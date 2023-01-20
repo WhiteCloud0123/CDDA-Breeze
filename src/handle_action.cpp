@@ -99,7 +99,7 @@
 #include "weather.h"
 #include "weather_type.h"
 #include "worldfactory.h"
-
+#include <ghc/filesystem.hpp>
 
 
 static const activity_id ACT_FERTILIZE_PLOT( "ACT_FERTILIZE_PLOT" );
@@ -2827,18 +2827,18 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
                   if(dir_exist(world_path)) {    // 首先判断save文件夹里是否已经有一个备份的世界了，如果有则删除
 
 
-
+                    world_generator->remove_world(world_name+"_备份");
 
                     save();
 
-                    std::filesystem::remove_all(world_path);
+                    ghc::filesystem::remove_all(world_path);
 
 
-                    std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
+                    ghc::filesystem::copy(playing_world_path, world_path, ghc::filesystem::copy_options::recursive);
 
                     add_msg(m_good,_("备份世界成功"));
 
-
+                    world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
 
 
 
@@ -2860,13 +2860,13 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
 
                     save();
 
-                    std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
-
+                    ghc::filesystem::copy(playing_world_path, world_path, ghc::filesystem::copy_options::recursive);
+ 
               //      world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
 
                     add_msg(m_good,_("备份当前世界成功"));
-
-
+        
+                    world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
 
 
                   }
