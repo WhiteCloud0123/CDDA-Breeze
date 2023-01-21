@@ -11546,7 +11546,7 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
         if( animate && ( seen || u.sees( *c ) ) ) {
             invalidate_main_ui_adaptor();
             inp_mngr.pump_events();
-            ui_manager::redraw_invalidated();
+            
            
             
 
@@ -11567,7 +11567,7 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
 
         }
 
-
+            ui_manager::redraw_invalidated();
             refresh_display();
 
        
