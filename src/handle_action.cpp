@@ -2820,8 +2820,9 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
                 if(query_yn("确定要备份当前世界吗?")) {
 
                   std::string world_name = world_generator->active_world->world_name;  // 获取角色当前的世界的名称
-                  const  std::string world_path="save/"+world_name+"_备份";
-                  std::string playing_world_path="save/"+world_name;
+                  const std::string world_path=PATH_INFO::savedir()+"/"+world_name+"_备份";
+
+                  std::string playing_world_path=PATH_INFO::savedir()+"/"+world_name;
 
 
                   if(dir_exist(world_path)) {    // 首先判断save文件夹里是否已经有一个备份的世界了，如果有则删除
