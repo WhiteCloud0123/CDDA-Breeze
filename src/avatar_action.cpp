@@ -419,15 +419,15 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
 
                              int afterHandleLv=mon_mounted->Lv;
 
-                             if(beginLv!=afterHandleLv)    {   // 标记 升级处理，增加hp与speed值
+                             if(beginLv!=afterHandleLv)    {   // 标记 升级处理，speed值
                            
                                 if(mon_mounted->Lv==1) {
-                                mon_mounted->set_speed_base(mon_mounted->get_speed_base()+5);   // 标记 对于升级为一级的怪物，升级后速度加1,生命值加30
-                                mon_mounted->set_hp(mon_mounted->get_hp_max()+30);                       
+                                mon_mounted->set_speed_base(mon_mounted->get_speed_base()+5);   // 标记 对于升级为一级的怪物，升级后速度加5
+                                                 
                                 }else {
 
                                 mon_mounted->set_speed_base(mon_mounted->type->speed+5+10*(mon_mounted->Lv-1));   
-                                mon_mounted->set_hp(mon_mounted->get_hp_max()+30+50*(mon_mounted->Lv-1));                       
+                                                    
 
                                 }
                       

@@ -4245,7 +4245,7 @@ void game::mon_info_update( )
                     }
 
 
-                    critter.set_hp(critter.get_hp_max()+30+50*(setLv-1));
+                   
 
                     critter.set_speed_base(critter.get_speed_base()+5+10*(setLv-1));
 
