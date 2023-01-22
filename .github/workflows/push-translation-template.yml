@@ -16,7 +16,7 @@ jobs:
       ${{ github.event.workflow_run.event == 'push' &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.status == 'success' &&
-      github.repository == 'CleverRaven/Cataclysm-DDA' }}
+      github.repository == 'WhiteCloud0123/CDDA-Breeze' }}
     steps:
       - name: "Install gettext tools"
         run: sudo apt install gettext
