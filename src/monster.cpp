@@ -1853,7 +1853,8 @@ bool monster::melee_attack( Creature &target, float accuracy )
 
     damage_instance damage = !is_hallucination() ? type->melee_damage : damage_instance();
     if( !is_hallucination() && type->melee_dice > 0 ) {
-        damage.add_damage( damage_type::BASH, dice( type->melee_dice, type->melee_sides ) + Lv );   // 标记 添加“等级”作为额外的伤害
+        // 标记 添加“等级”作为额外的伤害
+        damage.add_damage( damage_type::BASH, dice( type->melee_dice, type->melee_sides ) + Lv );   
     }
 
     dealt_damage_instance dealt_dam;
