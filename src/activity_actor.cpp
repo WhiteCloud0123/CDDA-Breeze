@@ -361,23 +361,23 @@ void aim_activity_actor::finish( player_activity &act, Character &who )
 
     // if invalid target or it's dead - reset it so a new one is acquired
     shared_ptr_fast<Creature> last_target = who.last_target.lock();
-    
-    
+
+
     if( !last_target || last_target->is_dead_state() ) {
 
-        
-        // // 标记 用枪械也可以获取击杀精英怪物后获取的经验值，这一部分暂时不添加进游戏
-        // if(last_target->is_dead_state()&&last_target->is_monster()) {
 
-        //     if(last_target->as_monster()->Lv>3) {
+        // 标记 用枪械也可以获取击杀精英怪物后获取的经验值
+        if(last_target->is_dead_state()&&last_target->is_monster()) {
 
-        //         get_player_character().kill_xp=get_player_character().kill_xp+int(last_target->as_monster()->exp/3);
+            if(last_target->as_monster()->Lv>3) {
 
-        //     }
+                get_player_character().kill_xp=get_player_character().kill_xp+int(last_target->as_monster()->exp/3);
 
-        // }
-        
-        
+            }
+
+        }
+
+
         who.last_target.reset();
     }
     who.assign_activity( player_activity( aim_actor ), false );

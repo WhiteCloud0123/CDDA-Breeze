@@ -523,7 +523,7 @@ static double occupied_tile_fraction( creature_size target_size )
 }
 
 double Creature::ranged_target_size() const
-{   
+{
     double stance_factor = 1.0;
     if( const Character *character = this->as_character() ) {
         if( character->is_crouching() ) {
@@ -1327,17 +1327,17 @@ dealt_projectile_attack Character::throw_item( const tripoint &target, const ite
     // Reset last target pos
     last_target_pos = cata::nullopt;
     recoil = MAX_RECOIL;
-    
-    // // 投掷击杀精英怪物也可以获得经验值，这一部分暂时不添加进游戏
-    // if(critter->is_monster()&&critter->is_dead_state()) {
 
-    //     if(critter->as_monster()->Lv>3) {
+    // 投掷击杀精英怪物也可以获得经验值
+    if(critter->is_monster()&&critter->is_dead_state()) {
 
-    //         get_player_character().kill_xp=get_player_character().kill_xp+int(critter->as_monster()->exp/3);
+        if(critter->as_monster()->Lv>3) {
 
-    //     }
+            get_player_character().kill_xp=get_player_character().kill_xp+int(critter->as_monster()->exp/3);
 
-    // }
+        }
+
+    }
 
     return dealt_attack;
 }
