@@ -80,7 +80,7 @@ jobs:
           body_path: ./CHANGELOG.md
           draft: false
           prerelease: true
-  - name: Generate matrix list
+      - name: Generate matrix list
         id: matrix
         if: ${{ steps.tag_check.outputs.exists == 'false' }}
         run: |
@@ -211,7 +211,7 @@ jobs:
             artifact: android-bundle
             ext: aab
             content: application/aap
-            '''
+          '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
           if not '${{ secrets.KEYSTORE }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
