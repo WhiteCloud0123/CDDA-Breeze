@@ -2013,15 +2013,15 @@ bool monster::melee_attack( Creature &target, float accuracy )
 
                     int afterHandleLv=this->Lv;  // 标记 获取经过处理后的lv
 
-                    if(beginLv!=afterHandleLv)    {   // 标记 升级处理，增加hp与speed值
+                    if(beginLv!=afterHandleLv)    {   // 标记 升级处理，增加speed值
                     
                            if(this->Lv==1) {
-                           this->set_speed_base(get_speed_base()+5);   // 标记 对于升级为一级的怪物，升级后速度加5,hp增加30
-                           this->set_hp(get_hp_max()+30);                       
+                           this->set_speed_base(get_speed_base()+5);   // 标记 对于升级为一级的怪物，升级后速度加5
+                                             
                            }else {
 
                            this->set_speed_base(this->type->speed+5+10*(Lv-1));   
-                           this->set_hp(get_hp_max()+30+50*(Lv-1));                       
+                                                
 
                            }
                       
