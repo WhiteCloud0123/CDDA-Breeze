@@ -4,6 +4,9 @@ CDDA-微风(CDDA-Breeze)是基于“Cataclysm: Dark Days Ahead”的一个改版
 
 ![image](https://user-images.githubusercontent.com/112397151/213683749-79951139-ab3e-483d-9359-3b4d1b8acfa4.png)
 
+
+## 贡献者
+
 <a href="https://github.com/WhiteCloud0123/CDDA-Breeze/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=WhiteCloud0123/CDDA-Breeze" />
 </a>
