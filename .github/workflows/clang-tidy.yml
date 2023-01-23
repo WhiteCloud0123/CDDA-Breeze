@@ -3,11 +3,11 @@ name: Clang-tidy (clang-12, tiles)
 on:
   push:
     branches:
-    - master
+    - main
 
   pull_request:
     branches:
-    - master
+    - main
 
 # We only care about the latest revision of a PR, so cancel all previous instances.
 concurrency:

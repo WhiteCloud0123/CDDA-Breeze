@@ -3,7 +3,7 @@ name: Clang Build Analyzer
 on:
   push:
     branches:
-    - master
+    - main
   workflow_dispatch:
 
 # Mixing in event_name so that a master push and a workflow dispatch can run at the same time.
