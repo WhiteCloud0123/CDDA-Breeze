@@ -89,23 +89,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-         - name: Android x64
+        include:  
+          - name: Android x64
             os: ubuntu-latest
             mxe: none
             android: arm64
             artifact: android-x64
             ext: apk
-            content: application/apk               
-         - name: Windows Tiles Sounds x64 MSVC
-            artifact: windows-tiles-sounds-x64-msvc
-            arch: x64
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 1                 
-          
+            content: application/apk                       
     runs-on: ${{ matrix.os }}
     env:
         ZSTD_CLEVEL: 17
