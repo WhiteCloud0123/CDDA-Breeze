@@ -3,14 +3,14 @@ name: cmake-format linting
 on:
   push:
     branches:
-    - main
+    - master
     paths:
     - '**/CMakeLists.txt'
     - '**.cmake'
     - '**.cmake.in'
   pull_request:
     branches:
-    - main
+    - master
     paths:
     - '**/CMakeLists.txt'
     - '**.cmake'

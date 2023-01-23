@@ -11,7 +11,7 @@ env:
 
 jobs:
   pull-updates:
-    if: github.repository == 'WhiteCloud0123/CDDA-Breeze'
+    if: github.repository == 'CleverRaven/Cataclysm-DDA'
     runs-on: ubuntu-latest
     steps:
       - name: "Generate PR body/tileset update changelog"
