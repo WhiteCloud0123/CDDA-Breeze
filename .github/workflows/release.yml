@@ -211,7 +211,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gettext
-          sudo apt-get install ca-certificates
+          sudo curl -O https://packages.cloud.google.com/apt/doc/apt-key.gpg
+          sudo apt-key add nodesource.gpg.key 
       - name: Build CDDA (android)
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
