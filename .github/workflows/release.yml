@@ -41,8 +41,8 @@ jobs:
       - name: Generate environmental variables
         id: generate_env_vars
         run: |
-          echo "::set-output name=tag_name::CDDA-Breeze ${{ steps.get-timestamp.outputs.time }}"
-          echo "::set-output name=release_name::CDDA-Breeze ${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=tag_name::CDDA-Breeze-${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=release_name::CDDA-Breeze-${{ steps.get-timestamp.outputs.time }}"
       - name: Check if there is existing git tag
         id: tag_check
         uses: mukunku/tag-exists-action@v1.0.0
