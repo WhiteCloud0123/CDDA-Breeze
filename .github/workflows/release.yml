@@ -1,7 +1,7 @@
 name: "Experimental Release"
 concurrency: release
 on:
-  workflow_dispatch:
+  
   push:
     branches:
       - main
@@ -30,7 +30,7 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       timestamp: ${{ steps.get-timestamp.outputs.time }}
       release_already_exists: ${{ steps.tag_check.outputs.exists }}
-      matrix: ${{ steps.matrix.outputs.matrix }}
+      
     steps:
       - name: Get build timestamp
         id: get-timestamp
