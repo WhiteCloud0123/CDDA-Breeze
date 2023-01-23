@@ -1,7 +1,7 @@
 name: "Experimental Release"
 concurrency: release
 on:
-  
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -30,7 +30,7 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       timestamp: ${{ steps.get-timestamp.outputs.time }}
       release_already_exists: ${{ steps.tag_check.outputs.exists }}
-      
+      matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
       - name: Get build timestamp
         id: get-timestamp
@@ -41,8 +41,8 @@ jobs:
       - name: Generate environmental variables
         id: generate_env_vars
         run: |
-          echo "::set-output name=tag_name::CDDA-Breeze-${{ steps.get-timestamp.outputs.time }}"
-          echo "::set-output name=release_name::CDDA-Breeze build ${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=tag_name::CDDA-Breeze ${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=release_name::CDDA-Breeze ${{ steps.get-timestamp.outputs.time }}"
       - name: Check if there is existing git tag
         id: tag_check
         uses: mukunku/tag-exists-action@v1.0.0
@@ -80,32 +80,50 @@ jobs:
           body_path: ./CHANGELOG.md
           draft: false
           prerelease: true
-
-     
-          
-  builds:
-    needs: release
-    if: ${{ needs.release.outputs.matrix }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-         - name: Android x64
-            os: ubuntu-latest
+      - name: Generate matrix list
+        id: matrix
+        if: ${{ steps.tag_check.outputs.exists == 'false' }}
+        run: |
+          pip3 install ruamel.yaml
+          python3 -c "
+          matrix = '''
+          - name: Windows Tiles x64 MSVC
+            artifact: windows-tiles-x64-msvc
+            arch: x64
+            os: windows-2019
             mxe: none
-            android: arm64
-            artifact: android-x64
-            ext: apk
-            content: application/apk               
-         - name: Windows Tiles Sounds x64 MSVC
+            ext: zip
+            content: application/zip
+            sound: 0
+          - name: Windows Tiles Sounds x64 MSVC
             artifact: windows-tiles-sounds-x64-msvc
             arch: x64
             os: windows-2019
             mxe: none
             ext: zip
             content: application/zip
-            sound: 1                 
-          
+            sound: 1      
+          - name: Android x64
+            os: ubuntu-latest
+            mxe: none
+            android: arm64
+            artifact: android-x64
+            ext: apk
+            content: application/apk
+          '''
+          from ruamel.yaml import YAML; yaml = YAML()
+          matrix = yaml.load(matrix)
+          if not '${{ secrets.KEYSTORE }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
+          import json; print('matrix='+json.dumps(matrix))
+          " >> $GITHUB_OUTPUT
+  builds:
+    needs: release
+    if: ${{ needs.release.outputs.matrix }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.release.outputs.matrix) }}
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     env:
         ZSTD_CLEVEL: 17
@@ -150,7 +168,7 @@ jobs:
           shasum -a 256 -c ./build-scripts/libbacktrace-${{ matrix.mxe }}-w64-mingw32-sha256
           sudo tar -xzf libbacktrace-${{ matrix.mxe }}-w64-mingw32.tar.gz --exclude=LICENSE -C /opt/mxe/usr/${{ matrix.mxe }}-w64-mingw32.static.gcc11
       - name: Install dependencies (Linux)
-        if: runner.os == 'Linux' 
+        if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none' 
         run: |
           sudo apt-get update
           sudo apt-get install libncursesw5-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev \
@@ -206,12 +224,12 @@ jobs:
           java-version: '8'
           distribution: 'adopt'   
       - name: Setup Build and Dependencies (android)
-        if: runner.os == 'Linux' 
+        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         run: |
           sudo apt-get update
           sudo apt-get install gettext          
       - name: Build CDDA (android)
-        if: runner.os == 'Linux' 
+        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
         run: | 
           echo "${{ secrets.KEYSTORE }}" > release.keystore.asc   
