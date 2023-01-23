@@ -211,12 +211,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gettext
-          sudo curl -O https://packages.cloud.google.com/apt/doc/apt-key.gpg
-          sudo apt-key add apt-key.gpg 
       - name: Build CDDA (android)
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
         run: | 
+          sudo curl -O https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc
+          sudo apt-key add ros.asc
           echo "${{ secrets.KEYSTORE }}" > release.keystore.asc   
           gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch release.keystore.asc > app/release.keystore 
           echo "${{ secrets.KEYSTORE_PROPERTIES }}" > keystore.properties.asc   
