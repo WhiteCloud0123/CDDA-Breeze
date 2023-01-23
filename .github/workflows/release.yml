@@ -98,7 +98,7 @@ jobs:
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
-          if not '${{ secrets.KEYSTORE }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
+          if not '${{ secrets.SIGNING_KEY }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
           import json; print('matrix='+json.dumps(matrix))
           " >> $GITHUB_OUTPUT
   builds:
