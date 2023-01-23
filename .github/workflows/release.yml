@@ -21,7 +21,6 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  name: Build
 
 jobs:
   release:
@@ -88,6 +87,13 @@ jobs:
           pip3 install ruamel.yaml
           python3 -c "
           matrix = '''
+           - name: Android x64
+            os: ubuntu-latest
+            mxe: none
+            android: arm64
+            artifact: android-x64
+            ext: apk
+            content: application/apk
           - name: Windows Tiles Sounds x64 MSVC
             artifact: windows-tiles-sounds-x64-msvc
             arch: x64
@@ -95,14 +101,7 @@ jobs:
             mxe: none
             ext: zip
             content: application/zip
-            sound: 1
-          - name: Android x64
-            os: ubuntu-latest
-            mxe: none
-            android: arm64
-            artifact: android-x64
-            ext: apk
-            content: application/apk
+            sound: 1        
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
