@@ -8,7 +8,7 @@ on:
 jobs:
   check_branch_name:
     runs-on: ubuntu-latest
-    if: github.head_ref == 'main' && github.repository == 'WhiteCloud0123/CDDA-Breeze'
+    if: github.head_ref == 'master' && github.repository == 'CleverRaven/Cataclysm-DDA'
     steps:
       - name: Post warning
         uses: actions/github-script@v6.3.3

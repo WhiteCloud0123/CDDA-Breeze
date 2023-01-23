@@ -21,6 +21,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  name: Build
 
 jobs:
   release:
@@ -41,8 +42,8 @@ jobs:
       - name: Generate environmental variables
         id: generate_env_vars
         run: |
-          echo "::set-output name=tag_name::CDDA-Breeze-${{ steps.get-timestamp.outputs.time }}"
-          echo "::set-output name=release_name::CDDA-Breeze build ${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=tag_name::cdda-experimental-${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=release_name::Cataclysm-DDA experimental build ${{ steps.get-timestamp.outputs.time }}"
       - name: Check if there is existing git tag
         id: tag_check
         uses: mukunku/tag-exists-action@v1.0.0
@@ -87,26 +88,33 @@ jobs:
           pip3 install ruamel.yaml
           python3 -c "
           matrix = '''
-           - name: Windows Tiles x64 MSVC
+          - name: Windows Tiles x64 MSVC
             artifact: windows-tiles-x64-msvc
             arch: x64
             os: windows-2019
             mxe: none
             ext: zip
             content: application/zip
-            sound: 0         
-          - name: Android Sounds x64 
+            sound: 0
+          - name: Windows Tiles Sounds x64 MSVC
+            artifact: windows-tiles-sounds-x64-msvc
+            arch: x64
+            os: windows-2019
+            mxe: none
+            ext: zip
+            content: application/zip
+            sound: 1
+          - name: Android x64
             os: ubuntu-latest
             mxe: none
             android: arm64
             artifact: android-x64
             ext: apk
             content: application/apk
-            sound: 1         
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
-         
+          if not '${{ secrets.KEY_01 }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
           import json; print('matrix='+json.dumps(matrix))
           " >> $GITHUB_OUTPUT
   builds:
@@ -255,7 +263,7 @@ jobs:
           asset_name: cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.content }}
       - name: Trigger GitHub pages rebuild
-        if: github.repository == 'CleverRaven/Cataclysm-DDA'
+        if: github.repository == 'WhiteCloud0123/CDDA-Breeze'
         shell: bash
         run: |
           curl --fail --request POST \

@@ -3,12 +3,12 @@ name: Flake8 Python linting
 on:
   push:
     branches:
-    - main
+    - master
     paths:
     - '**.py'
   pull_request:
     branches:
-    - main
+    - master
     paths:
     - '**.py'
 
