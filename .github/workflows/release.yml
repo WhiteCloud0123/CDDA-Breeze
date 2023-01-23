@@ -42,8 +42,8 @@ jobs:
       - name: Generate environmental variables
         id: generate_env_vars
         run: |
-          echo "::set-output name=tag_name::cdda-experimental-${{ steps.get-timestamp.outputs.time }}"
-          echo "::set-output name=release_name::Cataclysm-DDA experimental build ${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=tag_name::CDDA-Breeze-${{ steps.get-timestamp.outputs.time }}"
+          echo "::set-output name=release_name::CDDA-Breeze build ${{ steps.get-timestamp.outputs.time }}"
       - name: Check if there is existing git tag
         id: tag_check
         uses: mukunku/tag-exists-action@v1.0.0
@@ -114,7 +114,7 @@ jobs:
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
-          if not '${{ secrets.KEY_01 }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
+          if not '${{ secrets.KEYSTORE }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
           import json; print('matrix='+json.dumps(matrix))
           " >> $GITHUB_OUTPUT
   builds:
@@ -263,7 +263,7 @@ jobs:
           asset_name: cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.content }}
       - name: Trigger GitHub pages rebuild
-        if: github.repository == 'WhiteCloud0123/CDDA-Breeze'
+        if: github.repository == 'CleverRaven/Cataclysm-DDA'
         shell: bash
         run: |
           curl --fail --request POST \
