@@ -80,24 +80,8 @@ jobs:
           body_path: ./CHANGELOG.md
           draft: false
           prerelease: true
-      - name: Generate matrix list
-        id: matrix
-        if: ${{ steps.tag_check.outputs.exists == 'false' }}
-        run: |
-          pip3 install ruamel.yaml
-          python3 -c "
-          matrix = '''
-           - name: Android x64
-            os: ubuntu-latest
-            mxe: none
-            android: arm64
-            artifact: android-x64
-            ext: apk
-            content: application/apk
-         
-          '''
-          from ruamel.yaml import YAML; yaml = YAML()
-          matrix = yaml.load(matrix)
+
+     
           
   builds:
     needs: release
@@ -105,8 +89,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.release.outputs.matrix) }}
-    name: ${{ matrix.name }}
+        include:         
+          - name: Android x64
+            os: ubuntu-latest
+            mxe: none
+            android: arm64
+            artifact: android-x64
+            ext: apk
+            content: application/apk       
+         
     runs-on: ${{ matrix.os }}
     env:
         ZSTD_CLEVEL: 17
