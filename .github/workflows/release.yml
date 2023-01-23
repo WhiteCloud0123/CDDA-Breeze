@@ -86,7 +86,15 @@ jobs:
         run: |
           pip3 install ruamel.yaml
           python3 -c "
-          matrix = '''         
+          matrix = '''
+           - name: Windows Tiles x64 MSVC
+            artifact: windows-tiles-x64-msvc
+            arch: x64
+            os: windows-2019
+            mxe: none
+            ext: zip
+            content: application/zip
+            sound: 0         
           - name: Android Sounds x64 
             os: ubuntu-latest
             mxe: none
@@ -98,7 +106,7 @@ jobs:
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
-          if not '${{ secrets.SIGNING_KEY }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
+         
           import json; print('matrix='+json.dumps(matrix))
           " >> $GITHUB_OUTPUT
   builds:
