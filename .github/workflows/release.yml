@@ -210,7 +210,9 @@ jobs:
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         run: |
           sudo apt-get update
-          sudo apt-get install gettext          
+          sudo apt-get install gettext
+          https://download.jitsi.org/jitsi-key.gpg.key
+          sudo apt-key add jenkins-ci.org.key
       - name: Build CDDA (android)
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
