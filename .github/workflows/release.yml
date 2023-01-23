@@ -94,20 +94,11 @@ jobs:
             artifact: android-x64
             ext: apk
             content: application/apk
-          - name: Windows Tiles Sounds x64 MSVC
-            artifact: windows-tiles-sounds-x64-msvc
-            arch: x64
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 1        
+         
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
-          if not '${{ secrets.KEYSTORE }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
-          import json; print('matrix='+json.dumps(matrix))
-          " >> $GITHUB_OUTPUT
+          
   builds:
     needs: release
     if: ${{ needs.release.outputs.matrix }}
