@@ -26,6 +26,8 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
+    environment: 
+          name: build
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       timestamp: ${{ steps.get-timestamp.outputs.time }}
