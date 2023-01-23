@@ -89,15 +89,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:         
-          - name: Android x64
+        include:
+         - name: Android x64
             os: ubuntu-latest
             mxe: none
             android: arm64
             artifact: android-x64
             ext: apk
-            content: application/apk       
-         
+            content: application/apk               
+         - name: Windows Tiles Sounds x64 MSVC
+            artifact: windows-tiles-sounds-x64-msvc
+            arch: x64
+            os: windows-2019
+            mxe: none
+            ext: zip
+            content: application/zip
+            sound: 1                 
+          
     runs-on: ${{ matrix.os }}
     env:
         ZSTD_CLEVEL: 17
@@ -142,7 +150,7 @@ jobs:
           shasum -a 256 -c ./build-scripts/libbacktrace-${{ matrix.mxe }}-w64-mingw32-sha256
           sudo tar -xzf libbacktrace-${{ matrix.mxe }}-w64-mingw32.tar.gz --exclude=LICENSE -C /opt/mxe/usr/${{ matrix.mxe }}-w64-mingw32.static.gcc11
       - name: Install dependencies (Linux)
-        if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none' 
+        if: runner.os == 'Linux' 
         run: |
           sudo apt-get update
           sudo apt-get install libncursesw5-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev \
@@ -198,12 +206,12 @@ jobs:
           java-version: '8'
           distribution: 'adopt'   
       - name: Setup Build and Dependencies (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
+        if: runner.os == 'Linux' 
         run: |
           sudo apt-get update
           sudo apt-get install gettext          
       - name: Build CDDA (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
+        if: runner.os == 'Linux' 
         working-directory: ./android
         run: | 
           echo "${{ secrets.KEYSTORE }}" > release.keystore.asc   
