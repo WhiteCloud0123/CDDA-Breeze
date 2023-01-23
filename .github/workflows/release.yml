@@ -87,22 +87,6 @@ jobs:
           pip3 install ruamel.yaml
           python3 -c "
           matrix = '''
-          - name: Windows Tiles x64 MSVC
-            artifact: windows-tiles-x64-msvc
-            arch: x64
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 0
-          - name: Windows Tiles Sounds x64 MSVC
-            artifact: windows-tiles-sounds-x64-msvc
-            arch: x64
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 1      
           - name: Android x64
             os: ubuntu-latest
             mxe: none
@@ -113,7 +97,6 @@ jobs:
           '''
           from ruamel.yaml import YAML; yaml = YAML()
           matrix = yaml.load(matrix)
-          if not '${{ secrets.KEYSTORE }}': matrix = [i for i in matrix if i.get('android', 'none') == 'none']
           import json; print('matrix='+json.dumps(matrix))
           " >> $GITHUB_OUTPUT
   builds:
