@@ -2524,6 +2524,25 @@ void options_manager::add_options_world_default()
     }, "normal"
        );
 
+    // 标记 对于永恒天气，添加可视化的选项   
+    add( "ETERNAL_WEATHER", "world_default", to_translation( "Eternal weather" ),
+    to_translation( "Sets eternal weather.  'Normal' clears all eternal weather overrides and sets normal weather pattern." ), {
+        { "normal", to_translation( "Normal" ) },
+        { "clear", to_translation( "Clear weather" ) },
+        { "cloudy", to_translation( "Cloudy weather" ) },
+        { "light_drizzle", to_translation( "Light drizzle" ) },
+        { "drizzle", to_translation( "Drizzle" ) },
+        { "rain", to_translation( "Rain" ) },
+        { "thunder", to_translation( "Thunder storm" ) },
+        { "lightning", to_translation( "Lightning storm" ) },
+        { "flurries", to_translation( "Flurries" ) },
+        { "snowing", to_translation( "Snow" ) },
+        { "snowstorm", to_translation( "Snow storm" ) },
+        { "early_portal_storm", to_translation( "Light portal storm" ) },
+        { "portal_storm", to_translation( "Portal storm" ) },
+    }, "normal"
+       );
+
     add_empty_line();
 
     add( "WANDER_SPAWNS", "world_default", to_translation( "Wandering hordes" ),

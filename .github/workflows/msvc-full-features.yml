@@ -198,7 +198,7 @@ jobs:
       shell: bash
 
     - name: Don't upload vcpkg cache on failure or PRs
-      if: ${{ failure() || cancelled() || github.ref_name != 'master' }}
+      if: ${{ failure() || cancelled() || github.ref_name != 'main' }}
       run: |
         echo "RUNVCPKG_NO_CACHE=1" >> $GITHUB_ENV
       shell: bash
