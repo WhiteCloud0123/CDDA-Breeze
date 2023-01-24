@@ -3788,12 +3788,11 @@ int Character::get_enchantment_speed_bonus() const
 }
 
 int Character::get_speed() const
-{
+{   
     if( has_flag( json_flag_STEADY ) ) {
-        return get_speed_base() + std::max( 0, get_speed_bonus() ) + std::max( 0,
-                get_speedydex_bonus( get_dex() ) );
+        return get_speed_base() + std::max( 0, get_speed_bonus() );
     }
-    return Creature::get_speed() + get_speedydex_bonus( get_dex() );
+    return Creature::get_speed();  // 移除 get_speedydex_bonus() 
 }
 
 int Character::get_arm_str() const
@@ -10810,6 +10809,8 @@ void Character::recalc_speed_bonus()
     if( weight_carried() > weight_cap ) {
         carry_penalty = 25 * ( weight_carried() - weight_cap ) / weight_cap;
     }
+    set_speed_base( 100 + get_speedydex_bonus( get_dex() ) );  // 标记 将“敏捷速度加成mod”的加成视为 speed_base 的一部分  
+
     mod_speed_bonus( -carry_penalty );
 
     mod_speed_bonus( -get_pain_penalty().speed );
