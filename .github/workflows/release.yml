@@ -220,7 +220,7 @@ jobs:
           if [ ${{ matrix.android }} = arm64 ]
           then 
                ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_32=false assembleRelease
-               mv ./app/build/outputs/apk/stable/release/*.apk ../CDDA-Breeze-${{ needs.release.outputs.timestamp }}.apk
+               mv ./app/build/outputs/apk/stable/release/*.apk ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk
           
           fi
       - name: Upload release asset
@@ -230,8 +230,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }} 
-          asset_path: cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
-          asset_name: cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
+          asset_path: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
+          asset_name: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.content }}
       - name: Trigger GitHub pages rebuild
         if: github.repository == 'CleverRaven/Cataclysm-DDA'
