@@ -175,6 +175,7 @@ enum m_flag : int {
     MF_ALWAYS_SEES_YOU,     // This monster always knows where the avatar is
     MF_ALL_SEEING,          // This monster can see everything within its vision range regardless of light or obstacles
     MF_NEVER_WANDER,        // This monster will never join wandering hordes.
+    MF_PUSH_VEH_NO_DAMAGE,         // 标记 怪物推动载具这个行为本身不会给载具带来伤害
     MF_MAX                  // Sets the length of the flags - obviously must be LAST
 };
 
