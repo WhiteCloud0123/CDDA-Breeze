@@ -2249,18 +2249,7 @@ void monster::shove_vehicle( const tripoint &remote_destination,
 
                } 
                 veh.smash( here, shove_damage_min, shove_damage_max, 0.10F );
-            
             }
         }
     }
-    
-    
-
-
-
-
-
-
-
-
 }
