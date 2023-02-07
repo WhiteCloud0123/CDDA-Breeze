@@ -2243,7 +2243,7 @@ void monster::shove_vehicle( const tripoint &remote_destination,
                 veh.move = tileray( destination_delta.xy() );
 
                 // 标记 如果玩家没有PUSH_VEH_NO_DAMAGE 这个flag，那么载具不会因为怪物的推动行为本身受到伤害，照常接受其他伤害
-               if( this->has_flag( MF_PUSH_VEH ) == false ) {
+               if( this->has_flag( MF_PUSH_VEH_NO_DAMAGE ) == false ) {
                     
                     shove_damage_max=0.00F;                 
 
