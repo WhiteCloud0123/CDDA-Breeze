@@ -348,6 +348,8 @@ enum action_id : int {
     /** Toggle timing of the game hours */
     ACTION_TOGGLE_HOUR_TIMER,
     /** Not an action, serves as count of enumerated actions */
+      // 标记 添加actionCreateWorldBackup
+    actionCreateWorldBackup,
     NUM_ACTIONS
     /**@}*/
 };

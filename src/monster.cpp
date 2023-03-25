@@ -67,6 +67,7 @@
 #include "weakpoint.h"
 #include "weather.h"
 #include "harvest.h"
+#include "item_factory.h"  // 标记 添加 item_factory.h
 
 static const anatomy_id anatomy_default_anatomy( "default_anatomy" );
 
@@ -752,6 +753,223 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
     oss << "<color_white>" << std::string( 5 - utf8_width( bar_str ), '.' ) << "</color> ";
     oss << get_tag_from_color( basic_symbol_color() ) << name() << "</color> ";
     oss << "<color_h_white>" << get_effect_status() << "</color>";
+    
+
+    // 显示更加详细的信息
+    /*oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "最大HP : " << "</color>";
+    oss << "<color_white>" << type->hp << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "士气 : " << "</color>";
+    oss << "<color_white>" << type->morale << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "速度 : " << "</color>";
+    oss << "<color_white>" << type->speed << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "闪避技能 : " << "</color>";
+    oss << "<color_white>" << type->sk_dodge << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "常规攻击耗时 : " << "</color>";
+    oss << "<color_white>" << type->attack_cost<< "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "基础困难程度 : " << "</color>";
+    oss << "<color_red>" << type->difficulty_base << "</color>";
+    oss << "    ";
+    oss << "<color_white>" << "困难程度 : " << "</color>";
+    oss << "<color_red>" << type->difficulty << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "近战技能 : " << "</color>";
+    oss << "<color_white>" << type->melee_skill << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "钝击技能 : " << "</color>";
+    oss << "<color_white>" << type->bash_skill<< "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "近战骰子个数 : " << "</color>";
+    oss << "<color_white>" << type->melee_dice << "</color>";
+    oss << "   ";
+    oss << "<color_white>" << "近战骰子面数 : " << "</color>";
+    oss << "<color_white>" << type->melee_sides << "</color>";
+    oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "钝击防御: " << "</color>";
+    oss << "<color_white>" << type->armor_bash << "</color>";
+    oss << "   ";
+    oss << "<color_white>" << "斩击防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_cut << "</color>";
+    oss << "   ";
+    oss << "<color_white>" << "刺击防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_stab << "</color>";
+    oss << "    ";
+    oss << "<color_white>" << "子弹防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_bullet << "</color>";
+    oss << "    ";
+    oss << "<color_white>" << "火焰防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_fire << "</color>";
+    oss << "   ";
+    oss << "<color_white>" << "酸液防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_acid << "</color>";
+    oss << "   ";
+    oss << "<color_white>" << "寒冷防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_cold << "</color>";
+    oss << "   ";
+    oss << "<color_white>" << "电击防御 : " << "</color>";
+    oss << "<color_white>" << type->armor_elec << "</color>";
+    
+    
+    if ( type->special_attacks_names.empty() == false ) {
+
+        oss << "\n";
+        oss << "\n";
+
+        oss << "<color_white>" << "特殊攻击: " << "</color>";
+        
+        for (const std::string &name : type->special_attacks_names) {
+
+            oss << "<color_red>" <<name<< "</color>";
+            oss << "<color_red>" <<"   "<< "</color>";
+        
+        }
+        
+
+    }*/
+
+
+    /*if (type->petfood.food.empty() == false && get_option<bool>("显示驯服辅助信息") == true ) {
+
+        oss << "\n";
+        oss << "\n";
+        oss << "<color_white>" << "可驯服" << "</color>";
+        oss << "<color_white>" << "     食物: " << "</color>";
+
+        for (const std::string& food : type->petfood.food) {
+
+
+            if (food == "BIRDFOOD") {
+
+                oss << "<color_white>" << "鸟食   " << "</color>";
+
+            }
+            else  if (food == "DOGFOOD") {
+
+                oss << "<color_white>" << "狗粮   " << "</color>";
+
+            }
+            else if (food == "CATTLEFOOD") {
+
+                oss << "<color_white>" << "家畜饲料   " << "</color>";
+
+            }
+            else if (food == "CATFOOD") {
+
+                oss << "<color_white>" << "干猫粮/半湿猫粮  " << "</color>";
+
+            }
+            else if (food == "BUGFOOD") {
+
+                oss << "<color_white>" << "sweet goop   " << "</color>";
+
+            }
+            else if (food == "DINOFOOD_A") {
+
+                oss << "<color_white>" << "狗粮   " << "</color>";
+
+
+
+            }
+            else if (food == "DINOFOOD_B") {
+
+                oss << "<color_white>" << "干猫粮/半湿猫粮   " << "</color>";
+
+
+
+            }
+            else if (food == "DINOFOOD_C") {
+
+                oss << "<color_white>" << "家畜饲料   " << "</color>";
+
+
+
+            }
+            
+
+        }
+
+        oss << "\n";
+        oss << "\n";
+
+    }*/
+
+
+
+    /*if ( ! type->baby_monster.is_empty()) {
+
+        oss << "\n";
+        oss << "\n";
+        oss << "<color_white>" << "生产的怪物或者蛋: " << "</color>";
+        if ( ! type->baby_egg.is_empty() ) {
+
+            oss << "<color_white>" << type->baby_egg.str() << "</color>";
+
+
+        }
+        else {
+           
+            oss << "<color_white>" << type->baby_monster.str() << "</color>";
+        
+        }
+        
+
+        oss << "    ";
+        oss << "<color_white>" << "生产的怪物数量: " << "</color>";
+        oss << "<color_white>" << type->baby_count << "</color>";
+
+
+    }*/
+
+    
+
+        
+
+     /*if ( !type->death_drops.is_empty()) {
+            oss << "\n";
+            oss << "\n";
+            
+            
+            
+            oss << "<color_white>" << "掉落物: " << "</color>";
+
+            for (const auto &item : item_group::every_possible_item_from(type->death_drops)) {
+           
+                oss << "<color_green>" << item::nname(item->get_id()) << "</color>";
+                oss << "<color_green>" << "    " << "</color>";
+
+
+
+            }
+ 
+
+    }
+
+    oss << "\n";
+    oss << "\n";*/
+
+   
+   
+    
+    
+
+    
+    
+    
     vStart += fold_and_print( w, point( column, vStart ), max_width, c_white, oss.str() );
 
     Character &pc = get_player_character();

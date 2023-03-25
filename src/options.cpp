@@ -1366,6 +1366,13 @@ void options_manager::add_options_general()
          "", 30
        );
 
+    /*add_empty_line();
+    add("显示驯服辅助信息", "general", to_translation("显示驯服辅助信息"),
+        to_translation("打开后，如果怪物可以被驯服，那么会在怪物的信息面板上显示相应信息。"),
+        false
+    );*/
+
+
     add_empty_line();
 
     add( "AUTO_PICKUP", "general", to_translation( "Auto pickup enabled" ),
@@ -2671,7 +2678,7 @@ void options_manager::add_options_android()
     add( "ANDROID_NATIVE_UI", "android", to_translation( "Use native Android UI menus" ),
          to_translation( "If true, native Android dialogs are used for some in-game menus, "
                          "such as popup messages and yes/no dialogs." ),
-         android_get_default_setting( "Native Android UI", true )
+         android_get_default_setting( "Native Android UI", false )
        );
 
     add( "ANDROID_AUTO_KEYBOARD", "android", to_translation( "Auto-manage virtual keyboard" ),

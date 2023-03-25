@@ -69,18 +69,18 @@ bool cleanup_at_end()
 {
     avatar &u = get_avatar();
     if( g->uquit == QUIT_DIED || g->uquit == QUIT_SUICIDE ) {
-        // Put (non-hallucinations) into the overmap so they are not lost.
-        for( monster &critter : g->all_monsters() ) {
-            g->despawn_monster( critter );
-        }
-        // if player has "hunted" trait, remove their nemesis monster on death
-        if( u.has_trait( trait_HAS_NEMESIS ) ) {
-            overmap_buffer.remove_nemesis();
-        }
-        // Reset NPC factions and disposition
-        g->reset_npc_dispositions();
-        // Save the factions', missions and set the NPC's overmap coordinates
-        // Npcs are saved in the overmap.
+        // // Put (non-hallucinations) into the overmap so they are not lost.
+        // for( monster &critter : g->all_monsters() ) {
+        //     g->despawn_monster( critter );
+        // }
+        // // if player has "hunted" trait, remove their nemesis monster on death
+        // if( u.has_trait( trait_HAS_NEMESIS ) ) {
+        //     overmap_buffer.remove_nemesis();
+        // }
+        // // Reset NPC factions and disposition
+        // g->reset_npc_dispositions();
+        // // Save the factions', missions and set the NPC's overmap coordinates
+        // // Npcs are saved in the overmap.
         g->save_factions_missions_npcs(); //missions need to be saved as they are global for all saves.
 
         // and the overmap, and the local map.
@@ -274,16 +274,16 @@ bool cleanup_at_end()
         std::chrono::seconds total_time_played = g->time_played_at_last_load + time_since_load;
         get_event_bus().send<event_type::game_over>( is_suicide, sLastWords, total_time_played );
         // Struck the save_player_data here to forestall Weirdness
-        g->move_save_to_graveyard();
+        // g->move_save_to_graveyard();
         g->write_memorial_file( sLastWords );
         get_memorial().clear();
         std::vector<std::string> characters = g->list_active_saves();
         // remove current player from the active characters list, as they are dead
-        std::vector<std::string>::iterator curchar = std::find( characters.begin(),
-                characters.end(), u.get_save_id() );
-        if( curchar != characters.end() ) {
-            characters.erase( curchar );
-        }
+        // std::vector<std::string>::iterator curchar = std::find( characters.begin(),
+        //         characters.end(), u.get_save_id() );
+        // if( curchar != characters.end() ) {
+        //     characters.erase( curchar );
+        // }
 
         if( characters.empty() ) {
             bool queryDelete = false;

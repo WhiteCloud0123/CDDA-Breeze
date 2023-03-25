@@ -9272,6 +9272,8 @@ int Character::run_cost( int base_cost, bool diag ) const
 
 void Character::place_corpse()
 {
+
+    if(this->is_avatar()==false) {     // 标记 如果是玩家死亡就不执行以下处理
     //If the character/NPC is on a distant mission, don't drop their their gear when they die since they still have a local pos
     if( !death_drops ) {
         return;
@@ -9295,6 +9297,8 @@ void Character::place_corpse()
     }
 
     here.add_item_or_charges( pos(), body );
+
+    }
 }
 
 void Character::place_corpse( const tripoint_abs_omt &om_target )
