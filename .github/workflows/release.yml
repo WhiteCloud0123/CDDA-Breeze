@@ -211,9 +211,9 @@ jobs:
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
         run: | 
-          echo "${{ secrets.KEY_01 }}" > a.keystore 
+          echo "${{ secrets.KEY_01 }}" > /tmp/a.keystore 
 
-          echo -e "keyPassword=0123\nkeyAlias=a\nstorePassword=0123\nstoreFile=a.keystore" > keystore.properties
+          echo -e "keyPassword=0123\nkeyAlias=a\nstorePassword=0123\nstoreFile=/tmp/a.keystore" > keystore.properties
 
 
           export UPSTREAM_BUILD_NUMBER="$((11581 + ${{ github.run_number }}))"
