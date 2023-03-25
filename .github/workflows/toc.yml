@@ -1,13 +1,13 @@
 on:
   push:
     branches:
-    - master
+    - main
     paths:
     - 'doc/JSON_INFO.md'
 name: TOC Generator
 jobs:
   generateTOC:
-    if: github.repository == 'CleverRaven/Cataclysm-DDA'
+    if: github.repository == 'WhiteCloud0123/CDDA-Breeze"
     name: Update the table of contents
     runs-on: ubuntu-latest
     steps:

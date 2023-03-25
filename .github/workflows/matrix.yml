@@ -3,10 +3,10 @@ name: General build matrix
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches:
-    - master
+    - main
 
 # We only care about the latest revision of a PR, so cancel all previous instances.
 # Allow running master builds to complete to help with ccache refreshes.
@@ -68,9 +68,9 @@ jobs:
     steps:
       - id: matrix_vars
         run: |
-          echo "fail_fast=$([ "$GITHUB_REF_NAME" = "master" ] && echo false || echo true)" >> $GITHUB_OUTPUT
-          echo "skip_tests=$([ "$GITHUB_REF_NAME" = "master" ] && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo "max_parallel=$([ "$GITHUB_REF_NAME" = "master" ] && echo 20 || echo 1)" >> $GITHUB_OUTPUT
+          echo "fail_fast=$([ "$GITHUB_REF_NAME" = "main" ] && echo false || echo true)" >> $GITHUB_OUTPUT
+          echo "skip_tests=$([ "$GITHUB_REF_NAME" = "main" ] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "max_parallel=$([ "$GITHUB_REF_NAME" = "main" ] && echo 20 || echo 1)" >> $GITHUB_OUTPUT
   varied_builds:
     needs: [ skip-duplicates-code, skip-duplicates-data, matrix-variables ]
     strategy:

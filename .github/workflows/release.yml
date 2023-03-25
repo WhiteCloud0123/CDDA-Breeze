@@ -3,7 +3,7 @@ concurrency: release
 on:
   push:
     branches:
-      - master
+      - main
       - 0.G-branch
     paths:
       - '.github/workflows/release.yml'
@@ -63,9 +63,9 @@ jobs:
           gh api \
             --method POST \
             -H "Accept: application/vnd.github.v3+json" \
-            /repos/CleverRaven/Cataclysm-DDA/releases/generate-notes \
+            /repos/WhiteCloud0123/CDDA-Breeze/releases/generate-notes \
             -f tag_name='${{ steps.generate_env_vars.outputs.tag_name }}' \
-            -f target_commitish='master' \
+            -f target_commitish='main' \
             -q .body > CHANGELOG.md
       - name: Create release
         id: create_release
