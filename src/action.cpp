@@ -292,7 +292,7 @@ std::string action_ident( action_id act )
         case ACTION_WORKOUT:
             return "workout";
         case ACTION_SAVE:
-            return "save";
+            return "退出到游戏开始界面";
         case ACTION_QUICKSAVE:
             return "quicksave";
         case ACTION_QUICKLOAD:
@@ -407,6 +407,8 @@ std::string action_ident( action_id act )
             return "open_distraction_manager";
         case ACTION_NULL:
             return "null";
+        case actionCreateWorldBackup:
+            return "备份当前世界";
         default:
             return "unknown";
     }
@@ -1054,6 +1056,8 @@ action_id handle_main_menu()
     REGISTER_ACTION( ACTION_ACTIONMENU );
     REGISTER_ACTION( ACTION_QUICKSAVE );
     REGISTER_ACTION( ACTION_SAVE );
+    // 标记 添加当前世界的选项
+    REGISTER_ACTION( actionCreateWorldBackup );
     REGISTER_ACTION( ACTION_DEBUG );
 
     uilist smenu;

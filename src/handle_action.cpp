@@ -2514,11 +2514,11 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
             break;
 
         case ACTION_SAVE:
-            if( query_yn( _( "Save and quit?" ) ) ) {
-                if( save() ) {
+            if( query_yn( _( "真的要退出到游戏开始界面吗?" ) ) ) {
+
                     player_character.moves = 0;
                     uquit = QUIT_SAVED;
-                }
+
             }
             break;
 
@@ -2796,6 +2796,119 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
         case ACTION_AUTOATTACK:
             avatar_action::autoattack( player_character, m );
             break;
+
+          // 标记 添加备份世界的case
+        case actionCreateWorldBackup: {
+
+                if(query_yn("确定要备份当前世界吗?")) {
+
+                  std::string world_name = world_generator->active_world->world_name;  // 获取角色当前的世界的名称
+                  const std::string world_path=PATH_INFO::savedir()+"/"+world_name+"_备份";
+
+                  std::string playing_world_path=PATH_INFO::savedir()+"/"+world_name;
+
+
+                  if(dir_exist(world_path)) {    // 首先判断save文件夹里是否已经有一个备份的世界了，如果有则删除
+
+                    
+                    world_generator->remove_world(world_name+"_备份");
+
+                    save();
+
+                    ghc::filesystem::remove_all(world_path);
+                    
+
+                    ghc::filesystem::copy(playing_world_path, world_path, ghc::filesystem::copy_options::recursive);
+
+                    add_msg(m_good,_("备份当前世界成功"));
+
+                    world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
+
+#if defined(__ANDROID__)
+
+
+                    
+                    
+                   //if ( get_option<std::string>("COPY_SAVE_TO")=="default" ) {
+
+                   //    // 判断一下是否存在该文件夹，如果不存在，首先创建
+
+                   //    const std::string COPY_SAVE_TO = "/storage/emulated/0/CDDA-Convenient-Save";
+
+                   //    if ( !dir_exist(COPY_SAVE_TO) ) {
+
+                   //        ghc::filesystem::create_directory("/storage/emulated/0/CDDA-Convenient-Save");
+
+                   //        ghc::filesystem::copy(playing_world_path, "/storage/emulated/0/CDDA-Convenient-Save/"+world_name+"_备份", ghc::filesystem::copy_options::recursive);
+                   //        
+                   //    
+                   //    }
+                   //    else {
+
+                   //        ghc::filesystem::copy(playing_world_path, "/storage/emulated/0/CDDA-Convenient-Save/" + world_name + "_备份", ghc::filesystem::copy_options::recursive);
+                   //        
+                   //    
+                   //    
+                   //    }
+
+
+        
+                  
+                   //}
+
+
+                   //add_msg(m_good, _("额外的备份世界成功"));
+                    /*ghc::filesystem::copy(playing_world_path, "/storage/emulated/0/CDDA-Convenient-Save/" + world_name + "_备份", ghc::filesystem::copy_options::recursive);
+                    add_msg(m_good,_("%s"), PATH_INFO::savedir());*/
+
+
+
+#endif
+
+
+
+
+
+                    // quicksave();                   // 执行一遍保存
+
+
+                    // std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
+
+                    // world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
+
+                    // add_msg(m_good,_("备份当前世界成功"));
+
+                  }else {
+
+
+
+                    save();
+
+                    ghc::filesystem::copy(playing_world_path, world_path, ghc::filesystem::copy_options::recursive);
+
+              //      world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
+
+                    add_msg(m_good,_("备份当前世界成功"));
+
+                    world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
+
+#if defined(__ANDROID__)
+ 
+                    /*ghc::filesystem::copy(playing_world_path, "/storage/emulated/0/CDDA-Convenient-Save/" + world_name + "_备份", ghc::filesystem::copy_options::recursive);*/
+
+#endif
+                  
+                  
+                  }
+
+                }
+
+
+
+                    break;
+
+
+        }
 
         default:
             break;
