@@ -86,14 +86,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Windows Tiles x64 MSVC
-            artifact: windows-tiles-x64-msvc
-            arch: x64
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 0
           - name: Windows Tiles Sounds x64 MSVC
             artifact: windows-tiles-sounds-x64-msvc
             arch: x64
@@ -102,93 +94,6 @@ jobs:
             ext: zip
             content: application/zip
             sound: 1
-          - name: Windows Tiles x32 MSVC
-            artifact: windows-tiles-x32-msvc
-            arch: x86
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 0
-          - name: Windows Tiles Sounds x32 MSVC
-            artifact: windows-tiles-sounds-x32-msvc
-            arch: x86
-            os: windows-2019
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 1
-          - name: Windows Tiles x64
-            mxe: x86_64
-            artifact: windows-tiles-x64
-            os: ubuntu-latest
-            ext: zip
-            content: application/zip
-            sound: 0
-          - name: Windows Tiles Sounds x64
-            mxe: x86_64
-            artifact: windows-tiles-sounds-x64
-            os: ubuntu-latest
-            ext: zip
-            content: application/zip
-            sound: 1
-          - name: Windows Tiles x32
-            mxe: i686
-            artifact: windows-tiles-x32
-            os: ubuntu-latest
-            ext: zip
-            content: application/zip
-            sound: 0
-          - name: Windows Tiles Sounds x32
-            mxe: i686
-            artifact: windows-tiles-sounds-x32
-            os: ubuntu-latest
-            ext: zip
-            content: application/zip
-            sound: 1
-          - name: Linux Tiles x64
-            os: ubuntu-18.04
-            mxe: none
-            android: none
-            tiles: 1
-            sound: 0
-            artifact: linux-tiles-x64
-            ext: tar.gz
-            content: application/gzip
-          - name: Linux Tiles Sounds x64
-            os: ubuntu-18.04
-            mxe: none
-            android: none
-            tiles: 1
-            sound: 1
-            artifact: linux-tiles-sounds-x64
-            ext: tar.gz
-            content: application/gzip
-          - name: Linux Curses x64
-            os: ubuntu-18.04
-            mxe: none
-            android: none
-            tiles: 0
-            sound: 0
-            artifact: linux-curses-x64
-            ext: tar.gz
-            content: application/gzip
-          - name: OSX Curses x64
-            os: macos-10.15
-            mxe: none
-            tiles: 0
-            sound: 0
-            artifact: osx-curses-x64
-            ext: dmg
-            content: application/x-apple-diskimage
-          - name: OSX Tiles x64
-            os: macos-10.15
-            mxe: none
-            tiles: 1
-            sound: 0
-            artifact: osx-tiles-x64
-            ext: dmg
-            content: application/x-apple-diskimage
           - name: Android x64
             os: ubuntu-latest
             mxe: none
@@ -196,20 +101,6 @@ jobs:
             artifact: android-x64
             ext: apk
             content: application/apk
-          - name: Android x32
-            os: ubuntu-latest
-            mxe: none
-            android: arm32
-            artifact: android-x32
-            ext: apk
-            content: application/apk 
-          - name: Android Bundle
-            os: ubuntu-latest
-            mxe: none
-            android: bundle
-            artifact: android-bundle
-            ext: aab
-            content: application/aap
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     env:
@@ -327,16 +218,16 @@ jobs:
           chmod +x gradlew
           if [ ${{ matrix.android }} = arm64 ]
           then
-               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_32=false assembleExperimentalRelease
-               mv ./app/build/outputs/apk/experimental/release/*.apk ../cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk
+               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_32=false assembleRelease
+               mv ./app/build/outputs/apk/stable/release/*.apk ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk
           elif [ ${{ matrix.android }} = arm32 ]
           then
-               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_64=false assembleExperimentalRelease
-               mv ./app/build/outputs/apk/experimental/release/*.apk ../cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk 
+               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_64=false assembleRelease
+               mv ./app/build/outputs/apk/stable/release/*.apk ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk 
           elif [ ${{ matrix.android }} = bundle ]
           then
                ./gradlew -Pj=$((`nproc`+0)) bundleExperimentalRelease
-               mv ./app/build/outputs/bundle/experimentalRelease/*.aab ../cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.aab     
+               mv ./app/build/outputs/bundle/experimentalRelease/*.aab ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.aab     
           fi
       - name: Upload release asset
         id: upload-release-asset 
@@ -345,8 +236,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }} 
-          asset_path: cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
-          asset_name: cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
+          asset_path: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
+          asset_name: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.content }}
       - name: Trigger GitHub pages rebuild
         shell: bash
