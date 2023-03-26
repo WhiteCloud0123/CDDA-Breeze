@@ -240,7 +240,7 @@ android {
         versionCode Integer.valueOf(System.env.UPSTREAM_BUILD_NUMBER ?: 1)
         versionName new File("$version_header_path").text.split('\"')[1]
         if (buildAsApplication) {
-            applicationId "CDDA-Breeze"
+            applicationId "WhiteCloud.CddaBreeze"
             setProperty("archivesBaseName", "CDDA-Breeze" + versionName)
         }
         resValue "string", "app_name", "CDDA-Breeze"
