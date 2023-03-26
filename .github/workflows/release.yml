@@ -190,7 +190,7 @@ jobs:
         run: |
           msbuild -m -p:Configuration=Release -p:Platform=${{ matrix.arch }} "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static" msvc-full-features\Cataclysm-vcpkg-static.sln
           .\build-scripts\windist.ps1
-          mv cataclysmdda-0.G.zip cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
+          mv cataclysmdda-0.G.zip CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
       - name: Build CDDA (osx)
         if: runner.os == 'macOS'
         run: |
@@ -211,11 +211,8 @@ jobs:
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
         run: | 
-          echo "${{ secrets.KEY_01 }}" > /tmp/a.keystore 
-
-          echo -e "keyPassword=0123\nkeyAlias=a\nstorePassword=0123\nstoreFile=/tmp/a.keystore" > keystore.properties
-
-
+          ls
+          echo -e "keyPassword=${{ secrets.KEY_01 }}\nkeyAlias=a\nstorePassword=123456\nstoreFile=${{ github.workspace }}/android/a.keystore" > keystore.properties
           export UPSTREAM_BUILD_NUMBER="$((11581 + ${{ github.run_number }}))"
           chmod +x gradlew
           if [ ${{ matrix.android }} = arm64 ]
@@ -241,10 +238,4 @@ jobs:
           asset_path: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_name: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.content }}
-      - name: Trigger GitHub pages rebuild
-        shell: bash
-        run: |
-          curl --fail --request POST \
-            --url https://api.github.com/repos/${{ github.repository }}/pages/builds \
-            --header "Authorization: Bearer ${{ secrets.USER_TOKEN }}" \
-            --header "Accept: application/vnd.github.v3+json"
+    
