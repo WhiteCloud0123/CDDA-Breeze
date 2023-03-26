@@ -211,7 +211,7 @@ jobs:
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
         run: | 
-          echo -e "${{ secrets.KEY_01 }}" > keystore.properties
+          echo -e "keyPassword=${{ secrets.KEY_01 }}\nkeyAlias=a\nstorePassword=0123\nstoreFile=${{ github.workspace }}\android\a.keystore" > keystore.properties
           export UPSTREAM_BUILD_NUMBER="$((11581 + ${{ github.run_number }}))"
           chmod +x gradlew
           if [ ${{ matrix.android }} = arm64 ]
