@@ -38,7 +38,7 @@ public class SplashScreen extends Activity {
     private AlertDialog accessibilityServicesAlert;
 
     public CharSequence[] mSettingsNames;
-    public boolean[] mSettingsValues = { false, false, true, true };
+    public boolean[] mSettingsValues = { false, true, true, false };
 
     private String getVersionName() {
         try {
@@ -115,7 +115,7 @@ public class SplashScreen extends Activity {
         Context context = getApplicationContext();
         String service_names = CataclysmDDA_Helpers.getEnabledAccessibilityServiceNames(context);
         accessibilityServicesAlert.setMessage( String.format( getString(R.string.accessibilityServicesMessage), service_names ) );
-        if (!service_names.isEmpty()) {
+        if (false) {
             accessibilityServicesAlert.show();
         } else {
             SplashScreen.this.installOrRun();
@@ -236,7 +236,8 @@ public class SplashScreen extends Activity {
             try {
                 totalFiles = countTotalAssets(assetManager, "data") +
                     countTotalAssets(assetManager, "gfx") +
-                    countTotalAssets(assetManager, "lang");
+                    countTotalAssets(assetManager, "lang") +
+                    countTotalAssets(assetManager, "config");
                 showDialog(INSTALL_DIALOG_ID);
             } catch(Exception e) {
                 installationAlert.setMessage(e.getMessage());
@@ -304,10 +305,21 @@ public class SplashScreen extends Activity {
                 deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/gfx"));
                 deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/lang"));
 
+                if(assetExists(assetManager,"config")==true) {
+
+                    deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/config"));
+                    copyAssetFolder(assetManager, "config", externalFilesDir + "/config");
+
+                }
+
                 // Install the new data over the top
                 copyAssetFolder(assetManager, "data", externalFilesDir + "/data");
                 copyAssetFolder(assetManager, "gfx", externalFilesDir + "/gfx");
                 copyAssetFolder(assetManager, "lang", externalFilesDir + "/lang");
+                copyAssetFolder(assetManager, "config", externalFilesDir + "/config");
+
+
+
             } catch(Exception e) {
                 installationAlert.setMessage(e.getMessage());
                 return false;

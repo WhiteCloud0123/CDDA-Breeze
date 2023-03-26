@@ -243,7 +243,7 @@ android {
             applicationId "WhiteCloud.CddaBreeze"
             setProperty("archivesBaseName", "CDDA-Breeze" + versionName)
         }
-        resValue "string", "app_name", "CDDA-Breeze"
+        resValue "string", "app_name", "CDDA Breeze"
 
         splits {
             // Configures multiple APKs based on ABI.
@@ -283,7 +283,7 @@ android {
     productFlavors {
         stable {
             dimension "version"
-            resValue "string", "app_name", " CDDA-Breeze"
+            resValue "string", "app_name", " CDDA Breeze"
         }
         
     }
