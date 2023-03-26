@@ -5,6 +5,7 @@
 .DS_Store
 .externalNativeBuild
 .gradle
+.keystore
 /.idea/libraries
 /.idea/workspace.xml
 /app/jni/SDL2
