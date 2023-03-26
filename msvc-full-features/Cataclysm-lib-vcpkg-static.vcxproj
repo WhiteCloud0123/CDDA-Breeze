@@ -120,6 +120,9 @@
     <ClCompile>
       <PreprocessorDefinitions>_CONSOLE;SDL_SOUND;SDL_BUILDING_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>..\msvc-full-features\prebuild.cmd</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
