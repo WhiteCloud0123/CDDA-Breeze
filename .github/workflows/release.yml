@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - 0.G-branch
+      - develop
     paths:
       - '.github/workflows/release.yml'
       - 'android/**'

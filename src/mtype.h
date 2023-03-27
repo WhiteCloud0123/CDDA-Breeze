@@ -272,8 +272,7 @@ struct mtype {
 
     public:
         mtype_id id;
-        // 添加 “_breeze” 防止项目中有重复的变量名
-        bool set_breeze;
+
         std::map<itype_id, int> starting_ammo; // Amount of ammo the monster spawns with.
         // Name of item group that is used to create item dropped upon death, or empty.
         item_group_id death_drops;

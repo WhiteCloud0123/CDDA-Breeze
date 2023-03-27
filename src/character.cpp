@@ -9273,30 +9273,30 @@ int Character::run_cost( int base_cost, bool diag ) const
 void Character::place_corpse()
 {
 
-    if( this->is_avatar() == false ) { // 标记 如果是玩家死亡就不执行以下处理
-        //If the character/NPC is on a distant mission, don't drop their their gear when they die since they still have a local pos
-        if( !death_drops ) {
-            return;
+    if(this->is_avatar()==false) {     // 标记 如果是玩家死亡就不执行以下处理
+    //If the character/NPC is on a distant mission, don't drop their their gear when they die since they still have a local pos
+    if( !death_drops ) {
+        return;
+    }
+    std::vector<item *> tmp = inv_dump();
+    item body = item::make_corpse( mtype_id::NULL_ID(), calendar::turn, get_name() );
+    body.set_item_temperature( units::from_celsius( 37 ) );
+    map &here = get_map();
+    for( item *itm : tmp ) {
+        here.add_item_or_charges( pos(), *itm );
+    }
+    for( const bionic &bio : *my_bionics ) {
+        if( item::type_is_defined( bio.info().itype() ) ) {
+            item cbm( bio.id.str(), calendar::turn );
+            cbm.set_flag( flag_FILTHY );
+            cbm.set_flag( flag_NO_STERILE );
+            cbm.set_flag( flag_NO_PACKED );
+            cbm.faults.emplace( fault_bionic_salvaged );
+            body.put_in( cbm, item_pocket::pocket_type::CORPSE );
         }
-        std::vector<item *> tmp = inv_dump();
-        item body = item::make_corpse( mtype_id::NULL_ID(), calendar::turn, get_name() );
-        body.set_item_temperature( units::from_celsius( 37 ) );
-        map &here = get_map();
-        for( item *itm : tmp ) {
-            here.add_item_or_charges( pos(), *itm );
-        }
-        for( const bionic &bio : *my_bionics ) {
-            if( item::type_is_defined( bio.info().itype() ) ) {
-                item cbm( bio.id.str(), calendar::turn );
-                cbm.set_flag( flag_FILTHY );
-                cbm.set_flag( flag_NO_STERILE );
-                cbm.set_flag( flag_NO_PACKED );
-                cbm.faults.emplace( fault_bionic_salvaged );
-                body.put_in( cbm, item_pocket::pocket_type::CORPSE );
-            }
-        }
+    }
 
-        here.add_item_or_charges( pos(), body );
+    here.add_item_or_charges( pos(), body );
 
     }
 }
