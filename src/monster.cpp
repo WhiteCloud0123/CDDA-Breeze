@@ -753,7 +753,7 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
     oss << "<color_white>" << std::string( 5 - utf8_width( bar_str ), '.' ) << "</color> ";
     oss << get_tag_from_color( basic_symbol_color() ) << name() << "</color> ";
     oss << "<color_h_white>" << get_effect_status() << "</color>";
-    
+
 
     // 显示更加详细的信息
     /*oss << "\n";
@@ -823,22 +823,22 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
     oss << "   ";
     oss << "<color_white>" << "电击防御 : " << "</color>";
     oss << "<color_white>" << type->armor_elec << "</color>";
-    
-    
+
+
     if ( type->special_attacks_names.empty() == false ) {
 
         oss << "\n";
         oss << "\n";
 
         oss << "<color_white>" << "特殊攻击: " << "</color>";
-        
+
         for (const std::string &name : type->special_attacks_names) {
 
             oss << "<color_red>" <<name<< "</color>";
             oss << "<color_red>" <<"   "<< "</color>";
-        
+
         }
-        
+
 
     }*/
 
@@ -899,7 +899,7 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
 
 
             }
-            
+
 
         }
 
@@ -922,11 +922,11 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
 
         }
         else {
-           
+
             oss << "<color_white>" << type->baby_monster.str() << "</color>";
-        
+
         }
-        
+
 
         oss << "    ";
         oss << "<color_white>" << "生产的怪物数量: " << "</color>";
@@ -935,41 +935,41 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
 
     }*/
 
-    
-
-        
-
-     /*if ( !type->death_drops.is_empty()) {
-            oss << "\n";
-            oss << "\n";
-            
-            
-            
-            oss << "<color_white>" << "掉落物: " << "</color>";
-
-            for (const auto &item : item_group::every_possible_item_from(type->death_drops)) {
-           
-                oss << "<color_green>" << item::nname(item->get_id()) << "</color>";
-                oss << "<color_green>" << "    " << "</color>";
 
 
 
-            }
- 
+
+    /*if ( !type->death_drops.is_empty()) {
+           oss << "\n";
+           oss << "\n";
+
+
+
+           oss << "<color_white>" << "掉落物: " << "</color>";
+
+           for (const auto &item : item_group::every_possible_item_from(type->death_drops)) {
+
+               oss << "<color_green>" << item::nname(item->get_id()) << "</color>";
+               oss << "<color_green>" << "    " << "</color>";
+
+
+
+           }
+
 
     }
 
     oss << "\n";
     oss << "\n";*/
 
-   
-   
-    
-    
 
-    
-    
-    
+
+
+
+
+
+
+
     vStart += fold_and_print( w, point( column, vStart ), max_width, c_white, oss.str() );
 
     Character &pc = get_player_character();
