@@ -1694,30 +1694,30 @@ void suffer::from_pain( Character &you )
 
 void suffer::from_nyctophobia( Character &you )
 {
-
+    
 
     const float nyctophobia_threshold = LIGHT_AMBIENT_LIT - 3.0f;
 
-    const bool in_darkness = get_map().ambient_light_at( you.pos() ) < nyctophobia_threshold;
-    if( in_darkness ) {
-        if( one_in( 80 ) && !you.has_effect( effect_shakes ) ) {
-            you.add_msg_if_player( m_bad,
-                                   _( "Your fear of the dark is so intense that your hands start shaking uncontrollably." ) );
-            you.add_effect( effect_shakes, rng( 1_minutes, 3_minutes ) );
+    const bool in_darkness = get_map().ambient_light_at(you.pos()) < nyctophobia_threshold;
+    if (in_darkness) {
+        if (one_in(80) && !you.has_effect(effect_shakes)) {
+            you.add_msg_if_player(m_bad,
+                _("Your fear of the dark is so intense that your hands start shaking uncontrollably."));
+            you.add_effect(effect_shakes, rng(1_minutes, 3_minutes));
 
             return;
         }
 
-        if( one_in( 80 ) ) {
-            you.add_msg_if_player( m_bad,
-                                   _( "Your fear of the dark is so intense that you start breathing rapidly, and you feel like your heart is ready to jump out of your chest." ) );
-            you.mod_stamina( -500 * rng( 1, 3 ) );
+        if (one_in(80)) {
+            you.add_msg_if_player(m_bad,
+                _("Your fear of the dark is so intense that you start breathing rapidly, and you feel like your heart is ready to jump out of your chest."));
+            you.mod_stamina(-500 * rng(1, 3));
 
             return;
         }
 
-        if( one_turn_in( 5_minutes ) ) {
-            you.add_msg_if_player( m_bad, _( "You feel a twinge of panic as darkness engulfs you." ) );
+        if (one_turn_in(5_minutes)) {
+            you.add_msg_if_player(m_bad, _("You feel a twinge of panic as darkness engulfs you."));
         }
 
     }
