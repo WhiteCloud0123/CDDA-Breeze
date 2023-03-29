@@ -311,6 +311,15 @@ static const trait_id trait_WAYFARER( "WAYFARER" );
 static const zone_type_id zone_type_LOOT_CUSTOM( "LOOT_CUSTOM" );
 static const zone_type_id zone_type_NO_AUTO_PICKUP( "NO_AUTO_PICKUP" );
 
+// 标记 添加一系列species_id和trait_id
+static const species_id species_SLIME( "SLIME" );
+static const species_id species_HUMAN( "HUMAN" );
+static const species_id species_ZOMBIE( "ZOMBIE" );
+static const trait_id trait_THRESH_SLIME( "THRESH_SLIME" );
+static const trait_id trait_Slime_Pretend( "Slime_Pretend" );
+static const trait_id trait_Zombie_Pretend( "Zombie_Pretend" );
+static const trait_id trait_Feral_Human_Pretend( "Feral_Human_Pretend" );
+
 #if defined(TILES)
 #include "cata_tiles.h"
 #endif // TILES
@@ -4169,6 +4178,33 @@ void game::mon_info_update( )
         if( m != nullptr ) {
             //Safemode monster check
             monster &critter = *m;
+
+            // 标记 我们在这里利用 set_breeze 来判断是否做一些事情
+            if( critter.is_set_breeze == false ) {
+
+                Character &player_character_breeze = get_player_character();
+
+                if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false ) {
+
+                    int chance = rng( 1, 10 );
+
+                    // 丧尸自然变成身为丧尸主宰的玩家的友好单位的概率为 1/1000，这里我们测试使用1/10
+                    if( chance == 1 ) {
+
+                        critter.friendly = -1;
+
+                        critter.add_effect( effect_pet, 1_turns, true );
+
+                    }
+
+                }
+
+                // 最后将 set_breeze 设置为true
+                critter.is_set_breeze = true;
+
+            }
+
+
 
             const monster_attitude matt = critter.attitude( &u );
             const int mon_dist = rl_dist( u.pos(), critter.pos() );
