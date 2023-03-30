@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #ifndef CATA_SRC_MONSTER_H
 #define CATA_SRC_MONSTER_H
 
