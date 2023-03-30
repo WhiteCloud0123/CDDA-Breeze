@@ -1,4 +1,4 @@
-#include "game.h"
+﻿#include "game.h"
 
 #include <functional>
 #include <clocale>
@@ -4186,13 +4186,16 @@ void game::mon_info_update( )
                 Character &player_character_breeze = get_player_character();
 
                 if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false &&
+
                     player_character_breeze.has_trait( trait_Dominator_Of_Zombies ) ) {
 
                     // 丧尸自然变成身为丧尸主宰的玩家的友好单位的概率为 1/1000，这里我们测试使用1/10
                     int chance = rng( 1, 10 );
+
                     if( chance == 1 ) {
 
                         critter.friendly = -1;
+
                         critter.add_effect( effect_pet, 1_turns, true );
 
                     }

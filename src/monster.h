@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef CATA_SRC_MONSTER_H
 #define CATA_SRC_MONSTER_H
 
@@ -508,7 +508,7 @@ class monster : public Creature
         void move_special_item_to_inv( cata::value_ptr<item> &it );
 
         // DEFINING VALUES
-        // ±ê¼Ç Ìí¼Ó set_breeze£¬¡°_breeze¡± ·ÀÖ¹ÏîÄ¿ÖĞÓĞÖØ¸´µÄ±äÁ¿Ãû
+        // æ ‡è®° æ·»åŠ  set_breezeï¼Œâ€œ_breezeâ€ é˜²æ­¢é¡¹ç›®ä¸­æœ‰é‡å¤çš„å˜é‡å
         bool is_set_breeze = false;
         int friendly = 0;
         int anger = 0;
