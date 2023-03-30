@@ -4188,13 +4188,11 @@ void game::mon_info_update( )
                 if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false &&
                     player_character_breeze.has_trait( trait_Dominator_Of_Zombies ) ) {
 
-                    int chance = rng( 1, 10 );
-
                     // 丧尸自然变成身为丧尸主宰的玩家的友好单位的概率为 1/1000，这里我们测试使用1/10
+                    int chance = rng( 1, 10 );
                     if( chance == 1 ) {
 
                         critter.friendly = -1;
-
                         critter.add_effect( effect_pet, 1_turns, true );
 
                     }
