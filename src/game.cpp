@@ -4180,7 +4180,7 @@ void game::mon_info_update( )
             //Safemode monster check
             monster &critter = *m;
 
-            // 标记 我们在这里利用 set_breeze 来判断是否做一些事情
+            // 标记 我们在这里利用 is_set_breeze 来判断是否做一些事情
             if( critter.is_set_breeze == false ) {
 
                 Character &player_character_breeze = get_player_character();
