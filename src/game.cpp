@@ -4185,7 +4185,8 @@ void game::mon_info_update( )
 
                 Character &player_character_breeze = get_player_character();
 
-                if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false ) {
+                if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false &&
+                    player_character_breeze.has_trait( trait_Dominator_Of_Zombies ) ) {
 
                     int chance = rng( 1, 10 );
 
@@ -4199,6 +4200,7 @@ void game::mon_info_update( )
                     }
 
                 }
+
 
                 // 最后将 is_set_breeze 设置为true
                 critter.is_set_breeze = true;
