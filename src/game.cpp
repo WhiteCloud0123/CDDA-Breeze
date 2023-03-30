@@ -319,6 +319,7 @@ static const trait_id trait_THRESH_SLIME( "THRESH_SLIME" );
 static const trait_id trait_Slime_Pretend( "Slime_Pretend" );
 static const trait_id trait_Zombie_Pretend( "Zombie_Pretend" );
 static const trait_id trait_Feral_Human_Pretend( "Feral_Human_Pretend" );
+static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
 
 #if defined(TILES)
 #include "cata_tiles.h"
