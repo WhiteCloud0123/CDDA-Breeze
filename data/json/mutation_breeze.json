@@ -2,9 +2,7 @@
   {
     "type": "mutation",
     "id": "Dominator_Of_Zombies",
-    "name": {
-      "str": "丧尸主宰"
-    },
+    "name": { "str": "丧尸主宰" },
     "points": 8,
     "description": "你是一名丧尸主宰。",
     "starting_trait": false,
