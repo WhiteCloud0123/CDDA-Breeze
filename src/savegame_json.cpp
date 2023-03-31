@@ -2567,6 +2567,10 @@ void monster::load( const JsonObject &data )
     }
 
     std::string sidtmp;
+
+    // 标记 添加要读取的成员
+    data.read( "is_set_breeze", is_set_breeze );
+
     // load->str->int
     data.read( "typeid", sidtmp );
     type = &mtype_id( sidtmp ).obj();
@@ -2724,6 +2728,10 @@ void monster::serialize( JsonOut &json ) const
 void monster::store( JsonOut &json ) const
 {
     Creature::store( json );
+
+    //标记 添加json成员
+    json.member( "is_set_breeze", is_set_breeze );
+
     json.member( "typeid", type->id );
     json.member( "unique_name", unique_name );
     json.member( "nickname", nickname );
