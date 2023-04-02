@@ -4184,6 +4184,7 @@ void game::mon_info_update( )
             if( critter.is_set_breeze == false ) {
 
                 Character &player_character_breeze = get_player_character();
+                avatar &avatar_breeze = get_avatar();
 
                 if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false &&
 
@@ -4199,7 +4200,12 @@ void game::mon_info_update( )
                         critter.add_effect( effect_pet, 1_turns, true );
 
                         add_msg( m_good, _( "%s 阵营改变" ), critter.get_name() );
+                        // 丧尸主宰经验增加
+                        avatar_breeze.dominator_Of_zombies_exp = avatar_breeze.dominator_Of_zombies_exp + 50;
 
+                        // 升级检测
+                        // ......
+                        // ......
 
 
                     }

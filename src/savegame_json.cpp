@@ -1592,6 +1592,9 @@ void avatar::store( JsonOut &json ) const
     json.member( "preferred_aiming_mode", preferred_aiming_mode );
 
     json.member( "power_prev_turn", power_prev_turn );
+    // 在末端添加新增成员
+    json.member( "dominator_Of_zombies_exp", dominator_Of_zombies_exp );
+    json.member( "dominator_Of_zombies_lv", dominator_Of_zombies_lv );
 }
 
 void avatar::deserialize( const JsonObject &data )
@@ -1747,6 +1750,19 @@ void avatar::load( const JsonObject &data )
     }
 
     data.read( "snippets_read", snippets_read );
+
+    // 在末端添加新增的读取步骤
+    data.read( "dominator_Of_zombies_exp", dominator_Of_zombies_exp );
+    data.read( "dominator_Of_zombies_lv", dominator_Of_zombies_lv );
+
+
+
+
+
+
+
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2568,9 +2584,6 @@ void monster::load( const JsonObject &data )
 
     std::string sidtmp;
 
-    // 标记 添加要读取的成员
-    data.read( "is_set_breeze", is_set_breeze );
-
     // load->str->int
     data.read( "typeid", sidtmp );
     type = &mtype_id( sidtmp ).obj();
@@ -2711,6 +2724,15 @@ void monster::load( const JsonObject &data )
     faction = mfaction_str_id( faction_string == "blob" ? "slime" : faction_string );
     data.read( "mounted_player_id", mounted_player_id );
     data.read( "path", path );
+
+    // 在末端添加新增的读取步骤
+    data.read( "is_set_breeze", is_set_breeze );
+
+
+
+
+
+
 }
 
 /*
@@ -2728,9 +2750,6 @@ void monster::serialize( JsonOut &json ) const
 void monster::store( JsonOut &json ) const
 {
     Creature::store( json );
-
-    //标记 添加json成员
-    json.member( "is_set_breeze", is_set_breeze );
 
     json.member( "typeid", type->id );
     json.member( "unique_name", unique_name );
@@ -2791,6 +2810,11 @@ void monster::store( JsonOut &json ) const
     json.member( "dragged_foe_id", dragged_foe_id );
     // storing the rider
     json.member( "mounted_player_id", mounted_player_id );
+
+    //在末端添加新增的成员
+    json.member( "is_set_breeze", is_set_breeze );
+
+
 }
 
 void mon_special_attack::serialize( JsonOut &json ) const
