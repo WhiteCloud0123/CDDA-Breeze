@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
-      - 0.G-branch
+      - no
     paths:
       - '.github/workflows/release.yml'
       - 'android/**'
