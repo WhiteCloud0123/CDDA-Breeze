@@ -79,6 +79,7 @@ struct monster_visible_info {
 class avatar : public Character
 {
     public:
+
         avatar();
         avatar( const avatar & ) = delete;
         // NOLINTNEXTLINE(performance-noexcept-move-constructor)
@@ -342,6 +343,12 @@ class avatar : public Character
         //set 0-3 random hobbies, with 1 and 2 being twice as likely as 0 and 3
         void randomize_hobbies();
         void add_random_hobby( std::vector<profession_id> &choices );
+
+        // 丧尸主宰的等级
+        int dominator_Of_zombies_lv = 0;
+        // 丧尸主宰的经验
+        int dominator_Of_zombies_exp = 0;
+
 
         int movecounter = 0;
 

@@ -311,6 +311,20 @@ static const trait_id trait_WAYFARER( "WAYFARER" );
 static const zone_type_id zone_type_LOOT_CUSTOM( "LOOT_CUSTOM" );
 static const zone_type_id zone_type_NO_AUTO_PICKUP( "NO_AUTO_PICKUP" );
 
+// 标记 添加一系列species_id和trait_id
+static const species_id species_SLIME( "SLIME" );
+static const species_id species_HUMAN( "HUMAN" );
+static const species_id species_ZOMBIE( "ZOMBIE" );
+static const trait_id trait_THRESH_SLIME( "THRESH_SLIME" );
+static const trait_id trait_Slime_Pretend( "Slime_Pretend" );
+static const trait_id trait_Zombie_Pretend( "Zombie_Pretend" );
+static const trait_id trait_Feral_Human_Pretend( "Feral_Human_Pretend" );
+static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
+
+// 升级所需的经验标准，所属于另一套升级体系
+static const int exp_array[] = {100, 300, 900, 2700, 8100};
+
+
 #if defined(TILES)
 #include "cata_tiles.h"
 #endif // TILES
@@ -325,6 +339,7 @@ static const zone_type_id zone_type_NO_AUTO_PICKUP( "NO_AUTO_PICKUP" );
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
 
 static constexpr int DANGEROUS_PROXIMITY = 5;
+
 
 #if defined(__ANDROID__)
 extern bool add_key_to_quick_shortcuts( int key, const std::string &category, bool back ); // NOLINT
@@ -4169,6 +4184,61 @@ void game::mon_info_update( )
         if( m != nullptr ) {
             //Safemode monster check
             monster &critter = *m;
+
+            // 标记 我们在这里利用 is_set_breeze 来判断是否做一些事情
+            if( critter.is_set_breeze == false ) {
+
+                Character &player_character_breeze = get_player_character();
+                avatar &avatar_breeze = get_avatar();
+
+                if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false &&
+
+                    player_character_breeze.has_trait( trait_Dominator_Of_Zombies ) ) {
+
+                    // 丧尸自然变成身为丧尸主宰的玩家的友好单位的概率为 1/100，这里我们测试使用1/10
+                    int chance = rng( 1, 10 );
+
+                    if( chance == 1 ) {
+
+                        critter.friendly = -1;
+
+                        critter.add_effect( effect_pet, 1_turns, true );
+
+                        add_msg( m_good, _( "%s 阵营改变" ), critter.get_name() );
+                        // 丧尸主宰经验增加
+                        avatar_breeze.dominator_Of_zombies_exp = avatar_breeze.dominator_Of_zombies_exp + 5;
+
+                        // 升级检测
+                        for( int i = 0; i < 5; i++ ) {
+                            // 初始化等级
+                            avatar_breeze.dominator_Of_zombies_lv = 0;
+
+                            if( avatar_breeze.dominator_Of_zombies_exp > exp_array[i] ) {
+
+                                avatar_breeze.dominator_Of_zombies_lv++;
+
+                            } else {
+                                break;
+                            }
+
+                        }
+
+
+
+
+                    }
+
+                }
+
+
+                // 最后将 is_set_breeze 设置为true
+                critter.is_set_breeze = true;
+                // 测试
+                add_msg( m_good, _( "测试信息 设置完毕" ) );
+
+            }
+
+
 
             const monster_attitude matt = critter.attitude( &u );
             const int mon_dist = rl_dist( u.pos(), critter.pos() );

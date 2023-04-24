@@ -508,6 +508,8 @@ class monster : public Creature
         void move_special_item_to_inv( cata::value_ptr<item> &it );
 
         // DEFINING VALUES
+        // 标记 添加 set_breeze，“_breeze” 防止项目中有重复的变量名
+        bool is_set_breeze = false;
         int friendly = 0;
         int anger = 0;
         int morale = 0;

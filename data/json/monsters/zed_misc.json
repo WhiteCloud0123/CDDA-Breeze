@@ -777,7 +777,9 @@
       "REVIVES",
       "PUSH_MON",
       "PUSH_VEH",
-      "FILTHY"
+      "FILTHY",
+      "PET_MOUNTABLE",
+      "PET_HARNESSABLE"
     ]
   },
   {
