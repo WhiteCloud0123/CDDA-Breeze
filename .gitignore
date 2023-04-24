@@ -109,8 +109,7 @@ tags
 # Generated translation source
 /lang/po/*.pot
 
-# Compiled binary translations
-/lang/mo/
+
 
 # Stampfile for binary translations
 /lang/mo_built.stamp
