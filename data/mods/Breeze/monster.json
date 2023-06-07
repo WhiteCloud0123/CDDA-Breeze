@@ -1,19 +1,25 @@
 [
-
   {
     "id": "mon_zombie_hulk",
     "type": "MONSTER",
-    "name": { "str": "zombie hulk" },
+    "name": {
+      "str": "zombie hulk"
+    },
     "description": "A human corpse swollen to the size of six men, with arms as wide as trash cans.",
     "default_faction": "zombie",
     "bodytype": "human",
-    "species": [ "ZOMBIE", "HUMAN" ],
+    "species": [
+      "ZOMBIE",
+      "HUMAN"
+    ],
     "diff": 5,
     "volume": "875000 ml",
     "weight": "200 kg",
     "hp": 480,
     "speed": 130,
-    "material": [ "flesh" ],
+    "material": [
+      "flesh"
+    ],
     "symbol": "Z",
     "color": "white_magenta",
     "aggression": 100,
@@ -21,21 +27,47 @@
     "melee_skill": 5,
     "melee_dice": 4,
     "melee_dice_sides": 8,
-    "melee_damage": [ { "damage_type": "cut", "amount": 0 } ],
+    "melee_damage": [
+      {
+        "damage_type": "cut",
+        "amount": 0
+      }
+    ],
     "armor_bash": 8,
     "armor_cut": 12,
     "armor_bullet": 10,
     "armor_elec": 5,
     "weakpoints": [
-      { "name": "the head", "armor_mult": { "physical": 0.5 }, "coverage": 3 },
-      { "name": "the eye", "armor_mult": { "physical": 0 }, "coverage": 1 }
+      {
+        "name": "the head",
+        "armor_mult": {
+          "physical": 0.5
+        },
+        "coverage": 3
+      },
+      {
+        "name": "the eye",
+        "armor_mult": {
+          "physical": 0
+        },
+        "coverage": 1
+      }
     ],
-    "families": [ "prof_intro_biology", "prof_wp_zombie", "prof_wp_hulk" ],
+    "families": [
+      "prof_intro_biology",
+      "prof_wp_zombie",
+      "prof_wp_hulk"
+    ],
     "bleed_rate": 0,
     "vision_day": 83,
     "vision_night": 4,
     "harvest": "zombie",
-    "special_attacks": [ { "id": "smash", "throw_strength": 96 } ],
+    "special_attacks": [
+      {
+        "id": "smash",
+        "throw_strength": 96
+      }
+    ],
     "death_drops": "mon_zombie_hulk_death_drops",
     "fungalize_into": "mon_zombie_fungus",
     "flags": [
@@ -55,15 +87,37 @@
       "PET_MOUNTABLE",
       "PET_HARNESSABLE"
     ]
+  },
+  {
+    "id": "mon_zombie_dog_the_first",
+    "type": "MONSTER",
+    "name": { "str": "丧尸犬-TheFirst" },
+    "description": "这是一只已经陪伴了你一段时间的丧尸犬。",
+    "default_faction": "zombie",
+    "bodytype": "dog",
+    "species": [ "ZOMBIE" ],
+    "looks_like" : "mon_zombie_dog",
+    "volume": "30000 ml",
+    "weight": "40750 g",
+    "hp": 46,
+    "speed": 110,
+    "material": [ "flesh" ],
+    "symbol": "d",
+    "color": "light_green",
+    "aggression": 15,
+    "morale": 100,
+    "melee_skill": 5,
+    "melee_dice": 1,
+    "melee_dice_sides": 7,
+    "melee_damage": [ { "damage_type": "cut", "amount": 3 } ],
+    "dodge": 3,
+    "regenerates" : 2,
+    "armor_elec": 1,
+    "families": [ "prof_intro_biology", "prof_wp_zombie" ],
+    "vision_night": 4,
+    "harvest": "zombie",
+    "special_attacks": [ { "type": "bite", "attack_upper": false, "cooldown": 5 } ],
+    "death_drops": "mon_dog_death_drops",
+    "flags": [ "SEES", "HEARS", "SMELLS", "STUMBLES", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]
   }
-
-
-
-
-
-
-
-
-
-
 ]
