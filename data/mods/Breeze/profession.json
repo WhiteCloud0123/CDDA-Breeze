@@ -3,10 +3,10 @@
     "type": "profession",
     "id": "Dominator_Of_Zombies",
     "name": "丧尸主宰",
-    "description": "你在荒野里前行，令人惊讶的是，你身后跟着一只丧尸犬。你不清楚之前在野外遇到它的时候，它为什么不攻击你。但如今的事实是，它已经陪你度过了一小段时间了。",
+    "description": "你在荒野里前行，令人惊讶的是，你身后跟着一只丧尸犬。你不清楚之前在野外遇到它的时候，它为什么不攻击你。但如今的事实是，它已经陪你度过了一小段时间了。（这只丧尸犬比一般的丧尸犬要强一些。）",
     "points": 8,
     "traits": [ "Dominator_Of_Zombies" ],
-    "pets": [ { "name": "mon_zombie_dog", "amount": 1 } ],
+    "pets": [ { "name": "mon_zombie_dog_the_first", "amount": 1 } ],
     "items": {
       "both": {
         "items": [ "pants", "socks", "sneakers", "ZSG", "backpack", "wristwatch", "textbook_speech", "story_book", "howto_computer" ],
