@@ -347,7 +347,7 @@ class avatar : public Character
         // 丧尸主宰的等级
         int dominator_Of_zombies_lv = 0;
         // 丧尸主宰的经验
-        int dominator_Of_zombies_exp = 0;
+        int dominator_Of_zombies_exp = 5;
 
 
         int movecounter = 0;
