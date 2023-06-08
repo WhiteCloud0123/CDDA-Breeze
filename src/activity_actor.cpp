@@ -2976,7 +2976,7 @@ craft_activity_actor::craft_activity_actor( item_location &it, const bool is_lon
     cached_assistants = 0;
     cached_base_total_moves = 1;
     cached_cur_total_moves = 1;
-    // 测试
+  
     cached_workbench_multiplier = 0;
     use_cached_workbench_multiplier = false;
 }
@@ -3015,7 +3015,7 @@ void craft_activity_actor::start( player_activity &act, Character &crafter )
     activity_override = craft_item.get_item()->get_making().exertion_level();
     cached_crafting_speed = 0;
 
-    // 测试
+  
     cached_workbench_multiplier = 0;
     use_cached_workbench_multiplier = false;
 
@@ -3036,7 +3036,7 @@ void craft_activity_actor::do_turn( player_activity &act, Character &crafter )
     const recipe &rec = craft.get_making();
 
 
-    // 测试
+
     if( !use_cached_workbench_multiplier ) {
         cached_workbench_multiplier = crafter.workbench_crafting_speed_multiplier( craft, location );
         use_cached_workbench_multiplier = true;
