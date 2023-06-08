@@ -8,7 +8,7 @@ The results of these can be either seen under the "Files changed" section of a P
 NOTE: Please grant permission for repository maintainers to edit your PR.  It is EXTREMELY common for PRs to be held up due to trivial changes being requested and the author being unavailable to make them. -->
 
 #### Summary
-Category "Brief description"
+None
 <!-- This section should consist of exactly one line, edit the one above.
 1. Replace the word "Category" with one of these words: Features, Content, Interface, Mods, Balance, Bugfixes, Performance, Infrastructure, Build, I18N.
 2. Replace the text inside the quotes with a brief description of your changes.
