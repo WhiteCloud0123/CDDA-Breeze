@@ -1,6 +1,6 @@
 # CDDA-微风
 
-CDDA-微风(CDDA-Breeze)是基于[Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)的一个改版，目前基于CDDA-0.G，注重更加RPG的体验。
+CDDA-微风(CDDA-Breeze)是基于[Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)的一个改版，在CDDA-0.G的基础之上进行开发，没有一个明确的发展方向。
 
 ## CDDA-微风 贡献者
 
