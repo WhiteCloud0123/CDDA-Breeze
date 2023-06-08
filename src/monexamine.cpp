@@ -64,6 +64,10 @@ static const quality_id qual_SHEAR( "SHEAR" );
 
 static const skill_id skill_survival( "survival" );
 
+
+
+static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
+
 namespace
 {
 
@@ -577,7 +581,10 @@ bool monexamine::pet_menu( monster &z )
         insert_bat,
         check_bat,
         attack,
-        talk_to
+        talk_to,
+        在这里等待,
+        不要在这里继续等待
+
     };
 
     uilist amenu;
@@ -597,6 +604,18 @@ bool monexamine::pet_menu( monster &z )
     amenu.addentry( rename, true, 'e', _( "Rename" ) );
     amenu.addentry( attack, true, 'A', _( "Attack" ) );
     Character &player_character = get_player_character();
+
+    //如果玩家是丧尸主宰，可以对丧尸宠物进行额外的操作
+    if( player_character.has_trait( trait_Dominator_Of_Zombies ) ) {
+
+        amenu.addentry( 在这里等待, true, '0', _( "在这里等待" ) );
+
+        amenu.addentry( 不要在这里继续等待, true, '0', _( "不要在这里继续等待" ) );
+
+
+    }
+
+
     if( z.has_effect( effect_has_bag ) ) {
         amenu.addentry( give_items, true, 'g', _( "Place items into bag" ) );
         amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
