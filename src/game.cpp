@@ -4233,7 +4233,7 @@ void game::mon_info_update( )
 
                 // 最后将 is_set_breeze 设置为true
                 critter.is_set_breeze = true;
-                // 测试
+            
                 add_msg( m_good, _( "测试信息 设置完毕" ) );
 
             }

@@ -208,7 +208,7 @@ static float lerped_multiplier( const T &value, const T &low, const T &high )
     return 1.0f + ( value - low ) * ( 0.25f - 1.0f ) / ( high - low );
 }
 
-// 测试
+
 float Character::workbench_crafting_speed_multiplier( const item &craft,
         const cata::optional<tripoint> &loc )const
 {
