@@ -84,6 +84,7 @@ item_location tack_loc()
     return game_menus::inv::titled_filter_menu( filter, get_avatar(), _( "Tack" ) );
 }
 
+
 void attach_saddle_to( monster &z )
 {
     if( z.has_effect( effect_monster_saddled ) ) {
@@ -283,6 +284,46 @@ bool give_items_to( monster &z )
     // Return success if all items were inserted
     return to_move.size() == items.size();
 }
+
+void take_item_from_bag( monster &z )
+{
+
+
+    const std::string pet_name = z.get_name();
+    std::vector<item> &monster_inv = z.inv;
+    if( monster_inv.empty() ) {
+        return;
+    }
+
+    int i = 0;
+    uilist selection_menu;
+    selection_menu.text = string_format( _( "选择要从 %s 的背包里取出的物品" ), pet_name );
+    selection_menu.addentry( i++, true, MENU_AUTOASSIGN, _( "取消" ) );
+    for( auto iter : monster_inv ) {
+        selection_menu.addentry( i++, true, MENU_AUTOASSIGN, _( "取出 %s" ), iter.tname() );
+    }
+    selection_menu.selected = 1;
+    selection_menu.query();
+    const int index = selection_menu.ret;
+    if( index == 0 || index == UILIST_CANCEL || index < 0 ||
+        index > static_cast<int>( monster_inv.size() ) ) {
+        return;
+    }
+
+    // because the first entry is the cancel option
+    const int selection = index - 1;
+    item retrieved_item = monster_inv[selection];
+    monster_inv.erase( monster_inv.begin() + selection );
+
+    add_msg( _( "你从 %1s 的背包里取出了 %2s" ),  pet_name, retrieved_item.tname() );
+
+    avatar &you = get_avatar();
+    you.i_add( retrieved_item );
+
+
+}
+
+
 
 item_location pet_armor_loc( monster &z )
 {
@@ -587,7 +628,8 @@ bool monexamine::pet_menu( monster &z )
         attack,
         talk_to,
         命令其在这里等待,
-        命令其不要在这里继续等待
+        命令其不要在这里继续等待,
+        从背包里取出物品
 
     };
 
@@ -628,6 +670,7 @@ bool monexamine::pet_menu( monster &z )
         amenu.addentry( give_items, true, 'g', _( "Place items into bag" ) );
         amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
         if( !z.inv.empty() ) {
+            amenu.addentry( 从背包里取出物品, true, '2', _( "从背包里取出物品" ) );
             amenu.addentry( drop_all, true, 'd', _( "Remove all items from bag" ) );
         }
     } else if( !z.has_flag( MF_RIDEABLE_MECH ) ) {
@@ -837,6 +880,11 @@ bool monexamine::pet_menu( monster &z )
             break;
         case 命令其不要在这里继续等待:
             z.remove_effect( effect_wait_here );
+            break;
+        case 从背包里取出物品:
+
+            take_item_from_bag( z );
+
             break;
 
         default:
