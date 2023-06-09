@@ -291,9 +291,6 @@ void take_item_from_bag( monster &z )
 
     const std::string pet_name = z.get_name();
     std::vector<item> &monster_inv = z.inv;
-    if( monster_inv.empty() ) {
-        return;
-    }
 
     int i = 0;
     uilist selection_menu;
