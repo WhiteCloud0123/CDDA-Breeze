@@ -35,6 +35,8 @@ static const efftype_id effect_tied( "tied" );
 static const efftype_id effect_webbed( "webbed" );
 static const efftype_id effect_weed_high( "weed_high" );
 static const efftype_id effect_worked_on( "worked_on" );
+// 加入 在这里等待  efftype_id
+static const efftype_id effect_wait_here( "在这里等待" );
 
 static const itype_id itype_holybook_bible( "holybook_bible" );
 static const itype_id itype_money_one( "money_one" );
@@ -1424,6 +1426,7 @@ static const std::unordered_set<efftype_id> hardcoded_movement_impairing = {{
         effect_tied,
         effect_webbed,
         effect_worked_on,
+        effect_wait_here
     }
 };
 

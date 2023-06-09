@@ -52,6 +52,8 @@ static const efftype_id effect_pet( "pet" );
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_sheared( "sheared" );
 static const efftype_id effect_tied( "tied" );
+// 加入 在这里等待  efftype_id
+static const efftype_id effect_wait_here( "在这里等待" );
 
 static const flag_id json_flag_MECH_BAT( "MECH_BAT" );
 static const flag_id json_flag_TACK( "TACK" );
@@ -63,6 +65,12 @@ static const itype_id itype_id_military( "id_military" );
 static const quality_id qual_SHEAR( "SHEAR" );
 
 static const skill_id skill_survival( "survival" );
+
+
+
+static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
+static const species_id species_ZOMBIE( "ZOMBIE" );
+
 
 namespace
 {
@@ -577,7 +585,10 @@ bool monexamine::pet_menu( monster &z )
         insert_bat,
         check_bat,
         attack,
-        talk_to
+        talk_to,
+        命令其在这里等待,
+        命令其不要在这里继续等待
+
     };
 
     uilist amenu;
@@ -597,6 +608,22 @@ bool monexamine::pet_menu( monster &z )
     amenu.addentry( rename, true, 'e', _( "Rename" ) );
     amenu.addentry( attack, true, 'A', _( "Attack" ) );
     Character &player_character = get_player_character();
+
+    //如果玩家是丧尸主宰，可以对丧尸宠物进行额外的操作
+    if( player_character.has_trait( trait_Dominator_Of_Zombies ) && z.in_species( species_ZOMBIE ) ) {
+
+        // 身为丧尸主宰，可以不用绳子系紧绳子直接命令丧尸等待
+        if( !z.has_effect( effect_wait_here ) ) {
+            amenu.addentry( 命令其在这里等待, true, '0', _( "命令 %s 在这里等待" ), pet_name );
+        } else if( z.has_effect( effect_wait_here ) ) {
+            amenu.addentry( 命令其不要在这里继续等待, true, '1',
+                            _( "命令 %s 不要在这里继续等待" ), pet_name );
+        }
+
+
+    }
+
+
     if( z.has_effect( effect_has_bag ) ) {
         amenu.addentry( give_items, true, 'g', _( "Place items into bag" ) );
         amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
@@ -804,6 +831,14 @@ bool monexamine::pet_menu( monster &z )
         case talk_to:
             get_avatar().talk_to( get_talker_for( z ) );
             break;
+
+        case 命令其在这里等待:
+            z.add_effect( effect_wait_here, 1_turns, true );
+            break;
+        case 命令其不要在这里继续等待:
+            z.remove_effect( effect_wait_here );
+            break;
+
         default:
             break;
     }
