@@ -231,6 +231,7 @@ static const efftype_id effect_tetanus( "tetanus" );
 static const efftype_id effect_tied( "tied" );
 static const efftype_id effect_took_xanax( "took_xanax" );
 static const efftype_id effect_winded( "winded" );
+static const efftype_id effect_wait_here( "在这里等待" );
 
 static const faction_id faction_no_faction( "no_faction" );
 static const faction_id faction_your_followers( "your_followers" );
@@ -4233,7 +4234,7 @@ void game::mon_info_update( )
 
                 // 最后将 is_set_breeze 设置为true
                 critter.is_set_breeze = true;
-            
+
                 add_msg( m_good, _( "测试信息 设置完毕" ) );
 
             }
@@ -11396,11 +11397,11 @@ void game::vertical_move( int movez, bool force, bool peeking )
             if( ladder && !critter.climbs() ) {
                 continue;
             }
-            // TODO: just check if it's going for the avatar's location, it's simpler
+            // TODO: just check if it's going for the avatar's location, it's simpler 将是否有“在这里等待”的效果列入检查
             Creature *target = critter.attack_target();
             if( ( target && target->is_avatar() ) || ( !critter.has_effect( effect_ridden ) &&
                     critter.has_effect( effect_pet ) && critter.friendly == -1 &&
-                    !critter.has_effect( effect_tied ) ) ) {
+                    !critter.has_effect( effect_tied ) && !critter.has_effect( effect_wait_here ) ) ) {
                 monsters_following.push_back( &critter );
             }
         }

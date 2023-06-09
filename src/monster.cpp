@@ -107,6 +107,10 @@ static const efftype_id effect_venom_player2( "venom_player2" );
 static const efftype_id effect_venom_weaken( "venom_weaken" );
 static const efftype_id effect_webbed( "webbed" );
 static const efftype_id effect_worked_on( "worked_on" );
+static const efftype_id effect_pet( "pet" );
+
+// 加入 在这里等待  efftype_id
+static const efftype_id effect_wait_here( "在这里等待" );
 
 static const emit_id emit_emit_shock_cloud( "emit_shock_cloud" );
 static const emit_id emit_emit_shock_cloud_big( "emit_shock_cloud_big" );
@@ -755,6 +759,16 @@ int monster::print_info( const catacurses::window &w, int vStart, int vLines, in
     oss << "<color_h_white>" << get_effect_status() << "</color>";
 
 
+    /*oss << "\n";
+    oss << "\n";
+    oss << "<color_white>" << "友好度:" << friendly << "</color>";
+    oss << "\n";
+    oss << "\n";
+    if( has_effect( effect_pet ) ) {
+
+        oss << "<color_white>" << "你的宠物" << "</color>";
+
+    }*/
     // 显示更加详细的信息
     /*oss << "\n";
     oss << "\n";
@@ -2223,11 +2237,14 @@ bool monster::move_effects( bool )
 
     map &here = get_map();
     bool u_see_me = get_player_view().sees( *this );
-    if( has_effect( effect_tied ) ) {
-        // friendly pet, will stay tied down and obey.
-        if( friendly == -1 ) {
+
+    //
+    if( has_effect( effect_tied ) || has_effect( effect_wait_here ) ) {
+        // friendly pet, will stay tied down and obey.同时，接受了等待命令也可以继续在当前位置继续等待
+        if( friendly == -1 || has_effect( effect_pet ) ) {
             return false;
         }
+
         // non-friendly monster will struggle to get free occasionally.
         // some monsters can't be tangled up with a net/bolas/lasso etc.
         bool immediate_break = type->in_species( species_FISH ) || type->in_species( species_MOLLUSK ) ||

@@ -52,6 +52,8 @@ static const efftype_id effect_pet( "pet" );
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_sheared( "sheared" );
 static const efftype_id effect_tied( "tied" );
+// åŠ å…¥ åœ¨è¿™é‡Œç­‰å¾…  efftype_id
+static const efftype_id effect_wait_here( "åœ¨è¿™é‡Œç­‰å¾…" );
 
 static const flag_id json_flag_MECH_BAT( "MECH_BAT" );
 static const flag_id json_flag_TACK( "TACK" );
@@ -67,6 +69,8 @@ static const skill_id skill_survival( "survival" );
 
 
 static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
+static const species_id species_ZOMBIE( "ZOMBIE" );
+
 
 namespace
 {
@@ -582,8 +586,8 @@ bool monexamine::pet_menu( monster &z )
         check_bat,
         attack,
         talk_to,
-        ÔÚÕâÀïµÈ´ı,
-        ²»ÒªÔÚÕâÀï¼ÌĞøµÈ´ı
+        å‘½ä»¤å…¶åœ¨è¿™é‡Œç­‰å¾…,
+        å‘½ä»¤å…¶ä¸è¦åœ¨è¿™é‡Œç»§ç»­ç­‰å¾…
 
     };
 
@@ -605,12 +609,16 @@ bool monexamine::pet_menu( monster &z )
     amenu.addentry( attack, true, 'A', _( "Attack" ) );
     Character &player_character = get_player_character();
 
-    //Èç¹ûÍæ¼ÒÊÇÉ¥Ê¬Ö÷Ô×£¬¿ÉÒÔ¶ÔÉ¥Ê¬³èÎï½øĞĞ¶îÍâµÄ²Ù×÷
-    if( player_character.has_trait( trait_Dominator_Of_Zombies ) ) {
+    //å¦‚æœç©å®¶æ˜¯ä¸§å°¸ä¸»å®°ï¼Œå¯ä»¥å¯¹ä¸§å°¸å® ç‰©è¿›è¡Œé¢å¤–çš„æ“ä½œ
+    if( player_character.has_trait( trait_Dominator_Of_Zombies ) && z.in_species( species_ZOMBIE ) ) {
 
-        amenu.addentry( ÔÚÕâÀïµÈ´ı, true, '0', _( "ÔÚÕâÀïµÈ´ı" ) );
-
-        amenu.addentry( ²»ÒªÔÚÕâÀï¼ÌĞøµÈ´ı, true, '0', _( "²»ÒªÔÚÕâÀï¼ÌĞøµÈ´ı" ) );
+        // èº«ä¸ºä¸§å°¸ä¸»å®°ï¼Œå¯ä»¥ä¸ç”¨ç»³å­ç³»ç´§ç»³å­ç›´æ¥å‘½ä»¤ä¸§å°¸ç­‰å¾…
+        if( !z.has_effect( effect_wait_here ) ) {
+            amenu.addentry( å‘½ä»¤å…¶åœ¨è¿™é‡Œç­‰å¾…, true, '0', _( "å‘½ä»¤ %s åœ¨è¿™é‡Œç­‰å¾…" ), pet_name );
+        } else if( z.has_effect( effect_wait_here ) ) {
+            amenu.addentry( å‘½ä»¤å…¶ä¸è¦åœ¨è¿™é‡Œç»§ç»­ç­‰å¾…, true, '1',
+                            _( "å‘½ä»¤ %s ä¸è¦åœ¨è¿™é‡Œç»§ç»­ç­‰å¾…" ), pet_name );
+        }
 
 
     }
@@ -823,6 +831,14 @@ bool monexamine::pet_menu( monster &z )
         case talk_to:
             get_avatar().talk_to( get_talker_for( z ) );
             break;
+
+        case å‘½ä»¤å…¶åœ¨è¿™é‡Œç­‰å¾…:
+            z.add_effect( effect_wait_here, 1_turns, true );
+            break;
+        case å‘½ä»¤å…¶ä¸è¦åœ¨è¿™é‡Œç»§ç»­ç­‰å¾…:
+            z.remove_effect( effect_wait_here );
+            break;
+
         default:
             break;
     }
