@@ -296,7 +296,7 @@ void take_item_from_bag( monster &z )
     uilist selection_menu;
     selection_menu.text = string_format( _( "选择要从 %s 的背包里取出的物品" ), pet_name );
     selection_menu.addentry( i++, true, MENU_AUTOASSIGN, _( "取消" ) );
-    for( auto iter : monster_inv ) {
+    for( const item &iter : monster_inv ) {
         selection_menu.addentry( i++, true, MENU_AUTOASSIGN, _( "取出 %s" ), iter.tname() );
     }
     selection_menu.selected = 1;
