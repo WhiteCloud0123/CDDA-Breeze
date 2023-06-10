@@ -4206,8 +4206,8 @@ void game::mon_info_update( )
                         critter.add_effect( effect_pet, 1_turns, true );
 
                         add_msg( m_good, _( "%s 阵营改变" ), critter.get_name() );
-                        // 丧尸主宰经验增加
-                        avatar_breeze.dominator_Of_zombies_exp = avatar_breeze.dominator_Of_zombies_exp + 5;
+                        // 自然支配加20点经验
+                        avatar_breeze.dominator_Of_zombies_exp = avatar_breeze.dominator_Of_zombies_exp + 20;
 
                         // 升级检测
                         for( int i = 0; i < 5; i++ ) {
@@ -4223,9 +4223,6 @@ void game::mon_info_update( )
                             }
 
                         }
-
-
-
 
                     }
 
@@ -5654,7 +5651,10 @@ void game::examine( const tripoint &examp, bool with_pickup )
         monster *mon = dynamic_cast<monster *>( c );
         if( mon != nullptr ) {
             add_msg( _( "There is a %s." ), mon->get_name() );
-            if( mon->has_effect( effect_pet ) && !u.is_mounted() ) {
+            // 为了进行支配命令，我们添加其他检测
+            if( ( mon->has_effect( effect_pet ) && !u.is_mounted() ) ||
+                ( get_player_character().has_trait( trait_Dominator_Of_Zombies ) &&
+                  mon->in_species( species_ZOMBIE ) ) ) {
                 if( monexamine::pet_menu( *mon ) ) {
                     return;
                 }

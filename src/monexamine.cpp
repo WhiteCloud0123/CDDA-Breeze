@@ -302,8 +302,7 @@ void take_item_from_bag( monster &z )
     selection_menu.selected = 1;
     selection_menu.query();
     const int index = selection_menu.ret;
-    if( index == 0 || index == UILIST_CANCEL || index < 0 ||
-        index > static_cast<int>( monster_inv.size() ) ) {
+    if( index <= 0 || index > static_cast<int>( monster_inv.size() ) ) {
         return;
     }
 
@@ -595,6 +594,62 @@ bool Character::can_mount( const monster &critter ) const
 
 bool monexamine::pet_menu( monster &z )
 {
+
+    if( z.friendly != -1 ) {
+
+
+        enum choices_to_unfriendly_zombie {
+
+            支配 = 0
+
+
+        };
+
+        uilist amenu;
+        std::string zombie_name = z.get_name();
+        amenu.text = string_format( _( "你要对 %s 做什么?" ), zombie_name );
+        amenu.addentry( 支配, true, '0', _( "支配" ) );
+
+        amenu.query();
+        int choice = amenu.ret;
+
+
+
+        switch( choice ) {
+            case 支配:
+                if( z.get_hp() >  z.get_hp_max() / 10 ) {
+                    // 当玩家尝试支配一个当前生命值大于最大生命值的百分之10的丧尸时，会失败
+                    add_msg( m_bad, _( "你支配失败了！" ) );
+
+                } else if( !z.has_effect( effect_pet ) ) {
+
+                    z.friendly = -1;
+                    z.add_effect( effect_pet, 1_turns, true );
+
+                    add_msg( m_good, _( "你成功支配了 %s ！" ), zombie_name );
+                    // 支配成功加10点经验
+                    get_avatar().dominator_Of_zombies_exp = get_avatar().dominator_Of_zombies_exp + 10;
+                    // 消耗50行动点
+                    get_avatar().moves = get_avatar().moves - 50;
+
+                }
+                break;
+            default:
+                break;
+
+        }
+
+
+        return true;
+
+    }
+
+
+
+
+
+
+
     enum choices {
         swap_pos = 0,
         push_monster,
