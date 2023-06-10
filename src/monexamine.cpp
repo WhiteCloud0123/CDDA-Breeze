@@ -721,11 +721,11 @@ bool monexamine::pet_menu( monster &z )
 
     if( z.has_effect( effect_has_bag ) ) {
         amenu.addentry( give_items, true, 'g', _( "Place items into bag" ) );
-        amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
         if( !z.inv.empty() ) {
             amenu.addentry( 从背包里取出物品, true, '2', _( "从背包里取出物品" ) );
             amenu.addentry( drop_all, true, 'd', _( "Remove all items from bag" ) );
         }
+        amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
     } else if( !z.has_flag( MF_RIDEABLE_MECH ) ) {
         amenu.addentry( attach_bag, true, 'b', _( "Attach bag to %s" ), pet_name );
     }
