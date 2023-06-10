@@ -630,7 +630,7 @@ bool monexamine::pet_menu( monster &z )
                     // 支配成功加10点经验
                     get_avatar().dominator_Of_zombies_exp = get_avatar().dominator_Of_zombies_exp + 10;
                     // 消耗50行动点
-                    get_avatar().moves = get_avatar().moves - 50;
+                    get_player_character().moves = get_player_character().moves - 50;
 
                 }
                 break;
