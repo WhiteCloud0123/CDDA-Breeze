@@ -629,10 +629,11 @@ bool monexamine::pet_menu( monster &z )
                     add_msg( m_good, _( "你成功支配了 %s ！" ), zombie_name );
                     // 支配成功加10点经验
                     get_avatar().dominator_Of_zombies_exp = get_avatar().dominator_Of_zombies_exp + 10;
-                    // 消耗50行动点
-                    get_player_character().moves = get_player_character().moves - 50;
 
                 }
+                // 消耗50行动点
+                get_player_character().moves = get_player_character().moves - 50;
+
                 break;
             default:
                 break;
