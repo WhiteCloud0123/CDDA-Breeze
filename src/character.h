@@ -2112,8 +2112,7 @@ class Character : public Creature, public visitable
 
         bool covered_with_flag( const flag_id &flag, const body_part_set &parts ) const;
         bool is_waterproof( const body_part_set &parts ) const;
-        // Amount of radiation (mSv) leaked from carried items.
-        float leak_level() const;
+
 
         // --------------- Clothing Stuff ---------------
         /** Returns true if the player is wearing the item. */
@@ -3248,6 +3247,21 @@ class Character : public Creature, public visitable
         bool irradiate( float rads, bool bypass = false );
         /** Handles the chance for broken limbs to spontaneously heal to 1 HP */
         void mend( int rate_multiplier );
+
+    private:
+        // Amount of radiation (mSv) leaked from carried items.
+        float leak_level = 0.0f;
+        /** Signify that leak_level needs refreshing. Set to true on inventory change. */
+        bool leak_level_dirty = true;
+    public:
+        float get_leak_level() const;
+        /** Iterate through the character inventory to get its leak level */
+        void calculate_leak_level();
+        /** Sets leak_level_dirty to true */
+        void invalidate_leak_level_cache();
+
+
+
 
         /** Creates an auditory hallucination */
         void sound_hallu();

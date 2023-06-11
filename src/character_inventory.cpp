@@ -161,6 +161,7 @@ item_location Character::try_add( item it, const item *avoid, const item *origin
                                   const bool allow_wield, bool ignore_pkt_settings )
 {
     invalidate_inventory_validity_cache();
+    invalidate_leak_level_cache();
     itype_id item_type_id = it.typeId();
     last_item = item_type_id;
 
@@ -207,6 +208,7 @@ item_location Character::i_add( item it, bool /* should_stack */, const item *av
                                 const bool allow_wield, bool ignore_pkt_settings )
 {
     invalidate_inventory_validity_cache();
+    invalidate_leak_level_cache();
     item_location added = try_add( it, avoid, original_inventory_item, allow_wield,
                                    ignore_pkt_settings );
     if( added == item_location::nowhere ) {
@@ -289,6 +291,7 @@ item Character::i_rem( const item *it )
         debugmsg( "did not found item %s to remove it!", it->tname() );
         return item();
     }
+    invalidate_leak_level_cache();
     return tmp.front();
 }
 
