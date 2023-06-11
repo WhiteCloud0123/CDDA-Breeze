@@ -335,6 +335,7 @@ cata::optional<std::list<item>::iterator> Character::wear_item( const item &to_w
         bool interactive, bool do_calc_encumbrance )
 {
     invalidate_inventory_validity_cache();
+    invalidate_leak_level_cache();
     const auto ret = can_wear( to_wear );
     if( !ret.success() ) {
         if( interactive ) {
