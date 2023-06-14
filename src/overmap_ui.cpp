@@ -80,6 +80,9 @@
 #include "weather.h"
 #include "weather_gen.h"
 #include "weather_type.h"
+#include "messages.h"
+
+
 
 class character_id;
 
@@ -94,6 +97,8 @@ static const oter_str_id oter_unexplored( "unexplored" );
 static const oter_type_str_id oter_type_forest_trail( "forest_trail" );
 
 static const trait_id trait_DEBUG_NIGHTVISION( "DEBUG_NIGHTVISION" );
+
+static const efftype_id effect_pet("pet");
 
 #if defined(__ANDROID__)
 #include <SDL_keyboard.h>
@@ -642,6 +647,29 @@ static void draw_ascii(
     std::unordered_map<point_abs_omt, int> player_path_route;
     std::unordered_map<tripoint_abs_omt, npc_coloring> npc_color;
     auto npcs_near_player = overmap_buffer.get_npcs_near_player( sight_points );
+    
+    
+    std::vector<tripoint_abs_omt> pet_loc_vec;
+    std::vector<std::string> pet_sym_vec;
+    std::vector<nc_color> pet_basic_symbol_color_vec;
+    int draw_pet_count = 0;
+    for (Creature* c : get_player_character().get_visible_creatures(MAPSIZE_X)) {
+        monster* m = dynamic_cast<monster*>(c);
+        if (m != nullptr) {
+
+            if (m->has_effect(effect_pet)) {
+
+                pet_loc_vec.push_back(m->global_omt_location());
+                pet_sym_vec.push_back(m->symbol());
+                pet_basic_symbol_color_vec.push_back(m->basic_symbol_color());
+            
+            }
+            
+        }
+    }
+
+    
+    
     if( blink ) {
         // get seen NPCs
         for( const auto &np : npcs_near_player ) {
@@ -728,6 +756,7 @@ static void draw_ascii(
             // This allows for easy re-use of these variables without the unnecessary lookups if they aren't used
             int los = -1;
             int los_sky = -1;
+
             if( blink && omp == orig ) {
                 // Display player pos, should always be visible
                 ter_color = player_character.symbol_color();
@@ -862,6 +891,26 @@ static void draw_ascii(
                     ter_color = red_background( ter_color );
                 }
             }
+
+            // 如果已经绘制完了宠物，就不用再继续绘制了
+            if (draw_pet_count!=pet_loc_vec.size() && blink ) {
+                int i = 0;
+                for (const auto &iter : pet_loc_vec) {
+                    
+                    if (omp.xy() == iter.xy()) {
+
+                        ter_sym = pet_sym_vec[i];
+                        ter_color = pet_basic_symbol_color_vec[i];
+                        draw_pet_count = draw_pet_count + 1;
+                  
+                    }
+                    i++;
+                }
+
+            }
+
+
+
 
             if( omp.xy() == center.xy() && !uistate.place_special ) {
                 ccur_ter = cur_ter;
