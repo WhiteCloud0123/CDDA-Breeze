@@ -1,0 +1,31 @@
+[
+
+    {
+        "type": "scenario",
+        "id": "scenario_dominator_of_zombies",
+        "name": "丧尸主宰",
+        "points": 0,
+        "description": "你与你的丧尸犬正在荒野里前行着。",
+        "start_name": "平地",
+        "professions": [ "Dominator_Of_Zombies" ],
+        "allowed_locs": [ "sloc_field" ],
+        "flags": [ "LONE_START" ]
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]
