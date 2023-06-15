@@ -4808,9 +4808,9 @@ void cata_tiles::lr_generic( Iter begin, Iter end, Func id_func, TILE_CATEGORY c
         }
     }
     const std::string &category_name = TILE_CATEGORY_IDS[static_cast<size_t>( category )];
-    DebugLog( D_INFO, DC_ALL ) << "Missing " << category_name << ": " << missing_list;
+    /*DebugLog( D_INFO, DC_ALL ) << "Missing " << category_name << ": " << missing_list;
     DebugLog( D_INFO, DC_ALL ) << "Missing " << category_name <<
-                               " (but looks_like tile exists): " << missing_with_looks_like_list;
+                               " (but looks_like tile exists): " << missing_with_looks_like_list;*/
 }
 
 template <typename maptype>
