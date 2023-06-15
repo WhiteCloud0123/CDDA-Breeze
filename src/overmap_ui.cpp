@@ -892,8 +892,8 @@ static void draw_ascii(
                 }
             }
 
-            // 如果已经绘制完了宠物，就不用再继续绘制了
-            if (draw_pet_count!=pet_loc_vec.size() && blink ) {
+            // 如果已经绘制完了宠物，就不用再继续绘制了。同时，如果同一地图格有玩家，那么也不要绘制
+            if ( blink && draw_pet_count != pet_loc_vec.size() && omp!=orig) {
                 int i = 0;
                 for (const auto &iter : pet_loc_vec) {
                     
