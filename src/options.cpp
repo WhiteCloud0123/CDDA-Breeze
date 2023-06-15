@@ -2176,7 +2176,7 @@ void options_manager::add_options_graphics()
 
     add( "USE_OVERMAP_TILES", "graphics", to_translation( "Use tiles to display overmap" ),
          to_translation( "If true, replaces some TTF-rendered text with tiles for overmap display." ),
-         true, COPT_CURSES_HIDE
+         false, COPT_CURSES_HIDE
        );
 
     get_option( "USE_OVERMAP_TILES" ).setPrerequisite( "USE_TILES" );
@@ -2619,7 +2619,7 @@ void options_manager::add_options_debug()
         { "capped", to_translation( "Capped" ) },
         { "off", to_translation( "Off" ) }
     },
-    "vanilla" );
+    "off" );
 
     add_empty_line();
 
@@ -2696,7 +2696,7 @@ void options_manager::add_options_android()
 
     add( "ANDROID_VIBRATION", "android", to_translation( "Vibration duration" ),
          to_translation( "If non-zero, vibrate the device for this long on input, in milliseconds.  Ignored if hardware keyboard connected." ),
-         0, 200, 10
+         0, 200, 0
        );
 
     add_empty_line();
@@ -2730,24 +2730,24 @@ void options_manager::add_options_android()
     add( "ANDROID_REPEAT_DELAY_MAX", "android",
          to_translation( "Virtual joystick repeat rate (centered)" ),
          to_translation( "When the virtual joystick is centered, how fast should input events repeat, in milliseconds." ),
-         50, 1000, 500
+         50, 1000, 50
        );
 
     add( "ANDROID_REPEAT_DELAY_MIN", "android",
          to_translation( "Virtual joystick repeat rate (deflected)" ),
          to_translation( "When the virtual joystick is fully deflected, how fast should input events repeat, in milliseconds." ),
-         50, 1000, 100
+         50, 1000, 50
        );
 
     add( "ANDROID_SENSITIVITY_POWER", "android",
          to_translation( "Virtual joystick repeat rate sensitivity" ),
          to_translation( "As the virtual joystick moves from centered to fully deflected, this value is an exponent that controls the blend between the two repeat rates defined above.  1.0 = linear." ),
-         0.1f, 5.0f, 0.75f, 0.05f, COPT_NO_HIDE, "%.2f"
+         0.1f, 5.0f, 0.10f, 0.05f, COPT_NO_HIDE, "%.2f"
        );
 
     add( "ANDROID_INITIAL_DELAY", "android", to_translation( "Input repeat delay" ),
          to_translation( "While touching the screen, wait this long before showing the virtual joystick and repeating input, in milliseconds.  Also used to determine tap/double-tap detection, flick detection and toggling quick shortcuts." ),
-         150, 1000, 300
+         150, 1000, 250
        );
 
     add( "ANDROID_HIDE_HOLDS", "android", to_translation( "Virtual joystick hides shortcuts" ),
