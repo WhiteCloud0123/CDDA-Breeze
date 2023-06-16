@@ -329,8 +329,8 @@ void treat_zombie(monster& z) {
     // 治疗点数为   5  +  玩家的等级*5
     const int treat_point = 5 + player_avatar.dominator_Of_zombies_lv * 5;
 
-    // 消耗玩家的耐力
-    player_avatar.set_stamina(player_avatar.get_stamina() - 40);
+    // 消耗玩家的耐力,默认为1000
+    player_avatar.set_stamina(player_avatar.get_stamina() - 1000);
 
     if (z.get_hp() + treat_point > z.get_hp_max()) {
 
@@ -357,7 +357,7 @@ void treat_zombie(monster& z) {
     }
 
     z.add_effect(effect_controlled, 2_turns);
-  
+    // 消耗 100行动点
     player_avatar.moves = player_avatar.moves - 100;
 
 }
@@ -885,7 +885,17 @@ bool monexamine::pet_menu( monster &z )
 
 
     if (player_character.has_trait(trait_Dominator_Of_Zombies) && z.in_species(species_ZOMBIE) && z.get_hp()<z.get_hp_max()) {
-        amenu.addentry(治疗, true, '3', _("治疗"), z.get_name());
+        
+        
+        if (get_avatar().get_stamina() >= 1000) {
+        
+            amenu.addentry(治疗, true, '3', _("治疗"), z.get_name());
+        
+        }
+        
+    
+    
+    
     }
 
 
