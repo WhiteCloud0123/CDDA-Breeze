@@ -4208,7 +4208,7 @@ void game::mon_info_update( )
 
                         critter.add_effect( effect_pet, 1_turns, true );
 
-                        add_msg( m_good, _( "%s 阵营改变" ), critter.get_name() );
+                        add_msg( m_good, _( "%s 受你支配" ), critter.get_name() );
                         // 自然支配加20点经验
                         avatar_breeze.dominator_of_zombies_exp = avatar_breeze.dominator_of_zombies_exp + 20;
 
@@ -4238,7 +4238,7 @@ void game::mon_info_update( )
                 // 最后将 is_set_breeze 设置为true
                 critter.is_set_breeze = true;
 
-                add_msg( m_good, _( "测试信息 设置完毕" ) );
+               
 
             }
 
