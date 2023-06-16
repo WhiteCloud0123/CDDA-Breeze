@@ -321,6 +321,8 @@ std::string action_ident( action_id act )
             return "messages";
         case ACTION_HELP:
             return "help";
+        case ACTION_显示当前职业情况:
+            return "显示当前职业情况";
         case ACTION_DEBUG:
             return "debug";
         case ACTION_DISPLAY_SCENT:
@@ -856,6 +858,7 @@ action_id handle_action_menu()
                 REGISTER_ACTION( ACTION_SUICIDE );
             }
             REGISTER_ACTION( ACTION_HELP );
+            REGISTER_ACTION(ACTION_显示当前职业情况);
             if( ( entry = &entries.back() ) ) {
                 // help _is_a menu.
                 entry->txt += "…";

@@ -266,6 +266,7 @@ enum action_id : int {
     ACTION_MESSAGES,
     /** Display help screen */
     ACTION_HELP,
+    ACTION_显示当前职业情况,
     /** Display Diary window*/
     ACTION_DIARY,
     /** Open body status menu **/

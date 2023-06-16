@@ -1196,6 +1196,32 @@ static void sleep()
     player_character.try_to_sleep( try_sleep_dur );
 }
 
+
+void show_当前职业情况() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
 static void loot()
 {
     enum ZoneFlags {
@@ -2560,7 +2586,11 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
         case ACTION_DIARY:
             diary::show_diary_ui( u.get_avatar_diary() );
             break;
+        case ACTION_显示当前职业情况:
+            
+            show_当前职业情况();
 
+            break;
         case ACTION_SCORES:
             show_scores_ui( *achievements_tracker_ptr, stats(), get_kill_tracker() );
             break;
