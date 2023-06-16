@@ -162,6 +162,7 @@ static const zone_type_id zone_type_zone_unload_all( "zone_unload_all" );
 
 static const std::string flag_CANT_DRAG( "CANT_DRAG" );
 
+
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
 
 #if defined(__ANDROID__)
@@ -1195,6 +1196,91 @@ static void sleep()
     player_character.moves = 0;
     player_character.try_to_sleep( try_sleep_dur );
 }
+
+
+
+std::pair<point, point> draw_position() {
+
+
+    return {
+        point(TERMX / 4, TERMY / 4),
+        point(TERMX / 2, TERMY / 2)
+    };
+
+
+}
+
+
+
+
+
+void show_当前职业情况() {
+
+
+    avatar& player_avatar = get_avatar();
+    
+    
+    
+    catacurses::window w_01;
+    input_context ctxt("DIARY");
+    ctxt.register_action("QUIT");
+    ui_adaptor ui_01;
+    ui_01.on_screen_resize([&](ui_adaptor&) {
+        const std::pair<point, point> beg_and_max = draw_position();
+        const point& beg = beg_and_max.first;
+        const point& max = beg_and_max.second;
+        w_01 = catacurses::newwin(20, 40, beg + point(5, 5));
+        ui_01.position_from_window(w_01);
+        });
+
+    
+    
+    
+    ui_01.mark_resize();
+    
+    
+    
+    
+    
+    ui_01.on_redraw([&](const ui_adaptor&) {
+        werase(w_01);
+        draw_border(w_01);
+        trim_and_print(w_01, point(1, 1), 25, c_white, "当前职业: 丧尸主宰");
+        trim_and_print(w_01, point(1, 4), 25, c_white, "等级: %s", player_avatar.dominator_of_zombies_lv);
+        trim_and_print(w_01, point(1, 7), 25, c_white, "经验: %s", player_avatar.dominator_of_zombies_exp);
+        trim_and_print(w_01, point(1, 10), 25, c_white, "已经支配了 %s 只丧尸", player_avatar.dominator_of_zombies_number_of_zombies_controled);
+        wnoutrefresh(w_01);
+        });
+
+
+
+
+
+
+
+
+    while (true) {
+        ui_01.invalidate_ui();
+        ui_manager::redraw_invalidated();
+        const std::string action = ctxt.handle_input();
+        if (action == "QUIT") {
+            break;
+        }
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
 
 static void loot()
 {
@@ -2560,7 +2646,11 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
         case ACTION_DIARY:
             diary::show_diary_ui( u.get_avatar_diary() );
             break;
+        case ACTION_显示当前职业情况:
+            
+            show_当前职业情况();
 
+            break;
         case ACTION_SCORES:
             show_scores_ui( *achievements_tracker_ptr, stats(), get_kill_tracker() );
             break;

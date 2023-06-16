@@ -162,6 +162,8 @@ static const vpart_id vpart_turret_mount( "turret_mount" );
 static const vproto_id vehicle_prototype_bicycle( "bicycle" );
 static const vproto_id vehicle_prototype_bicycle_folding( "bicycle_folding" );
 
+static const trait_id trait_Dominator_Of_Zombies("Dominator_Of_Zombies");
+
 static const std::array<std::string, static_cast<size_t>( object_type::NUM_OBJECT_TYPES )>
 obj_type_name = { { "OBJECT_NONE", "OBJECT_ITEM", "OBJECT_ACTOR", "OBJECT_PLAYER",
         "OBJECT_NPC", "OBJECT_MONSTER", "OBJECT_VEHICLE", "OBJECT_TRAP", "OBJECT_FIELD",
@@ -1593,8 +1595,14 @@ void avatar::store( JsonOut &json ) const
 
     json.member( "power_prev_turn", power_prev_turn );
     // 在末端添加新增成员
-    json.member( "dominator_Of_zombies_exp", dominator_Of_zombies_exp );
-    json.member( "dominator_Of_zombies_lv", dominator_Of_zombies_lv );
+    if (get_avatar().has_trait(trait_Dominator_Of_Zombies)) {
+    
+        json.member("dominator_Of_zombies_lv", dominator_of_zombies_lv);
+        json.member("dominator_Of_zombies_exp", dominator_of_zombies_exp);
+        json.member("dominator_Of_zombies_number", dominator_of_zombies_number_of_zombies_controled);
+
+    }
+    
 }
 
 void avatar::deserialize( const JsonObject &data )
@@ -1752,10 +1760,22 @@ void avatar::load( const JsonObject &data )
     data.read( "snippets_read", snippets_read );
 
     // 在末端添加新增的读取步骤
-    data.read( "dominator_Of_zombies_exp", dominator_Of_zombies_exp );
-    data.read( "dominator_Of_zombies_lv", dominator_Of_zombies_lv );
 
+    if (data.has_member("dominator_of_zombies_lv")) {
 
+        data.read("dominator_of_zombies_lv", dominator_of_zombies_lv);
+  
+    }
+
+    if (data.has_member("dominator_of_zombies_exp")) {
+        data.read("dominator_of_zombies_exp", dominator_of_zombies_exp);
+    }
+     
+    if (data.has_member("dominator_of_zombies_number_of_zombies_controled")) {
+    
+        data.read("dominator_of_zombies_number_of_zombies_controled", dominator_of_zombies_number_of_zombies_controled);
+    
+    }
 
 
 

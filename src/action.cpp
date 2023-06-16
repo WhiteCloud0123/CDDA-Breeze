@@ -46,6 +46,8 @@ static const itype_id itype_swim_fins( "swim_fins" );
 static const quality_id qual_BUTCHER( "BUTCHER" );
 static const quality_id qual_CUT_FINE( "CUT_FINE" );
 
+static const trait_id trait_Dominator_Of_Zombies("Dominator_Of_Zombies");
+
 static void parse_keymap( std::istream &keymap_txt, std::map<char, action_id> &kmap,
                           std::set<action_id> &unbound_keymap );
 
@@ -321,6 +323,8 @@ std::string action_ident( action_id act )
             return "messages";
         case ACTION_HELP:
             return "help";
+        case ACTION_显示当前职业情况:
+            return "显示当前职业情况";
         case ACTION_DEBUG:
             return "debug";
         case ACTION_DISPLAY_SCENT:
@@ -837,7 +841,7 @@ action_id handle_action_menu()
                     REGISTER_ACTION( it->first );
                 }
             }
-
+            
             REGISTER_CATEGORY( _( "Look" ) );
             REGISTER_CATEGORY( _( "Interact" ) );
             REGISTER_CATEGORY( _( "Inventory" ) );
@@ -856,10 +860,17 @@ action_id handle_action_menu()
                 REGISTER_ACTION( ACTION_SUICIDE );
             }
             REGISTER_ACTION( ACTION_HELP );
-            if( ( entry = &entries.back() ) ) {
+
+            if ((entry = &entries.back())) {
                 // help _is_a menu.
                 entry->txt += "…";
             }
+
+            if (get_player_character().has_trait( trait_Dominator_Of_Zombies )) {
+                REGISTER_ACTION(ACTION_显示当前职业情况);
+            }
+            
+            
             if( hotkey_for_action( ACTION_DEBUG, /*maximum_modifier_count=*/1 ).has_value() ) {
                 // register with global key
                 REGISTER_CATEGORY( _( "Debug" ) );

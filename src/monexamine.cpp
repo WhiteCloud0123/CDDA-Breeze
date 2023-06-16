@@ -71,6 +71,8 @@ static const skill_id skill_survival( "survival" );
 static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
 static const species_id species_ZOMBIE( "ZOMBIE" );
 
+// 升级所需的经验标准，所属于另一套升级体系
+static const int exp_array[] = { 100, 300, 900, 2700, 8100 };
 
 namespace
 {
@@ -327,7 +329,7 @@ void treat_zombie(monster& z) {
     avatar &player_avatar = get_avatar();
 
     // 治疗点数为   5  +  玩家的等级*5
-    const int treat_point = 5 + player_avatar.dominator_Of_zombies_lv * 5;
+    const int treat_point = 5 + player_avatar.dominator_of_zombies_lv * 5;
 
     // 消耗玩家的耐力,默认为1000
     player_avatar.set_stamina(player_avatar.get_stamina() - 1000);
@@ -648,13 +650,13 @@ bool monexamine::pet_menu( monster &z )
 
         };
 
-        uilist amenu;
+        uilist menu_01;
         std::string zombie_name = z.get_name();
-        amenu.text = string_format( _( "你要对 %s 做什么?" ), zombie_name );
-        amenu.addentry( 支配, true, '0', _( "支配" ) );
+        menu_01.text = string_format( _( "你要对 %s 做什么?" ), zombie_name );
+        menu_01.addentry( 支配, true, '0', _( "支配" ) );
 
-        amenu.query();
-        int choice = amenu.ret;
+        menu_01.query();
+        int choice = menu_01.ret;
 
 
 
@@ -671,7 +673,26 @@ bool monexamine::pet_menu( monster &z )
 
                     add_msg( m_good, _( "你成功支配了 %s ！" ), zombie_name );
                     // 支配成功加10点经验
-                    get_avatar().dominator_Of_zombies_exp = get_avatar().dominator_Of_zombies_exp + 10;
+                    get_avatar().dominator_of_zombies_exp = get_avatar().dominator_of_zombies_exp + 10;
+
+                    // 升级检测
+                    for (int i = 0; i < 5; i++) {
+                        // 初始化等级
+                        get_avatar().dominator_of_zombies_lv = 0;
+
+                        if (get_avatar().dominator_of_zombies_exp > exp_array[i]) {
+
+                            get_avatar().dominator_of_zombies_lv++;
+
+                        }
+                        else {
+                            break;
+                        }
+
+                    }
+
+
+
 
                 }
                 // 消耗50行动点

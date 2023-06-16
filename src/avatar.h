@@ -345,10 +345,11 @@ class avatar : public Character
         void add_random_hobby( std::vector<profession_id> &choices );
 
         // 丧尸主宰的等级
-        int dominator_Of_zombies_lv = 0;
+        int dominator_of_zombies_lv = 0;
         // 丧尸主宰的经验
-        int dominator_Of_zombies_exp = 20;
-
+        int dominator_of_zombies_exp = 20;
+        // 丧尸主宰已经支配了的丧尸数量
+        int dominator_of_zombies_number_of_zombies_controled = 1;
 
         int movecounter = 0;
 

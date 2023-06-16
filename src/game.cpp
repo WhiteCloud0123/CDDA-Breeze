@@ -322,8 +322,7 @@ static const trait_id trait_Zombie_Pretend( "Zombie_Pretend" );
 static const trait_id trait_Feral_Human_Pretend( "Feral_Human_Pretend" );
 static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
 
-// 升级所需的经验标准，所属于另一套升级体系
-static const int exp_array[] = {100, 300, 900, 2700, 8100};
+
 
 
 #if defined(TILES)
@@ -351,6 +350,10 @@ std::unique_ptr<game> g;
 
 //The one and only uistate instance
 uistatedata uistate;
+
+// 升级所需的经验标准，所属于另一套升级体系
+static const int exp_array[] = { 100, 300, 900, 2700, 8100 };
+
 
 bool is_valid_in_w_terrain( const point &p )
 {
@@ -4207,16 +4210,19 @@ void game::mon_info_update( )
 
                         add_msg( m_good, _( "%s 阵营改变" ), critter.get_name() );
                         // 自然支配加20点经验
-                        avatar_breeze.dominator_Of_zombies_exp = avatar_breeze.dominator_Of_zombies_exp + 20;
+                        avatar_breeze.dominator_of_zombies_exp = avatar_breeze.dominator_of_zombies_exp + 20;
+
+                        
+
 
                         // 升级检测
                         for( int i = 0; i < 5; i++ ) {
                             // 初始化等级
-                            avatar_breeze.dominator_Of_zombies_lv = 0;
+                            avatar_breeze.dominator_of_zombies_lv = 0;
 
-                            if( avatar_breeze.dominator_Of_zombies_exp > exp_array[i] ) {
+                            if( avatar_breeze.dominator_of_zombies_exp > exp_array[i] ) {
 
-                                avatar_breeze.dominator_Of_zombies_lv++;
+                                avatar_breeze.dominator_of_zombies_lv++;
 
                             } else {
                                 break;
