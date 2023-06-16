@@ -320,6 +320,49 @@ void take_item_from_bag( monster &z )
 }
 
 
+void treat_zombie(monster& z) {
+
+
+
+    avatar &player_avatar = get_avatar();
+
+    // 治疗点数为   5  +  玩家的等级*5
+    const int treat_point = 5 + player_avatar.dominator_Of_zombies_lv * 5;
+
+    // 消耗玩家的耐力
+    player_avatar.set_stamina(player_avatar.get_stamina() - 40);
+
+    if (z.get_hp() + treat_point > z.get_hp_max()) {
+
+
+        z.set_hp(z.get_hp_max());
+    
+    }
+    else {
+
+        z.set_hp(z.get_hp() + treat_point);
+    
+    }
+
+
+    if (z.get_hp() < z.get_hp_max()) {
+
+        add_msg(m_good, _("你治疗了 %1s , %2s的伤势变好了一些。"), z.get_name(), z.get_name());
+    
+    }
+    else {
+    
+        add_msg(m_good, _("你治疗了 %s"),z.get_name());
+    
+    }
+
+    z.add_effect(effect_controlled, 2_turns);
+  
+    player_avatar.moves = player_avatar.moves - 100;
+
+}
+
+
 
 item_location pet_armor_loc( monster &z )
 {
@@ -682,7 +725,8 @@ bool monexamine::pet_menu( monster &z )
         talk_to,
         命令其在这里等待,
         命令其不要在这里继续等待,
-        从背包里取出物品
+        从背包里取出物品,
+        治疗
 
     };
 
@@ -838,6 +882,15 @@ bool monexamine::pet_menu( monster &z )
             amenu.addentry( insert_bat, false, 'x', _( "You need a %s to power this mech" ), type.nname( 1 ) );
         }
     }
+
+
+    if (player_character.has_trait(trait_Dominator_Of_Zombies) && z.in_species(species_ZOMBIE) && z.get_hp()<z.get_hp_max()) {
+        amenu.addentry(治疗, true, '3', _("治疗"), z.get_name());
+    }
+
+
+
+
     amenu.query();
     int choice = amenu.ret;
 
@@ -939,7 +992,11 @@ bool monexamine::pet_menu( monster &z )
             take_item_from_bag( z );
 
             break;
+        case 治疗:
 
+            treat_zombie(z);
+
+            break;
         default:
             break;
     }
