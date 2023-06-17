@@ -4216,10 +4216,10 @@ void game::mon_info_update( )
 
 
                         // 升级检测
+                        // 初始化等级
+                        avatar_breeze.dominator_of_zombies_lv = 0;
                         for( int i = 0; i < 5; i++ ) {
-                            // 初始化等级
-                            avatar_breeze.dominator_of_zombies_lv = 0;
-
+                            
                             if( avatar_breeze.dominator_of_zombies_exp > exp_array[i] ) {
 
                                 avatar_breeze.dominator_of_zombies_lv++;
