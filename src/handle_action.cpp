@@ -1248,7 +1248,7 @@ void show_当前职业情况() {
         trim_and_print(w_01, point(1, 1), 25, c_white, "当前职业: 丧尸主宰");
         trim_and_print(w_01, point(1, 4), 25, c_white, "等级: %s", player_avatar.dominator_of_zombies_lv);
         trim_and_print(w_01, point(1, 7), 25, c_white, "经验: %s", player_avatar.dominator_of_zombies_exp);
-        trim_and_print(w_01, point(1, 10), 25, c_white, "已经支配了 %s 只丧尸", player_avatar.dominator_of_zombies_number_of_zombies_controled);
+        trim_and_print(w_01, point(1, 10), 25, c_white, "已经支配了 %s 只丧尸", player_avatar.dominator_of_zombies_number_of_zombies_controlled);
         wnoutrefresh(w_01);
         });
 

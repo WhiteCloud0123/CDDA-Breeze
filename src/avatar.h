@@ -349,7 +349,7 @@ class avatar : public Character
         // 丧尸主宰的经验
         int dominator_of_zombies_exp = 20;
         // 丧尸主宰已经支配了的丧尸数量
-        int dominator_of_zombies_number_of_zombies_controled = 1;
+        int dominator_of_zombies_number_of_zombies_controlled = 1;
 
         int movecounter = 0;
 
