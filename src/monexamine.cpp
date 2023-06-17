@@ -677,9 +677,10 @@ bool monexamine::pet_menu( monster &z )
                     // 增加  已经支配了的丧尸数量
                     get_avatar().dominator_of_zombies_number_of_zombies_controlled++;
                     // 升级检测
+                    // 初始化等级
+                    get_avatar().dominator_of_zombies_lv = 0;
                     for (int i = 0; i < 5; i++) {
-                        // 初始化等级
-                        get_avatar().dominator_of_zombies_lv = 0;
+                        
 
                         if (get_avatar().dominator_of_zombies_exp > exp_array[i]) {
 

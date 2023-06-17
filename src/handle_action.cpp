@@ -1229,7 +1229,7 @@ void show_当前职业情况() {
         const std::pair<point, point> beg_and_max = draw_position();
         const point& beg = beg_and_max.first;
         const point& max = beg_and_max.second;
-        w_01 = catacurses::newwin(20, 40, beg + point(5, 5));
+        w_01 = catacurses::newwin(20, 40, beg + point(0, 0));
         ui_01.position_from_window(w_01);
         });
 
