@@ -1517,7 +1517,7 @@ void options_manager::add_options_general()
 
     add( "AUTOSAVE", "general", to_translation( "Autosave" ),
          to_translation( "If true, game will periodically save the map.  Autosaves occur based on in-game turns or realtime minutes, whichever is larger." ),
-         true
+         false
        );
 
     add( "AUTOSAVE_TURNS", "general", to_translation( "Game turns between autosaves" ),
