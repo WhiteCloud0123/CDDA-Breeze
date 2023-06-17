@@ -674,7 +674,8 @@ bool monexamine::pet_menu( monster &z )
                     add_msg( m_good, _( "你成功支配了 %s ！" ), zombie_name );
                     // 支配成功加10点经验
                     get_avatar().dominator_of_zombies_exp = get_avatar().dominator_of_zombies_exp + 10;
-
+                    // 增加  已经支配了的丧尸数量
+                    get_avatar().dominator_of_zombies_number_of_zombies_controlled++;
                     // 升级检测
                     for (int i = 0; i < 5; i++) {
                         // 初始化等级

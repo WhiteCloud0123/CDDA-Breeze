@@ -1597,9 +1597,9 @@ void avatar::store( JsonOut &json ) const
     // 在末端添加新增成员
     if (get_avatar().has_trait(trait_Dominator_Of_Zombies)) {
     
-        json.member("dominator_Of_zombies_lv", dominator_of_zombies_lv);
-        json.member("dominator_Of_zombies_exp", dominator_of_zombies_exp);
-        json.member("dominator_Of_zombies_number", dominator_of_zombies_number_of_zombies_controled);
+        json.member("dominator_of_zombies_lv", dominator_of_zombies_lv);
+        json.member("dominator_of_zombies_exp", dominator_of_zombies_exp);
+        json.member("dominator_of_zombies_number_of_zombies_controlled", dominator_of_zombies_number_of_zombies_controlled);
 
     }
     
@@ -1761,22 +1761,35 @@ void avatar::load( const JsonObject &data )
 
     // 在末端添加新增的读取步骤
 
-    if (data.has_member("dominator_of_zombies_lv")) {
 
+    if (data.has_member("dominator_of_zombies_lv")) {
+    
         data.read("dominator_of_zombies_lv", dominator_of_zombies_lv);
-  
+    
     }
 
     if (data.has_member("dominator_of_zombies_exp")) {
+    
         data.read("dominator_of_zombies_exp", dominator_of_zombies_exp);
-    }
-     
-    if (data.has_member("dominator_of_zombies_number_of_zombies_controled")) {
-    
-        data.read("dominator_of_zombies_number_of_zombies_controled", dominator_of_zombies_number_of_zombies_controled);
-    
-    }
 
+    
+    }
+        
+    if (data.has_member("dominator_of_zombies_number_of_zombies_controlled")) {
+    
+        data.read("dominator_of_zombies_number_of_zombies_controlled", dominator_of_zombies_number_of_zombies_controlled);
+    
+    }
+   
+
+   
+        
+
+   
+
+        
+
+    
 
 
 

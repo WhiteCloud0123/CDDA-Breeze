@@ -4212,7 +4212,7 @@ void game::mon_info_update( )
                         // 自然支配加20点经验
                         avatar_breeze.dominator_of_zombies_exp = avatar_breeze.dominator_of_zombies_exp + 20;
 
-                        
+                        avatar_breeze.dominator_of_zombies_number_of_zombies_controlled++;
 
 
                         // 升级检测
