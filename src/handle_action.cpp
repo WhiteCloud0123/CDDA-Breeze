@@ -2100,7 +2100,7 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
             }
             break;
         case ACTION_MOVE_DOWN:
-            if( player_character.is_mounted() ) {
+            if( player_character.is_mounted() && get_option<bool>("骑乘状态可以上下楼")==false) {
                 auto *mon = player_character.mounted_creature.get();
                 if( !mon->has_flag( MF_RIDEABLE_MECH ) ) {
                     add_msg( m_info, _( "You can't go down stairs while you're riding." ) );
@@ -2118,12 +2118,12 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
             break;
 
         case ACTION_MOVE_UP:
-            if( player_character.is_mounted() ) {
+            if( player_character.is_mounted() && get_option<bool>("骑乘状态可以上下楼")==false) {
                 auto *mon = player_character.mounted_creature.get();
                 if( !mon->has_flag( MF_RIDEABLE_MECH ) ) {
                     add_msg( m_info, _( "You can't go up stairs while you're riding." ) );
                     break;
-                }
+                }            
             }
             if( !player_character.in_vehicle ) {
                 vertical_move( 1, false );

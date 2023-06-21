@@ -1371,7 +1371,9 @@ void options_manager::add_options_general()
         to_translation("打开后，如果怪物可以被驯服，那么会在怪物的信息面板上显示相应信息。"),
         false
     );*/
+    add_empty_line();
 
+    add("骑乘状态可以上下楼", "general", to_translation("骑乘状态可以上下楼"), to_translation("当此选项的值为 true 时，骑乘状态可以上下楼。"), false);
 
     add_empty_line();
 
