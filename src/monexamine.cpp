@@ -192,7 +192,32 @@ void attach_bag_to( monster &z )
     }
 
     item &it = *loc;
-    z.storage_item = cata::make_value<item>( it );
+    std::vector<const item*> item_vec;
+
+    if(!it.is_container_empty()) {
+        
+
+        for (const item *p : it.all_items_top()) {
+            
+            item_vec.push_back(p);
+                       
+        }
+
+        z.storage_item = cata::make_value<item>(it);
+
+        for (const item * i : item_vec) {
+
+            const item& m = *i;
+                
+            z.inv.push_back(m);
+        
+        }
+
+
+        it.clear_items();
+        
+    }
+    
     add_msg( _( "You mount the %1$s on your %2$s." ), it.display_name(), pet_name );
     player_character.i_rem( &it );
     z.add_effect( effect_has_bag, 1_turns, true );
