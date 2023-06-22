@@ -238,7 +238,7 @@ android {
         minSdkVersion override_minSdkVersion
         targetSdkVersion override_targetSdkVersion
         versionCode "2.1"
-        versionName "CDDA-Breeze 2.1"
+        versionName "CDDA-Breeze-2.1"
         if (buildAsApplication) {
             applicationId "WhiteCloud.CddaBreeze"
             setProperty("archivesBaseName", "CDDA-Breeze" + versionName)
