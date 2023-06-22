@@ -193,7 +193,7 @@ void attach_bag_to( monster &z )
 
     item &it = *loc;
     std::vector<const item*> item_vec;
-
+    z.storage_item = cata::make_value<item>(it);
     if(!it.is_container_empty()) {
         
 
@@ -203,7 +203,7 @@ void attach_bag_to( monster &z )
                        
         }
 
-        z.storage_item = cata::make_value<item>(it);
+        
 
         for (const item * i : item_vec) {
 
