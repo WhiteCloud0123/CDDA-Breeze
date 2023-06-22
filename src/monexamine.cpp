@@ -192,34 +192,17 @@ void attach_bag_to( monster &z )
     }
 
     item &it = *loc;
-    std::vector<item*> item_vec;
     z.storage_item = cata::make_value<item>(it);
     if(!it.is_container_empty()) {
-        
-
-        for (item *p : it.all_items_top()) {
-            item_vec.push_back(p);
-            item& m = *p;             
-        }
-
-        for (const item * i : item_vec) {
-
-            const item& m = *i;
-            add_msg(m_good,_("%s"),m.type_name());
-            z.inv.push_back(m);
-        
-        }
 
         for (item *i : it.all_items_top()) {
-              
+
             item& m = *i;
+            z.add_item(m);
             it.remove_item(m);
-                 
+
         }
 
-
-
-        
     }
     
     add_msg( _( "You mount the %1$s on your %2$s." ), it.display_name(), pet_name );
