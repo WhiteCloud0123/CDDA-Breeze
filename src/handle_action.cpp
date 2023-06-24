@@ -228,10 +228,66 @@ public:
             std::string header = string_format("#%d: %s (%d)%s", entnum, tmp.type->id.str(),
                 group, hallucination ? _(" (hallucination)") : "");
             mvwprintz(w_info, point((getmaxx(w_info) - utf8_width(header)) / 2, 0), c_cyan, header);
+            
         }
 
-        mvwprintz(w_info, point(0, getmaxy(w_info) - 3), c_green, msg);
-        msg.clear();
+
+
+        std::ostringstream oss;
+
+        oss << tmp.type->get_description();
+        /*oss << "\n";
+        oss << "\n";
+        oss << "物种 : ";
+        oss<<"";*/
+        oss << "\n";
+        oss << "\n";
+        oss << "<color_white>" << "HP : " << "</color>";
+        oss << "<color_white>" << tmp.get_hp_max() << "</color>";
+        oss << "\n";
+        oss << "\n";
+        oss << "白天视野 : "; 
+        oss << tmp.type->vision_day; 
+        oss << "          "; 
+        oss << "夜间视野 : "; 
+        oss <<tmp.type->vision_night;
+        oss << "\n";
+        oss << "\n";
+        oss << "士气 : ";
+        oss << tmp.type->morale;
+        oss << "\n";
+        oss << "\n";
+        oss << "近战技能 : ";
+        oss << tmp.type->melee_skill;
+        oss << "\n";
+        oss << "\n";
+        oss << "近战骰子面数 : ";
+        oss << tmp.type->melee_sides;
+        oss << "          ";
+        oss << "近战骰子个数 : ";
+        oss << tmp.type->melee_dice;
+        oss << "\n";
+        oss << "\n";
+        oss << "闪避技能 : ";
+        oss << tmp.get_dodge_base();
+        oss << "\n";
+        oss << "\n";
+        oss << "速度 : ";
+        oss << tmp.get_speed_base();
+        oss << "\n";
+        oss << "\n";
+        oss << "钝击防御 : ";
+        oss << tmp.type->armor_bash;
+        oss << "          ";
+        oss << "刺击防御 : ";
+        oss << tmp.type->armor_stab;
+        oss << "\n";
+        oss << "\n";
+        oss << "再生能力 : ";
+        oss << tmp.type->regenerates;
+        fold_and_print(w_info, point(1, 9), getmaxx(w_info)-2, c_white, oss.str());
+
+       
         
     
 
@@ -240,16 +296,6 @@ public:
 
     ~monster_data_retrieval_ui_callback() override = default;
 };
-
-
-
-
-
-
-
-
-
-
 
 
 
