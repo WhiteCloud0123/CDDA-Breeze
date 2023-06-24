@@ -413,6 +413,8 @@ std::string action_ident( action_id act )
             return "null";
         case actionCreateWorldBackup:
             return "备份当前世界";
+        case ACTION_数据检索:
+            return "数据检索";
         default:
             return "unknown";
     }
@@ -1051,12 +1053,16 @@ action_id handle_main_menu()
                               ctxt.get_action_name( action_ident( name ) ) );
     };
 
+
+    REGISTER_ACTION(ACTION_数据检索);
+
     REGISTER_ACTION( ACTION_HELP );
 
     // The hotkey is reserved for the uilist keybindings menu
     entries.emplace_back( ACTION_KEYBINDINGS, true, cata::nullopt,
                           ctxt.get_action_name( action_ident( ACTION_KEYBINDINGS ) ) );
 
+    
     REGISTER_ACTION( ACTION_OPTIONS );
     REGISTER_ACTION( ACTION_AUTOPICKUP );
     REGISTER_ACTION( ACTION_AUTONOTES );

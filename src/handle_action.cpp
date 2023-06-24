@@ -93,6 +93,7 @@
 #include "weather.h"
 #include "weather_type.h"
 #include "worldfactory.h"
+#include "monstergenerator.h"
 
 static const activity_id ACT_FERTILIZE_PLOT( "ACT_FERTILIZE_PLOT" );
 static const activity_id ACT_MOVE_LOOT( "ACT_MOVE_LOOT" );
@@ -1275,7 +1276,74 @@ void show_当前职业情况() {
 }
 
 
+void handle_action_data_retrieval() {
 
+    uilist menu;
+
+    enum choce_list {
+
+        怪物数据检索 = 0
+
+    };
+
+    menu.addentry(怪物数据检索, true, '0', _("怪物数据检索"));
+
+    menu.query();
+    
+    int choice = menu.ret;
+
+    if (choice == 怪物数据检索) {
+
+        std::vector<const mtype*> mtype_vec;
+        
+        uilist monster_menu_left;
+        
+        monster_menu_left.w_x_setup = 0;
+
+        monster_menu_left.w_width_setup = []() -> int {
+            return TERMX;
+        };
+        monster_menu_left.pad_right_setup = []() -> int {
+            return TERMX - 30;
+        };
+
+        monster_menu_left.selected = uistate.wishmonster_selected;
+        
+        int i = 0;
+
+        for (const mtype& montype : MonsterGenerator::generator().get_all_mtypes()) {
+             
+           
+            monster_menu_left.addentry(i,true,0,montype.nname());
+            monster_menu_left.entries[i].extratxt.txt = montype.sym;
+            monster_menu_left.entries[i].extratxt.color = montype.color;
+            monster_menu_left.entries[i].extratxt.left = 1;
+            i++;
+            mtype_vec.push_back(&montype);
+            
+        }
+        
+
+        do {   
+            
+            monster_menu_left.query();
+        
+        } while (monster_menu_left.ret >= 0);
+        
+        
+    
+    
+
+
+    }
+    
+
+
+
+
+
+
+}
 
 
 
@@ -2886,7 +2954,20 @@ bool game::do_regular_action( action_id &act, avatar &player_character,
         case ACTION_AUTOATTACK:
             avatar_action::autoattack( player_character, m );
             break;
+        
 
+
+        case ACTION_数据检索:
+
+            handle_action_data_retrieval();
+
+
+            break;
+
+
+
+
+        
         // 标记 添加备份世界的case
         case actionCreateWorldBackup: {
 
