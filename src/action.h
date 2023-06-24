@@ -351,6 +351,7 @@ enum action_id : int {
     /** Not an action, serves as count of enumerated actions */
     // 标记 添加actionCreateWorldBackup
     actionCreateWorldBackup,
+    ACTION_数据检索,
     NUM_ACTIONS
     /**@}*/
 };
