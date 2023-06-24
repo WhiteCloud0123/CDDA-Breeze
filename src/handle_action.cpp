@@ -200,29 +200,7 @@ public:
         lastent = -2;
     }
 
-    bool key(const input_context&, const input_event& event, int /*entnum*/,
-        uilist* /*menu*/) override {
-        if (event.get_first_input() == 'f') {
-            friendly = !friendly;
-            // Force tmp monster regen
-            lastent = -2;
-            // Tell menu we handled keypress
-            return true;
-        }
-        else if (event.get_first_input() == 'i') {
-            group++;
-            return true;
-        }
-        else if (event.get_first_input() == 'h') {
-            hallucination = !hallucination;
-            return true;
-        }
-        else if (event.get_first_input() == 'd' && group != 0) {
-            group--;
-            return true;
-        }
-        return false;
-    }
+    
 
     void refresh(uilist* menu) override {
         catacurses::window w_info = catacurses::newwin(menu->w_height - 2, menu->pad_right,
@@ -254,10 +232,8 @@ public:
 
         mvwprintz(w_info, point(0, getmaxy(w_info) - 3), c_green, msg);
         msg.clear();
-        input_context ctxt(menu->input_category, keyboard_mode::keycode);
-        mvwprintw(w_info, point(0, getmaxy(w_info) - 2),
-            _("[%s] find, [f]riendly, [h]allucination, [i]ncrease group, [d]ecrease group, [%s] quit"),
-            ctxt.get_desc("FILTER"), ctxt.get_desc("QUIT"));
+        
+    
 
         wnoutrefresh(w_info);
     }
