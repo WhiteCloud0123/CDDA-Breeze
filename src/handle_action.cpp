@@ -173,6 +173,111 @@ extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
 extern bool add_key_to_quick_shortcuts( int key, const std::string &category, bool back );
 #endif
 
+
+
+
+class monster_data_retrieval_ui_callback : public uilist_callback
+{
+public:
+    // last menu entry
+    int lastent;
+    // feedback message
+    std::string msg;
+    // spawn friendly critter?
+    bool friendly;
+    bool hallucination;
+    // Number of monsters to spawn.
+    int group;
+    // scrap critter for monster::print_info
+    monster tmp;
+    const std::vector<const mtype*>& mtypes;
+
+    explicit monster_data_retrieval_ui_callback(const std::vector<const mtype*>& mtypes)
+        : mtypes(mtypes) {
+        friendly = false;
+        hallucination = false;
+        group = 0;
+        lastent = -2;
+    }
+
+    bool key(const input_context&, const input_event& event, int /*entnum*/,
+        uilist* /*menu*/) override {
+        if (event.get_first_input() == 'f') {
+            friendly = !friendly;
+            // Force tmp monster regen
+            lastent = -2;
+            // Tell menu we handled keypress
+            return true;
+        }
+        else if (event.get_first_input() == 'i') {
+            group++;
+            return true;
+        }
+        else if (event.get_first_input() == 'h') {
+            hallucination = !hallucination;
+            return true;
+        }
+        else if (event.get_first_input() == 'd' && group != 0) {
+            group--;
+            return true;
+        }
+        return false;
+    }
+
+    void refresh(uilist* menu) override {
+        catacurses::window w_info = catacurses::newwin(menu->w_height - 2, menu->pad_right,
+            point(menu->w_x + menu->w_width - 1 - menu->pad_right, 1));
+
+        const int entnum = menu->selected;
+        const bool valid_entnum = entnum >= 0 && static_cast<size_t>(entnum) < mtypes.size();
+        if (entnum != lastent) {
+            lastent = entnum;
+            if (valid_entnum) {
+                tmp = monster(mtypes[entnum]->id);
+                if (friendly) {
+                    tmp.friendly = -1;
+                }
+            }
+            else {
+                tmp = monster();
+            }
+        }
+
+        werase(w_info);
+        if (valid_entnum) {
+            tmp.print_info(w_info, 2, 5, 1);
+
+            std::string header = string_format("#%d: %s (%d)%s", entnum, tmp.type->id.str(),
+                group, hallucination ? _(" (hallucination)") : "");
+            mvwprintz(w_info, point((getmaxx(w_info) - utf8_width(header)) / 2, 0), c_cyan, header);
+        }
+
+        mvwprintz(w_info, point(0, getmaxy(w_info) - 3), c_green, msg);
+        msg.clear();
+        input_context ctxt(menu->input_category, keyboard_mode::keycode);
+        mvwprintw(w_info, point(0, getmaxy(w_info) - 2),
+            _("[%s] find, [f]riendly, [h]allucination, [i]ncrease group, [d]ecrease group, [%s] quit"),
+            ctxt.get_desc("FILTER"), ctxt.get_desc("QUIT"));
+
+        wnoutrefresh(w_info);
+    }
+
+    ~monster_data_retrieval_ui_callback() override = default;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class user_turn
 {
 
@@ -1223,8 +1328,9 @@ void show_当前职业情况() {
     
     
     catacurses::window w_01;
-    input_context ctxt("DIARY");
+    input_context ctxt("");
     ctxt.register_action("QUIT");
+
     ui_adaptor ui_01;
     ui_01.on_screen_resize([&](ui_adaptor&) {
         const std::pair<point, point> beg_and_max = draw_position();
@@ -1296,39 +1402,58 @@ void handle_action_data_retrieval() {
 
         std::vector<const mtype*> mtype_vec;
         
-        uilist monster_menu_left;
+        uilist monster_data_retrieval_ui;
         
-        monster_menu_left.w_x_setup = 0;
+        monster_data_retrieval_ui.w_x_setup = 0;
 
-        monster_menu_left.w_width_setup = []() -> int {
+        monster_data_retrieval_ui.w_width_setup = []() -> int {
             return TERMX;
         };
-        monster_menu_left.pad_right_setup = []() -> int {
+        monster_data_retrieval_ui.pad_right_setup = []() -> int {
             return TERMX - 30;
         };
 
-        monster_menu_left.selected = uistate.wishmonster_selected;
+        monster_data_retrieval_ui.selected = uistate.wishmonster_selected;
+
+        monster_data_retrieval_ui_callback m_d_r_u_c(mtype_vec);
+
+        monster_data_retrieval_ui.callback = &m_d_r_u_c;
+
         
         int i = 0;
 
         for (const mtype& montype : MonsterGenerator::generator().get_all_mtypes()) {
              
            
-            monster_menu_left.addentry(i,true,0,montype.nname());
-            monster_menu_left.entries[i].extratxt.txt = montype.sym;
-            monster_menu_left.entries[i].extratxt.color = montype.color;
-            monster_menu_left.entries[i].extratxt.left = 1;
+            monster_data_retrieval_ui.addentry(i,true,0,montype.nname());
+            monster_data_retrieval_ui.entries[i].extratxt.txt = montype.sym;
+            monster_data_retrieval_ui.entries[i].extratxt.color = montype.color;
+            monster_data_retrieval_ui.entries[i].extratxt.left = 1;
             i++;
             mtype_vec.push_back(&montype);
             
         }
         
 
+        
+
         do {   
             
-            monster_menu_left.query();
+
+            monster_data_retrieval_ui.query();
+            
+
+            if (monster_data_retrieval_ui.ret >= 0) {
+            
+                uistate.wishmonster_selected = monster_data_retrieval_ui.selected;
+                
+            }
+
+            
+
+
         
-        } while (monster_menu_left.ret >= 0);
+        } while (monster_data_retrieval_ui.ret >= 0);
         
         
     
