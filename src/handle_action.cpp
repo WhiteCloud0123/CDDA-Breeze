@@ -254,10 +254,8 @@ public:
 
         mvwprintz(w_info, point(0, getmaxy(w_info) - 3), c_green, msg);
         msg.clear();
-        input_context ctxt(menu->input_category, keyboard_mode::keycode);
-        mvwprintw(w_info, point(0, getmaxy(w_info) - 2),
-            _("[%s] find, [f]riendly, [h]allucination, [i]ncrease group, [d]ecrease group, [%s] quit"),
-            ctxt.get_desc("FILTER"), ctxt.get_desc("QUIT"));
+        
+    
 
         wnoutrefresh(w_info);
     }
