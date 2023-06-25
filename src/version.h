@@ -1,2 +1,2 @@
 // NOLINT(cata-header-guard)
-#define VERSION "CDDA-Breeze 2.0"
+#define VERSION "CDDA-Breeze 2.1"
