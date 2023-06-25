@@ -222,6 +222,10 @@ public:
         }
 
         werase(w_info);
+
+        draw_border(w_info);
+
+
         if (valid_entnum) {
             tmp.print_info(w_info, 2, 5, 1);
 
@@ -285,6 +289,9 @@ public:
         oss << "\n";
         oss << "再生能力 : ";
         oss << tmp.type->regenerates;
+
+
+
         fold_and_print(w_info, point(1, 9), getmaxx(w_info)-2, c_white, oss.str());
 
        
