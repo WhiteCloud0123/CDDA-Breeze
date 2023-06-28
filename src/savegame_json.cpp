@@ -163,6 +163,9 @@ static const vproto_id vehicle_prototype_bicycle( "bicycle" );
 static const vproto_id vehicle_prototype_bicycle_folding( "bicycle_folding" );
 
 static const trait_id trait_Dominator_Of_Zombies("Dominator_Of_Zombies");
+static const efftype_id effect_pet("pet");
+
+
 
 static const std::array<std::string, static_cast<size_t>( object_type::NUM_OBJECT_TYPES )>
 obj_type_name = { { "OBJECT_NONE", "OBJECT_ITEM", "OBJECT_ACTOR", "OBJECT_PLAYER",
@@ -2760,8 +2763,8 @@ void monster::load( const JsonObject &data )
 
     // 在末端添加新增的读取步骤
     data.read( "is_set_breeze", is_set_breeze );
-
-
+    data.read("lv_breeze", lv_breeze);
+    data.read("exp_breeze", exp_breeze);
 
 
 
@@ -2846,7 +2849,13 @@ void monster::store( JsonOut &json ) const
 
     //在末端添加新增的成员
     json.member( "is_set_breeze", is_set_breeze );
-
+    
+    if (has_effect(effect_pet)) {
+        
+        json.member("lv_breeze", lv_breeze);
+        json.member("exp_breeze", exp_breeze);
+    
+    }
 
 }
 
