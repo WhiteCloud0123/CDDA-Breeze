@@ -2058,7 +2058,7 @@ bool monster::melee_attack( Creature &target, float accuracy )
     }
 
     // 目前只有身为宠物的怪物击杀敌人才可以获取经验
-    if (has_effect(effect_pet) && target.is_dead_state() && get_player_character().has_trait(trait_Dominator_Of_Zombies) && in_species(species_ZOMBIE) ) {
+    if (has_effect(effect_pet) && in_species(species_ZOMBIE) && target.is_dead_state() && get_player_character().has_trait(trait_Dominator_Of_Zombies)  ) {
 
 
         if (target.is_monster()) {
