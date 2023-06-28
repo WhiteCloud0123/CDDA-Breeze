@@ -5,7 +5,7 @@
         "id": "scenario_dominator_of_zombies",
         "name": "丧尸主宰",
         "points": 0,
-        "description": "你与你的丧尸犬正在荒野里前行着。",
+        "description": "你与你的丧尸犬正在荒野里前行着。(丧尸主宰场景中的玩家是一位极其特殊的丧尸主宰，他仍然是人类，但同时又有了可以支配丧尸的能力，与其他丧尸是敌对的关系。)",
         "start_name": "平地",
         "professions": [ "Dominator_Of_Zombies" ],
         "allowed_locs": [ "sloc_field" ],
