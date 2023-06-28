@@ -166,6 +166,8 @@ static const trait_id trait_PHEROMONE_MAMMAL( "PHEROMONE_MAMMAL" );
 static const trait_id trait_TERRIFYING( "TERRIFYING" );
 static const trait_id trait_THRESH_MYCUS( "THRESH_MYCUS" );
 
+static const trait_id trait_Dominator_Of_Zombies("Dominator_Of_Zombies");
+
 static const int monster_exp_array[] = { 100, 300, 900, 2700, 8100 , 24300 , 72900 , 218700 , 656100 , 1968300 };
 
 struct pathfinding_settings;
@@ -2056,7 +2058,7 @@ bool monster::melee_attack( Creature &target, float accuracy )
     }
 
     // 目前只有身为宠物的怪物击杀敌人才可以获取经验
-    if (has_effect(effect_pet) && target.is_dead_state() ) {
+    if (has_effect(effect_pet) && target.is_dead_state() && get_player_character().has_trait(trait_Dominator_Of_Zombies) ) {
 
 
         if (target.is_monster()) {
