@@ -166,6 +166,8 @@ static const trait_id trait_PHEROMONE_MAMMAL( "PHEROMONE_MAMMAL" );
 static const trait_id trait_TERRIFYING( "TERRIFYING" );
 static const trait_id trait_THRESH_MYCUS( "THRESH_MYCUS" );
 
+static const int monster_exp_array[] = { 100, 300, 900, 2700, 8100 , 24300 , 72900 , 218700 , 656100 , 1968300 };
+
 struct pathfinding_settings;
 
 // Limit the number of iterations for next upgrade_time calculations.
@@ -2052,6 +2054,76 @@ bool monster::melee_attack( Creature &target, float accuracy )
                      body_part_name_accusative( dealt_dam.bp_hit ), target.skin_name() );
         }
     }
+
+    // 目前只有身为宠物的怪物击杀敌人才可以获取经验
+    if (has_effect(effect_pet) && target.is_dead_state() ) {
+
+
+        if (target.is_monster()) {
+
+            exp_breeze = exp_breeze + target.as_monster()->type->difficulty_base;
+            lv_breeze = 0;
+            for (int i = 0; i < 10; i++) {
+
+                if (exp_breeze>monster_exp_array[i]) {
+
+                    lv_breeze++;
+                
+                }
+                else {
+                
+                    break;
+                
+                }
+            
+            
+            }
+
+
+        }
+        else {
+        
+            // 对于击杀npc获得的经验计算: 10 + 力量 + 智力 + 敏捷 + 感知 
+            exp_breeze = exp_breeze +
+                target.as_character()->get_str_base() +
+                target.as_character()->get_int_base() + 
+                target.as_character()->get_dex_base() +
+                target.as_character()->get_per_base();
+
+            lv_breeze = 0;
+            for (int i = 0; i < 10; i++) {
+
+                if (exp_breeze > monster_exp_array[i]) {
+
+                    lv_breeze++;
+                    
+                }
+                else {
+
+                    break;
+
+                }
+
+
+            }
+        
+        
+        
+        
+        
+        
+        }
+
+
+
+    
+    
+    
+    }
+
+
+
+
 
     target.check_dead_state();
 

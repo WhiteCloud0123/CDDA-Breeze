@@ -510,6 +510,8 @@ class monster : public Creature
         // DEFINING VALUES
         // 标记 添加 set_breeze，“_breeze” 防止项目中有重复的变量名
         bool is_set_breeze = false;
+        int lv_breeze = 0;
+        int exp_breeze = 0;
         int friendly = 0;
         int anger = 0;
         int morale = 0;
