@@ -288,7 +288,7 @@ void monster::poly( const mtype_id &id )
     }
     type = &id.obj();
     moves = 0;
-    Creature::set_speed_base( type->speed );
+    Creature::set_speed_base( type->speed + lv_breeze );
     anger = type->agro;
     morale = type->morale;
     hp = static_cast<int>( hp_percentage * type->hp );
