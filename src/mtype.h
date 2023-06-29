@@ -152,6 +152,7 @@ enum m_flag : int {
     MF_PET_HARNESSABLE,     // This monster can be harnessed when tamed.
     MF_DOGFOOD,             // This monster will respond to the dog whistle.
     MF_MILKABLE,            // This monster is milkable.
+    可以装备武器,           // 这个怪物可以装备武器
     MF_SHEARABLE,           // This monster is shearable.
     MF_NO_BREED,            // This monster doesn't breed, even though it has breed data
     MF_NO_FUNG_DMG,         // This monster can't be damaged by fungal spores and can't be fungalized either.

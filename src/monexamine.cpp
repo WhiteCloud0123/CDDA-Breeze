@@ -414,7 +414,22 @@ void view_attribute(monster& z) {
 }
 
 
+void equip_weapon(monster&z) {
 
+
+    item* i = get_player_character().get_wielded_item().get_item();
+
+    z.weapon_item = cata::make_value<item>(*i);
+    
+    add_msg(m_good,_("你为 %1s 装备上了 %2s"),z.get_name(), i->tname());
+
+    get_player_character().i_rem(i);
+
+    // 简单起见，消耗100行动点
+    get_avatar().moves = get_avatar().moves - 100;
+
+
+}
 
 
 item_location pet_armor_loc( monster &z )
@@ -801,7 +816,8 @@ bool monexamine::pet_menu( monster &z )
         命令其不要在这里继续等待,
         从背包里取出物品,
         治疗,
-        查看属性
+        查看属性,
+        装备武器
 
     };
 
@@ -836,6 +852,19 @@ bool monexamine::pet_menu( monster &z )
 
 
     }
+
+    // 目前简单起见仅仅当怪物拥有“可以装备武器”这个flag，并且玩家手持着东西的时候才显示这个选项
+    if (z.has_flag(可以装备武器) && z.weapon_item==NULL && player_character.is_armed()   ) {
+        
+        amenu.addentry(装备武器, true, '5', _("装备武器"));
+
+    
+    }
+
+
+
+
+
 
 
     if( z.has_effect( effect_has_bag ) ) {
@@ -981,6 +1010,8 @@ bool monexamine::pet_menu( monster &z )
     
     }
 
+    
+
 
 
 
@@ -1094,6 +1125,11 @@ bool monexamine::pet_menu( monster &z )
         case 查看属性:
 
             view_attribute(z);
+
+            break;
+        case 装备武器:
+
+            equip_weapon(z);
 
             break;
         default:

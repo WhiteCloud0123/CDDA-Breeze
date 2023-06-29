@@ -180,6 +180,7 @@ std::string enum_to_string<m_flag>( m_flag data )
         case MF_PET_HARNESSABLE: return "PET_HARNESSABLE";
         case MF_DOGFOOD: return "DOGFOOD";
         case MF_MILKABLE: return "MILKABLE";
+        case 可以装备武器: return "可以装备武器";
         case MF_SHEARABLE: return "SHEARABLE";
         case MF_NO_BREED: return "NO_BREED";
         case MF_NO_FUNG_DMG: return "NO_FUNG_DMG";
