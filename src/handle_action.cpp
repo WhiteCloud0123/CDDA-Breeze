@@ -271,123 +271,130 @@ public:
 
         }
 
-        if (index == 0) {
+        if (valid_entnum) {
+            if (index == 0) {
 
-            std::ostringstream oss;
+                std::ostringstream oss;
 
-            oss << tmp.type->get_description();
-            /*oss << "\n";
-            oss << "\n";
-            oss << "物种 : ";
-            oss<<"";*/
-
-
-
-            if (!tmp.type->petfood.food.empty()) {
-
+                oss << tmp.type->get_description();
+                /*oss << "\n";
                 oss << "\n";
-                oss << "\n";
-
-                oss << "可驯服          食物 : ";
-                for (const std::string& food_ref : tmp.type->petfood.food) {
-
-                    oss << food_ref << " ";
-
-                }
-
-
-            }
-
-
-            oss << "\n";
-            oss << "\n";
-            oss << "<color_white>" << "HP : " << "</color>";
-            oss << "<color_white>" << tmp.get_hp_max() << "</color>";
-            oss << "\n";
-            oss << "\n";
-            oss << "白天视野 : ";
-            oss << tmp.type->vision_day;
-            oss << "          ";
-            oss << "夜间视野 : ";
-            oss << tmp.type->vision_night;
-            oss << "\n";
-            oss << "\n";
-            oss << "士气 : ";
-            oss << tmp.type->morale;
-            oss << "\n";
-            oss << "\n";
-            oss << "近战技能 : ";
-            oss << tmp.type->melee_skill;
-            oss << "\n";
-            oss << "\n";
-            oss << "近战骰子面数 : ";
-            oss << tmp.type->melee_sides;
-            oss << "          ";
-            oss << "近战骰子个数 : ";
-            oss << tmp.type->melee_dice;
-            oss << "\n";
-            oss << "\n";
-            oss << "闪避技能 : ";
-            oss << tmp.get_dodge_base();
-            oss << "\n";
-            oss << "\n";
-            oss << "速度 : ";
-            oss << tmp.get_speed_base();
-            oss << "\n";
-            oss << "\n";
-            oss << "钝击防御 : ";
-            oss << tmp.type->armor_bash;
-            oss << "          ";
-            oss << "刺击防御 : ";
-            oss << tmp.type->armor_stab;
-
-            if (tmp.type->regenerates != 0) {
-                oss << "\n";
-                oss << "\n";
-                oss << "再生能力 : ";
-                oss << tmp.type->regenerates;
-            }
+                oss << "物种 : ";
+                oss<<"";*/
 
 
 
+                if (!tmp.type->petfood.food.empty()) {
 
+                    oss << "\n";
+                    oss << "\n";
 
-            fold_and_print(w_info, point(1, 9), getmaxx(w_info) - 2, c_white, oss.str());
+                    oss << "可驯服          食物 : ";
+                    for (const std::string& food_ref : tmp.type->petfood.food) {
 
-        }
-        else if (index = 1) {
+                        oss << food_ref << " ";
 
-
-            std::ostringstream oss;
-
-            if (!tmp.type->death_drops.is_empty()) {
-
-
-                oss << "<color_white>" << "掉落物: " << "</color>";
-
-                for (const auto& item : item_group::every_possible_item_from(tmp.type->death_drops)) {
-
-                    oss << "<color_green>" << item::nname(item->get_id()) << "</color>";
-                    oss << "<color_green>" << "    " << "</color>";
-
+                    }
 
 
                 }
 
 
+                oss << "\n";
+                oss << "\n";
+                oss << "<color_white>" << "HP : " << "</color>";
+                oss << "<color_white>" << tmp.get_hp_max() << "</color>";
+                oss << "\n";
+                oss << "\n";
+                oss << "白天视野 : ";
+                oss << tmp.type->vision_day;
+                oss << "          ";
+                oss << "夜间视野 : ";
+                oss << tmp.type->vision_night;
+                oss << "\n";
+                oss << "\n";
+                oss << "士气 : ";
+                oss << tmp.type->morale;
+
+
+                oss << "\n";
+                oss << "\n";
+                oss << "近战技能 : ";
+                oss << tmp.type->melee_skill;
+                oss << "\n";
+                oss << "\n";
+                oss << "近战骰子面数 : ";
+                oss << tmp.type->melee_sides;
+                oss << "          ";
+                oss << "近战骰子个数 : ";
+                oss << tmp.type->melee_dice;
+                oss << "\n";
+                oss << "\n";
+                oss << "闪避技能 : ";
+                oss << tmp.get_dodge_base();
+                oss << "\n";
+                oss << "\n";
+                oss << "速度 : ";
+                oss << tmp.get_speed_base();
+                oss << "\n";
+                oss << "\n";
+                oss << "钝击防御 : ";
+                oss << tmp.type->armor_bash;
+                oss << "          ";
+                oss << "刺击防御 : ";
+                oss << tmp.type->armor_stab;
+
+                if (tmp.type->regenerates != 0) {
+                    oss << "\n";
+                    oss << "\n";
+                    oss << "再生能力 : ";
+                    oss << tmp.type->regenerates;
+                }
+
+                oss << "\n";
+                oss << "\n";
+                oss << "难度 : ";
+                oss << tmp.type->difficulty;
+
+
+
+                fold_and_print(w_info, point(1, 9), getmaxx(w_info) - 2, c_white, oss.str());
+
+            }
+            else if (index = 1) {
+
+
+                std::ostringstream oss;
+
+                if (!tmp.type->death_drops.is_empty()) {
+
+
+                    oss << "<color_white>" << "掉落物: " << "</color>";
+
+                    for (const auto& item : item_group::every_possible_item_from(tmp.type->death_drops)) {
+
+                        oss << "<color_green>" << item::nname(item->get_id()) << "</color>";
+                        oss << "<color_green>" << "    " << "</color>";
+
+
+
+                    }
+
+
+                }
+
+                fold_and_print(w_info, point(1, 9), getmaxx(w_info) - 2, c_white, oss.str());
+
+
+
+
+
+
+
+
             }
 
-            fold_and_print(w_info, point(1, 9), getmaxx(w_info) - 2, c_white, oss.str());
-
-
-
-
-
-
-
-
         }
-
 
 
 
