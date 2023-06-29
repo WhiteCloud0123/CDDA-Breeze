@@ -2664,6 +2664,12 @@ void monster::load( const JsonObject &data )
         newitem.deserialize( battery_item_json );
         battery_item = cata::make_value<item>( newitem );
     }
+    if (data.has_object("weapon_item")) {
+        JsonValue weapon_item_json = data.get_member("weapon_item");
+        item newitem;
+        newitem.deserialize(weapon_item_json);
+        weapon_item = cata::make_value<item>(newitem);
+    }
     data.read( "hp", hp );
 
     // sp_timeout indicates an old save, prior to the special_attacks refactor
@@ -2824,6 +2830,9 @@ void monster::store( JsonOut &json ) const
     }
     if( battery_item ) {
         json.member( "battery_item", *battery_item );
+    }
+    if (weapon_item) {
+        json.member("weapon_item", *weapon_item);
     }
     json.member( "ammo", ammo );
     json.member( "underwater", underwater );
