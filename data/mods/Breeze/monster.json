@@ -118,6 +118,6 @@
     "harvest": "zombie",
     "special_attacks": [ { "type": "bite", "attack_upper": false, "cooldown": 5 } ],
     "death_drops": "mon_dog_death_drops",
-    "flags": [ "SEES", "HEARS", "SMELLS", "STUMBLES", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "STUMBLES", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "FILTHY", "可以装备武器" ]
   }
 ]

@@ -503,6 +503,7 @@ class monster : public Creature
         cata::value_ptr<item> armor_item; // item of armor the monster may be wearing
         cata::value_ptr<item> storage_item; // storage item for monster carrying items
         cata::value_ptr<item> battery_item; // item to power mechs
+        cata::value_ptr<item> weapon_item; // 怪物装备的武器
         units::mass get_carried_weight() const;
         units::volume get_carried_volume() const;
         void move_special_item_to_inv( cata::value_ptr<item> &it );
