@@ -379,6 +379,43 @@ void treat_zombie(monster& z) {
 }
 
 
+void view_attribute(monster& z) {
+
+    enum choice {
+
+        等级 = 0,
+        经验值, 
+        生命值,
+        速度
+
+
+    };
+
+    uilist monster_attribute_ui;
+
+    monster_attribute_ui.text = string_format(_("%s 的属性"),z.get_name());
+
+    monster_attribute_ui.addentry(等级, true, '0', _("等级: %s"), z.lv_breeze);
+    
+    monster_attribute_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
+
+    monster_attribute_ui.addentry(生命值, true, '2', _("当前生命值 / 最大生命值: %1s / %2s"), z.get_hp(),z.get_hp_max());
+
+    monster_attribute_ui.addentry(速度, true, '3', _("速度: %s"), z.get_speed_base());
+
+
+    monster_attribute_ui.query();
+
+
+
+
+
+
+}
+
+
+
+
 
 item_location pet_armor_loc( monster &z )
 {
@@ -763,7 +800,8 @@ bool monexamine::pet_menu( monster &z )
         命令其在这里等待,
         命令其不要在这里继续等待,
         从背包里取出物品,
-        治疗
+        治疗,
+        查看属性
 
     };
 
@@ -935,6 +973,15 @@ bool monexamine::pet_menu( monster &z )
     
     }
 
+    if (player_character.has_trait(trait_Dominator_Of_Zombies) && z.in_species(species_ZOMBIE)) {
+    
+    
+        amenu.addentry(查看属性, true, '4', _("查看属性"));
+        
+    
+    }
+
+
 
 
 
@@ -1042,6 +1089,11 @@ bool monexamine::pet_menu( monster &z )
         case 治疗:
 
             treat_zombie(z);
+
+            break;
+        case 查看属性:
+
+            view_attribute(z);
 
             break;
         default:
