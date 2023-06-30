@@ -1,0 +1,35 @@
+[
+
+
+    {
+        "type": "PET_ARMOR",
+        "id": "废料护甲_宠物_体型_人类",
+        "symbol": "[",
+        "color": "white",
+        "name": "废料护甲(人类体型)",
+        "description": "一件专为人类体型的宠物设计的废料护甲。",
+        "price": 1000,
+        "price_postapoc": 80,
+        "material": [
+            "budget_steel",
+            "cotton"
+          ],
+          "repairs_with": [
+            "budget_steel"
+          ],
+        "weight": "4000 g",
+        "volume": "6400 ml",
+        "bashing": 2,
+        "to_hit": -1,
+        "flags": [
+          "IS_PET_ARMOR"
+        ],
+        "material_thickness": 2,
+        "max_pet_vol": "100000 ml",
+        "min_pet_vol": "62500 ml",
+        "pet_bodytype": "human"
+    
+      }
+
+
+]
