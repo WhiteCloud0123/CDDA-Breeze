@@ -414,7 +414,7 @@ void view_attribute(monster& z) {
 }
 
 
-void equip_weapon(monster&z) {
+void equip_weapon_pet_menu(monster&z) {
 
 
     item* i = get_player_character().get_wielded_item().get_item();
@@ -428,6 +428,22 @@ void equip_weapon(monster&z) {
     // 简单起见，消耗100行动点
     get_avatar().moves = get_avatar().moves - 100;
 
+
+}
+
+
+void remove_weapon_pet_menu(monster &z) {
+
+
+
+    get_map().add_item_or_charges(get_player_character().pos(), *z.weapon_item);
+    
+    add_msg(m_good,_("你移除了 %1s 的 %2s "),z.get_name(), z.weapon_item->tname());
+
+    z.weapon_item.reset();
+    
+    // 消耗100行动点
+    get_avatar().moves = get_avatar().moves - 100;
 
 }
 
@@ -817,7 +833,8 @@ bool monexamine::pet_menu( monster &z )
         从背包里取出物品,
         治疗,
         查看属性,
-        装备武器
+        装备武器,
+        移除武器
 
     };
 
@@ -861,6 +878,14 @@ bool monexamine::pet_menu( monster &z )
     
     }
 
+    if (z.weapon_item != NULL) {
+
+
+        amenu.addentry(移除武器,true,'6',_("移除武器"));
+    
+    
+    
+    }
 
 
 
@@ -1129,7 +1154,12 @@ bool monexamine::pet_menu( monster &z )
             break;
         case 装备武器:
 
-            equip_weapon(z);
+            equip_weapon_pet_menu(z);
+
+            break;
+        case 移除武器:
+
+            remove_weapon_pet_menu(z);
 
             break;
         default:
