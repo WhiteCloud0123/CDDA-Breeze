@@ -419,9 +419,23 @@ void equip_weapon_pet_menu(monster&z) {
 
     item* i = get_player_character().get_wielded_item().get_item();
 
-    z.weapon_item = cata::make_value<item>(*i);
     
-    add_msg(m_good,_("你为 %1s 装备上了 %2s"),z.get_name(), i->tname());
+    
+    if (i->weight()>z.weight_capacity()) {
+
+        add_msg(m_info, _("%1s 对 %2s 来说太重了!"), i->tname(), z.get_name());
+        
+        return;
+    
+    }
+    
+       
+    z.weapon_item = cata::make_value<item>(*i);
+        
+    
+    add_msg(m_good, _("你为 %1s 装备上了 %2s"), z.get_name(), i->tname());
+
+    
 
     get_player_character().i_rem(i);
 
