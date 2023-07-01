@@ -361,7 +361,7 @@ public:
                 fold_and_print(w_info, point(1, 9), getmaxx(w_info) - 2, c_white, oss.str());
 
             }
-            else if (index = 1) {
+            else if (index == 1) {
 
 
                 std::ostringstream oss;
