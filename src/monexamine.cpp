@@ -379,32 +379,62 @@ void treat_zombie(monster& z) {
 }
 
 
-void view_attribute(monster& z) {
+void view_status(monster& z) {
 
     enum choice {
 
         等级 = 0,
         经验值, 
         生命值,
-        速度
+        速度,
+        武器,
+        防具
 
 
     };
 
-    uilist monster_attribute_ui;
+    uilist monster_status_ui;
 
-    monster_attribute_ui.text = string_format(_("%s 的属性"),z.get_name());
+    monster_status_ui.text = string_format(_("%s 的状态"),z.get_name());
 
-    monster_attribute_ui.addentry(等级, true, '0', _("等级: %s"), z.lv_breeze);
+    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv_breeze);
     
-    monster_attribute_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
+    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
 
-    monster_attribute_ui.addentry(生命值, true, '2', _("当前生命值 / 最大生命值: %1s / %2s"), z.get_hp(),z.get_hp_max());
+    monster_status_ui.addentry(生命值, true, '2', _("当前生命值 / 最大生命值: %1s / %2s"), z.get_hp(),z.get_hp_max());
 
-    monster_attribute_ui.addentry(速度, true, '3', _("速度: %s"), z.get_speed_base());
+    monster_status_ui.addentry(速度, true, '3', _("速度: %s"), z.get_speed_base());
+
+    
+    if (z.weapon_item!=NULL) {
+
+        monster_status_ui.addentry(武器, true, '4', _("武器: %s"), z.weapon_item->tname());
+    
+    }
+    else {
+    
+        monster_status_ui.addentry(武器, true, '4', _("武器: 无"));
+    
+    }
+    
+    if (z.armor_item!=NULL) {
+    
+        monster_status_ui.addentry(防具, true, '5', _("防具: %s"), z.armor_item->tname());
+    
+    }
+    else {
+    
+        monster_status_ui.addentry(防具, true, '5', _("防具: 无"));
+    
+    }
 
 
-    monster_attribute_ui.query();
+    
+
+    
+    
+    
+    monster_status_ui.query();
 
 
 
@@ -413,6 +443,60 @@ void view_attribute(monster& z) {
 
 }
 
+
+
+void view_status_02(monster &z) {
+
+    enum choice {
+
+        等级 = 0,
+        经验值,
+        生命值,
+        速度,
+        武器,
+        防具
+
+
+    };
+
+
+    uilist monster_status_ui;
+
+    if (z.weapon_item != NULL) {
+
+        monster_status_ui.addentry(武器, true, '4', _("武器: %s"), z.weapon_item->tname());
+
+    }
+    else {
+
+        monster_status_ui.addentry(武器, true, '4', _("武器: 无"));
+
+    }
+
+    if (z.armor_item != NULL) {
+
+        monster_status_ui.addentry(防具, true, '5', _("防具: %s"), z.armor_item->tname());
+
+    }
+    else {
+
+        monster_status_ui.addentry(防具, true, '5', _("防具: 无"));
+
+    }
+
+
+
+
+
+
+
+    monster_status_ui.query();
+
+
+
+
+
+}
 
 void equip_weapon_pet_menu(monster&z) {
 
@@ -846,7 +930,8 @@ bool monexamine::pet_menu( monster &z )
         命令其不要在这里继续等待,
         从背包里取出物品,
         治疗,
-        查看属性,
+        查看状态,
+        查看状态_02,
         装备武器,
         移除武器
 
@@ -1044,8 +1129,15 @@ bool monexamine::pet_menu( monster &z )
     if (player_character.has_trait(trait_Dominator_Of_Zombies) && z.in_species(species_ZOMBIE)) {
     
     
-        amenu.addentry(查看属性, true, '4', _("查看属性"));
+        amenu.addentry(查看状态, true, '4', _("查看状态"));
         
+    
+    }
+    else {
+    
+        
+        amenu.addentry(查看状态_02, true, '4', _("查看状态"));
+    
     
     }
 
@@ -1161,9 +1253,14 @@ bool monexamine::pet_menu( monster &z )
             treat_zombie(z);
 
             break;
-        case 查看属性:
+        case 查看状态:
 
-            view_attribute(z);
+            view_status(z);
+
+            break;
+        case 查看状态_02:
+
+            view_status_02(z);
 
             break;
         case 装备武器:
