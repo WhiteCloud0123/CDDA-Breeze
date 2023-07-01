@@ -462,6 +462,10 @@ void view_status_02(monster &z) {
 
     uilist monster_status_ui;
 
+    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv_breeze);
+
+    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
+
     if (z.weapon_item != NULL) {
 
         monster_status_ui.addentry(武器, true, '4', _("武器: %s"), z.weapon_item->tname());
