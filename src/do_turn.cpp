@@ -55,6 +55,8 @@ static const trait_id trait_CANNIBAL( "CANNIBAL" );
 static const trait_id trait_HAS_NEMESIS( "HAS_NEMESIS" );
 static const trait_id trait_PSYCHOPATH( "PSYCHOPATH" );
 
+static const species_id species_ZOMBIE("ZOMBIE");
+
 #if defined(__ANDROID__)
 extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
 extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
@@ -443,6 +445,70 @@ void monmove()
             }
             critter.try_biosignature();
             critter.try_reproduce();
+
+            // 首先判断怪物有没有受伤
+            if (critter.get_hp() < critter.get_hp_max()) {
+                
+                // 对于regenerates不为0的怪物，先不管是不是丧尸，先以regenerates的数值恢复血量
+                if (critter.type->regenerates!=0) {
+            
+                    // 如果治疗量超过了最大hp，直接设置当前hp为最大hp
+                    if ((critter.get_hp() + critter.type->regenerates) > critter.get_hp_max()) {
+                       
+                        critter.set_hp(critter.get_hp_max());
+                    
+                    }
+                    else {
+                    
+                        critter.set_hp(critter.get_hp() + critter.type->regenerates);
+                    
+                    }
+                
+                }
+
+
+                // 丧尸除了本身有自愈能力的个体之外，每天不自动回复血量
+                if ( !critter.in_species(species_ZOMBIE) ) {
+
+                    // 每天自动回复百分之5的血量，那最少也会回复1点
+                    if ( (0.05 * critter.get_hp_max() + critter.get_hp()) > critter.get_hp_max() ) {
+
+                        critter.set_hp(critter.get_hp_max());
+
+                    
+                    }
+                    else {
+                    
+                        
+                        if (0.05 * critter.get_hp_max()<1) {
+                        
+                            critter.set_hp( 1 + critter.get_hp() );
+                        
+                        }
+                        else {
+                            critter.set_hp(0.05 * critter.get_hp_max() + critter.get_hp());
+                        }
+                    
+                    
+                    }
+
+
+                
+                
+                }
+
+
+
+
+
+
+
+            
+            }
+
+
+
+
         }
         while( critter.moves > 0 && !critter.is_dead() && !critter.has_effect( effect_ridden ) ) {
             critter.made_footstep = false;
