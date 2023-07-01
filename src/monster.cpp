@@ -1993,7 +1993,25 @@ bool monster::melee_attack(Creature& target, float accuracy)
 
     damage_instance damage = !is_hallucination() ? type->melee_damage : damage_instance();
     if (!is_hallucination() && type->melee_dice > 0) {
-        damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides));
+
+        // 如果怪物的weapon_item不是空的，我们将武器的钝击属性作为怪物的近战伤害加成
+        if (weapon_item !=NULL) {
+            
+
+            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + weapon_item->damage_melee(damage_type::BASH));
+            
+        
+        }
+        else {
+        
+            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides));
+
+        }
+
+
+        
+    
+    
     }
 
     dealt_damage_instance dealt_dam;
