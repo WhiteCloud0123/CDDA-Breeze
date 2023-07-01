@@ -449,7 +449,7 @@ void monmove()
             // 首先判断怪物有没有受伤
             if (critter.get_hp() < critter.get_hp_max()) {
                 
-                // 拥有自愈能力的怪物，先不管是不是丧尸，先以regenerates的数值恢复血量
+                // 对于regenerates不为0的怪物，先不管是不是丧尸，先以regenerates的数值恢复血量
                 if (critter.type->regenerates!=0) {
             
                     // 如果治疗量超过了最大hp，直接设置当前hp为最大hp
