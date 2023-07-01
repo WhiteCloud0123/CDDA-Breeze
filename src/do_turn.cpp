@@ -449,25 +449,8 @@ void monmove()
             // 首先判断怪物有没有受伤
             if (critter.get_hp() < critter.get_hp_max()) {
                 
-                // 对于regenerates不为0的怪物，先不管是不是丧尸，先以regenerates的数值恢复血量
-                if (critter.type->regenerates!=0) {
-            
-                    // 如果治疗量超过了最大hp，直接设置当前hp为最大hp
-                    if ((critter.get_hp() + critter.type->regenerates) > critter.get_hp_max()) {
-                       
-                        critter.set_hp(critter.get_hp_max());
-                    
-                    }
-                    else {
-                    
-                        critter.set_hp(critter.get_hp() + critter.type->regenerates);
-                    
-                    }
-                
-                }
 
-
-                // 丧尸除了本身有自愈能力的个体之外，每天不自动回复血量
+                // 丧尸之外的怪物每天自动回复生命值
                 if ( !critter.in_species(species_ZOMBIE) ) {
 
                     // 每天自动回复百分之5的血量，那最少也会回复1点
