@@ -401,7 +401,7 @@ void view_status(monster& z) {
     
     monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
 
-    monster_status_ui.addentry(生命值, true, '2', _("当前生命值 / 最大生命值: %1s / %2s"), z.get_hp(),z.get_hp_max());
+    monster_status_ui.addentry(生命值, true, '2', _("当前生命值: %1s   |   最大生命值: %2s"), z.get_hp(),z.get_hp_max());
 
     monster_status_ui.addentry(速度, true, '3', _("速度: %s"), z.get_speed_base());
 

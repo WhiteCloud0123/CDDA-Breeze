@@ -453,7 +453,7 @@ void monmove()
                 // 丧尸之外的怪物每天自动回复生命值
                 if ( !critter.in_species(species_ZOMBIE) ) {
 
-                    // 每天自动回复百分之5的血量，那最少也会回复1点
+                    // 每天自动回复怪物最大血量的百分之5的血量，至少回复1点
                     if ( (0.05 * critter.get_hp_max() + critter.get_hp()) > critter.get_hp_max() ) {
 
                         critter.set_hp(critter.get_hp_max());
