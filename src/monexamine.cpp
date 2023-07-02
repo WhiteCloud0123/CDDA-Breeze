@@ -408,7 +408,7 @@ void view_status(monster& z) {
     
     if (z.weapon_item!=NULL) {
 
-        monster_status_ui.addentry(武器, true, '4', _("武器: %s"), z.weapon_item->tname());
+        monster_status_ui.addentry(武器, true, '4', _("武器: %1s   |   伤害加成: %2s"), z.weapon_item->tname(), z.weapon_item->damage_melee(damage_type::BASH));
     
     }
     else {
@@ -468,7 +468,7 @@ void view_status_02(monster &z) {
 
     if (z.weapon_item != NULL) {
 
-        monster_status_ui.addentry(武器, true, '4', _("武器: %s"), z.weapon_item->tname());
+        monster_status_ui.addentry(武器, true, '4', _("武器: %1s   |   伤害加成: %2s"), z.weapon_item->tname(),z.weapon_item->damage_melee(damage_type::BASH));
 
     }
     else {
