@@ -56,6 +56,7 @@ static const trait_id trait_HAS_NEMESIS( "HAS_NEMESIS" );
 static const trait_id trait_PSYCHOPATH( "PSYCHOPATH" );
 
 static const species_id species_ZOMBIE("ZOMBIE");
+static const species_id species_ROBOT("ROBOT");
 
 #if defined(__ANDROID__)
 extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
@@ -450,8 +451,8 @@ void monmove()
             if (critter.get_hp() < critter.get_hp_max()) {
                 
 
-                // 丧尸之外的怪物每天自动回复生命值
-                if ( !critter.in_species(species_ZOMBIE) ) {
+                // 丧尸与机器人之外的怪物每天自动回复生命值
+                if ( !critter.in_species(species_ZOMBIE) && !critter.in_species(species_ROBOT)) {
 
                     // 每天自动回复怪物最大血量的百分之5的血量，至少回复1点
                     if ( (0.05 * critter.get_hp_max() + critter.get_hp()) > critter.get_hp_max() ) {
