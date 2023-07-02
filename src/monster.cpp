@@ -3052,6 +3052,7 @@ void monster::die(Creature* nkiller)
         move_special_item_to_inv(armor_item);
         move_special_item_to_inv(storage_item);
         move_special_item_to_inv(tied_item);
+        move_special_item_to_inv(weapon_item);
 
         if (has_effect(effect_lightsnare)) {
             add_item(item("string_36", calendar::turn_zero));
