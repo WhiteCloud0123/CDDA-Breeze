@@ -863,7 +863,8 @@ bool monexamine::pet_menu( monster &z )
 
         enum choices_to_unfriendly_zombie {
 
-            支配 = 0
+            支配 = 0,
+            内部结构破坏
 
 
         };
@@ -872,7 +873,7 @@ bool monexamine::pet_menu( monster &z )
         std::string zombie_name = z.get_name();
         menu_01.text = string_format( _( "你要对 %s 做什么?" ), zombie_name );
         menu_01.addentry( 支配, true, '0', _( "支配" ) );
-
+        menu_01.addentry(内部结构破坏, true, '1', _("内部结构破坏"));
         menu_01.query();
         int choice = menu_01.ret;
 
@@ -917,6 +918,26 @@ bool monexamine::pet_menu( monster &z )
                 }
                 // 消耗50行动点
                 get_player_character().moves = get_player_character().moves - 50;
+
+                break;
+            case 内部结构破坏:
+                
+                //伤害计算公式为 20 + 20 * 角色的丧尸主宰职业等级
+
+                z.set_hp( z.get_hp() - ( 20 + 20 * get_avatar().dominator_of_zombies_lv ) );
+                
+                add_msg(m_good,_("%1s 的内部结构遭到破坏,受到 %2s点 伤害。"),z.get_name(), 20 + 20 * get_avatar().dominator_of_zombies_lv);
+               
+                // 消耗一百行动点
+                get_player_character().moves = get_player_character().moves - 100;
+                
+                // 击杀了怪物后，获取kill_xp
+                if ( z.get_hp()<=0 ) {
+
+                    get_player_character().kill_xp = get_player_character().kill_xp + z.type->difficulty;
+                
+                }
+
 
                 break;
             default:
