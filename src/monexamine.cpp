@@ -549,6 +549,40 @@ void remove_weapon_pet_menu(monster &z) {
 
 }
 
+void dispatch_pet_menu(monster &z) {
+
+
+    enum choice {
+
+        去附近寻找食物 = 0,
+        去附近打猎
+    
+    };
+
+    uilist ui;
+
+    if (z.storage_item!=NULL) {
+
+        ui.addentry(去附近寻找食物, true, '0', _("去附近寻找食物"));
+    
+    }
+    else {
+
+        ui.addentry(去附近寻找食物, false, '0', _("去附近寻找食物"));
+    
+    
+    }
+    
+
+    ui.query();
+
+
+
+
+
+
+}
+
 
 item_location pet_armor_loc( monster &z )
 {
@@ -937,7 +971,8 @@ bool monexamine::pet_menu( monster &z )
         查看状态,
         查看状态_02,
         装备武器,
-        移除武器
+        移除武器,
+        派遣
 
     };
 
@@ -1135,6 +1170,14 @@ bool monexamine::pet_menu( monster &z )
     
         amenu.addentry(查看状态, true, '4', _("查看状态"));
         
+        
+
+        amenu.addentry(派遣, true, '6', _("派遣"));
+
+        
+        
+        
+    
     
     }
     else {
@@ -1275,6 +1318,11 @@ bool monexamine::pet_menu( monster &z )
         case 移除武器:
 
             remove_weapon_pet_menu(z);
+
+            break;
+        case 派遣:
+
+            dispatch_pet_menu(z);
 
             break;
         default:
