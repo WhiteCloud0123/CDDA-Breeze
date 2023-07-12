@@ -23,16 +23,25 @@ static const itype_id itype_rope_6( "rope_6" );
 static const itype_id itype_snare_trigger( "snare_trigger" );
 static const itype_id itype_string_36( "string_36" );
 
+static const json_character_flag json_flag_DOWNED_RECOVERY("DOWNED_RECOVERY");
+
+
 void Character::try_remove_downed()
 {
 
     /** @EFFECT_DEX increases chance to stand up when knocked down */
 
-    /** @EFFECT_STR increases chance to stand up when knocked down, slightly */
-    if( rng( 0, 40 ) > get_dex() + get_str() / 2 ) {
+    /** @EFFECT_ARM_STR increases chance to stand up when knocked down, slightly */
+    // Downed reduces balance score to 10% unless resisted, multiply to compensate
+    int chance = (get_dex() + get_arm_str() / 2.0) * get_limb_score(limb_score_balance) * 10.0;
+    // Always 2,5% chance to stand up
+    chance += has_flag(json_flag_DOWNED_RECOVERY) ? 20 : 1;
+    if (!x_in_y(chance, 40)) {
         add_msg_if_player( _( "You struggle to stand." ) );
     } else {
-        add_msg_player_or_npc( m_good, _( "You stand up." ),
+        add_msg_player_or_npc(m_good,
+            has_flag(json_flag_DOWNED_RECOVERY) ? _("You deftly roll to your feet.") : _("You stand up."),
+            has_flag(json_flag_DOWNED_RECOVERY) ? _("<npcname> deftly rolls to their feet.") :
                                _( "<npcname> stands up." ) );
         remove_effect( effect_downed );
     }
@@ -191,9 +200,7 @@ bool Character::try_remove_grab()
             defender_check = defender_check + 2;
         }
 
-        if( is_throw_immune() ) {
-            defender_check = defender_check + 2;
-        }
+        
 
         if( get_effect_int( effect_stunned ) ) {
             defender_check = defender_check - 2;

@@ -6,7 +6,7 @@
   - [TODO](#todo)
   - [Ammo](#ammo)
     - [Ammo type](#ammo-type)
-    - [Effects](#ammo-effects)
+    - [Ammo effects](#ammo-effects)
     - [Flags](#flags)
   - [Traps](#traps)
   - [Armor](#armor)
@@ -16,7 +16,7 @@
   - [Bionics](#bionics)
   - [Bodyparts](#bodyparts)
   - [Books](#books)
-  - [Character - (Bionic/Mutation/Effect)](#character)
+  - [Character](#character)
   - [Comestibles](#comestibles)
     - [Comestible type](#comestible-type)
     - [Addiction type](#addiction-type)
@@ -427,6 +427,7 @@ Some armor flags, such as `WATCH` and `ALARMCLOCK` are compatible with other ite
 - ```COLDBLOOD``` For heat dependent mutations.
 - ```COLDBLOOD2``` For very heat dependent mutations.
 - ```COLDBLOOD3``` For cold-blooded mutations.
+- ```DOWNED_RECOVERY``` Always has 50% chance to recover from downing, regardless of limb scores / stats.
 - ```ECTOTHERM``` For ectothermic mutations, like `COLDBLOOD4` and `DRAGONBLOOD3` (Black Dragon from Magiclysm).
 - ```HEAT_IMMUNE``` Immune to very hot temperatures.
 - ```NO_DISEASE``` This mutation grants immunity to diseases.
