@@ -511,11 +511,21 @@ void tileset_cache::loader::load_tileset( const cata_path &img_path, const bool 
     }
     // for debugging only: force a very small maximal texture size, as to trigger
     // splitting the tile atlas.
-#if 0
+//#if 0
     // +1 to check correct rounding
-    info.max_texture_width = sprite_width * 10 + 1;
-    info.max_texture_height = sprite_height * 20 + 1;
+    /*info.max_texture_width = sprite_width * 10 + 1;
+    info.max_texture_height = sprite_height * 20 + 1;*/
+//#endif
+
+
+#if defined(__ANDROID__)
+    
+    info.max_texture_width = sprite_width;
+    info.max_texture_height = sprite_height;
+    
 #endif
+
+    
 
     const int min_tile_xcount = 128;
     const int min_tile_ycount = min_tile_xcount * 2;
