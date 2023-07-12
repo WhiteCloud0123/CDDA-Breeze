@@ -2809,9 +2809,7 @@ bool mattack::ranged_pull( monster *z )
         int attacker_check = rng( 0, z->type->melee_sides + z->type->melee_dice );
         const ma_technique grab_break = pl->martial_arts_data->get_grab_break( *pl );
 
-        if (pl->is_throw_immune()) {
-            defender_check = defender_check + 2;
-        }
+       
 
         if( pl->get_effect_int( effect_stunned ) ) {
             defender_check = defender_check - 2;

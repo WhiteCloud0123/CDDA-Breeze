@@ -22,6 +22,7 @@ static const efftype_id effect_webbed( "webbed" );
 static const itype_id itype_rope_6( "rope_6" );
 static const itype_id itype_snare_trigger( "snare_trigger" );
 static const itype_id itype_string_36( "string_36" );
+static const limb_score_id limb_score_balance("balance");
 
 static const json_character_flag json_flag_DOWNED_RECOVERY("DOWNED_RECOVERY");
 
