@@ -923,7 +923,7 @@ bool monexamine::pet_menu( monster &z )
 
 
                 }
-                // 消耗50行动点
+                // 消耗100行动点
                 get_player_character().moves = get_player_character().moves - 100;
 
                 break;
