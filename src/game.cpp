@@ -1913,6 +1913,90 @@ static hint_rating rate_action_insert( const avatar &you, const item_location &l
     return hint_rating::good;
 }
 
+void 复活丧尸_func() {
+
+
+    const cata::optional<tripoint> pnt = choose_adjacent(string_format(
+        _("选择一个方向来进行复活 %s 的流程。"),
+        get_player_character().get_wielded_item().get_item()->get_mtype()->nname() ) );
+
+
+    if (!pnt) {
+
+        return;
+    
+    }
+
+    creature_tracker& creatures = get_creature_tracker();
+    
+    if (npc* const who = creatures.creature_at<npc>(*pnt)) {
+
+
+        add_msg(m_info, _("你不能选择这个方向。"));
+        return;
+
+    }
+    else if (monster* const mon = creatures.creature_at<monster>(*pnt, true)) {
+
+        add_msg(m_info, _("你不能选择这个方向。"));
+        return;
+
+    }
+    
+    
+    shared_ptr_fast<monster> newmon_ptr = make_shared_fast<monster>(get_player_character().get_wielded_item().get_item()->get_mtype()->id);
+    monster& newmon = *newmon_ptr;
+    
+
+    newmon.friendly = -1;
+    newmon.add_effect(effect_pet, 1_turns, true);
+    newmon.no_extra_death_drops = true;
+        
+
+
+        if (!g->place_critter_at(newmon_ptr, *pnt)) {
+            add_msg(m_info, _("你不能选择这个方向。"));
+            return;
+        }
+
+
+        add_msg(m_good,_("%s 复活了。"), newmon.get_name());
+
+        get_player_character().moves = get_player_character().moves - 100;
+        
+
+        if (get_player_character().get_stamina() - 9000  + 1000 * get_avatar().dominator_of_zombies_lv < 0 ) {
+            
+
+            get_player_character().set_stamina(0);
+        
+        
+        }
+        else {
+
+
+            get_player_character().set_stamina(get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv);
+        
+        
+        }
+
+        // 将怪物的掉落物全部放到怪物所在的位置
+        for (item* top_item : get_player_character().get_wielded_item().get_item()->all_items_top()) {
+            
+            item& i = *top_item;
+
+            if (i.has_var("DESTROY_ITEM_ON_MON_DEATH")) {
+                continue;
+            }
+            get_map().add_item_or_charges(newmon.pos(), i);
+        }
+        
+        //移除玩家持有的物品
+        get_player_character().remove_weapon();
+    
+
+}
+
 /* item submenu for 'i' and '/'
 * It use draw_item_info to draw item info and action menu
 *
@@ -2000,6 +2084,35 @@ int game::inventory_item_menu( item_location locThisItem,
         } else {
             addentry( '+', _( "Auto pickup" ), hint_rating::good );
         }
+
+        // 如果玩家是丧尸主宰，可以将可以复活的丧尸尸体复活
+        if (get_player_character().has_trait(trait_Dominator_Of_Zombies)) {
+        
+            
+            if (locThisItem.get_item() == get_player_character().get_wielded_item().get_item()) {
+
+
+                if ( locThisItem.get_item()->can_revive() ) {
+
+
+                    if (locThisItem.get_item()->get_mtype()->in_species(species_ZOMBIE)) {
+
+
+                        addentry('0', _("复活"), hint_rating::good);
+
+
+                    
+                    }
+
+                                               
+                
+                }
+           
+            }
+        
+        }
+
+
 
         int iScrollPos = 0;
         oThisItem.info( true, vThisItem );
@@ -2221,6 +2334,10 @@ int game::inventory_item_menu( item_location locThisItem,
                     for( item_pocket *pocket : oThisItem.get_all_standard_pockets() ) {
                         pocket->settings.set_collapse( cMenu == '>' );
                     }
+                    break;
+
+                case '0':
+                    复活丧尸_func();
                     break;
                 default:
                     break;

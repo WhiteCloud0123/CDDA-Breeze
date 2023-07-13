@@ -379,7 +379,7 @@ void treat_zombie(monster& z) {
     
     }
 
-    z.add_effect(effect_controlled, 2_turns);
+    
     // 消耗 100行动点
     player_avatar.moves = player_avatar.moves - 100;
 
@@ -924,7 +924,7 @@ bool monexamine::pet_menu( monster &z )
 
                 }
                 // 消耗50行动点
-                get_player_character().moves = get_player_character().moves - 50;
+                get_player_character().moves = get_player_character().moves - 100;
 
                 break;
             case 内部结构破坏:
