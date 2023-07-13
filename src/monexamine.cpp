@@ -379,7 +379,7 @@ void treat_zombie(monster& z) {
     
     }
 
-    z.add_effect(effect_controlled, 2_turns);
+    
     // 消耗 100行动点
     player_avatar.moves = player_avatar.moves - 100;
 
