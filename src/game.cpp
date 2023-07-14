@@ -1916,6 +1916,19 @@ static hint_rating rate_action_insert( const avatar &you, const item_location &l
 void 复活丧尸_func() {
 
 
+    if (get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv < 0) {
+
+
+        add_msg(m_info,_("你的耐力不够。"));
+
+
+        return;
+    
+    
+    }
+
+
+
     const cata::optional<tripoint> pnt = choose_adjacent(string_format(
         _("选择一个方向来进行复活 %s 的流程。"),
         get_player_character().get_wielded_item().get_item()->get_mtype()->nname() ) );
@@ -1965,20 +1978,13 @@ void 复活丧尸_func() {
         get_player_character().moves = get_player_character().moves - 100;
         
 
-        if (get_player_character().get_stamina() - 9000  + 1000 * get_avatar().dominator_of_zombies_lv < 0 ) {
-            
-
-            get_player_character().set_stamina(0);
-        
-        
-        }
-        else {
+       
 
 
-            get_player_character().set_stamina(get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv);
+        get_player_character().set_stamina(get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv);
         
         
-        }
+        
 
         // 将怪物的掉落物全部放到怪物所在的位置
         for (item* top_item : get_player_character().get_wielded_item().get_item()->all_items_top()) {

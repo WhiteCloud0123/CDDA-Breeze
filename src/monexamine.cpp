@@ -345,9 +345,16 @@ void take_item_from_bag( monster &z )
 
 void treat_zombie(monster& z) {
 
+    avatar& player_avatar = get_avatar();
 
+    if (player_avatar.get_stamina() - 1000 < 0) {
 
-    avatar &player_avatar = get_avatar();
+        add_msg(m_info,_("你的耐力不够。"));
+        return;
+    
+    }
+
+    
 
     // 治疗点数为   5  +  玩家的等级*5
     const int treat_point = 5 + player_avatar.dominator_of_zombies_lv * 5;
