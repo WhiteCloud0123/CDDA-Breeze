@@ -350,7 +350,7 @@ void treat_zombie(monster& z) {
     if (player_avatar.get_stamina() - 1000 < 0) {
 
         add_msg(m_info,_("你的耐力不够。"));
-    
+        return;
     
     }
 
