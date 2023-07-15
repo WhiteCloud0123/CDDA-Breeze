@@ -3420,10 +3420,10 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
                 save();
 
-                ghc::filesystem::remove_all(world_path);
+                std::filesystem::remove_all(world_path);
 
 
-                ghc::filesystem::copy(playing_world_path, world_path, ghc::filesystem::copy_options::recursive);
+                std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
 
                 add_msg(m_good, _("备份当前世界成功"));
 
@@ -3491,7 +3491,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
                 save();
 
-                ghc::filesystem::copy(playing_world_path, world_path, ghc::filesystem::copy_options::recursive);
+                std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
 
                 //      world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
 

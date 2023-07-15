@@ -114,7 +114,7 @@ public class SplashScreen extends Activity {
 
         Context context = getApplicationContext();
         String service_names = CataclysmDDA_Helpers.getEnabledAccessibilityServiceNames(context);
-        accessibilityServicesAlert.setMessage( String.format( getString(R.string.accessibilityServicesMessage), service_names ) );
+        //accessibilityServicesAlert.setMessage( String.format( getString(R.string.accessibilityServicesMessage), service_names ) );
         if (false) {
             accessibilityServicesAlert.show();
         } else {
@@ -148,7 +148,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
 
         accessibilityServicesAlert = new AlertDialog.Builder(SplashScreen.this)
-            .setTitle(getString(R.string.accessibilityServicesTitle))
+            //.setTitle(getString(R.string.accessibilityServicesTitle))
             .setCancelable(false)
             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
