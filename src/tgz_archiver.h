@@ -4,7 +4,7 @@
 #include <chrono>
 #include <string>
 #include <utility>
-
+#include <ghc/fs_std_fwd.hpp>
 #include "filesystem.h"
 #include "zlib.h"
 
@@ -18,7 +18,8 @@ class tgz_archiver
 
         gzFile fd = nullptr;
         std::string const output;
-        std::chrono::system_clock::time_point const _fsnow, _sysnow;
+        fs::file_time_type const _fsnow;
+        std::chrono::system_clock::time_point const _sysnow;
 
     public:
         explicit tgz_archiver( std::string ofile )
