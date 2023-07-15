@@ -96,6 +96,7 @@
 #include "monstergenerator.h"
 #include "item_factory.h"
 
+
 static const activity_id ACT_FERTILIZE_PLOT("ACT_FERTILIZE_PLOT");
 static const activity_id ACT_MOVE_LOOT("ACT_MOVE_LOOT");
 static const activity_id ACT_MULTIPLE_BUTCHER("ACT_MULTIPLE_BUTCHER");
@@ -1562,6 +1563,39 @@ void show_当前职业情况() {
 
 
 }
+
+
+void handle_action_network() {
+
+
+    uilist menu;
+
+    enum choce_list {
+
+        测试 = 0
+
+    };
+
+
+    menu.addentry(测试, true, '0', _("怪物数据检索"));
+
+    menu.query();
+
+    int choice = menu.ret;
+
+    if (choice == 测试) {
+    
+        
+    
+    
+    
+    }
+
+
+}
+
+
+
 
 
 void handle_action_data_retrieval() {
@@ -3357,8 +3391,13 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
         break;
 
+    case ACTION_网络功能:
+
+        handle_action_network();
 
 
+        break;
+    
 
 
         // 标记 添加备份世界的case

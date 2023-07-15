@@ -415,6 +415,8 @@ std::string action_ident( action_id act )
             return "备份当前世界";
         case ACTION_数据检索:
             return "数据检索";
+        case ACTION_网络功能:
+            return "网络功能";
         default:
             return "unknown";
     }
@@ -1076,6 +1078,7 @@ action_id handle_main_menu()
     // 标记 添加当前世界的选项
     REGISTER_ACTION( actionCreateWorldBackup );
     REGISTER_ACTION( ACTION_DEBUG );
+    REGISTER_ACTION(ACTION_网络功能);
 
     uilist smenu;
     smenu.settext( _( "MAIN MENU" ) );
