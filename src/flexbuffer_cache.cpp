@@ -22,11 +22,12 @@
 #include "mmap_file.h"
 #include "path_info.h"
 
+
 namespace
 {
 
 void try_find_and_throw_json_error( TextJsonValue &jv )
-{
+{   
     if( jv.test_object() ) {
         TextJsonObject jo = jv.get_object();
         for( TextJsonMember jm : jo ) {
