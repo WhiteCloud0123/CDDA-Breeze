@@ -97,6 +97,9 @@
 #include "item_factory.h"
 
 
+
+
+
 static const activity_id ACT_FERTILIZE_PLOT("ACT_FERTILIZE_PLOT");
 static const activity_id ACT_MOVE_LOOT("ACT_MOVE_LOOT");
 static const activity_id ACT_MULTIPLE_BUTCHER("ACT_MULTIPLE_BUTCHER");
@@ -3420,10 +3423,10 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
                 save();
 
-                std::filesystem::remove_all(world_path);
-
-
-                std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
+                fs::remove_all(world_path);
+             
+                
+                fs::copy(playing_world_path, world_path, fs::copy_options::recursive);
 
                 add_msg(m_good, _("备份当前世界成功"));
 
@@ -3488,10 +3491,10 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             else {
 
 
-
+         
                 save();
-
-                std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
+                
+                fs::copy(playing_world_path, world_path, fs::copy_options::recursive);
 
                 //      world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
 
