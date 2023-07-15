@@ -20,4 +20,6 @@
     <string name="cancel">Cancel</string>
     <string name="unavailable">Unavailable</string>
     <string name="unavailableOption">The option you chose is not available.</string>
+    <string name="accessibilityServicesTitle">Accessibility Services Warning</string>
+    <string name="accessibilityServicesMessage">If swipe commands and shortcuts menus are not working in game, you might want to disable one of the following accessibility services/software that interact with touchscreen (swipe assists, auto-clickers, one-handed mode, etc.):\n%1$s</string>
 </resources>
