@@ -95,6 +95,11 @@
 #include "worldfactory.h"
 #include "monstergenerator.h"
 #include "item_factory.h"
+//#include <asio2/asio2.hpp>
+//#include <asio2/http/http_client.hpp>
+
+#include<asio2/asio2.hpp>
+#include <asio2/http/http_client.hpp>
 
 
 static const activity_id ACT_FERTILIZE_PLOT("ACT_FERTILIZE_PLOT");
@@ -1564,7 +1569,7 @@ void show_当前职业情况() {
 
 }
 
-
+// 网络功能
 void handle_action_network() {
 
 
@@ -1577,7 +1582,7 @@ void handle_action_network() {
     };
 
 
-    menu.addentry(测试, true, '0', _("怪物数据检索"));
+    menu.addentry(测试, true, '0', _("测试"));
 
     menu.query();
 
@@ -1585,10 +1590,11 @@ void handle_action_network() {
 
     if (choice == 测试) {
     
-        
+        std::string_view host = "127.0.0.1";
+        std::string_view port = "8080";
+        asio2::tcp_client test_client;
     
-    
-    
+
     }
 
 
@@ -3421,8 +3427,8 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                 save();
 
                 std::filesystem::remove_all(world_path);
-
-
+             
+                
                 std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
 
                 add_msg(m_good, _("备份当前世界成功"));
@@ -3488,9 +3494,9 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             else {
 
 
-
+         
                 save();
-
+                
                 std::filesystem::copy(playing_world_path, world_path, std::filesystem::copy_options::recursive);
 
                 //      world_generator->make_new_world(world_name+"_备份",world_generator->active_world->active_mod_order);
