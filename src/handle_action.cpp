@@ -170,6 +170,10 @@ static const zone_type_id zone_type_zone_unload_all("zone_unload_all");
 
 static const std::string flag_CANT_DRAG("CANT_DRAG");
 
+static const species_id species_ZOMBIE("ZOMBIE");
+static const efftype_id effect_pet("pet");
+static const efftype_id effect_wait_here("在这里等待");
+
 
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
 
@@ -3149,6 +3153,75 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
         show_当前职业情况();
 
         break;
+    case ACTION_命令视野中的我方丧尸全部等待: {
+    
+    
+        for (Creature* c : u.get_visible_creatures(MAPSIZE_X)) {
+
+
+            monster* m = dynamic_cast<monster*>(c);
+
+            if (  m != nullptr) {
+
+                monster& m_ref = *m;
+
+                if (m_ref.in_species(species_ZOMBIE) && m_ref.has_effect(effect_pet) && ! m_ref.has_effect(effect_wait_here)) {
+                       
+       
+                    m_ref.add_effect(effect_wait_here,1_turns,true);
+
+    
+                }           
+            
+            }
+
+
+        }
+    
+        
+
+        break;
+    
+    
+    }
+
+        
+    case ACTION_结束视野中的我方全部丧尸的等待状态: {
+      
+        for (Creature* c : u.get_visible_creatures(MAPSIZE_X)) {
+
+
+            monster* m = dynamic_cast<monster*>(c);
+
+            if (m != nullptr) {
+
+                monster& m_ref = *m;
+
+                if (m_ref.in_species(species_ZOMBIE) && m_ref.has_effect(effect_pet) && m_ref.has_effect(effect_wait_here)) {
+
+
+                    m_ref.remove_effect(effect_wait_here);
+
+
+                }
+
+            }
+
+
+        }
+
+
+
+        break;
+
+
+    }
+    
+    
+
+        
+
+        
     case ACTION_SCORES:
         show_scores_ui(*achievements_tracker_ptr, stats(), get_kill_tracker());
         break;
