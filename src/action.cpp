@@ -417,6 +417,10 @@ std::string action_ident( action_id act )
             return "数据检索";
         case ACTION_网络功能:
             return "网络功能";
+        case ACTION_命令视野中的我方丧尸全部等待:
+            return "命令视野中的我方丧尸全部等待";
+        case ACTION_结束视野中的我方全部丧尸的等待状态:
+            return "结束视野中的我方全部丧尸的等待状态";
         default:
             return "unknown";
     }
@@ -872,6 +876,13 @@ action_id handle_action_menu()
 
             if (get_player_character().has_trait( trait_Dominator_Of_Zombies )) {
                 REGISTER_ACTION(ACTION_显示当前职业情况);
+                
+                // 玩家的丧尸主宰职业等级要高于0，才显示这两个命令
+                if (get_avatar().dominator_of_zombies_lv>0) {
+                    REGISTER_ACTION(ACTION_命令视野中的我方丧尸全部等待);
+                    REGISTER_ACTION(ACTION_结束视野中的我方全部丧尸的等待状态);
+                }
+            
             }
             
             

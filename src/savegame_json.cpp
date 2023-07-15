@@ -2859,12 +2859,12 @@ void monster::store( JsonOut &json ) const
     //在末端添加新增的成员
     json.member( "is_set_breeze", is_set_breeze );
     
-    if (has_effect(effect_pet)) {
+
         
-        json.member("lv_breeze", lv_breeze);
-        json.member("exp_breeze", exp_breeze);
+   json.member("lv_breeze", lv_breeze);
+   json.member("exp_breeze", exp_breeze);
     
-    }
+    
 
 }
 
