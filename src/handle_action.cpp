@@ -452,7 +452,7 @@ public:
         if (turn_duration <= 0.005) {
             return 0;
         }
-        auto now = std::chrono::steady_clock::now();
+        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         std::chrono::milliseconds elapsed_ms =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - user_turn_start);
         return elapsed_ms.count() / (10.0 * turn_duration);

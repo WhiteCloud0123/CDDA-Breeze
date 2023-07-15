@@ -2398,7 +2398,7 @@ std::pair<tripoint, tripoint> game::mouse_edge_scrolling( input_context &ctxt, c
     ( void ) speed;
     ( void ) iso;
 #if (defined TILES || defined _WIN32 || defined WINDOWS)
-    auto now = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     if( now < last_mouse_edge_scroll + std::chrono::milliseconds( rate ) ) {
         return ret;
     } else {
@@ -6109,7 +6109,7 @@ void game::print_all_tile_info( const tripoint &lp, const catacurses::window &w_
     }
     const int max_width = getmaxx( w_look ) - column - 1;
 
-    auto this_sound = sounds::sound_at( lp );
+    std::string this_sound = sounds::sound_at(lp);
     if( !this_sound.empty() ) {
         const int lines = fold_and_print( w_look, point( 1, ++line ), max_width, c_light_gray,
                                           _( "From here you heard %s" ),
