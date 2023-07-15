@@ -352,6 +352,7 @@ enum action_id : int {
     // 标记 添加actionCreateWorldBackup
     actionCreateWorldBackup,
     ACTION_数据检索,
+    ACTION_网络功能,
     NUM_ACTIONS
     /**@}*/
 };
