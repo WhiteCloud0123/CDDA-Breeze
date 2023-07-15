@@ -3285,7 +3285,7 @@ void npc::on_load()
     shop_restock();
 }
 
-constexpr tripoint_abs_omt npc::no_goal_point;
+
 
 bool npc::query_yn( const std::string &/*msg*/ ) const
 {
