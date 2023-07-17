@@ -95,12 +95,9 @@
 #include "worldfactory.h"
 #include "monstergenerator.h"
 #include "item_factory.h"
-//#include <asio2/asio2.hpp>
-//#include <asio2/http/http_client.hpp>
 
-#include<asio2/asio2.hpp>
-#include <asio2/http/http_client.hpp>
 
+#include"network.h"
 
 static const activity_id ACT_FERTILIZE_PLOT("ACT_FERTILIZE_PLOT");
 static const activity_id ACT_MOVE_LOOT("ACT_MOVE_LOOT");
@@ -1581,24 +1578,54 @@ void handle_action_network() {
 
     enum choce_list {
 
-        测试 = 0
+        启动服务器 = 0,
+        作为客户端加入
 
     };
 
 
-    menu.addentry(测试, true, '0', _("测试"));
+    menu.addentry(启动服务器, true, '0', _("启动服务器"));
+    menu.addentry(作为客户端加入, true, '1', _("作为客户端加入"));
 
     menu.query();
 
     int choice = menu.ret;
 
-    if (choice == 测试) {
+    if (choice == 启动服务器) {
     
         std::string_view host = "127.0.0.1";
-        std::string_view port = "8080";
-        asio2::tcp_client test_client;
+        std::string_view port = "4454";
+        
+       
+
+        server_breeze.bind_recv([](std::shared_ptr<asio2::udp_session>& session_ptr, std::string_view data)
+            {
+                //printf("%zu %.*s", data.size(), (int)data.size(), data.data());
+                add_msg(m_good,_("%s"), data.data());
+                session_ptr->async_send(data);
+
+            });
+
+        server_breeze.start(host,port);
+
+        add_msg(m_good, _("服务器启动"));
     
 
+    }
+    else if(choice == 作为客户端加入) {
+        
+        std::string_view host = "127.0.0.1";
+        std::string_view port = "4454";
+        
+        client_breeze.start(host,port);
+
+        client_breeze.async_send("你好");
+
+
+    
+    
+    
+    
     }
 
 

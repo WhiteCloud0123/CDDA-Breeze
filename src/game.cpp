@@ -185,6 +185,7 @@
 #include "weather.h"
 #include "weather_type.h"
 #include "worldfactory.h"
+#include "network.h"
 
 #if defined(TILES)
 #include "sdl_utils.h"
