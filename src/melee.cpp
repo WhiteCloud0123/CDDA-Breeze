@@ -970,6 +970,14 @@ void Character::reach_attack( const tripoint &p )
             !x_in_y( ( target_size * target_size + 1 ) * skill,
                      ( inter->get_size() * inter->get_size() + 1 ) * 10 ) ) {
             // Even if we miss here, low roll means weapon is pushed away or something like that
+            if ( inter->has_effect( effect_pet ) || ( inter->is_npc() && inter->as_npc()->is_friendly( get_player_character() ) ) ) {
+                if ( query_yn(_( "你的攻击会造成误伤，要继续吗?" ) ) ) {
+                    critter = inter;
+                    break;
+                } else {
+                    return;                   
+                }
+            }
             critter = inter;
             break;
             /** @EFFECT_STABBING increases ability to reach attack through fences */
