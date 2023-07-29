@@ -3244,7 +3244,52 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
     }
     
+    case ACTION_融合丧尸尸体: {
     
+       // num 用于记录可以复活的丧尸数量，我们需要20具可以复活的丧尸尸体融合成一个 放荡吞噬者
+        int num = 0;
+
+        map& here = get_map();
+        
+        // map_stack items = here.i_at( get_player_character().pos() );
+
+        for (const tripoint& p : here.points_in_radius(get_player_character().pos(), 1)) {
+           
+            map_stack items = here.i_at(p);
+
+            for (item &i : items) {
+                 
+                if ( i.can_revive() && i.get_mtype()->in_species(species_ZOMBIE) ) {
+
+                    num++;
+                    
+                   
+                }
+            
+            
+            }
+            
+               
+        }
+
+
+      
+    
+        add_msg(m_good,_("可以复活的丧尸尸体的数量为: %s"),num);
+    
+    
+        
+        
+        
+        
+        break;
+    
+    
+    }
+        
+       
+
+       
 
         
 
