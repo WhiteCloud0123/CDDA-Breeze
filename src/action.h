@@ -355,6 +355,7 @@ enum action_id : int {
     ACTION_网络功能,
     ACTION_命令视野中的我方丧尸全部等待,
     ACTION_结束视野中的我方全部丧尸的等待状态,
+    ACTION_融合丧尸尸体,
     NUM_ACTIONS
     /**@}*/
 };
