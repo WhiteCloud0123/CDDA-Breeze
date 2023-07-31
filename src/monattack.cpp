@@ -6041,6 +6041,13 @@ bool mattack::zombie_fuse( monster *z )
                                       effect_grown_of_fuse ).get_max_intensity() ) ) ) {
         return false;
     }
+
+    if( z->has_effect(effect_pet) && critter->has_effect(effect_pet)) {
+       
+       return false;
+
+    }
+
     add_msg_if_player_sees( *z, _( "The %1$s fuses with the %2$s." ),
                             critter->name(), z->name() );
     z->moves -= 200;
