@@ -3299,7 +3299,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
             if ( *pnt == get_player_character().pos()) {
                 
-                add_msg(m_info, _("你不能选择这里。"));
+                add_msg(m_info, _("你不能选择这个方向。"));
                 break;
 
             }
