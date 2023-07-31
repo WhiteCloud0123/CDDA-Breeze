@@ -1985,10 +1985,8 @@ void 复活丧尸_func() {
         get_player_character().set_stamina(get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv);
         
         
-        
-
-        // 将怪物的掉落物全部放到怪物所在的位置
-        for (item* top_item : get_player_character().get_wielded_item().get_item()->all_items_top()) {
+       
+        /*for (item* top_item : get_player_character().get_wielded_item().get_item()->all_items_top()) {
             
             item& i = *top_item;
 
@@ -1996,8 +1994,10 @@ void 复活丧尸_func() {
                 continue;
             }
             get_map().add_item_or_charges(newmon.pos(), i);
-        }
+        }*/
         
+
+
         //移除玩家持有的物品
         get_player_character().remove_weapon();
     
