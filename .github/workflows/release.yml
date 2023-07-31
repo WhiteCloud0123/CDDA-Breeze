@@ -101,6 +101,7 @@ jobs:
             artifact: android-x64
             ext: apk
             content: application/apk
+            sound: 1
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     env:
