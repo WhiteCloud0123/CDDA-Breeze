@@ -171,6 +171,7 @@ static const species_id species_ZOMBIE("ZOMBIE");
 static const efftype_id effect_pet("pet");
 static const efftype_id effect_wait_here("在这里等待");
 
+static const mtype_id mon_devourer("mon_devourer");
 
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
 
@@ -3244,26 +3245,35 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
     }
     
-    case ACTION_融合丧尸尸体: {
-    
-       // num 用于记录可以复活的丧尸数量，我们需要20具可以复活的丧尸尸体融合成一个 放荡吞噬者
+    case ACTION_融合可以复活的丧尸尸体: {
+        
+
+        if (get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv < 0) {
+
+
+            add_msg(m_info, _("你的耐力不够。"));
+
+
+            break;
+
+
+        }
+
+
+
+       // num 用于记录可以复活的丧尸数量，我们需要30具可以复活的丧尸尸体融合成一个 放荡吞噬者
         int num = 0;
 
         map& here = get_map();
-        
-        // map_stack items = here.i_at( get_player_character().pos() );
 
         for (const tripoint& p : here.points_in_radius(get_player_character().pos(), 1)) {
            
             map_stack items = here.i_at(p);
 
             for (item &i : items) {
-                 
-                if ( i.can_revive() && i.get_mtype()->in_species(species_ZOMBIE) ) {
 
-                    num++;
-                    
-                   
+                if ( i.can_revive() && i.get_mtype()->in_species(species_ZOMBIE) ) {
+                    num++;                  
                 }
             
             
@@ -3272,12 +3282,116 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                
         }
 
+         
+        
+        if ( num >= 30) {
 
-      
-    
-        add_msg(m_good,_("可以复活的丧尸尸体的数量为: %s"),num);
-    
-    
+
+            const cata::optional<tripoint> pnt = choose_adjacent(string_format(
+                _("选择一个方向来进行 融合可以复活的丧尸尸体 的流程")));
+
+
+            if (!pnt) {
+
+                break;
+
+            }
+
+            if ( *pnt == get_player_character().pos()) {
+                
+                add_msg(m_info, _("你不能选择这个方向。"));
+                break;
+
+            }
+
+            if ( get_map().impassable(*pnt) ) {
+            
+                add_msg(m_info, _("你不能选择这个方向。"));
+                break;
+            
+            }
+
+
+            creature_tracker& creatures = get_creature_tracker();
+
+            if (creatures.creature_at<Character>(*pnt)) {
+
+
+                add_msg(m_info, _("你不能选择这个方向。"));
+                break;
+
+            }
+            else if (monster* const mon = creatures.creature_at<monster>(*pnt, true)) {
+
+                add_msg(m_info, _("你不能选择这个方向。"));
+                break;
+
+            }
+
+
+            int count = 0;
+
+            for (const tripoint& p : here.points_in_radius(get_player_character().pos(), 1)) {
+
+                map_stack items = here.i_at(p);
+
+                for (item_stack::iterator iter = items.begin(); iter != items.end();) {
+
+                    if (iter->can_revive() && iter->get_mtype()->in_species(species_ZOMBIE)) {
+                                                
+                        iter = items.erase(iter);
+
+                        count++;
+              
+                        if ( count==30 ) {
+
+                            break;
+                        
+                        }
+
+                    }
+                    else {
+                                       
+                        iter++;
+                                        
+                    }
+                    
+                }
+
+                if (count == 30) {
+
+                    break;
+
+                }
+
+            }
+
+            shared_ptr_fast<monster> newmon_ptr = make_shared_fast<monster>(mon_devourer);
+            monster& newmon = *newmon_ptr;
+            newmon.friendly = -1;
+            newmon.add_effect(effect_pet, 1_turns, true);
+            newmon.no_extra_death_drops = true;
+            
+            g->place_critter_at(newmon_ptr,*pnt);
+
+            add_msg(m_good, _("你将这些可以复活的丧尸尸体融合成了一个 放荡吞噬者。"));
+            
+            get_player_character().moves = get_player_character().moves - 100;
+
+            get_player_character().set_stamina( get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv );
+        
+        }
+        else {
+           
+  
+            add_msg(m_info,_("为了融合成 放荡吞噬者，还需要 %s具 可以复活的丧尸尸体。"), 30-num );
+        
+        }
+
+
+
+
+
         
         
         
@@ -3286,14 +3400,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
     
     
     }
-        
-       
-
-       
-
-        
-
-        
+              
     case ACTION_SCORES:
         show_scores_ui(*achievements_tracker_ptr, stats(), get_kill_tracker());
         break;

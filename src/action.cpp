@@ -421,7 +421,7 @@ std::string action_ident( action_id act )
             return "命令视野中的我方丧尸全部等待";
         case ACTION_结束视野中的我方全部丧尸的等待状态:
             return "结束视野中的我方全部丧尸的等待状态";
-        case ACTION_融合丧尸尸体:
+        case ACTION_融合可以复活的丧尸尸体:
             return "融合丧尸尸体";
         default:
             return "unknown";
@@ -886,7 +886,7 @@ action_id handle_action_menu()
                     
                 }
 
-                REGISTER_ACTION(ACTION_融合丧尸尸体);
+                REGISTER_ACTION(ACTION_融合可以复活的丧尸尸体);
             
             }
             
