@@ -2176,7 +2176,7 @@ bool monster::melee_attack(Creature& target, float accuracy)
                 if (exp_breeze > monster_exp_array[i]) {
 
                     lv_breeze++;
-                    //   = 基础速度+怪物当前等级
+                    //   = Json定义的速度 + 2 * 怪物当前的等级
                     set_speed_base(type->speed + 2 * lv_breeze);
 
                 }
