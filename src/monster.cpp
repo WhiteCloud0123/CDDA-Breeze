@@ -2162,6 +2162,7 @@ bool monster::melee_attack(Creature& target, float accuracy)
 
             // 对于击杀npc获得的经验计算: 10 + 力量 + 智力 + 敏捷 + 感知 
             exp_breeze = exp_breeze +
+                10 +
                 target.as_character()->get_str_base() +
                 target.as_character()->get_int_base() +
                 target.as_character()->get_dex_base() +
