@@ -1373,9 +1373,12 @@ void options_manager::add_options_general()
     );*/
     add_empty_line();
 
-    add("骑乘状态可以上下楼", "general", to_translation("骑乘状态可以上下楼"), to_translation("当此选项的值为 true 时，骑乘状态可以上下楼。"), false);
+    add("骑乘状态可以上下楼", "general", to_translation("骑乘状态可以上下楼"), to_translation("当此选项的值为 true 时，骑乘状态可以上下楼。"), true);
+    add("可以看到怪物的等级", "general", to_translation("可以看到怪物的等级"), to_translation("当此选项的值为 true 时，可以看到怪物的等级。"), true);
 
     add_empty_line();
+
+
 
     add( "AUTO_PICKUP", "general", to_translation( "Auto pickup enabled" ),
          to_translation( "If true, enable item auto pickup.  Change pickup rules with the Auto pickup manager." ),
