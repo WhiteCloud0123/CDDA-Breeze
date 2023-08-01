@@ -78,7 +78,7 @@ jobs:
           release_name: ${{ steps.generate_env_vars.outputs.release_name }}
           body_path: ./CHANGELOG.md
           draft: false
-          prerelease: true
+          prerelease: false
   builds:
     needs: release
     if: ${{ needs.release.outputs.release_already_exists == 'false' }}
