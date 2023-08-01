@@ -1,5 +1,4 @@
 [
-  
   {
     "id": "mon_zombie",
     "type": "MONSTER",
@@ -20,7 +19,6 @@
       "可以装备武器"
     ]
   },
-  
   {
     "id": "mon_zombie_hulk",
     "type": "MONSTER",
@@ -52,7 +50,7 @@
     "default_faction": "zombie",
     "bodytype": "dog",
     "species": [ "ZOMBIE" ],
-    "looks_like" : "mon_zombie_dog",
+    "looks_like": "mon_zombie_dog",
     "volume": "30000 ml",
     "weight": "40750 g",
     "hp": 46,
@@ -67,7 +65,7 @@
     "melee_dice_sides": 7,
     "melee_damage": [ { "damage_type": "cut", "amount": 3 } ],
     "dodge": 3,
-    "regenerates" : 2,
+    "regenerates": 2,
     "armor_elec": 1,
     "families": [ "prof_intro_biology", "prof_wp_zombie" ],
     "vision_night": 4,
@@ -76,7 +74,6 @@
     "death_drops": "mon_dog_death_drops",
     "flags": [ "SEES", "HEARS", "SMELLS", "STUMBLES", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]
   },
-  
   {
     "id": "mon_zombie_military_pilot",
     "type": "MONSTER",
@@ -97,7 +94,6 @@
       "可以装备武器"
     ]
   },
-  
   {
     "id": "mon_zombie_fat",
     "type": "MONSTER",
@@ -137,20 +133,42 @@
       "可以装备武器"
     ]
   },
-  
-  
-
   {
     "id": "mon_zombie_soldier",
     "type": "MONSTER",
     "copy-from": "mon_zombie_soldier",
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON", "FILTHY","可以装备武器" ]
+    "flags": [
+      "SEES",
+      "HEARS",
+      "SMELLS",
+      "WARM",
+      "BASHES",
+      "GROUP_BASH",
+      "POISON",
+      "NO_BREATHE",
+      "REVIVES",
+      "PUSH_MON",
+      "FILTHY",
+      "可以装备武器"
+    ]
   },
   {
     "id": "mon_zombie_miner",
     "type": "MONSTER",
     "copy-from": "mon_zombie_miner",
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "FILTHY", "可以装备武器" ]
+    "flags": [
+      "SEES",
+      "HEARS",
+      "SMELLS",
+      "WARM",
+      "BASHES",
+      "GROUP_BASH",
+      "POISON",
+      "NO_BREATHE",
+      "REVIVES",
+      "FILTHY",
+      "可以装备武器"
+    ]
   },
   {
     "id": "mon_zombie_grappler",
@@ -177,9 +195,65 @@
     "id": "mon_zombie_runner",
     "type": "MONSTER",
     "copy-from": "mon_zombie_runner",
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON", "FILTHY", "可以装备武器" ]
+    "flags": [
+      "SEES",
+      "HEARS",
+      "SMELLS",
+      "WARM",
+      "BASHES",
+      "POISON",
+      "NO_BREATHE",
+      "REVIVES",
+      "PUSH_MON",
+      "FILTHY",
+      "可以装备武器"
+    ]
+  },
+  {
+    "id": "mon_devourer",
+    "type": "MONSTER",
+    "copy-from": "mon_devourer",
+    "flags": [
+      "SEES",
+      "HEARS",
+      "SMELLS",
+      "STUMBLES",
+      "WARM",
+      "BASHES",
+      "GROUP_BASH",
+      "POISON",
+      "NO_BREATHE",
+      "REVIVES",
+      "BILE_BLOOD",
+      "PUSH_MON",
+      "PATH_AVOID_DANGER_1",
+      "FILTHY",
+      "可以装备武器",
+      "PET_MOUNTABLE"
+    ]
+  },
+  {
+    "id": "mon_devourer_lab_sec",
+    "type": "MONSTER",
+    "copy-from": "mon_devourer_lab_sec",
+    "flags": [
+      "SEES",
+      "HEARS",
+      "SMELLS",
+      "WARM",
+      "BASHES",
+      "NO_BREATHE",
+      "COLDPROOF",
+      "STUN_IMMUNE",
+      "NOHEAD",
+      "BILE_BLOOD",
+      "PUSH_MON",
+      "PUSH_VEH",
+      "CAN_OPEN_DOORS",
+      "HARDTOSHOOT",
+      "FILTHY",
+      "可以装备武器",
+      "PET_MOUNTABLE"
+    ]
   }
-
-
-
 ]
