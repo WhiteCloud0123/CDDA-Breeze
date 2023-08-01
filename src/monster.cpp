@@ -290,7 +290,7 @@ void monster::poly(const mtype_id& id)
     }
     type = &id.obj();
     moves = 0;
-    Creature::set_speed_base(type->speed + lv_breeze);
+    Creature::set_speed_base(type->speed + 2 * lv_breeze);
     anger = type->agro;
     morale = type->morale;
     hp = static_cast<int>(hp_percentage * type->hp);
@@ -1998,7 +1998,7 @@ bool monster::melee_attack(Creature& target, float accuracy)
         if (weapon_item !=NULL) {
             
 
-            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + weapon_item->damage_melee(damage_type::BASH) + lv_breeze );
+            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + weapon_item->damage_melee(damage_type::BASH) + 2 * lv_breeze );
             
         
         }
@@ -2145,7 +2145,7 @@ bool monster::melee_attack(Creature& target, float accuracy)
                 if (exp_breeze > monster_exp_array[i]) {
 
                     lv_breeze++;
-                    set_speed_base(get_speed_base() + lv_breeze);
+                    set_speed_base(get_speed_base() + 2 * lv_breeze);
                 }
                 else {
 
@@ -2174,7 +2174,7 @@ bool monster::melee_attack(Creature& target, float accuracy)
 
                     lv_breeze++;
                     //   = 基础速度+怪物当前等级
-                    set_speed_base(get_speed_base() + lv_breeze);
+                    set_speed_base(get_speed_base() + 2 * lv_breeze);
 
                 }
                 else {
