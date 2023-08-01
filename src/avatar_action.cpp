@@ -355,6 +355,13 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
             if( critter.is_hallucination() ) {
                 critter.die( &you );
             }
+            // 骑乘状态下，被骑乘的怪物可以对玩家的近战攻击的目标进行近战攻击
+            if (is_riding) {
+                auto* mons = you.mounted_creature.get();
+                mons->melee_attack(critter);
+            }
+
+
             g->draw_hit_mon( dest_loc, critter, critter.is_dead() );
             return false;
         } else if( critter.has_flag( MF_IMMOBILE ) || critter.has_effect( effect_harnessed ) ||
