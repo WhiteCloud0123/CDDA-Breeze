@@ -2145,7 +2145,7 @@ bool monster::melee_attack(Creature& target, float accuracy)
                 if (exp_breeze > monster_exp_array[i]) {
 
                     lv_breeze++;
-
+                    set_speed_base(get_speed_base() + lv_breeze);
                 }
                 else {
 
@@ -2173,8 +2173,8 @@ bool monster::melee_attack(Creature& target, float accuracy)
                 if (exp_breeze > monster_exp_array[i]) {
 
                     lv_breeze++;
-                    // 速度+1
-                    set_speed_base(get_speed_base() + 1);
+                    //   = 基础速度+怪物当前等级
+                    set_speed_base(get_speed_base() + lv_breeze);
 
                 }
                 else {
