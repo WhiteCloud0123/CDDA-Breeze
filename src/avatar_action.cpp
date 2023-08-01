@@ -358,7 +358,7 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
             // 骑乘状态下，被骑乘的怪物可以对玩家的近战攻击的目标进行近战攻击
             if (is_riding) {
                 auto* mons = you.mounted_creature.get();
-                if ( !mons->has_flag(MF_MILITARY_MECH)) {
+                if ( !mons->has_flag(MF_RIDEABLE_MECH)) {
                     mons->melee_attack(critter);
                 }
                
