@@ -417,7 +417,7 @@ void view_status(monster& z) {
 
     monster_status_ui.addentry(生命值, true, '2', _("当前生命值: %1s   |   最大生命值: %2s"), z.get_hp(),z.get_hp_max());
 
-    monster_status_ui.addentry(速度, true, '3', _("速度: %s"), z.get_speed_base());
+    monster_status_ui.addentry(速度, true, '3', _("当前速度: %1s   |   基础速度: &2s"), z.get_speed(), z.get_speed_base());
 
     
     if (z.weapon_item!=NULL) {
