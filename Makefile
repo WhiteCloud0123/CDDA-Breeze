@@ -136,7 +136,7 @@ export CCACHE_COMMENTS=1
 # Explicitly let 'char' to be 'signed char' to fix #18776
 OTHERS += -fsigned-char
 
-VERSION = CDDA-Breeze-3.4
+VERSION = CDDA-Breeze-3.5
 
 TARGET_NAME = cataclysm
 TILES_TARGET_NAME = $(TARGET_NAME)-tiles
