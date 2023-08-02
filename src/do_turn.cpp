@@ -84,10 +84,10 @@ bool cleanup_at_end()
         // g->reset_npc_dispositions();
         // // Save the factions', missions and set the NPC's overmap coordinates
         // // Npcs are saved in the overmap.
-        g->save_factions_missions_npcs(); //missions need to be saved as they are global for all saves.
+        //g->save_factions_missions_npcs(); //missions need to be saved as they are global for all saves.
 
         // and the overmap, and the local map.
-        g->save_maps(); //Omap also contains the npcs who need to be saved.
+        //g->save_maps(); //Omap also contains the npcs who need to be saved.
     }
 
     if( g->uquit == QUIT_DIED || g->uquit == QUIT_SUICIDE ) {
