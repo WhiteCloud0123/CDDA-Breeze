@@ -883,10 +883,10 @@ action_id handle_action_menu()
                 if (get_avatar().dominator_of_zombies_lv>0) {
                     REGISTER_ACTION(ACTION_命令视野中的我方丧尸全部等待);
                     REGISTER_ACTION(ACTION_结束视野中的我方全部丧尸的等待状态);
-                    
+                    REGISTER_ACTION(ACTION_fuse_corpses_that_can_revive);
                 }
 
-                REGISTER_ACTION(ACTION_fuse_corpses_that_can_revive);
+                
             
             }
             
