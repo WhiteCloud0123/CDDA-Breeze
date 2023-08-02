@@ -3245,7 +3245,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
     }
     
-    case ACTION_融合可以复活的丧尸尸体: {
+    case ACTION_fuse_corpses_that_can_revive : {
         
 
         if (get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv < 0) {
