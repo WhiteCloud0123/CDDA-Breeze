@@ -93,7 +93,6 @@ jobs:
             mxe: none
             ext: zip
             content: application/zip
-            sound: 1
           - name: Android x64
             os: ubuntu-latest
             mxe: none
