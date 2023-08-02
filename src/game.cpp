@@ -1914,7 +1914,7 @@ static hint_rating rate_action_insert( const avatar &you, const item_location &l
     return hint_rating::good;
 }
 
-void 复活_func() {
+void revive_func() {
 
 
     if (get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv < 0) {
@@ -2359,7 +2359,7 @@ int game::inventory_item_menu( item_location locThisItem,
                     break;
 
                 case '0':
-                    复活_func();
+                    revive_func();
                     break;
                 default:
                     break;
