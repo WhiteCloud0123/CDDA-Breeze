@@ -1914,7 +1914,7 @@ static hint_rating rate_action_insert( const avatar &you, const item_location &l
     return hint_rating::good;
 }
 
-void 复活丧尸_func() {
+void 复活_func() {
 
 
     if (get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv < 0) {
@@ -1957,11 +1957,26 @@ void 复活丧尸_func() {
 
     }
     
-    
-    shared_ptr_fast<monster> newmon_ptr = make_shared_fast<monster>(get_player_character().get_wielded_item().get_item()->get_mtype()->id);
-    monster& newmon = *newmon_ptr;
+
+    shared_ptr_fast<monster> newmon_ptr;
     
 
+    if ( get_player_character().get_wielded_item().get_item()->has_var("zombie_form") ) {
+
+        newmon_ptr = make_shared_fast<monster>(mtype_id( get_player_character().get_wielded_item().get_item()->get_var("zombie_form") ) );
+    
+    
+    }  else {
+    
+        newmon_ptr = make_shared_fast<monster>(get_player_character().get_wielded_item().get_item()->get_mtype()->id);
+        
+    
+    
+    }
+    
+    
+    
+    monster& newmon = *newmon_ptr;
     newmon.friendly = -1;
     newmon.add_effect(effect_pet, 1_turns, true);
     newmon.no_extra_death_drops = true;
@@ -2102,7 +2117,7 @@ int game::inventory_item_menu( item_location locThisItem,
                 if ( locThisItem.get_item()->can_revive() ) {
 
 
-                    if (locThisItem.get_item()->get_mtype()->in_species(species_ZOMBIE)) {
+                    if (locThisItem.get_item()->get_mtype()->in_species(species_ZOMBIE) || locThisItem.get_item()->has_var("zombie_form") ) {
 
 
                         addentry('0', _("复活"), hint_rating::good);
@@ -2344,7 +2359,7 @@ int game::inventory_item_menu( item_location locThisItem,
                     break;
 
                 case '0':
-                    复活丧尸_func();
+                    复活_func();
                     break;
                 default:
                     break;
