@@ -356,8 +356,8 @@ void treat_zombie(monster& z) {
 
     
 
-    // 治疗点数为   5  +  玩家的等级*5
-    const int treat_point = 5 + player_avatar.dominator_of_zombies_lv * 5;
+    // 治疗量为   10  +  丧尸主宰职业等级 * 10
+    const int treat_point = 10 + player_avatar.dominator_of_zombies_lv * 10;
 
     // 消耗玩家的耐力,默认为1000
     player_avatar.set_stamina(player_avatar.get_stamina() - 1000);
