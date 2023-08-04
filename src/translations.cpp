@@ -98,5 +98,5 @@ void set_language()
 
     reload_names();
 
-    set_title( string_format( _( "Cataclysm: Dark Days Ahead - %s" ), getVersionString() ) );
+    set_title( string_format( _( "CDDA-Breeze" )) );
 }
