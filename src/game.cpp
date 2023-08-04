@@ -1924,8 +1924,8 @@ void revive_func() {
 
 
         return;
-    
-    
+
+
     }
 
 
@@ -1938,11 +1938,11 @@ void revive_func() {
     if (!pnt) {
 
         return;
-    
+
     }
 
     creature_tracker& creatures = get_creature_tracker();
-    
+
     if (npc* const who = creatures.creature_at<npc>(*pnt)) {
 
 
@@ -1956,31 +1956,31 @@ void revive_func() {
         return;
 
     }
-    
+
 
     shared_ptr_fast<monster> newmon_ptr;
-    
+
 
     if ( get_player_character().get_wielded_item().get_item()->has_var("zombie_form") ) {
 
         newmon_ptr = make_shared_fast<monster>(mtype_id( get_player_character().get_wielded_item().get_item()->get_var("zombie_form") ) );
-    
-    
+
+
     }  else {
-    
+
         newmon_ptr = make_shared_fast<monster>(get_player_character().get_wielded_item().get_item()->get_mtype()->id);
-        
-    
-    
+
+
+
     }
-    
-    
-    
+
+
+
     monster& newmon = *newmon_ptr;
     newmon.friendly = -1;
     newmon.add_effect(effect_pet, 1_turns, true);
     newmon.no_extra_death_drops = true;
-        
+
 
 
         if (!g->place_critter_at(newmon_ptr, *pnt)) {
@@ -1992,30 +1992,26 @@ void revive_func() {
         add_msg(m_good,_("%s 复活了。"), newmon.get_name());
 
         get_player_character().moves = get_player_character().moves - 100;
-        
 
-       
+
+
 
 
         get_player_character().set_stamina(get_player_character().get_stamina() - 9000 + 1000 * get_avatar().dominator_of_zombies_lv);
-        
-        
-       
-        /*for (item* top_item : get_player_character().get_wielded_item().get_item()->all_items_top()) {
-            
-            item& i = *top_item;
 
-            if (i.has_var("DESTROY_ITEM_ON_MON_DEATH")) {
-                continue;
-            }
-            get_map().add_item_or_charges(newmon.pos(), i);
-        }*/
-        
+
+
+        for (item* top_item : get_player_character().get_wielded_item().get_item()->all_items_top()) {
+
+            get_map().add_item_or_charges(newmon.pos(), *top_item);
+
+        }
+
 
 
         //移除玩家持有的物品
         get_player_character().remove_weapon();
-    
+
 
 }
 
@@ -2109,8 +2105,8 @@ int game::inventory_item_menu( item_location locThisItem,
 
         // 如果玩家是丧尸主宰，可以将可以复活的丧尸尸体复活
         if (get_player_character().has_trait(trait_Dominator_Of_Zombies)) {
-        
-            
+
+
             if (locThisItem.get_item() == get_player_character().get_wielded_item().get_item()) {
 
 
@@ -2123,15 +2119,15 @@ int game::inventory_item_menu( item_location locThisItem,
                         addentry('0', _("复活"), hint_rating::good);
 
 
-                    
+
                     }
 
-                                               
-                
+
+
                 }
-           
+
             }
-        
+
         }
 
 
@@ -4358,7 +4354,7 @@ void game::mon_info_update( )
                         // 初始化等级
                         avatar_breeze.dominator_of_zombies_lv = 0;
                         for( int i = 0; i < 5; i++ ) {
-                            
+
                             if( avatar_breeze.dominator_of_zombies_exp > exp_array[i] ) {
 
                                 avatar_breeze.dominator_of_zombies_lv++;
@@ -4377,7 +4373,7 @@ void game::mon_info_update( )
                 // 最后将 is_set_breeze 设置为true
                 critter.is_set_breeze = true;
 
-               
+
 
             }
 
