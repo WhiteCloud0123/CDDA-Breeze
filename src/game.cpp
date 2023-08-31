@@ -4378,6 +4378,12 @@ void game::mon_info_update( )
             }
 
 
+            if (get_option<bool>("精英怪物警告") == true && critter.lv_breeze>=6) {
+
+                add_msg(m_bad,_("精英怪物警告！"));
+            
+            }
+
 
             const monster_attitude matt = critter.attitude( &u );
             const int mon_dist = rl_dist( u.pos(), critter.pos() );
