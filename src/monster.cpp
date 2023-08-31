@@ -250,6 +250,51 @@ monster::monster(const mtype_id& id) : monster()
         battery_item = cata::make_value<item>(mech_bat_item);
     }
     aggro_character = type->aggro_character;
+
+
+    
+    int chance = rng(1,10);
+
+    if (chance == 1) {
+
+        int chance_ = rng(1, 100);
+
+        if (chance_ == 1) {
+
+            lv_breeze = rng(6, 10);
+
+            set_speed_base(type->speed + 5 * lv_breeze);
+
+            exp_breeze = monster_exp_array[lv_breeze-1];
+            
+        
+        }
+        else {
+        
+            lv_breeze = rng(1, 5);
+
+            set_speed_base(type->speed + 5 * lv_breeze);
+
+            exp_breeze = monster_exp_array[lv_breeze - 1];
+        
+        
+        }
+
+
+        
+
+    }
+   
+
+
+
+
+
+
+
+
+
+
 }
 
 monster::monster(const mtype_id& id, const tripoint& p) : monster(id)
