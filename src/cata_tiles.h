@@ -523,6 +523,11 @@ class cata_tiles
                              const std::array<bool, 5> &invisible );
         bool draw_zombie_revival_indicators( const tripoint &pos, lit_level ll, int &height_3d,
                                              const std::array<bool, 5> &invisible );
+        
+
+        void draw_zlevel_overlay(const tripoint& p, lit_level ll, int& height_3d);
+        
+        
         void draw_entity_with_overlays( const Character &ch, const tripoint &p, lit_level ll,
                                         int &height_3d );
 
