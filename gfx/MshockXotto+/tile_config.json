@@ -4178,7 +4178,7 @@
         },
         { "id": "t_oil_circ_brkr_l", "fg": 4688, "bg": 4799, "rotates": false },
         { "id": "t_oil_circ_brkr_s", "fg": 4689, "bg": 4799, "rotates": false },
-        { "id": [ "t_open_air", "t_open_air_rooved", "t_open_air_rooved_outside" ], "bg": 1, "rotates": false },
+        { "id": "tr_ledge", "bg": 1, "rotates": false },
         { "id": "t_ov_reb_cage", "fg": 4690, "bg": 4799 },
         { "id": "t_ov_smreb_cage", "fg": 4691, "rotates": false },
         { "id": "t_pedestal_temple", "fg": 4697, "bg": 4952, "rotates": false },
