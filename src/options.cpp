@@ -2629,14 +2629,14 @@ void options_manager::add_options_debug()
 
     add_empty_line();
 
-    add( "FOV_3D", "debug", to_translation( "Experimental 3D field of vision" ),
-         to_translation( "If true and the world is in Z-level mode, the vision will extend beyond current Z-level.  If false, vision is limited to current Z-level." ),
-         false
+    add( "FOV_3D", "debug", to_translation( "实验性3D视野" ),
+         to_translation( "开启时，将启用z轴，视野会不限于玩家所处的高度。关闭是，视野会仅限于当前高度。" ),
+         true
        );
 
-    add( "FOV_3D_Z_RANGE", "debug", to_translation( "Vertical range of 3D field of vision" ),
-         to_translation( "How many levels up and down the experimental 3D field of vision reaches and is drawn on screen.  (This many levels up, this many levels down.)  3D vision of the full height of the world can slow the game down a lot.  Seeing fewer Z-levels is faster." ),
-         0, OVERMAP_LAYERS, 4
+    add( "FOV_3D_Z_RANGE", "debug", to_translation( "3D视野垂直可见范围" ),
+         to_translation( "实验性3D视野中上方和下方的最大视野层数及对下方多少层进行绘制。过高的3D视野会严重拖慢游戏速度。能看到的层数越少速度越快。" ),
+         0, OVERMAP_LAYERS, 1
        );
 
     add_empty_line();
