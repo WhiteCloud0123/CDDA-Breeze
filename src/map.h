@@ -1150,6 +1150,8 @@ class map
                           bool destroy = false, bool bash_floor = false,
                           const vehicle *bashing_vehicle = nullptr );
 
+        void bash_ter_furn_new(const tripoint& p, bash_params& params);
+
         // Effects of attacks/items
         bool hit_with_acid( const tripoint &p );
         bool hit_with_fire( const tripoint &p );

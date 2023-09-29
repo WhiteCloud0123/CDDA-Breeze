@@ -557,7 +557,7 @@ class game
 
         /** Flings the input creature in the given direction. */
         void fling_creature( Creature *c, const units::angle &dir, float flvel,
-                             bool controlled = false );
+                             bool controlled = false , bool suppress_map_update = false);
 
         float natural_light_level( int zlev ) const;
         /** Returns coarse number-of-squares of visibility at the current light level.

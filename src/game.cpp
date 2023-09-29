@@ -11174,7 +11174,7 @@ void game::water_affect_items( Character &ch ) const
     }
 }
 
-void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled )
+void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled, bool suppress_map_update)
 {
     if( c == nullptr ) {
         debugmsg( "game::fling_creature invoked on null target" );
@@ -11262,7 +11262,7 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
                     m.unboard_vehicle( you->pos() );
                 }
                 // If we're flinging the player around, make sure the map stays centered on them.
-                if( is_u ) {
+                if( is_u && !suppress_map_update) {
                     update_map( pt.x, pt.y );
                 } else {
                     you->setpos( pt );
