@@ -146,6 +146,11 @@ static const trait_id trait_SCHIZOPHRENIC( "SCHIZOPHRENIC" );
 
 static const trap_str_id tr_unfinished_construction( "tr_unfinished_construction" );
 
+const flag_id flag_EXPLOSION_SMASHED("EXPLOSION_SMASHED");
+const flag_id flag_EXPLOSION_PROPELLED("EXPLOSION_PROPELLED");
+const flag_id flag_IS_EXPLOSION_PROPELLED("IS_EXPLOSION_PROPELLED");
+
+
 #define dbg(x) DebugLog((x),D_MAP) << __FILE__ << ":" << __LINE__ << ": "
 
 static cata::colony<item> nulitems;          // Returned when &i_at() is asked for an OOB value
@@ -3516,6 +3521,97 @@ void map::collapse_at( const tripoint &p, const bool silent, const bool was_supp
     // that's not handled for now
 }
 
+void map::bash_items_new(const tripoint& p, bash_params& params)
+{
+    if (!has_items(p) || has_flag_ter_or_furn(ter_furn_flag::TFLAG_PLANT, p)) {
+        return;
+    }
+
+    std::vector<item> smashed_contents;
+    map_stack bashed_items = i_at(p);
+    bool smashed_glass = false;
+    for (auto bashed_item = bashed_items.begin(); bashed_item != bashed_items.end(); ) {
+        // the check for active suppresses Molotovs smashing themselves with their own explosion
+        int glass_portion = bashed_item->made_of(material_glass);
+        float glass_fraction = glass_portion / static_cast<float>(bashed_item->type->mat_portion_total);
+        if (glass_portion && !bashed_item->active && rng_float(0.0f, 1.0f) < glass_fraction * 0.5f) {
+            params.did_bash = true;
+            smashed_glass = true;
+            for (const item* bashed_content : bashed_item->all_items_top()) {
+                smashed_contents.emplace_back(*bashed_content);
+            }
+            bashed_item = bashed_items.erase(bashed_item);
+        }
+        else {
+            ++bashed_item;
+        }
+    }
+    // Now plunk in the contents of the smashed items.
+    spawn_items(p, smashed_contents);
+
+    // Add a glass sound even when something else also breaks
+    if (smashed_glass && !params.silent) {
+        sounds::sound(p, 12, sounds::sound_t::combat, _("glass shattering."), false,
+            "smash_success", "smash_glass_contents");
+    }
+}
+
+void map::bash_vehicle_new(const tripoint& p, bash_params& params)
+{
+    // Smash vehicle if present
+    if (const optional_vpart_position vp = veh_at(p)) {
+        vp->vehicle().damage(*this, vp->part_index(), params.strength, damage_type::BASH);
+        if (!params.silent) {
+            sounds::sound(p, 18, sounds::sound_t::combat, _("crash!"), false,
+                "smash_success", "hit_vehicle");
+        }
+
+        params.did_bash = true;
+        params.success = true;
+        params.bashed_solid = true;
+    }
+}
+
+void map::bash_field_new(const tripoint& p, bash_params& params)
+{
+    std::vector<field_type_id> to_remove;
+    for (const std::pair<const field_type_id, field_entry>& fd : field_at(p)) {
+        if (fd.first->bash_info.str_min > -1) {
+            params.did_bash = true;
+            params.bashed_solid = true; // To prevent bashing furniture/vehicles
+            to_remove.push_back(fd.first);
+        }
+    }
+    for (field_type_id fd : to_remove) {
+        remove_field(p, fd);
+    }
+}
+
+
+void map::smash_trap(const tripoint& p, int power, const std::string& cause_message)
+{
+    const trap& tr = get_map().tr_at(p);
+    if (tr.is_null()) {
+        return;
+    }
+
+    const bool is_explosive_trap = !tr.is_benign() && tr.vehicle_data.do_explosion;
+
+    if ( !(power>=30 ) || !is_explosive_trap) {
+        return;
+    }
+    // make a fake NPC to trigger the trap
+    npc dummy;
+    dummy.set_fake(true);
+    dummy.name = cause_message;
+    dummy.setpos(p);
+    tr.trigger(p ,dummy);
+}
+
+
+
+
+
 void map::smash_items( const tripoint &p, const int power, const std::string &cause_message )
 {
     if( !has_items( p ) || has_flag_ter_or_furn( ter_furn_flag::TFLAG_PLANT, p ) ) {
@@ -3535,6 +3631,17 @@ void map::smash_items( const tripoint &p, const int power, const std::string &ca
             i++;
             continue;
         }
+
+       
+        if (i->has_flag(flag_EXPLOSION_SMASHED) ) {
+            i++;
+            continue;
+        }
+
+
+
+
+
         if( i->active ) {
             // Get the explosion item actor
             if( i->type->get_use( "explosion" ) != nullptr ) {
@@ -4296,6 +4403,14 @@ bash_params map::bash( const tripoint &p, const int str,
 
     return bsh;
 }
+
+
+
+
+
+
+
+
 
 void map::bash_items( const tripoint &p, bash_params &params )
 {

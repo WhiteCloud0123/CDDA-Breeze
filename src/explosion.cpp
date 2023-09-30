@@ -63,6 +63,17 @@
 #include "units.h"
 #include "vehicle.h"
 #include "vpart_position.h"
+#include"posix_time.h"
+#include"ui_manager.h"
+
+
+
+
+
+
+
+
+
 
 static const efftype_id effect_blind( "blind" );
 static const efftype_id effect_deaf( "deaf" );
@@ -89,6 +100,16 @@ static const trait_id trait_LEG_TENT_BRACE( "LEG_TENT_BRACE" );
 static const trait_id trait_PER_SLIME( "PER_SLIME" );
 static const trait_id trait_PER_SLIME_OK( "PER_SLIME_OK" );
 
+
+const flag_id flag_EXPLOSION_SMASHED("EXPLOSION_SMASHED");
+const flag_id flag_EXPLOSION_PROPELLED("EXPLOSION_PROPELLED");
+const flag_id flag_IS_EXPLOSION_PROPELLED("IS_EXPLOSION_PROPELLED");
+
+
+
+
+
+
 // Global to smuggle data into shrapnel_calc() function without replicating it across entire map.
 // Mass in kg
 static float fragment_mass = 0.0001f;
@@ -98,6 +119,957 @@ static float fragment_area = 0.00001f;
 static constexpr float MIN_EFFECTIVE_VELOCITY = 70.0f;
 // Pretty arbitrary minimum density.  1/1,000 change of a fragment passing through the given square.
 static constexpr float MIN_FRAGMENT_DENSITY = 0.0001f;
+
+
+
+
+static float obstacle_blast_percentage(float range, float distance)
+{
+    return distance > range ? 0.0f : distance > range / 2 ? 0.5f : 1.0f;
+}
+
+static float item_blast_percentage(float range, float distance)
+{
+    const float radius_reduction = 1.0f - distance / range;
+    return radius_reduction;
+}
+
+static float critter_blast_percentage(Creature* c, float range, float distance)
+{
+    const float radius_reduction = distance > range ? 0.0f : distance > range / 2 ? 0.5f : 1.0f;
+
+    switch (c->get_size()) {
+    case(creature_size::tiny):
+        return 0.5 * radius_reduction;
+    case(creature_size::small):
+        return 0.8 * radius_reduction;
+    case(creature_size::medium):
+        return 1.0 * radius_reduction;
+    case(creature_size::large):
+        return 1.5 * radius_reduction;
+    case(creature_size::huge):
+        return 2.0 * radius_reduction;
+    default:
+        return 1.0 * radius_reduction;
+    }
+}
+
+
+
+// Programmer-friendly numbers to tweak
+namespace ExplosionConstants
+{
+    // Assumed distance between z-levels.
+    // Affects depths of craters and such.
+    constexpr int Z_LEVEL_DIST = 4;
+
+    // Shrapnel hitting terrain and vehicle parts should not inflict full damage
+    // This constant specifies by how much the damage of shrapnel is multiplied
+    //   on terrain/vehicle hits.
+    constexpr float SHRAPNEL_OBSTACLE_REDUCTION = 0.25;
+
+    // To destroy terrain consistently, we bash it several times
+    //   at linearly dissipating strength.
+    // This determines how many times.
+    constexpr int MULTIBASH_COUNT = 5;
+
+    // Even though bash the terrain several times, we want to limit
+    //   the total amount of damage inflicted
+    // For terrain and furniture this doesn't matter, but it does
+    //   for vehicles
+    // This coeff specifies total amount of damage inflicted after every bash
+    constexpr float VEHICLE_DAMAGE_MULT = 2.0;
+
+    // We use this upper bound for the linear interpolation of terfurn strength
+    // The intent is to make explosions consistent, but have jagged edges
+    constexpr float BASH_RANDOM_FACTOR = 0.3;
+
+    // Flinging entities
+    // Whenever an entity is struck by the blast wave
+    //   it is given velocity
+    // Velocity is the range the object will fly
+
+    // Refer to MOB_FLING_FACTOR & ITEM_FLING_FACTOR
+    constexpr int EXPLOSION_CALIBRATION_POWER = 100;
+
+    // This is the amount of grams a mob staying at the
+    //   blast center has to weight
+    //   in order to fly exactly one blast radius away when struck by
+    //   an explosion of strength EXPLOSION_CALIBRATION_STRENGTH
+    constexpr int MOB_FLING_FACTOR = 40750;
+
+    // This is the amount of grams an item staying at the
+    //   blast center has to weight
+    //   in order to fly exactly one blast radius away when struck by
+    //   an explosion of strength EXPLOSION_CALIBRATION_STRENGTH
+    constexpr int ITEM_FLING_FACTOR = 1500;
+
+    // To make items propagate a bit more interestingly, we add a random amount to effective distance
+    //   as rng_float(-ITEM_FLING_RANDOM_FACTOR, +ITEM_FLING_RANDOM_FACTOR);
+    constexpr float ITEM_FLING_RANDOM_FACTOR = 2.5;
+
+    // If the entity strikes an obstacle, we multiply its velocity by this factor
+    //   and reflect it back
+    constexpr float RESTITUTION_COEFF = 0.3;
+
+    // If a flung entity would get more than this speed,
+    //   it instead will choose a random value between
+    //   FLING_THRESHOLD and FLING_MAX_RANGE
+    constexpr float FLING_THRESHOLD = 30.0;
+
+    // See above
+    constexpr float FLING_MAX_RANGE = 50.0;
+}; // namespace ExplosionConstants
+
+
+
+class ExplosionEvent
+{
+public:
+    struct PropelledEntity {
+        std::variant<Creature*, safe_reference<item>> target;
+
+        rl_vec2d position;
+        float angle;
+        float velocity;
+
+        int cur_time;
+    };
+    struct FieldToAdd {
+        field_type_id field;
+        int intensity;
+        bool hit_player;
+    };
+    using target_types =
+        std::variant<std::monostate, PropelledEntity, FieldToAdd, field_type_id, int>;
+
+    enum class Kind { ITEM_MOVEMENT, MOB_MOVEMENT, BLAST, SHRAPNEL, FIELD_ADDITION, FIELD_REMOVAL } kind;
+    target_types target;
+    tripoint position;
+
+    static ExplosionEvent mob_movement(const tripoint position, Creature* mob, float angle,
+        float velocity, int cur_time) {
+        return ExplosionEvent(Kind::MOB_MOVEMENT, position,
+            PropelledEntity{
+                mob,
+                rl_vec2d(position.x + 0.5, position.y + 0.5),
+                angle,
+                velocity,
+                cur_time
+            });
+    }
+    static ExplosionEvent item_movement(const tripoint position, safe_reference<item> item,
+        float angle, float velocity, int cur_time) {
+        return ExplosionEvent(Kind::ITEM_MOVEMENT, position,
+            PropelledEntity{
+                item,
+                rl_vec2d(position.x + 0.5, position.y + 0.5),
+                angle,
+                velocity,
+                cur_time
+            });
+    }
+    static ExplosionEvent tile_blast(const tripoint position, const int distance) {
+        return ExplosionEvent(Kind::BLAST, position, distance);
+    }
+    static ExplosionEvent tile_shrapnel(const tripoint position) {
+        return ExplosionEvent(Kind::SHRAPNEL, position);
+    }
+    static ExplosionEvent field_addition(
+        const tripoint position, field_type_id target,
+        const int intensity = INT_MAX, const bool hit_player = false
+    ) {
+        return ExplosionEvent(Kind::FIELD_ADDITION, position, FieldToAdd{ target, intensity, hit_player });
+    }
+    static ExplosionEvent field_removal(const tripoint position, field_type_id target) {
+        return ExplosionEvent(Kind::FIELD_REMOVAL, position, target);
+    }
+
+private:
+    ExplosionEvent(Kind kind, const tripoint position) :
+        kind(kind), position(position) {};
+    ExplosionEvent(Kind kind, const tripoint position, target_types target) :
+        kind(kind), target(target), position(position) {};
+};
+
+
+
+class ExplosionProcess
+{
+public:
+    // Where did the explosion originate from?
+    const tripoint center;
+
+    // Explosion damage.
+    const int blast_power;
+
+    // Explosion radius, 0 to disable
+    const int blast_radius;
+
+    // Is the fire created by the explosion actually left behind?
+    const bool is_fiery;
+
+    // Shrapnel data, nullopt to disable
+    const std::optional<projectile> shrapnel;
+
+    // Who do we attribute the explosion & shrapnel to? nullopt to disable
+    const std::optional<Creature*> emitter;
+private:
+    using dist_point_pair = std::pair<float, tripoint>;
+    using time_event_pair = std::pair<int, ExplosionEvent>;
+
+    std::vector<dist_point_pair> blast_map;
+    std::vector<dist_point_pair> shrapnel_map;
+    std::priority_queue<time_event_pair, std::vector<time_event_pair>, pair_greater_cmp_first>
+        event_queue;
+
+    std::optional<avatar*> player_flung;
+    std::map<const Creature*, int> mobs_blasted;
+    std::map<const Creature*, int> mobs_shrapneled;
+    std::set<const Creature*> flung_set;
+    std::vector<tripoint> recombination_targets;
+
+    const int radius_step_delay;
+    int cur_time;
+    bool request_redraw;
+public:
+    void run();
+
+    std::map<const Creature*, int> get_blasted() {
+        return mobs_blasted;
+    };
+    std::map<const Creature*, int> get_shrapneled() {
+        return mobs_shrapneled;
+    };
+
+    ExplosionProcess(
+        const tripoint blast_center,
+        const int blast_power,
+        const int blast_radius,
+        const std::optional<projectile> proj = std::nullopt,
+        const bool is_fiery = false,
+        const std::optional<Creature*> responsible = std::nullopt
+    ) : center(blast_center),
+        blast_power(blast_power),
+        blast_radius(blast_radius),
+        is_fiery(is_fiery),
+        shrapnel(proj),
+        emitter(responsible),
+        player_flung(std::nullopt),
+        // We want to ensure the delay is at least some small value at least to make sure propagation occurs correctly
+        radius_step_delay(std::max(get_option<int>("ANIMATION_DELAY"), 5)),
+        cur_time(0),
+        request_redraw(false) {}
+private:
+    static bool dist_comparator(dist_point_pair a, dist_point_pair b) {
+        return a.first < b.first;
+    };
+    static bool time_comparator(time_event_pair a, time_event_pair b) {
+        return a.first < b.first;
+    };
+
+    void fill_maps();
+    void init_event_queue();
+    float generate_fling_angle(const tripoint from, const tripoint to);
+    bool is_occluded(const tripoint from, const tripoint to);
+    void add_event(const int delay, const ExplosionEvent event) {
+        assert(delay >= 0);
+        event_queue.push({ cur_time + 1 + delay, event });
+    }
+
+    bool process_next();
+    void blast_tile(const tripoint position, const int rl_distance);
+    void project_shrapnel(const tripoint position);
+    void add_field(const tripoint position, const field_type_id field,
+        const int intensity, const bool hit_player);
+    void remove_field(const tripoint position, const field_type_id target);
+    void move_entity(const tripoint position, const ExplosionEvent::PropelledEntity& datum,
+        bool is_mob);
+
+    // How long should it take for an entity to travel 1 unit of distance at `velocity`?
+    int one_tile_at_vel(float velocity) {
+        assert(velocity > 0);
+        return radius_step_delay / velocity;
+    };
+};
+
+void ExplosionProcess::fill_maps()
+{
+    map& here = get_map();
+
+    const int shrapnel_range = shrapnel.has_value() ? shrapnel.value().range : 0;
+    const int aoe_radius = std::max(blast_radius, shrapnel_range);
+    const int z_levels_affected = aoe_radius / ExplosionConstants::Z_LEVEL_DIST;
+    const tripoint_range<tripoint> affected_block(
+        center + tripoint(-aoe_radius, -aoe_radius, -z_levels_affected),
+        center + tripoint(aoe_radius, aoe_radius, z_levels_affected)
+    );
+
+    for (const tripoint& target : affected_block) {
+        if (!here.inbounds(target)) {
+            continue;
+        }
+
+        // Uses this ternany check instead of rl_dist because it converts trig_dist's distance to int implicitly
+        const float distance = (
+            trigdist ?
+            trig_dist(center, target) :
+            square_dist(center, target)
+            );
+        const float z_distance = abs(target.z - center.z);
+        const float z_aware_distance = distance + (ExplosionConstants::Z_LEVEL_DIST - 1) * z_distance;
+        // We static_cast<int> in order to keep parity with legacy blasts using rl_dist for distance
+        //   which, as stated above, converts trig_dist into int implicitly
+        if (blast_radius > 0 && static_cast<int>(z_aware_distance) <= blast_radius) {
+            blast_map.push_back({ z_aware_distance, target });
+        }
+
+        if (shrapnel && static_cast<int>(distance) <= shrapnel_range && target.z == center.z &&
+            !is_occluded(center, target)) {
+            shrapnel_map.push_back({ distance, target });
+        }
+    }
+
+    std::stable_sort(blast_map.begin(), blast_map.end(), dist_comparator);
+    std::stable_sort(shrapnel_map.begin(), shrapnel_map.end(), dist_comparator);
+};
+void ExplosionProcess::init_event_queue()
+{
+    // Start with shrapnel first
+    // In how many blast steps should the animation for shrapnel complete?
+    const float SHRAPNEL_EQUIV = 3.0;
+    const float shrapnel_delay = shrapnel.has_value() ? radius_step_delay * SHRAPNEL_EQUIV : 0.0;
+
+    for (const auto& [distance, position] : shrapnel_map) {
+        const float random_factor = rng_float(-0.2, 0.2);
+        const float range_percent = distance / shrapnel.value().range;
+        const float timing = std::min(std::max(range_percent + random_factor, 0.0f), 1.0f);
+        const int time_taken = static_cast<int>(SHRAPNEL_EQUIV * radius_step_delay * timing);
+
+        add_event(time_taken, ExplosionEvent::tile_shrapnel(position));
+    }
+
+    // Then apply blasting
+    for (const auto& [distance, position] : blast_map) {
+        const int time_taken = static_cast<int>(shrapnel_delay + distance * radius_step_delay);
+        // We static_cast<int> in order to keep parity with legacy blasts using rl_dist for distance
+        //   which, as stated before, converts trig_dist into int implicitly
+        add_event(time_taken, ExplosionEvent::tile_blast(position, static_cast<int>(distance)));
+    }
+};
+bool ExplosionProcess::is_occluded(const tripoint from, const tripoint to)
+{
+    if (from == to) {
+        return false;
+    }
+    
+    map& here = get_map();
+    tripoint last_position = from;
+
+    std::vector<tripoint> line_of_movement = line_to(from, to);
+    // Annoyingly, line_to does not include the origin point
+    //   so it has to be added manually
+    line_of_movement.insert(line_of_movement.begin(), from);
+    for (const auto& position : line_of_movement) {
+        // position != to necessary because we do want to strike the
+        //   target obstacle
+        if (position != to && here.impassable(position)) {
+            return true;
+        }
+        
+
+        // 待定
+        // position != to is unneeded here though because we want to
+        //   make sure stuff does not fly into vehicles
+        /*if (here.obstructed_by_vehicle_rotation(last_position, position)) {
+            return true;
+        }*/
+
+
+
+        last_position = position;
+    }
+    return false;
+};
+
+float ExplosionProcess::generate_fling_angle(const tripoint from, const tripoint to)
+{
+    if (from != to) {
+        // -+ 0.95 added to add a half-arc
+        // It should be noted that this mathematically has a bias towards diagonal directions
+        //   but this is the shortest way to get good enough results
+        return units::atan2(
+            to.y - from.y + rng_float(-0.95, 0.95),
+            to.x - from.x + rng_float(-0.95, 0.95)
+        ).value();
+    }
+    else {
+        return rng_float(-M_PI, M_PI);
+    }
+}
+
+bool ExplosionProcess::process_next()
+{
+    if (event_queue.empty()) {
+        return false;
+    }
+    const int time = event_queue.top().first;
+
+    // We don't need to wait in testing mode
+    if (!test_mode) {
+        const long int anim_delay = (time - cur_time) * 1000000L;
+        const timespec delay = timespec{ 0, anim_delay };
+        nanosleep(&delay, nullptr);
+    }
+
+    // You can change this to adjust the step size
+    //   to make the animation have fewer rerenders
+    cur_time = time;
+
+    while (!event_queue.empty() && event_queue.top().first <= cur_time) {
+        const auto& event = event_queue.top().second;
+
+        switch (event.kind) {
+        case ExplosionEvent::Kind::SHRAPNEL:
+            project_shrapnel(event.position);
+            break;
+        case ExplosionEvent::Kind::BLAST:
+            blast_tile(event.position, std::get<int>(event.target));
+            break;
+        case ExplosionEvent::Kind::FIELD_ADDITION: {
+            const auto& [field, intensity,
+                hit_player] = std::get<ExplosionEvent::FieldToAdd>(event.target);
+            add_field(event.position, field, intensity, hit_player);
+            break;
+        }
+        case ExplosionEvent::Kind::FIELD_REMOVAL:
+            remove_field(event.position, std::get<field_type_id>(event.target));
+            break;
+        case ExplosionEvent::Kind::ITEM_MOVEMENT:
+        case ExplosionEvent::Kind::MOB_MOVEMENT:
+            move_entity(
+                event.position,
+                std::get<ExplosionEvent::PropelledEntity>(event.target),
+                event.kind == ExplosionEvent::Kind::MOB_MOVEMENT
+            );
+            break;
+        };
+        event_queue.pop();
+    }
+
+    return true;
+}
+
+
+void ExplosionProcess::project_shrapnel(const tripoint position)
+{
+    map& here = get_map();
+    creature_tracker& c_t = get_creature_tracker();
+    assert(shrapnel);
+
+    if (is_occluded(center, position)) {
+        return;
+    }
+
+    projectile fragment = shrapnel.value();
+    
+    // 待定
+    //fragment.add_effect(ammo_effect_NULL_SOURCE);
+   
+
+
+
+    auto critter = c_t.creature_at(position);
+    if (critter && !critter->is_dead_state()) {
+        int damage_taken = 0;
+        // 变通 const auto bps = critter->get_all_body_parts(true);
+        const auto bps = critter->get_all_body_parts();
+        // Humans get hit in all body parts
+        if (critter->is_avatar()) {
+            for (bodypart_id bp : bps) {
+                
+                // 待定
+                /*if (Character::bp_to_hp(bp->token) == num_hp_parts) {
+                    continue;
+                }*/
+        
+                // TODO: Apply projectile effects
+                // TODO: Penalize low coverage armor
+                // Halve damage to be closer to what monsters take
+                damage_instance half_impact = fragment.impact;
+                half_impact.mult_damage(0.5f);
+                dealt_damage_instance dealt = critter->deal_damage(emitter.value_or(nullptr), bp,
+                    fragment.impact);
+                if (dealt.total_damage() > 0) {
+                    damage_taken += dealt.total_damage();
+                }
+            }
+        }
+        else {
+            dealt_damage_instance dealt = critter->deal_damage(emitter.value_or(nullptr), bps[0],
+                fragment.impact);
+            if (dealt.total_damage() > 0) {
+                damage_taken += dealt.total_damage();
+            }
+            critter->check_dead_state();
+        }
+        mobs_shrapneled[critter] = damage_taken;
+    }
+
+    if (here.impassable(position)) {
+        const int damage = fragment.impact.total_damage() * ExplosionConstants::SHRAPNEL_OBSTACLE_REDUCTION;
+        if (optional_vpart_position vp = here.veh_at(position)) {
+            vp->vehicle().damage(here,vp->part_index(), damage);
+        }
+        else {
+            // Terrain should be affected by shrapnel less
+            here.bash(position, damage, true);
+        }
+    }
+
+    if (!test_mode) {
+        std::vector<tripoint> buf = line_to(position, center);
+        buf.resize(2);
+        g->draw_line(position, buf);
+    }
+    request_redraw |= true;
+}
+
+void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance)
+{
+    assert(blast_radius > 0);
+    // Verify we have view of the center
+    if (is_occluded(center, position)) {
+        return;
+    }
+
+    map& here = get_map();
+    
+
+    // Item damage comes first in order to prevent dropped loot from being destroyed immediately.
+    {
+        const std::string cause = _("force of the explosion");
+        const int smash_force = blast_power * item_blast_percentage(blast_radius, rl_distance);
+        here.smash_trap(position, smash_force, cause);
+        here.smash_items(position, smash_force, cause);
+        // Don't forget to mark them as explosion smashed already
+        for (auto& item : here.i_at(position)) {
+            item.set_flag(flag_EXPLOSION_SMASHED);
+        }
+    }
+
+    // Damage creatures. Done first to reduce the amount of flung enemies.
+    {
+        Creature* critter = get_creature_tracker().creature_at(position);
+
+        if (critter != nullptr && !mobs_blasted.count(critter)) {
+            const int blast_damage = blast_power * critter_blast_percentage(critter, blast_radius,
+                rl_distance);
+            const auto shockwave_dmg = damage_instance::physical(blast_damage, 0, 0, 0.4f);
+
+            avatar* player_ptr = critter->as_avatar();
+            if (player_ptr != nullptr) {
+                player_ptr->add_msg_if_player(m_bad, _("You're caught in the explosion!"));
+
+                struct blastable_part {
+                    bodypart_id bp;
+                    float low_mul;
+                    float high_mul;
+                    float armor_mul;
+                };
+
+                static const std::array<blastable_part, 6> blast_parts = { {
+                        { bodypart_id("torso"), 0.5f, 1.0f, 0.5f },
+                        { bodypart_id("head"),  0.5f, 1.0f, 0.5f },
+                        { bodypart_id("leg_l"), 0.75f, 1.25f, 0.4f },
+                        { bodypart_id("leg_r"), 0.75f, 1.25f, 0.4f },
+                        { bodypart_id("arm_l"), 0.75f, 1.25f, 0.4f },
+                        { bodypart_id("arm_r"), 0.75f, 1.25f, 0.4f },
+                    }
+                };
+
+                for (const auto& blast_part : blast_parts) {
+                    const int part_dam = rng(blast_damage * blast_part.low_mul, blast_damage * blast_part.high_mul);
+                    const std::string hit_part_name = body_part_name_accusative(blast_part.bp);
+                    const auto dmg_instance = damage_instance(damage_type::BASH, part_dam, 0, blast_part.armor_mul);
+                    const auto result = player_ptr->deal_damage(emitter.value_or(nullptr), blast_part.bp,
+                        dmg_instance);
+                    const int res_dmg = result.total_damage();
+
+                    if (res_dmg > 0) {
+                        mobs_blasted[critter] = res_dmg;
+                    }
+                }
+            }
+            else {
+                critter->deal_damage(emitter.value_or(nullptr), bodypart_id("torso"), shockwave_dmg);
+                critter->check_dead_state();
+                mobs_blasted[critter] = blast_damage;
+            }
+        }
+    }
+
+    // Fling creatures
+    {
+        Creature* critter = get_creature_tracker().creature_at(position);
+        avatar* player_ptr = dynamic_cast<avatar*>(critter);
+
+        if (critter != nullptr && !flung_set.count(critter)) {
+            const int push_strength = (blast_radius - rl_distance) * blast_power;
+            const float move_power = ExplosionConstants::MOB_FLING_FACTOR * push_strength;
+
+            const int weight = to_gram(critter->get_weight());
+            const int inertia = std::max(weight, 1) * ExplosionConstants::EXPLOSION_CALIBRATION_POWER;
+            const float real_velocity = move_power / inertia;
+            const float velocity = real_velocity > ExplosionConstants::FLING_THRESHOLD ?
+                rng_float(ExplosionConstants::FLING_THRESHOLD, ExplosionConstants::FLING_MAX_RANGE) :
+                real_velocity;
+
+            if (velocity >= 1.0) {
+                if (player_ptr != nullptr) {
+                    player_flung = std::make_optional(player_ptr);
+                }
+
+                add_event(one_tile_at_vel(velocity),
+                    ExplosionEvent::mob_movement(
+                        position, critter,
+                        generate_fling_angle(center, position), velocity, cur_time
+                    )
+                );
+                flung_set.insert(critter);
+            }
+        }
+    }
+
+    {
+        // This reduces the randomness factor in terrain bash significantly
+        // Which makes explosions have a more well-defined shape.
+        const float offset_distance = std::max(rl_distance - 1.0, 0.0);
+        const float terrain_random_factor = rng_float(0.0, ExplosionConstants::BASH_RANDOM_FACTOR);
+        const float terrain_factor = std::min(std::max(offset_distance / blast_radius -
+            terrain_random_factor, 0.0f), 1.0f);
+        float terrain_blast_force = blast_power * obstacle_blast_percentage(blast_radius, rl_distance);
+
+        // Multibash is done by bashing the tile with decaying force.
+        // The reason for this existing is because a number of tiles undergo multiple bashed states
+        // Things like doors and wall -> floor -> ground.
+
+        const float blast_force_decay = (ExplosionConstants::VEHICLE_DAMAGE_MULT - 1.0) *
+            blast_power / ExplosionConstants::MULTIBASH_COUNT;
+        assert(blast_force_decay > 0);
+        while (terrain_blast_force > 0) {
+            bash_params bash{
+                static_cast<int>(terrain_blast_force),
+                true,
+                false,
+                here.passable(position + tripoint_below),
+                terrain_factor,
+                center.z > position.z,
+                true
+            };
+            // Despite what you might expect, this is NOT the same as smash_items
+
+            here.bash_items_new(position, bash);
+            here.bash_field_new(position, bash);
+            here.bash_vehicle_new(position, bash);
+            here.bash_ter_furn_new(position, bash);
+            terrain_blast_force -= blast_force_decay;
+        }
+    }
+
+    {
+        // Split items here into stacks
+        std::vector<item> stacks;
+
+        for (auto& it : here.i_at(position)) {
+            while (true) {
+                const int amt = it.count();
+                const int split_cnt = rng(1, amt - 1);
+                const bool is_final = amt <= 1;
+
+                // If the item is already propelled, ignore it
+                if (!is_final && !it.has_flag(flag_EXPLOSION_PROPELLED)) {
+                    stacks.push_back(it.split(split_cnt));
+                }
+                else {
+                    stacks.push_back(item(it));
+                    break;
+                }
+            }
+        }
+        here.i_clear(position);
+
+        for (const auto& it : stacks) {
+            here.add_item(position, it);
+        }
+        recombination_targets.push_back(position);
+    }
+
+    // Now give items velocity
+    for (auto& it : here.i_at(position)) {
+        // If the item is already propelled, ignore it
+        if (it.has_flag(flag_EXPLOSION_PROPELLED)) {
+            continue;
+        };
+
+        const float random_factor = rng_float(-ExplosionConstants::ITEM_FLING_RANDOM_FACTOR,
+            ExplosionConstants::ITEM_FLING_RANDOM_FACTOR);
+        const float push_strength = std::max(blast_radius - rl_distance + random_factor,
+            0.0f) * blast_power;
+        const float move_power = ExplosionConstants::ITEM_FLING_FACTOR * push_strength;
+
+        const int weight = to_gram(it.weight());
+        const float inertia = std::max(weight, 1) * ExplosionConstants::EXPLOSION_CALIBRATION_POWER;
+        const float real_velocity = move_power / inertia;
+        const float velocity = real_velocity > ExplosionConstants::FLING_THRESHOLD ?
+            rng_float(ExplosionConstants::FLING_THRESHOLD, ExplosionConstants::FLING_MAX_RANGE) :
+            real_velocity;
+
+        if (velocity < 1.0) {
+            continue;
+        }
+
+        it.set_flag(flag_EXPLOSION_PROPELLED);
+
+        add_event(
+            one_tile_at_vel(velocity),
+            ExplosionEvent::item_movement(
+                position, it.get_safe_reference(),
+                generate_fling_angle(center, position), velocity, cur_time)
+        );
+    }
+
+    // Finally, add fields if we can
+    if (here.passable(position)) {
+        const float radius_percent = static_cast<float>(rl_distance) / blast_radius;
+        // Create fresh smoke
+        // 50% of the radius is guaranteed to be covered in thin smoke afterwards
+        if (here.get_field(position, fd_smoke) == nullptr) {
+            const float radius_offset = 2 * radius_percent - 1;
+            add_event(0, ExplosionEvent::field_addition(position, fd_smoke));
+            if (radius_offset > 0) {
+                const int delay = static_cast<int>(blast_radius * radius_step_delay *
+                    rng_float(0.0, 1.1 - radius_offset));
+                add_event(delay, ExplosionEvent::field_removal(position, fd_smoke));
+            }
+        }
+
+        // Create fresh fire fields
+        if (here.get_field(position, fd_fire) == nullptr) {
+            add_event(
+                radius_step_delay,
+                ExplosionEvent::field_addition(position, fd_fire,
+                    1 + (blast_power > 10) + (blast_power > 30),
+                    is_fiery
+                )
+            );
+            if (!is_fiery) {
+                // Remove at an accelerating pace
+                const int delay = static_cast<int>(rng_float(2.0, 4.0) *
+                    radius_step_delay * (1.1 - radius_percent));
+                add_event(delay + radius_step_delay, ExplosionEvent::field_removal(position, fd_fire));
+            }
+        }
+    }
+    request_redraw |= position.z == get_avatar().posz();
+};
+
+void ExplosionProcess::add_field(const tripoint position,
+    const field_type_id field,
+    const int intensity,
+    const bool hit_player)
+{
+    map& here = get_map();
+    here.add_field(position, field, intensity, 0_turns, hit_player);
+    request_redraw |= position.z == get_avatar().posz();
+};
+
+void ExplosionProcess::remove_field(const tripoint position, field_type_id target)
+{
+    map& here = get_map();
+    here.remove_field(position, target);
+    request_redraw |= position.z == get_avatar().posz();
+};
+
+void ExplosionProcess::move_entity(const tripoint position,
+    const ExplosionEvent::PropelledEntity& datum,
+    const bool is_mob)
+{
+    if (datum.velocity < 1) {
+        return;
+    }
+
+    std::variant<Creature*, safe_reference<item>> cur_target = datum.target;
+
+    if (!is_mob && !std::get<safe_reference<item>>(cur_target)) {
+        return;
+    }
+
+    map& here = get_map();
+
+
+    const int time_delta = cur_time - datum.cur_time;
+    const float distance_to_travel = std::min(
+        datum.velocity * time_delta / radius_step_delay,
+        datum.velocity
+    );
+
+    tripoint new_position = position;
+    float new_velocity = datum.velocity;
+    float new_angle = datum.angle;
+
+    // Sometimes items fly more than one tile at once
+    //   so we want to make sure we do not hit any obstacles on the way
+    // Hence this complication
+    {
+        const int intermediate_steps = ceil(1.5 * distance_to_travel);
+
+        for (int step = 0; step <= intermediate_steps; step++) {
+            const float progress = static_cast<float>(step) / static_cast<float>(intermediate_steps);
+            const float cur_distance_travelled = distance_to_travel * progress;
+            rl_vec2d new_position_vec = datum.position +
+                rl_vec2d(cur_distance_travelled, 0.0).rotated(datum.angle);
+            tripoint maybe_new_position = tripoint(static_cast<int>(new_position_vec.x),
+                static_cast<int>(new_position_vec.y),
+                position.z);
+            if (!here.inbounds(maybe_new_position) ||
+                here.impassable(maybe_new_position) ||
+                (is_mob && maybe_new_position != position && get_creature_tracker().creature_at(maybe_new_position)) /* 待定 ||
+                here.obstructed_by_vehicle_rotation(position, maybe_new_position)*/) {
+                // TODO: Bash the obstacle with whatever is flung?
+
+                new_angle += M_PI;
+                new_velocity = datum.velocity - cur_distance_travelled;
+                new_velocity *= ExplosionConstants::RESTITUTION_COEFF;
+                break;
+            }
+            new_position = maybe_new_position;
+            new_velocity = datum.velocity - cur_distance_travelled;
+        }
+    }
+
+    bool do_next = new_velocity >= 1;
+
+    if (new_position != position) {
+        if (is_mob) {
+            std::get<Creature*>(cur_target)->setpos(new_position);
+        }
+        else {
+            item* target = std::get<safe_reference<item>>(cur_target).get();
+            item copy = *target;
+
+            if (!copy.is_null()) {
+                here.i_rem(position, target);
+
+                item* new_item = &here.add_item(new_position, copy);
+                recombination_targets.push_back(position);
+                recombination_targets.push_back(new_position);
+
+                // add_item may in fact change the item in a number of ways
+                //   so we _have_ to check if it's in the location we expect
+                // It's slow, but what can you do?
+                new_item->set_flag(flag_IS_EXPLOSION_PROPELLED);
+                bool is_safe = false;
+                for (auto& it : here.i_at(new_position)) {
+                    if (it.has_flag(flag_IS_EXPLOSION_PROPELLED)) {
+                        is_safe = true;
+                        break;
+                    }
+                }
+                new_item->unset_flag(flag_IS_EXPLOSION_PROPELLED);
+                if (!is_safe) {
+                    do_next = false;
+                }
+                else {
+                    cur_target = new_item->get_safe_reference();
+                }
+            }
+        }
+        request_redraw |= position.z == get_avatar().posz();
+        request_redraw |= new_position.z == get_avatar().posz();
+    }
+
+    if (do_next) {
+        add_event(
+            one_tile_at_vel(new_velocity),
+            is_mob ?
+            ExplosionEvent::mob_movement(new_position,
+                std::get<Creature*>(cur_target), new_angle, new_velocity, cur_time) :
+            ExplosionEvent::item_movement(new_position,
+                std::get<safe_reference<item>>(cur_target), new_angle, new_velocity, cur_time)
+        );
+    }
+};
+
+
+void ExplosionProcess::run()
+{
+    fill_maps();
+    init_event_queue();
+
+    // We need to temporary disable it because
+    //   larger explosions may end up filling
+    //   the texture pool, causing a crash
+    bool disable_minimap = !test_mode && pixel_minimap_option;
+    if (disable_minimap) {
+        g->toggle_pixel_minimap();
+    }
+
+    map& here = get_map();
+    while (process_next()) {
+        // No need to redraw in testing mode
+        if (!test_mode && request_redraw) {
+            ui_manager::redraw();
+            refresh_display();
+            request_redraw = false;
+        }
+    };
+
+    // Reenable disabled options
+    if (disable_minimap) {
+        g->toggle_pixel_minimap();
+    }
+
+    // Remove temporary flags
+    for (int z = -OVERMAP_DEPTH; z <= OVERMAP_HEIGHT; z++) {
+        for (const auto& pos : here.points_on_zlevel(z)) {
+            for (auto& it : here.i_at(pos)) {
+                it.unset_flag(flag_EXPLOSION_SMASHED);
+                it.unset_flag(flag_EXPLOSION_PROPELLED);
+            }
+        }
+    }
+
+    // Make sure the map is centered around the player
+    if (player_flung.has_value()) {
+        g->update_map(*player_flung.value());
+    }
+
+    // Finally, recombine thrown items into full stacks again
+    std::sort(recombination_targets.begin(), recombination_targets.end());
+    auto end = std::unique(recombination_targets.begin(), recombination_targets.end());
+    recombination_targets.erase(end, recombination_targets.end());
+
+    for (const auto& position : recombination_targets) {
+        std::vector<item> storage;
+        for (item& it : here.i_at(position)) {
+            storage.push_back(it);
+        }
+        here.i_clear(position);
+        for (item& it : storage) {
+            here.add_item_or_charges(position, it);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 
 explosion_data load_explosion_data( const JsonObject &jo )
 {
@@ -131,38 +1103,18 @@ shrapnel_data load_shrapnel_data( const JsonObject &jo )
     ret.drop = itype_id( jo.get_string( "drop", "null" ) );
     return ret;
 }
+
+
+
+
+
 namespace explosion_handler
 {
 
-    static float obstacle_blast_percentage(float range, float distance)
-    {
-        return distance > range ? 0.0f : distance > range / 2 ? 0.5f : 1.0f;
-    }
-    static float critter_blast_percentage(Creature* c, float range, float distance)
-    {
-        const float radius_reduction = distance > range ? 0.0f : distance > range / 2 ? 0.5f : 1.0f;
+    
+    
 
-        switch (c->get_size()) {
-        case(creature_size::tiny):
-            return 0.5 * radius_reduction;
-        case(creature_size::small):
-            return 0.8 * radius_reduction;
-        case(creature_size::medium):
-            return 1.0 * radius_reduction;
-        case(creature_size::large):
-            return 1.5 * radius_reduction;
-        case(creature_size::huge):
-            return 2.0 * radius_reduction;
-        default:
-            return 1.0 * radius_reduction;
-        }
-    }
-
-    static float item_blast_percentage(float range, float distance)
-    {
-        const float radius_reduction = 1.0f - distance / range;
-        return radius_reduction;
-    }
+    
 
 
 
@@ -850,16 +1802,20 @@ void _make_explosion( const Creature *source, const tripoint &p, const explosion
         }
     }
 
-    if (ex.distance_factor > 0.0f && ex.power > 0.0f) {
-        // Power rescaled to mean grams of TNT equivalent, this scales it roughly back to where
-        // it was before until we re-do blasting power to be based on TNT-equivalent directly.
-        //do_blast( source, p, ex.power, ex.distance_factor, ex.fire );
+    //if (ex.distance_factor > 0.0f && ex.power > 0.0f) {
+    //    // Power rescaled to mean grams of TNT equivalent, this scales it roughly back to where
+    //    // it was before until we re-do blasting power to be based on TNT-equivalent directly.
+    //    //do_blast( source, p, ex.power, ex.distance_factor, ex.fire );
 
-        do_blast_new(p, ex.power, ex.distance_factor * 10);
-        
+    //    do_blast_new(p, ex.power, ex.distance_factor * 10);
+    //    
 
-    }
+    //}
 
+ 
+     ExplosionProcess process( p, ex.power, ex.distance_factor*10, std::nullopt, ex.fire);
+     process.run();
+ 
 
 
 }
