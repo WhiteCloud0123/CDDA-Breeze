@@ -370,7 +370,7 @@ private:
     float generate_fling_angle(const tripoint from, const tripoint to);
     bool is_occluded(const tripoint from, const tripoint to);
     void add_event(const int delay, const ExplosionEvent event) {
-        assert(delay >= 0);
+        cata_assert(delay >= 0);
         event_queue.push({ cur_time + 1 + delay, event });
     }
 
@@ -385,7 +385,7 @@ private:
 
     // How long should it take for an entity to travel 1 unit of distance at `velocity`?
     int one_tile_at_vel(float velocity) {
-        assert(velocity > 0);
+        cata_assert(velocity > 0);
         return radius_step_delay / velocity;
     };
 };
@@ -562,7 +562,7 @@ void ExplosionProcess::project_shrapnel(const tripoint position)
 {
     map& here = get_map();
     creature_tracker& c_t = get_creature_tracker();
-    assert(shrapnel);
+    cata_assert(shrapnel);
 
     if (is_occluded(center, position)) {
         return;
@@ -634,7 +634,7 @@ void ExplosionProcess::project_shrapnel(const tripoint position)
 
 void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance)
 {
-    assert(blast_radius > 0);
+    cata_assert(blast_radius > 0);
     // Verify we have view of the center
     if (is_occluded(center, position)) {
         return;
@@ -753,7 +753,7 @@ void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance
 
         const float blast_force_decay = (ExplosionConstants::VEHICLE_DAMAGE_MULT - 1.0) *
             blast_power / ExplosionConstants::MULTIBASH_COUNT;
-        assert(blast_force_decay > 0);
+        cata_assert(blast_force_decay > 0);
         while (terrain_blast_force > 0) {
             bash_params bash{
                 static_cast<int>(terrain_blast_force),
