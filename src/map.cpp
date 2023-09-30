@@ -146,9 +146,6 @@ static const trait_id trait_SCHIZOPHRENIC( "SCHIZOPHRENIC" );
 
 static const trap_str_id tr_unfinished_construction( "tr_unfinished_construction" );
 
-const flag_id flag_EXPLOSION_SMASHED("EXPLOSION_SMASHED");
-const flag_id flag_EXPLOSION_PROPELLED("EXPLOSION_PROPELLED");
-const flag_id flag_IS_EXPLOSION_PROPELLED("IS_EXPLOSION_PROPELLED");
 
 
 #define dbg(x) DebugLog((x),D_MAP) << __FILE__ << ":" << __LINE__ << ": "

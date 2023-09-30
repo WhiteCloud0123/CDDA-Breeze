@@ -2117,5 +2117,17 @@
   {
     "id": "ELECTRONIC",
     "type": "json_flag"
+  },
+  {
+    "id": "EXPLOSION_SMASHED",
+    "type": "json_flag"
+  },
+  {
+    "id": "EXPLOSION_PROPELLED",
+    "type": "json_flag"
+  },
+  {
+    "id": "IS_EXPLOSION_PROPELLED",
+    "type": "json_flag"
   }
 ]

@@ -101,9 +101,6 @@ static const trait_id trait_PER_SLIME( "PER_SLIME" );
 static const trait_id trait_PER_SLIME_OK( "PER_SLIME_OK" );
 
 
-const flag_id flag_EXPLOSION_SMASHED("EXPLOSION_SMASHED");
-const flag_id flag_EXPLOSION_PROPELLED("EXPLOSION_PROPELLED");
-const flag_id flag_IS_EXPLOSION_PROPELLED("IS_EXPLOSION_PROPELLED");
 
 
 
