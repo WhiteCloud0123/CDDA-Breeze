@@ -1038,9 +1038,10 @@ void ExplosionProcess::run()
     }
 
     // Make sure the map is centered around the player
-    if (player_flung.has_value()) {
+    // 待定
+    /*if (player_flung.has_value()) {
         g->update_map(*player_flung.value());
-    }
+    }*/
 
     // Finally, recombine thrown items into full stacks again
     std::sort(recombination_targets.begin(), recombination_targets.end());
