@@ -856,7 +856,7 @@ void _make_explosion( const Creature *source, const tripoint &p, const explosion
         //do_blast( source, p, ex.power, ex.distance_factor, ex.fire );
 
         do_blast_new(p, ex.power, ex.distance_factor * 10);
-        add_msg(m_good, _("distance_factor 的值为 %s"), ex.distance_factor);
+        
 
     }
 
