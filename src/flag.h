@@ -367,6 +367,15 @@ extern const flag_id flag_SOFT;
 extern const flag_id flag_HARD;
 extern const flag_id flag_SHREDDED;
 extern const flag_id flag_FROM_FROZEN_LIQUID;
+
+extern const flag_id flag_EXPLOSION_SMASHED;
+extern const flag_id flag_EXPLOSION_PROPELLED;
+extern const flag_id flag_IS_EXPLOSION_PROPELLED;
+
+
+
+
+
 /**
  * Flags: json entity with "type": "json_flag", defined in flags.json, vp_flags.json
  * Currently used by:

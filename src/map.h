@@ -1134,6 +1134,11 @@ class map
         /** Causes a collapse at p, such as from destroying a wall */
         void collapse_at( const tripoint &p, bool silent, bool was_supporting = false,
                           bool destroy_pos = true );
+        
+        
+        /** Tries to smash the items at the given tripoint. Used by the explosion code */
+        void smash_trap(const tripoint& p, int power, const std::string& cause_message);
+        
         /** Tries to smash the items at the given tripoint. Used by the explosion code */
         void smash_items( const tripoint &p, int power, const std::string &cause_message );
         /**
@@ -1150,6 +1155,18 @@ class map
                           bool destroy = false, bool bash_floor = false,
                           const vehicle *bashing_vehicle = nullptr );
 
+        
+        // Information on what to bash/what was bashed is read from/written to the bash_params/bash_results struct
+        void bash_items(const tripoint& p, const bash_params& params);
+        void bash_field(const tripoint& p, const bash_params& params);
+
+        
+       
+        
+        
+        void bash_items_new(const tripoint& p, bash_params& params);
+        void bash_vehicle_new(const tripoint& p, bash_params& params);
+        void bash_field_new(const tripoint& p, bash_params& params);
         void bash_ter_furn_new(const tripoint& p, bash_params& params);
 
         // Effects of attacks/items
