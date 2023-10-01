@@ -216,6 +216,8 @@ static const std::string flag_SILENT( "SILENT" );
 // item pricing
 static const int PRICE_FILTHY_MALUS = 100;  // cents
 
+static const skill_id skill_throw("throw");
+
 
 
 class npc_class;
