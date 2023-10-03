@@ -632,8 +632,21 @@ bool melee_actor::call( monster &z ) const
     }
     if( throw_strength > 0 ) {
         z.remove_effect( effect_grabbing );
-        g->fling_creature( target, coord_to_angle( z.pos(), target->pos() ),
-                           throw_strength );
+        if (rng(1,20)==1) {
+            // 使得被击飞的目标只纵向穿越z轴
+            g->fling_creature_up(target, coord_to_angle(z.pos(), target->pos()),
+                throw_strength);
+
+        
+        }
+        else {
+
+            g->fling_creature(target, coord_to_angle(z.pos(), target->pos()),
+                throw_strength);
+        
+        
+        }
+        
         target->add_msg_player_or_npc( m_bad, throw_msg_u, throw_msg_npc, mon_name );
 
         // Items strapped to you may fall off as you hit the ground

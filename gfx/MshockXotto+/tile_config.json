@@ -4057,19 +4057,6 @@
             { "id": "edge", "fg": 4706, "bg": 4799 }
           ]
         },
-        {
-          "id": "t_hole",
-          "fg": 4654,
-          "multitile": true,
-          "additional_tiles": [
-            { "id": "unconnected", "fg": 4654 },
-            { "id": "center", "fg": 4655 },
-            { "id": "corner", "fg": 4656 },
-            { "id": "edge", "fg": 4657 },
-            { "id": "end_piece", "fg": 4658 },
-            { "id": "t_connection", "fg": 4659 }
-          ]
-        },
         { "id": "t_improvised_shelter", "fg": 4660, "bg": 4952, "rotates": false },
         { "id": "t_improvised_shelter_season_autumn", "fg": 4660, "bg": 4956, "rotates": false },
         { "id": "t_improvised_shelter_season_summer", "fg": 4660, "bg": 4960, "rotates": false },

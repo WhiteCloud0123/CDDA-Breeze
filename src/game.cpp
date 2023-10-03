@@ -186,6 +186,7 @@
 #include "weather_type.h"
 #include "worldfactory.h"
 #include "network.h"
+#include "posix_time.h"
 
 #if defined(TILES)
 #include "sdl_utils.h"
@@ -11174,7 +11175,231 @@ void game::water_affect_items( Character &ch ) const
     }
 }
 
-void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled, bool suppress_map_update)
+void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, bool controlled) {
+
+
+
+    if (c == nullptr) {
+        debugmsg("game::fling_creature invoked on null target");
+        return;
+    }
+
+    if (c->is_dead_state()) {
+        // Flinging a corpse causes problems, don't enable without testing
+        return;
+    }
+
+    if (c->is_hallucination()) {
+        // Don't fling hallucinations
+        return;
+    }
+
+    // Target creature shouldn't be grabbed if thrown
+    c->remove_effect(effect_grabbed);
+
+    bool thru = true;
+    const bool is_u = c == &u;
+    // Don't animate critters getting bashed if animations are off
+    const bool animate = is_u || get_option<bool>("ANIMATIONS");
+
+    Character* you = dynamic_cast<Character*>(c);
+
+    tileray tdir(dir);
+    int range = flvel / 20;
+
+    if (c->posz() == 10 ) {
+        return;
+    }
+    if (range>10) {
+        range = 10;
+    }
+    
+    tripoint pt = c->pos();
+    
+    
+    while (range > 0) {
+        
+        c->underwater = false;
+        // TODO: Check whenever it is actually in the viewport
+        // or maybe even just redraw the changed tiles
+        bool seen = is_u || u.sees(*c); // To avoid redrawing when not seen
+        tdir.advance();
+
+        pt.z = c->posz() + 1;
+        
+        float force = 0.0f;
+
+        bash_params bash{
+                (int)50*flvel,
+                true,
+                false,
+                get_map().passable(pt),
+                10,
+                false, false, false, false
+        };
+        
+        map &m = get_map();
+        creature_tracker& creatures = get_creature_tracker();
+
+        if ( !m.has_flag_ter(ter_furn_flag::TFLAG_NO_FLOOR, pt) ) {
+        
+            
+
+            if (c->get_size() == creature_size::huge) {
+
+                for (int i = 0; i < 3; i++) {
+                    for (int r = 0; r < 3; r++) {
+                        m.bash_ter_furn_new(tripoint(pt.x - 1 + i, pt.y + 1 - r, pt.z), bash);
+                        m.bash_field_new(tripoint(pt.x - 1 + i, pt.y + 1 - r, pt.z), bash);
+                    }
+
+
+                }
+            }
+            else {
+                m.bash_ter_furn_new(pt, bash);
+                m.bash_field_new(pt, bash);
+            }
+
+            c->apply_damage(nullptr, bodypart_id("torso"), rng(flvel/2,flvel));
+            add_msg(m_bad, _("%s 撞到了天花板！"), c->is_avatar()?"你" : c->get_name());
+            c->check_dead_state();
+            if (!c->is_dead_state()) {
+                thru = false;
+            }
+        
+            
+        
+        
+        }
+        
+
+        
+
+        
+        
+
+
+        if (m.has_flag_ter(ter_furn_flag::TFLAG_NO_FLOOR, pt)) {
+            if (monster* const mon_ptr = creatures.creature_at<monster>(pt)) {
+                monster& critter = *mon_ptr;
+                // Approximate critter's "stopping power" with its max hp
+                force = std::min<float>(1.5f * critter.type->hp, flvel);
+                const int damage = rng(force, force * 2.0f) / 6;
+                
+                const int zed_damage = std::max(0,
+                    (damage - critter.get_armor_bash(bodypart_id("torso"))) * 6);
+                // TODO: Pass the "flinger" here - it's not the flung critter that deals damage
+                critter.apply_damage(c, bodypart_id("torso"), zed_damage);
+                critter.check_dead_state();
+                if (!critter.is_dead()) {
+                    thru = false;
+                }
+            }
+        }
+
+        // If the critter dies during flinging, moving it around causes debugmsgs
+        if (c->is_dead_state()) {
+            return;
+        }
+
+        flvel -= force;
+        if (thru) {
+            if (you != nullptr) {
+                if (you->in_vehicle) {
+                    m.unboard_vehicle(you->pos());
+                }
+               
+                
+                    you->setpos(pt);
+                
+            }
+            else if (!creatures.creature_at(pt)) {
+                // Dying monster doesn't always leave an empty tile (blob spawning etc.)
+                // Just don't setpos if it happens - next iteration will do so
+                // or the monster will stop a tile before the unpassable one
+                c->setpos(pt);
+            }
+        }
+        else {
+            // Don't zero flvel - count this as slamming both the obstacle and the ground
+            // although at lower velocity
+            break;
+        }
+        range--;
+        if (animate && (seen || u.sees(*c))) {
+            invalidate_main_ui_adaptor();
+            inp_mngr.pump_events();
+            
+            // 程序停顿500毫秒
+            const timespec delay = timespec{ 0, 500000000 };
+            nanosleep(&delay, nullptr);
+
+            ui_manager::redraw_invalidated();
+            refresh_display();
+
+        }
+    }
+
+    if (you != nullptr) {
+
+        g->vertical_move(pt.z, true);
+       
+    
+    }
+    
+    
+
+    // Fall down to the ground - always on the last reached tile
+    if (!m.has_flag(ter_furn_flag::TFLAG_SWIMMABLE, c->pos())) {
+        const trap& trap_under_creature = m.tr_at(c->pos());
+        // Didn't smash into a wall or a floor so only take the fall damage
+        if (thru && trap_under_creature == tr_ledge) {
+            m.creature_on_trap(*c, false);
+        }
+        else {
+            // Fall on ground
+            int force = rng(flvel, flvel * 2) / 9;
+            if (controlled) {
+                force = std::max(force / 2 - 5, 0);
+            }
+            if (force > 0) {
+                int dmg = c->impact(force, c->pos());
+                // TODO: Make landing damage the floor
+                m.bash(c->pos(), dmg / 4, false, false, false);
+            }
+            // Always apply traps to creature i.e. bear traps, tele traps etc.
+            m.creature_on_trap(*c, false);
+        }
+    }
+    else {
+        c->underwater = true;
+
+        if (you != nullptr) {
+            water_affect_items(*you);
+        }
+
+        if (is_u) {
+            if (controlled) {
+                add_msg(_("You dive into water."));
+            }
+            else {
+                add_msg(m_warning, _("You fall into water."));
+            }
+        }
+    }
+
+
+
+
+}
+
+
+
+
+
+
+void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled)
 {
     if( c == nullptr ) {
         debugmsg( "game::fling_creature invoked on null target" );
@@ -11262,7 +11487,7 @@ void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bo
                     m.unboard_vehicle( you->pos() );
                 }
                 // If we're flinging the player around, make sure the map stays centered on them.
-                if( is_u && !suppress_map_update) {
+                if( is_u ) {
                     update_map( pt.x, pt.y );
                 } else {
                     you->setpos( pt );

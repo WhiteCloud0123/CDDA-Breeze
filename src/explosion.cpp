@@ -1567,7 +1567,7 @@ static std::map<const Creature*, int> do_blast_new(const tripoint& blast_center,
                 }
                 else {
                     fling_creature_affected_player = true;
-                    g->fling_creature(critter, angle, fling_vel, false, true);
+                    g->fling_creature(critter, angle, fling_vel, false);
                 }
                 // Prevent multiflings
                 already_flung.insert(critter);
