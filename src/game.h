@@ -555,9 +555,18 @@ class game
         /** Destroy / dissolve character items when in water. */
         void water_affect_items( Character &ch ) const;
 
+        
+        
         /** Flings the input creature in the given direction. */
         void fling_creature( Creature *c, const units::angle &dir, float flvel,
-                             bool controlled = false , bool suppress_map_update = false);
+                             bool controlled = false);
+        // 使得被击飞的目标不再局限于平面位移，也会穿越z轴
+        void fling_creature_new(Creature* c, const units::angle& dir, float flvel,
+            bool controlled = false);
+        // 使得被击飞的目标只纵向的穿越z轴
+        void fling_creature_up(Creature* c, const units::angle& dir, float flvel,
+            bool controlled = false);
+        
 
         float natural_light_level( int zlev ) const;
         /** Returns coarse number-of-squares of visibility at the current light level.
@@ -574,6 +583,9 @@ class game
         point update_map( Character &p, bool z_level_changed = false );
         point update_map( int &x, int &y, bool z_level_changed = false );
         void update_overmap_seen(); // Update which overmap tiles we can see
+
+        point update_map_new(int& x, int& y, int &z ,bool z_level_changed = false);
+
 
         void peek();
         void peek( const tripoint &p );
