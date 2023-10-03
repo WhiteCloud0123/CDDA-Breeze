@@ -11274,12 +11274,6 @@ void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, b
         }
         
 
-        
-
-        
-        
-
-
         if (m.has_flag_ter(ter_furn_flag::TFLAG_NO_FLOOR, pt)) {
             if (monster* const mon_ptr = creatures.creature_at<monster>(pt)) {
                 monster& critter = *mon_ptr;
