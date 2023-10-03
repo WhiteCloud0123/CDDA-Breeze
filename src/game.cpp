@@ -11383,14 +11383,7 @@ void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, b
         }
     }
 
-
-
-
 }
-
-
-
-
 
 
 void game::fling_creature( Creature *c, const units::angle &dir, float flvel, bool controlled)
