@@ -11230,7 +11230,7 @@ void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, b
         float force = 0.0f;
 
         bash_params bash{
-                (int)50*flvel,
+                static_cast<int>(50 * flvel),
                 true,
                 false,
                 get_map().passable(pt),
