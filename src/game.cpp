@@ -11264,7 +11264,7 @@ void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, b
             c->apply_damage(nullptr, bodypart_id("torso"), rng(flvel/2,flvel));
             add_msg(m_bad, _("%s 撞到了天花板！"), c->is_avatar()?"你" : c->get_name());
             c->check_dead_state();
-            if (!c->is_dead_state()) {
+            if (c->is_dead_state()) {
                 thru = false;
             }
         

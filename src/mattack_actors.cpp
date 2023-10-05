@@ -633,10 +633,34 @@ bool melee_actor::call( monster &z ) const
     if( throw_strength > 0 ) {
         z.remove_effect( effect_grabbing );
         if (rng(1,20)==1) {
-            // 使得被击飞的目标只纵向穿越z轴
-            g->fling_creature_up(target, coord_to_angle(z.pos(), target->pos()),
-                throw_strength);
+            
+            // 精英怪物触发联连招
+            if (z.lv_breeze>=6) {
 
+                
+                g->fling_creature_up(target, coord_to_angle(z.pos(), target->pos()),
+                    throw_strength);
+
+                if (z.posz()==target->posz()) {
+
+                    g->fling_creature(target, coord_to_angle(z.pos(), target->pos()),
+                        throw_strength);
+                                
+                }
+                
+            
+            
+            }
+            else {
+
+
+                // 使得被击飞的目标只纵向穿越z轴
+                g->fling_creature_up(target, coord_to_angle(z.pos(), target->pos()),
+                    throw_strength);
+            
+            
+            
+            }
         
         }
         else {
