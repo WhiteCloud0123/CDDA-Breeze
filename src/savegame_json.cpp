@@ -3908,6 +3908,8 @@ void faction::deserialize( const JsonObject &jo )
     jo.read( "respects_u", respects_u );
     jo.read( "trusts_u", trusts_u );
     jo.read( "known_by_u", known_by_u );
+    jo.read("conquer_degree", conquer_degree);
+    jo.read("days_required_to_submit_resources", days_required_to_submit_resources);
     jo.read( "size", size );
     jo.read( "power", power );
     if( !jo.read( "food_supply", food_supply ) ) {
@@ -3932,6 +3934,8 @@ void faction::serialize( JsonOut &json ) const
     json.member( "respects_u", respects_u );
     json.member( "trusts_u", trusts_u );
     json.member( "known_by_u", known_by_u );
+    json.member("conquer_degree", conquer_degree);
+    json.member("days_required_to_submit_resources", days_required_to_submit_resources);
     json.member( "size", size );
     json.member( "power", power );
     json.member( "food_supply", food_supply );

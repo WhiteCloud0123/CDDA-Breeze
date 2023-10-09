@@ -6,10 +6,10 @@
 
 
 
-    extern asio2::udp_server server_breeze;
+    /*extern asio2::udp_server server_breeze;
     extern asio2::udp_client client_breeze;
     extern bool is_server;
-    extern bool is_client;
+    extern bool is_client;*/
 
 
 

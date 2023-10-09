@@ -115,6 +115,8 @@ class faction_template
         int food_supply;  //Total nutritional value held
         int wealth;  //Total trade currency
         bool lone_wolf_faction; // is this a faction for just one person?
+        int conquer_degree; // 征服度
+        int days_required_to_submit_resources; // 被玩家征服的派系，上交资源所需天数
         itype_id currency; // id of the faction currency
         std::vector<faction_price_rule> price_rules; // additional pricing rules
         std::map<std::string, std::bitset<npc_factions::rel_types>> relations;
