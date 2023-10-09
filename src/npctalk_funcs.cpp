@@ -58,6 +58,7 @@
 #include "translations.h"
 #include "ui.h"
 #include "viewer.h"
+#include "mtype.h"
 
 static const activity_id ACT_FIND_MOUNT( "ACT_FIND_MOUNT" );
 static const activity_id ACT_MOVE_LOOT( "ACT_MOVE_LOOT" );
@@ -234,6 +235,721 @@ void talk_function::start_trade( npc &p )
 {
     npc_trading::trade( p, 0, _( "Trade" ) );
 }
+
+void talk_function::exert_coercion(npc &p) {
+
+
+    if (p.get_faction()->id.str() != "free_merchants") {
+
+
+        
+        return;
+    
+    
+    
+    }
+
+    // 如果我们已经将其派系威压，不能再进行这个流程
+    if (p.get_faction()->conquer_degree>0) {
+
+          add_msg(m_good, _("你之前已经将他们的派系威压成功了。"));
+
+         return;
+
+    }
+
+
+    avatar& player_avatar = get_avatar();
+    int turn = 1;
+    int player_psychological_stress_value = 0;
+    int target_psychological_stress_value = 0;
+    int target_force = 0;
+    int player_force = player_avatar.get_str()*2;
+
+    int lose_like_u = 0;
+    add_msg(m_good, _(" 1 player_force %s"), player_force);
+    for (npc &n_ref : g->all_npcs()) {
+
+        /*if (n_ref.get_fac_id() == p.get_fac_id()) {
+            
+            target_force = target_force + n_ref.get_str();
+        
+        }*/
+        if (n_ref.is_ally(get_player_character())) {
+
+            player_force = player_force + n_ref.get_str() * 2;
+        
+        
+        }
+        // 就算目标武力的时候，应该附带上这些派系，他们都依附于难民中心
+        else if(n_ref.get_faction()->id.str() == "free_merchants"  || n_ref.get_faction()->id.str() == "lobby_beggars" || n_ref.get_faction()->id.str() == "no_faction" || n_ref.get_faction()->id.str() == "old_guard") {
+
+            target_force = target_force + n_ref.get_str() * 2 ;
+                        
+        }
+
+        add_msg(m_good,_("派系: %s"),n_ref.get_faction()->id.str());
+        
+    
+    
+    }
+    add_msg(m_good, _(" 2 player_force %s"), player_force);
+
+    // 普通施压
+    bool normal_attack = false;
+    // 展示带来的宠物
+    bool show_pet = false;
+    // 以武力进行极限施压
+    bool force_attack = false;
+
+    bool done_show_pet = false;
+
+    bool done_force_attack = false;
+
+    
+    int normal_attack_count = 0;
+
+    bool turn_end = false;
+    bool drew_w_02 = false;
+    bool should_clear = false;
+    bool success_clear = false;
+
+    bool will_break = false;
+
+
+    // 玩家和对方的智力差异，如果为正，代表优势，如果为负代表劣势
+    int int_diffence = get_player_character().get_int() - p.get_int();
+    // 玩家和对方的力量差异，如果为正，代表优势，如果为负代表劣势
+    int str_diffence = get_player_character().get_str() - p.get_str();
+
+    // 玩家的智力作为基础的心理攻击力
+    int base_attack_power = get_player_character().get_int();
+    // 对方的智力作为基础的心理攻击力
+    int target_base_attack_power = p.get_int();
+
+
+    // 统计一回合能给对方造成的心理压力值
+    int damage = 0;
+    // 统计一回合能给玩家造成的心理压力值
+    int damage_to_player = 0;
+
+
+    std::vector<const monster*> player_pet_vec;
+
+    // 统计玩家的宠物
+    for (const monster & m: g->all_monsters()) {
+
+        if (m.has_effect(effect_pet)) {
+            player_force = player_force + m.get_hp_max() * 0.1 * (m.lv_breeze > 0 ? m.lv_breeze : 1) * m.type->melee_skill ;
+            player_pet_vec.push_back(&m);
+            
+        
+        }
+
+    
+    }
+    
+
+    float player_fix = player_force / target_force;
+    float target_fix;
+    if (player_force ==0) {
+
+        target_fix = 1.0;
+
+    }
+    else {
+    
+    
+        target_fix = target_force / player_force;
+
+    }
+    
+
+
+    // 显示玩家当前的状况
+    catacurses::window w_01;
+    // 显示博弈的过程
+    catacurses::window w_02;
+    // 显示对方当前的状况
+    catacurses::window w_03;
+    input_context ctxt("");
+    ctxt.register_action("QUIT");
+    ctxt.register_action("UP");
+    ctxt.register_action("LEFT");
+    ctxt.register_action("RIGHT");
+    ctxt.register_action("DOWN");
+
+    ui_adaptor ui_01;
+    ui_01.on_screen_resize([&](ui_adaptor&) {
+        const std::pair<point, point> beg_and_max = {
+        point(TERMX / 5, TERMY / 8),
+        point(TERMX / 2, TERMY / 2)
+        };
+        const point& beg = beg_and_max.first;
+        const point& max = beg_and_max.second;
+        w_01 = catacurses::newwin(40, 40, beg + point(0, 0));
+        w_02 = catacurses::newwin(40, 40, beg + point(40, 0));
+        w_03 = catacurses::newwin(40, 40, beg + point(80, 0));
+        ui_01.position_from_window(w_01);
+        });
+
+
+
+
+    ui_01.mark_resize();
+
+
+    
+
+
+    ui_01.on_redraw([&](const ui_adaptor&) {
+
+
+
+        damage = damage + base_attack_power / 4;
+        damage_to_player = damage_to_player + target_base_attack_power / 4;
+
+
+
+
+
+        werase(w_01);
+        werase(w_02);
+        werase(w_03);
+        draw_border(w_01);
+        draw_border(w_02);
+        draw_border(w_03);
+
+        
+
+
+        if (player_pet_vec.size()>0 && done_show_pet == false) {
+
+            fold_and_print(w_01, point(1, 22), getmaxx(w_01) - 1 - 1, c_white,
+                "按 LEFT 展示自己带来的宠物");
+            
+            if (done_force_attack == false) {
+
+                fold_and_print(w_01, point(1, 25), getmaxx(w_01) - 1 - 1, c_white,
+                    "按 RIGHT 以武力进行极限威压 (高风险)");
+            
+            
+            }
+            
+            
+        
+        
+        }
+        else {
+        
+            if (done_force_attack == false) {
+                fold_and_print(w_01, point(1, 22), getmaxx(w_01) - 1 - 1, c_white,
+                    "按 RIGHT 以武力进行极限威压 (高风险)");
+            }
+
+        }
+
+        
+
+
+
+        trim_and_print(w_02, point(1, 1), 25, c_white, "              第 %s 回合 ", turn);
+
+
+        if (normal_attack == true ) {
+
+            
+            if (int_diffence > 0) {
+
+
+                int chance = rng(1, 3);
+
+                if (chance ==1 ) {
+
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人: 话说得高明，值得称赞......老实说，我还真有点动摇...... \n 之后商人巧妙的回应了你的威压。");
+                
+                }
+
+                if (chance == 2) {
+
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "你能看出商人有一点动摇。 \n 但是之后商人仍然巧妙的回应了你的威压。");
+                
+                }
+
+                if (chance == 3) {
+
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人的表情微微有了一点变化， \n 之后商人仍然巧妙的回应了你的威压。");
+
+                }
+
+                
+
+                
+                damage = ( damage + rng_float(0.8,1.0)* 5 )* player_fix ;
+                damage_to_player = (damage_to_player + 5 * rng_float(0.5, 0.8) )*  target_fix;
+            
+            
+            
+            }
+            else {
+
+                int chance = rng(1, 3);
+
+                if (chance == 1) {
+
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人只是略作无奈的耸耸肩。 \n 之后商人用密不透风地话术回应了你的威压。");
+                
+                }
+
+                if (chance == 2) {
+
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人轻笑了一声，摇了摇头。 \n 之后商人用密不透风地话术回应了你的威压。");
+                
+                }
+
+                if (chance == 3) {
+
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人先是平平淡淡的应和了几声。 \n 之后商人用密不透风地话术回应了你的威压。");
+
+
+                }
+
+               
+            
+                damage = (damage + rng_float(0.1, 0.5) * 5) * player_fix;
+                damage_to_player = (damage_to_player + 5 * rng_float(0.8, 1.0)) * target_fix;
+            
+            
+            }    
+
+
+
+
+            // 最终校正
+
+            if (damage >= 10) {
+                damage = rng(10, damage);
+            }
+            else if (damage <= 0) {
+                damage = rng(1, 3);
+            }
+
+            if (damage_to_player >= 10) {
+                damage_to_player = rng(10, damage_to_player);
+            }
+            else if (damage_to_player <= 0) {
+                damage_to_player = rng(1, 3);
+            }
+
+
+
+            lose_like_u = lose_like_u + 1;
+
+        
+                
+        }
+
+
+         else if (show_pet == true  && done_show_pet == false && player_pet_vec.size()>0) {
+
+
+
+            int pets_power = 0;
+
+            for (const monster *m : player_pet_vec) {
+
+                pets_power = pets_power + m->get_hp_max() * 0.1 * (m->lv_breeze > 0 ? m->lv_breeze : 1) * m->type->melee_skill;
+            
+            }
+
+
+            if (pets_power > 0.5 * target_force) {
+                fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                    "商人: “我很想掩盖住自己的惊讶，可以的话，我真的很想知道你是如何拥有%s强大的宠物的。甚至我想说，用宠物去护卫我们的商路，能让我们避免很多损失......”\n 商人意识到了自己的惊讶后，迅速冷静了下来，像是思索着什么。", player_pet_vec.size()>0 ? "这些" : "这个");
+
+                damage = damage + rng_float(0.5, 1.0) * 10;
+                damage_to_player = damage_to_player - 5 * rng_float(0.5, 1.0);
+
+            }
+            else {
+
+                int chance = rng(1, 3);
+
+                if (chance == 1) {
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人充满平静，说到，“就这样？”");
+                }
+                if (chance == 2) {
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人轻笑了一声，摇了摇头。");
+                }
+                if (chance == 3) {
+                    fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                        "商人仅仅是平平淡淡的应和了几声。");
+                }
+
+                damage = damage - rng_float(0.5, 1.0) ;
+
+
+            }
+
+            done_show_pet = true;
+
+
+
+            // 最终校正
+
+            if (damage >= 10) {
+                damage = rng(10, damage);
+            }
+            else if (damage <= 0) {
+                damage = rng(1, 3);
+            }
+
+            if (damage_to_player >= 10) {
+                damage_to_player = rng(10, damage_to_player);
+            }
+            else if (damage_to_player <= 0) {
+                damage_to_player = rng(1, 3);
+            }
+
+
+        }
+
+         else if ( force_attack == true && done_force_attack == false ) {
+
+
+            if (target_force - player_force >0) {
+
+                // 大于100 是极大的差距
+                if (target_force - player_force > 100) {
+                
+                    int chance = rng(1, 10);
+
+                    //
+                    if (chance != 1 ) {
+
+
+                        will_break = true;
+                        p.get_faction()->likes_u = p.get_faction()->likes_u - 500;
+                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                            "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”");
+                        add_msg(m_bad, _("你已经触怒了他们整个派系！"));
+                        add_msg(m_bad,_("你已经触怒了他们整个派系！"));
+                        
+                        
+                    
+                                        
+                    }
+                    else {
+
+                        int chance_ = rng(1,3);
+
+                        if (chance_ == 1) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”接着又是一阵沉默......");
+
+                        }
+                        else if (chance_ == 2) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "空气好像突然冷凝了一阵，过会，商人和你言辞激烈地交锋起来......");
+
+                        }
+                        else {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人此刻稍微低下了头，你看不到他的神情......");
+
+
+                        }
+                    
+                    
+                    
+                    }                              
+                
+                }
+
+
+                else {
+
+
+
+                    int chance = rng(1, 10);
+
+                    if (chance == 1) {
+
+
+                        will_break = true;
+                        p.get_faction()->likes_u = p.get_faction()->likes_u - 500;
+                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                            "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”");
+                        add_msg(m_bad, _("你已经触怒了他们整个派系！"));
+                        
+
+
+                    }
+                    else {
+                    
+                    
+                        
+                        int chance_ = rng(1, 3);
+
+                        if (chance_ == 1) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”接着又是一阵沉默......");
+
+                        }
+                        else if (chance_ == 2) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "空气好像突然冷凝了一阵，过会，商人和你言辞激烈地交锋起来......");
+
+                        }
+                        else {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人此刻稍微低下了头，你看不到他的神情......");
+
+
+                        }
+                                                 
+                    }
+
+                    
+
+
+
+                    // 对双方的心理伤害都很大
+                    damage = damage + rng_float(0.5, 1.0) * 10 + player_force > 100 ? rng(0.01 * player_force, 0.03 * player_force) : rng(0.04 * player_force, 0.07 * player_force);
+                    damage_to_player = damage_to_player + 5 * rng_float(0.5, 1.0);
+
+
+
+                }
+            }
+
+
+            done_force_attack = true;
+
+            
+            lose_like_u = lose_like_u + 1;
+
+
+
+
+            // 最终校正
+
+            if (damage >= 10) {
+                damage = rng(10, damage);
+            }
+            else if (damage <= 0) {
+                damage = rng(1, 3);
+            }
+
+            if (damage_to_player >= 10) {
+                damage_to_player = rng(10, damage_to_player);
+            }
+            else if (damage_to_player <= 0) {
+                damage_to_player = rng(1, 3);
+            }
+
+                  
+         }
+
+
+        if (turn_end == true ) {
+
+
+            if (should_clear == false) {
+
+                target_psychological_stress_value = target_psychological_stress_value + damage;
+                player_psychological_stress_value = player_psychological_stress_value + damage_to_player;
+
+            }
+
+
+            fold_and_print(w_02, point(1, 16), getmaxx(w_02) - 1 - 1, c_white,
+                "--------------------------------------");
+            fold_and_print(w_02, point(1, 19), getmaxx(w_02) - 1 - 1, c_white,
+                "本回合交锋结果: ");
+            fold_and_print(w_02, point(1, 22), getmaxx(w_02) - 1 - 1, c_green,
+                "你造成的心理压力为 : %s", damage);
+            fold_and_print(w_02, point(1, 25), getmaxx(w_02) - 1 - 1, c_red,
+                "对方造成的心理压力为 : %s", damage_to_player);
+            
+            should_clear = true;
+            
+            fold_and_print(w_02, point(1, 28), getmaxx(w_02) - 1 - 1, c_white,
+                "请按 UP/LEFT/RIGHT 结束本回合");
+        
+            
+            
+        
+        
+        
+        
+        }
+        trim_and_print(w_01, point(1, 1), 25, c_white, "我");
+        trim_and_print(w_01, point(1, 4), 25, c_white, "心理压力值: %s", player_psychological_stress_value);
+        trim_and_print(w_01, point(1, 7), 25, c_white, "当前能展示的武力: %s", player_force * 2);
+
+        fold_and_print(w_01, point(1, 16), getmaxx(w_01) - 1 - 1, c_white,
+            "--------------------------------------");
+        fold_and_print(w_01, point(1, 19), getmaxx(w_01) - 1 - 1, c_white,
+            "按 UP 进行普通威压");
+        
+
+          
+        trim_and_print(w_03, point(1, 1), 25, c_white, "商人");
+        trim_and_print(w_03, point(1, 4), 25, c_white, "心理压力值: %s", target_psychological_stress_value);
+        trim_and_print(w_03, point(1, 7), 25, c_white, "对你自身的基础恐惧: %s", p.op_of_u.fear);
+        trim_and_print(w_03, point(1, 10), 25, c_white, "当前能展示的武力: %s", target_force*2);
+        fold_and_print(w_03, point(1, 16), getmaxx(w_03) - 1 - 1, c_white,
+            "--------------------------------------");
+        fold_and_print(w_03, point(1, 19), getmaxx(w_03) - 1 - 1, c_white,
+            "特性:      冷静      精明");
+        
+        wnoutrefresh(w_03);
+        wnoutrefresh(w_02);
+        wnoutrefresh(w_01);
+
+        
+
+        
+
+
+        damage = 0;
+        damage_to_player = 0;
+
+        // 重置标志状态
+        normal_attack = false;
+        show_pet = false;
+        force_attack = false;
+        turn_end = false;   
+        });
+
+
+
+
+
+
+
+
+    while (true) {
+
+
+        ui_01.invalidate_ui();
+        ui_manager::redraw_invalidated();
+        const std::string action = ctxt.handle_input();
+        
+        if (will_break==true) {
+
+            break;
+        
+        }
+
+
+        if (should_clear == true) {
+
+            should_clear = false;
+            turn++;
+            continue;
+            
+        
+        } 
+
+
+        if (turn>10 || player_psychological_stress_value >=100 || target_psychological_stress_value>=100) {
+
+        
+            if (target_psychological_stress_value >=100) {
+
+                // 威压成功
+                // 征服度上升到100
+                p.get_faction()->conquer_degree = 100;
+
+                // 距离下一次拿取物资的天数变为 30
+                p.get_faction()->days_required_to_submit_resources = 30;
+
+
+            }
+            else {
+            
+            
+                // 处理积攒的 lose_like_u 的数值，当然如果成功威压，如上面，不用考虑应用上这部分数值
+                p.get_faction()->likes_u = p.get_faction()->likes_u - lose_like_u;
+            
+            
+            }
+            
+            
+            
+            break;
+        
+        
+        }
+        
+              
+        if (action == "QUIT") {
+            break;
+        }
+
+        if (action == "UP") {
+            
+                  
+                normal_attack = true;
+                turn_end = true;
+            
+            
+                       
+        }
+
+        if (action == "LEFT" ) {
+
+            if (player_pet_vec.size() == 0) {
+
+                continue;
+
+
+            
+            }
+
+                show_pet = true;
+                turn_end = true;
+
+        }
+
+        if (action == "RIGHT") {
+
+                
+                force_attack = true;
+                turn_end = true;
+
+                    
+        }
+
+
+
+        
+        
+
+    }
+
+
+
+
+
+}
+
 
 void talk_function::sort_loot( npc &p )
 {

@@ -48,6 +48,7 @@ void buy_shave( npc & );
 void morale_chat( npc & );
 void morale_chat_activity( npc & );
 void start_trade( npc & );
+void exert_coercion(npc& p);
 void sort_loot( npc & );
 void do_construction( npc & );
 void do_mining( npc & );

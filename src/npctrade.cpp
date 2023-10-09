@@ -336,8 +336,19 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
 
 // Will the NPC accept the trade that's currently on offer?
 bool npc_trading::npc_will_accept_trade( npc const &np, int your_balance )
-{
+{    
+
+    // 如果征服度大于0，并且 距离下一次拿取物资的日子等于0
+    if (np.get_faction()->conquer_degree>0 && np.get_faction()->days_required_to_submit_resources == 0) {
+        
+        return true;
+    
+    }
+
     return np.will_exchange_items_freely() || your_balance + np.max_credit_extended() >= 0;
+    
+
+
 }
 bool npc_trading::npc_can_fit_items( npc const &np, trade_selector::select_t const &to_trade )
 {

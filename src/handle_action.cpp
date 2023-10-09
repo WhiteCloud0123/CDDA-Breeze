@@ -1594,33 +1594,33 @@ void handle_action_network() {
 
     if (choice == 启动服务器) {
     
-        std::string_view host = "127.0.0.1";
-        std::string_view port = "4454";
-        
+        //std::string_view host = "127.0.0.1";
+        //std::string_view port = "4454";
+        //
        
 
-        server_breeze.bind_recv([](std::shared_ptr<asio2::udp_session>& session_ptr, std::string_view data)
-            {
-                //printf("%zu %.*s", data.size(), (int)data.size(), data.data());
-                add_msg(m_good,_("%s"), data.data());
-                session_ptr->async_send(data);
+        //server_breeze.bind_recv([](std::shared_ptr<asio2::udp_session>& session_ptr, std::string_view data)
+        //    {
+        //        //printf("%zu %.*s", data.size(), (int)data.size(), data.data());
+        //        add_msg(m_good,_("%s"), data.data());
+        //        session_ptr->async_send(data);
 
-            });
+        //    });
 
-        server_breeze.start(host,port);
+        //server_breeze.start(host,port);
 
-        add_msg(m_good, _("服务器启动"));
+        //add_msg(m_good, _("服务器启动"));
     
 
     }
     else if(choice == 作为客户端加入) {
         
-        std::string_view host = "127.0.0.1";
+        /*std::string_view host = "127.0.0.1";
         std::string_view port = "4454";
         
         client_breeze.start(host,port);
 
-        client_breeze.async_send("你好");
+        client_breeze.async_send("你好");*/
 
 
     

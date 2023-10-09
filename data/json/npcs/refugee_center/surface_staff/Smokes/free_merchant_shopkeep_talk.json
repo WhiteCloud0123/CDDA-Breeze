@@ -37,7 +37,8 @@
         "text": "Just saying hello.  Keep safe.",
         "topic": "TALK_DONE",
         "condition": { "u_has_var": "u_met_Gavin", "type": "general", "context": "meeting", "value": "yes" }
-      }
+      },
+      { "text": "进行威压（派系类型选项）", "topic": "TALK_DONE", "effect": "exert_coercion" }
     ]
   },
   {

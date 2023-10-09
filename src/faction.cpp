@@ -536,8 +536,16 @@ void basecamp::faction_display( const catacurses::window &fac_w, const int width
 void faction::faction_display( const catacurses::window &fac_w, const int width ) const
 {
     int y = 2;
-    mvwprintz( fac_w, point( width, ++y ), c_light_gray, _( "Attitude to you:           %s" ),
+    mvwprintz( fac_w, point( width, ++y ), c_white, _( "Attitude to you:           %s" ),
                fac_ranking_text( likes_u ) );
+    mvwprintz(fac_w, point(width, ++y), c_white, _("征服度:           %s"),
+        conquer_degree);
+    // 如果征服度大于0，才在派系界面显示 下一次拿取物资的日期
+    if (conquer_degree > 0) {
+        fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 1, c_white,
+            "下一次拿取物资的日期:   %s", days_required_to_submit_resources);
+    
+    }
     fold_and_print( fac_w, point( width, ++y ), getmaxx( fac_w ) - width - 2, c_light_gray,
                     "%s", desc );
 }
