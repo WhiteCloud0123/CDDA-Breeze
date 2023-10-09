@@ -249,7 +249,14 @@ void talk_function::exert_coercion(npc &p) {
     
     }
 
+    // 如果我们已经将其派系威压，不能再进行这个流程
+    if (p.get_faction()->conquer_degree>0) {
 
+          add_msg(m_good, _("你之前已经将他们的派系威压成功了。"));
+
+         return;
+
+    }
 
 
     avatar& player_avatar = get_avatar();
@@ -274,15 +281,11 @@ void talk_function::exert_coercion(npc &p) {
         
         
         }
-        else {
-
-
+        // 就算目标武力的时候，应该附带上这些派系，他们都依附于难民中心
+        else if(n_ref.get_faction()->id.str() == "free_merchants"  || n_ref.get_faction()->id.str() == "lobby_beggars" || n_ref.get_faction()->id.str() == "no_faction" || n_ref.get_faction()->id.str() == "old_guard") {
 
             target_force = target_force + n_ref.get_str() * 2 ;
-        
-        
-        
-        
+                        
         }
 
         add_msg(m_good,_("派系: %s"),n_ref.get_faction()->id.str());
@@ -519,7 +522,8 @@ void talk_function::exert_coercion(npc &p) {
 
                
             
-                damage = ( damage - rng_float(0.1,0.5) * p.get_int() ) * player_fix;
+                damage = (damage + rng_float(0.1, 0.5) * 5) * player_fix;
+                damage_to_player = (damage_to_player + 5 * rng_float(0.8, 1.0)) * target_fix;
             
             
             }    
@@ -596,7 +600,7 @@ void talk_function::exert_coercion(npc &p) {
             }
 
             done_show_pet = true;
-            lose_like_u = lose_like_u + 1;
+
 
 
             // 最终校正
@@ -634,16 +638,42 @@ void talk_function::exert_coercion(npc &p) {
 
                         will_break = true;
                         p.get_faction()->likes_u = p.get_faction()->likes_u - 500;
+                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                            "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”");
+                        add_msg(m_bad, _("你已经触怒了他们整个派系！"));
                         add_msg(m_bad,_("你已经触怒了他们整个派系！"));
                         
                         
                     
                                         
                     }
+                    else {
 
-                
-                
-                
+                        int chance_ = rng(1,3);
+
+                        if (chance_ == 1) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”接着又是一阵沉默......");
+
+                        }
+                        else if (chance_ == 2) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "空气好像突然冷凝了一阵，过会，商人和你言辞激烈地交锋起来......");
+
+                        }
+                        else {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人此刻稍微低下了头，你看不到他的神情......");
+
+
+                        }
+                    
+                    
+                    
+                    }                              
                 
                 }
 
@@ -659,33 +689,42 @@ void talk_function::exert_coercion(npc &p) {
 
                         will_break = true;
                         p.get_faction()->likes_u = p.get_faction()->likes_u - 500;
+                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                            "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”");
                         add_msg(m_bad, _("你已经触怒了他们整个派系！"));
                         
 
 
                     }
-
-                    int chance_ = rng(1, 3);
-
-                    if (chance_ == 1) {
-
-                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
-                            "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”接着又是一阵沉默......");
-
-                    }
-                    else if (chance_ == 2) {
-
-                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
-                            "空气好像突然冷凝了一阵，过会，商人和你言辞激烈地交锋起来......");
-
-                    }
                     else {
+                    
+                    
+                        
+                        int chance_ = rng(1, 3);
 
-                        fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
-                            "商人此刻稍微低下了头，你看不到他的神情......");
+                        if (chance_ == 1) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人先是一直盯着你，过了许久，然后对你说：“你已经做了不可挽回的事。”接着又是一阵沉默......");
+
+                        }
+                        else if (chance_ == 2) {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "空气好像突然冷凝了一阵，过会，商人和你言辞激烈地交锋起来......");
+
+                        }
+                        else {
+
+                            fold_and_print(w_02, point(1, 3), getmaxx(w_02) - 1 - 1, c_white,
+                                "商人此刻稍微低下了头，你看不到他的神情......");
 
 
+                        }
+                                                 
                     }
+
+                    
 
 
 
@@ -701,8 +740,8 @@ void talk_function::exert_coercion(npc &p) {
 
             done_force_attack = true;
 
+            
             lose_like_u = lose_like_u + 1;
-
 
 
 
@@ -725,13 +764,6 @@ void talk_function::exert_coercion(npc &p) {
 
                   
          }
-
-
-
-         
-        
-
-
 
 
         if (turn_end == true ) {
@@ -844,11 +876,16 @@ void talk_function::exert_coercion(npc &p) {
                 // 威压成功
                 // 征服度上升到100
                 p.get_faction()->conquer_degree = 100;
+
+                // 距离下一次拿取物资的天数变为 30
+                p.get_faction()->days_required_to_submit_resources = 30;
+
+
             }
             else {
             
             
-            
+                // 处理积攒的 lose_like_u 的数值，当然如果成功威压，如上面，不用考虑应用上这部分数值
                 p.get_faction()->likes_u = p.get_faction()->likes_u - lose_like_u;
             
             
@@ -907,8 +944,8 @@ void talk_function::exert_coercion(npc &p) {
 
     }
 
-    p.get_faction()->conquer_degree ++;
-    add_msg(m_good,_("执行威压，对方派系的征服度为 %s"),p.get_faction()->conquer_degree);
+
+
 
 
 }

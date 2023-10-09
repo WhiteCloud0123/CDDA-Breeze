@@ -58,6 +58,8 @@ static const trait_id trait_PSYCHOPATH( "PSYCHOPATH" );
 static const species_id species_ZOMBIE("ZOMBIE");
 static const species_id species_ROBOT("ROBOT");
 
+static const faction_id faction_no_faction("no_faction");
+
 #if defined(__ANDROID__)
 extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
 extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
@@ -65,6 +67,76 @@ extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
 #endif
 
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
+
+
+
+void make_assassins() {
+
+
+    // 如果玩家没有睡着，不要生成刺客
+    if ( ! get_player_character().has_effect(effect_sleep)) {
+
+        return;
+
+    }
+
+    // 如果玩家的z轴位置不为0，就不用生成刺客了
+    if (get_player_character().posz() !=0 ) {
+
+        return;
+        
+    }
+
+    int chance = rng(1,2);
+
+    shared_ptr_fast<npc> temp = make_shared_fast<npc>();
+    temp->normalize();
+    temp->randomize();
+
+    if (chance == 1) {
+
+        temp->spawn_at_precise(get_player_character().get_location() + point(-10, -10));
+    
+    }
+    else {
+
+        temp->spawn_at_precise(get_player_character().get_location() + point(10, 10));
+    
+    }
+    
+    
+    overmap_buffer.insert_npc(temp);
+    temp->form_opinion(get_player_character());
+    temp->mission = NPC_MISSION_NULL;
+    temp->add_new_mission(mission::reserve_random(ORIGIN_ANY_NPC, temp->global_omt_location(),
+        temp->getID()));
+    std::string new_fac_id = "solo_";
+    new_fac_id += temp->name;
+    // create a new "lone wolf" faction for this one NPC
+    faction* new_solo_fac = g->faction_manager_ptr->add_new_faction(temp->name,
+        faction_id(new_fac_id), faction_no_faction);
+    temp->set_fac(new_solo_fac ? new_solo_fac->id : faction_no_faction);
+
+    temp->get_faction()->likes_u = temp->get_faction()->likes_u - 1000;
+
+    temp->set_attitude(NPCATT_KILL);
+    
+    g->load_npcs();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 namespace turn_handler
 {
@@ -477,28 +549,88 @@ void monmove()
           
             }
 
-
-
-            // 派系的处理
             
-            for (const auto &f : g->faction_manager_ptr->all()) {
 
+            
+            
+            // 派系的处理
+            bool assassin_attack = false;
+
+            for (auto &f : g->faction_manager_ptr->all()) {
+
+
+                faction* f_ptr = g->faction_manager_ptr->get(f.first);
                 // 每天十分之一的概率
                 int chance = rng(1,10);
+
+
+                // 如果 距离下一次拿物资的日子为0，那么重置它为30
+                if (f_ptr->conquer_degree == 0) {
+
+                    f_ptr->days_required_to_submit_resources = 30;
+
+                }
                 
                 if (chance == 1) {
                     // 征服度作为唯一的判断，因为征服度的上升仅仅只有威压的方式，大于0已经是威压成功了
-                    if (f.second.conquer_degree>0) {
-                        // 命中概率后，降低派系征服度，降低1
-                        f.second.conquer_degree == f.second.conquer_degree - 1;
+                           
+                    if (f_ptr->conquer_degree>0) {
+                        // 命中概率后，降低派系征服度，降低1   
+                        f_ptr->conquer_degree--;
+                        
                    
                     }
                               
                 }
-                       
+
+
+
+                if (f_ptr->conquer_degree > 0 && f_ptr->conquer_degree <50) {
+                    // 此种情况下，产生刺客的概率为百分之20
+                    int chance_assassin_attack = rng(1,5);
+                    if (chance_assassin_attack==1) {
+                        assassin_attack = true;
+                    }
+                                                        
+                }
+
+
+                // 距离下一次拿取物资的日子减少
+                if (f_ptr->conquer_degree > 0) {
+
+                    f_ptr->days_required_to_submit_resources--;
+                
+                    
+                    
+                
+                }
+
+
+
+
+
+                      
+            }
+
+            creature_tracker& c_t = get_creature_tracker();
+            int chance_ = rng(1, 10);
+            if (true) {
+
+                make_assassins();
+                make_assassins();
+                make_assassins();
+                make_assassins();
+                make_assassins();
+                make_assassins();
+                make_assassins();
+                make_assassins();
+                make_assassins();
+
+               
+            
             }
             
-
+         
 
 
 

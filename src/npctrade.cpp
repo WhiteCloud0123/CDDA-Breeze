@@ -338,8 +338,8 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
 bool npc_trading::npc_will_accept_trade( npc const &np, int your_balance )
 {    
 
-    // npc派系的征服度大于0即可
-    if (np.get_faction()->conquer_degree>0) {
+    // 如果征服度大于0，并且 距离下一次拿取物资的日子等于0
+    if (np.get_faction()->conquer_degree>0 && np.get_faction()->days_required_to_submit_resources == 0) {
         
         return true;
     
