@@ -336,9 +336,17 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
 
 // Will the NPC accept the trade that's currently on offer?
 bool npc_trading::npc_will_accept_trade( npc const &np, int your_balance )
-{
-    //return np.will_exchange_items_freely() || your_balance + np.max_credit_extended() >= 0;
-    return true;
+{    
+
+    // npc派系的征服度大于0即可
+    if (np.get_faction()->conquer_degree>0) {
+        
+        return true;
+    
+    }
+
+    return np.will_exchange_items_freely() || your_balance + np.max_credit_extended() >= 0;
+    
 
 
 }

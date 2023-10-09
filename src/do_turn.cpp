@@ -441,6 +441,9 @@ void monmove()
 
         m.creature_in_field( critter );
         if( calendar::once_every( 1_days ) ) {
+
+
+
             if( critter.has_flag( MF_MILKABLE ) ) {
                 critter.refill_udders();
             }
@@ -450,20 +453,14 @@ void monmove()
             // 首先判断怪物有没有受伤
             if (critter.get_hp() < critter.get_hp_max()) {
                 
-
                 // 丧尸与机器人之外的怪物每天自动回复生命值
                 if ( !critter.in_species(species_ZOMBIE) && !critter.in_species(species_ROBOT)) {
 
                     // 每天自动回复怪物最大血量的百分之5的血量，至少回复1点
                     if ( (0.05 * critter.get_hp_max() + critter.get_hp()) > critter.get_hp_max() ) {
-
-                        critter.set_hp(critter.get_hp_max());
-
-                    
+                        critter.set_hp(critter.get_hp_max());                   
                     }
-                    else {
-                    
-                        
+                    else {                      
                         if (0.05 * critter.get_hp_max()<1) {
                         
                             critter.set_hp( 1 + critter.get_hp() );
@@ -476,19 +473,33 @@ void monmove()
                     
                     }
 
-
-                
-                
                 }
-
-
-
-
-
-
-
-            
+          
             }
+
+
+
+            // 派系的处理
+            
+            for (const auto &f : g->faction_manager_ptr->all()) {
+
+                // 每天十分之一的概率
+                int chance = rng(1,10);
+                
+                if (chance == 1) {
+                    // 征服度作为唯一的判断，因为征服度的上升仅仅只有威压的方式，大于0已经是威压成功了
+                    if (f.second.conquer_degree>0) {
+                        // 命中概率后，降低派系征服度，降低1
+                        f.second.conquer_degree == f.second.conquer_degree - 1;
+                   
+                    }
+                              
+                }
+                       
+            }
+            
+
+
 
 
 
