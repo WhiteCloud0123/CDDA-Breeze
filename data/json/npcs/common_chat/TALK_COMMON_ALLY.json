@@ -934,6 +934,12 @@
         "topic": "TALK_DONE",
         "condition": { "and": [ { "not": "npc_has_activity" }, { "not": { "npc_has_trait": "HALLUCINATION" } } ] },
         "effect": "do_disassembly"
+      },
+      {
+        "text": "你能制作这件物品吗？",
+        "topic": "TALK_DONE",
+        "condition": { "and": [ { "not": "npc_has_activity" }, { "not": { "npc_has_trait": "HALLUCINATION" } } ] },
+        "effect": "do_craft"
       }
     ]
   },

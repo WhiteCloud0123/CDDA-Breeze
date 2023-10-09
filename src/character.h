@@ -3102,7 +3102,7 @@ class Character : public Creature, public visitable
 
         // crafting.cpp
         float morale_crafting_speed_multiplier( const recipe &rec ) const;
-        float lighting_craft_speed_multiplier( const recipe &rec ) const;
+        float lighting_craft_speed_multiplier(const recipe& rec, const tripoint& p = tripoint_min) const;
 
         float crafting_speed_multiplier( const recipe &rec ) const;
 
