@@ -4345,5 +4345,11 @@
     "category": "STRING_EDITOR",
     "//": "'?' is treated as text input, so a different key is used.",
     "bindings": [ { "input_method": "keyboard_any", "key": "F1" } ]
+  },
+  {
+    "type": "keybinding",
+    "name": "退出到游戏开始界面",
+    "category": "DEFAULTMODE",
+    "id": "退出到游戏开始界面"
   }
 ]

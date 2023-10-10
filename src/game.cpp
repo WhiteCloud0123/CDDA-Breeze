@@ -2593,6 +2593,7 @@ input_context get_default_mode_input_context()
     ctxt.register_action( "debug_radiation" );
     ctxt.register_action( "debug_hour_timer" );
     ctxt.register_action( "debug_mode" );
+    ctxt.register_action("退出到游戏开始界面");
     ctxt.register_action( "zoom_out" );
     ctxt.register_action( "zoom_in" );
 #if !defined(__ANDROID__)
