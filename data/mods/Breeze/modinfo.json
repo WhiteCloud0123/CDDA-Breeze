@@ -3,7 +3,7 @@
     "type": "MOD_INFO",
     "id": "Breeze",
     "name": "微风",
-    "description": " ",
+    "description": "重要的内容，请勿从mod加载列表中移除。",
     "category": "content",
     "dependencies": [ "dda" ]
   }
