@@ -3542,6 +3542,7 @@ void vehicle::deserialize( const JsonObject &data )
     data.read( "is_alarm_on", is_alarm_on );
     data.read( "camera_on", camera_on );
     data.read( "autopilot_on", autopilot_on );
+    data.read("is_AUTOPILOT_fly", is_AUTOPILOT_fly);
     if( !data.read( "last_update_turn", last_update ) ) {
         last_update = calendar::turn;
     }
@@ -3779,7 +3780,7 @@ void vehicle::serialize( JsonOut &json ) const
     json.member( "magic", magic );
     json.member( "smart_controller", smart_controller_cfg );
     json.member( "vehicle_noise", vehicle_noise );
-
+    json.member("is_AUTOPILOT_fly", is_AUTOPILOT_fly);
     json.end_object();
 }
 
