@@ -5479,6 +5479,9 @@ void game::control_vehicle()
             }
             u.controlling_vehicle = true;
             add_msg( _( "You take control of the %s." ), veh->name );
+            if (veh->is_flying_in_air() && veh->is_AUTOPILOT_fly == true) {
+                veh->is_AUTOPILOT_fly = false;          
+            }
         } else {
             if( !veh->handle_potential_theft( dynamic_cast<Character &>( u ) ) ) {
                 return;

@@ -1785,6 +1785,28 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
                     get_player_character().controlling_vehicle = false;
                     g->setremoteveh( nullptr );
                 } );
+
+
+                if (controls_here && has_part("AUTOPILOT") && has_electronic_controls && is_AUTOPILOT_fly == false && is_flying_in_air() ) {
+                    
+                        menu.add(_("交给自动驾驶仪来保持平稳")).on_submit([this] {
+                            if (engine_on && has_engine_type_not(fuel_type_muscle, true))
+                            {
+                                add_msg(_("你将载具控制权交给了自动驾驶仪。"));
+                            }
+                            
+                            is_AUTOPILOT_fly = true;
+                            get_player_character().controlling_vehicle = false;
+                            g->setremoteveh(nullptr);
+                            });;
+                             
+                }
+
+                
+                
+
+
+
             } else if( controls_here && has_engine_type_not( fuel_type_muscle, true ) ) {
                 menu.add( engine_on ? _( "Turn off the engine" ) : _( "Turn on the engine" ) )
                 .hotkey( "TOGGLE_ENGINE" )

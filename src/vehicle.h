@@ -2158,6 +2158,9 @@ class vehicle
         int requested_z_change = 0;
 
     public:
+
+        bool is_AUTOPILOT_fly = false;
+
         bool is_on_ramp = false;
         // vehicle being driven by player/npc automatically
         bool is_autodriving = false;

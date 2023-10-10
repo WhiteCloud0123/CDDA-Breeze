@@ -4202,8 +4202,15 @@ bool vehicle::has_sufficient_rotorlift() const
 }
 
 bool vehicle::is_rotorcraft() const
-{
-    return !rotors.empty() && player_in_control( get_player_character() ) &&
+{   
+    if (is_AUTOPILOT_fly == true) {
+
+        return !rotors.empty() && has_sufficient_rotorlift();
+    
+    }
+    
+
+    return !rotors.empty() && player_in_control( get_player_character() ) && 
            has_sufficient_rotorlift();
 }
 
