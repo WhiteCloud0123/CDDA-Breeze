@@ -14,7 +14,7 @@ QQ频道：85su5m0359
 
 
 ## 支持我的工作
-<img src ="./文件存放/微信赞赏码.jpg" width="255" height="258">
+<img src ="./文件存放/微信赞赏码.jpg" width="362" height="362">
 
 
 # Cataclysm: Dark Days Ahead
