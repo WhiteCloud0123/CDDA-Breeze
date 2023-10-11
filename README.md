@@ -1,6 +1,9 @@
 # CDDA-微风
 
-CDDA-微风(CDDA-Breeze)是[Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)的一个分支，在CDDA-0.G的基础之上进行开发，没有一个明确的发展方向。关于此分支的具体内容可以查看[内容汇总](内容汇总.md)。这是在开发过程中[参考、学习以及引用的内容一览](参考、学习以及引用的内容一览.md)。
+CDDA-微风(CDDA-Breeze)是[Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)的一个分支，在CDDA-0.G的基础之上进行开发。关于此分支的具体内容可以查看[内容汇总](内容汇总.md)。这是在开发过程中[参考、学习以及引用的内容一览](参考、学习以及引用的内容一览.md)。
+
+## 社区
+QQ频道：85su5m0359
 
 ## CDDA-微风 贡献者
 
@@ -8,8 +11,11 @@ CDDA-微风(CDDA-Breeze)是[Cataclysm: Dark Days Ahead](https://github.com/Cleve
   <img src="https://contrib.rocks/image?repo=WhiteCloud0123/CDDA-Breeze" />
 </a>
 
+
+
 ## 支持我的工作
 <img src ="./文件存放/微信赞赏码.jpg" width="255" height="258">
+
 
 # Cataclysm: Dark Days Ahead
 
