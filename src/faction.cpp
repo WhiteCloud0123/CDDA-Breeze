@@ -543,7 +543,7 @@ void faction::faction_display( const catacurses::window &fac_w, const int width 
     // 如果征服度大于0，才在派系界面显示 下一次拿取物资的日期
     if (conquer_degree > 0) {
         fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 1, c_white,
-            "下一次拿取物资的日期:   %s", days_required_to_submit_resources);
+            "距离下一次拿取物资:   %s天", days_required_to_submit_resources);
     
     }
     fold_and_print( fac_w, point( width, ++y ), getmaxx( fac_w ) - width - 2, c_light_gray,
