@@ -252,47 +252,35 @@ monster::monster(const mtype_id& id) : monster()
     aggro_character = type->aggro_character;
 
 
-    
-    int chance = rng(1,10);
+    if (get_option<bool>("怪物的等级动态变化") == true) {
+        int chance = rng(1, 10);
 
-    if (chance == 1) {
+        if (chance == 1) {
 
-        int chance_ = rng(1, 100);
+            int chance_ = rng(1, 100);
 
-        if (chance_ == 1) {
+            if (chance_ == 1) {
 
-            lv_breeze = rng(6, 10);
+                lv_breeze = rng(6, 10);
 
-            set_speed_base(type->speed + 5 * lv_breeze);
+                set_speed_base(type->speed + 5 * lv_breeze);
 
-            exp_breeze = monster_exp_array[lv_breeze-1];
-            
-        
+                exp_breeze = monster_exp_array[lv_breeze - 1];
+
+
+            }
+            else {
+
+                lv_breeze = rng(1, 5);
+
+                set_speed_base(type->speed + 5 * lv_breeze);
+
+                exp_breeze = monster_exp_array[lv_breeze - 1];
+
+
+            }
         }
-        else {
-        
-            lv_breeze = rng(1, 5);
-
-            set_speed_base(type->speed + 5 * lv_breeze);
-
-            exp_breeze = monster_exp_array[lv_breeze - 1];
-        
-        
-        }
-
-
-        
-
     }
-   
-
-
-
-
-
-
-
-
 
 
 }
