@@ -157,6 +157,8 @@ static const trait_id trait_SAPIOVORE( "SAPIOVORE" );
 static const trait_id trait_SQUEAMISH( "SQUEAMISH" );
 static const trait_id trait_TERRIFYING( "TERRIFYING" );
 
+static const efftype_id effect_just_trade("just_trade");
+
 class monfaction;
 
 static void starting_clothes( npc &who, const npc_class_id &type, bool male );
@@ -3000,9 +3002,12 @@ void npc::die( Creature *nkiller )
     }
     dead = true;
     Character::die( nkiller );
-
+    
     if( is_hallucination() ) {
-        add_msg_if_player_sees( *this, _( "%s disappears." ), get_name().c_str() );
+        // 如果是幻觉，同时没有“effect_just_trade”这个effect才显示这行信息
+        if( !has_effect(effect_just_trade) ){
+            add_msg_if_player_sees(*this, _("%s disappears."), get_name().c_str());
+        }
         return;
     }
 

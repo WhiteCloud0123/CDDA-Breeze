@@ -14,6 +14,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "action.h"
 #include "activity_type.h"
 #include "auto_pickup.h"
 #include "avatar.h"
@@ -109,6 +110,9 @@ static const trait_id trait_PROF_FOODP( "PROF_FOODP" );
 
 static const zone_type_id zone_type_NPC_INVESTIGATE_ONLY( "NPC_INVESTIGATE_ONLY" );
 static const zone_type_id zone_type_NPC_NO_INVESTIGATE( "NPC_NO_INVESTIGATE" );
+
+static const efftype_id effect_just_trade("just_trade");
+static const efftype_id effect_just_guard("just_guard");
 
 static std::map<std::string, json_talk_topic> json_talk_topics;
 
@@ -305,6 +309,7 @@ enum npc_chat_menu {
     NPC_CHAT_SENTENCE,
     NPC_CHAT_GUARD,
     NPC_CHAT_FOLLOW,
+    NPC_CHAT_MOVE_TO_POS,
     NPC_CHAT_AWAKE,
     NPC_CHAT_ACTIVITIES_CRAFT,
     NPC_CHAT_MOUNT,
@@ -667,6 +672,9 @@ void game::chat()
                         string_format( _( "Tell %s to guard" ), followers.front()->get_name() ) :
                         _( "Tell someone to guard…" )
                       );
+        nmenu.addentry(NPC_CHAT_MOVE_TO_POS, true, 'G',
+            follower_count == 1 ? string_format(_("让 %s 前往指定位置"),
+                followers.front()->get_name()) : _("让某人前往指定位置…"));
         nmenu.addentry( NPC_CHAT_AWAKE, true, 'w', _( "Tell everyone on your team to wake up" ) );
         nmenu.addentry( NPC_CHAT_MOUNT, true, 'M', _( "Tell everyone on your team to mount up" ) );
         nmenu.addentry( NPC_CHAT_DISMOUNT, true, 'm', _( "Tell everyone on your team to dismount" ) );
@@ -753,6 +761,35 @@ void game::chat()
             } else {
                 talk_function::assign_guard( *followers[npcselect] );
                 yell_msg = string_format( _( "Guard here, %s!" ), followers[npcselect]->get_name() );
+            }
+            break;
+        }
+        case NPC_CHAT_MOVE_TO_POS: {
+            const int npcselect = npc_select_menu(followers, _("Who should move?"));
+            if (npcselect < 0) {
+                return;
+            }
+            map& here = get_map();
+            cata::optional<tripoint> p = look_around();
+
+            if (!p) {
+                return;
+            }
+
+            if (here.impassable(tripoint(*p))) {
+                add_msg(m_info, _("此目的地无法到达。"));
+                return;
+            }
+
+            if (npcselect == follower_count) {
+                for (npc* them : followers) {
+                    them->goto_to_this_pos = here.getglobal(*p);
+                }
+                yell_msg = _("所有人前往那里！");
+            }
+            else {
+                followers[npcselect]->goto_to_this_pos = here.getglobal(*p);
+                yell_msg = string_format(_("前往那里, %s ！"), followers[npcselect]->get_name());
             }
             break;
         }
@@ -947,6 +984,20 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     if( !talk_with->will_talk_to_u( *this, has_mind_control ) ) {
         return;
     }
+
+    npc *who = talk_with.get()->get_npc();
+    
+    // 这里判断一下对象是不是有“just_trade”
+    if ( who != nullptr &&  who->has_effect(effect_just_trade)) {
+        npc_trading::trade(*who, 0, _("Trade"));
+        // 让这个npc先在这里守一会     
+        who->set_mission(NPC_MISSION_GUARD);
+        who->set_omt_destination();
+        
+        return;
+    }
+
+
     dialogue d( get_talker_for( *this ), std::move( talk_with ) );
     d.by_radio = radio_contact;
     dialogue_by_radio = radio_contact;

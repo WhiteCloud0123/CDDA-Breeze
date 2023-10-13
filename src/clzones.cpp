@@ -79,6 +79,8 @@ static const zone_type_id zone_type_VEHICLE_PATROL( "VEHICLE_PATROL" );
 static const zone_type_id zone_type_VEHICLE_REPAIR( "VEHICLE_REPAIR" );
 static const zone_type_id zone_type_zone_disassemble( "zone_disassemble" );
 static const zone_type_id zone_type_zone_unload_all( "zone_unload_all" );
+// 其他派系的来交易的人优先去trade_area
+static const zone_type_id zone_type_trade_area("trade_area");
 
 zone_manager::zone_manager()
 {
@@ -129,7 +131,9 @@ zone_manager::zone_manager()
     types.emplace( zone_type_AUTO_DRINK,
                    zone_type( to_translation( "Auto Drink" ),
                               to_translation( "Items in this zone will be automatically consumed during a long activity if you get thirsty." ) ) );
-
+    types.emplace(zone_type_trade_area,
+        zone_type(to_translation("交易区域"),
+            to_translation("从其他派系来的想要交易的人会优先前往此区域。")));
 }
 
 void zone_manager::clear()
