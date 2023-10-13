@@ -141,6 +141,10 @@ static const trait_id trait_RETURN_TO_START_POS( "RETURN_TO_START_POS" );
 static const zone_type_id zone_type_NO_NPC_PICKUP( "NO_NPC_PICKUP" );
 static const zone_type_id zone_type_NPC_RETREAT( "NPC_RETREAT" );
 
+static const efftype_id effect_want_trade("want_trade");
+static const efftype_id effect_just_trade("just_trade");
+static const zone_type_id zone_type_trade_area("trade_area");
+
 static constexpr float NPC_DANGER_VERY_LOW = 5.0f;
 static constexpr float NPC_DANGER_MAX = 150.0f;
 static constexpr float MAX_FLOAT = 5000000000.0f;
@@ -163,6 +167,7 @@ enum npc_action : int {
     npc_flee, npc_melee, npc_shoot,
     npc_look_for_player, npc_heal_player, npc_follow_player, npc_follow_embarked,
     npc_talk_to_player, npc_mug_player,
+    npc_goto_to_this_pos,
     npc_goto_destination,
     npc_avoid_friendly_fire,
     npc_escape_explosion,
@@ -790,7 +795,7 @@ void npc::regen_ai_cache()
 }
 
 void npc::move()
-{
+{   
     // don't just return from this function without doing something
     // that will eventually subtract moves, or change the NPC to a different type of action.
     // because this will result in an infinite loop
@@ -924,6 +929,15 @@ void npc::move()
             print_action( "address_player %s", action );
         }
     }
+
+    if (action == npc_undecided && is_walking_with() && goto_to_this_pos) {
+        action = npc_goto_to_this_pos;
+    }
+
+    if (has_effect(effect_just_trade) && has_effect(effect_want_trade)) {
+        action = npc_goto_to_this_pos;   
+    }
+
 
     // check if in vehicle before doing any other follow activities
     if( action == npc_undecided && is_walking_with() && player_character.in_vehicle &&
@@ -1374,6 +1388,47 @@ void npc::execute_action( npc_action action )
         case npc_mug_player:
             mug_player( player_character );
             break;
+
+        case npc_goto_to_this_pos: {
+            tripoint trade_point;
+            tripoint_abs_ms t_a_m;
+
+            if (has_effect(effect_want_trade) && has_effect(effect_want_trade)) {
+                zone_manager& mgr = zone_manager::get_manager();
+                //  如果设有交易区域，优先去交易区域
+                if (mgr.has_near(zone_type_trade_area, get_player_character().get_location(), 60)) {
+                    
+                    auto zone = mgr.get_near(zone_type_trade_area, get_player_character().get_location(), 60);
+                    
+                    for (auto point_ : zone) {
+                        t_a_m = point_;
+                        trade_point.x = point_.raw().x;
+                        trade_point.y = point_.raw().y;
+                        break;
+                    }        
+                } 
+                // 如果没有就一直让他去玩家所在的位置
+                else {
+                    t_a_m = get_player_character().get_location();
+
+                }
+
+                update_path(get_map().getlocal(t_a_m));
+            }
+            else {
+
+                update_path(get_map().getlocal(*goto_to_this_pos));
+            
+            }
+
+            
+            move_to_next();
+
+            if (get_location() == *goto_to_this_pos) {
+                goto_to_this_pos = std::nullopt;
+            }
+            break;
+        }
 
         case npc_goto_destination:
             go_to_omt_destination();
@@ -4292,6 +4347,8 @@ std::string npc_action_name( npc_action action )
             return "Do nothing";
         case npc_do_attack:
             return "Attack";
+        case npc_goto_to_this_pos:
+            return "Go to position";
         case num_npc_actions:
             return "Unnamed action";
     }

@@ -59,6 +59,15 @@ static const species_id species_ZOMBIE("ZOMBIE");
 static const species_id species_ROBOT("ROBOT");
 
 static const faction_id faction_no_faction("no_faction");
+static const faction_id faction_free_merchants("free_merchants");
+
+static const efftype_id effect_just_trade("just_trade");
+static const efftype_id effect_just_guard("just_guard");
+static const efftype_id effect_want_trade("want_trade");
+static const efftype_id effect_npc_run_away("npc_run_away");
+static const efftype_id effect_npc_flee_player("npc_flee_player");
+
+static const zone_type_id zone_type_trade_area("trade_area");
 
 #if defined(__ANDROID__)
 extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
@@ -95,12 +104,12 @@ void make_assassins() {
 
     if (chance == 1) {
 
-        temp->spawn_at_precise(get_player_character().get_location() + point(-10, -10));
+        temp->spawn_at_precise(get_player_character().get_location() + point(-49, -49));
     
     }
     else {
 
-        temp->spawn_at_precise(get_player_character().get_location() + point(10, 10));
+        temp->spawn_at_precise(get_player_character().get_location() + point(49, 49));
     
     }
     
@@ -118,21 +127,98 @@ void make_assassins() {
     temp->set_fac(new_solo_fac ? new_solo_fac->id : faction_no_faction);
 
     temp->get_faction()->likes_u = temp->get_faction()->likes_u - 1000;
-
+    
     temp->set_attitude(NPCATT_KILL);
     
     g->load_npcs();
 
 }
 
+void make_trade_caravan() {
+
+ 
+
+    zone_manager& mgr = zone_manager::get_manager();
+
+    // 如果玩家的z轴位置不为0，就不用生成商队
+    if (get_player_character().posz() != 0) {
+        return;
+    }
+
+    int chance = rng(1, 2);
+
+    shared_ptr_fast<npc> temp = make_shared_fast<npc>();
+    temp->normalize();
+    temp->randomize();
+
+    if (chance == 1) {
+        temp->spawn_at_precise(get_player_character().get_location() + point(50, 0));
+    }
+    else {
+        temp->spawn_at_precise(get_player_character().get_location() + point(-50, 0));
+    }
+
+    overmap_buffer.insert_npc(temp);
+    temp->form_opinion(get_player_character());
+    temp->mission = NPC_MISSION_NULL;
+    
+    // 指定生成的派系为商人派系
+    temp->set_fac(faction_free_merchants);
+       
+    // 添加 仅仅交易效果,持续时间为永久
+    temp->add_effect(effect_just_trade,1_turns,true);
+    
+    // 添加 want_trade 效果，正常10分钟
+    temp->add_effect(effect_want_trade, 10_minutes);
+    
+    
+    temp->set_attitude(NPCATT_NULL);
+ 
+
+    g->load_npcs();
+
+
+    catacurses::window w_01;
+    input_context ctxt("");
+    ctxt.register_action("QUIT");
+
+    ui_adaptor ui_01;
+    ui_01.on_screen_resize([&](ui_adaptor&) {
+        const std::pair<point, point> beg_and_max = {
+        point(TERMX / 5, TERMY / 8),
+        point(TERMX / 2, TERMY / 2)
+        };
+        const point& beg = beg_and_max.first;
+        const point& max = beg_and_max.second;
+        w_01 = catacurses::newwin(10, 40, beg);
+        ui_01.position_from_window(w_01);
+        });
+
+
+    ui_01.mark_resize();
+
+
+    ui_01.on_redraw([&](const ui_adaptor&) {
+        werase(w_01);
+        draw_border(w_01);
+        fold_and_print(w_01, point(1, 1), getmaxx(w_01) - 1 - 1, c_white,
+            "自由商会派人来访问了");
+        wnoutrefresh(w_01);
+        });
+
+
+    while (true) {
+        ui_01.invalidate_ui();
+        ui_manager::redraw_invalidated();
+        const std::string action = ctxt.handle_input();
+        if (action == "QUIT") {
+            break;
+        }
+    }
 
 
 
-
-
-
-
-
+}
 
 
 
@@ -514,8 +600,6 @@ void monmove()
         m.creature_in_field( critter );
         if( calendar::once_every( 1_days ) ) {
 
-
-
             if( critter.has_flag( MF_MILKABLE ) ) {
                 critter.refill_udders();
             }
@@ -549,12 +633,10 @@ void monmove()
           
             }
 
-            
-
-            
-            
+                        
             // 派系的处理
             bool assassin_attack = false;
+
 
             for (auto &f : g->faction_manager_ptr->all()) {
 
@@ -577,12 +659,10 @@ void monmove()
                     if (f_ptr->conquer_degree>0) {
                         // 命中概率后，降低派系征服度，降低1   
                         f_ptr->conquer_degree--;
-                        
-                   
+               
                     }
                               
                 }
-
 
 
                 if (f_ptr->conquer_degree > 0 && f_ptr->conquer_degree <50) {
@@ -600,22 +680,15 @@ void monmove()
 
                     f_ptr->days_required_to_submit_resources--;
                 
-                    
-                    
-                
+                                    
                 }
 
-
-
-
-
-                      
+                     
             }
 
-            creature_tracker& c_t = get_creature_tracker();
-            int chance_ = rng(1, 10);
-            if (true) {
-
+            // 如果 assassin_attack 为 true，生成刺客
+            if (assassin_attack == true) {
+                
                 make_assassins();
                 make_assassins();
                 make_assassins();
@@ -625,18 +698,29 @@ void monmove()
                 make_assassins();
                 make_assassins();
                 make_assassins();
-
-               
             
             }
-            
-         
-
-
-
-
+        
 
         }
+
+        if ( get_option<bool>("其他派系的访问")== true) {
+            if (g->faction_manager_ptr->get(faction_free_merchants)->known_by_u == true 
+                && g->faction_manager_ptr->get(faction_free_merchants)->likes_u >=0) {
+                
+                if (calendar::once_every(907200_turns)) {
+                    add_msg(m_good, _("自由商会派人来访问了。"));
+                    make_trade_caravan();
+                }
+            
+            }
+            
+
+        }
+        
+        
+
+
         while( critter.moves > 0 && !critter.is_dead() && !critter.has_effect( effect_ridden ) ) {
             critter.made_footstep = false;
             // Controlled critters don't make their own plans
@@ -711,7 +795,8 @@ void monmove()
             if( turns == 9 ) {
                 debugmsg( "NPC %s entered infinite loop.  Turning on debug mode",
                           guy.get_name() );
-                debug_mode = true;
+                // 目前及时是进入无限循环也不要开启debug_mode
+                //debug_mode = true;
                 // make sure the filter is active
                 if( std::find(
                         debugmode::enabled_filters.begin(), debugmode::enabled_filters.end(),
@@ -730,7 +815,27 @@ void monmove()
 
         if( !guy.is_dead() ) {
             guy.npc_update_body();
+        } 
+
+        // 这是用来检查从其他派系来的这个npc是不是还想要继续交易，不想的话，就离开玩家
+        if ( guy.has_effect(effect_just_trade) && !guy.has_effect(effect_want_trade)) {
+            
+            guy.set_attitude(NPCATT_NULL);
+            // 清空这个npc的任务
+            guy.set_mission(NPC_MISSION_NULL);
+            // 让这个npc离开玩家
+            guy.add_effect(effect_npc_flee_player, 24_hours);
+
+            int dx = guy.get_location().raw().x - u.get_location().raw().x;
+            int dy = guy.get_location().raw().y - u.get_location().raw().y;
+        // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了59，是的话就直接将其设置为幻觉，就此消失。 
+            if (static_cast<int>(std::sqrt(dx*dx+dy*dy)) >58 ) {
+                guy.hallucination = true;
+            }
         }
+        
+
+
     }
     g->cleanup_dead();
 }

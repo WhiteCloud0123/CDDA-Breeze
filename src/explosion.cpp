@@ -756,7 +756,7 @@ void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance
         cata_assert(blast_force_decay > 0);
         while (terrain_blast_force > 0) {
             bash_params bash{
-                static_cast<int>(terrain_blast_force),
+                static_cast<int>(terrain_blast_force * 0.1),
                 true,
                 false,
                 here.passable(position + tripoint_below),
@@ -1647,7 +1647,7 @@ static std::vector<tripoint> shrapnel( const Creature *source, const tripoint &s
 
     projectile proj;
     proj.speed = fragment_velocity;
-    proj.range = range;
+    proj.range = range*0.6;
     proj.proj_effects.insert( "NULL_SOURCE" );
 
     struct local_caches {
@@ -1811,7 +1811,7 @@ void _make_explosion( const Creature *source, const tripoint &p, const explosion
     //}
 
  
-     ExplosionProcess process( p, ex.power, ex.distance_factor*10, std::nullopt, ex.fire);
+     ExplosionProcess process( p, ex.power, ex.distance_factor*7, std::nullopt, ex.fire);
      process.run();
  
 
