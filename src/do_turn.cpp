@@ -634,86 +634,7 @@ void monmove()
             }
 
                         
-            // 派系的处理
-            bool assassin_attack = false;
-
-
-            for (auto &f : g->faction_manager_ptr->all()) {
-
-
-                faction* f_ptr = g->faction_manager_ptr->get(f.first);
-                // 每天十分之一的概率
-                int chance = rng(1,10);
-
-
-                // 如果 距离下一次拿物资的日子为0，那么重置它为30
-                if (f_ptr->conquer_degree == 0) {
-
-                    f_ptr->days_required_to_submit_resources = 30;
-
-                }
-                
-                if (chance == 1) {
-                    // 征服度作为唯一的判断，因为征服度的上升仅仅只有威压的方式，大于0已经是威压成功了
-                           
-                    if (f_ptr->conquer_degree>0) {
-                        // 命中概率后，降低派系征服度，降低1   
-                        f_ptr->conquer_degree--;
-               
-                    }
-                              
-                }
-
-
-                if (f_ptr->conquer_degree > 0 && f_ptr->conquer_degree <50) {
-                    // 此种情况下，产生刺客的概率为百分之20
-                    int chance_assassin_attack = rng(1,5);
-                    if (chance_assassin_attack==1) {
-                        assassin_attack = true;
-                    }
-                                                        
-                }
-
-
-                // 距离下一次拿取物资的日子减少
-                if (f_ptr->conquer_degree > 0) {
-
-                    f_ptr->days_required_to_submit_resources--;
-                
-                                    
-                }
-
-                     
-            }
-
-            // 如果 assassin_attack 为 true，生成刺客
-            if (assassin_attack == true) {
-                
-                make_assassins();
-                make_assassins();
-                make_assassins();
-                make_assassins();
-                make_assassins();
-                make_assassins();
-                make_assassins();
-                make_assassins();
-                make_assassins();
-            
-            }
-        
-
-        }
-
-        if ( get_option<bool>("其他派系的访问")== true) {
-            if (g->faction_manager_ptr->get(faction_free_merchants)->known_by_u == true 
-                && g->faction_manager_ptr->get(faction_free_merchants)->likes_u >=0) {
-                
-                if (calendar::once_every(907200_turns)) {
-                    add_msg(m_good, _("自由商会派人来访问了。"));
-                    make_trade_caravan();
-                }
-            
-            }
+           
             
 
         }
@@ -752,7 +673,7 @@ void monmove()
     }
 
     g->cleanup_dead();
-
+   
     // The remaining monsters are all alive, but may be outside of the reality bubble.
     // If so, despawn them. This is not the same as dying, they will be stored for later and the
     // monster::die function is not called.
@@ -838,6 +759,91 @@ void monmove()
 
     }
     g->cleanup_dead();
+
+
+    // 派系的处理
+    bool assassin_attack = false;
+    if (calendar::once_every(1_days)) {
+
+        for (auto& f : g->faction_manager_ptr->all()) {
+
+            faction* f_ptr = g->faction_manager_ptr->get(f.first);
+            // 每天十分之一的概率
+            int chance = rng(1, 10);
+
+            // 如果 距离下一次拿物资的日子为0，那么重置它为30
+            if (f_ptr->conquer_degree == 0) {
+
+                f_ptr->days_required_to_submit_resources = 30;
+
+            }
+
+            if (chance == 1) {
+                // 征服度作为唯一的判断，因为征服度的上升仅仅只有威压的方式，大于0已经是威压成功了
+
+                if (f_ptr->conquer_degree > 0) {
+                    // 命中概率后，降低派系征服度，降低1   
+                    f_ptr->conquer_degree--;
+                }
+
+            }
+
+            if (f_ptr->conquer_degree > 0 && f_ptr->conquer_degree < 50) {
+                // 此种情况下，产生刺客的概率为百分之20
+                int chance_assassin_attack = rng(1, 5);
+                if (chance_assassin_attack == 1) {
+                    assassin_attack = true;
+                }
+
+            }
+
+
+            // 距离下一次拿取物资的日子减少
+            if (f_ptr->conquer_degree > 0) {
+
+                f_ptr->days_required_to_submit_resources--;
+
+
+            }
+
+
+        }
+
+        // 如果 assassin_attack 为 true，生成刺客
+        if (assassin_attack == true) {
+
+            make_assassins();
+            make_assassins();
+            make_assassins();
+            make_assassins();
+            make_assassins();
+            make_assassins();
+            make_assassins();
+            make_assassins();
+            make_assassins();
+
+        }
+
+    }
+
+
+        if (get_option<bool>("其他派系的访问") == true) {
+            if (g->faction_manager_ptr->get(faction_free_merchants)->known_by_u == true
+                && g->faction_manager_ptr->get(faction_free_merchants)->likes_u >= 0) {
+
+                if (calendar::once_every(907200_turns)) {
+                    add_msg(m_good, _("自由商会派人来访问了。"));
+                    make_trade_caravan();
+                }
+
+            }
+        }
+
+    
+
+
+
+
 }
 
 void overmap_npc_move()
