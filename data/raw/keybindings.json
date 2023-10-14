@@ -2517,13 +2517,6 @@
   },
   {
     "type": "keybinding",
-    "name": "Save and quit",
-    "category": "DEFAULTMODE",
-    "id": "save",
-    "bindings": [ { "input_method": "keyboard_char", "key": "S" }, { "input_method": "keyboard_code", "key": "s", "mod": [ "shift" ] } ]
-  },
-  {
-    "type": "keybinding",
     "name": "Abandon character",
     "category": "DEFAULTMODE",
     "id": "SUICIDE",
