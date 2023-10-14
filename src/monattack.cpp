@@ -1862,16 +1862,30 @@ bool mattack::fungus_corporate( monster *z )
     }
 }
 
+// 如果是白天，真菌雾的成功喷射几率为 1/75，其他时间为1/100
+// 将真菌雾的喷射范围由3降低到1，
+// 将真菌雾的强度设定为2
 bool mattack::fungus_haze( monster *z )
-{
+{   
+
+    if (is_day(calendar::turn)) {
+        if ( rng(1,75) != 1) {
+            return false;
+        }        
+    }
+
+    if (rng(1,100)!=1 ) {
+        return false;
+    }
+    
     //~ That spore sound again
     sounds::sound( z->pos(), 10, sounds::sound_t::combat, _( "Pouf!" ), true, "misc", "puff" );
     add_msg_if_player_sees( *z, m_info, _( "The %s pulses, and fresh fungal material bursts forth." ),
                             z->name() );
     z->moves -= 150;
     map &here = get_map();
-    for( const tripoint &dest : here.points_in_radius( z->pos(), 3 ) ) {
-        here.add_field( dest, fd_fungal_haze, rng( 1, 2 ) );
+    for( const tripoint &dest : here.points_in_radius( z->pos(), 1 ) ) {
+        here.add_field( dest, fd_fungal_haze, 2 );
     }
 
     return true;
