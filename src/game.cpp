@@ -2563,7 +2563,6 @@ input_context get_default_mode_input_context()
     ctxt.register_action( "ignore_enemy" );
     ctxt.register_action( "whitelist_enemy" );
     ctxt.register_action( "workout" );
-    ctxt.register_action( "save" );
     ctxt.register_action( "quicksave" );
 #if !defined(RELEASE)
     ctxt.register_action( "quickload" );
