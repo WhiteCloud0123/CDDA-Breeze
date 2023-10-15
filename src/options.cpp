@@ -1381,6 +1381,7 @@ void options_manager::add_options_general()
     add_empty_line();
 
     add("其他派系的访问", "general", to_translation("其他派系的访问"), to_translation("当此选项的值为 是 时，会生成来自其他派系的人来访问。如果遇到问题，可以关闭。"), false);
+    add("派系态度以数值显示", "general", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值"), false);
 
     add_empty_line();
 

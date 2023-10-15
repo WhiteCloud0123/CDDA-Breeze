@@ -32,6 +32,7 @@
 #include "memory_fast.h"
 #include "mtype.h"
 #include "npc.h"
+#include "options.h"
 #include "optional.h"
 #include "output.h"
 #include "overmapbuffer.h"
@@ -536,8 +537,17 @@ void basecamp::faction_display( const catacurses::window &fac_w, const int width
 void faction::faction_display( const catacurses::window &fac_w, const int width ) const
 {
     int y = 2;
-    mvwprintz( fac_w, point( width, ++y ), c_white, _( "Attitude to you:           %s" ),
-               fac_ranking_text( likes_u ) );
+
+    if (get_option<bool>("派系态度以数值显示") == true) {
+        mvwprintz(fac_w, point(width, ++y), c_white, _("对你的态度:       %s"),
+            likes_u);
+    }
+    else {
+        mvwprintz(fac_w, point(width, ++y), c_white, _("Attitude to you:           %s"),
+            fac_ranking_text(likes_u));
+    }
+
+    
     mvwprintz(fac_w, point(width, ++y), c_white, _("征服度:           %s"),
         conquer_degree);
     // 如果征服度大于0，才在派系界面显示 下一次拿取物资的日期
