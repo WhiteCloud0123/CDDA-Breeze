@@ -45,6 +45,8 @@
 #include <utility>
 #include <vector>
 
+static const weather_type_id weather_snowing("snowing");
+
 namespace
 {
 
@@ -777,6 +779,14 @@ void game::draw_weather( const weather_printable &w ) const
         draw_weather_curses( w_terrain, w );
         return;
     }
+
+    if (get_option<bool>("启用粒子特效") && get_weather().weather_id == weather_snowing  ) {
+    
+        return;
+    }
+
+
+
 
     tilecontext->init_draw_weather( w, w.wtype->tiles_animation );
 }

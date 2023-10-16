@@ -74,6 +74,9 @@
 #include "string_formatter.h"
 #include "ui_manager.h"
 #include "wcwidth.h"
+#include "ParticleSystem.h"
+#include "path_info.h"
+#include "messages.h"
 
 #if defined(__linux__)
 #   include <cstdlib> // getenv()/setenv()
@@ -123,6 +126,11 @@ static Font_Ptr font;
 static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
+ParticleSystem particle_system;
+bool particle_system_is_ready = false;
+SDL_Texture* test_texture;
+SDL_Texture_Ptr texture_ptr;
+
 static SDL_Window_Ptr window;
 static SDL_Renderer_Ptr renderer;
 static SDL_PixelFormat_Ptr format;
@@ -152,6 +160,9 @@ static std::vector<curseline> oversized_framebuffer;
 static std::vector<curseline> terminal_framebuffer;
 static std::weak_ptr<void> winBuffer; //tracking last drawn window to fix the framebuffer
 static int fontScaleBuffer; //tracking zoom levels to fix framebuffer w/tiles
+
+static const weather_type_id weather_snowing("snowing");
+
 
 //***********************************
 //Non-curses, Window functions      *
@@ -511,7 +522,34 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
 #endif
 
 void refresh_display()
-{
+{   
+
+
+    if (  particle_system_is_ready == false ) {
+        
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/particle/01.png";
+
+        test_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+
+        particle_system.setRenderer(renderer.get());                   // set the renderer
+        particle_system.setPosition(552, 0);              // set the position
+#if defined(__ANDROID__)
+        particle_system.setPosition(952, 0);
+#endif
+        
+        particle_system.setTexture(test_texture);
+        particle_system.set_style();    // set the example effects
+        particle_system.setStartSpin(0);
+        particle_system.setStartSpinVar(90);
+        particle_system.setEndSpin(90);
+        particle_system.setStartSpinVar(90);
+        
+        particle_system_is_ready = true;
+
+    }
+
+
     needupdate = false;
     lastupdate = SDL_GetTicks();
 
@@ -528,7 +566,12 @@ void refresh_display()
                        TERMINAL_HEIGHT * fontheight );
     RenderCopy( renderer, display_buffer, NULL, &dstrect );
 #else
+    
+    
     RenderCopy( renderer, display_buffer, nullptr, nullptr );
+    
+    
+
 #endif
 #if defined(__ANDROID__)
     draw_terminal_size_preview();
@@ -537,6 +580,15 @@ void refresh_display()
     }
     draw_virtual_joystick();
 #endif
+    
+    
+    if (get_option<bool>("启用粒子特效") && g->is_core_data_loaded()) {
+        if (get_weather().weather_id == weather_snowing) {
+            particle_system.draw();
+    }
+
+}
+
     SDL_RenderPresent( renderer.get() );
     SetRenderTarget( renderer, display_buffer );
 }

@@ -2010,6 +2010,13 @@ void options_manager::add_options_graphics()
         graphics_page_.items_.emplace_back();
     };
 
+    add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
+        to_translation("目前是测试阶段。开启后，将在游戏的一些地方，例如天气动画上（目前只有雪天）应用粒子特效。"),
+        true
+    );
+
+
+
     add( "ANIMATIONS", "graphics", to_translation( "Animations" ),
          to_translation( "If true, will display enabled animations." ),
          true
