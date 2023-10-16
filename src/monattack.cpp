@@ -1891,8 +1891,26 @@ bool mattack::fungus_haze( monster *z )
     return true;
 }
 
+// 如果是白天，真菌大开花的成功几率为 1/75，其他时间为1/100
+// 喷射范围由12降低到6，
+// 强度设定为2
 bool mattack::fungus_big_blossom( monster *z )
-{
+{   
+
+    if (is_day(calendar::turn)) {
+        if (rng(1, 75) != 1) {
+            return false;
+        }
+    }
+
+    if (rng(1, 100) != 1) {
+        return false;
+    }
+
+
+
+
+
     bool firealarm = false;
     const bool u_see = get_player_view().sees( *z );
     map &here = get_map();
@@ -1930,8 +1948,8 @@ bool mattack::fungus_big_blossom( monster *z )
             add_msg( m_info, _( "The %s pulses, and fresh fungal material bursts forth!" ), z->name() );
         }
         z->moves -= 150;
-        for( const tripoint &dest : here.points_in_radius( z->pos(), 12 ) ) {
-            here.add_field( dest, fd_fungal_haze, rng( 1, 2 ) );
+        for( const tripoint &dest : here.points_in_radius( z->pos(), 6 ) ) {
+            here.add_field( dest, fd_fungal_haze, 2 );
         }
     }
 
