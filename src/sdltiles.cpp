@@ -74,6 +74,7 @@
 #include "string_formatter.h"
 #include "ui_manager.h"
 #include "wcwidth.h"
+#include "ParticleSystem.h"
 
 #if defined(__linux__)
 #   include <cstdlib> // getenv()/setenv()
@@ -122,6 +123,11 @@ palette_array windowsPalette;
 static Font_Ptr font;
 static Font_Ptr map_font;
 static Font_Ptr overmap_font;
+
+ParticleSystem particle_system;
+bool particle_system_is_ready = false;
+SDL_Texture* test_texture;
+SDL_Texture_Ptr texture_ptr;
 
 static SDL_Window_Ptr window;
 static SDL_Renderer_Ptr renderer;
@@ -511,7 +517,27 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
 #endif
 
 void refresh_display()
-{
+{   
+
+
+    if (  particle_system_is_ready == false ) {
+
+        test_texture = IMG_LoadTexture(renderer.get(), ".//gfx//particle//01.png");
+
+        particle_system.setRenderer(renderer.get());                   // set the renderer
+        particle_system.setPosition(552, 0);              // set the position
+        particle_system.setTexture(test_texture);
+        particle_system.set_style();    // set the example effects
+        particle_system.setStartSpin(0);
+        particle_system.setStartSpinVar(90);
+        particle_system.setEndSpin(90);
+        particle_system.setStartSpinVar(90);
+        
+        particle_system_is_ready = true;
+
+    }
+
+
     needupdate = false;
     lastupdate = SDL_GetTicks();
 
@@ -528,7 +554,13 @@ void refresh_display()
                        TERMINAL_HEIGHT * fontheight );
     RenderCopy( renderer, display_buffer, NULL, &dstrect );
 #else
+    
+    
     RenderCopy( renderer, display_buffer, nullptr, nullptr );
+    particle_system.draw();        
+   
+
+
 #endif
 #if defined(__ANDROID__)
     draw_terminal_size_preview();
@@ -537,6 +569,7 @@ void refresh_display()
     }
     draw_virtual_joystick();
 #endif
+    
     SDL_RenderPresent( renderer.get() );
     SetRenderTarget( renderer, display_buffer );
 }
