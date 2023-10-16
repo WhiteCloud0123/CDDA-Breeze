@@ -75,6 +75,8 @@
 #include "ui_manager.h"
 #include "wcwidth.h"
 #include "ParticleSystem.h"
+#include "path_info.h"
+#include "messages.h"
 
 #if defined(__linux__)
 #   include <cstdlib> // getenv()/setenv()
@@ -158,6 +160,9 @@ static std::vector<curseline> oversized_framebuffer;
 static std::vector<curseline> terminal_framebuffer;
 static std::weak_ptr<void> winBuffer; //tracking last drawn window to fix the framebuffer
 static int fontScaleBuffer; //tracking zoom levels to fix framebuffer w/tiles
+
+static const weather_type_id weather_snowing("snowing");
+
 
 //***********************************
 //Non-curses, Window functions      *
@@ -521,11 +526,18 @@ void refresh_display()
 
 
     if (  particle_system_is_ready == false ) {
+        
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/particle/01.png";
 
-        test_texture = IMG_LoadTexture(renderer.get(), ".//gfx//particle//01.png");
+        test_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
 
         particle_system.setRenderer(renderer.get());                   // set the renderer
         particle_system.setPosition(552, 0);              // set the position
+#if defined(__ANDROID__)
+        particle_system.setPosition(952, 0);
+#endif
+        
         particle_system.setTexture(test_texture);
         particle_system.set_style();    // set the example effects
         particle_system.setStartSpin(0);
@@ -557,9 +569,8 @@ void refresh_display()
     
     
     RenderCopy( renderer, display_buffer, nullptr, nullptr );
-    particle_system.draw();        
-   
-
+    
+    
 
 #endif
 #if defined(__ANDROID__)
@@ -570,6 +581,14 @@ void refresh_display()
     draw_virtual_joystick();
 #endif
     
+    
+    if (get_option<bool>("启用粒子特效") && g->is_core_data_loaded()) {
+        if (get_weather().weather_id == weather_snowing) {
+            particle_system.draw();
+    }
+
+}
+
     SDL_RenderPresent( renderer.get() );
     SetRenderTarget( renderer, display_buffer );
 }
