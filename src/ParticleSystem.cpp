@@ -2,6 +2,10 @@
 #include <algorithm>
 #include <assert.h>
 #include <string>
+#include "weather.h"
+
+
+
 
 inline float Deg2Rad(float a)
 {
@@ -653,71 +657,235 @@ void ParticleSystem::resumeEmissions()
     _paused = false;
 }
 
-void ParticleSystem::set_style() {
+void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture, SDL_Renderer *renderer) {
+
+    
+    if (w_t_i_str == id_str) {
+        return;
+    }
+
+    w_t_i_str = id_str;
+
+    if ( w_t_i_str == "snowing" ) {
+        
+
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/particle/01.png";
+        SDL_Texture *texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
+        setTexture(texture);
+
+        initWithTotalParticles(700);
+
+        // duration
+        _duration = DURATION_INFINITY;
+
+        // set gravity mode.
+        setEmitterMode(Mode::GRAVITY);
+
+        // Gravity Mode: gravity
+        setGravity(Vec2(0, 1));
+
+        // Gravity Mode: speed of particles
+        setSpeed(-5);
+        setSpeedVar(1);
+
+        // Gravity Mode: radial
+        setRadialAccel(0);
+        setRadialAccelVar(1);
+
+        // Gravity mode: tangential
+        setTangentialAccel(0);
+        setTangentialAccelVar(1);
+
+        // angle
+        _angle = -90;
+        _angleVar = 5;
+
+        // life of particles
+        _life = 45;
+        _lifeVar = 15;
+
+        // size, in pixels
+        _startSize = 10.0f;
+        _startSizeVar = 5.0f;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
+
+        // emits per second
+        _emissionRate = 10;
+
+        // color of particles
+        _startColor.r = 1.0f;
+        _startColor.g = 1.0f;
+        _startColor.b = 1.0f;
+        _startColor.a = 1.0f;
+        _startColorVar.r = 0.0f;
+        _startColorVar.g = 0.0f;
+        _startColorVar.b = 0.0f;
+        _startColorVar.a = 0.0f;
+        _endColor.r = 1.0f;
+        _endColor.g = 1.0f;
+        _endColor.b = 1.0f;
+        _endColor.a = 0.0f;
+        _endColorVar.r = 0.0f;
+        _endColorVar.g = 0.0f;
+        _endColorVar.b = 0.0f;
+        _endColorVar.a = 0.0f;
+
+        _posVar = { 1.0f * x_, 0.0f };
 
 
+    }
+    else if (w_t_i_str == "rain") {
 
-    initWithTotalParticles(700);
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/particle/01.png";
+        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
+        setTexture(texture);
 
-    // duration
-    _duration = DURATION_INFINITY;
+        initWithTotalParticles(2000);
 
-    // set gravity mode.
-    setEmitterMode(Mode::GRAVITY);
+        // duration
+        _duration = DURATION_INFINITY;
 
-    // Gravity Mode: gravity
-    setGravity(Vec2(0, 1));
+        setEmitterMode(Mode::GRAVITY);
 
-    // Gravity Mode: speed of particles
-    setSpeed(-5);
-    setSpeedVar(1);
+        // Gravity Mode: gravity
+        setGravity(Vec2(10, 10));
 
-    // Gravity Mode: radial
-    setRadialAccel(0);
-    setRadialAccelVar(1);
+        // Gravity Mode: radial
+        setRadialAccel(0);
+        setRadialAccelVar(1);
 
-    // Gravity mode: tangential
-    setTangentialAccel(0);
-    setTangentialAccelVar(1);
+        // Gravity Mode: tangential
+        setTangentialAccel(0);
+        setTangentialAccelVar(1);
 
-    // angle
-    _angle = -90;
-    _angleVar = 5;
+        // Gravity Mode: speed of particles
+        setSpeed(-130);
+        setSpeedVar(30);
 
-    // life of particles
-    _life = 45;
-    _lifeVar = 15;
+        // angle
+        _angle = -90;
+        _angleVar = 5;
 
-    // size, in pixels
-    _startSize = 10.0f;
-    _startSizeVar = 5.0f;
-    _endSize = START_SIZE_EQUAL_TO_END_SIZE;
+        // life of particles
+        _life = 4.5f;
+        _lifeVar = 0;
 
-    // emits per second
-    _emissionRate = 10;
+        // size, in pixels
+        _startSize = 6.0f;
+        _startSizeVar = 2.0f;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
-    // color of particles
-    _startColor.r = 1.0f;
-    _startColor.g = 1.0f;
-    _startColor.b = 1.0f;
-    _startColor.a = 1.0f;
-    _startColorVar.r = 0.0f;
-    _startColorVar.g = 0.0f;
-    _startColorVar.b = 0.0f;
-    _startColorVar.a = 0.0f;
-    _endColor.r = 1.0f;
-    _endColor.g = 1.0f;
-    _endColor.b = 1.0f;
-    _endColor.a = 0.0f;
-    _endColorVar.r = 0.0f;
-    _endColorVar.g = 0.0f;
-    _endColorVar.b = 0.0f;
-    _endColorVar.a = 0.0f;
+        // emits per second
+        _emissionRate = 20;
 
-    _posVar = { 1.0f * x_, 0.0f };
+        // color of particles
+        _startColor.r = 0.7f;
+        _startColor.g = 0.8f;
+        _startColor.b = 1.0f;
+        _startColor.a = 1.0f;
+        _startColorVar.r = 0.0f;
+        _startColorVar.g = 0.0f;
+        _startColorVar.b = 0.0f;
+        _startColorVar.a = 0.0f;
+        _endColor.r = 0.7f;
+        _endColor.g = 0.8f;
+        _endColor.b = 1.0f;
+        _endColor.a = 0.5f;
+        _endColorVar.r = 0.0f;
+        _endColorVar.g = 0.0f;
+        _endColorVar.b = 0.0f;
+        _endColorVar.a = 0.0f;
 
+        _posVar = { 1.0f * x_, 0.0f };
+
+    
+    }
+    else if (w_t_i_str == "drizzle") {
+
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/particle/01.png";
+        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
+        setTexture(texture);
+
+        initWithTotalParticles(1000);
+
+        // duration
+        _duration = DURATION_INFINITY;
+
+        setEmitterMode(Mode::GRAVITY);
+
+        // Gravity Mode: gravity
+        setGravity(Vec2(10, 10));
+
+        // Gravity Mode: radial
+        setRadialAccel(0);
+        setRadialAccelVar(1);
+
+        // Gravity Mode: tangential
+        setTangentialAccel(0);
+        setTangentialAccelVar(1);
+
+        // Gravity Mode: speed of particles
+        setSpeed(-130);
+        setSpeedVar(30);
+
+        // angle
+        _angle = -90;
+        _angleVar = 5;
+
+        // life of particles
+        _life = 4.5f;
+        _lifeVar = 0;
+
+        // size, in pixels
+        _startSize = 4.0f;
+        _startSizeVar = 2.0f;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
+
+        // emits per second
+        _emissionRate = 20;
+
+        // color of particles
+        _startColor.r = 0.7f;
+        _startColor.g = 0.8f;
+        _startColor.b = 1.0f;
+        _startColor.a = 1.0f;
+        _startColorVar.r = 0.0f;
+        _startColorVar.g = 0.0f;
+        _startColorVar.b = 0.0f;
+        _startColorVar.a = 0.0f;
+        _endColor.r = 0.7f;
+        _endColor.g = 0.8f;
+        _endColor.b = 1.0f;
+        _endColor.a = 0.5f;
+        _endColorVar.r = 0.0f;
+        _endColorVar.g = 0.0f;
+        _endColorVar.b = 0.0f;
+        _endColorVar.a = 0.0f;
+
+        _posVar = { 1.0f * x_, 0.0f };
+    
+    
+    
+    
+    }
+
+
+    else {
+    
+        setTexture(nullptr);
+        
+    }
 
 
 
 
 }
+
+
+
+
+
+

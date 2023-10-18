@@ -10,6 +10,8 @@
 #endif
 #include <vector>
 #include <string>
+#include"weather.h"
+#include"sdl_wrappers.h"
 
 struct Pointf
 {
@@ -143,6 +145,11 @@ public:
     };
 
 public:
+
+    std::string w_t_i_str = "null";
+
+
+
     void addParticles(int count);
 
     void stopSystem();
@@ -601,7 +608,7 @@ public:
      void pauseEmissions();
      void resumeEmissions();
 
-     void set_style();
+     void set_style(const std::string &id_str,SDL_Texture * texture,SDL_Renderer *renderer );
 
 protected:
     //virtual void updateBlendFunc();
