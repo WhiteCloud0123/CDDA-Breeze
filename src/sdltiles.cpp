@@ -543,7 +543,7 @@ void refresh_display()
     }
 
 
-    needupdate = false;
+    
     lastupdate = SDL_GetTicks();
 
     if( test_mode ) {
@@ -583,6 +583,11 @@ void refresh_display()
             
             
 
+    }
+    else {
+    
+        needupdate = false;
+    
     }
 
     SDL_RenderPresent( renderer.get() );
