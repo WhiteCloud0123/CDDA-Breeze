@@ -46,6 +46,8 @@
 #include <vector>
 
 static const weather_type_id weather_snowing("snowing");
+static const weather_type_id weather_rain("rain");
+static const weather_type_id weather_drizzle("drizzle");
 
 namespace
 {
@@ -780,9 +782,12 @@ void game::draw_weather( const weather_printable &w ) const
         return;
     }
 
-    if (get_option<bool>("启用粒子特效") && get_weather().weather_id == weather_snowing  ) {
-    
-        return;
+    if (get_option<bool>("启用粒子特效")) {
+        weather_type_id& id = get_weather().weather_id;
+        if (id == weather_snowing || id == weather_rain || id == weather_drizzle) {
+            return;
+        }
+        
     }
 
 

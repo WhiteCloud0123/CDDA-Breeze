@@ -2011,7 +2011,7 @@ void options_manager::add_options_graphics()
     };
 
     add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
-        to_translation("目前是测试阶段。开启后，将在游戏的一些地方，例如天气动画上（目前只有雪天）应用粒子特效。"),
+        to_translation("目前是测试阶段。开启后，将在游戏的一些地方应用粒子特效。目前已在 细雨、雨、雪这三种天气上应用。"),
         false
     );
 
