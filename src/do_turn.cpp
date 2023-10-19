@@ -136,9 +136,6 @@ void make_assassins() {
 
 void make_trade_caravan() {
 
- 
-
-    zone_manager& mgr = zone_manager::get_manager();
 
     // 如果玩家的z轴位置不为0，就不用生成商队
     if (get_player_character().posz() != 0) {
