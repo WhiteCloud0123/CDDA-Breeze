@@ -46,8 +46,10 @@
 #include "type_id.h"
 #include "ui_manager.h"
 
+
 static const faction_id faction_no_faction( "no_faction" );
 static const faction_id faction_your_followers( "your_followers" );
+static const faction_id faction_free_merchants("free_merchants");
 
 static const flag_id json_flag_TWO_WAY_RADIO( "TWO_WAY_RADIO" );
 
@@ -556,6 +558,17 @@ void faction::faction_display( const catacurses::window &fac_w, const int width 
             "距离下一次拿取物资:   %s天", days_required_to_submit_resources);
     
     }
+
+    if (likes_u>=0 && id == faction_free_merchants) {
+
+            
+            fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 1, c_white,
+                "距离下一次交易人员来访:   %s回合", to_turns<int>( 907200_turns - (calendar::turn - calendar::start_of_game) % 907200_turns));
+        
+        
+    }
+
+
     fold_and_print( fac_w, point( width, ++y ), getmaxx( fac_w ) - width - 2, c_light_gray,
                     "%s", desc );
 }
