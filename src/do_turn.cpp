@@ -832,8 +832,21 @@ void monmove()
                 && g->faction_manager_ptr->get(faction_free_merchants)->likes_u >= 0) {
 
                 if (calendar::once_every(907200_turns)) {
-                    add_msg(m_good, _("自由商会派人来访问了。"));
-                    make_trade_caravan();
+
+                    tripoint_abs_omt omt_pos = u.global_omt_location();
+                    
+                    cata::optional<basecamp*> camp = overmap_buffer.find_camp(omt_pos.xy());
+
+                    // 如果玩家不处于营地的范围内，不要生成交易人员
+                    if ( camp ) {
+                        add_msg(m_good, _("Player  %1s  %2s"), omt_pos.raw().x, omt_pos.raw().x);
+                        add_msg(m_good, _("自由商会派人来访问了。 %1s  %2s"),camp.value()->board_x() , camp.value()->board_x());
+                        make_trade_caravan();
+                                              
+                    }
+
+
+                    
                 }
 
             }
