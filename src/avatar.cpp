@@ -897,8 +897,16 @@ nc_color avatar::basic_symbol_color() const
 }
 
 int avatar::print_info( const catacurses::window &w, int vStart, int, int column ) const
-{
-    return vStart + fold_and_print( w, point( column, vStart ), getmaxx( w ) - column - 1, c_dark_gray,
+{   
+    if (get_option<bool>("显示玩家剩余的行动点")) {
+
+        fold_and_print(w, point(column, vStart + 1), getmaxx(w) - column - 1, c_white,
+            _("剩余行动点:   %s"),
+            get_avatar().moves);
+    
+    }
+    
+    return vStart + fold_and_print( w, point( column, vStart ), getmaxx( w ) - column - 1, c_white,
                                     _( "You (%s)" ),
                                     get_name() ) - 1;
 }

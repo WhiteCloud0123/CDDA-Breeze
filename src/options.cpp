@@ -1375,13 +1375,11 @@ void options_manager::add_options_general()
 
     add("骑乘状态可以上下楼", "general", to_translation("骑乘状态可以上下楼"), to_translation("当此选项的值为 是 时，骑乘状态可以上下楼。"), true);
     add("怪物的等级动态变化", "general", to_translation("怪物的等级动态变化"), to_translation("当此选项的值为 是 时，怪物的等级将动态变化。当此选项的值为 否 时，怪物的等级默认为0级。"), true);
-    add("可以看到怪物的等级", "general", to_translation("可以看到怪物的等级"), to_translation("当此选项的值为 是 时，可以看到怪物的等级。"), true);
     add("精英怪物警告", "general", to_translation("精英怪物警告"), to_translation("如果玩家的视野中有等级有6级及以上的怪物，玩家的信息栏会不断的输出警告信息。"), true);
 
     add_empty_line();
 
     add("其他派系的访问", "general", to_translation("其他派系的访问"), to_translation("当此选项的值为 是 时，会生成来自其他派系的人来访问。如果遇到问题，可以关闭。"), false);
-    add("派系态度以数值显示", "general", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值"), false);
 
     add_empty_line();
 
@@ -1641,6 +1639,12 @@ void options_manager::add_options_interface()
 
     add( "USE_LANG", "interface", to_translation( "Language" ),
          to_translation( "Switch language." ), options_manager::get_lang_options(), "" );
+
+    add_empty_line();
+
+    add("显示怪物的等级", "interface", to_translation("显示怪物的等级"), to_translation("当此选项的值为 是 时，显示怪物的等级。"), true);
+    add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值"), false);
+    add("显示玩家剩余的行动点", "interface", to_translation("显示玩家剩余的行动点"), to_translation("当此选项的值为 是 时，显示玩家剩余的行动点数"), false);
 
     add_empty_line();
 
