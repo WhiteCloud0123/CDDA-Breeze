@@ -229,6 +229,7 @@ void map::set_transparency_cache_dirty( const tripoint &p, bool field )
         if( !field ) {
             get_cache( smp.z ).r_hor_cache->invalidate( p.xy() );
             get_cache( smp.z ).r_up_cache->invalidate( p.xy() );
+            set_visitable_zones_cache_dirty();
         }
     }
 }
@@ -1664,6 +1665,7 @@ bool map::furn_set( const tripoint &p, const furn_id &new_furniture, const bool 
             ter_furn_flag::TFLAG_NO_FLOOR ) ) {
         set_floor_cache_dirty( p.z );
         set_seen_cache_dirty( p );
+        set_visitable_zones_cache_dirty();
     }
 
     if( old_f.has_flag( ter_furn_flag::TFLAG_SUN_ROOF_ABOVE ) != new_f.has_flag(
@@ -1674,6 +1676,11 @@ bool map::furn_set( const tripoint &p, const furn_id &new_furniture, const bool 
     invalidate_max_populated_zlev( p.z );
 
     set_memory_seen_cache_dirty( p );
+
+
+    if ((old_f.movecost < 0) != (new_f.movecost < 0)) {
+        set_visitable_zones_cache_dirty();
+    }
 
     // TODO: Limit to changes that affect move cost, traps and stairs
     set_pathfinding_cache_dirty( p.z );
@@ -2116,6 +2123,10 @@ bool map::ter_set( const tripoint &p, const ter_id &new_terrain, bool avoid_crea
 
     set_memory_seen_cache_dirty( p );
 
+
+    if ((old_t.movecost == 0) != (new_t.movecost == 0)) {
+        set_visitable_zones_cache_dirty();
+    }
     // TODO: Limit to changes that affect move cost, traps and stairs
     set_pathfinding_cache_dirty( p.z );
 
