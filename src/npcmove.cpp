@@ -2385,8 +2385,8 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
 
             return;
         }
-
-        if( critter->is_avatar() ) {
+        // 如果critter是玩家，同时不是其他派系的交易人员，才说一些“让我过去”这种类型的话
+        if( critter->is_avatar() && !has_effect(effect_want_trade) ) {
             say( chatbin.snip_let_me_pass );
         }
 
