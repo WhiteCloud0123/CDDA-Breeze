@@ -2319,7 +2319,8 @@ bool npc::can_move_to( const tripoint &p, bool no_bashing ) const
 }
 
 void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomove )
-{
+{   
+    bool has_special_effect_want_trade = has_effect(effect_want_trade);
     tripoint p = pt;
     map &here = get_map();
     if( sees_dangerous_field( p )
@@ -2385,8 +2386,8 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
 
             return;
         }
-        // 如果critter是玩家，同时不是其他派系的交易人员，才说一些“让我过去”这种类型的话
-        if( critter->is_avatar() && !has_effect(effect_want_trade) ) {
+        // 同时还要满足：如果没有 effect_want_trade
+        if( critter->is_avatar() && !has_special_effect_want_trade ) {
             say( chatbin.snip_let_me_pass );
         }
 
@@ -2406,7 +2407,14 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
             // other npcs should not try to move into this npc anymore,
             // so infinite loop can be avoided.
             realnomove->insert( pos() );
-            say( chatbin.snip_let_me_pass );
+
+            // 如果没有 effect_want_trade
+            if (!has_special_effect_want_trade) {
+            
+                say(chatbin.snip_let_me_pass);
+
+            }
+                       
             np->move_away_from( pos(), true, realnomove );
             // if we moved NPC, readjust their path, so NPCs don't jostle each other out of their activity paths.
             if( np->attitude == NPCATT_ACTIVITY ) {
