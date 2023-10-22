@@ -539,6 +539,10 @@ void basecamp::faction_display( const catacurses::window &fac_w, const int width
 void faction::faction_display( const catacurses::window &fac_w, const int width ) const
 {
     int y = 2;
+    bool has_hostile_monster = false;
+    Character& player = get_player_character();
+    tripoint_abs_omt omt_pos = player.global_omt_location();
+    cata::optional<basecamp*> camp = overmap_buffer.find_camp(omt_pos.xy());
 
     if (get_option<bool>("派系态度以数值显示") == true) {
         mvwprintz(fac_w, point(width, ++y), c_white, _("对你的态度:       %s"),
@@ -559,18 +563,57 @@ void faction::faction_display( const catacurses::window &fac_w, const int width 
     
     }
 
-    if (likes_u>=0 && id == faction_free_merchants) {
+  
 
+        if (likes_u >= 0 && id == faction_free_merchants) {
+
+            // 判断当前玩家营地是否有敌对的怪物
+            if (camp) {
+                for (monster& m : g->all_monsters()) {
+                    if (m.attitude_to(player) == Creature::Attitude::HOSTILE) {
+                        has_hostile_monster = true;
+                        break;
+                    }
+                }
+            }
+
+
+            if (has_hostile_monster == false) {
+
+                fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 1, c_white,
+                    "距离下一次交易人员来访:   %s回合", to_turns<int>(907200_turns - (calendar::turn - calendar::start_of_game) % 907200_turns));
+
+                if (!camp) {
+
+                    fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 2, c_white,
+                        "你当前并不处于营地的范围。");
+                
+                }
             
-            fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 1, c_white,
-                "距离下一次交易人员来访:   %s回合", to_turns<int>( 907200_turns - (calendar::turn - calendar::start_of_game) % 907200_turns));
+            
+            } else {
+               
+                fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 2, c_red,
+                    "你的营地周围存在危险，将无法通过自由商会的安全评估。");
+            
+            }
         
-        
-    }
+        }
 
 
-    fold_and_print( fac_w, point( width, ++y ), getmaxx( fac_w ) - width - 2, c_light_gray,
-                    "%s", desc );
+        if (has_hostile_monster == false) {
+
+            fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 2, c_light_gray,
+                "%s", desc);
+            
+        }
+        else {
+
+            fold_and_print(fac_w, point(width, y+2), getmaxx(fac_w) - width - 2, c_light_gray,
+                "%s", desc);
+              
+        }
+    
 }
 
 std::string npc::get_current_status() const
