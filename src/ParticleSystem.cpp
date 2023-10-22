@@ -669,6 +669,19 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
     if ( w_t_i_str == "snowing" ) {
         
 
+
+        setRenderer(renderer);                   // set the renderer
+        setPosition(552, 0);              // set the position
+#if defined(__ANDROID__)
+        setPosition(952, 0);
+#endif
+        setStartSpin(0);
+        setStartSpinVar(90);
+        setEndSpin(90);
+        setStartSpinVar(90);
+
+
+
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
         SDL_Texture *texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
@@ -737,6 +750,19 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
     }
     else if (w_t_i_str == "rain") {
 
+        setRenderer(renderer);                   // set the renderer
+        setPosition(552, 0);              // set the position
+#if defined(__ANDROID__)
+        setPosition(952, 0);
+#endif
+        setStartSpin(0);
+        setStartSpinVar(90);
+        setEndSpin(90);
+        setStartSpinVar(90);
+
+
+
+
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
         SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
@@ -803,6 +829,18 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
     
     }
     else if (w_t_i_str == "drizzle") {
+
+        setRenderer(renderer);                   // set the renderer
+        setPosition(552, 0);              // set the position
+#if defined(__ANDROID__)
+        setPosition(952, 0);
+#endif
+        setStartSpin(0);
+        setStartSpinVar(90);
+        setEndSpin(90);
+        setStartSpinVar(90);
+
+
 
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";

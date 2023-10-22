@@ -127,7 +127,6 @@ static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
 ParticleSystem particle_system;
-bool particle_system_is_ready = false;
 
 static SDL_Window_Ptr window;
 static SDL_Renderer_Ptr renderer;
@@ -522,27 +521,6 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
 
 void refresh_display()
 {   
-
-
-    if (  particle_system_is_ready == false ) {
-        
-        
-        particle_system.setRenderer(renderer.get());                   // set the renderer
-        particle_system.setPosition(552, 0);              // set the position
-#if defined(__ANDROID__)
-        particle_system.setPosition(952, 0);
-#endif
-                
-        particle_system.setStartSpin(0);
-        particle_system.setStartSpinVar(90);
-        particle_system.setEndSpin(90);
-        particle_system.setStartSpinVar(90);
-        
-        particle_system_is_ready = true;
-
-    }
-
-
     
     lastupdate = SDL_GetTicks();
 
