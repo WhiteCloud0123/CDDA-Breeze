@@ -79,17 +79,17 @@ extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
 
 
 
-void make_assassins() {
+void generate_hostile_npc() {
 
 
-    // 如果玩家没有睡着，不要生成刺客
+    // 如果玩家没有睡着，不要生成
     if ( ! get_player_character().has_effect(effect_sleep)) {
 
         return;
 
     }
 
-    // 如果玩家的z轴位置不为0，就不用生成刺客了
+    // 如果玩家的z轴位置不为0，就不用生成
     if (get_player_character().posz() !=0 ) {
 
         return;
@@ -104,12 +104,12 @@ void make_assassins() {
 
     if (chance == 1) {
 
-        temp->spawn_at_precise(get_player_character().get_location() + point(-49, -49));
+        temp->spawn_at_precise(get_player_character().get_location() + point(-45 + rng(-5,5), -45));
     
     }
     else {
 
-        temp->spawn_at_precise(get_player_character().get_location() + point(49, 49));
+        temp->spawn_at_precise(get_player_character().get_location() + point(45 + rng(-5,5), 45));
     
     }
     
@@ -134,7 +134,7 @@ void make_assassins() {
 
 }
 
-void make_trade_caravan() {
+void generate_trade_caravan() {
 
 
     // 如果玩家的z轴位置不为0，就不用生成商队
@@ -773,15 +773,15 @@ void monmove()
         // 如果 assassin_attack 为 true，生成刺客
         if (assassin_attack == true) {
 
-            make_assassins();
-            make_assassins();
-            make_assassins();
-            make_assassins();
-            make_assassins();
-            make_assassins();
-            make_assassins();
-            make_assassins();
-            make_assassins();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
+            generate_hostile_npc();
 
         }
 
@@ -795,7 +795,7 @@ void monmove()
                     faction* free_merchants = g->faction_manager_ptr->get(faction_free_merchants);
 
                     // 好感度越高，来的交易员越多
-                    int base_count = free_merchants->likes_u / 40;
+                    int base_count = free_merchants->likes_u / 30;
 
                     if (free_merchants->known_by_u == true && free_merchants->likes_u >= 0) {
 
@@ -848,7 +848,7 @@ void monmove()
 
                         for (int i = 0; i < base_count + 1; i++) {
 
-                            make_trade_caravan();
+                            generate_trade_caravan();
 
                         }
 
