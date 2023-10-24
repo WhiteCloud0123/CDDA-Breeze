@@ -149,10 +149,10 @@ void make_trade_caravan() {
     temp->randomize();
 
     if (chance == 1) {
-        temp->spawn_at_precise(get_player_character().get_location() + point(50, 0));
+        temp->spawn_at_precise(get_player_character().get_location() + point(45+rng(-5,5), 0));
     }
     else {
-        temp->spawn_at_precise(get_player_character().get_location() + point(-50, 0));
+        temp->spawn_at_precise(get_player_character().get_location() + point(-45+rng(-5, 5), 0));
     }
 
     overmap_buffer.insert_npc(temp);
@@ -175,43 +175,7 @@ void make_trade_caravan() {
     g->load_npcs();
 
 
-    catacurses::window w_01;
-    input_context ctxt("");
-    ctxt.register_action("QUIT");
-
-    ui_adaptor ui_01;
-    ui_01.on_screen_resize([&](ui_adaptor&) {
-        const std::pair<point, point> beg_and_max = {
-        point(TERMX / 5, TERMY / 8),
-        point(TERMX / 2, TERMY / 2)
-        };
-        const point& beg = beg_and_max.first;
-        const point& max = beg_and_max.second;
-        w_01 = catacurses::newwin(10, 40, beg);
-        ui_01.position_from_window(w_01);
-        });
-
-
-    ui_01.mark_resize();
-
-
-    ui_01.on_redraw([&](const ui_adaptor&) {
-        werase(w_01);
-        draw_border(w_01);
-        fold_and_print(w_01, point(1, 1), getmaxx(w_01) - 1 - 1, c_white,
-            "自由商会派人来访问了");
-        wnoutrefresh(w_01);
-        });
-
-
-    while (true) {
-        ui_01.invalidate_ui();
-        ui_manager::redraw_invalidated();
-        const std::string action = ctxt.handle_input();
-        if (action == "QUIT") {
-            break;
-        }
-    }
+    
 
 
 
@@ -746,7 +710,7 @@ void monmove()
 
             int dx = guy.get_location().raw().x - u.get_location().raw().x;
             int dy = guy.get_location().raw().y - u.get_location().raw().y;
-        // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了59，是的话就直接将其设置为幻觉，就此消失。 
+        // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了58，是的话就直接将其设置为幻觉，就此消失。 
             if (static_cast<int>(std::sqrt(dx*dx+dy*dy)) >58 ) {
                 guy.hallucination = true;
             }
@@ -825,20 +789,72 @@ void monmove()
 
 
         if (get_option<bool>("其他派系的访问") == true) {
-            if (g->faction_manager_ptr->get(faction_free_merchants)->known_by_u == true
-                && g->faction_manager_ptr->get(faction_free_merchants)->likes_u >= 0) {
 
                 if (calendar::once_every(907200_turns)) {
+
+                    faction* free_merchants = g->faction_manager_ptr->get(faction_free_merchants);
+
+                    // 好感度越高，来的交易员越多
+                    int base_count = free_merchants->likes_u / 40;
+
+                    if (free_merchants->known_by_u == true && free_merchants->likes_u >= 0) {
 
                     tripoint_abs_omt omt_pos = u.global_omt_location();
                     
                     cata::optional<basecamp*> camp = overmap_buffer.find_camp(omt_pos.xy());
 
                     // 如果玩家不处于营地的范围内，不要生成交易人员
-                    if ( camp ) {
-                        add_msg(m_good, _("Player  %1s  %2s"), omt_pos.raw().x, omt_pos.raw().x);
-                        add_msg(m_good, _("自由商会派人来访问了。 %1s  %2s"),camp.value()->board_x() , camp.value()->board_x());
-                        make_trade_caravan();
+                    if (camp) {
+                        catacurses::window w_01;
+                        input_context ctxt("");
+                        ctxt.register_action("QUIT");
+
+                        ui_adaptor ui_01;
+                        ui_01.on_screen_resize([&](ui_adaptor&) {
+                            const std::pair<point, point> beg_and_max = {
+                            point(TERMX / 5, TERMY / 8),
+                            point(TERMX / 2, TERMY / 2)
+                            };
+                            const point& beg = beg_and_max.first;
+                            const point& max = beg_and_max.second;
+                            w_01 = catacurses::newwin(10, 40, beg);
+                            ui_01.position_from_window(w_01);
+                            });
+
+
+                        ui_01.mark_resize();
+
+
+                        ui_01.on_redraw([&](const ui_adaptor&) {
+                            werase(w_01);
+                            draw_border(w_01);
+                            fold_and_print(w_01, point(1, 1), getmaxx(w_01) - 1 - 1, c_white,
+                                "自由商会派人来访问了");
+                            wnoutrefresh(w_01);
+                            });
+
+
+                        while (true) {
+                            ui_01.invalidate_ui();
+                            ui_manager::redraw_invalidated();
+                            const std::string action = ctxt.handle_input();
+                            if (action == "QUIT") {
+                                break;
+                            }
+
+
+                        }
+                        add_msg(m_good, _("自由商会派人来访问了。"));
+
+                        for (int i = 0; i < base_count + 1; i++) {
+
+                            make_trade_caravan();
+
+                        }
+
+
+                    }
+                        
                                               
                     }
 
@@ -846,7 +862,7 @@ void monmove()
                     
                 }
 
-            }
+            
         }
 
     

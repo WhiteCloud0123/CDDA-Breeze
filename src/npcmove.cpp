@@ -1390,41 +1390,104 @@ void npc::execute_action( npc_action action )
             break;
 
         case npc_goto_to_this_pos: {
-            tripoint trade_point;
+
             tripoint_abs_ms t_a_m;
+            zone_manager& mgr = zone_manager::get_manager();
+            std::vector<std::optional<tripoint_abs_ms>> used_trade_point_vec;
+            bool found_target_trade_point = false;
 
             if (has_effect(effect_want_trade) && has_effect(effect_want_trade)) {
-                zone_manager& mgr = zone_manager::get_manager();
-                //  如果设有交易区域，优先去交易区域
-                if (mgr.has_near(zone_type_trade_area, get_player_character().get_location(), 60)) {
+
+                if (!goto_to_this_pos) {
+
+                    // 存在交易区域，优先去交易区域
+                    if (mgr.has_near(zone_type_trade_area, get_player_character().get_location(), 60)) {
+
+                        auto zone = mgr.get_near(zone_type_trade_area, get_player_character().get_location(), 60);
+
+
+                        // 收集vec，但没必要将自己的包含在内
+                        for (npc& n : g->all_npcs()) {
+
+                            if (n.goto_to_this_pos && &n != this && n.has_effect(effect_just_trade)) {
+
+                                used_trade_point_vec.push_back(n.goto_to_this_pos);
+
+                            }
+
+                        }
+
+
+                        for (const tripoint_abs_ms& point : zone) {
+
+
+                            if (used_trade_point_vec.size()==0) {
+
+                                goto_to_this_pos = point;
+                                found_target_trade_point = true;
+                                break;
+
+                            
+                            }
+
+
+
+                            for (std::optional<tripoint_abs_ms> point_ : used_trade_point_vec) {
+
+                                if (point.raw().x != point_.value().raw().x || point.raw().y != point_.value().raw().y) {
+
+                                    found_target_trade_point = true;
+                                    goto_to_this_pos = point;
+                                    break;
+
+
+                                }
+
+
+                            }
+
+                            if (found_target_trade_point == true) {
+
+                                break;
+
+                            }
+                        
+
+                        }
+
+                        // 如果没有找到,就让他去玩家所在的位置
+                        if (found_target_trade_point == false) {
+
+                            goto_to_this_pos = get_player_character().get_location();
+                        
+                        }                                             
+             
+                    }
+
                     
-                    auto zone = mgr.get_near(zone_type_trade_area, get_player_character().get_location(), 60);
+                    else {
+
+                        goto_to_this_pos = get_player_character().get_location();
                     
-                    for (auto point_ : zone) {
-                        t_a_m = point_;
-                        trade_point.x = point_.raw().x;
-                        trade_point.y = point_.raw().y;
-                        break;
-                    }        
-                } 
-                // 如果没有就一直让他去玩家所在的位置
-                else {
-                    t_a_m = get_player_character().get_location();
+                    
+                    }
 
                 }
+                
+                
 
-                update_path(get_map().getlocal(t_a_m));
+               
             }
-            else {
+            
 
                 update_path(get_map().getlocal(*goto_to_this_pos));
             
-            }
+            
 
             
             move_to_next();
 
-            if (get_location() == *goto_to_this_pos) {
+            if (get_location() == *goto_to_this_pos && !has_effect(effect_just_trade)) {
                 goto_to_this_pos = std::nullopt;
             }
             break;
