@@ -585,7 +585,7 @@ void faction::faction_display( const catacurses::window &fac_w, const int width 
 
                 if (!camp) {
 
-                    fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 2, c_white,
+                    fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 2, c_light_gray,
                         "你当前并不处于营地的范围。");
                     
                 }
