@@ -1,7 +1,7 @@
 #pragma once
 #ifndef CATA_SRC_PARTICLESYSTEM_H
 #define CATA_SRC_PARTICLESYSTEM_H
-//移植自Cocos2dx，版权声明请查看licenses文件夹
+//移植自Cocos2dx，版权声明请查看“文件存放”文件夹
 #if defined(_MSC_VER) && defined(USE_VCPKG)
 #      include <SDL2/SDL.h>
 
@@ -10,7 +10,6 @@
 #endif
 #include <vector>
 #include <string>
-#include"weather.h"
 #include"sdl_wrappers.h"
 
 struct Pointf
