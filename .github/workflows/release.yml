@@ -86,8 +86,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Windows Tiles Sounds x64 MSVC
-            artifact: windows-tiles-sounds-x64-msvc
+          - name: Windows Tiles x64 MSVC
+            artifact: windows-tiles-x64-msvc
             arch: x64
             os: windows-2019
             mxe: none
