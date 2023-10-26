@@ -1370,5 +1370,27 @@
     "weight": "1000 g",
     "difficulty": 3,
     "installation_data": "AID_bio_pitch_perfect"
+  },
+  {
+    "id": "bio_helicopter_driving_knowledge_infusion_plugin",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": { "str": "直升机驾驶-知识灌输插件" },
+    "description": "让你学会如何驾驶直升机。",
+    "weight": "100 g",
+    "difficulty": 8,
+    "price": 1250000,
+    "price_postapoc": 900000
+  },
+  {
+    "id": "bio_aircraft_mechanic_knowledge_infusion_plugin",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": { "str": "飞行器机械师-知识灌输插件" },
+    "description": "让你学会如何改装飞行器。",
+    "weight": "100 g",
+    "difficulty": 8,
+    "price": 2500000,
+    "price_postapoc": 1800000
   }
 ]

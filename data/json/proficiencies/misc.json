@@ -126,16 +126,16 @@
     "type": "proficiency",
     "id": "prof_helicopter_pilot",
     "category": "prof_mechanic",
-    "name": { "str": "Helicopter Piloting" },
-    "description": "Before the Cataclysm, you were a helicopter pilot.  Now, you just hope you can fly again.",
+    "name": { "str": "直升机驾驶" },
+    "description": "直升机驾驶。",
     "can_learn": false
   },
   {
     "type": "proficiency",
     "id": "prof_aircraft_mechanic",
     "category": "prof_mechanic",
-    "name": { "str": "Airframe and Powerplant Mechanic" },
-    "description": "You've been trained and certified to repair aircraft.  You're not really sure how that could help you survive now.",
+    "name": { "str": "飞行器机械师" },
+    "description": "飞行器机械师。",
     "can_learn": false
   },
   {
