@@ -127,6 +127,9 @@ static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
 ParticleSystem particle_system;
+SDL_Texture* character_texture;
+
+
 
 static SDL_Window_Ptr window;
 static SDL_Renderer_Ptr renderer;
@@ -150,6 +153,8 @@ static int TERMINAL_WIDTH;
 static int TERMINAL_HEIGHT;
 static bool fullscreen;
 static int scaling_factor;
+
+std::string character_name_breeze = "";
 
 using cata_cursesport::curseline;
 using cata_cursesport::cursecell;
@@ -558,14 +563,49 @@ void refresh_display()
             particle_system.set_style(get_weather().weather_id.str(),display_buffer.get(),renderer.get());
             
             particle_system.draw();
-            
-            
 
+            
+           
     }
     else {
     
         needupdate = false;
     
+    }
+
+    if ( character_name_breeze != "") {
+
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/character_picture/" + character_name_breeze+".png";
+        character_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+
+        if (character_texture != nullptr) {
+            
+            SDL_Rect srcrect;
+            srcrect.x = 0;
+            srcrect.y = 0;
+            srcrect.w = 381;
+            srcrect.h = 522;
+
+            
+            SDL_Rect dstrect;
+            dstrect.x = 1000;
+            dstrect.y = 175;
+            dstrect.w = 381;
+            dstrect.h = 522;
+
+#if defined(__ANDROID__)
+            dstrect.x = 1400;
+            dstrect.y = 375;
+#endif
+
+            SDL_RenderCopy(renderer.get(), character_texture, &srcrect, &dstrect);
+            
+        }
+
+        
+        
+
     }
 
     SDL_RenderPresent( renderer.get() );
