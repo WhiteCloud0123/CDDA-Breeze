@@ -43,6 +43,11 @@ extern std::array<SDL_Color, color_loader<SDL_Color>::COLOR_NAMES_COUNT> windows
 extern int fontheight;
 extern int fontwidth;
 
+extern std::string character_name_breeze;
+
+
+
+
 // This function may refresh the screen, so it should not be used where tiles
 // may be displayed. Actually, this is supposed to be called from init.cpp,
 // and only from there.

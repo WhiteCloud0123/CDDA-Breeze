@@ -85,6 +85,7 @@
 #include "vehicle.h"
 #include "vpart_position.h"
 #include "vpart_range.h"
+#include "sdltiles.h"
 
 static const activity_id ACT_AIM( "ACT_AIM" );
 static const activity_id ACT_SOCIALIZE( "ACT_SOCIALIZE" );
@@ -997,8 +998,17 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         return;
     }
 
-
+    
     dialogue d( get_talker_for( *this ), std::move( talk_with ) );
+    
+    // 传递这个npc的名字
+    if (who != nullptr) {
+        
+        character_name_breeze = who->get_name();
+    
+    }
+    
+
     d.by_radio = radio_contact;
     dialogue_by_radio = radio_contact;
     d.actor( true )->check_missions();
@@ -1036,6 +1046,15 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
             d.add_topic( next );
         }
     } while( !d.done );
+
+    if (who != nullptr) {
+
+        // 重新将名字重置
+        character_name_breeze = "";
+    
+    }
+    
+
 
     if( activity.id() == ACT_AIM && !has_weapon() ) {
         cancel_activity();
