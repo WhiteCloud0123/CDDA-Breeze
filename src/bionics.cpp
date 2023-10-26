@@ -110,6 +110,8 @@ static const bionic_id bio_teleport( "bio_teleport" );
 static const bionic_id bio_time_freeze( "bio_time_freeze" );
 static const bionic_id bio_torsionratchet( "bio_torsionratchet" );
 static const bionic_id bio_water_extractor( "bio_water_extractor" );
+static const bionic_id bio_helicopter_driving_knowledge_infusion_plugin("bio_helicopter_driving_knowledge_infusion_plugin");
+static const bionic_id bio_aircraft_mechanic_knowledge_infusion_plugin("bio_aircraft_mechanic_knowledge_infusion_plugin");
 
 static const efftype_id effect_adrenaline( "adrenaline" );
 static const efftype_id effect_antifungal( "antifungal" );
@@ -195,6 +197,9 @@ static const trait_id trait_PROF_AUTODOC( "PROF_AUTODOC" );
 static const trait_id trait_PROF_MED( "PROF_MED" );
 static const trait_id trait_PYROMANIA( "PYROMANIA" );
 static const trait_id trait_THRESH_MEDICAL( "THRESH_MEDICAL" );
+
+static const proficiency_id proficiency_prof_helicopter_pilot("prof_helicopter_pilot");
+static const proficiency_id proficiency_prof_aircraft_mechanic("prof_aircraft_mechanic");
 
 struct Character::bionic_fuels {
     std::vector<vehicle *> connected_vehicles;
@@ -2478,6 +2483,24 @@ void Character::perform_install( const bionic_id &bid, bionic_uid upbio_uid, int
         } else {
             //~ %s - name of the bionic.
             add_msg( m_good, _( "Successfully installed %s." ), bid.obj().name );
+
+
+            // 获取专长
+            if (bid == bio_helicopter_driving_knowledge_infusion_plugin) {
+
+                add_proficiency(proficiency_prof_helicopter_pilot,true);
+
+                       
+            }
+            else if (bid == bio_aircraft_mechanic_knowledge_infusion_plugin) {
+            
+            
+                add_proficiency(proficiency_prof_aircraft_mechanic,true);
+
+            }
+
+        
+        
         }
 
         add_bionic( bid );
