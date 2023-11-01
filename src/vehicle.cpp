@@ -19,6 +19,7 @@
 #include <unordered_set>
 #include <utility>
 
+#include "activity_handlers.h"
 #include "activity_type.h"
 #include "avatar.h"
 #include "bionics.h"
@@ -98,7 +99,6 @@ static const efftype_id effect_winded( "winded" );
 
 static const fault_id fault_engine_immobiliser( "fault_engine_immobiliser" );
 
-static const flag_id json_flag_POWER_CORD( "POWER_CORD" );
 
 static const itype_id fuel_type_animal( "animal" );
 static const itype_id fuel_type_battery( "battery" );
@@ -207,6 +207,11 @@ vehicle::vehicle() : vehicle( get_map(), vproto_id() )
 }
 
 vehicle::~vehicle() = default;
+
+safe_reference<vehicle> vehicle::get_safe_reference()
+{
+    return anchor.reference_to(this);
+}
 
 bool vehicle::player_in_control( const Character &p ) const
 {
@@ -4930,9 +4935,15 @@ int vehicle::net_battery_charge_rate_w( bool include_reactors, bool connected_ve
     } else {
         return total_engine_epower_w() + total_alternator_epower_w() + total_accessory_epower_w() +
                total_solar_epower_w() + total_wind_epower_w() + total_water_wheel_epower_w() +
-               ( include_reactors ? active_reactor_epower_w( false ) : 0 );
+            linked_item_epower_this_turn.value()/1000  /*(include_reactors ? active_reactor_epower_w(true) : 0)*/;
+        
     }
 }
+
+
+
+
+
 
 int vehicle::active_reactor_epower_w( bool connected_vehicles ) const
 {
@@ -5364,6 +5375,7 @@ void vehicle::idle( bool on_map )
         }
     }
 
+    linked_item_epower_this_turn = 0_W;
     smart_controller_handle_turn();
 
     if( !on_map ) {
@@ -5845,6 +5857,7 @@ void vehicle::refresh( const bool remove_fakes )
     mufflers.clear();
     planters.clear();
     accessories.clear();
+    cable_ports.clear();
 
     alternator_load = 0;
     extra_drag = 0;
@@ -6000,6 +6013,10 @@ void vehicle::refresh( const bool remove_fakes )
         if( vpi.has_flag( VPFLAG_ENABLED_DRAINS_EPOWER ) ) {
             accessories.push_back( p );
         }
+        if (vpi.has_flag(VPFLAG_CABLE_PORTS) || vpi.has_flag(VPFLAG_APPLIANCE)) {
+            cable_ports.push_back(p);
+        }
+
     }
 
     rail_wheel_bounding_box.p1 = point( railwheel_xmin, railwheel_ymin );
@@ -6425,15 +6442,8 @@ bool vehicle::is_towed() const
 
 int vehicle::get_tow_part() const
 {
-    for( const vpart_reference &vp : get_all_parts() ) {
-        const size_t p = vp.part_index();
-        if( vp.part().removed ) {
-            continue;
-        }
-
-        if( part_with_feature( p, "TOW_CABLE", true ) >= 0 && vp.part().is_available() ) {
-            return p;
-        }
+    for (const vpart_reference& vpr : this->get_any_parts("TOW_CABLE")) {
+        return vpr.part_index();
     }
     return -1;
 }
@@ -6488,7 +6498,7 @@ bool towing_data::set_towing( vehicle *tower_veh, vehicle *towed_veh )
     return true;
 }
 
-void vehicle::invalidate_towing( bool first_vehicle )
+void vehicle::invalidate_towing(bool first_vehicle, Character* remover)
 {
     if( !is_towing() && !is_towed() ) {
         return;
@@ -6496,28 +6506,52 @@ void vehicle::invalidate_towing( bool first_vehicle )
     if (first_vehicle) {
         vehicle* other_veh = is_towing() ? tow_data.get_towed() :
             is_towed() ? tow_data.get_towed_by() : nullptr;
+        const int tow_cable_idx = get_tow_part();
+        if (tow_cable_idx > -1) {
+            vehicle_part& vp = parts[tow_cable_idx];
+            item drop = vp.properties_to_item();
+            drop.set_damage(0);
+            if (other_veh != nullptr) {
+                if (is_towing()) {
+                    drop.link->s_state = link_state::no_link;
+                    drop.link->t_state = link_state::vehicle_tow;
+                }
+                else {
+                    drop.link->s_state = link_state::vehicle_tow;
+                    drop.link->t_state = link_state::no_link;
+                }
+                const int other_tow_cable_idx = other_veh->get_tow_part();
+                drop.link->t_abs_pos = other_veh->global_square_location();
+                if (other_tow_cable_idx > -1) {
+                    drop.link->t_mount = other_veh->part(other_tow_cable_idx).mount;
+                }
+            }
+            else {
+                drop.reset_cable();
+            }
+
+            if (remover != nullptr) {
+                std::list<item> drops{ drop };
+                put_into_vehicle_or_drop(*remover, item_drop_reason::deliberate, drops);
+            }
+            else {
+                get_map().add_item_or_charges(global_part_pos3(vp), drop);
+            }
+            remove_part(tow_cable_idx);
+        }
         if (other_veh) {
             other_veh->invalidate_towing();
         }
+        tow_data.clear_towing();
     }
-    map &here = get_map();
-    for( const vpart_reference &vp : get_all_parts() ) {
-        const size_t p = vp.part_index();
-        if( vp.part().removed ) {
-            continue;
+    else {
+        const int tow_cable_idx = get_tow_part();
+        if (tow_cable_idx > -1) {
+            remove_part(tow_cable_idx);
         }
-
-        if( part_with_feature( p, "TOW_CABLE", true ) >= 0 ) {
-            if( first_vehicle ) {
-                vehicle_part *part = &parts[part_with_feature( p, "TOW_CABLE", true )];
-                item drop = part->properties_to_item();
-                here.add_item_or_charges( global_part_pos3( *part ), drop );
-            }
-            remove_part( part_with_feature( p, "TOW_CABLE", true ) );
-            break;
-        }
+        tow_data.clear_towing();
     }
-    tow_data.clear_towing();
+    
 }
 
 // to be called on the towed vehicle
@@ -6638,19 +6672,13 @@ void vehicle::shed_loose_parts( const tripoint_bub_ms *src, const tripoint_bub_m
                                     _( "The %s's power connection was detached!" ), name );
             remove_remote_part( elem );
         }
-        if( is_towing() || is_towed() ) {
-            vehicle *other_veh = is_towing() ? tow_data.get_towed() : tow_data.get_towed_by();
-            if( other_veh ) {
-                other_veh->remove_part( other_veh->part_with_feature( other_veh->get_tow_part(), "TOW_CABLE",
-                                        true ) );
-                other_veh->tow_data.clear_towing();
-            }
-            tow_data.clear_towing();
+        if (part_flag(elem, "TOW_CABLE")) {
+            invalidate_towing(true);
+            continue;
         }
-        const vehicle_part *part = &parts[elem];
-        if( !magic && !part->properties_to_item().has_flag( json_flag_POWER_CORD ) ) {
-            item drop = part->properties_to_item();
-            here.add_item_or_charges( global_part_pos3( *part ), drop );
+        const item drop = part(elem).properties_to_item();
+        if (!magic && !drop.has_flag(flag_AUTO_DELETE_CABLE)) {
+            here.add_item_or_charges(global_part_pos3(part(elem)), drop);
         }
 
         remove_part( elem );
@@ -6951,7 +6979,21 @@ int vehicle::break_off( map &here, int p, int dmg )
                 continue;
             }
 
-            if( parts[ parts_in_square[ index ] ].is_broken() ) {
+            if (part_flag(parts_in_square[index], "TOW_CABLE")) {
+                // Tow cables - remove it in one piece, remove remote part, and remove towing data
+                add_msg_if_player_sees(pos, m_bad, _("The %1$s's %2$s is disconnected!"), name,
+                    parts[parts_in_square[index]].name());
+                invalidate_towing(true);
+            }
+            else if (part_flag(parts_in_square[index], "POWER_TRANSFER")) {
+                // Electrical cables - remove it in one piece and remove remote part
+                add_msg_if_player_sees(pos, m_bad, _("The %1$s's %2$s is disconnected!"), name,
+                    parts[parts_in_square[index]].name());
+                item part_as_item = parts[parts_in_square[index]].properties_to_item();
+                here.add_item_or_charges(pos, part_as_item);
+                remove_remote_part(parts_in_square[index]);
+            }
+            else if (parts[parts_in_square[index]].is_broken()) {
                 // Tearing off a broken part - break it up
                 add_msg_if_player_sees( pos, m_bad, _( "The %s's %s breaks into pieces!" ), name,
                                         parts[ parts_in_square[ index ] ].name() );
@@ -6973,10 +7015,26 @@ int vehicle::break_off( map &here, int p, int dmg )
         remove_part( p, *handler_ptr );
         find_and_split_vehicles( here, { p } );
     } else {
-        //Just break it off
-        add_msg_if_player_sees( pos, m_bad, _( "The %1$s's %2$s is destroyed!" ), name, parts[ p ].name() );
+        if (part_flag(p, "TOW_CABLE")) {
+            // Tow cables - remove it in one piece, remove remote part, and remove towing data
+            add_msg_if_player_sees(pos, m_bad, _("The %1$s's %2$s is disconnected!"), name,
+                parts[p].name());
+            invalidate_towing(true);
+        }
+        else if (part_flag(p, "POWER_TRANSFER")) {
+            // Electrical cables - remove it in one piece and remove remote part
+            add_msg_if_player_sees(pos, m_bad, _("The %1$s's %2$s is disconnected!"), name,
+                parts[p].name());
+            item part_as_item = parts[p].properties_to_item();
+            here.add_item_or_charges(pos, part_as_item);
+            remove_remote_part(p);
+        }
+        else {
+            //Just break it off
+            add_msg_if_player_sees(pos, m_bad, _("The %1$s's %2$s is destroyed!"), name, parts[p].name());
 
-        scatter_parts( parts[p] );
+            scatter_parts(parts[p]);
+        }
         const point position = parts[p].mount;
         remove_part( p, *handler_ptr );
 
@@ -6997,9 +7055,17 @@ int vehicle::break_off( map &here, int p, int dmg )
                     }
                 }
                 if( remove ) {
-                    item part_as_item = parts[part].properties_to_item();
-                    here.add_item_or_charges( pos, part_as_item );
-                    remove_part( part, *handler_ptr );
+                    if (part_flag(part, "TOW_CABLE")) {
+                        invalidate_towing(true);
+                    }
+                    else {
+                        if (part_flag(p, "POWER_TRANSFER")) {
+                            remove_remote_part(part);
+                        }
+                        item part_as_item = parts[part].properties_to_item();
+                        here.add_item_or_charges(pos, part_as_item);
+                        remove_part(part, *handler_ptr);
+                    }
                 }
             }
         }
@@ -7090,8 +7156,6 @@ int vehicle::damage_direct( map &here, int p, int dmg, damage_type type )
     if( parts[p].is_fuel_store() ) {
         explode_fuel( p, type );
     } else if( parts[ p ].is_broken() && part_flag( p, "UNMOUNT_ON_DAMAGE" ) ) {
-        here.spawn_item( global_part_pos3( p ), part_info( p ).base_item, 1, 0, calendar::turn,
-                         part_info( p ).base_item.obj().damage_max() - 1 );
         monster *mon = get_monster( p );
         if( mon != nullptr && mon->has_effect( effect_harnessed ) ) {
             mon->remove_effect( effect_harnessed );
@@ -7099,6 +7163,19 @@ int vehicle::damage_direct( map &here, int p, int dmg, damage_type type )
         if( part_flag( p, "TOW_CABLE" ) ) {
             invalidate_towing( true );
         } else {
+            item part_as_item = parts[p].properties_to_item();
+            add_msg_if_player_sees(global_part_pos3(p), m_bad, _("The %1$s's %2$s is disconnected!"), name,
+                parts[p].name());
+            if (part_flag(p, "POWER_TRANSFER")) {
+                remove_remote_part(p);
+                part_as_item.set_damage(0);
+            }
+            else {
+                part_as_item.set_damage(part_info(p).base_item.obj().damage_max() - 1);
+            }
+            if (!magic && !part_as_item.has_flag(flag_AUTO_DELETE_CABLE)) {
+                here.add_item_or_charges(global_part_pos3(p), part_as_item);
+            }
             if( !g || &get_map() != &here ) {
                 MapgenRemovePartHandler handler( here );
                 remove_part( p, handler );

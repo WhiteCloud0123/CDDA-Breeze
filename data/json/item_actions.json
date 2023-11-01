@@ -312,18 +312,8 @@
   },
   {
     "type": "item_action",
-    "id": "CABLE_ATTACH",
-    "name": { "str": "Attach" }
-  },
-  {
-    "type": "item_action",
-    "id": "CORD_ATTACH",
-    "name": { "str": "Attach" }
-  },
-  {
-    "type": "item_action",
-    "id": "TOW_ATTACH",
-    "name": { "str": "Attach" }
+    "id": "link_up",
+    "name": { "str": "Attach / Detach" }
   },
   {
     "type": "item_action",

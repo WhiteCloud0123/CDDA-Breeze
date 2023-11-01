@@ -1582,7 +1582,7 @@
     "type": "json_flag"
   },
   {
-    "id": "POWER_CORD",
+    "id": "AUTO_DELETE_CABLE",
     "type": "json_flag"
   },
   {
