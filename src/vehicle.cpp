@@ -5471,9 +5471,6 @@ units::volume vehicle::free_volume( const int part ) const
 void vehicle::make_active( item_location &loc )
 {
     item &target = *loc;
-    if( !target.needs_processing() ) {
-        return;
-    }
     auto cargo_parts = get_parts_at( loc.position(), "CARGO", part_status_flag::any );
     if( cargo_parts.empty() ) {
         return;
@@ -5554,9 +5551,7 @@ cata::optional<vehicle_stack::iterator> vehicle::add_item( int part, const item 
     }
 
     const vehicle_stack::iterator new_pos = p.items.insert( itm_copy );
-    if( itm_copy.needs_processing() ) {
-        active_items.add( *new_pos, p.mount );
-    }
+    active_items.add(*new_pos, p.mount);
 
     invalidate_mass();
     return cata::optional<vehicle_stack::iterator>( new_pos );
@@ -5577,8 +5572,6 @@ vehicle_stack::iterator vehicle::remove_item( int part, const vehicle_stack::con
 {
     cata::colony<item> &veh_items = parts[part].items;
 
-    // remove from the active items cache (if it isn't there does nothing)
-    active_items.remove( &*it );
 
     invalidate_mass();
     return veh_items.erase( it );
@@ -5817,9 +5810,7 @@ void vehicle::refresh_active_item_cache()
         auto it = vp.part().items.begin();
         auto end = vp.part().items.end();
         for( ; it != end; ++it ) {
-            if( it->needs_processing() ) {
-                active_items.add( *it, vp.mount() );
-            }
+            active_items.add(*it, vp.mount());
         }
     }
 }
