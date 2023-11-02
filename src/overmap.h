@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <string_view>
 
 #include "basecamp.h"
 #include "coordinates.h"
@@ -595,7 +596,7 @@ om_special_sectors get_sectors( int sector_width );
 /**
 * Returns the string of oter without any directional suffix
 */
-std::string oter_no_dir( const oter_id &oter );
+std::string_view oter_no_dir(const oter_id& oter);
 
 /**
 * Return 0, 1, 2, 3 respectively if the suffix is _north, _west, _south, _east

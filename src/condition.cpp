@@ -665,19 +665,21 @@ void conditional_t<T>::set_at_om_location( const JsonObject &jo, const std::stri
     condition = [location, is_npc]( const T & d ) {
         const tripoint_abs_omt omt_pos = d.actor( is_npc )->global_omt_location();
         const oter_id &omt_ter = overmap_buffer.ter( omt_pos );
-        const std::string &omt_str = omt_ter.id().c_str();
+        const std::string& omt_str = omt_ter.id().str();
+        std::string location_value = location.evaluate(d);
 
-        if( location.evaluate( d ) == "FACTION_CAMP_ANY" ) {
+        if (location_value == "FACTION_CAMP_ANY") {
             cata::optional<basecamp *> bcp = overmap_buffer.find_camp( omt_pos.xy() );
             if( bcp ) {
                 return true;
             }
             // legacy check
             return omt_str.find( "faction_base_camp" ) != std::string::npos;
-        } else if( location.evaluate( d ) == "FACTION_CAMP_START" ) {
+        }
+        else if (location_value == "FACTION_CAMP_START") {
             return !recipe_group::get_recipes_by_id( "all_faction_base_types", omt_str ).empty();
         } else {
-            return oter_no_dir( omt_ter ) == location.evaluate( d );
+            return oter_no_dir(omt_ter) == location_value;
         }
     };
 }
@@ -693,9 +695,10 @@ void conditional_t<T>::set_near_om_location( const JsonObject &jo, const std::st
         for( const tripoint_abs_omt &curr_pos : points_in_radius( omt_pos,
                 range.evaluate( d ) ) ) {
             const oter_id &omt_ter = overmap_buffer.ter( curr_pos );
-            const std::string &omt_str = omt_ter.id().c_str();
+            const std::string& omt_str = omt_ter.id().str();
+            std::string location_value = location.evaluate(d);
 
-            if( location.evaluate( d ) == "FACTION_CAMP_ANY" ) {
+            if (location_value == "FACTION_CAMP_ANY") {
                 cata::optional<basecamp *> bcp = overmap_buffer.find_camp( curr_pos.xy() );
                 if( bcp ) {
                     return true;
@@ -704,11 +707,12 @@ void conditional_t<T>::set_near_om_location( const JsonObject &jo, const std::st
                 if( omt_str.find( "faction_base_camp" ) != std::string::npos ) {
                     return true;
                 }
-            } else if( location.evaluate( d ) == "FACTION_CAMP_START" &&
+            }
+            else if (location_value == "FACTION_CAMP_START" &&
                        !recipe_group::get_recipes_by_id( "all_faction_base_types", omt_str ).empty() ) {
                 return true;
             } else {
-                if( oter_no_dir( omt_ter ) == location.evaluate( d ) ) {
+                if (oter_no_dir(omt_ter) == location_value) {
                     return true;
                 }
             }
