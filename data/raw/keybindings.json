@@ -1978,6 +1978,12 @@
   },
   {
     "type": "keybinding",
+    "id": "SHOW_HIDE_CONTENTS_ALL",
+    "category": "INVENTORY",
+    "name": "显示/隐藏所有内容物"
+  },
+  {
+    "type": "keybinding",
     "id": "TOGGLE_SKIP_UNSELECTABLE",
     "category": "INVENTORY",
     "name": "Toggle skipping unselectable items"
