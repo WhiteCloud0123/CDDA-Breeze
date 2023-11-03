@@ -524,6 +524,40 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
 
 #endif
 
+void draw_character_picture() {
+
+    std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+    std::string gfx_p_t = gfx_string + "/character_picture/" + character_name_breeze + ".png";
+    character_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+
+    if (character_texture != nullptr) {
+
+        const int& font_width_ref = get_option<int>("FONT_WIDTH");
+        const int& font_height_ref = get_option<int>("FONT_HEIGHT");
+
+        const int& win_beginx = TERMX > FULL_SCREEN_WIDTH ? (TERMX - FULL_SCREEN_WIDTH) / 4 : 0;
+        const int& win_beginy = TERMY > FULL_SCREEN_HEIGHT ? (TERMY - FULL_SCREEN_HEIGHT) / 4 : 0;
+
+        SDL_Rect srcrect;
+        srcrect.x = 0;
+        srcrect.y = 0;
+        srcrect.w = 381;
+        srcrect.h = 522;
+
+
+        SDL_Rect dstrect;
+        dstrect.x = (TERMX - win_beginx) * font_width_ref - 381;
+        dstrect.y = win_beginy * font_height_ref;
+        dstrect.w = 381;
+        dstrect.h = 522;
+
+
+        SDL_RenderCopy(renderer.get(), character_texture, &srcrect, &dstrect);
+
+    }
+
+}
+
 void refresh_display()
 {   
     
@@ -575,37 +609,8 @@ void refresh_display()
 
     if ( character_name_breeze != "") {
 
-        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-        std::string gfx_p_t = gfx_string + "/character_picture/" + character_name_breeze+".png";
-        character_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
-
-        if (character_texture != nullptr) {
+        draw_character_picture();
             
-            SDL_Rect srcrect;
-            srcrect.x = 0;
-            srcrect.y = 0;
-            srcrect.w = 381;
-            srcrect.h = 522;
-
-            
-            SDL_Rect dstrect;
-            dstrect.x = 1000;
-            dstrect.y = 175;
-            dstrect.w = 381;
-            dstrect.h = 522;
-
-#if defined(__ANDROID__)
-            dstrect.x = 1400;
-            dstrect.y = 375;
-#endif
-
-            SDL_RenderCopy(renderer.get(), character_texture, &srcrect, &dstrect);
-            
-        }
-
-        
-        
-
     }
 
     SDL_RenderPresent( renderer.get() );
