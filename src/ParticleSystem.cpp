@@ -2,7 +2,8 @@
 #include <algorithm>
 #include <assert.h>
 #include <string>
-#include "weather.h"
+#include "output.h"
+#include"options.h"
 
 
 
@@ -671,10 +672,8 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
 
 
         setRenderer(renderer);                   // set the renderer
-        setPosition(552, 0);              // set the position
-#if defined(__ANDROID__)
-        setPosition(952, 0);
-#endif
+        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);
@@ -751,10 +750,8 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
     else if (w_t_i_str == "rain") {
 
         setRenderer(renderer);                   // set the renderer
-        setPosition(552, 0);              // set the position
-#if defined(__ANDROID__)
-        setPosition(952, 0);
-#endif
+        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);
@@ -831,10 +828,8 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
     else if (w_t_i_str == "drizzle") {
 
         setRenderer(renderer);                   // set the renderer
-        setPosition(552, 0);              // set the position
-#if defined(__ANDROID__)
-        setPosition(952, 0);
-#endif
+        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);
