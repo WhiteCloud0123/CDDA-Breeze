@@ -4,6 +4,7 @@
 #include <string>
 #include "output.h"
 #include"options.h"
+#include "sdltiles.h"
 
 
 
@@ -673,7 +674,11 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
 
         setRenderer(renderer);                   // set the renderer
         setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+#if defined(__ANDROID__)
 
+        setPosition(WindowWidth * 0.38 , 0);
+
+#endif
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);
@@ -751,7 +756,11 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
 
         setRenderer(renderer);                   // set the renderer
         setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+#if defined(__ANDROID__)
 
+        setPosition(WindowWidth * 0.38, 0);
+
+#endif
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);
@@ -829,7 +838,11 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
 
         setRenderer(renderer);                   // set the renderer
         setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+#if defined(__ANDROID__)
 
+        setPosition(WindowWidth * 0.38, 0);
+
+#endif
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);

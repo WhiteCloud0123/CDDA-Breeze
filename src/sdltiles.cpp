@@ -127,7 +127,7 @@ static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
 ParticleSystem particle_system;
-SDL_Texture* character_texture;
+SDL_Texture* character_texture  =  nullptr;
 
 
 
@@ -139,8 +139,8 @@ static GeometryRenderer_Ptr geometry;
 #if defined(__ANDROID__)
 static SDL_Texture_Ptr touch_joystick;
 #endif
-static int WindowWidth;        //Width of the actual window, not the curses window
-static int WindowHeight;       //Height of the actual window, not the curses window
+int WindowWidth;        //Width of the actual window, not the curses window
+int WindowHeight;       //Height of the actual window, not the curses window
 // input from various input sources. Each input source sets the type and
 // the actual input value (key pressed, mouse button clicked, ...)
 // This value is finally returned by input_manager::get_input_event.
@@ -528,8 +528,13 @@ void draw_character_picture() {
 
     std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
     std::string gfx_p_t = gfx_string + "/character_picture/" + character_name_breeze + ".png";
-    character_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+    
+    if (character_texture == nullptr) {
 
+        character_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+    
+    }
+    
     if (character_texture != nullptr) {
 
         const int& font_width_ref = get_option<int>("FONT_WIDTH");
@@ -551,6 +556,13 @@ void draw_character_picture() {
         dstrect.w = 381;
         dstrect.h = 522;
 
+#if defined(__ANDROID__)
+       
+        dstrect.x = WindowWidth - win_beginx * font_width_ref - 381 - visible_display_frame.x * 2;
+        dstrect.y = win_beginy * font_height_ref * 2;
+
+#endif
+        
 
         SDL_RenderCopy(renderer.get(), character_texture, &srcrect, &dstrect);
 

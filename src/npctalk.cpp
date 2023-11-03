@@ -1051,6 +1051,8 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
 
         // 重新将名字重置
         character_name_breeze = "";
+        // 将texture重置
+        character_texture = nullptr;
     
     }
     
