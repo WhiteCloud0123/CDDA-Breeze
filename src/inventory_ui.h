@@ -125,7 +125,7 @@ class inventory_entry
         /**
         *  Whether it is hidden in inventory screen.
         * */
-        bool is_hidden() const;
+        bool is_hidden(cata::optional<bool> const& hide_entries_override) const;
 
         /** Whether the entry can be selected */
         bool is_selectable() const {
@@ -450,6 +450,8 @@ class inventory_column
         /** Toggle being able to highlight unselectable entries*/
         void toggle_skip_unselectable( bool skip );
 
+        void cycle_hide_override();
+
     protected:
         struct entry_cell_cache_t {
             bool assigned = false;
@@ -526,6 +528,7 @@ class inventory_column
         mutable std::vector<entry_cell_cache_t> entries_cell_cache;
 
         cata::optional<bool> indent_entries_override = cata::nullopt;
+        cata::optional<bool> hide_entries_override = cata::nullopt;
         /** @return Number of visible cells */
         size_t visible_cells() const;
         void _get_entries( get_entries_t *res, entries_t const &ent,
