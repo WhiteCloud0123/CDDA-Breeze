@@ -1400,6 +1400,8 @@ void inventory_column::collate()
             if (e->is_item() && e->get_category_ptr() == outer->get_category_ptr() &&
                 e->any_item()->is_favorite == outer->any_item()->is_favorite &&
                 e->any_item()->typeId() == outer->any_item()->typeId() &&
+                e->any_item()->contents_linked == outer->any_item()->contents_linked &&
+                !!e->any_item()->link == !!outer->any_item()->link &&
                 (!indent_entries() ||
                     e->any_item().parent_item() == outer->any_item().parent_item()) &&
                 (e->is_collation_header() || !e->chevron) &&
@@ -1705,9 +1707,13 @@ void inventory_column::draw( const catacurses::window &win, const point &p,
 
                 const std::string &hl_option = get_option<std::string>( "INVENTORY_HIGHLIGHT" );
                 if( cell_index == 0 && entry.chevron ) {
-                    nc_color const col = entry.is_collation_header() ? c_light_blue : c_dark_gray;
+                    bool const hide_override = hide_entries_override && entry.any_item()->is_container();
+                    nc_color const col = entry.is_collation_header() ? c_light_blue : hide_override ?
+                        *hide_entries_override ? c_red : c_green : c_dark_gray;
+                    bool const stat = entry.is_collation_entry() ||
+                        !hide_override ? entry.collapsed : *hide_entries_override;
                     trim_and_print(win, point(text_x - 1, yy), 1, col,
-                                    entry.collapsed ? "▶" : "▼" );
+                                    stat ? "▶" : "▼" );
                 }
                 if( entry.is_item() && ( selected || !entry.is_selectable() ) ) {
                     trim_and_print( win, point( text_x, yy ), text_width, selected ? h_white : c_dark_gray,
