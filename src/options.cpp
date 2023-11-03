@@ -2016,7 +2016,7 @@ void options_manager::add_options_graphics()
 
     add("显示独立角色的立绘", "graphics", to_translation("显示独立角色的立绘"),
         to_translation("开启后，在与独立角色进行交谈时，将显示该角色的立绘。"),
-        false
+        true
     );
 
     add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
