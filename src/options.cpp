@@ -2014,12 +2014,15 @@ void options_manager::add_options_graphics()
         graphics_page_.items_.emplace_back();
     };
 
+    add("显示独立角色的立绘", "graphics", to_translation("显示独立角色的立绘"),
+        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的立绘。"),
+        true
+    );
+
     add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
         to_translation("目前是测试阶段。开启后，将在游戏的一些地方应用粒子特效,同时提高游戏画面的刷新频率。目前已在 细雨、雨、雪 这三种天气上应用。"),
         false
     );
-
-
 
     add( "ANIMATIONS", "graphics", to_translation( "Animations" ),
          to_translation( "If true, will display enabled animations." ),
