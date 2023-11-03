@@ -40,11 +40,13 @@ extern std::shared_ptr<cata_tiles> closetilecontext;
 extern std::shared_ptr<cata_tiles> fartilecontext;
 extern std::unique_ptr<cata_tiles> overmap_tilecontext;
 extern std::array<SDL_Color, color_loader<SDL_Color>::COLOR_NAMES_COUNT> windowsPalette;
+extern int WindowWidth;
+extern int WindowHeight;
 extern int fontheight;
 extern int fontwidth;
 
 extern std::string character_name_breeze;
-
+extern SDL_Texture* character_texture;
 
 
 
