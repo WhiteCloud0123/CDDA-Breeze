@@ -823,7 +823,7 @@ item_location item_location::parent_item() const
     if( where() == type::container ) {
         return ptr->parent_item();
     }
-    debugmsg( "this item location type has no parent" );
+
     return item_location::nowhere;
 }
 
