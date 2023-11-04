@@ -5,6 +5,7 @@
     "name_suffix": "Cyborg",
     "class": "NC_EXODII_TYPE_1_Merchant",
     "name_unique": "Rubik",
+    "gender": "female",
     "attitude": 0,
     "mission": 3,
     "chat": "TALK_EXODII_MERCHANT",
