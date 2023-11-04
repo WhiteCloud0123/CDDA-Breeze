@@ -128,13 +128,6 @@ std::vector<advanced_inv_listitem> outfit::get_AIM_inventory( size_t &item_index
         const advanced_inventory_pane &pane, advanced_inv_area &square )
 {
     std::vector<advanced_inv_listitem> items;
-
-    if (worn.empty()) {
-
-        return items;
-    
-    }
-
     for( item &worn_item : worn ) {
         if( worn_item.empty() || worn_item.has_flag( flag_NO_UNLOAD ) ) {
             continue;
