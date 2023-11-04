@@ -2014,8 +2014,8 @@ void options_manager::add_options_graphics()
         graphics_page_.items_.emplace_back();
     };
 
-    add("显示独立角色的立绘", "graphics", to_translation("显示独立角色的立绘"),
-        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的立绘。"),
+    add("显示独立角色的图片", "graphics", to_translation("显示独立角色的图片"),
+        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的图片。"),
         true
     );
 
