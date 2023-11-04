@@ -620,7 +620,7 @@ void refresh_display()
     }
 
     if ( character_name_breeze != "") {
-        if (get_option<bool>("显示独立角色的立绘")) {
+        if (get_option<bool>("显示独立角色的图片")) {
             
             draw_character_picture();
 
