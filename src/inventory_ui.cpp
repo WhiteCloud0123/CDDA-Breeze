@@ -594,6 +594,13 @@ const item_category *inventory_entry::get_category_ptr() const
     return &any_item()->get_category_of_contents();
 }
 
+inventory_column::inventory_column(const inventory_selector_preset& preset) :
+    preset(preset)
+{
+    hide_entries_override = uistate.hide_entries_override;
+    cells.resize(preset.get_cells_count());
+}
+
 bool inventory_column::activatable() const
 {
     return std::any_of( entries.begin(), entries.end(), [this]( const inventory_entry & e ) {
@@ -649,6 +656,7 @@ void inventory_column::cycle_hide_override()
     else {
         hide_entries_override = false;
     }
+    uistate.hide_entries_override = hide_entries_override;
 }
 
 void inventory_column::toggle_skip_unselectable( const bool skip )
