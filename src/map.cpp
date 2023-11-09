@@ -149,7 +149,10 @@ static const trait_id trait_SCHIZOPHRENIC( "SCHIZOPHRENIC" );
 
 static const trap_str_id tr_unfinished_construction( "tr_unfinished_construction" );
 
-
+bool has_processed_conveyor_belt = false;
+std::set<item*> processed_conveyor_belt_item_set;
+std::set<Creature*>processed_conveyor_belt_creature_set;
+std::set<tripoint> processed_conveyor_belt_tripoint_set;
 
 #define dbg(x) DebugLog((x),D_MAP) << __FILE__ << ":" << __LINE__ << ": "
 
@@ -2829,6 +2832,94 @@ void map::process_falling()
             drop_everything( p );
         }
     }
+}
+
+void map::process_conveyor_belt() {
+
+    creature_tracker& c_t = get_creature_tracker();
+    tripoint new_p;
+    Creature* c;
+    Creature* c_new_p;
+    //points_in_radius(get_player_character().pos(), 30)
+    for (const tripoint& t: points_in_radius(get_player_character().pos(), 30)) {
+        
+            
+        if (has_flag_furn("CONVEYOR_BELT_EAST", t)) {
+            
+            new_p = t;
+            new_p.x++;
+
+        }
+        else if (has_flag_furn("CONVEYOR_BELT_WEST", t)) {
+            
+            new_p = t;
+            new_p.x--;
+        
+        }
+        else if (has_flag_furn("CONVEYOR_BELT_SOUTH", t)) {
+
+            new_p = t;
+            new_p.y++;
+
+        }
+        else if (has_flag_furn("CONVEYOR_BELT_NORTH", t)) {
+
+            new_p = t;
+            new_p.y--;
+
+        }
+        else {
+        
+            continue;
+        
+        }
+
+            
+
+ 
+            // 先处理物品
+            for (item &i : i_at(t)) {
+                
+                if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {                   
+                        
+                    if (&i!=nullptr) {
+                        processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
+                        item_location(map_cursor(t), &i).remove_item();
+                    }
+ 
+                        
+                        
+                    
+                    
+                    
+                }
+
+                                
+            }
+
+            // 再处理生物
+            c = c_t.creature_at(t);
+            if (c != nullptr && processed_conveyor_belt_creature_set.find(c)==processed_conveyor_belt_creature_set.end()) {
+
+                c_new_p = c_t.creature_at(new_p);
+                if (c_new_p==nullptr) {
+
+                    
+                    
+                    c->setpos(new_p);
+                    processed_conveyor_belt_creature_set.insert(c);
+                    
+                
+                }
+            
+            }
+       
+    }
+
+    
+    processed_conveyor_belt_item_set.clear();
+    processed_conveyor_belt_creature_set.clear();
+
 }
 
 bool map::has_flag( const std::string &flag, const tripoint &p ) const

@@ -1,0 +1,21 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [ "UNDEAD_PEOPLE_BASE", "UNDEAD_PEOPLE", "MshockRealXotto", "MSX++DEAD_PEOPLE", "MshockXottoplus" ],
+    "tiles-new": [
+      {
+        "file": "gfx_new/new_test.png",
+        "tiles": [
+          { "id": "f_conveyor_belt_east", "fg": 1 },
+          { "id": "f_conveyor_belt_west", "fg": 2 },
+          { "id": "f_conveyor_belt_south", "fg": 3 },
+          { "id": "f_conveyor_belt_north", "fg": 4 }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  }
+]

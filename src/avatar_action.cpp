@@ -508,6 +508,14 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
         return true;
     }
 
+    if (veh1->is_appliance()) {
+
+        add_msg(m_good,_("测试信息，它是电器"));
+        you.setpos(dest_loc);
+        return true;
+    
+    }
+
     if( m.furn( dest_loc ) != f_safe_c && m.open_door( you, dest_loc, !m.is_outside( you.pos() ) ) ) {
         you.moves -= 100;
         if( veh1 != nullptr ) {

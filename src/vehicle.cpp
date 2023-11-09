@@ -1443,10 +1443,6 @@ bool vehicle::is_connected( const vehicle_part &to, const vehicle_part &from,
     return false;
 }
 
-bool vehicle::is_appliance() const
-{
-    return has_tag( flag_APPLIANCE );
-}
 
 /**
  * Installs a part into this vehicle.

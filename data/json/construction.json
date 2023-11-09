@@ -7158,5 +7158,53 @@
     "pre_special": "check_empty",
     "post_terrain": "f_chair_white",
     "activity_level": "LIGHT_EXERCISE"
+  },
+  {
+    "type": "construction",
+    "id": "建造定向传送带-东",
+    "group": "建造定向传送带_东_组",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 1 ] ],
+    "time": "30 m",
+    "qualities": [ [ { "id": "HAMMER", "level": 2 } ], [ { "id": "SAW_W", "level": 1 } ] ],
+    "components": [ [ [ "2x4", 4 ] ], [ [ "wood_sheet", 1 ], [ "wood_panel", 1 ] ], [ [ "nail", 8 ] ] ],
+    "pre_special": "check_empty",
+    "post_terrain": "f_conveyor_belt_east"
+  },
+  {
+    "type": "construction",
+    "id": "建造定向传送带-西",
+    "group": "建造定向传送带_西_组",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 1 ] ],
+    "time": "30 m",
+    "qualities": [ [ { "id": "HAMMER", "level": 2 } ], [ { "id": "SAW_W", "level": 1 } ] ],
+    "components": [ [ [ "2x4", 4 ] ], [ [ "wood_sheet", 1 ], [ "wood_panel", 1 ] ], [ [ "nail", 8 ] ] ],
+    "pre_special": "check_empty",
+    "post_terrain": "f_conveyor_belt_west"
+  },
+  {
+    "type": "construction",
+    "id": "建造定向传送带-南",
+    "group": "建造定向传送带_南_组",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 1 ] ],
+    "time": "30 m",
+    "qualities": [ [ { "id": "HAMMER", "level": 2 } ], [ { "id": "SAW_W", "level": 1 } ] ],
+    "components": [ [ [ "2x4", 4 ] ], [ [ "wood_sheet", 1 ], [ "wood_panel", 1 ] ], [ [ "nail", 8 ] ] ],
+    "pre_special": "check_empty",
+    "post_terrain": "f_conveyor_belt_south"
+  },
+  {
+    "type": "construction",
+    "id": "建造定向传送带-北",
+    "group": "建造定向传送带_北_组",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 1 ] ],
+    "time": "30 m",
+    "qualities": [ [ { "id": "HAMMER", "level": 2 } ], [ { "id": "SAW_W", "level": 1 } ] ],
+    "components": [ [ [ "2x4", 4 ] ], [ [ "wood_sheet", 1 ], [ "wood_panel", 1 ] ], [ [ "nail", 8 ] ] ],
+    "pre_special": "check_empty",
+    "post_terrain": "f_conveyor_belt_north"
   }
 ]

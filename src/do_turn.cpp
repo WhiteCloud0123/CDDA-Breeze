@@ -1119,9 +1119,11 @@ bool do_turn()
     m.build_floor_caches();
 
     m.process_falling();
+    m.process_conveyor_belt();
     m.vehmove();
     m.process_fields();
     m.process_items();
+    
     explosion_handler::process_explosions();
     m.creature_in_field( u );
 
