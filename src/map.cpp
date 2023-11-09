@@ -2185,13 +2185,23 @@ std::string map::features( const tripoint &p ) const
 int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, const field &field,
                              const vehicle *veh,
                              const int vpart ) const
-{
+{   
     if( terrain.movecost == 0 || ( furniture.id && furniture.movecost < 0 ) ||
         field.total_move_cost() < 0 ) {
         return 0;
     }
 
     if( veh != nullptr ) {
+
+
+        if (veh->is_appliance() && veh->part(0).info().has_flag("CONVEYOR_BELT_EAST")) {
+
+            return std::max(terrain.movecost + field.total_move_cost(), 0);
+
+        }
+
+
+
         const vpart_position vp( const_cast<vehicle &>( *veh ), vpart );
         if( vp.obstacle_at_part() ) {
             return 0;
@@ -2840,29 +2850,60 @@ void map::process_conveyor_belt() {
     tripoint new_p;
     Creature* c;
     Creature* c_new_p;
+    vehicle* appliance;
+    vehicle_part* part;
+    
     //points_in_radius(get_player_character().pos(), 30)
     for (const tripoint& t: points_in_radius(get_player_character().pos(), 30)) {
         
-            
-        if (has_flag_furn("CONVEYOR_BELT_EAST", t)) {
+        const optional_vpart_position vp_there = veh_at(t);
+
+        if (!vp_there) {
+
+            continue;
+        
+        }
+
+        appliance = &(vp_there->vehicle());
+        if (appliance != nullptr) {
+
+            part = & (appliance->part(0) );
+        
+        }
+        else {
+        
+            continue;
+        
+        }
+
+        if (part->enabled == false) {
+
+            continue;
+
+        
+        }
+
+
+
+        if (part->info().has_flag("CONVEYOR_BELT_EAST")) {
             
             new_p = t;
             new_p.x++;
 
         }
-        else if (has_flag_furn("CONVEYOR_BELT_WEST", t)) {
+        else if (part->info().has_flag("CONVEYOR_BELT_WEST")) {
             
             new_p = t;
             new_p.x--;
         
         }
-        else if (has_flag_furn("CONVEYOR_BELT_SOUTH", t)) {
+        else if (part->info().has_flag("CONVEYOR_BELT_SOUTH")) {
 
             new_p = t;
             new_p.y++;
 
         }
-        else if (has_flag_furn("CONVEYOR_BELT_NORTH", t)) {
+        else if (part->info().has_flag("CONVEYOR_BELT_NORTH")) {
 
             new_p = t;
             new_p.y--;

@@ -1501,7 +1501,8 @@ int vehicle::install_part( const point &dp, const vehicle_part &new_part )
                 "COOLER",
                 "WATER_PURIFIER",
                 "ROCKWHEEL",
-                "ROADHEAD"
+                "ROADHEAD",
+                "CONVEYOR_BELT"
             }
         };
 

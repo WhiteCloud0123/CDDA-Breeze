@@ -628,5 +628,9 @@
   {
     "id": "CONVEYOR_BELT_EAST",
     "type": "json_flag"
+  },
+  {
+    "id": "CONVEYOR_BELT",
+    "type": "json_flag"
   }
 ]

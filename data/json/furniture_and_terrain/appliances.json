@@ -935,5 +935,29 @@
       { "item": "lead", "charges": [ 12, 18 ] }
     ],
     "damage_reduction": { "all": 80 }
+  },
+  {
+    "id": "电器-定向传送带-东",
+    "type": "vehicle_part",
+    "name": { "str": "定向传送带-东" },
+    "item": "定向传送带_东_GENERIC",
+    "symbol": "*",
+    "broken_symbol": "-",
+    "categories": [ "lighting" ],
+    "color": "white",
+    "broken_color": "blue",
+    "durability": 20,
+    "description": "定向传送带-东",
+    "epower": -20,
+    "bonus": 200,
+    "damage_modifier": 10,
+    "looks_like": "f_conveyor_belt_east",
+    "breaks_into": [
+      { "item": "cable", "charges": [ 1, 4 ] },
+      { "item": "steel_chunk", "count": [ 0, 2 ] },
+      { "item": "scrap", "count": [ 1, 2 ] }
+    ],
+    "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CONVEYOR_BELT_EAST", "CONVEYOR_BELT" ],
+    "requirements": { "removal": { "time": "6 m" } }
   }
 ]

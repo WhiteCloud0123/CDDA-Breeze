@@ -322,5 +322,22 @@
     "symbol": "O",
     "color": "green_white",
     "flags": [ "LEAK_DAM", "NO_SALVAGE" ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "定向传送带_东_GENERIC",
+    "name": { "str": "定向传送带-东" },
+    "description": "尚未安装的定向传送带。",
+    "weight": "2500 g",
+    "to_hit": -1,
+    "material": [ "plastic", "steel" ],
+    "volume": "2 L",
+    "longest_side": "170 cm",
+    "bashing": 5,
+    "price": 9000,
+    "price_postapoc": 500,
+    "symbol": "L",
+    "color": "white",
+    "looks_like": "f_floor_lamp"
   }
 ]

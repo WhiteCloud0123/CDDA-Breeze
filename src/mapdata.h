@@ -310,7 +310,6 @@ enum class ter_furn_flag : int {
     TFLAG_CONVEYOR_BELT_SOUTH,
     TFLAG_CONVEYOR_BELT_WEST,
     TFLAG_CONVEYOR_BELT_EAST,
-
     NUM_TFLAG_FLAGS
 };
 

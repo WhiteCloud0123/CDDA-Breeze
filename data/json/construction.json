@@ -7206,5 +7206,17 @@
     "components": [ [ [ "2x4", 4 ] ], [ [ "wood_sheet", 1 ], [ "wood_panel", 1 ] ], [ [ "nail", 8 ] ] ],
     "pre_special": "check_empty",
     "post_terrain": "f_conveyor_belt_north"
+  },
+  {
+    "type": "construction",
+    "id": "安装定向传送带-东",
+    "group": "安装定向传送带_东_组",
+    "category": "APPLIANCE",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "5 s",
+    "components": [ [ [ "定向传送带_东_GENERIC", 1 ] ] ],
+    "pre_special": "check_empty",
+    "post_special": "done_appliance",
+    "activity_level": "NO_EXERCISE"
   }
 ]
