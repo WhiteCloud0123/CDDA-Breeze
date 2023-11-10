@@ -1641,7 +1641,7 @@ class vehicle
          */
         cata::optional<vehicle_stack::iterator> add_item( int part, const item &itm );
 
-        // 这个函数专门为了获取创建的item copy的引用
+        // 这个函数专门为了获取引用
         item& add_item_new(int part, const item& itm);
 
         /** Like the above */
