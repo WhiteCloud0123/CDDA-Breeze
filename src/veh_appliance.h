@@ -140,6 +140,9 @@ class veh_app_interact
          * any used cable items on the ground.
         */
         void unplug();
+
+        void set_conveyor_belt_direction();
+
         /**
          * The main loop of the appliance UI. Redraws windows, checks for input, and
          * performs selected actions. The loop exits once an activity is assigned

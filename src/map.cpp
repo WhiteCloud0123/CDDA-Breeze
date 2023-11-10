@@ -2877,25 +2877,25 @@ void map::process_conveyor_belt() {
 
 
 
-        if (part->info().has_flag("CONVEYOR_BELT_EAST")) {
+        if (appliance->conveyor_belt_direction=="向东运输") {
             
             new_p = t;
             new_p.x++;
 
         }
-        else if (part->info().has_flag("CONVEYOR_BELT_WEST")) {
+        else if (appliance->conveyor_belt_direction == "向西运输") {
             
             new_p = t;
             new_p.x--;
         
         }
-        else if (part->info().has_flag("CONVEYOR_BELT_SOUTH")) {
+        else if (appliance->conveyor_belt_direction == "向南运输") {
 
             new_p = t;
             new_p.y++;
 
         }
-        else if (part->info().has_flag("CONVEYOR_BELT_NORTH")) {
+        else if (appliance->conveyor_belt_direction == "向北运输") {
 
             new_p = t;
             new_p.y--;

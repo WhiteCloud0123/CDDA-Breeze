@@ -3567,6 +3567,38 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                 const bool ret =
                     draw_from_id_string( vpname, TILE_CATEGORY::VEHICLE_PART, empty_string, p,
                                          subtile, rotation, ll, nv_goggles_activated, height_3d_temp );
+                
+                
+                if (veh.conveyor_belt_direction!="") {
+
+
+                    if (veh.conveyor_belt_direction =="向东运输") {
+
+                        draw_from_id_string("f_conveyor_belt_east", TILE_CATEGORY::VEHICLE_PART, empty_string, p,
+                            subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+                    
+                    }else if (veh.conveyor_belt_direction == "向西运输") {
+
+                        draw_from_id_string("f_conveyor_belt_west", TILE_CATEGORY::VEHICLE_PART, empty_string, p,
+                            subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+
+                    }
+                    else if (veh.conveyor_belt_direction == "向南运输") {
+
+                        draw_from_id_string("f_conveyor_belt_south", TILE_CATEGORY::VEHICLE_PART, empty_string, p,
+                            subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+
+                    }
+                    else  {
+
+                        draw_from_id_string("f_conveyor_belt_north", TILE_CATEGORY::VEHICLE_PART, empty_string, p,
+                            subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+
+                    }
+                
+                }
+
+
                 if( !roof ) {
                     height_3d = height_3d_temp;
                 }
@@ -3585,18 +3617,19 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                     }
                     else {
 
-                        if (veh.get_items(cargopart->part_index()).size() > 1) {
+                        if (v_s_ref.size() > 1) {
 
                             draw_item_highlight(p);
-                            draw_from_id_string(v_s_ref.end()->type->get_id().str(), TILE_CATEGORY::ITEM, empty_string, p,
+                            draw_from_id_string(v_s_ref.begin()->type->get_id().str(), TILE_CATEGORY::ITEM, empty_string, p,
                                 subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
 
                         }
-                        else {
+                        else if(v_s_ref.size()==1) {
 
-                            draw_from_id_string(v_s_ref.end()->type->get_id().str(), TILE_CATEGORY::ITEM, empty_string, p,
-                                subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
-                        
+                            
+                                draw_from_id_string(v_s_ref.begin()->type->get_id().str(), TILE_CATEGORY::ITEM, empty_string, p,
+                                    subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+                                                      
                         }
                     }
                     
