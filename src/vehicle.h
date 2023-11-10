@@ -2173,6 +2173,8 @@ class vehicle
 
         bool is_AUTOPILOT_fly = false;
 
+        std::string conveyor_belt_direction = "";
+
         bool is_on_ramp = false;
         // vehicle being driven by player/npc automatically
         bool is_autodriving = false;

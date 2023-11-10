@@ -23,6 +23,7 @@
 #include "trade_ui.h"
 #include "type_id.h"
 #include "units.h"
+#include "sdltiles.h"
 
 static const flag_id json_flag_NO_UNWIELD( "NO_UNWIELD" );
 static const skill_id skill_speech( "speech" );
@@ -276,7 +277,10 @@ void npc_trading::update_npc_owed( npc &np, int your_balance, int your_sale_valu
 // NPC
 // cost is positive when the player owes the NPC money for a service to be performed
 bool npc_trading::trade( npc &np, int cost, const std::string &deal )
-{
+{   
+    
+    is_in_trading = true;
+
     np.shop_restock();
     //np.drop_items( np.weight_carried() - np.weight_capacity(),
     //               np.volume_carried() - np.volume_capacity() );
@@ -331,6 +335,8 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
             player_character.practice( skill_speech, trade_result.value_you / 10000 );
         }
     }
+
+    is_in_trading = false;
     return trade_result.traded ;
 }
 

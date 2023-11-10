@@ -121,6 +121,7 @@ veh_app_interact::veh_app_interact( vehicle &veh, const point &p )
     ctxt.register_action( "RENAME" );
     ctxt.register_action( "REMOVE" );
     ctxt.register_action( "UNPLUG" );
+    ctxt.register_action("SET_CONVEYOR_BELT_DIRECTION");
 }
 
 // @returns true if a battery part exists on any vehicle connected to veh
@@ -303,6 +304,62 @@ bool veh_app_interact::can_unplug()
         return ref.vehicle().part_flag( static_cast<int>( ref.part_index() ), "POWER_TRANSFER" );
     } );
 }
+
+void veh_app_interact::set_conveyor_belt_direction() {
+
+
+    enum choices {
+
+        向东运输 = 0,
+        向西运输,
+        向南运输,
+        向北运输
+
+    };
+
+
+    uilist menu_01;
+
+    menu_01.text = "请选择运输的方向";
+
+    menu_01.addentry(向东运输,true,'1',_("向东运输"));
+
+    menu_01.addentry(向西运输, true, '2', _("向西运输"));
+
+    menu_01.addentry(向南运输, true, '3', _("向南运输"));
+
+    menu_01.addentry(向北运输, true, '4', _("向北运输"));
+
+    menu_01.query();
+    
+    int choice = menu_01.ret;
+
+    if (choice == 向东运输) {
+
+        veh->conveyor_belt_direction = "向东运输";
+   
+    }
+    else if (choice == 向西运输) {
+
+        veh->conveyor_belt_direction = "向西运输";
+   
+    }
+    else if (choice == 向南运输) {
+
+        veh->conveyor_belt_direction = "向南运输";
+    
+    }
+    else if(choice == 向北运输) {
+
+        veh->conveyor_belt_direction = "向北运输";
+    
+    }
+
+
+}
+
+
+
 
 // Helper function for selecting a part in the parts list.
 // If only one part is available, don't prompt the player.
@@ -549,6 +606,18 @@ void veh_app_interact::populate_app_actions()
     } );
     imenu.addentry( -1, can_unplug(), ctxt.keys_bound_to( "UNPLUG" ).front(),
                     ctxt.get_action_name( "UNPLUG" ) );
+
+    if (veh->is_appliance() && veh->part(0).info().has_flag("CONVEYOR_BELT")) {
+        
+        app_actions.emplace_back([this]() {
+            set_conveyor_belt_direction();
+            });
+        imenu.addentry(-1, true, 'S',
+            "设置运输方向");
+    }
+
+
+
 
     /*************** Get part-specific actions ***************/
     veh_menu menu( veh, "IF YOU SEE THIS IT IS A BUG" );

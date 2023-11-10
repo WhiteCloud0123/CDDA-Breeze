@@ -155,6 +155,7 @@ static bool fullscreen;
 static int scaling_factor;
 
 std::string character_name_breeze = "";
+bool is_in_trading = false;
 
 using cata_cursesport::curseline;
 using cata_cursesport::cursecell;
@@ -620,7 +621,7 @@ void refresh_display()
     }
 
     if ( character_name_breeze != "") {
-        if (get_option<bool>("显示独立角色的图片")) {
+        if (get_option<bool>("显示独立角色的图片") && is_in_trading ==false) {
             
             draw_character_picture();
 

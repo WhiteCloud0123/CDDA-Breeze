@@ -164,12 +164,7 @@
   {
     "type": "item_group",
     "id": "EXODII_other_extra_01_breeze",
-    "items": [
-      [ "定向传送带_东_GENERIC", 10 ],
-      [ "定向传送带_西_GENERIC", 10 ],
-      [ "定向传送带_南_GENERIC", 10 ],
-      [ "定向传送带_北_GENERIC", 10 ]
-    ]
+    "items": [ [ "运输器_GENERIC", 10 ] ]
   },
   {
     "type": "item_group",
