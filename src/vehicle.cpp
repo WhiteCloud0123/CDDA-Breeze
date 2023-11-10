@@ -5558,6 +5558,56 @@ cata::optional<vehicle_stack::iterator> vehicle::add_item( int part, const item 
     return cata::optional<vehicle_stack::iterator>( new_pos );
 }
 
+item& vehicle::add_item_new(int part, const item& itm) {
+
+
+    if (part < 0 || part >= static_cast<int>(parts.size())) {
+        debugmsg("int part (%d) is out of range", part);
+        return null_item_reference();
+    }
+    // const int max_weight = ?! // TODO: weight limit, calculation per vpart & vehicle stats, not a hard user limit.
+    // add creaking sounds and damage to overloaded vpart, outright break it past a certain point, or when hitting bumps etc
+    vehicle_part& p = parts[part];
+    if (p.is_broken()) {
+        return null_item_reference();
+    }
+
+    if (p.base.is_gun()) {
+        if (!itm.is_ammo() || !p.base.ammo_types().count(itm.ammo_type())) {
+            return null_item_reference();
+        }
+    }
+    bool charge = itm.count_by_charges();
+    vehicle_stack istack = get_items(part);
+    const int to_move = istack.amount_can_fit(itm);
+    if (to_move == 0 || (charge && to_move < itm.charges)) {
+        return null_item_reference(); // @add_charges should be used in the latter case
+    }
+    if (charge) {
+        item* here = istack.stacks_with(itm);
+        if (here) {
+            invalidate_mass();
+            if (!here->merge_charges(itm)) {
+                return null_item_reference();
+            }
+            else {
+                return *istack.get_iterator_from_pointer(here);
+            }
+        }
+    }
+
+    item itm_copy = itm;
+
+    const vehicle_stack::iterator new_pos = p.items.insert(itm_copy);
+    active_items.add(*new_pos, p.mount);
+
+    invalidate_mass();
+    return *new_pos;
+
+   
+
+}
+
 bool vehicle::remove_item( int part, item *it )
 {
     const cata::colony<item> &veh_items = parts[part].items;

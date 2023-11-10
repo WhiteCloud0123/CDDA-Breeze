@@ -2192,16 +2192,6 @@ int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, cons
     }
 
     if( veh != nullptr ) {
-
-
-        if (veh->is_appliance() && veh->part(0).info().has_flag("CONVEYOR_BELT_EAST")) {
-
-            return std::max(terrain.movecost + field.total_move_cost(), 0);
-
-        }
-
-
-
         const vpart_position vp( const_cast<vehicle &>( *veh ), vpart );
         if( vp.obstacle_at_part() ) {
             return 0;
@@ -2853,17 +2843,19 @@ void map::process_conveyor_belt() {
     vehicle* appliance;
     vehicle_part* part;
     
+    vehicle* appliance_new;
+    
     //points_in_radius(get_player_character().pos(), 30)
     for (const tripoint& t: points_in_radius(get_player_character().pos(), 30)) {
         
-        const optional_vpart_position vp_there = veh_at(t);
+        const optional_vpart_position &vp_there = veh_at(t);
 
         if (!vp_there) {
 
             continue;
         
         }
-
+        
         appliance = &(vp_there->vehicle());
         if (appliance != nullptr) {
 
@@ -2875,8 +2867,8 @@ void map::process_conveyor_belt() {
             continue;
         
         }
-
-        if (part->enabled == false) {
+        // || appliance->net_battery_charge_rate_w(true,true) <=0
+        if ( part->enabled == false ) {
 
             continue;
 
@@ -2916,25 +2908,35 @@ void map::process_conveyor_belt() {
         }
 
             
-
- 
             // 先处理物品
-            for (item &i : i_at(t)) {
+            for (item &i : appliance->get_items(0)) {
                 
                 if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {                   
                         
                     if (&i!=nullptr) {
-                        processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
-                        item_location(map_cursor(t), &i).remove_item();
-                    }
- 
-                        
-                        
-                    
-                    
-                    
-                }
 
+                        const optional_vpart_position vp_there_new = veh_at(new_p);
+
+                        // 如果将要传送到的位置没有电器（载具），直接将其放置到目标地点
+                        if (!vp_there_new) {
+
+                            processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p,i));
+                            
+                        }
+                        else {
+
+                            appliance_new = & (vp_there_new->vehicle());
+                            processed_conveyor_belt_item_set.insert(&(appliance_new->add_item_new(0, i)));
+                        
+                        }
+
+
+                        appliance->remove_item(0, &i);
+                        
+                        
+                    }
+                                
+                }
                                 
             }
 
@@ -2944,9 +2946,7 @@ void map::process_conveyor_belt() {
 
                 c_new_p = c_t.creature_at(new_p);
                 if (c_new_p==nullptr) {
-
-                    
-                    
+                   
                     c->setpos(new_p);
                     processed_conveyor_belt_creature_set.insert(c);
                     
