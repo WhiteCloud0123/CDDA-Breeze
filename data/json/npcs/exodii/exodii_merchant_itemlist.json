@@ -149,7 +149,8 @@
       { "group": "EXODII_CBM_tier1_tools", "prob": 80 },
       { "group": "EXODII_CBM_tier1_power", "prob": 50 },
       { "group": "EXODII_CBM_tier1_fun", "prob": 100 },
-      { "group": "EXODII_CBM_extra_01_breeze", "prob": 50 }
+      { "group": "EXODII_CBM_extra_01_breeze", "prob": 50 },
+      { "group": "EXODII_other_extra_01_breeze", "prob": 100 }
     ]
   },
   {
@@ -158,6 +159,16 @@
     "items": [
       [ "bio_helicopter_driving_knowledge_infusion_plugin", 10 ],
       [ "bio_aircraft_mechanic_knowledge_infusion_plugin", 10 ]
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "EXODII_other_extra_01_breeze",
+    "items": [
+      [ "定向传送带_东_GENERIC", 10 ],
+      [ "定向传送带_西_GENERIC", 10 ],
+      [ "定向传送带_南_GENERIC", 10 ],
+      [ "定向传送带_北_GENERIC", 10 ]
     ]
   },
   {

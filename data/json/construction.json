@@ -7158,5 +7158,53 @@
     "pre_special": "check_empty",
     "post_terrain": "f_chair_white",
     "activity_level": "LIGHT_EXERCISE"
+  },
+  {
+    "type": "construction",
+    "id": "安装定向传送带-东",
+    "group": "安装定向传送带_东_组",
+    "category": "APPLIANCE",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "10 m",
+    "components": [ [ [ "定向传送带_东_GENERIC", 1 ] ] ],
+    "pre_special": "check_empty",
+    "post_special": "done_appliance",
+    "activity_level": "NO_EXERCISE"
+  },
+  {
+    "type": "construction",
+    "id": "安装定向传送带-西",
+    "group": "安装定向传送带_西_组",
+    "category": "APPLIANCE",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "10 m",
+    "components": [ [ [ "定向传送带_西_GENERIC", 1 ] ] ],
+    "pre_special": "check_empty",
+    "post_special": "done_appliance",
+    "activity_level": "NO_EXERCISE"
+  },
+  {
+    "type": "construction",
+    "id": "安装定向传送带-南",
+    "group": "安装定向传送带_南_组",
+    "category": "APPLIANCE",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "10 m",
+    "components": [ [ [ "定向传送带_南_GENERIC", 1 ] ] ],
+    "pre_special": "check_empty",
+    "post_special": "done_appliance",
+    "activity_level": "NO_EXERCISE"
+  },
+  {
+    "type": "construction",
+    "id": "安装定向传送带-北",
+    "group": "安装定向传送带_北_组",
+    "category": "APPLIANCE",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "10 m",
+    "components": [ [ [ "定向传送带_北_GENERIC", 1 ] ] ],
+    "pre_special": "check_empty",
+    "post_special": "done_appliance",
+    "activity_level": "NO_EXERCISE"
   }
 ]

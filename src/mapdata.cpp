@@ -257,6 +257,10 @@ std::string enum_to_string<ter_furn_flag>( ter_furn_flag data )
         case ter_furn_flag::TFLAG_TOILET_WATER: return "TOILET_WATER";
         case ter_furn_flag::TFLAG_ELEVATOR: return "ELEVATOR";
 		case ter_furn_flag::TFLAG_ACTIVE_GENERATOR: return "ACTIVE_GENERATOR";
+        case ter_furn_flag::TFLAG_CONVEYOR_BELT_NORTH: return "CONVEYOR_BELT_NORTH";
+        case ter_furn_flag::TFLAG_CONVEYOR_BELT_SOUTH: return "CONVEYOR_BELT_SOUTH";
+        case ter_furn_flag::TFLAG_CONVEYOR_BELT_WEST: return "CONVEYOR_BELT_WEST";
+        case ter_furn_flag::TFLAG_CONVEYOR_BELT_EAST: return "CONVEYOR_BELT_EAST";
 
         // *INDENT-ON*
         case ter_furn_flag::NUM_TFLAG_FLAGS:

@@ -1118,10 +1118,12 @@ bool do_turn()
     // We need floor cache before checking falling 'n stuff
     m.build_floor_caches();
 
+    m.process_conveyor_belt();
     m.process_falling();
     m.vehmove();
     m.process_fields();
     m.process_items();
+    
     explosion_handler::process_explosions();
     m.creature_in_field( u );
 

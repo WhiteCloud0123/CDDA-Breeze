@@ -1640,6 +1640,10 @@ class vehicle
          * Otherwise, returns an iterator to the added item in the vehicle stack
          */
         cata::optional<vehicle_stack::iterator> add_item( int part, const item &itm );
+
+        // 这个函数专门为了获取引用
+        item& add_item_new(int part, const item& itm);
+
         /** Like the above */
         cata::optional<vehicle_stack::iterator> add_item( vehicle_part &pt, const item &obj );
         /**

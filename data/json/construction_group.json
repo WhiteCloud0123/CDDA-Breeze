@@ -1688,5 +1688,25 @@
     "type": "construction_group",
     "id": "place_chair_wood_white",
     "name": "Place a white wooden chair"
+  },
+  {
+    "type": "construction_group",
+    "id": "安装定向传送带_东_组",
+    "name": "安装传送带-东"
+  },
+  {
+    "type": "construction_group",
+    "id": "安装定向传送带_西_组",
+    "name": "安装传送带-西"
+  },
+  {
+    "type": "construction_group",
+    "id": "安装定向传送带_南_组",
+    "name": "安装传送带-南"
+  },
+  {
+    "type": "construction_group",
+    "id": "安装定向传送带_北_组",
+    "name": "安装传送带-北"
   }
 ]

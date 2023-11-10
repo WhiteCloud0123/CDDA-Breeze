@@ -612,5 +612,25 @@
   {
     "id": "WINDSHIELD",
     "type": "json_flag"
+  },
+  {
+    "id": "CONVEYOR_BELT_NORTH",
+    "type": "json_flag"
+  },
+  {
+    "id": "CONVEYOR_BELT_SOUTH",
+    "type": "json_flag"
+  },
+  {
+    "id": "CONVEYOR_BELT_WEST",
+    "type": "json_flag"
+  },
+  {
+    "id": "CONVEYOR_BELT_EAST",
+    "type": "json_flag"
+  },
+  {
+    "id": "CONVEYOR_BELT",
+    "type": "json_flag"
   }
 ]

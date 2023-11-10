@@ -1686,6 +1686,8 @@ class map
          */
         void process_falling();
 
+        void process_conveyor_belt();
+
         bool is_cornerfloor( const tripoint &p ) const;
 
         // mapgen.cpp functions

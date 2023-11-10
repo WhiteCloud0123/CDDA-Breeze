@@ -935,5 +935,105 @@
       { "item": "lead", "charges": [ 12, 18 ] }
     ],
     "damage_reduction": { "all": 80 }
+  },
+  {
+    "id": "电器-定向传送带-东",
+    "type": "vehicle_part",
+    "name": { "str": "定向传送带-东" },
+    "item": "定向传送带_东_GENERIC",
+    "symbol": "T",
+    "broken_symbol": "t",
+    "categories": [ "other" ],
+    "color": "white",
+    "broken_color": "blue",
+    "durability": 20,
+    "description": "定向传送带-东",
+    "epower": -20,
+    "bonus": 200,
+    "size": "200 L",
+    "damage_modifier": 10,
+    "looks_like": "f_conveyor_belt_east",
+    "breaks_into": [
+      { "item": "cable", "charges": [ 1, 4 ] },
+      { "item": "steel_chunk", "count": [ 0, 2 ] },
+      { "item": "scrap", "count": [ 1, 2 ] }
+    ],
+    "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CONVEYOR_BELT_EAST", "CONVEYOR_BELT", "CARGO" ],
+    "requirements": { "removal": { "time": "12 m" } }
+  },
+  {
+    "id": "电器-定向传送带-西",
+    "type": "vehicle_part",
+    "name": { "str": "定向传送带-西" },
+    "item": "定向传送带_西_GENERIC",
+    "symbol": "T",
+    "broken_symbol": "t",
+    "categories": [ "other" ],
+    "color": "white",
+    "broken_color": "blue",
+    "durability": 20,
+    "description": "定向传送带-西",
+    "epower": -20,
+    "bonus": 200,
+    "size": "200 L",
+    "damage_modifier": 10,
+    "looks_like": "f_conveyor_belt_west",
+    "breaks_into": [
+      { "item": "cable", "charges": [ 1, 4 ] },
+      { "item": "steel_chunk", "count": [ 0, 2 ] },
+      { "item": "scrap", "count": [ 1, 2 ] }
+    ],
+    "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CONVEYOR_BELT_WEST", "CONVEYOR_BELT", "CARGO" ],
+    "requirements": { "removal": { "time": "12 m" } }
+  },
+  {
+    "id": "电器-定向传送带-南",
+    "type": "vehicle_part",
+    "name": { "str": "定向传送带-南" },
+    "item": "定向传送带_南_GENERIC",
+    "symbol": "T",
+    "broken_symbol": "t",
+    "categories": [ "other" ],
+    "color": "white",
+    "broken_color": "blue",
+    "durability": 20,
+    "description": "定向传送带-南",
+    "epower": -20,
+    "bonus": 200,
+    "size": "200 L",
+    "damage_modifier": 10,
+    "looks_like": "f_conveyor_belt_south",
+    "breaks_into": [
+      { "item": "cable", "charges": [ 1, 4 ] },
+      { "item": "steel_chunk", "count": [ 0, 2 ] },
+      { "item": "scrap", "count": [ 1, 2 ] }
+    ],
+    "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CONVEYOR_BELT_SOUTH", "CONVEYOR_BELT", "CARGO" ],
+    "requirements": { "removal": { "time": "12 m" } }
+  },
+  {
+    "id": "电器-定向传送带-北",
+    "type": "vehicle_part",
+    "name": { "str": "定向传送带-北" },
+    "item": "定向传送带_北_GENERIC",
+    "symbol": "T",
+    "broken_symbol": "-",
+    "categories": [ "other" ],
+    "color": "white",
+    "broken_color": "blue",
+    "durability": 20,
+    "description": "定向传送带-北",
+    "epower": -20,
+    "bonus": 200,
+    "size": "200 L",
+    "damage_modifier": 10,
+    "looks_like": "f_conveyor_belt_north",
+    "breaks_into": [
+      { "item": "cable", "charges": [ 1, 4 ] },
+      { "item": "steel_chunk", "count": [ 0, 2 ] },
+      { "item": "scrap", "count": [ 1, 2 ] }
+    ],
+    "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CONVEYOR_BELT_NORTH", "CONVEYOR_BELT", "CARGO" ],
+    "requirements": { "removal": { "time": "12 m" } }
   }
 ]

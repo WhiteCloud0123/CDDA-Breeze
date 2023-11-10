@@ -1595,17 +1595,17 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         // List all layers for a single z-level
         const std::array<decltype(&cata_tiles::draw_furniture), 11> drawing_layers = { {
                 &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,
-                &cata_tiles::draw_field_or_item,
-                &cata_tiles::draw_vpart_no_roof, &cata_tiles::draw_vpart_roof,
+                & cata_tiles::draw_field_or_item,
+                & cata_tiles::draw_vpart_no_roof,& cata_tiles::draw_vpart_roof,
                 &cata_tiles::draw_critter_at, &cata_tiles::draw_zone_mark,
                 &cata_tiles::draw_zombie_revival_indicators
             }
         };
-
+      
         // Legacy code to use when vertical vision range is 0
         const std::array<decltype(&cata_tiles::draw_furniture), 14> drawing_layers_legacy = { {
                 &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,
-                &cata_tiles::draw_field_or_item, &cata_tiles::draw_vpart_below,
+                &cata_tiles::draw_field_or_item,&cata_tiles::draw_vpart_below,
                 &cata_tiles::draw_critter_at_below, &cata_tiles::draw_terrain_below,
                 &cata_tiles::draw_vpart_no_roof, &cata_tiles::draw_vpart_roof,
                 &cata_tiles::draw_critter_at, &cata_tiles::draw_zone_mark,
@@ -3571,7 +3571,36 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                     height_3d = height_3d_temp;
                 }
                 if( ret && draw_highlight ) {
-                    draw_item_highlight( p );
+
+                    const vehicle_stack& v_s_ref = veh.get_items(cargopart->part_index());
+
+
+                    // 如果这个载具的部分（电器）是不是传送带，如果是那么就直接用亮色突出物品，
+                    // 其他时候，我们要看看此传送带上的物品数量是不是大于1，大于一高亮显示，并显示物品
+                    // ，不大于一，仅仅显示物品。
+                    if (cargopart->info().has_flag("CONVEYOR_BELT") == false) {
+                        
+                        draw_item_highlight(p);
+                    
+                    }
+                    else {
+
+                        if (veh.get_items(cargopart->part_index()).size() > 1) {
+
+                            draw_item_highlight(p);
+                            draw_from_id_string(v_s_ref.end()->type->get_id().str(), TILE_CATEGORY::ITEM, empty_string, p,
+                                subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+
+                        }
+                        else {
+
+                            draw_from_id_string(v_s_ref.end()->type->get_id().str(), TILE_CATEGORY::ITEM, empty_string, p,
+                                subtile, rotation, ll, nv_goggles_activated, height_3d_temp);
+                        
+                        }
+                    }
+                    
+                    
                 }
                 return ret;
             }

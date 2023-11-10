@@ -149,7 +149,10 @@ static const trait_id trait_SCHIZOPHRENIC( "SCHIZOPHRENIC" );
 
 static const trap_str_id tr_unfinished_construction( "tr_unfinished_construction" );
 
-
+bool has_processed_conveyor_belt = false;
+std::set<item*> processed_conveyor_belt_item_set;
+std::set<Creature*>processed_conveyor_belt_creature_set;
+std::set<tripoint> processed_conveyor_belt_tripoint_set;
 
 #define dbg(x) DebugLog((x),D_MAP) << __FILE__ << ":" << __LINE__ << ": "
 
@@ -2182,7 +2185,7 @@ std::string map::features( const tripoint &p ) const
 int map::move_cost_internal( const furn_t &furniture, const ter_t &terrain, const field &field,
                              const vehicle *veh,
                              const int vpart ) const
-{
+{   
     if( terrain.movecost == 0 || ( furniture.id && furniture.movecost < 0 ) ||
         field.total_move_cost() < 0 ) {
         return 0;
@@ -2829,6 +2832,135 @@ void map::process_falling()
             drop_everything( p );
         }
     }
+}
+
+void map::process_conveyor_belt() {
+
+    creature_tracker& c_t = get_creature_tracker();
+    tripoint new_p;
+    Creature* c;
+    Creature* c_new_p;
+    vehicle* appliance;
+    vehicle_part* part;
+    
+    vehicle* appliance_new;
+    
+    //points_in_radius(get_player_character().pos(), 30)
+    for (const tripoint& t: points_in_radius(get_player_character().pos(), 30)) {
+        
+        const optional_vpart_position &vp_there = veh_at(t);
+
+        if (!vp_there) {
+
+            continue;
+        
+        }
+        
+        appliance = &(vp_there->vehicle());
+        if (appliance != nullptr) {
+
+            part = & (appliance->part(0) );
+        
+        }
+        else {
+        
+            continue;
+        
+        }
+        // || appliance->net_battery_charge_rate_w(true,true) <=0
+        if ( part->enabled == false ) {
+
+            continue;
+
+        
+        }
+
+
+
+        if (part->info().has_flag("CONVEYOR_BELT_EAST")) {
+            
+            new_p = t;
+            new_p.x++;
+
+        }
+        else if (part->info().has_flag("CONVEYOR_BELT_WEST")) {
+            
+            new_p = t;
+            new_p.x--;
+        
+        }
+        else if (part->info().has_flag("CONVEYOR_BELT_SOUTH")) {
+
+            new_p = t;
+            new_p.y++;
+
+        }
+        else if (part->info().has_flag("CONVEYOR_BELT_NORTH")) {
+
+            new_p = t;
+            new_p.y--;
+
+        }
+        else {
+        
+            continue;
+        
+        }
+
+            
+            // 先处理物品
+            for (item &i : appliance->get_items(0)) {
+                
+                if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {                   
+                        
+                    if (&i!=nullptr) {
+
+                        const optional_vpart_position vp_there_new = veh_at(new_p);
+
+                        // 如果将要传送到的位置没有电器（载具），直接将其放置到目标地点
+                        if (!vp_there_new) {
+
+                            processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p,i));
+                            
+                        }
+                        else {
+
+                            appliance_new = & (vp_there_new->vehicle());
+                            processed_conveyor_belt_item_set.insert(&(appliance_new->add_item_new(0, i)));
+                        
+                        }
+
+
+                        appliance->remove_item(0, &i);
+                        
+                        
+                    }
+                                
+                }
+                                
+            }
+
+            // 再处理生物
+            c = c_t.creature_at(t);
+            if (c != nullptr && processed_conveyor_belt_creature_set.find(c)==processed_conveyor_belt_creature_set.end()) {
+
+                c_new_p = c_t.creature_at(new_p);
+                if (c_new_p==nullptr) {
+                   
+                    c->setpos(new_p);
+                    processed_conveyor_belt_creature_set.insert(c);
+                    
+                
+                }
+            
+            }
+       
+    }
+
+    
+    processed_conveyor_belt_item_set.clear();
+    processed_conveyor_belt_creature_set.clear();
+
 }
 
 bool map::has_flag( const std::string &flag, const tripoint &p ) const
