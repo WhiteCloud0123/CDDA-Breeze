@@ -82,15 +82,17 @@ extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
 void generate_hostile_npc() {
 
 
+    Character& player_character = get_player_character();
+
     // 如果玩家没有睡着，不要生成
-    if ( ! get_player_character().has_effect(effect_sleep)) {
+    if ( !player_character.has_effect(effect_sleep)) {
 
         return;
 
     }
 
     // 如果玩家的z轴位置不为0，就不用生成
-    if (get_player_character().posz() !=0 ) {
+    if (player_character.posz() !=0 ) {
 
         return;
         
@@ -104,18 +106,18 @@ void generate_hostile_npc() {
 
     if (chance == 1) {
 
-        temp->spawn_at_precise(get_player_character().get_location() + point(-45 + rng(-5,5), -45));
+        temp->spawn_at_precise(player_character.get_location() + point(-45 + rng(-5,5), -45));
     
     }
     else {
 
-        temp->spawn_at_precise(get_player_character().get_location() + point(45 + rng(-5,5), 45));
+        temp->spawn_at_precise(player_character.get_location() + point(45 + rng(-5,5), 45));
     
     }
     
     
     overmap_buffer.insert_npc(temp);
-    temp->form_opinion(get_player_character());
+    temp->form_opinion(player_character);
     temp->mission = NPC_MISSION_NULL;
     temp->add_new_mission(mission::reserve_random(ORIGIN_ANY_NPC, temp->global_omt_location(),
         temp->getID()));
@@ -137,8 +139,10 @@ void generate_hostile_npc() {
 void generate_trade_caravan() {
 
 
+    Character& player_character = get_player_character();
+
     // 如果玩家的z轴位置不为0，就不用生成商队
-    if (get_player_character().posz() != 0) {
+    if (player_character.posz() != 0) {
         return;
     }
 
@@ -149,14 +153,14 @@ void generate_trade_caravan() {
     temp->randomize();
 
     if (chance == 1) {
-        temp->spawn_at_precise(get_player_character().get_location() + point(40+rng(-5,5), 0));
+        temp->spawn_at_precise(player_character.get_location() + point(40+rng(-5,5), 0));
     }
     else {
-        temp->spawn_at_precise(get_player_character().get_location() + point(-40+rng(-5, 5), 0));
+        temp->spawn_at_precise(player_character.get_location() + point(-40+rng(-5, 5), 0));
     }
 
     overmap_buffer.insert_npc(temp);
-    temp->form_opinion(get_player_character());
+    temp->form_opinion(player_character);
     temp->mission = NPC_MISSION_NULL;
     
     // 指定生成的派系为商人派系
