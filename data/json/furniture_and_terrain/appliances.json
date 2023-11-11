@@ -948,7 +948,7 @@
     "broken_color": "blue",
     "durability": 20,
     "description": "来路不明的运输器，在连接电源的情况下，可独立进行运输工作。",
-    "epower": -20,
+    "epower": -10,
     "bonus": 200,
     "size": "200 L",
     "damage_modifier": 10,
