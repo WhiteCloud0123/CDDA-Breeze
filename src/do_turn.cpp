@@ -149,10 +149,10 @@ void generate_trade_caravan() {
     temp->randomize();
 
     if (chance == 1) {
-        temp->spawn_at_precise(get_player_character().get_location() + point(45+rng(-5,5), 0));
+        temp->spawn_at_precise(get_player_character().get_location() + point(40+rng(-5,5), 0));
     }
     else {
-        temp->spawn_at_precise(get_player_character().get_location() + point(-45+rng(-5, 5), 0));
+        temp->spawn_at_precise(get_player_character().get_location() + point(-40+rng(-5, 5), 0));
     }
 
     overmap_buffer.insert_npc(temp);
@@ -710,8 +710,8 @@ void monmove()
 
             int dx = guy.get_location().raw().x - u.get_location().raw().x;
             int dy = guy.get_location().raw().y - u.get_location().raw().y;
-        // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了58，是的话就直接将其设置为幻觉，就此消失。 
-            if (static_cast<int>(std::sqrt(dx*dx+dy*dy)) >58 ) {
+        // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了55，是的话就直接将其设置为幻觉，就此消失。 
+            if (static_cast<int>(std::sqrt(dx*dx+dy*dy)) >55 ) {
                 guy.hallucination = true;
             }
         }
