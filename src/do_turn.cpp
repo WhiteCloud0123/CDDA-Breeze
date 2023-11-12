@@ -699,29 +699,33 @@ void monmove()
             guy.reboot();
         }
 
-        if( !guy.is_dead() ) {
-            guy.npc_update_body();
-        } 
 
         // 这是用来检查从其他派系来的这个npc是不是还想要继续交易，不想的话，就离开玩家
-        if ( guy.has_effect(effect_just_trade) && !guy.has_effect(effect_want_trade)) {
-            
+        if (guy.has_effect(effect_just_trade) && !guy.has_effect(effect_want_trade)) {
+
             guy.set_attitude(NPCATT_NULL);
             // 清空这个npc的任务
             guy.set_mission(NPC_MISSION_NULL);
             // 让这个npc离开玩家
             guy.add_effect(effect_npc_flee_player, 24_hours);
+            
+            const int &dx = guy.get_location().raw().x - u.get_location().raw().x;
+            const int &dy = guy.get_location().raw().y - u.get_location().raw().y;
+            // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了50，是的话就直接将其设置为幻觉，就此消失。 
+            if (static_cast<int>(std::sqrt(dx * dx + dy * dy)) > 50) {
 
-            int dx = guy.get_location().raw().x - u.get_location().raw().x;
-            int dy = guy.get_location().raw().y - u.get_location().raw().y;
-        // 这里取巧，仅仅看看这个npc与玩家的距离是不是大于了55，是的话就直接将其设置为幻觉，就此消失。 
-            if (static_cast<int>(std::sqrt(dx*dx+dy*dy)) >55 ) {
                 guy.hallucination = true;
+                guy.die(nullptr);
+                
             }
         }
+
+
+        if( !guy.is_dead() ) {
+            guy.npc_update_body();
+        } 
+
         
-
-
     }
     g->cleanup_dead();
 
@@ -794,7 +798,7 @@ void monmove()
 
         if (get_option<bool>("其他派系的访问") == true) {
 
-                if (calendar::once_every(907200_turns)) {
+                if (calendar::once_every(648000_turns)) {
 
                     faction* free_merchants = g->faction_manager_ptr->get(faction_free_merchants);
 

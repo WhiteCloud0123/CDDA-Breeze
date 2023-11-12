@@ -4516,10 +4516,17 @@ void game::cleanup_dead()
     // can't use all_npcs as that does not include dead ones
     for( const auto &n : critter_tracker->active_npc ) {
         if( n->is_dead() ) {
-            // 如果这个死亡的npc拥有 effect_just_trade 并且不是幻觉，
+
+            // 如果这个死亡的npc拥有 effect_just_trade，同时距离玩家没有超过45，暂时不让这个距离与让这些访客消失时要大于的距离一致
             // 那么这个npc的死亡会导致对应派系对我们的好感度下降
-            if (n->has_effect(effect_just_trade) && n->is_hallucination() == false ) {
-                n->get_faction()->likes_u = n->get_faction()->likes_u - 50;
+            if (n->has_effect(effect_just_trade)) {
+                const int& dx = n->get_location().raw().x - u.get_location().raw().x;
+                const int& dy = n->get_location().raw().y - u.get_location().raw().y;
+                if (std::sqrt(dx*dx + dy*dy) < 45) {
+
+                    n->get_faction()->likes_u = n->get_faction()->likes_u - 10;
+                
+                }
             }
 
             n->die( nullptr ); // make sure this has been called to create corpses etc.
