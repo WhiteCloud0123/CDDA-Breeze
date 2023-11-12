@@ -579,9 +579,9 @@ void faction::faction_display( const catacurses::window &fac_w, const int width 
 
 
             if (has_hostile_monster == false) {
-
+                
                 fold_and_print(fac_w, point(width, ++y), getmaxx(fac_w) - width - 1, c_white,
-                    "距离下一次交易人员来访:   %s回合", to_turns<int>(907200_turns - (calendar::turn - calendar::start_of_game) % 907200_turns));
+                    "距离下一次交易人员来访:   %s回合", to_turns<int>(648000_turns - (calendar::turn - calendar::start_of_game) % 648000_turns));
 
                 if (!camp) {
 
