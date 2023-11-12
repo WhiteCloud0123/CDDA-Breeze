@@ -2845,8 +2845,8 @@ void map::process_conveyor_belt() {
     
     vehicle* appliance_new;
     
-    //points_in_radius(get_player_character().pos(), 30)
-    for (const tripoint& t: points_in_radius(get_player_character().pos(), 30)) {
+    //points_in_radius(get_player_character().pos(), 60)
+    for (const tripoint& t: points_in_radius(get_player_character().pos(), 60)) {
         
         const optional_vpart_position &vp_there = veh_at(t);
 
@@ -5919,7 +5919,20 @@ void map::process_items_in_submap( submap &current_submap, const tripoint &gridp
 }
 
 void map::process_items_in_vehicles( submap &current_submap )
-{
+{   
+
+
+
+    creature_tracker& c_t = get_creature_tracker();
+    tripoint new_p;
+    Creature* c;
+    Creature* c_new_p;
+    vehicle* appliance;
+    vehicle_part* part;
+
+    vehicle* appliance_new;
+
+
     // a copy, important if the vehicle list changes because a
     // vehicle got destroyed by a bomb (an active item!), this list
     // won't change, but veh_in_nonant will change.
@@ -5935,8 +5948,99 @@ void map::process_items_in_vehicles( submap &current_submap )
             continue;
         }
 
+        if (cur_veh->is_appliance()) {
+
+
+            if ( cur_veh->part(0).enabled==true ) {
+
+
+
+                if (cur_veh->conveyor_belt_direction == "向东运输") {
+
+                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p.x++;
+
+                }
+                else if (cur_veh->conveyor_belt_direction == "向西运输") {
+
+                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p.x--;
+
+                }
+                else if (cur_veh->conveyor_belt_direction == "向南运输") {
+
+                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p.y++;
+
+                }
+                else if (cur_veh->conveyor_belt_direction == "向北运输") {
+
+                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p.y--;
+
+                }
+
+
+                // 先处理物品
+                for (item& i : cur_veh->get_items(0)) {
+
+                    if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {
+
+                        if (&i != nullptr) {
+
+                            const optional_vpart_position vp_there_new = veh_at(new_p);
+
+                            // 如果将要传送到的位置没有电器（载具），直接将其放置到目标地点
+                            if (!vp_there_new) {
+
+                                processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
+
+                            }
+                            else {
+
+                                appliance_new = &(vp_there_new->vehicle());
+                                processed_conveyor_belt_item_set.insert(&(appliance_new->add_item_new(0, i)));
+
+                            }
+
+
+                            cur_veh->remove_item(0, &i);
+
+
+                        }
+
+                    }
+
+                }
+
+
+                // 再处理生物
+                c = c_t.creature_at(cur_veh->bub_part_pos(cur_veh->part(0)).raw());
+                if (c != nullptr && processed_conveyor_belt_creature_set.find(c) == processed_conveyor_belt_creature_set.end()) {
+
+                    c_new_p = c_t.creature_at(new_p);
+                    if (c_new_p == nullptr) {
+
+                        c->setpos(new_p);
+                        processed_conveyor_belt_creature_set.insert(c);
+
+
+                    }
+
+                }
+
+           
+            }
+       
+        }
+
         process_items_in_vehicle( *cur_veh, current_submap );
     }
+
+
+    processed_conveyor_belt_item_set.clear();
+    processed_conveyor_belt_creature_set.clear();
+
 }
 
 void map::process_items_in_vehicle( vehicle &cur_veh, submap &current_submap )
