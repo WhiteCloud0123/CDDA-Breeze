@@ -2834,135 +2834,6 @@ void map::process_falling()
     }
 }
 
-void map::process_conveyor_belt() {
-
-    creature_tracker& c_t = get_creature_tracker();
-    tripoint new_p;
-    Creature* c;
-    Creature* c_new_p;
-    vehicle* appliance;
-    vehicle_part* part;
-    
-    vehicle* appliance_new;
-    
-    //points_in_radius(get_player_character().pos(), 60)
-    for (const tripoint& t: points_in_radius(get_player_character().pos(), 60)) {
-        
-        const optional_vpart_position &vp_there = veh_at(t);
-
-        if (!vp_there) {
-
-            continue;
-        
-        }
-        
-        appliance = &(vp_there->vehicle());
-        if (appliance != nullptr) {
-
-            part = & (appliance->part(0) );
-        
-        }
-        else {
-        
-            continue;
-        
-        }
-        // || appliance->net_battery_charge_rate_w(true,true) <=0
-        if ( part->enabled == false ) {
-
-            continue;
-
-        
-        }
-
-
-
-        if (appliance->conveyor_belt_direction=="向东运输") {
-            
-            new_p = t;
-            new_p.x++;
-
-        }
-        else if (appliance->conveyor_belt_direction == "向西运输") {
-            
-            new_p = t;
-            new_p.x--;
-        
-        }
-        else if (appliance->conveyor_belt_direction == "向南运输") {
-
-            new_p = t;
-            new_p.y++;
-
-        }
-        else if (appliance->conveyor_belt_direction == "向北运输") {
-
-            new_p = t;
-            new_p.y--;
-
-        }
-        else {
-        
-            continue;
-        
-        }
-
-            
-            // 先处理物品
-            for (item &i : appliance->get_items(0)) {
-                
-                if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {                   
-                        
-                    if (&i!=nullptr) {
-
-                        const optional_vpart_position vp_there_new = veh_at(new_p);
-
-                        // 如果将要传送到的位置没有电器（载具），直接将其放置到目标地点
-                        if (!vp_there_new) {
-
-                            processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p,i));
-                            
-                        }
-                        else {
-
-                            appliance_new = & (vp_there_new->vehicle());
-                            processed_conveyor_belt_item_set.insert(&(appliance_new->add_item_new(0, i)));
-                        
-                        }
-
-
-                        appliance->remove_item(0, &i);
-                        
-                        
-                    }
-                                
-                }
-                                
-            }
-
-            // 再处理生物
-            c = c_t.creature_at(t);
-            if (c != nullptr && processed_conveyor_belt_creature_set.find(c)==processed_conveyor_belt_creature_set.end()) {
-
-                c_new_p = c_t.creature_at(new_p);
-                if (c_new_p==nullptr) {
-                   
-                    c->setpos(new_p);
-                    processed_conveyor_belt_creature_set.insert(c);
-                    
-                
-                }
-            
-            }
-       
-    }
-
-    
-    processed_conveyor_belt_item_set.clear();
-    processed_conveyor_belt_creature_set.clear();
-
-}
-
 bool map::has_flag( const std::string &flag, const tripoint &p ) const
 {
     return has_flag_ter_or_furn( flag, p ); // Does bound checking
@@ -5922,13 +5793,10 @@ void map::process_items_in_vehicles( submap &current_submap )
 {   
 
 
-
     creature_tracker& c_t = get_creature_tracker();
     tripoint new_p;
     Creature* c;
     Creature* c_new_p;
-    vehicle* appliance;
-    vehicle_part* part;
 
     vehicle* appliance_new;
 
@@ -5950,32 +5818,33 @@ void map::process_items_in_vehicles( submap &current_submap )
 
         if (cur_veh->is_appliance()) {
 
+            vehicle_part& first_part = cur_veh->part(0);
+            tripoint& first_part_location = cur_veh->bub_part_pos(first_part).raw();
 
-            if ( cur_veh->part(0).enabled==true ) {
-
+            if (first_part.enabled==true ) {
 
 
                 if (cur_veh->conveyor_belt_direction == "向东运输") {
 
-                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p = first_part_location;
                     new_p.x++;
 
                 }
                 else if (cur_veh->conveyor_belt_direction == "向西运输") {
 
-                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p = first_part_location;
                     new_p.x--;
 
                 }
                 else if (cur_veh->conveyor_belt_direction == "向南运输") {
 
-                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p = first_part_location;
                     new_p.y++;
 
                 }
                 else if (cur_veh->conveyor_belt_direction == "向北运输") {
 
-                    new_p = cur_veh->bub_part_pos(cur_veh->part(0)).raw();
+                    new_p = first_part_location;
                     new_p.y--;
 
                 }
