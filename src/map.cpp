@@ -5816,7 +5816,7 @@ void map::process_items_in_vehicles( submap &current_submap )
             continue;
         }
 
-        if (cur_veh->is_appliance()) {
+        if (cur_veh->is_appliance() && cur_veh->conveyor_belt_direction != "") {
 
             vehicle_part& first_part = cur_veh->part(0);
             tripoint& first_part_location = cur_veh->bub_part_pos(first_part).raw();
@@ -5842,7 +5842,7 @@ void map::process_items_in_vehicles( submap &current_submap )
                     new_p.y++;
 
                 }
-                else if (cur_veh->conveyor_belt_direction == "向北运输") {
+                else  {
 
                     new_p = first_part_location;
                     new_p.y--;
