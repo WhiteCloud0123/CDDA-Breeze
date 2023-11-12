@@ -1686,7 +1686,7 @@ class map
          */
         void process_falling();
 
-        void process_conveyor_belt();
+        void process_others();
 
         bool is_cornerfloor( const tripoint &p ) const;
 
