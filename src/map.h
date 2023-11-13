@@ -25,6 +25,7 @@
 #include "colony.h"
 #include "coordinate_conversions.h"
 #include "coordinates.h"
+#include"creature.h"
 #include "enums.h"
 #include "game_constants.h"
 #include "item.h"
