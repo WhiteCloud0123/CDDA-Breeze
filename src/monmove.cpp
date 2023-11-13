@@ -602,6 +602,9 @@ void monster::plan()
                     continue;
                 }
                 monster& mon = *shared;
+                if (get_reachable_zone() != mon.get_reachable_zone()) {
+                    continue;
+                }
                 float rating = rate_target(mon, mon_plan.dist, mon_plan.smart_planning);
                 if (mon_plan.group_morale && rating <= 10) {
                     morale += 10 - rating;
