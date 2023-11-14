@@ -1230,7 +1230,7 @@ void conditional_t<T>::set_x_in_y_chance( const JsonObject &jo, const std::strin
 
 template<class T>
 void conditional_t<T>::set_is_weather( const JsonObject &jo, const std::string &member )
-{
+{   
     str_or_var<T> weather = get_str_or_var<T>( jo.get_member( member ), member, true );
     condition = [weather]( const T & d ) {
         return get_weather().weather_id == weather_type_id( weather.evaluate( d ) );
@@ -1982,6 +1982,20 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const std::string
         return 0;
     };
 }
+
+template<class T>
+void conditional_t<T>::set_u_joined_the_faction(const JsonObject& jo, const std::string& member)
+{
+    
+    str_or_var<T> faction = get_str_or_var<T>(jo.get_member(member), member, true);
+    condition = [](const T&) {
+        
+        return true;
+    };
+
+}
+
+
 
 template<class T>
 static int handle_min_max( const T &d, int input, cata::optional<int_or_var_part<T>> min,

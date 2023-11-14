@@ -1121,6 +1121,16 @@
   },
   {
     "type": "construction_group",
+    "id": "place_veh_tools_kitchen",
+    "name": "放置厨房"
+  },
+  {
+    "type": "construction_group",
+    "id": "place_veh_tools_workshop",
+    "name": "放置工作站"
+  },
+  {
+    "type": "construction_group",
     "id": "place_fridge",
     "name": "Place Fridge"
   },
