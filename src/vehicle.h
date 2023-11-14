@@ -505,6 +505,7 @@ struct vehicle_part {
         mutable const vpart_info *info_cache = nullptr; // NOLINT(cata-serialize)
 
         item base;
+        std::vector<item> tools; // stores tools in VEH_TOOLS drawer
         cata::colony<item> items; // inventory
 
         /** Preferred ammo type when multiple are available */
@@ -811,6 +812,7 @@ class vehicle
          * @param where Location of the other vehicle's origin tile.
          */
         static vehicle *find_vehicle( const tripoint &where );
+
 
         /**
          * Traverses the graph of connected vehicles, starting from start_veh, and continuing
@@ -1355,6 +1357,9 @@ class vehicle
         // Current and total battery power level of all connected vehicles as a pair
         std::pair<int, int> connected_battery_power_level() const;
 
+
+        int64_t battery_left(bool apply_loss = true) const;
+
         /**
          * Try to charge our (and, optionally, connected vehicles') batteries by the given amount.
          * @return amount of charge left over.
@@ -1627,6 +1632,21 @@ class vehicle
         units::volume max_volume( int part ) const;
         units::volume free_volume( int part ) const;
         units::volume stored_volume( int part ) const;
+        
+        int prepare_tool(item& tool) const;
+        /**
+        * if \p tool is not an itype with tool != nullptr this returns { itype::NULL_ID(), 0 } pair
+        * @param tool the item to examine
+        * @return a pair of tool's first ammo type and the amount of it available from tanks / batteries
+        */
+        std::pair<const itype_id&, int> tool_ammo_available(const itype_id& tool_type) const;
+        /**
+        * @return pseudo- and attached tools available from this vehicle part,
+        * marked with PSEUDO flags, pseudo_magazine_mod and pseudo_magazine attached, magazines filled
+        * with the first ammo type required by the tool. pseudo tools are mapped to their hotkey if exists.
+        */
+        std::map<item, input_event> prepare_tools(const vehicle_part& vp) const;
+        
         /**
          * Update an item's active status, for example when adding
          * hot or perishable liquid to a container.
@@ -1659,6 +1679,8 @@ class vehicle
 
         vehicle_stack get_items( int part ) const;
         vehicle_stack get_items( int part );
+        std::vector<item>& get_tools(vehicle_part& vp);
+        const std::vector<item>& get_tools(const vehicle_part& vp) const;
         void dump_items_from_part( size_t index );
 
         // Generates starting items in the car, should only be called when placed on the map

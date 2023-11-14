@@ -212,6 +212,7 @@ struct conditional_t {
         void set_can_see( bool is_npc = false );
         void set_compare_string( const JsonObject &jo, const std::string &member );
         void set_compare_int( const JsonObject &jo, const std::string &member );
+        void set_u_joined_the_faction(const JsonObject& jo, const std::string& member);
         static std::function<int( const T & )> get_get_int( const JsonObject &jo );
         static std::function<int( const T & )> get_get_int( const std::string &value,
                 const JsonObject &jo );

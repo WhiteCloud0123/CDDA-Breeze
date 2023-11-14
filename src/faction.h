@@ -117,6 +117,10 @@ class faction_template
         bool lone_wolf_faction; // is this a faction for just one person?
         int conquer_degree; // 征服度
         int days_required_to_submit_resources; // 被玩家征服的派系，上交资源所需天数
+        bool player_has_joined; // 玩家是否已经加入了这个派系
+        bool player_has_get_food_toady_NO_JOINED; 
+        bool player_has_get_food_JOINED;  // 玩家加入了这个派系，是否已经领取了今天的食物。
+        
         itype_id currency; // id of the faction currency
         std::vector<faction_price_rule> price_rules; // additional pricing rules
         std::map<std::string, std::bitset<npc_factions::rel_types>> relations;
