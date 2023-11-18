@@ -384,7 +384,6 @@ void split(const std::string& source, const char d, std::set<std::string>& rst)
     if (source[source.length() - 1] == d) rst.insert("");
 }
 
-
 void veh_app_interact::set_classified_rule() {
 
     
@@ -405,24 +404,26 @@ void veh_app_interact::set_classified_rule() {
 
     menu_01.text = "请选择运输的方向";
 
-    menu_01.addentry(向东运输, true, '1', _("向东运输"));
+    menu_01.addentry(向东运输, true, '1', _("设置向东运输的物品"));
 
-    menu_01.addentry(向西运输, true, '2', _("向西运输"));
+    menu_01.addentry(向西运输, true, '2', _("设置向西运输的物品"));
 
-    menu_01.addentry(向南运输, true, '3', _("向南运输"));
+    menu_01.addentry(向南运输, true, '3', _("设置向南运输的物品"));
 
-    menu_01.addentry(向北运输, true, '4', _("向北运输"));
+    menu_01.addentry(向北运输, true, '4', _("设置向北运输的物品"));
 
     menu_01.query();
 
     int choice = menu_01.ret;
 
+    std::string des="";
+
     if (choice == 向东运输) {
 
         std::string the_rule_ = string_input_popup()
             .title(_("请输入向东运输的物品"))
-            .width(40)
-            .description(veh->classified_rule)
+            .width(60)
+            .description(veh->rule_item_to_east)
             .query_string();
         the_rule = the_rule_;
 
@@ -431,56 +432,58 @@ void veh_app_interact::set_classified_rule() {
 
         std::string the_rule_ = string_input_popup()
             .title(_("请输入向西运输的物品"))
-            .width(40)
-            .description(veh->classified_rule)
+            .width(60)
+            .description(veh->rule_item_to_west)
             .query_string();
         the_rule = the_rule_;
 
     }
     else if (choice == 向南运输) {
-
         std::string the_rule_ = string_input_popup()
             .title(_("请输入向南运输的物品"))
-            .width(40)
-            .description(veh->classified_rule)
+            .width(60)
+            .description(veh->rule_item_to_south)
             .query_string();
         the_rule = the_rule_;
 
     }
     else if (choice == 向北运输) {
-
         std::string the_rule_ = string_input_popup()
             .title(_("请输入向北运输的物品"))
-            .width(40)
-            .description(veh->classified_rule)
+            .width(60)
+            .description(veh->rule_item_to_north)
             .query_string();
         the_rule = the_rule_;
 
     }
 
-    if (the_rule != veh->classified_rule && the_rule != "") {
-
-
+    if ( the_rule != "") {
 
         if (choice == 向东运输) {
+           
             veh->item_to_east.clear();
+            veh->rule_item_to_east = the_rule;
             split(the_rule, ',', veh->item_to_east);
+            
         }
         else if (choice == 向西运输) {
             veh->item_to_west.clear();
+            veh->rule_item_to_west = the_rule;
             split(the_rule, ',', veh->item_to_west);
         }
         else if (choice == 向南运输) {
             veh->item_to_south.clear();
+            veh->rule_item_to_south = the_rule;
             split(the_rule, ',', veh->item_to_south);
         }
         else if (choice == 向北运输) {
             veh->item_to_north.clear();
+            veh->rule_item_to_north = the_rule;
             split(the_rule, ',', veh->item_to_north);
         }
 
         
-        veh->classified_rule = the_rule;
+        veh->has_set_the_rule = true;
 
     }
 

@@ -354,7 +354,6 @@
     "price": 100000,
     "price_postapoc": 10000,
     "symbol": "T",
-    "color": "white",
-    "looks_like": "t_conveyor"
+    "color": "white"
   }
 ]

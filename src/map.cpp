@@ -5800,6 +5800,26 @@ void map::process_items_in_submap( submap &current_submap, const tripoint &gridp
     }
 }
 
+// 待定 记得将它移动到一个类里，或者将它作为全局的函数
+void split_(const std::string& source, const char d, std::set<std::string>& rst)
+{
+    if (!source.length()) return;
+    rst.clear();
+    for (int i = 0; i < source.length();)
+    {
+        std::string temp = "";
+        while (true)
+        {
+            if (i >= source.length()) break;
+            if (source[i] == d) break;
+            else temp += source[i++];
+        }
+        rst.insert(temp);
+        ++i;
+    }
+    if (source[source.length() - 1] == d) rst.insert("");
+}
+
 void map::process_items_in_vehicles( submap &current_submap )
 {   
 
@@ -5809,7 +5829,7 @@ void map::process_items_in_vehicles( submap &current_submap )
     Creature* c;
     Creature* c_new_p;
 
-    vehicle* appliance_new;
+    vehicle* vehicle_new;
     std::string now_direction = "";
 
 
@@ -5873,16 +5893,30 @@ void map::process_items_in_vehicles( submap &current_submap )
 
                                 const optional_vpart_position vp_there_new = veh_at(new_p);
 
-                                // 如果将要传送到的位置没有电器（载具），直接将其放置到目标地点
-                                if (!vp_there_new) {
 
+                                if (!vp_there_new) {
+                                    
                                     processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
 
                                 }
                                 else {
 
-                                    appliance_new = &(vp_there_new->vehicle());
-                                    processed_conveyor_belt_item_set.insert(&(appliance_new->add_item_new(0, i)));
+                                    vehicle_new = &(vp_there_new->vehicle());
+                                    
+                                    if (vehicle_new->is_appliance() && ( vehicle_new->part(0).info().has_flag("CONVEYOR_BELT")
+                                        || vehicle_new->part(0).info().has_flag("CLASSIFIED_DEVICE") ) ) {
+                                        
+                                        processed_conveyor_belt_item_set.insert(&(vehicle_new->add_item_new(0, i)));
+
+                                    }
+                                    else {
+                                    
+                                        processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
+                                    
+                                    }
+                                    
+                                    
+                                    
 
                                 }
 
@@ -5917,21 +5951,37 @@ void map::process_items_in_vehicles( submap &current_submap )
 
             }
             
-            else if (cur_veh->classified_rule!="") {
+            else if (cur_veh->part(0).info().has_flag("CLASSIFIED_DEVICE")) {
+
+
+                // 待定 将来有时间的时候，试着将这些集合中的元素存储到存档里
+                if (cur_veh->has_set_the_rule == false) {
+
+                    split_(cur_veh->rule_item_to_east, ',', cur_veh->item_to_east);
+                    split_(cur_veh->rule_item_to_west, ',', cur_veh->item_to_west);
+                    split_(cur_veh->rule_item_to_south, ',', cur_veh->item_to_south);
+                    split_(cur_veh->rule_item_to_north, ',', cur_veh->item_to_north);
+
+                    cur_veh->has_set_the_rule = true;
+                
+                }
+
 
 
                 vehicle_part& first_part = cur_veh->part(0);
                 tripoint& first_part_location = cur_veh->bub_part_pos(first_part).raw();
                 std::set<tripoint> queue;
+                std::vector<tripoint> queue_vec;
                 
                 if (first_part.enabled == true) {
 
-                    add_msg(m_good,_("执行分拣器"));
+
                     if (!cur_veh->item_to_east.empty()) {
                         
                         tripoint temp_tripoint = first_part_location;
                         temp_tripoint.x++;
-                        queue.insert(temp_tripoint);
+                        //queue.insert(temp_tripoint);
+                        queue_vec.push_back(temp_tripoint);
                     
                     } 
 
@@ -5939,7 +5989,8 @@ void map::process_items_in_vehicles( submap &current_submap )
                     
                         tripoint temp_tripoint = first_part_location;
                         temp_tripoint.x--;
-                        queue.insert(temp_tripoint);
+                        //queue.insert(temp_tripoint);
+                        queue_vec.push_back(temp_tripoint);
                     
                     }
 
@@ -5947,8 +5998,8 @@ void map::process_items_in_vehicles( submap &current_submap )
                     
                         tripoint temp_tripoint = first_part_location;
                         temp_tripoint.y++;
-                        queue.insert(temp_tripoint);
-
+                        //queue.insert(temp_tripoint);
+                        queue_vec.push_back(temp_tripoint);
                     
                     }
 
@@ -5956,34 +6007,40 @@ void map::process_items_in_vehicles( submap &current_submap )
                     
                         tripoint temp_tripoint = first_part_location;
                         temp_tripoint.y--;
-                        queue.insert(temp_tripoint);
-
+                        //queue.insert(temp_tripoint);
+                        queue_vec.push_back(temp_tripoint);
 
                     }
 
 
-                    for (const tripoint &t : queue) {
+                    for (const tripoint &t : queue_vec) {
 
                         for (item& i : cur_veh->get_items(0)) {
 
+                            if (&i == nullptr) {
+
+                                continue;
+                            
+                            }
+
                             if (t.x> first_part_location.x) {                                       
-                                if (cur_veh->item_to_east.find(i.tname()) == cur_veh->item_to_east.end()) {
+                                if (cur_veh->item_to_east.find(i.tname()) == cur_veh->item_to_east.end() && cur_veh->item_to_east.find("剩余的所有物品") == cur_veh->item_to_east.end()) {                              
                                     continue;
                                 }
                            
                             } else if (t.x < first_part_location.x) {
-                                if (cur_veh->item_to_west.find(i.tname()) == cur_veh->item_to_west.end()) {
+                                if (cur_veh->item_to_west.find(i.tname()) == cur_veh->item_to_west.end() && cur_veh->item_to_west.find("剩余的所有物品") == cur_veh->item_to_west.end()) {
                                     continue;
                                 }
 
                             }
                             else if (t.y > first_part_location.y) {
-                                if (cur_veh->item_to_south.find(i.tname()) == cur_veh->item_to_south.end()) {
+                                if (cur_veh->item_to_south.find(i.tname()) == cur_veh->item_to_south.end() && cur_veh->item_to_south.find("剩余的所有物品") == cur_veh->item_to_south.end()) {
                                     continue;
                                 }
                             }
                              else{
-                                if (cur_veh->item_to_north.find(i.tname()) == cur_veh->item_to_north.end()) {
+                                if (cur_veh->item_to_north.find(i.tname()) == cur_veh->item_to_north.end() && cur_veh->item_to_north.find("剩余的所有物品") == cur_veh->item_to_north.end()) {
                                     continue;
                                 }
 
@@ -5996,7 +6053,7 @@ void map::process_items_in_vehicles( submap &current_submap )
 
                                     const optional_vpart_position vp_there_new = veh_at(t);
 
-                                    // 如果将要传送到的位置没有电器（载具），直接将其放置到目标地点
+                                    
                                     if (!vp_there_new) {
 
                                         processed_conveyor_belt_item_set.insert(&add_item_or_charges(t, i));
@@ -6004,8 +6061,19 @@ void map::process_items_in_vehicles( submap &current_submap )
                                     }
                                     else {
 
-                                        appliance_new = &(vp_there_new->vehicle());
-                                        processed_conveyor_belt_item_set.insert(&(appliance_new->add_item_new(0, i)));
+                                        vehicle_new = &(vp_there_new->vehicle());
+
+                                        if (vehicle_new->is_appliance() && (vehicle_new->part(0).info().has_flag("CONVEYOR_BELT")
+                                            || vehicle_new->part(0).info().has_flag("CLASSIFIED_DEVICE"))) {
+
+                                            processed_conveyor_belt_item_set.insert(&(vehicle_new->add_item_new(0, i)));
+
+                                        }
+                                        else {
+
+                                            processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
+
+                                        }
 
                                     }
 

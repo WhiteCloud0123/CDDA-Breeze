@@ -9,7 +9,8 @@
           { "id": "f_conveyor_belt_east", "fg": 1 },
           { "id": "f_conveyor_belt_west", "fg": 2 },
           { "id": "f_conveyor_belt_south", "fg": 3 },
-          { "id": "f_conveyor_belt_north", "fg": 4 }
+          { "id": "f_conveyor_belt_north", "fg": 4 },
+          { "id": "分拣器_GENERIC", "fg": 5 }
         ],
         "sprite_width": 32,
         "sprite_height": 32,

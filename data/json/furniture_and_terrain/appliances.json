@@ -987,11 +987,11 @@
     "broken_color": "blue",
     "durability": 20,
     "description": "来路不明的分拣器，在连接电源的情况下，可独立进行分拣工作。",
-    "epower": -10,
+    "epower": -30,
     "bonus": 200,
     "size": "200 L",
     "damage_modifier": 10,
-    "looks_like": "t_conveyor",
+    "looks_like": "分拣器_GENERIC",
     "breaks_into": [
       { "item": "cable", "charges": [ 1, 4 ] },
       { "item": "steel_chunk", "count": [ 10, 20 ] },
