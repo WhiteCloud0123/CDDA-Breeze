@@ -3586,6 +3586,11 @@ void vehicle::deserialize( const JsonObject &data )
     data.read( "autopilot_on", autopilot_on );
     data.read("is_AUTOPILOT_fly", is_AUTOPILOT_fly);
     data.read("conveyor_belt_direction", conveyor_belt_direction);
+    data.read("rule_item_to_east", rule_item_to_east);
+    data.read("rule_item_to_west", rule_item_to_west);
+    data.read("rule_item_to_south", rule_item_to_south);
+    data.read("rule_item_to_north", rule_item_to_north);
+
     if( !data.read( "last_update_turn", last_update ) ) {
         last_update = calendar::turn;
     }
@@ -3825,6 +3830,11 @@ void vehicle::serialize( JsonOut &json ) const
     json.member( "vehicle_noise", vehicle_noise );
     json.member("is_AUTOPILOT_fly", is_AUTOPILOT_fly);
     json.member("conveyor_belt_direction", conveyor_belt_direction);
+    json.member("rule_item_to_east", rule_item_to_east);
+    json.member("rule_item_to_west", rule_item_to_west);
+    json.member("rule_item_to_south", rule_item_to_south);
+    json.member("rule_item_to_north", rule_item_to_north);
+
     json.end_object();
 }
 
@@ -3955,6 +3965,11 @@ void faction::deserialize( const JsonObject &jo )
     jo.read( "known_by_u", known_by_u );
     jo.read("conquer_degree", conquer_degree);
     jo.read("days_required_to_submit_resources", days_required_to_submit_resources);
+    jo.read("player_has_joined", player_has_joined);
+    jo.read("if_player_get_food_today_JOINED", if_player_get_food_today_JOINED);
+    jo.read("if_player_reported_work_today", if_player_reported_work_today);
+    jo.read("today_contribution", today_contribution);
+    jo.read("total_contribution", total_contribution);
     jo.read( "size", size );
     jo.read( "power", power );
     if( !jo.read( "food_supply", food_supply ) ) {
@@ -3981,6 +3996,11 @@ void faction::serialize( JsonOut &json ) const
     json.member( "known_by_u", known_by_u );
     json.member("conquer_degree", conquer_degree);
     json.member("days_required_to_submit_resources", days_required_to_submit_resources);
+    json.member("player_has_joined", player_has_joined);
+    json.member("if_player_get_food_today_JOINED", if_player_get_food_today_JOINED);
+    json.member("if_player_reported_work_today", if_player_reported_work_today);
+    json.member("today_contribution", today_contribution);
+    json.member("total_contribution", total_contribution);
     json.member( "size", size );
     json.member( "power", power );
     json.member( "food_supply", food_supply );

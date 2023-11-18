@@ -1319,10 +1319,14 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
         if( first ) {
             first = false;
             // TODO: reconsider recipe memorization
-            if( knows_recipe( &making ) ) {
+            if( knows_recipe( &making ) && is_avatar() ) {
                 add_msg( _( "You craft %s from memory." ), making.result_name() );
             } else {
-                add_msg( _( "You craft %s using a reference." ), making.result_name() );
+
+                if (is_avatar()) {
+                    add_msg(_("You craft %s using a reference."), making.result_name());
+                }
+                
                 // If we made it, but we don't know it, we're using a book, device or NPC
                 // as a reference and have a chance to learn it.
                 // Base expected time to learn is 1000*(difficulty^4)/skill/int moves.
@@ -2955,6 +2959,22 @@ item_location npc::get_item_to_craft()
                 }
             }
         }
+
+        const optional_vpart_position vp = here.veh_at(adj);
+        if (vp) {
+            const int &cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
+            const bool &veh_has_items = cargo_part >= 0 && !vp->vehicle().get_items(cargo_part).empty();
+            if (veh_has_items) {
+                for (item& itm : vp->vehicle().get_items(cargo_part)) {
+                    if (itm.get_var("crafter", "") == name) {
+                        to_craft = item_location(vehicle_cursor(vp->vehicle(), vp->part_index()), &itm);
+                        if (!is_anyone_crafting(to_craft, this)) {
+                            return to_craft;
+                        }
+                    }
+                }
+            }
+        }
     }
     return to_craft;
 }
@@ -2987,6 +3007,23 @@ void npc::do_npc_craft(const cata::optional<tripoint>& loc, const recipe_id& got
                 }
             }
         }
+        const optional_vpart_position vp = here.veh_at(adj);  
+        if (vp) {
+            const int &cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
+            const bool &veh_has_items = cargo_part >= 0 && !vp->vehicle().get_items(cargo_part).empty();
+            if (veh_has_items) {
+                for (item& itm : vp->vehicle().get_items(cargo_part)) {
+                    if (itm.is_craft() && itm.get_making().npc_can_craft(dummy)) {
+                        item_location to_craft = item_location(vehicle_cursor(vp->vehicle(), vp->part_index()), &itm);
+                        if (!is_anyone_crafting(to_craft, this)) {
+                            craft_item_list.push_back(to_craft);
+                        }
+                    }
+                }            
+            }
+            
+        }
+
     }
 
     if (craft_item_list.empty()) {

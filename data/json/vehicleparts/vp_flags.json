@@ -638,5 +638,9 @@
   {
     "id": "CONVEYOR_BELT",
     "type": "json_flag"
+  },
+  {
+    "id": "CLASSIFIED_DEVICE",
+    "type": "json_flag"
   }
 ]

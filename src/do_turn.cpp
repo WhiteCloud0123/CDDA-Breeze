@@ -730,13 +730,23 @@ void monmove()
     g->cleanup_dead();
 
 
-    // 派系的处理
+    // 派系和其他的处理
     bool assassin_attack = false;
     if (calendar::once_every(1_days)) {
 
         for (auto& f : g->faction_manager_ptr->all()) {
 
             faction* f_ptr = g->faction_manager_ptr->get(f.first);
+            
+            
+            // 重置一部分标志
+            f_ptr->if_player_get_food_today_JOINED = false;
+            f_ptr->if_player_reported_work_today = false;
+            f_ptr->today_contribution = 0;
+            // 总贡献结算
+            f_ptr->total_contribution = f_ptr->total_contribution + f_ptr->today_contribution;
+            
+            
             // 每天十分之一的概率
             int chance = rng(1, 10);
 
@@ -786,17 +796,13 @@ void monmove()
             generate_hostile_npc();
             generate_hostile_npc();
             generate_hostile_npc();
-            generate_hostile_npc();
-            generate_hostile_npc();
-            generate_hostile_npc();
-            generate_hostile_npc();
 
         }
 
     }
 
 
-        if (get_option<bool>("其他派系的访问") == true) {
+    if (get_option<bool>("其他派系的访问") == true) {
 
                 if (calendar::once_every(648000_turns)) {
 
@@ -873,10 +879,10 @@ void monmove()
             
         }
 
+
+
     
-
-
-
+    
 
 }
 

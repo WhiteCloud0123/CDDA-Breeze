@@ -164,7 +164,7 @@
   {
     "type": "item_group",
     "id": "EXODII_other_extra_01_breeze",
-    "items": [ [ "运输器_GENERIC", 10 ] ]
+    "items": [ [ "运输器_GENERIC", 10 ], [ "分拣器_GENERIC", 10 ] ]
   },
   {
     "type": "item_group",

@@ -85,6 +85,7 @@ enum vpart_bitflags : int {
     VPFLAG_ROOF,
     VPFLAG_CABLE_PORTS,
     VPFLAG_CONVEYOR_BELT,
+    VPFLAG_CLASSIFIED_DEVICE,
     NUM_VPFLAGS
 };
 /* Flag info:

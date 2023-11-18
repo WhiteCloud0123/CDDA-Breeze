@@ -974,5 +974,30 @@
     ],
     "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CONVEYOR_BELT", "CARGO" ],
     "requirements": { "removal": { "time": "12 m" } }
+  },
+  {
+    "id": "分拣器",
+    "type": "vehicle_part",
+    "name": { "str": "分拣器" },
+    "item": "分拣器_GENERIC",
+    "symbol": "T",
+    "broken_symbol": "-",
+    "categories": [ "other" ],
+    "color": "white",
+    "broken_color": "blue",
+    "durability": 20,
+    "description": "来路不明的分拣器，在连接电源的情况下，可独立进行分拣工作。",
+    "epower": -30,
+    "bonus": 200,
+    "size": "200 L",
+    "damage_modifier": 10,
+    "looks_like": "分拣器_GENERIC",
+    "breaks_into": [
+      { "item": "cable", "charges": [ 1, 4 ] },
+      { "item": "steel_chunk", "count": [ 10, 20 ] },
+      { "item": "scrap", "count": [ 10, 20 ] }
+    ],
+    "flags": [ "APPLIANCE", "ENABLED_DRAINS_EPOWER", "CTRL_ELECTRONIC", "CLASSIFIED_DEVICE", "CARGO" ],
+    "requirements": { "removal": { "time": "12 m" } }
   }
 ]

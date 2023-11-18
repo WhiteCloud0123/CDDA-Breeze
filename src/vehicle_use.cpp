@@ -279,6 +279,8 @@ void vehicle::build_electronics_menu( veh_menu &menu )
                 "TOGGLE_OVERHEAD_LIGHT", "CIRCLE_LIGHT" );
     add_toggle(pgettext("electronics menu option", "此运输节点"),
         "TOGGLE_CONVEYOR_BELT", "CONVEYOR_BELT");
+    add_toggle(pgettext("electronics menu option", "此分拣器"),
+        "TOGGLE_CLASSIFIED_DEVICE", "CLASSIFIED_DEVICE");
     add_toggle( pgettext( "electronics menu option", "aisle lights" ),
                 "TOGGLE_AISLE_LIGHT", "AISLE_LIGHT" );
     add_toggle( pgettext( "electronics menu option", "dome lights" ),

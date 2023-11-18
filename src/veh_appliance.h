@@ -143,6 +143,8 @@ class veh_app_interact
 
         void set_conveyor_belt_direction();
 
+        void set_classified_rule();
+
         /**
          * The main loop of the appliance UI. Redraws windows, checks for input, and
          * performs selected actions. The loop exits once an activity is assigned

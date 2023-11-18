@@ -11,6 +11,8 @@
       "no": "*waves you over.  \"I haven't seen you before.  Welcome to our little homely house.\""
     },
     "responses": [
+      { "text": "我想要领取今天的食物。", "topic": "TALK_DONE" },
+      { "text": "汇报今天的工作。", "topic": "TALK_DONE" },
       {
         "text": "Who are you?  This is a refugee center, right?",
         "topic": "TALK_FREE_MERCHANTS_MERCHANT_Intro",
@@ -121,7 +123,11 @@
         "topic": "TALK_FREE_MERCHANTS_MERCHANT_BeggarsRecruited"
       },
       { "text": "Who's in charge here?", "topic": "TALK_FREE_MERCHANTS_MERCHANT_WhosInCharge" },
-      { "text": "Is there any way I can join your group?", "topic": "TALK_FREE_MERCHANTS_MERCHANT_AskJoin" },
+      {
+        "text": "Is there any way I can join your group?",
+        "topic": "TALK_FREE_MERCHANTS_MERCHANT_AskJoin",
+        "condition": { "not": { "u_joined_the_faction": "free_merchants" } }
+      },
       {
         "text": "What's with these 'Free Merchant certified notes'?",
         "topic": "TALK_FREE_MERCHANTS_MERCHANT_AboutMerch",

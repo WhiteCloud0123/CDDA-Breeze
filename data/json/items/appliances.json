@@ -339,5 +339,21 @@
     "symbol": "T",
     "color": "white",
     "looks_like": "t_conveyor"
+  },
+  {
+    "type": "GENERIC",
+    "id": "分拣器_GENERIC",
+    "name": { "str": "分拣器" },
+    "description": "来路不明的分拣器。在连接电源的情况下，可独立进行分拣工作",
+    "weight": "2500 g",
+    "to_hit": -1,
+    "material": [ "plastic", "steel" ],
+    "volume": "2 L",
+    "longest_side": "170 cm",
+    "bashing": 5,
+    "price": 100000,
+    "price_postapoc": 10000,
+    "symbol": "T",
+    "color": "white"
   }
 ]

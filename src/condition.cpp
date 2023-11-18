@@ -54,6 +54,36 @@ static const efftype_id effect_currently_busy( "currently_busy" );
 
 static const json_character_flag json_flag_MUTATION_THRESHOLD( "MUTATION_THRESHOLD" );
 
+
+
+
+bool check_if_joined_the_faction(const std::string &faction_id_str) {
+
+ 
+    faction* f = g->faction_manager_ptr->get(faction_id(faction_id_str));
+
+    return f->player_has_joined;
+
+
+}
+
+bool check_if_get_food_from_the_faction(const std::string &faction_id_str) {
+
+    faction* f = g->faction_manager_ptr->get(faction_id(faction_id_str));
+    return f->if_player_get_food_today_JOINED;
+
+
+}
+
+
+bool check_if_reported_work(const std::string& faction_id_str) {
+
+    faction* f = g->faction_manager_ptr->get(faction_id(faction_id_str));
+    return f->if_player_reported_work_today;
+
+}
+
+
 template<class T>
 std::string get_talk_varname( const JsonObject &jo, const std::string &member,
                               bool check_value, int_or_var<T> &default_val )
@@ -1988,9 +2018,38 @@ void conditional_t<T>::set_u_joined_the_faction(const JsonObject& jo, const std:
 {
     
     str_or_var<T> faction = get_str_or_var<T>(jo.get_member(member), member, true);
-    condition = [](const T&) {
+    condition = [faction](const T& d) {
         
-        return true;
+        return check_if_joined_the_faction(faction.evaluate(d));
+    
+    };
+
+}
+
+
+template<class T>
+void conditional_t<T>::set_u_get_food_today_from_the_faction(const JsonObject& jo, const std::string& member)
+{
+
+    str_or_var<T> faction = get_str_or_var<T>(jo.get_member(member), member, true);
+    condition = [faction](const T& d) {
+
+        return check_if_get_food_from_the_faction(faction.evaluate(d));
+
+    };
+
+}
+
+
+template<class T>
+void conditional_t<T>::set_u_reported_work(const JsonObject& jo, const std::string& member)
+{
+
+    str_or_var<T> faction = get_str_or_var<T>(jo.get_member(member), member, true);
+    condition = [faction](const T& d) {
+
+        return check_if_reported_work(faction.evaluate(d));
+
     };
 
 }
@@ -2995,7 +3054,18 @@ conditional_t<T>::conditional_t( const JsonObject &jo )
         set_compare_int( jo, "compare_int" );
     } else if( jo.has_member( "compare_string" ) ) {
         set_compare_string( jo, "compare_string" );
-    } else {
+    }
+    else if (jo.has_member("u_joined_the_faction")) {
+        set_u_joined_the_faction(jo,"u_joined_the_faction");
+    }
+    else if (jo.has_member("u_get_food_from_the_faction")) {
+        set_u_get_food_today_from_the_faction(jo, "u_get_food_from_the_faction");
+        }
+    else if (jo.has_member("u_reported_work")) {
+            set_u_reported_work(jo, "u_get_food_from_the_faction");
+            }
+    
+    else {
         for( const std::string &sub_member : dialogue_data::simple_string_conds ) {
             if( jo.has_string( sub_member ) ) {
                 const conditional_t<T> sub_condition( jo.get_string( sub_member ) );
