@@ -2196,6 +2196,18 @@ class vehicle
         bool is_AUTOPILOT_fly = false;
 
         std::string conveyor_belt_direction = "";
+        // 分拣规则
+        std::string classified_rule = "";
+        // 应该向东运输的物品的名称集合
+        std::set<std::string> item_to_east;
+        // 应该向西运输的物品的名称集合
+        std::set<std::string> item_to_west;
+        // 应该向南运输的物品的名称集合
+        std::set<std::string> item_to_south;
+        // 应该向北运输的物品的名称集合
+        std::set<std::string> item_to_north;
+        // 是否已经分析了规则，设置了新的分拣规则后，上一次分析失效
+        bool has_analysed_the_rule = false;
 
         bool is_on_ramp = false;
         // vehicle being driven by player/npc automatically

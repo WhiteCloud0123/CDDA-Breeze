@@ -3,6 +3,7 @@
 #include "inventory.h"
 #include "itype.h"
 #include "map_iterator.h"
+#include "messages.h"
 #include "output.h"
 #include "overmapbuffer.h"
 #include "player_activity.h"
@@ -16,6 +17,7 @@
 #include "veh_utils.h"
 #include "vehicle.h"
 #include "vpart_range.h"
+
 
 static const activity_id ACT_VEHICLE( "ACT_VEHICLE" );
 
@@ -121,6 +123,7 @@ veh_app_interact::veh_app_interact( vehicle &veh, const point &p )
     ctxt.register_action( "RENAME" );
     ctxt.register_action( "REMOVE" );
     ctxt.register_action( "UNPLUG" );
+    ctxt.register_action("SET_CLASSIFIED_RULE");
     ctxt.register_action("SET_CONVEYOR_BELT_DIRECTION");
 }
 
@@ -362,7 +365,128 @@ void veh_app_interact::set_conveyor_belt_direction() {
 
 }
 
+void split(const std::string& source, const char d, std::set<std::string>& rst)
+{
+    if (!source.length()) return;
+    rst.clear();
+    for (int i = 0; i < source.length();)
+    {
+        std::string temp = "";
+        while (true)
+        {
+            if (i >= source.length()) break;
+            if (source[i] == d) break;
+            else temp += source[i++];
+        }
+        rst.insert(temp);
+        ++i;
+    }
+    if (source[source.length() - 1] == d) rst.insert("");
+}
 
+
+void veh_app_interact::set_classified_rule() {
+
+    
+    
+    std::string the_rule;
+
+    
+    enum choices {
+
+        向东运输 = 0,
+        向西运输,
+        向南运输,
+        向北运输
+
+    };
+
+    uilist menu_01;
+
+    menu_01.text = "请选择运输的方向";
+
+    menu_01.addentry(向东运输, true, '1', _("向东运输"));
+
+    menu_01.addentry(向西运输, true, '2', _("向西运输"));
+
+    menu_01.addentry(向南运输, true, '3', _("向南运输"));
+
+    menu_01.addentry(向北运输, true, '4', _("向北运输"));
+
+    menu_01.query();
+
+    int choice = menu_01.ret;
+
+    if (choice == 向东运输) {
+
+        std::string the_rule_ = string_input_popup()
+            .title(_("请输入向东运输的物品"))
+            .width(40)
+            .description(veh->classified_rule)
+            .query_string();
+        the_rule = the_rule_;
+
+    }
+    else if (choice == 向西运输) {
+
+        std::string the_rule_ = string_input_popup()
+            .title(_("请输入向西运输的物品"))
+            .width(40)
+            .description(veh->classified_rule)
+            .query_string();
+        the_rule = the_rule_;
+
+    }
+    else if (choice == 向南运输) {
+
+        std::string the_rule_ = string_input_popup()
+            .title(_("请输入向南运输的物品"))
+            .width(40)
+            .description(veh->classified_rule)
+            .query_string();
+        the_rule = the_rule_;
+
+    }
+    else if (choice == 向北运输) {
+
+        std::string the_rule_ = string_input_popup()
+            .title(_("请输入向北运输的物品"))
+            .width(40)
+            .description(veh->classified_rule)
+            .query_string();
+        the_rule = the_rule_;
+
+    }
+
+    if (the_rule != veh->classified_rule && the_rule != "") {
+
+
+
+        if (choice == 向东运输) {
+            veh->item_to_east.clear();
+            split(the_rule, ',', veh->item_to_east);
+        }
+        else if (choice == 向西运输) {
+            veh->item_to_west.clear();
+            split(the_rule, ',', veh->item_to_west);
+        }
+        else if (choice == 向南运输) {
+            veh->item_to_south.clear();
+            split(the_rule, ',', veh->item_to_south);
+        }
+        else if (choice == 向北运输) {
+            veh->item_to_north.clear();
+            split(the_rule, ',', veh->item_to_north);
+        }
+
+        
+        veh->classified_rule = the_rule;
+
+    }
+
+
+
+}
 
 
 // Helper function for selecting a part in the parts list.
@@ -611,6 +735,19 @@ void veh_app_interact::populate_app_actions()
     imenu.addentry( -1, can_unplug(), ctxt.keys_bound_to( "UNPLUG" ).front(),
                     ctxt.get_action_name( "UNPLUG" ) );
 
+
+
+    if (veh->is_appliance() && veh->part(0).info().has_flag("CLASSIFIED_DEVICE")) {
+
+        app_actions.emplace_back([this]() {
+            set_classified_rule();
+            });
+        imenu.addentry(-1, true, 'C',
+            "设置分拣规则");
+    }
+
+
+
     if (veh->is_appliance() && veh->part(0).info().has_flag("CONVEYOR_BELT")) {
         
         app_actions.emplace_back([this]() {
@@ -619,6 +756,8 @@ void veh_app_interact::populate_app_actions()
         imenu.addentry(-1, true, 'S',
             "设置运输方向");
     }
+
+
 
 
 

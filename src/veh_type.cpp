@@ -125,7 +125,8 @@ static const std::unordered_map<std::string, vpart_bitflags> vpart_bitflag_map =
     { "TURRET_CONTROLS", VPFLAG_TURRET_CONTROLS },
     { "ROOF", VPFLAG_ROOF },
     { "CABLE_PORTS", VPFLAG_CABLE_PORTS },
-    {"CONVEYOR_BELT",VPFLAG_CONVEYOR_BELT}
+    {"CONVEYOR_BELT",VPFLAG_CONVEYOR_BELT},
+    {"CLASSIFIED_DEVICE",VPFLAG_CLASSIFIED_DEVICE}
 };
 
 static const std::vector<std::pair<std::string, veh_ter_mod>> standard_terrain_mod = {{

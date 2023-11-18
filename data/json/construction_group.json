@@ -1703,5 +1703,10 @@
     "type": "construction_group",
     "id": "安装运输器_组",
     "name": "安装运输器"
+  },
+  {
+    "type": "construction_group",
+    "id": "安装分拣器_组",
+    "name": "安装运分拣器"
   }
 ]

@@ -3586,6 +3586,7 @@ void vehicle::deserialize( const JsonObject &data )
     data.read( "autopilot_on", autopilot_on );
     data.read("is_AUTOPILOT_fly", is_AUTOPILOT_fly);
     data.read("conveyor_belt_direction", conveyor_belt_direction);
+    data.read("classified_rule", classified_rule);
     if( !data.read( "last_update_turn", last_update ) ) {
         last_update = calendar::turn;
     }
@@ -3825,6 +3826,7 @@ void vehicle::serialize( JsonOut &json ) const
     json.member( "vehicle_noise", vehicle_noise );
     json.member("is_AUTOPILOT_fly", is_AUTOPILOT_fly);
     json.member("conveyor_belt_direction", conveyor_belt_direction);
+    json.member("classified_rule", classified_rule);
     json.end_object();
 }
 
