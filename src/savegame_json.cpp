@@ -3955,6 +3955,11 @@ void faction::deserialize( const JsonObject &jo )
     jo.read( "known_by_u", known_by_u );
     jo.read("conquer_degree", conquer_degree);
     jo.read("days_required_to_submit_resources", days_required_to_submit_resources);
+    jo.read("player_has_joined", player_has_joined);
+    jo.read("if_player_get_food_today_JOINED", if_player_get_food_today_JOINED);
+    jo.read("if_player_reported_work_today", if_player_reported_work_today);
+    jo.read("today_contribution", today_contribution);
+    jo.read("total_contribution", total_contribution);
     jo.read( "size", size );
     jo.read( "power", power );
     if( !jo.read( "food_supply", food_supply ) ) {
@@ -3981,6 +3986,11 @@ void faction::serialize( JsonOut &json ) const
     json.member( "known_by_u", known_by_u );
     json.member("conquer_degree", conquer_degree);
     json.member("days_required_to_submit_resources", days_required_to_submit_resources);
+    json.member("player_has_joined", player_has_joined);
+    json.member("if_player_get_food_today_JOINED", if_player_get_food_today_JOINED);
+    json.member("if_player_reported_work_today", if_player_reported_work_today);
+    json.member("today_contribution", today_contribution);
+    json.member("total_contribution", total_contribution);
     json.member( "size", size );
     json.member( "power", power );
     json.member( "food_supply", food_supply );

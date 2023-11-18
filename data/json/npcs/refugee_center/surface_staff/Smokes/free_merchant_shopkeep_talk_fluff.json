@@ -97,11 +97,19 @@
     "dynamic_line": "Oh, merch.  They're just paper notes we've started using for local cash.  We started out paying each other with dollar bills, but there's so much paper money out there that it's just useless now.  For our internal use, we started certifying bills that represent food and labor in the center here.  We started trading them internally, and then they started circling around, and now other people have started adopting them, too."
   },
   {
-    "id": [
-      "TALK_FREE_MERCHANTS_MERCHANT_AskJoin",
-      "TALK_FREE_MERCHANTS_MERCHANT_AskJoin1",
-      "TALK_FREE_MERCHANTS_MERCHANT_AskJoin2"
-    ],
+    "id": "TALK_FREE_MERCHANTS_MERCHANT_AskJoin",
+    "type": "talk_topic",
+    "dynamic_line": "不知怎的，向这我们基地靠近的丧尸逐渐多了起来，我们需要一些额外的人手去基地的外围巡逻和清理掉那些讨厌的丧尸。我们每天会给你一小份食物，然后根据你清理的丧尸数量，我们再给你额外的食物，不过，最终也不会太多。几条稳定的商路，让我们的生活稍微有了起色，但也仅此而已。情况就是这样，你接受这样的工作吗？",
+    "responses": [ { "text": "我接受这样的工作。", "topic": "TALK_FREE_MERCHANTS_MERCHANT_AskJoin_JOIN_THE_FACTION" } ]
+  },
+  {
+    "id": "TALK_FREE_MERCHANTS_MERCHANT_AskJoin_JOIN_THE_FACTION",
+    "type": "talk_topic",
+    "dynamic_line": "欢迎你成为这里的新成员！",
+    "responses": [ { "text": "太棒了！", "topic": "TALK_DONE", "effect": "join_the_faction" } ]
+  },
+  {
+    "id": [ "TALK_FREE_MERCHANTS_MERCHANT_AskJoin1", "TALK_FREE_MERCHANTS_MERCHANT_AskJoin2" ],
     "type": "talk_topic",
     "dynamic_line": "I'm sorry, but the last thing we need is another mouth to feed.  Most of us lack any real survival skills, so keeping our group small enough to survive on the food we trade for is the main thing keeping us alive.",
     "responses": [

@@ -2726,7 +2726,18 @@ void map::drop_items( const tripoint &p )
         float item_density = i.get_base_material().density();
         float damage = 5 * to_kilogram(wt_dropped) * height_fallen * item_density;
         damage_total += damage;
-        add_item_or_charges( below, i );
+
+        // 如果掉落的地点有运输器，那么物品会直接掉落到运输器上，没有，直接掉落到地面上
+        const optional_vpart_position &vp = veh_at(below);
+        if (vp && vp->vehicle().part(0).info().has_flag("CONVEYOR_BELT")) {
+            vp->vehicle().add_item_new(0,i);
+        }
+        else {
+            add_item_or_charges(below, i);       
+        }
+
+
+
         // Bash creature standing below
         Creature* creature_below = get_creature_tracker().creature_at(below);
         if (creature_below) {

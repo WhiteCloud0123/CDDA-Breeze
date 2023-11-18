@@ -951,6 +951,31 @@ void talk_function::exert_coercion(npc &p) {
 }
 
 
+void talk_function::join_the_faction(npc& p) {
+
+
+    faction* f = g->faction_manager_ptr->get(p.fac_id);
+    f->player_has_joined = true;
+
+
+}
+
+
+void talk_function::set_status_get_food_from_the_faction(npc& p) {
+
+    faction* f = g->faction_manager_ptr->get(p.fac_id);
+    f->if_player_get_food_today_JOINED = true;
+
+}
+
+void talk_function::report_work_to_this_faction(npc& p) {
+
+    faction* f = g->faction_manager_ptr->get(p.fac_id);
+    f->if_player_reported_work_today = true;
+
+}
+
+
 void talk_function::sort_loot( npc &p )
 {
     p.assign_activity( ACT_MOVE_LOOT );

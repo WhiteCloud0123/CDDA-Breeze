@@ -49,7 +49,7 @@ const std::unordered_set<std::string> complex_conds = { {
         "u_has_worn_with_flag", "npc_has_worn_with_flag", "u_has_wielded_with_flag", "npc_has_wielded_with_flag",
         "u_has_pain", "npc_has_pain", "u_has_power", "npc_has_power", "u_has_focus", "npc_has_focus", "u_has_morale",
         "npc_has_morale", "u_is_on_terrain", "npc_is_on_terrain", "u_is_in_field", "npc_is_in_field", "compare_int",
-        "compare_string", "roll_contested"
+        "compare_string", "roll_contested" ,"u_joined_the_faction" ,"u_get_food_from_the_faction", "u_reported_work"
     }
 };
 } // namespace dialogue_data
@@ -213,6 +213,8 @@ struct conditional_t {
         void set_compare_string( const JsonObject &jo, const std::string &member );
         void set_compare_int( const JsonObject &jo, const std::string &member );
         void set_u_joined_the_faction(const JsonObject& jo, const std::string& member);
+        void set_u_get_food_today_from_the_faction(const JsonObject& jo, const std::string& member);
+        void set_u_reported_work(const JsonObject& jo, const std::string& member);
         static std::function<int( const T & )> get_get_int( const JsonObject &jo );
         static std::function<int( const T & )> get_get_int( const std::string &value,
                 const JsonObject &jo );
