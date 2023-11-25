@@ -37,6 +37,7 @@
 #include "optional.h"
 #include "options.h"
 #include "output.h"
+#include "overmapbuffer.h"
 #include "panels.h"
 #include "player_activity.h"
 #include "point.h"
@@ -318,7 +319,8 @@ bool Pickup::do_pickup( std::vector<item_location> &targets, std::vector<int> &q
     bool got_frozen_liquid = false;
     Character &player_character = get_player_character();
     bool weight_is_okay = ( player_character.weight_carried() <= player_character.weight_capacity() );
-
+    map& cur_map = get_map();
+    const tripoint_abs_ms &target_abs_ms = cur_map.getglobal(targets.begin()->pos_bub());
     // Map of items picked up so we can output them all at the end and
     // merge dropping items with the same name.
     PickupMap mapPickup;
@@ -360,6 +362,44 @@ bool Pickup::do_pickup( std::vector<item_location> &targets, std::vector<int> &q
 
     player_character.recoil = MAX_RECOIL;
 
+    if (get_option<bool>("AUTO_NOTES_DROPPED_FAVORITES")) {
+
+        const tripoint_abs_omt& dest_omt = tripoint_abs_omt(target_abs_ms.x() / 24, target_abs_ms.y() / 24, target_abs_ms.z());
+        const tripoint_abs_omt& player_omt = player_character.global_omt_location();
+
+        std::set<std::string> name_set;
+        std::string note = "";
+        add_msg(m_good, _("%1s %2s"), dest_omt.x(), player_omt.x());
+        int x_begin = dest_omt.x() * 24;
+        int y_begin = dest_omt.y() * 24;
+        int x_max = x_begin + 23;
+        int y_max = y_begin + 23;
+        for (int i = x_begin; i <= x_max; i++) {
+            for (int r = y_begin; r < y_max; r++) {
+                for (item& i_ref : cur_map.i_at(cur_map.getlocal(tripoint(i, r, dest_omt.z())))) {
+                    if (i_ref.is_favorite)
+                    {
+                        name_set.insert(i_ref.tname());
+                    }
+                }
+            }
+        }
+
+        for (std::string str : name_set) {
+            note = note + str + " ;";
+        }
+        if (name_set.empty()) {
+            const std::string& cur_note = overmap_buffer.note(dest_omt);
+            if (cur_note.back() == ';') {
+                overmap_buffer.delete_note(dest_omt);
+            }
+
+        }
+        else {
+            overmap_buffer.add_note(dest_omt, note);
+        }
+
+    }
     return !problem;
 }
 

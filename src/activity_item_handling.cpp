@@ -382,14 +382,6 @@ void drop_on_map( Character &you, item_drop_reason reason, const std::list<item>
                 break;
         }
 
-        if( get_option<bool>( "AUTO_NOTES_DROPPED_FAVORITES" ) && it.is_favorite ) {
-            const tripoint_abs_omt your_pos = you.global_omt_location();
-            if( !overmap_buffer.has_note( your_pos ) ) {
-                overmap_buffer.add_note( your_pos, it.display_name() );
-            } else {
-                overmap_buffer.add_note( your_pos, overmap_buffer.note( your_pos ) + "; " + it.display_name() );
-            }
-        }
     } else {
         switch( reason ) {
             case item_drop_reason::deliberate:
@@ -439,6 +431,54 @@ void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
         return;
     }
     drop_on_map( you, reason, items, where );
+
+
+    if (get_option<bool>("AUTO_NOTES_DROPPED_FAVORITES") && you.is_avatar()) {
+        map& cur_map = get_map();
+        const tripoint_abs_ms  &dest_abs_ms= cur_map.getglobal(where);
+        const tripoint_abs_omt &dest_omt = tripoint_abs_omt(dest_abs_ms.x() / 24, dest_abs_ms.y() / 24, dest_abs_ms.z());
+        const tripoint_abs_omt &player_omt = you.global_omt_location();
+        
+        std::set<std::string> name_set;
+        std::string note = "";
+
+        add_msg(m_good,_("%1s %2s"),dest_omt.x(),player_omt.x() );
+
+        int x_begin = dest_omt.x() * 24;
+        int y_begin = dest_omt.y() * 24;
+        int x_max = x_begin + 23;
+        int y_max = y_begin + 23;
+
+        for (int i = x_begin; i <= x_max;i++) {
+            for (int r = y_begin ; r < y_max; r++) {
+                for (item& i_ref : cur_map.i_at(cur_map.getlocal(tripoint(i,r, dest_omt.z())))) {
+                    if (i_ref.is_favorite) 
+                    {
+                        name_set.insert(i_ref.tname());                
+                    }
+               }
+            }
+        }
+        
+        for (std::string str : name_set) {
+            note = note + str + " ;";
+        }
+
+        if (name_set.empty()) {
+
+            const std::string &cur_note = overmap_buffer.note(dest_omt);
+            if (cur_note.back() == ';') {
+                overmap_buffer.delete_note(dest_omt);
+            }
+        }
+        else {
+            overmap_buffer.add_note(dest_omt, note);
+        }
+
+        
+
+    }
+
 }
 
 static std::list<act_item> convert_to_act_item( const player_activity &act, Character &guy )
