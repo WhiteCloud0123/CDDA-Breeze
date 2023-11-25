@@ -1564,8 +1564,8 @@ void options_manager::add_options_general()
 
     get_option( "AUTO_NOTES_MAP_EXTRAS" ).setPrerequisite( "AUTO_NOTES" );
 
-    add( "AUTO_NOTES_DROPPED_FAVORITES", "general", to_translation( "Auto notes (dropped favorites)" ),
-         to_translation( "If true, automatically sets notes when player drops favorited items." ),
+    add( "AUTO_NOTES_DROPPED_FAVORITES", "general", to_translation( "自动备注 （丢弃与拾取收藏物品）" ),
+         to_translation( "开启时，将自动记录玩家丢下被收藏物品时的位置。之后玩家每次 拾取/放下/丢弃 被收藏物品，也会同步地更新备注。" ),
          false
        );
 
