@@ -86,13 +86,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Windows Tiles x64 MSVC
-            artifact: windows-tiles-x64-msvc
-            arch: x64
-            os: windows-2019
-            mxe: none
+          - name: Windows Tiles x64
+            mxe: x86_64
+            artifact: windows-tiles-x64
+            os: ubuntu-latest
             ext: zip
             content: application/zip
+            sound: 0
           - name: Android x64
             os: ubuntu-latest
             mxe: none
