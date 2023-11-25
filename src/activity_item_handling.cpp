@@ -442,8 +442,6 @@ void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
         std::set<std::string> name_set;
         std::string note = "";
 
-        add_msg(m_good,_("%1s %2s"),dest_omt.x(),player_omt.x() );
-
         int x_begin = dest_omt.x() * 24;
         int y_begin = dest_omt.y() * 24;
         int x_max = x_begin + 23;
