@@ -436,7 +436,12 @@ void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
     if (get_option<bool>("AUTO_NOTES_DROPPED_FAVORITES") && you.is_avatar()) {
         map& cur_map = get_map();
         const tripoint_abs_ms  &dest_abs_ms= cur_map.getglobal(where);
-        const tripoint_abs_omt &dest_omt = tripoint_abs_omt(dest_abs_ms.x() / 24, dest_abs_ms.y() / 24, dest_abs_ms.z());
+
+
+        int fix_x_dest_omt = dest_abs_ms.x() >= 0 ? dest_abs_ms.x() / 24  : std::floor(static_cast<double>(dest_abs_ms.x()) / 24);
+        int fix_y_dest_omt = dest_abs_ms.y() >= 0 ? dest_abs_ms.y() / 24  : std::floor(static_cast<double>(-dest_abs_ms.y()) / 24);
+
+        const tripoint_abs_omt &dest_omt = tripoint_abs_omt(fix_x_dest_omt, fix_y_dest_omt, dest_abs_ms.z());
         const tripoint_abs_omt &player_omt = you.global_omt_location();
         
         std::set<std::string> name_set;
@@ -448,7 +453,7 @@ void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
         int y_max = y_begin + 23;
 
         for (int i = x_begin; i <= x_max;i++) {
-            for (int r = y_begin ; r < y_max; r++) {
+            for (int r = y_begin ; r <= y_max; r++) {
                 for (item& i_ref : cur_map.i_at(cur_map.getlocal(tripoint(i,r, dest_omt.z())))) {
                     if (i_ref.is_favorite) 
                     {

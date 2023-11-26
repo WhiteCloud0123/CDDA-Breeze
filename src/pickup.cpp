@@ -363,8 +363,9 @@ bool Pickup::do_pickup( std::vector<item_location> &targets, std::vector<int> &q
     player_character.recoil = MAX_RECOIL;
 
     if (get_option<bool>("AUTO_NOTES_DROPPED_FAVORITES")) {
-
-        const tripoint_abs_omt& dest_omt = tripoint_abs_omt(target_abs_ms.x() / 24, target_abs_ms.y() / 24, target_abs_ms.z());
+        int fix_x_dest_omt = target_abs_ms.x() >= 0 ? target_abs_ms.x() / 24 : std::floor(static_cast<double>(target_abs_ms.x()) / 24);
+        int fix_y_dest_omt = target_abs_ms.y() >= 0 ? target_abs_ms.y() / 24 : std::floor(static_cast<double>(target_abs_ms.y()) / 24);
+        const tripoint_abs_omt& dest_omt = tripoint_abs_omt(fix_x_dest_omt, fix_y_dest_omt, target_abs_ms.z());
         const tripoint_abs_omt& player_omt = player_character.global_omt_location();
 
         std::set<std::string> name_set;
@@ -375,7 +376,7 @@ bool Pickup::do_pickup( std::vector<item_location> &targets, std::vector<int> &q
         int x_max = x_begin + 23;
         int y_max = y_begin + 23;
         for (int i = x_begin; i <= x_max; i++) {
-            for (int r = y_begin; r < y_max; r++) {
+            for (int r = y_begin; r <= y_max; r++) {
                 for (item& i_ref : cur_map.i_at(cur_map.getlocal(tripoint(i, r, dest_omt.z())))) {
                     if (i_ref.is_favorite)
                     {
