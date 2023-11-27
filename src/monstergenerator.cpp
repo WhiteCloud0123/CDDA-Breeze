@@ -621,6 +621,7 @@ void MonsterGenerator::init_attack()
     add_hardcoded_attack( "DOOT", mattack::doot );
     add_hardcoded_attack( "DSA_DRONE_SCAN", mattack::dsa_drone_scan );
     add_hardcoded_attack( "ZOMBIE_FUSE", mattack::zombie_fuse );
+    add_hardcoded_attack("DO_WEAPON_ITEM", mattack::do_weapon_item);
 }
 
 void MonsterGenerator::init_defense()

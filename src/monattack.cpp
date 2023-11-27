@@ -6110,6 +6110,81 @@ bool mattack::zombie_fuse( monster *z )
     return true;
 }
 
+
+bool mattack::do_weapon_item(monster *z) {
+    
+    map& cur_map = get_map();
+    tripoint_abs_ms z_pos = z->get_location();
+
+    int x_begin = z_pos.x() - 1;
+    int y_begin = z_pos.y() - 1;
+    
+    int z_level = z_pos.z();
+
+    int x_max = x_begin + 2;
+    int y_max = y_begin + 2;
+
+    bool continue_find_weapon = true;
+
+
+    // 如果怪物没有装备武器，先去尝试在周围找一把武器装备上
+    if (!z->weapon_item) {
+
+        int chance = rng(1,2);
+
+        if (chance!=1) {
+            return true;
+        }
+
+
+        for (int i = x_begin; i <= x_max;i++) {
+            for (int r = y_begin; r <= y_max;r++) {
+                
+                for (item& i_ref : cur_map.i_at(cur_map.getlocal(tripoint(i,r,z_level)))) {
+                    if (i_ref.damage_melee(damage_type::BASH)>=1) {
+                        z->weapon_item = cata::make_value<item>(i_ref);
+                        continue_find_weapon = false;
+                        add_msg(m_bad,_("%1s 装备上了 %2s !"),z->get_name(),i_ref.tname());
+                        item_location(map_cursor(cur_map.getlocal(tripoint(i, r, z_level))), &i_ref).remove_item();
+                        break;
+                    }
+                }
+
+                if (!continue_find_weapon) {
+                    break;
+                }
+
+
+            }
+
+            if (!continue_find_weapon) {
+                break;
+            }
+
+        }
+
+    }
+    else {
+    
+        
+        int chance = rng(1, 20);
+        if (chance == 1) {
+            cur_map.add_item_or_charges(get_player_character().pos(), *z->weapon_item);
+            add_msg(m_bad, _("%1s 放下了 %2s 。"), z->get_name(), z->weapon_item.get()->tname());
+            z->weapon_item.reset();
+        }
+    
+    
+    
+    
+    }
+
+
+    return true;
+
+
+}
+
 bool mattack::doot( monster *z )
 {
     z->moves -= 300;
