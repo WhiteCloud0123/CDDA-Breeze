@@ -308,7 +308,7 @@
     "vision_day": 35,
     "vision_night": 5,
     "harvest": "zombie",
-    "special_attacks": [ { "type": "bite", "cooldown": 5 }, [ "GRAB", 7 ], [ "scratch", 20 ] ],
+    "special_attacks": [ { "type": "bite", "cooldown": 5 }, [ "GRAB", 7 ], [ "scratch", 20 ], [ "DO_WEAPON_ITEM", 20 ] ],
     "death_drops": "mon_zombie_military_pilot_death_drops",
     "burn_into": "mon_zombie_scorched",
     "flags": [
@@ -323,7 +323,8 @@
       "REVIVES",
       "PUSH_MON",
       "NOHEAD",
-      "FILTHY"
+      "FILTHY",
+      "可以装备武器"
     ]
   },
   {

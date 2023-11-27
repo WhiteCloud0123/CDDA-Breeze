@@ -3803,6 +3803,13 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
                 }
                 result = draw_from_id_string( chosen_id, ent_category, ent_subcategory, p,
                                               subtile, rot_facing, ll, false, height_3d );
+                
+                // 如果额外装备了武器，绘制武器的贴图
+                if (m->weapon_item) {
+                    draw_from_id_string(m->weapon_item.get()->type->get_id().str(), TILE_CATEGORY::NONE, empty_string, p,
+                        0, rot_facing, ll, false, height_3d);
+                }
+                               
                 sees_player = m->sees( you );
                 attitude = m->attitude_to( you );
             }

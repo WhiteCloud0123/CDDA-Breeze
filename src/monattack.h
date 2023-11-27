@@ -110,6 +110,7 @@ bool grenadier( monster *z );
 bool grenadier_elite( monster *z );
 bool doot( monster *z );
 bool zombie_fuse( monster *z );
+bool do_weapon_item(monster *z);
 bool dsa_drone_scan( monster *z );
 
 void taze( monster *z, Creature *target );

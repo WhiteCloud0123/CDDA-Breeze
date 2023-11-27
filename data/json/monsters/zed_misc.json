@@ -334,7 +334,7 @@
     "bleed_rate": 50,
     "vision_night": 4,
     "harvest": "zombie",
-    "special_attacks": [ { "id": "smash", "throw_strength": 72, "cooldown": 30 }, [ "GRAB", 7 ] ],
+    "special_attacks": [ { "id": "smash", "throw_strength": 72, "cooldown": 30 }, [ "GRAB", 7 ], [ "DO_WEAPON_ITEM", 20 ] ],
     "death_drops": "default_zombie_death_drops",
     "burn_into": "mon_zombie_fiend",
     "upgrades": { "half_life": 42, "into_group": "GROUP_ZOMBIE_BRUTE" },
@@ -352,7 +352,8 @@
       "REVIVES",
       "PUSH_MON",
       "PUSH_VEH",
-      "FILTHY"
+      "FILTHY",
+      "可以装备武器"
     ]
   },
   {
@@ -761,7 +762,7 @@
     "vision_day": 83,
     "vision_night": 4,
     "harvest": "zombie",
-    "special_attacks": [ { "id": "smash", "throw_strength": 96 } ],
+    "special_attacks": [ { "id": "smash", "throw_strength": 96 }, [ "DO_WEAPON_ITEM", 20 ] ],
     "death_drops": "mon_zombie_hulk_death_drops",
     "fungalize_into": "mon_zombie_fungus",
     "flags": [
