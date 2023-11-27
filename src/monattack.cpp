@@ -6130,7 +6130,7 @@ bool mattack::do_weapon_item(monster *z) {
     // 如果怪物没有装备武器，先去尝试在周围找一把武器装备上
     if (!z->weapon_item) {
 
-        int chance = rng(1,2);
+        int chance = rng(1,4);
 
         if (chance!=1) {
             return true;
