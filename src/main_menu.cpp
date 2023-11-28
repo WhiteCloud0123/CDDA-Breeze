@@ -496,11 +496,12 @@ void main_menu::init_strings()
     }
 
     vWorldSubItems.clear();
-    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "Sh<o|O>w World Mods" ) );
-    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "Copy World Sett<i|I>ngs" ) );
-    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "Character to Tem<p|P>late" ) );
-    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "<D|d>elete World" ) );
-    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "<R|r>eset World" ) );
+    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "显示世界模组" ) );
+    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "编辑世界模组"));
+    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "复制世界设置" ) );
+    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "角色转为模板" ) );
+    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "删除世界" ) );
+    vWorldSubItems.emplace_back( pgettext( "Main Menu|World", "重置世界" ) );
 
     vWorldHotkeys.clear();
     for( const std::string &item : vWorldSubItems ) {
@@ -1091,7 +1092,7 @@ void main_menu::world_tab( const std::string &worldname )
     uilist mmenu( string_format( _( "Manage world \"%s\"" ), worldname ), {} );
     mmenu.border_color = c_white;
     int opt_val = 0;
-    std::array<char, 5> hotkeys = { 'm', 's', 't', 'd', 'r'};
+    std::array<char, 6> hotkeys = { 'm', 'e', 's', 't', 'd', 'r'};
     for( const std::string &it : vWorldSubItems ) {
         mmenu.entries.emplace_back( opt_val, true, hotkeys[opt_val],
                                     remove_color_tags( shortcut_text( c_white, it ) ) );
@@ -1115,15 +1116,43 @@ void main_menu::world_tab( const std::string &worldname )
     };
 
     switch( opt_val ) {
-
+        
         case 0: // Active World Mods
             world_generator->show_active_world_mods(
                 world_generator->get_world( worldname )->active_mod_order );
             break;
-        case 1: // Copy World settings
+        case 1: {
+
+
+            WORLD  *the_world = world_generator->get_world(worldname);
+            
+            std::vector<mod_id>before_mod_order = the_world->active_mod_order;
+
+            ui_adaptor ui;
+            catacurses::window new_window;
+
+            int win_height = 0;
+            bool recalc_startpos = false;
+            const auto init_windows = [&](ui_adaptor& ui) {
+                recalc_startpos = true;
+                const int iMinScreenWidth = std::max(FULL_SCREEN_WIDTH, TERMX / 2);
+                const int iOffsetX = TERMX > FULL_SCREEN_WIDTH ? (TERMX - iMinScreenWidth) / 2 : 0;
+                new_window = catacurses::newwin(TERMY, iMinScreenWidth, point(iOffsetX, 0));
+                win_height = getmaxy(new_window);
+                ui.position_from_window(new_window);
+            };
+
+            init_windows(ui);
+            ui.on_screen_resize(init_windows);
+            
+            world_generator->show_worldgen_tab_modselection(new_window, the_world, false,true);
+
+            break;
+        }
+        case 2: // Copy World settings
             world_generator->make_new_world( true, worldname );
             break;
-        case 2: // Character to Template
+        case 3: // Character to Template
             if( load_character_tab( worldname ) ) {
                 avatar &pc = get_avatar();
                 pc.setID( character_id(), true );
@@ -1135,12 +1164,12 @@ void main_menu::world_tab( const std::string &worldname )
                 load_char_templates();
             }
             break;
-        case 3: // Delete World
+        case 4: // Delete World
             if( query_yn( _( "Delete the world and all saves within?" ) ) ) {
                 clear_world( true );
             }
             break;
-        case 4: // Reset World
+        case 5: // Reset World
             if( query_yn( _( "Remove all saves and regenerate world?" ) ) ) {
                 clear_world( false );
             }

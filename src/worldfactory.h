@@ -131,7 +131,8 @@ class worldfactory
         static std::map<size_t, inclusive_rectangle<point>> draw_worldgen_tabs( const catacurses::window &w,
                 size_t current );
         void show_active_world_mods( const std::vector<mod_id> &world_mods );
-
+        int show_worldgen_tab_modselection(const catacurses::window& win, WORLD* world, bool with_tabs, bool in_main_menu = false);
+        
     private:
         std::map<std::string, std::unique_ptr<WORLD>> all_worlds;
 
@@ -139,7 +140,6 @@ class worldfactory
 
         std::string pick_random_name();
         int show_worldgen_tab_options( const catacurses::window &win, WORLD *world, bool with_tabs );
-        int show_worldgen_tab_modselection( const catacurses::window &win, WORLD *world, bool with_tabs );
         int show_worldgen_basic( WORLD *world );
         int show_worldgen_advanced( WORLD *world );
 
