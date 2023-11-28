@@ -6126,7 +6126,6 @@ bool mattack::do_weapon_item(monster *z) {
 
     bool continue_find_weapon = true;
 
-
     // 如果怪物没有装备武器，先去尝试在周围找一把武器装备上
     if (!z->weapon_item) {
 
@@ -6139,12 +6138,12 @@ bool mattack::do_weapon_item(monster *z) {
 
         for (int i = x_begin; i <= x_max;i++) {
             for (int r = y_begin; r <= y_max;r++) {
-                
+ 
                 for (item& i_ref : cur_map.i_at(cur_map.getlocal(tripoint(i,r,z_level)))) {
-                    if (i_ref.damage_melee(damage_type::BASH)>=1) {
+                    if (i_ref.damage_melee(damage_type::BASH)>=1   &&  units::to_kilogram(i_ref.weight()) <= z->type->melee_dice * z->type->melee_sides   ) {
                         z->weapon_item = cata::make_value<item>(i_ref);
                         continue_find_weapon = false;
-                        add_msg(m_bad,_("%1s 装备上了 %2s !"),z->get_name(),i_ref.tname());
+                        add_msg(m_bad,_("%1s 拿起了 %2s !"),z->get_name(),i_ref.tname());
                         item_location(map_cursor(cur_map.getlocal(tripoint(i, r, z_level))), &i_ref).remove_item();
                         break;
                     }
@@ -6173,10 +6172,10 @@ bool mattack::do_weapon_item(monster *z) {
             add_msg(m_bad, _("%1s 放下了 %2s 。"), z->get_name(), z->weapon_item.get()->tname());
             z->weapon_item.reset();
         }
-    
-    
-    
-    
+        
+
+
+
     }
 
 
