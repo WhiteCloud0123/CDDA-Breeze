@@ -1024,10 +1024,12 @@ void worldfactory::show_active_world_mods( const std::vector<mod_id> &world_mods
 }
 
 int worldfactory::show_worldgen_tab_modselection( const catacurses::window &win, WORLD *world,
-        bool with_tabs )
+        bool with_tabs ,bool in_main_menu)
 {
     // Use active_mod_order of the world,
     // saves us from writing 'world->active_mod_order' all the time.
+
+    std::vector<mod_id> before_mod_order = world->active_mod_order;
     std::vector<mod_id> &active_mod_order = world->active_mod_order;
     {
         std::vector<mod_id> tmp_mod_order;
@@ -1529,6 +1531,16 @@ int worldfactory::show_worldgen_tab_modselection( const catacurses::window &win,
                 popup( "%s", mman_ui->get_information( selmod ) );
             }
         } else if( action == "QUIT" ) {
+
+            if (in_main_menu) {
+                if (query_yn(_("要保存更改吗？"))) {
+                   world->save();
+                }
+                else {
+                    world->active_mod_order = before_mod_order;
+                }          
+            }
+
             tab_output = -999;
         } else if( action == "FILTER" ) {
             set_filter();
