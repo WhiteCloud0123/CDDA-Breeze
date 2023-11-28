@@ -1125,8 +1125,6 @@ void main_menu::world_tab( const std::string &worldname )
 
 
             WORLD  *the_world = world_generator->get_world(worldname);
-            
-            std::vector<mod_id>before_mod_order = the_world->active_mod_order;
 
             ui_adaptor ui;
             catacurses::window new_window;
