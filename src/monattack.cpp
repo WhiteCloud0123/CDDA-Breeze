@@ -6113,6 +6113,7 @@ bool mattack::zombie_fuse( monster *z )
 
 bool mattack::do_weapon_item(monster *z) {
     
+    Character& player = get_player_character();
     map& cur_map = get_map();
     tripoint_abs_ms z_pos = z->get_location();
 
@@ -6143,7 +6144,11 @@ bool mattack::do_weapon_item(monster *z) {
                     if (i_ref.damage_melee(damage_type::BASH)>=1   &&  units::to_kilogram(i_ref.weight()) <= z->type->melee_dice * z->type->melee_sides   ) {
                         z->weapon_item = cata::make_value<item>(i_ref);
                         continue_find_weapon = false;
-                        add_msg(m_bad,_("%1s 拿起了 %2s !"),z->get_name(),i_ref.tname());
+                       
+                        if (player.sees(*static_cast<Creature*>(z))) {
+                            add_msg(m_bad, _("%1s 拿起了 %2s !"), z->get_name(), i_ref.tname());
+                        }
+
                         item_location(map_cursor(cur_map.getlocal(tripoint(i, r, z_level))), &i_ref).remove_item();
                         break;
                     }
@@ -6168,8 +6173,12 @@ bool mattack::do_weapon_item(monster *z) {
         
         int chance = rng(1, 20);
         if (chance == 1) {
-            cur_map.add_item_or_charges(get_player_character().pos(), *z->weapon_item);
-            add_msg(m_bad, _("%1s 放下了 %2s 。"), z->get_name(), z->weapon_item.get()->tname());
+            cur_map.add_item_or_charges(z->pos(), *z->weapon_item);
+            
+            if (player.sees(*static_cast<Creature*>(z))) {
+                add_msg(m_bad, _("%1s 放下了 %2s 。"), z->get_name(), z->weapon_item.get()->tname());
+            }
+
             z->weapon_item.reset();
         }
         
