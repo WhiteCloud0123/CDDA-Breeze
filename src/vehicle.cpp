@@ -4945,7 +4945,7 @@ int vehicle::net_battery_charge_rate_w( bool include_reactors, bool connected_ve
     } else {
         return total_engine_epower_w() + total_alternator_epower_w() + total_accessory_epower_w() +
                total_solar_epower_w() + total_wind_epower_w() + total_water_wheel_epower_w() +
-            linked_item_epower_this_turn.value()/1000  /*(include_reactors ? active_reactor_epower_w(true) : 0)*/;
+            linked_item_epower_this_turn.value()/1000  + (include_reactors ? active_reactor_epower_w(true) : 0);
         
     }
 }
