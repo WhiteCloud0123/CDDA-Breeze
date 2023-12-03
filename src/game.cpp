@@ -3211,6 +3211,11 @@ bool game::save()
             return false;
         } else {
             world_generator->active_world->add_save( save_t::from_save_id( u.get_save_id() ) );
+            write_to_file(PATH_INFO::world_base_save_path_path() / (base64_encode(
+                u.get_save_id()) + ".pt"), [&total_time_played](std::ostream& fout) {
+                    fout.imbue(std::locale::classic());
+                    fout << total_time_played.count();
+                });
             return true;
         }
     } catch( std::ios::failure & ) {
