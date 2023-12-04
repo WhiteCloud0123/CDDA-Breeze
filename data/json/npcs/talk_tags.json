@@ -2085,6 +2085,16 @@
   },
   {
     "type": "snippet",
+    "category": "<ally_rule_use_vehicle_mounted_weapon_true_text>",
+    "text": "<mypronoun> 会使用车载武器。"
+  },
+  {
+    "type": "snippet",
+    "category": "<ally_rule_use_vehicle_mounted_weapon_false_text>",
+    "text": "<mypronoun> 不会使用车载武器。"
+  },
+  {
+    "type": "snippet",
     "category": "<ally_rule_use_guns_true_text>",
     "text": "<mypronoun> will use ranged weapons."
   },

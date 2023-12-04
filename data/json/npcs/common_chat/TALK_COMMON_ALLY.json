@@ -290,6 +290,16 @@
         },
         {
           "concatenate": [
+            { "npc_override": "use_vehicle_mounted_weapon", "yes": "  OVERRIDE: ", "no": "  " },
+            {
+              "npc_rule": "use_vehicle_mounted_weapon",
+              "yes": "<ally_rule_use_vehicle_mounted_weapon_true_text>",
+              "no": "<ally_rule_use_vehicle_mounted_weapon_false_text>"
+            }
+          ]
+        },
+        {
+          "concatenate": [
             { "npc_override": "use_grenades", "yes": "  OVERRIDE: ", "no": "  " },
             {
               "npc_rule": "use_grenades",
@@ -351,6 +361,15 @@
         },
         "topic": "TALK_COMBAT_COMMANDS",
         "effect": { "toggle_npc_rule": "follow_distance_2" }
+      },
+      {
+        "truefalsetext": {
+          "condition": { "npc_rule": "use_vehicle_mounted_weapon" },
+          "true": "不要使用车载武器。",
+          "false": "你可以使用车载武器。"
+        },
+        "topic": "TALK_COMBAT_COMMANDS",
+        "effect": { "toggle_npc_rule": "use_vehicle_mounted_weapon" }
       },
       {
         "truefalsetext": {

@@ -7,6 +7,7 @@
 #include "avatar.h"
 #include "character.h"
 #include "creature.h"
+#include "creature_tracker.h"
 #include "debug.h"
 #include "enums.h"
 #include "gun_mode.h"
@@ -333,14 +334,22 @@ int turret_data::fire( Character &c, const tripoint &target )
 }
 
 void vehicle::turrets_aim_and_fire_single()
-{
+{   
+    creature_tracker& c_t = get_creature_tracker();
     std::vector<std::string> option_names;
     std::vector<vehicle_part *> options;
 
     // Find all turrets that are ready to fire
     for( vehicle_part *&t : turrets() ) {
         turret_data data = turret_query( *t );
-        if( data.query() == turret_data::status::ready ) {
+        tripoint& turret_pos = bub_part_pos(*t).raw();
+        Creature* c = c_t.creature_at(turret_pos);
+        if ( c && c->is_npc() &&c->as_npc()->rules.has_flag(ally_rule::use_vehicle_mounted_weapon)) {
+            continue;
+        }
+
+
+        if( data.query() == turret_data::status::ready) {
             option_names.push_back( t->name() );
             options.push_back( t );
         }
@@ -363,7 +372,8 @@ void vehicle::turrets_aim_and_fire_single()
 }
 
 bool vehicle::turrets_aim_and_fire_all_manual( bool show_msg )
-{
+{   
+    creature_tracker& c_t = get_creature_tracker();
     std::vector<vehicle_part *> turrets = find_all_ready_turrets( true, false );
 
     if( turrets.empty() ) {
@@ -374,7 +384,20 @@ bool vehicle::turrets_aim_and_fire_all_manual( bool show_msg )
         return false;
     }
 
-    turrets_aim_and_fire( turrets );
+
+    std::vector<vehicle_part*>turrets_npc_not_control;
+    // 筛选没有npc正在控制的车载武器
+    for (vehicle_part *t : turrets) {
+        tripoint &turret_pos = bub_part_pos(*t).raw();
+        Creature* c = c_t.creature_at(turret_pos);
+        if (c && c->is_npc() && c->as_npc()->rules.has_flag(ally_rule::use_vehicle_mounted_weapon)) {
+            continue;
+        }
+        turrets_npc_not_control.push_back(t);
+    }
+
+
+    turrets_aim_and_fire( turrets_npc_not_control );
     return true;
 }
 
@@ -579,9 +602,11 @@ npc vehicle::get_targeting_npc( const vehicle_part &pt ) const
     return cpu;
 }
 
-int vehicle::automatic_fire_turret( vehicle_part &pt )
+int vehicle::automatic_fire_turret( vehicle_part &pt ,npc *handler )
 {
     turret_data gun = turret_query( pt );
+
+    bool has_npc_handler = handler ? true : false;
 
     int shots = 0;
 
@@ -616,7 +641,7 @@ int vehicle::automatic_fire_turret( vehicle_part &pt )
         // TODO: calculate chance to hit and cap range based upon this
         int max_range = 20;
         int range = std::min( gun.range(), max_range );
-        Creature *auto_target = cpu.auto_find_hostile_target( range, boo_hoo, area );
+        Creature *auto_target = has_npc_handler ? handler->auto_find_hostile_target(range, boo_hoo, area) : cpu.auto_find_hostile_target( range, boo_hoo, area );
         if( auto_target == nullptr ) {
             if( boo_hoo ) {
                 cpu.get_name() = string_format( pgettext( "vehicle turret", "The %s" ), pt.name() );
@@ -652,7 +677,12 @@ int vehicle::automatic_fire_turret( vehicle_part &pt )
     tripoint targ = target.second;
     pt.reset_target( pos );
 
-    shots = gun.fire( cpu, targ );
+    if (has_npc_handler) {
+        shots = gun.fire(*handler, targ);
+    }
+    else {
+        shots = gun.fire(cpu, targ);
+    }
 
     if( shots && u_see ) {
         add_msg_if_player_sees( targ, _( "The %1$s fires its %2$s!" ), name, pt.name() );
