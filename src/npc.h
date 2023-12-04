@@ -330,6 +330,7 @@ enum class ally_rule : int {
     use_guns = 1,
     use_grenades = 2,
     use_silent = 4,
+    use_vehicle_mounted_weapon = 5,
     avoid_friendly_fire = 8,
     allow_pick_up = 16,
     allow_bash = 32,
@@ -351,7 +352,14 @@ struct ally_rule_data {
     std::string rule_false_text;
 };
 
-const std::unordered_map<std::string, ally_rule_data> ally_rule_strs = { {
+const std::unordered_map<std::string, ally_rule_data> ally_rule_strs = { {        
+        {
+            "use_vehicle_mounted_weapon", {
+                ally_rule::use_vehicle_mounted_weapon,
+                "<ally_rule_use_vehicle_mounted_weapon_true_text>",
+                "<ally_rule_use_vehicle_mounted_weapon_false_text>"
+            }
+        },      
         {
             "use_guns", {
                 ally_rule::use_guns,

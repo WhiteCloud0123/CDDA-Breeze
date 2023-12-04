@@ -1756,7 +1756,7 @@ class vehicle
          * Fire turret at automatically acquired target
          * @return number of shots actually fired (which may be zero)
          */
-        int automatic_fire_turret( vehicle_part &pt );
+        int automatic_fire_turret( vehicle_part &pt , npc *handler );
 
     private:
         /*

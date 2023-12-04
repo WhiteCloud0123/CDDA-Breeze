@@ -5777,7 +5777,8 @@ void vehicle::place_zones( map &pmap ) const
 }
 
 void vehicle::gain_moves()
-{
+{   
+    creature_tracker& c_t = get_creature_tracker();
     fuel_used_last_turn.clear();
     check_falling_or_floating();
     const bool pl_control = player_in_control( get_player_character() );
@@ -5824,13 +5825,18 @@ void vehicle::gain_moves()
     if( check_environmental_effects ) {
         check_environmental_effects = do_environmental_effects();
     }
-
+    
     // turrets which are enabled will try to reload and then automatically fire
     // Turrets which are disabled but have targets set are a special case
     for( vehicle_part *e : turrets() ) {
-        if( e->enabled || e->target.second != e->target.first ) {
-            automatic_fire_turret( *e );
-        }
+        tripoint &turret_pos = bub_part_pos(*e).raw();
+        Creature *c =c_t.creature_at(turret_pos);
+    if (e->enabled || e->target.second != e->target.first) {
+        automatic_fire_turret(*e, nullptr);
+    }
+    else if (c && c->is_npc() && c->as_npc()->rules.has_flag(ally_rule::use_vehicle_mounted_weapon)) {
+            automatic_fire_turret(*e,c->as_npc());
+        } 
     }
 
     if( velocity < 0 ) {
