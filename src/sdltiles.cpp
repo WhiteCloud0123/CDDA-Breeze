@@ -553,14 +553,14 @@ void draw_character_picture() {
 
         SDL_Rect dstrect;
         dstrect.x = (TERMX - win_beginx) * font_width_ref - 381;
-        dstrect.y = win_beginy * font_height_ref;
+        dstrect.y = WindowHeight - 531 - win_beginy * font_height_ref;
         dstrect.w = 381;
         dstrect.h = 522;
 
 #if defined(__ANDROID__)
        
         dstrect.x = WindowWidth - win_beginx * font_width_ref - 381 - visible_display_frame.x * 2;
-        dstrect.y = win_beginy * font_height_ref * 2;
+        dstrect.y = WindowHeight - 531 - win_beginy * font_height_ref * 2;
 
 #endif
         
