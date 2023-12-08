@@ -3554,52 +3554,111 @@ void game::add_draw_callback( const shared_ptr_fast<draw_callback_t> &cb )
 static void draw_trail( const tripoint &start, const tripoint &end, bool bDrawX );
 
 static shared_ptr_fast<game::draw_callback_t> create_zone_callback(
-    const cata::optional<tripoint> &zone_start,
-    const cata::optional<tripoint> &zone_end,
-    const bool &zone_blink,
-    const bool &zone_cursor,
-    const bool &is_moving_zone = false
+    const cata::optional<tripoint>& zone_start,
+    const cata::optional<tripoint>& zone_end,
+    const bool& zone_blink,
+    const bool& zone_cursor,
+    const bool& is_moving_zone = false
 )
 {
     return make_shared_fast<game::draw_callback_t>(
-    [&]() {
-        if( zone_cursor ) {
-            if( is_moving_zone ) {
-                g->draw_cursor( ( zone_start.value() + zone_end.value() ) / 2 );
-            } else {
-                if( zone_end ) {
-                    g->draw_cursor( zone_end.value() );
-                } else if( zone_start ) {
-                    g->draw_cursor( zone_start.value() );
+        [&]() {
+            if (zone_cursor) {
+                if (is_moving_zone) {
+                    g->draw_cursor((zone_start.value() + zone_end.value()) / 2);
+                }
+                else {
+                    if (zone_end) {
+                        g->draw_cursor(zone_end.value());
+                    }
+                    else if (zone_start) {
+                        g->draw_cursor(zone_start.value());
+                    }
                 }
             }
-        }
-        if( zone_blink && zone_start && zone_end ) {
-            avatar &player_character = get_avatar();
-            const point offset2( player_character.view_offset.xy() +
-                                 point( player_character.posx() - getmaxx( g->w_terrain ) / 2,
-                                        player_character.posy() - getmaxy( g->w_terrain ) / 2 ) );
+            if (zone_blink && zone_start && zone_end) {
+                avatar& player_character = get_avatar();
+                const point offset2(player_character.view_offset.xy() +
+                    point(player_character.posx() - getmaxx(g->w_terrain) / 2,
+                        player_character.posy() - getmaxy(g->w_terrain) / 2));
 
-            tripoint offset;
+                tripoint offset;
 #if defined(TILES)
-            if( use_tiles ) {
-                offset = tripoint_zero; //TILES
-            } else {
+                if (use_tiles) {
+                    offset = tripoint_zero; //TILES
+                }
+                else {
 #endif
-                offset = tripoint( offset2, 0 ); //CURSES
+                    offset = tripoint(offset2, 0); //CURSES
 #if defined(TILES)
+                }
+#endif
+
+                const tripoint start(std::min(zone_start->x, zone_end->x),
+                    std::min(zone_start->y, zone_end->y),
+                    zone_end->z);
+                const tripoint end(std::max(zone_start->x, zone_end->x),
+                    std::max(zone_start->y, zone_end->y),
+                    zone_end->z);
+                g->draw_zones(start, end, offset);
+            } });
+}
+
+static shared_ptr_fast<game::draw_callback_t> create_zone_callback_new(
+    const cata::optional<tripoint>& zone_start,
+    const cata::optional<tripoint>& zone_end,
+    std::vector<zone_manager::ref_zone_data>& zones,
+    const bool& zone_blink,
+    const bool& zone_cursor,
+    const bool& is_moving_zone = false
+)
+{
+    map& m = get_map();
+    return make_shared_fast<game::draw_callback_t>(
+        [&]() {
+            if (zone_cursor) {
+                if (is_moving_zone) {
+                    g->draw_cursor((zone_start.value() + zone_end.value()) / 2);
+                }
+                else {
+                    if (zone_end) {
+                        g->draw_cursor(zone_end.value());
+                    }
+                    else if (zone_start) {
+                        g->draw_cursor(zone_start.value());
+                    }
+                }
             }
+            if ( zone_start && zone_end) {
+                avatar& player_character = get_avatar();
+                const point offset2(player_character.view_offset.xy() +
+                    point(player_character.posx() - getmaxx(g->w_terrain) / 2,
+                        player_character.posy() - getmaxy(g->w_terrain) / 2));
+
+                tripoint offset;
+#if defined(TILES)
+                if (use_tiles) {
+                    offset = tripoint_zero; //TILES
+                }
+                else {
+#endif
+                    offset = tripoint(offset2, 0); //CURSES
+#if defined(TILES)
+                }
 #endif
 
-            const tripoint start( std::min( zone_start->x, zone_end->x ),
-                                  std::min( zone_start->y, zone_end->y ),
-                                  zone_end->z );
-            const tripoint end( std::max( zone_start->x, zone_end->x ),
-                                std::max( zone_start->y, zone_end->y ),
-                                zone_end->z );
-            g->draw_zones( start, end, offset );
-        }
-    } );
+                const tripoint start(std::min(zone_start->x, zone_end->x),
+                    std::min(zone_start->y, zone_end->y),
+                    zone_end->z);
+                const tripoint end(std::max(zone_start->x, zone_end->x),
+                    std::max(zone_start->y, zone_end->y),
+                zone_end->z);       
+                    g->draw_all_zones(start, end, offset,zones);
+                
+                
+            }
+
+        });
 }
 
 static shared_ptr_fast<game::draw_callback_t> create_trail_callback(
@@ -6710,9 +6769,10 @@ void game::zones_manager()
     cata::optional<tripoint> zone_end;
     bool zone_blink = false;
     bool zone_cursor = false;
-    shared_ptr_fast<draw_callback_t> zone_cb = create_zone_callback(
-                zone_start, zone_end, zone_blink, zone_cursor );
-    add_draw_callback( zone_cb );
+    shared_ptr_fast<draw_callback_t> zone_cb_new = create_zone_callback_new(
+                zone_start, zone_end,zones,blink, zone_cursor);
+    
+    add_draw_callback( zone_cb_new );
 
     // This lambda returns either absolute coordinates or relative-to-player
     // coordinates, depending on whether personal is false or true respectively.
@@ -7165,7 +7225,7 @@ void game::zones_manager()
     } while( action != "QUIT" );
     zones_manager_open = false;
     ctxt.reset_timeout();
-    zone_cb = nullptr;
+    zone_cb_new = nullptr;
 
     if( stuff_changed ) {
         zone_manager &zones = zone_manager::get_manager();
@@ -7402,7 +7462,7 @@ look_around_result game::look_around(
     cata::optional<tripoint> zone_end;
     bool zone_blink = false;
     bool zone_cursor = true;
-    shared_ptr_fast<draw_callback_t> zone_cb = create_zone_callback( zone_start, zone_end, zone_blink,
+    shared_ptr_fast<draw_callback_t> zone_cb = create_zone_callback( zone_start, zone_end ,zone_blink,
             zone_cursor, is_moving_zone );
     add_draw_callback( zone_cb );
 

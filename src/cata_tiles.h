@@ -14,6 +14,7 @@
 #include "animation.h"
 #include "cata_type_traits.h"
 #include "creature.h"
+#include "clzones.h"
 #include "enums.h"
 #include "lightmap.h"
 #include "line.h"
@@ -576,6 +577,8 @@ class cata_tiles
         void void_sct();
 
         void init_draw_zones( const tripoint &start, const tripoint &end, const tripoint &offset );
+        void init_draw_all_zones(const tripoint& start, const tripoint& end, 
+            const tripoint& offset,std::vector<zone_manager::ref_zone_data>&zones_ref);
         void draw_zones_frame();
         void void_zones();
 
@@ -708,6 +711,7 @@ class cata_tiles
         bool do_draw_weather = false;
         bool do_draw_sct = false;
         bool do_draw_zones = false;
+        std::vector<zone_manager::ref_zone_data> zones;
 
         tripoint exp_pos;
         int exp_rad = 0;
