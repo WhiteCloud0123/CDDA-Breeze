@@ -872,6 +872,15 @@ void game::draw_zones( const tripoint &start, const tripoint &end, const tripoin
         draw_zones_curses( w_terrain, start, end, offset );
     }
 }
+void game::draw_all_zones(const tripoint& start, const tripoint& end, const tripoint& offset,std::vector<zone_manager::ref_zone_data> & zones_ref) const
+{
+    if (use_tiles) {
+        tilecontext->init_draw_all_zones(start, end, offset,zones_ref);
+    }
+    else {
+        draw_zones_curses(w_terrain, start, end, offset);
+    }
+}
 #else
 void game::draw_zones( const tripoint &start, const tripoint &end, const tripoint &offset ) const
 {

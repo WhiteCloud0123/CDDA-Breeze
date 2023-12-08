@@ -42,6 +42,7 @@
 #include "map_extras.h"
 #include "map_memory.h"
 #include "mapdata.h"
+#include "messages.h"
 #include "mod_tileset.h"
 #include "monster.h"
 #include "monstergenerator.h"
@@ -4089,6 +4090,16 @@ void cata_tiles::init_draw_zones( const tripoint &_start, const tripoint &_end,
     zone_end = _end;
     zone_offset = _offset;
 }
+void cata_tiles::init_draw_all_zones(const tripoint& _start, const tripoint& _end,
+    const tripoint& _offset,std::vector<zone_manager::ref_zone_data>&zones_ref)
+{
+    do_draw_zones = true;
+    zone_start = _start;
+    zone_end = _end;
+    zone_offset = _offset;
+    zones = zones_ref;
+
+}
 void cata_tiles::init_draw_radiation_override( const tripoint &p, const int rad )
 {
     radiation_override.emplace( p, rad );
@@ -4459,15 +4470,43 @@ void cata_tiles::draw_sct_frame( std::multimap<point, formatted_text> &overlay_s
 }
 
 void cata_tiles::draw_zones_frame()
-{
+{   
     tripoint player_pos = get_player_character().pos();
-    for( int iY = zone_start.y; iY <= zone_end.y; ++ iY ) {
-        for( int iX = zone_start.x; iX <= zone_end.x; ++iX ) {
-            draw_from_id_string( "highlight", TILE_CATEGORY::NONE, empty_string,
-                                 zone_offset.xy() + tripoint( iX, iY, player_pos.z ),
-                                 0, 0, lit_level::LIT, false );
+    map& m = get_map();
+    bool has_pass_the_drawn_zone = false;
+ 
+        for (int iY = zone_start.y; iY <= zone_end.y; ++iY) {
+            for (int iX = zone_start.x; iX <= zone_end.x; ++iX) {
+                draw_from_id_string("highlight", TILE_CATEGORY::NONE, empty_string,
+                    zone_offset.xy() + tripoint(iX, iY, player_pos.z),
+                    0, 0, lit_level::LIT, false);
+            }
+        }    
+    
+
+        for (zone_data& data : zones) {
+            
+            const tripoint& zone_start_ref = m.getlocal(data.get_start_point());
+            const tripoint& zone_end_ref = m.getlocal(data.get_end_point());
+          
+            if (  !has_pass_the_drawn_zone &&  zone_start_ref.x == zone_start.x && zone_start_ref.y == zone_start.y
+                 && zone_end_ref.x == zone_end.x && zone_end_ref.y == zone_end.y
+                ) {
+                has_pass_the_drawn_zone = true;
+                continue;
+            }
+            
+               
+            for (int iY = zone_start_ref.y; iY <= zone_end_ref.y; ++iY) {
+                for (int iX = zone_start_ref.x; iX <= zone_end_ref.x; ++iX) {
+                    draw_from_id_string("highlight_02", TILE_CATEGORY::NONE, empty_string,
+                        zone_offset.xy() + tripoint(iX, iY, player_pos.z),
+                        0, 0, lit_level::LIT, false);
+                }
+            }
         }
-    }
+
+        has_pass_the_drawn_zone = true;
 
 }
 

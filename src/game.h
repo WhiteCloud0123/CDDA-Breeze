@@ -19,6 +19,7 @@
 #include "calendar.h"
 #include "character.h"
 #include "character_id.h"
+#include "clzones.h"
 #include "coordinates.h"
 #include "creature.h"
 #include "cursesdef.h"
@@ -746,6 +747,8 @@ class game
         void draw_weather( const weather_printable &wPrint ) const;
         void draw_sct() const;
         void draw_zones( const tripoint &start, const tripoint &end, const tripoint &offset ) const;
+        void draw_all_zones(const tripoint& start, const tripoint& end, const tripoint& offset
+            ,std::vector<zone_manager::ref_zone_data> &zones_ref) const;
         // Draw critter (if visible!) on its current position into w_terrain.
         // @param center the center of view, same as when calling map::draw
         void draw_critter( const Creature &critter, const tripoint &center );
