@@ -4477,7 +4477,7 @@ void cata_tiles::draw_zones_frame()
  
         for (int iY = zone_start.y; iY <= zone_end.y; ++iY) {
             for (int iX = zone_start.x; iX <= zone_end.x; ++iX) {
-                draw_from_id_string("highlight", TILE_CATEGORY::NONE, empty_string,
+                draw_from_id_string("highlight_02", TILE_CATEGORY::NONE, empty_string,
                     zone_offset.xy() + tripoint(iX, iY, player_pos.z),
                     0, 0, lit_level::LIT, false);
             }
@@ -4499,14 +4499,12 @@ void cata_tiles::draw_zones_frame()
                
             for (int iY = zone_start_ref.y; iY <= zone_end_ref.y; ++iY) {
                 for (int iX = zone_start_ref.x; iX <= zone_end_ref.x; ++iX) {
-                    draw_from_id_string("highlight_02", TILE_CATEGORY::NONE, empty_string,
+                    draw_from_id_string("highlight_03", TILE_CATEGORY::NONE, empty_string,
                         zone_offset.xy() + tripoint(iX, iY, player_pos.z),
                         0, 0, lit_level::LIT, false);
                 }
             }
         }
-
-        has_pass_the_drawn_zone = true;
 
 }
 
