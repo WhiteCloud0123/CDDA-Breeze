@@ -574,8 +574,8 @@ void monmove()
             // 首先判断怪物有没有受伤
             if (critter.get_hp() < critter.get_hp_max()) {
                 
-                // 丧尸与机器人之外的怪物每天自动回复生命值
-                if ( !critter.in_species(species_ZOMBIE) && !critter.in_species(species_ROBOT)) {
+                // 机器人之外的怪物每天自动回复生命值
+                if ( !critter.in_species(species_ROBOT)) {
 
                     // 每天自动回复怪物最大血量的百分之5的血量，至少回复1点
                     if ( (0.05 * critter.get_hp_max() + critter.get_hp()) > critter.get_hp_max() ) {
