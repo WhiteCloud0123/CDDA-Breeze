@@ -11,8 +11,6 @@
       "no": "*waves you over.  \"I haven't seen you before.  Welcome to our little homely house.\""
     },
     "responses": [
-      { "text": "我想要领取今天的食物。", "topic": "TALK_DONE" },
-      { "text": "汇报今天的工作。", "topic": "TALK_DONE" },
       {
         "text": "Who are you?  This is a refugee center, right?",
         "topic": "TALK_FREE_MERCHANTS_MERCHANT_Intro",
