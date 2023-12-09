@@ -572,23 +572,27 @@ void monmove()
             critter.try_reproduce();
 
             // 首先判断怪物有没有受伤
-            if (critter.get_hp() < critter.get_hp_max()) {
+
+            const int& hp = critter.get_hp();
+            const int& hp_max = critter.get_hp_max();
+
+            if (hp < hp_max) {
                 
                 // 机器人之外的怪物每天自动回复生命值
                 if ( !critter.in_species(species_ROBOT)) {
 
                     // 每天自动回复怪物最大血量的百分之5的血量，至少回复1点
-                    if ( (0.05 * critter.get_hp_max() + critter.get_hp()) > critter.get_hp_max() ) {
-                        critter.set_hp(critter.get_hp_max());                   
+                    if ( (0.05 * hp_max + hp) > hp_max) {
+                        critter.set_hp(hp_max);
                     }
                     else {                      
-                        if (0.05 * critter.get_hp_max()<1) {
+                        if (0.05 * hp_max <1) {
                         
-                            critter.set_hp( 1 + critter.get_hp() );
+                            critter.set_hp( 1 + hp);
                         
                         }
                         else {
-                            critter.set_hp(0.05 * critter.get_hp_max() + critter.get_hp());
+                            critter.set_hp(0.05 * hp_max + hp);
                         }
                     
                     
