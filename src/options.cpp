@@ -1370,7 +1370,7 @@ void options_manager::add_options_general()
     add_empty_line();
 
     add("骑乘状态可以上下楼", "general", to_translation("骑乘状态可以上下楼"), to_translation("当此选项的值为 是 时，骑乘状态可以上下楼。"), true);
-    add("怪物的等级动态变化", "general", to_translation("怪物的等级动态变化"), to_translation("当此选项的值为 是 时，怪物的等级将动态变化。当此选项的值为 否 时，怪物的等级默认为0级。"), true);
+    add("怪物的等级动态变化", "general", to_translation("怪物的等级动态变化"), to_translation("当此选项的值为 是 时，怪物的等级将动态变化。当此选项的值为 否 时，怪物的等级默认为0级。"), false);
     add("精英怪物警告", "general", to_translation("精英怪物警告"), to_translation("如果玩家的视野中有等级有6级及以上的怪物，玩家的信息栏会不断的输出警告信息。"), true);
 
     add_empty_line();
