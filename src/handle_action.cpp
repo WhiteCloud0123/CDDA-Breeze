@@ -2810,7 +2810,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
         break;
 
     case ACTION_EAT:
-        if (!avatar_action::eat_here(player_character)) {
+        if ( (player_character.is_driving() && !query_yn(_("你正处于驾驶状态，确定要进食/消耗物品吗？"))) || !avatar_action::eat_here(player_character)) {
             avatar_action::eat(player_character, game_menus::inv::consume(player_character));
         }
         break;

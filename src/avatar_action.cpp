@@ -1124,7 +1124,12 @@ void avatar_action::use_item( avatar &you )
 }
 
 void avatar_action::use_item( avatar &you, item_location &loc )
-{
+{   
+    
+    if (you.is_driving() && !query_yn(_("你正处于驾驶状态，确定要使用物品吗？"))) {
+            return;
+    }
+
     if( you.has_effect( effect_incorporeal ) ) {
         you.add_msg_if_player( m_bad, _( "You can't use anything while incorporeal." ) );
         return;
