@@ -13,11 +13,9 @@ QQ频道
 
 <img src ="./文件存放/QQ频道.jpg" width="218" height="271">
 
-## 支持我的工作
-捐助渠道为微信赞赏码
+## 表达对此项目的支持
 
-<img src ="./文件存放/微信赞赏码.jpg" width="362" height="362">
-
+帮项目点一个star。
 
 # Cataclysm: Dark Days Ahead
 
