@@ -277,6 +277,15 @@ void aim_activity_actor::do_turn( player_activity &act, Character &who )
     if( !weapon || !avatar_action::can_fire_weapon( you, get_map(), *weapon ) ) {
         aborted = true;
         act.moves_left = 0;
+        if (you.use_gun_attack_in_peeking) {
+            std::optional<tripoint> bp = you.before_pos;
+            you.before_pos = std::nullopt;
+            you.use_gun_attack_in_peeking = false;
+            if (!get_creature_tracker().creature_at(*bp)) {
+                you.setpos(*bp);
+            };
+            you.moves -= 200;
+        }
         return;
     }
 
@@ -285,13 +294,39 @@ void aim_activity_actor::do_turn( player_activity &act, Character &who )
         if( !load_RAS_weapon() ) {
             aborted = true;
             act.moves_left = 0;
+            if (you.use_gun_attack_in_peeking) {
+                std::optional<tripoint> bp = you.before_pos;
+                you.before_pos = std::nullopt;
+                you.use_gun_attack_in_peeking = false;
+                if (!get_creature_tracker().creature_at(*bp)) {
+                    you.setpos(*bp);
+                };
+                you.moves -= 200;
+            }
+            
+            
             return;
+
         }
     }
 
     g->temp_exit_fullscreen();
     target_handler::trajectory trajectory = target_handler::mode_fire( you, *this );
     g->reenter_fullscreen();
+
+    if (trajectory.empty() && you.use_gun_attack_in_peeking == true && aborted ==true) {
+        act.moves_left = 0;
+        std::optional<tripoint> bp = you.before_pos;
+        you.before_pos = std::nullopt;
+        you.use_gun_attack_in_peeking = false;
+        if (!get_creature_tracker().creature_at(*bp)) {
+            you.setpos(*bp);
+        };
+        you.moves -= 200;
+        return;
+    }
+
+
 
     if( aborted ) {
         act.moves_left = 0;
@@ -312,6 +347,8 @@ void aim_activity_actor::do_turn( player_activity &act, Character &who )
         act.interruptable_with_kb = action != "AIM";
     }
 }
+
+
 
 void aim_activity_actor::finish( player_activity &act, Character &who )
 {
@@ -365,7 +402,7 @@ void aim_activity_actor::finish( player_activity &act, Character &who )
     if( !last_target || last_target->is_dead_state() ) {
         who.last_target.reset();
     }
-    who.assign_activity( player_activity( aim_actor ), false );
+        who.assign_activity( player_activity( aim_actor ), false );
 }
 
 void aim_activity_actor::canceled( player_activity &/*act*/, Character &/*who*/ )

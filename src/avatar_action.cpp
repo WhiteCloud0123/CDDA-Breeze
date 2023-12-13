@@ -850,6 +850,8 @@ void avatar_action::fire_wielded_weapon( avatar &you )
     }
 
     you.assign_activity( player_activity( aim_activity_actor::use_wielded() ), false );
+    // 玩家正在窥视状态下，使用枪械
+    you.use_gun_attack_in_peeking = true;
 }
 
 void avatar_action::fire_ranged_mutation( Character &you, const item &fake_gun )

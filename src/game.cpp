@@ -6070,8 +6070,77 @@ void game::peek()
     peek( new_pos );
 }
 
-void game::peek( const tripoint &p )
+// Perform a reach attach using wielded weapon
+static void reach_attack_in_peeking(avatar& you ,tripoint p)
+{   
+    tripoint before = you.pos();
+
+    you.setpos(p);
+
+    g->temp_exit_fullscreen();
+
+    target_handler::trajectory traj = target_handler::mode_reach(you, you.get_wielded_item());
+
+    if (!traj.empty()) {
+        you.reach_attack(traj.back());
+    }
+
+
+    you.setpos(before);
+
+    g->reenter_fullscreen();
+}
+
+static void fire_in_peeking(tripoint p)
 {
+    avatar& player_character = get_avatar();
+    map& here = get_map();
+
+    if (!player_character.is_armed()) {
+
+        std::vector<std::string> options;
+        std::vector<std::function<void()>> actions;
+
+        player_character.worn.fire_options(player_character, options, actions);
+        if (!options.empty()) {
+            int sel = uilist(_("Draw what?"), options);
+            if (sel >= 0) {
+                actions[sel]();
+            }
+        }
+    }
+
+    const item_location weapon = player_character.get_wielded_item();
+    if (!weapon) {
+        return;
+    }
+
+    if (weapon->is_gun() && !weapon->gun_current_mode().melee()) {
+        player_character.moves += 200;
+        player_character.setpos(p);
+        avatar_action::fire_wielded_weapon(player_character);
+    
+    }
+    else if (weapon->current_reach_range(player_character) > 1) {
+        if (player_character.has_effect(efftype_id("effect_relax_gas"))) {
+            if (one_in(8)) {
+                add_msg(m_good, _("Your willpower asserts itself, and so do you!"));
+                reach_attack_in_peeking(player_character,p);
+            }
+            else {
+                player_character.moves -= rng(2, 8) * 10;
+                add_msg(m_bad, _("You're too pacified to strike anything…"));
+            }
+        }
+        else {
+            reach_attack_in_peeking(player_character,p);
+        }
+    }
+}
+
+
+void game::peek( const tripoint &p )
+{   
     u.moves -= 200;
     tripoint prev = u.pos();
     u.setpos( p );
@@ -6090,11 +6159,22 @@ void game::peek( const tripoint &p )
         u.setpos( prev );
     }
 
-    if( result.peek_action && *result.peek_action == PA_BLIND_THROW ) {
-        item_location loc;
-        avatar_action::plthrow( u, loc, p );
+    // 记录“之前”的位置，实际上只是在程序层面的“之前”
+    u.before_pos = prev;
+
+
+    if (result.peek_action) {
+        if(*result.peek_action == PA_BLIND_THROW ) {
+            item_location loc;
+            avatar_action::plthrow(u, loc, p);
+        }
+        else if (*result.peek_action == FIRE_IN_PEEKING) {
+            fire_in_peeking(p);    
+        }
+    
     }
     m.invalidate_map_cache( p.z );
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -7380,6 +7460,7 @@ look_around_result game::look_around(
     ctxt.register_action( "SELECT" );
     if( peeking ) {
         ctxt.register_action( "throw_blind" );
+        ctxt.register_action( "fire_in_peeking" );
     }
     if( !select_zone ) {
         ctxt.register_action( "TRAVEL_TO" );
@@ -7630,7 +7711,11 @@ look_around_result game::look_around(
             center.y = center.y + vec->y;
         } else if( action == "throw_blind" ) {
             result.peek_action = PA_BLIND_THROW;
-        } else if( action == "zoom_in" ) {
+        }
+        else if (action == "fire_in_peeking") {
+            result.peek_action = FIRE_IN_PEEKING;
+        }
+        else if( action == "zoom_in" ) {
             // TODO: fix point types
             center.x = lp.x();
             center.y = lp.y();
@@ -7644,7 +7729,7 @@ look_around_result game::look_around(
             mark_main_ui_adaptor_resize();
         }
     } while( action != "QUIT" && action != "CONFIRM" && action != "SELECT" && action != "TRAVEL_TO" &&
-             action != "throw_blind" );
+             action != "throw_blind" && action != "fire_in_peeking");
 
     if( center.z != old_levz ) {
         m.invalidate_map_cache( old_levz );
