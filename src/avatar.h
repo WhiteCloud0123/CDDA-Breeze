@@ -350,6 +350,11 @@ class avatar : public Character
         int dominator_of_zombies_exp = 20;
         // 丧尸主宰已经支配了的丧尸数量
         int dominator_of_zombies_number_of_zombies_controlled = 1;
+        // 是否处于窥视状态下使用枪械攻击
+        bool use_gun_attack_in_peeking = false;
+        // 记录玩家处于窥视状态下之前的位置
+        std::optional<tripoint> before_pos = std::nullopt;
+
 
         int movecounter = 0;
 

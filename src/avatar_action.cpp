@@ -850,6 +850,8 @@ void avatar_action::fire_wielded_weapon( avatar &you )
     }
 
     you.assign_activity( player_activity( aim_activity_actor::use_wielded() ), false );
+    // 玩家正在窥视状态下，使用枪械
+    you.use_gun_attack_in_peeking = true;
 }
 
 void avatar_action::fire_ranged_mutation( Character &you, const item &fake_gun )
@@ -1124,7 +1126,12 @@ void avatar_action::use_item( avatar &you )
 }
 
 void avatar_action::use_item( avatar &you, item_location &loc )
-{
+{   
+    
+    if (you.is_driving() && !query_yn(_("你正处于驾驶状态，确定要使用物品吗？"))) {
+            return;
+    }
+
     if( you.has_effect( effect_incorporeal ) ) {
         you.add_msg_if_player( m_bad, _( "You can't use anything while incorporeal." ) );
         return;

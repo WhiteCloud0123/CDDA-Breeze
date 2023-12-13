@@ -254,7 +254,7 @@
     "id": "MISSION_REFUGEE_Uyen_3",
     "type": "mission_definition",
     "name": { "str": "Find 6 bottles of antidepressant" },
-    "description": "Find 6 bottles of antidepressant for Uyen Tran in the refugee center, in exchange for <reward_count:FMCNote> merch.",
+    "description": "为 难民中心 的 陈宛 带回 60粒 抗抑郁药 以换取商会币。",
     "goal": "MGOAL_FIND_ITEM",
     "difficulty": 2,
     "value": 0,
@@ -263,7 +263,7 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "dialogue": {
       "describe": "We could still use your help…",
-      "offer": "I probably shouldn't be prescribing things, but there's a ton of people needing help with sleep in here.  If you could get us some antidepressants, Rhyzaea and I can probably make sure they're doled out appropriately without people having to starve to pay for them.  Three month's worth - about 6 bottles - would last us a little while.",
+      "offer": "我也许不该乱开药方，但这里有很多人需要帮助才能入睡。如果你能给我们一些抗抑郁药，我和莱泽尔就能确保它们被合理分配，而不需要让大家饿着肚子付钱。三个月的量——大约60粒——够我们用一段时间了。",
       "accepted": "Thanks so much.  It's a small thing but it'd be really helpful.",
       "rejected": "That's okay.  I'm sure we'll make do somehow.",
       "advice": "Antidepressant was really common.  You can probably find it in most medicine cabinets and pharmacies.",
