@@ -6118,7 +6118,7 @@ static void fire_in_peeking(tripoint p)
     if (weapon->is_gun() && !weapon->gun_current_mode().melee()) {
         player_character.moves += 200;
         player_character.setpos(p);
-        avatar_action::fire_wielded_weapon(player_character);
+        avatar_action::fire_wielded_weapon(player_character,true);
     
     }
     else if (weapon->current_reach_range(player_character) > 1) {
