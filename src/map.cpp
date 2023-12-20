@@ -79,6 +79,7 @@
 #include "output.h"
 #include "overmapbuffer.h"
 #include "pathfinding.h"
+#include "parallel_hashmap/phmap.h"
 #include "projectile.h"
 #include "relic.h"
 #include "ret_val.h"
@@ -564,7 +565,11 @@ void map::vehmove()
             } else if( veh->is_patrolling ) {
                 veh->autopilot_patrol();
             }
-            veh->gain_moves();
+
+            if (!veh->is_appliance()) {
+                veh->gain_moves();              
+            }
+
             veh->slow_leak();
             wrapped_vehicle w;
             w.v = veh;
