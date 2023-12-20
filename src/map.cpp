@@ -564,7 +564,11 @@ void map::vehmove()
             } else if( veh->is_patrolling ) {
                 veh->autopilot_patrol();
             }
-            veh->gain_moves();
+
+            if (!veh->is_appliance()) {
+                veh->gain_moves();              
+            }
+
             veh->slow_leak();
             wrapped_vehicle w;
             w.v = veh;
