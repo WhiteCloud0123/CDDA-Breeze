@@ -2673,6 +2673,16 @@ void options_manager::add_options_debug()
          0.0, 60.0, 0.0, 0.1
        );
 
+    add_empty_line();
+
+    add("不再弹出错误信息", "debug", to_translation("不再弹出错误信息"),
+        to_translation("开启后，将不再弹出错误信息。"),
+        false
+    );
+
+
+
+
     get_option( "FOV_3D_Z_RANGE" ).setPrerequisite( "FOV_3D" );
 }
 

@@ -495,7 +495,13 @@ static void output_repetitions( std::ostream &out );
 
 void realDebugmsg( const char *filename, const char *line, const char *funcname,
                    const std::string &text )
-{
+{   
+
+    if (get_option<bool>("不再弹出错误信息")) {
+        return;
+    }
+
+
     cata_assert( filename != nullptr );
     cata_assert( line != nullptr );
     cata_assert( funcname != nullptr );
