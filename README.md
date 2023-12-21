@@ -4,11 +4,6 @@ CDDA-微风(CDDA-Breeze)是[Cataclysm: Dark Days Ahead](https://github.com/Cleve
 
 ## 社区
 
-QQ群
-
-786761536
-
-
 QQ频道
 
 <img src ="./文件存放/QQ频道.jpg" width="218" height="271">
