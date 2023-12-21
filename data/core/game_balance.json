@@ -246,6 +246,13 @@
   },
   {
     "type": "EXTERNAL_OPTION",
+    "name": "OVERMAP_PLACE_OCEANS",
+    "info": "Allows to place procgen oceans during overmap generation.",
+    "stype": "bool",
+    "value": true
+  },
+  {
+    "type": "EXTERNAL_OPTION",
     "name": "OVERMAP_PLACE_RIVERS",
     "info": "Allows to place procgen rivers during overmap generation.",
     "stype": "bool",

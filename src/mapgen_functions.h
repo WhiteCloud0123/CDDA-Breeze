@@ -66,6 +66,7 @@ void mapgen_sewer_four_way( mapgendata &dat );
 void mapgen_sewer_straight( mapgendata &dat );
 void mapgen_sewer_tee( mapgendata &dat );
 void mapgen_lake_shore( mapgendata &dat );
+void mapgen_ocean_shore(mapgendata& dat);
 void mapgen_ravine_edge( mapgendata &dat );
 
 // Temporary wrappers
