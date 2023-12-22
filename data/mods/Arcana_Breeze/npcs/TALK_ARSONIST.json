@@ -1,0 +1,232 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_ARSONIST",
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_ARSONIST_GM_PRELUDE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_ARSONIST_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "实际上，不久前我自己也遇到过类似的事情。在晚上，当我开始对一个废弃的街区进行有控制的焚烧时，一些奇怪的生物出现了。从阴影中走出来，好像影子跟着他们。我沿着街道往下走，似乎火光要么吓跑了他们，要么分散了他们的注意力。"
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ARSONIST_WORLD_OPTIMISTIC",
+    "responses": [
+      {
+        "text": "至少有人活下来了。还有工作要做。",
+        "topic": "TALK_ARSONIST_CF_REP_MISSION_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "sofia_refugee_convinced",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ARSONIST_CF_REP_MISSION_4",
+    "dynamic_line": {
+      "u_has_var": "tacoma_started",
+      "type": "knowledge",
+      "context": "flag",
+      "value": "yes",
+      "yes": "是的，我想他们在那里有农场的东西，像我这样的人经常会来拜访。我猜你是说其他人吗？他们是什么样的？",
+      "no": "我见过的大多数是躲在建筑物里的小团体。我想这里还有其他一些顽固分子。你说的是什么工作？"
+    },
+    "responses": [
+      {
+        "text": "这是一个在路边的乡村教堂里运作的团体，我被要求看看是否能为他们找到另一个贸易伙伴。",
+        "switch": true,
+        "topic": "TALK_ARSONIST_CF_REP_MISSION_4_DESCRIBE",
+        "condition": {
+          "u_has_var": "tacoma_started",
+          "type": "knowledge",
+          "context": "flag",
+          "value": "yes"
+        }
+      },
+      {
+        "text": "有人请我帮他找另一个贸易伙伴。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_ARSONIST_CF_REP_MISSION_4_HELP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ARSONIST_CF_REP_MISSION_4_DESCRIBE",
+    "dynamic_line": "我听说过一个像以前一样的地方，是从当地一些拾荒者那里听说的。我从来没有亲自拜访过他们，离我喜欢侦察的地方有点远，而且我也不想在他们可能给其他抵抗者带来麻烦的地方放火。我想我可以告诉其他骗子那里有工作。",
+    "responses": [
+      {
+        "text": "如果可以的话，我会很感激你的帮助。",
+        "topic": "TALK_ARSONIST_CF_REP_MISSION_4_DEAL"
+      },
+      {
+        "text": "没关系，我本来打算找别的办法以防万一。",
+        "topic": "TALK_ARSONIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ARSONIST_CF_REP_MISSION_4_DEAL",
+    "dynamic_line": "也许我在这里的时候，可能会有一些抢劫犯被困在稳定的工作中，而不是在我正在努力工作的大楼里闲逛。",
+    "responses": [
+      {
+        "text": "谢谢！我也和其他一些人谈过了，这应该足够让大家知道了。我应该去看看。",
+        "effect": [
+          {
+            "u_add_var": "sofia_allies_secured",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_1",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_2",
+            "om_terrain": "cf_church_3",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_1",
+            "om_terrain": "cf_church_1_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_2",
+            "om_terrain": "cf_church_3_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          }
+        ],
+        "condition": {
+          "u_has_var": "sofia_ally_seeking_2",
+          "type": "mission",
+          "context": "flag",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "谢谢！我可能会找其他人帮忙把消息说出来。",
+        "effect": [
+          {
+            "u_add_var": "sofia_ally_seeking_2",
+            "type": "mission",
+            "context": "flag",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "sofia_refugee_convinced",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "condition": {
+          "u_has_var": "sofia_ally_seeking_1",
+          "type": "mission",
+          "context": "flag",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "谢谢！我看看和其他人谈谈是否有帮助。",
+        "effect": [
+          {
+            "u_add_var": "sofia_ally_seeking_1",
+            "type": "mission",
+            "context": "flag",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "sofia_refugee_convinced",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "switch": true,
+        "default": true,
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ARSONIST_CF_REP_MISSION_4_HELP",
+    "dynamic_line": "嗯，可能很有趣。关于他们你能告诉我些什么？",
+    "responses": [
+      {
+        "text": "他们在一个乡村教区教堂之外运作，并且一直在扩张以使他们的定居点更加自给自足。",
+        "topic": "TALK_ARSONIST_CF_REP_MISSION_4_DESCRIBE"
+      }
+    ]
+  }
+]

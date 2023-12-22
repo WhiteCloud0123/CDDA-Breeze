@@ -1,0 +1,41 @@
+[
+  {
+    "id": "arcana_mech_power_cell",
+    "type": "MAGAZINE",
+    "category": "spare_parts",
+    "name": {
+      "str": "源质扩容电池"
+    },
+    "description": "一种专门为一种罕见而有价值的原型机械设计的定制动力电池，使用异常技术燃烧外来能源，机器本身的空间异常技术大大提高了效率。即便如此，制造每个动力电池也需要大量深奥的精华，一旦耗尽，它们需要被拆开并重新制造。",
+    "weight": "10 kg",
+    "volume": "6 L",
+    "price": "1000 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "=",
+    "color": "light_cyan",
+    "ammo_type": [
+      "battery"
+    ],
+    "//": "Ten crystallized essence at 1500 kJ each, essence surge generator doubles output, distortion amp doubles output again, temporal stimulation effectively halves consumption.",
+    "count": 120000,
+    "capacity": 120000,
+    "looks_like": "battery",
+    "flags": [
+      "NO_SALVAGE",
+      "NO_UNLOAD",
+      "MECH_BAT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "battery": 120000
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_RANCH_NURSE",
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_RANCH_NURSE_GM_PRELUDE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_NURSE_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "既然你提到了，是的。几天前，一个拾荒者进来时受了重伤，描述了一个奇怪的生物在他与其他几个人会合的路上袭击了他。我想我可以把事情发生的地方转告给你。非常奇怪的是，他的前臂有一个三英寸长的部分遭受了四度冻伤，一直到肌腱，桡骨和尺骨在这个区域都有一个完整的横向骨折。我们别无选择只能截肢，恐怕…"
+  }
+]

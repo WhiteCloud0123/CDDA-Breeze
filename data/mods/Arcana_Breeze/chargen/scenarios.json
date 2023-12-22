@@ -1,0 +1,315 @@
+[
+  {
+    "type": "scenario",
+    "name": "奥术探秘者",
+    "description": "你被吸引到这个地方来寻求真理和力量，无论是谁，还是此地任何存在过的事物，他们的命运都与城市中的人们一样。但他们的神秘学研究残余品可能仍然遗留着。",
+    "id": "arcane_seeker",
+    "points": 0,
+    "start_name": "奥术师飞地",
+    "allowed_locs": [
+      "curious_structure",
+      "impact_site",
+      "island_temple",
+      "strange_grove"
+    ],
+    "professions": [
+      "arcanist_apprentice",
+      "arcanist_alchemist",
+      "arcanist_scribe",
+      "arcanist_bloodmage",
+      "arcanist_magehunter",
+      "arcanist_dark_priest",
+      "arcanist_summoner",
+      "arcanist_scholar",
+      "arcanist_dragonblood_aspirant",
+      "arcanist_shrike",
+      "arcanist_purifier",
+      "arcanist_operator",
+      "arcanist_mendicant"
+    ],
+    "traits": [
+      "ARCANA_SCALYPATCHES",
+      "ARCANA_INNERHEAT",
+      "ARCANA_DRAGONCLAWS",
+      "ARCANA_DRAGONTEETH",
+      "ARCANA_DRAGONHORNS",
+      "SPELL_HEAL",
+      "SPELL_SHADOWSNAKES",
+      "SPELL_CLERIC",
+      "SPELL_STRENGTH",
+      "SPELL_AGILE",
+      "SPELL_INSIGHT",
+      "SPELL_LIGHT",
+      "SPELL_FIRE",
+      "SPELL_DAMPENING",
+      "SPELL_SUMMONDOG",
+      "MARTIAL_ARTS_SANGUINE",
+      "MARTIAL_ARTS_CF"
+    ]
+  },
+  {
+    "type": "scenario",
+    "name": "城市觉醒",
+    "description": "有些人在文明的阴影下练习奥术。要么逃避遥远的奥术教团的争吵，要么推进他们的目标。迟早，你将不得不面对上面肆虐的启示…",
+    "id": "arcane_urban",
+    "points": 1,
+    "start_name": "阴影之下",
+    "allowed_locs": [
+      "arcanist_basement",
+      "cathedral_basement",
+      "necropolis_basement"
+    ],
+    "professions": [
+      "unemployed",
+      "priest",
+      "shinto_priest",
+      "imam",
+      "rabbi",
+      "guru",
+      "preacher",
+      "scoundrel",
+      "detective",
+      "archaeologist",
+      "arcanist_apprentice",
+      "arcanist_scholar",
+      "arcanist_alchemist",
+      "arcanist_scribe",
+      "arcanist_dragonblood_aspirant",
+      "arcanist_shrike",
+      "arcanist_purifier",
+      "arcanist_operator",
+      "arcanist_mendicant"
+    ],
+    "traits": [
+      "SPELL_CLAIRVOYANCE",
+      "SPELL_CLARITY",
+      "SPELL_CONFUSE",
+      "SPELL_STRENGTH",
+      "SPELL_AGILE",
+      "SPELL_INSIGHT",
+      "SPELL_LIGHT",
+      "SPELL_DAYLIGHT",
+      "SPELL_LOCKPICK",
+      "SPELL_POISONARMOR",
+      "MARTIAL_ARTS_SANGUINE",
+      "MARTIAL_ARTS_CF"
+    ],
+    "flags": [
+      "CITY_START",
+      "LONE_START"
+    ]
+  },
+  {
+    "type": "scenario",
+    "id": "surrounded",
+    "copy-from": "surrounded",
+    "add_professions": true,
+    "extend": {
+      "professions": [
+        "arcanist_alchemist",
+        "arcanist_scribe",
+        "arcanist_dragonblood_aspirant",
+        "arcanist_shrike",
+        "arcanist_purifier",
+        "arcanist_operator",
+        "arcanist_mendicant"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "isolationist",
+    "copy-from": "isolationist",
+    "add_professions": true,
+    "extend": {
+      "professions": [
+        "arcanist_alchemist",
+        "arcanist_scribe",
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_summoner"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "lab_chal",
+    "copy-from": "lab_chal",
+    "extend": {
+      "traits": [
+        "ARCANA_SCALYPATCHES",
+        "ARCANA_INNERHEAT"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "mutant",
+    "copy-from": "mutant",
+    "extend": {
+      "professions": [
+        "arcanist_dragonblood_aspirant"
+      ],
+      "traits": [
+        "ARCANA_SCALYPATCHES",
+        "ARCANA_INNERHEAT"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "ambushed",
+    "copy-from": "ambushed",
+    "extend": {
+      "professions": [
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_dragonblood_aspirant",
+        "arcanist_shrike",
+        "arcanist_purifier",
+        "arcanist_operator",
+        "arcanist_mendicant"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "summer_advanced_start",
+    "copy-from": "summer_advanced_start",
+    "extend": {
+      "professions": [
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_dragonblood_aspirant",
+        "arcanist_shrike",
+        "arcanist_purifier",
+        "arcanist_operator",
+        "arcanist_mendicant"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "wilderness",
+    "copy-from": "wilderness",
+    "add_professions": true,
+    "extend": {
+      "professions": [
+        "arcanist_alchemist",
+        "arcanist_scribe",
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_summoner"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "strong_portal_storm",
+    "copy-from": "strong_portal_storm",
+    "add_professions": true,
+    "extend": {
+      "professions": [
+        "arcanist_alchemist",
+        "arcanist_scribe",
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_summoner"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "portal_dependent",
+    "copy-from": "portal_dependent",
+    "add_professions": true,
+    "extend": {
+      "professions": [
+        "arcanist_bloodmage",
+        "arcanist_dragonblood_aspirant",
+        "arcanist_shrike",
+        "arcanist_summoner"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "Mine_bottom",
+    "copy-from": "Mine_bottom",
+    "extend": {
+      "professions": [
+        "arcanist_purifier",
+        "arcanist_operator"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "migo_prisoner",
+    "copy-from": "migo_prisoner",
+    "extend": {
+      "professions": [
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_dragonblood_aspirant",
+        "arcanist_shrike",
+        "arcanist_purifier",
+        "arcanist_operator",
+        "arcanist_mendicant"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "Mansion",
+    "copy-from": "Mansion",
+    "extend": {
+      "professions": [
+        "arcanist_bloodmage",
+        "arcanist_magehunter",
+        "arcanist_dark_priest",
+        "arcanist_summoner",
+        "arcanist_scholar",
+        "arcanist_dragonblood_aspirant",
+        "arcanist_shrike",
+        "arcanist_purifier",
+        "arcanist_operator",
+        "arcanist_mendicant"
+      ],
+      "traits": [
+        "MARTIAL_ARTS_SANGUINE",
+        "MARTIAL_ARTS_CF"
+      ]
+    }
+  }
+]

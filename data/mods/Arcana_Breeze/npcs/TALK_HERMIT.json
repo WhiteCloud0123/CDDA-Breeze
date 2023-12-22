@@ -1,0 +1,4226 @@
+[
+  {
+    "id": "TALK_MISSION_INQUIRE",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "感觉没用。我做错什么了？",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "THRESH_VEIL"
+              }
+            },
+            {
+              "u_has_flag": "MUTATION_THRESHOLD"
+            },
+            {
+              "u_has_mission": "MISSION_HERMIT_BECOME_PARAGON"
+            },
+            {
+              "npc_has_trait": "PROF_CHALICE"
+            }
+          ]
+        },
+        "topic": "TALK_MISSION_FAILURE",
+        "effect": {
+          "npc_add_effect": "hermit_stage_failure",
+          "duration": "PERMANENT"
+        },
+        "opinion": {
+          "trust": -1,
+          "value": -1,
+          "anger": 1
+        }
+      },
+      {
+        "text": "感觉没用。我做错什么了？",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "THRESH_VEIL"
+              }
+            },
+            {
+              "u_has_flag": "MUTATION_THRESHOLD"
+            },
+            {
+              "u_has_mission": "MISSION_HERMIT_AWAKEN_POWER"
+            },
+            {
+              "npc_has_trait": "PROF_CHALICE"
+            }
+          ]
+        },
+        "topic": "TALK_MISSION_FAILURE",
+        "effect": {
+          "npc_add_effect": "hermit_stage_failure",
+          "duration": "PERMANENT"
+        },
+        "opinion": {
+          "trust": -1,
+          "value": -1,
+          "anger": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT",
+    "dynamic_line": {
+      "u_has_effect": "hermit_earned_trust_1",
+      "yes": {
+        "u_has_trait": "THRESH_VEIL",
+        "yes": "很荣幸再次见到你，被选中的。我能帮你什么忙？",
+        "no": "欢迎回来。我能帮你什么忙？"
+      },
+      "no": "你好，流浪者。是什么风把你带到这个家来的？"
+    },
+    "responses": [
+      {
+        "text": "[任务]我的任务是清除最近出现的异常情况。你有什么建议吗？",
+        "condition": {
+          "u_has_mission": "MISSION_CF_GM_4"
+        },
+        "topic": "TALK_HERMIT_GM_4"
+      },
+      {
+        "text": "[任务]我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            },
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_HERMIT_GM_PRELUDE"
+      },
+      {
+        "text": "我希望你们继续努力，把同盟派到乡村教会去。",
+        "topic": "TALK_HERMIT_UNDEFER",
+        "condition": {
+          "u_has_var": "spawned_tablet_fallback",
+          "type": "flag",
+          "context": "hermit",
+          "value": "yes"
+        },
+        "effect": [
+          {
+            "u_lose_var": "spawned_tablet_fallback",
+            "type": "flag",
+            "context": "hermit"
+          },
+          {
+            "mapgen_update": "arcana_hermit_spawn_npcs",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          }
+        ]
+      },
+      {
+        "text": "[任务]我是代表净化圣火而来的。我听说你知道饲养员吗？",
+        "topic": "TALK_HERMIT_CF_REP_MISSION",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_mission_5_ready",
+                "type": "flag",
+                "context": "hermit",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_5"
+            }
+          ]
+        }
+      },
+      {
+        "text": "奇怪的梦和幻觉把我带到这里。",
+        "topic": "TALK_HERMIT_SENT_DREAM",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "hermit_trust_1"
+              }
+            },
+            {
+              "u_has_effect": "sent_to_hermit"
+            }
+          ]
+        }
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_HERMIT_WHO"
+      },
+      {
+        "text": "你在这里干什么？",
+        "topic": "TALK_HERMIT_DOING"
+      },
+      {
+        "switch": true,
+        "text": "还有什么要讨论的？",
+        "topic": "TALK_HERMIT_DISCUSS_4",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_stage_4"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            },
+            {
+              "u_has_trait": "THRESH_VEIL"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我看见了他的祝福，也知道你在寻求什么。",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_COMPLETE",
+        "condition": {
+          "u_has_trait": "THRESH_VEIL"
+        }
+      },
+      {
+        "switch": true,
+        "text": "有什么我可以帮忙的？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "THRESH_VEIL"
+              }
+            },
+            {
+              "u_has_flag": "MUTATION_THRESHOLD"
+            },
+            {
+              "npc_has_effect": "hermit_stage_failure"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我能帮什么忙？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "and": [
+            "has_no_available_mission",
+            {
+              "not": "has_assigned_mission"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "那么，我能帮忙吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_stage_failure"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "你提到了更多要谈的，还有这次任务？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL",
+        "effect": {
+          "npc_add_effect": "hermit_stage_failure",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "THRESH_VEIL"
+              }
+            },
+            {
+              "u_has_flag": "MUTATION_THRESHOLD"
+            },
+            {
+              "npc_has_effect": "hermit_stage_3"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "你提到了更多要谈的，还有这次任务？",
+        "topic": "TALK_HERMIT_DISCUSS_3",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_stage_3"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "text": "【任务】你能给我一些建议吗？",
+        "topic": "TALK_HERMIT_QUEST_HELP_2",
+        "condition": {
+          "u_has_mission": "MISSION_HERMIT_AWAKEN_POWER"
+        }
+      },
+      {
+        "switch": true,
+        "text": "[任务]你怎么知道什么“迹象”显示了帷幕彼端古神的好感？",
+        "topic": "TALK_HERMIT_QUEST_HELP_2_SIGNS",
+        "condition": {
+          "u_has_mission": "MISSION_HERMIT_AWAKEN_POWER"
+        }
+      },
+      {
+        "switch": true,
+        "text": "在进一步讨论之前，我们还有什么要讨论的？",
+        "topic": "TALK_HERMIT_DISCUSS_2",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_stage_2"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "text": "【任务】你能帮我修复这把剑吗？",
+        "switch": true,
+        "topic": "TALK_HERMIT_QUEST_HELP_1_BACKDOOR",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_HERMIT_RESTORE_SWORD"
+            },
+            {
+              "u_has_effect": "hermit_quest_backdoor"
+            }
+          ]
+        }
+      },
+      {
+        "text": "【任务】你能帮我修复这把剑吗？",
+        "switch": true,
+        "topic": "TALK_HERMIT_QUEST_HELP_1",
+        "condition": {
+          "u_has_mission": "MISSION_HERMIT_RESTORE_SWORD"
+        }
+      },
+      {
+        "switch": true,
+        "text": "你提到你有答案来完成这项任务？",
+        "topic": "TALK_HERMIT_DISCUSS_1",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_stage_1"
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "那么，我能帮什么忙？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "u_has_effect": "hermit_earned_trust_2"
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我能帮上什么忙？",
+        "topic": "TALK_HERMIT_MISSION_NONE"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_HERMIT_GM_4",
+    "type": "talk_topic",
+    "dynamic_line": "现在是黑暗的时代，也许还会变得更黑暗。我敢肯定，你所面对的正是那个把我的命令推向最后毁灭的闯入者。但他们只是许多不属于这里的人中的一个。如果又有一百个不朽的不朽入侵者取代了它的位置，而一千个入侵者已经溜走了，那还有什么办法呢？简单。我们尽一切可能把他们赶回去。时间会证明这是否会有结果。无论这件事的真正结果是什么，我都不指望我能活着看到它。结果也可能超出你的时间。",
+    "responses": [
+      {
+        "text": "不放弃？你的建议就这些？",
+        "topic": "TALK_HERMIT_GM_4_2"
+      },
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "id": "TALK_HERMIT_GM_4_2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_VEIL",
+      "yes": "我不知道如何杀死这个被选中的敌人。但总有一个选择。不管事情看起来多么绝望，帷幕彼端古神无疑给了你许多祝福，一些可能被证明是有用的工具，在你需要的时候帮助你，毫无疑问，许多其他武器可能在你的使用。我希望，这种毅力会让你度过足够长的时间，找到你的答案。",
+      "no": {
+        "u_has_trait": "PROF_CLEANSINGFLAME",
+        "yes": "你是清洁之火的一员，是吗？我能从你眼中的火光看出。也许我对你们中的一个人讲决心的美德是愚蠢的。正如你们的信条所说，只要太阳照耀地球。我也不太害怕这个闯入者。我只想说谨慎一点，但这也是你们订货的要求，不是吗？",
+        "no": "我不知道这个闯入者会采取什么形式，你会面临什么可怕的力量和疯狂。对任何事都要做好准备，但那建议对你没什么用处。你不要失去希望对你更有用。没有这些，你将无法找到你所寻求的答案。"
+      }
+    },
+    "responses": [
+      {
+        "text": "好吧。谢谢，我猜我该谢谢你。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "id": "TALK_HERMIT_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_effect": "hermit_stage_1",
+      "yes": "所以这就是你找我的原因。现在是黑暗的时代，奇怪的事件隐约出现在地平线上。我知道有一个源头与你可能寻求的相匹配，但那一个已经被征服了。我隐约感觉到另一个人的存在。以前入侵过一次的同一支部队已经开始在这片土地上获得第二个立足点，这是来自远方的众多入侵者之一。把这件事转告给任何派你来的人，并小心在这场灾难的中心等待着的威胁。",
+      "no": "所以这就是你找我的原因。现在是黑暗的时代，奇怪的事件隐约出现在地平线上。我知道有一个来源与你可能寻找的相匹配，但还有另一个来源。它是微弱的，一种在这个世界上生长和扎根的存在，一种与日复一日更牢固的握在一起的存在。在许多其他闯入者中站稳脚跟的那股力量，又重新扎根了。把这件事转告给派你的人，但要谨慎行事。"
+    },
+    "responses": [
+      {
+        "text": "非常感谢。那么我会向他们汇报的。",
+        "effect": [
+          {
+            "u_add_var": "johnathan_prelude_data_5",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "johnathan_prelude_mid",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_UNDEFER",
+    "dynamic_line": "很好。我会尽我所能，与少数路过该地区的人一起。我希望这对你有用。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "谢谢。再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_VEIL",
+      "yes": {
+        "npc_has_effect": "hermit_stage_4",
+        "yes": "所以你，被选中的，和猎人结盟了。誓言也许是不朽的，但我再也不适合被称为帷幕彼端古神的仆人了。你能告诉我他们的意图吗？",
+        "no": "我没想到他们会这么容易找到我。我当饲养员的日子一去不复返了，我的名下除了旧书和大自然给我们的一切，什么都没有了。他们猎杀老人的目的是什么？"
+      },
+      "no": {
+        "u_has_trait": "THRESH_DRAGONBLOOD",
+        "yes": "你身上有着猩红教派跨人类涉猎的不可磨灭的印记，然而正是清洁之火把你送上了这项任务？无论你是一个血法师，还是仅仅是偶然进入他们的工作，这是不寻常的。他们向我寻求什么？",
+        "no": "我没想到他们会这么容易找到我。我当饲养员的日子一去不复返了，我的名下除了旧书和大自然给我们的一切，什么都没有了。他们猎杀老人的目的是什么？"
+      }
+    },
+    "responses": [
+      {
+        "switch": true,
+        "text": "他们寻求学习在我面前被拣选者的道路。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_CHOSEN",
+        "condition": {
+          "u_has_trait": "THRESH_VEIL"
+        }
+      },
+      {
+        "switch": true,
+        "text": "我们都被不朽的誓言所束缚。我选择帮助他们。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_CHALICE",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我们来这里不是为了狩猎，而是为了弥补损失和获得知识。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_CLEANSINGFLAME",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我是他们的敌人之一。这说明了什么？",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_SANGUINE",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "text": "他们对寻找盟友和情报感兴趣。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES",
+        "condition": {
+          "or": [
+            {
+              "u_has_any_trait": [
+                "THRESH_DRAGONBLOOD",
+                "PROF_ARCANIST",
+                "PROF_ARCANIST2"
+              ]
+            },
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            }
+          ]
+        }
+      },
+      {
+        "text": "他们对你愿意提供给他们的超越感兴趣。",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30
+        },
+        "success": {
+          "topic": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE"
+        },
+        "failure": {
+          "topic": "TALK_HERMIT_CF_REP_MISSION_BASIC",
+          "opinion": {
+            "value": -1,
+            "trust": -1
+          }
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "不是他们在追捕你。交出研究报告，否则。",
+        "trial": {
+          "type": "INTIMIDATE",
+          "difficulty": 10
+        },
+        "success": {
+          "topic": "TALK_HERMIT_CF_REP_MISSION_INTIMIDATE",
+          "opinion": {
+            "fear": 1,
+            "trust": -1
+          }
+        },
+        "failure": {
+          "topic": "TALK_DONE",
+          "opinion": {
+            "anger": 3,
+            "value": -3
+          },
+          "effect": "insult_combat"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_CHOSEN",
+    "dynamic_line": {
+      "npc_has_effect": "hermit_stage_4",
+      "yes": "如果他们追求我们的知识是在你的监督下选择的，那么我相信你的判断。你只需要问，他们追求什么？",
+      "no": "我懂了。我不太认识你眼中的火焰，那指引你的存在。如果这是真的，而且你确实代表他们行事，那么我就相信你。他们追求什么？"
+    },
+    "responses": [
+      {
+        "text": "你能告诉我还有没有其他饲养员还活着吗？他们寻求知识和盟友。",
+        "effect": {
+          "npc_add_effect": "hermit_stage_4",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES"
+      },
+      {
+        "text": "你有没有自己的研究可以让他们受益，关于超越？",
+        "effect": {
+          "npc_add_effect": "hermit_stage_4",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_CHALICE",
+    "dynamic_line": "所以我们并不像我曾经认为的那样孤独。如果你认为与猎人结盟是明智的，那么我会相信你的判断，年轻人。告诉我，他们在找什么？",
+    "responses": [
+      {
+        "text": "他们寻求修补旧伤，与我们结盟，除了保留我们书面誓言之外的任何知识。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES"
+      },
+      {
+        "text": "他们要求进一步洞察超越和它的危险，以及你所学到的任何对抗它的方法。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_CLEANSINGFLAME",
+    "dynamic_line": "那么你也是他们中的一员？那么告诉我，他们派你来干什么？",
+    "responses": [
+      {
+        "text": "我们在这里聚集盟友，保卫人类的残余，弥补过去的错误。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES"
+      },
+      {
+        "text": "我们寻求知识，进一步学习你在学习过程中积累的超越。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE"
+      },
+      {
+        "text": "我们的动机是我们自己的。现在把你囤积的研究交出来。",
+        "trial": {
+          "type": "INTIMIDATE",
+          "difficulty": 25
+        },
+        "success": {
+          "topic": "TALK_HERMIT_CF_REP_MISSION_INTIMIDATE",
+          "opinion": {
+            "fear": 1,
+            "trust": -1
+          },
+          "effect": {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "TALK_DONE",
+          "opinion": {
+            "anger": 1,
+            "value": -1
+          },
+          "effect": "insult_combat"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_SANGUINE",
+    "dynamic_line": "一个不同寻常的联盟，如果有的话。告诉我，他们派你来干什么？",
+    "responses": [
+      {
+        "text": "似乎有更多的盟友，更不用说有更多的情报来获得他们的手。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES"
+      },
+      {
+        "text": "他们在做一些研究，专注于未来。他们特别想要你做的事。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE"
+      },
+      {
+        "text": "[攻击]我才不在乎呢。我要他们想要的，你可以阻止我。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_ALLIES",
+    "dynamic_line": "说实话，我不知道。我们失去了这么多人，我只能肯定地记得，所有的大祭司在这之前都曾遭受过各种各样的危险。他们中的一个曾是我的导师，他们将是我们重新与其他人联系的最大希望。",
+    "responses": [
+      {
+        "text": "有没有其他方法可以帮你和他们结盟？",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES_OFFER"
+      },
+      {
+        "text": "关于超越的研究呢？他们在寻找的不仅仅是圣杯誓言。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_ALLIES_OFFER",
+    "dynamic_line": "我至少可以尝试一下。有时，我确实听到了一些在这个地区旅行的人的一些暗示和片段。我怀疑，即使我对我所寻求的更加开放，我也无法接触到我们秩序中的任何其他成员。如果你愿意，我可以试试。",
+    "responses": [
+      {
+        "text": "我会很感激的。非常感谢。",
+        "effect": [
+          {
+            "mapgen_update": "arcana_hermit_spawn_npcs",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          }
+        ],
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES_DEAL"
+      },
+      {
+        "text": "现在不需要，我们主要关心的是信息。",
+        "effect": {
+          "u_add_var": "hermit_allies_deferred",
+          "type": "flag",
+          "context": "hermit",
+          "value": "yes"
+        },
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES_DEFERRED"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_ALLIES_DEAL",
+    "dynamic_line": {
+      "npc_has_item": "offering_mission_notes",
+      "no": "那我现在能帮什么忙。至于知识，我一直在用粘土写下自己的观察和研究。这里比纸更容易得到，而且更持久。我希望，如果我一生的工作发现我缺乏，有一天另一个人会找到它的用处。现在这一天到了。你可以得到它。",
+      "yes": "好吧，那我现在就尽力帮忙。至于知识，我一直用粘土写下自己的观察和研究。比纸更容易得到，也更持久。我希望，如果我一生的工作发现我有所欠缺，总有一天另一个人会发现它的用处。现在那一天已经到来。在保险箱里，这里。"
+    },
+    "speaker_effect": [
+      {
+        "condition": {
+          "npc_has_item": "offering_mission_notes"
+        },
+        "effect": [
+          {
+            "npc_remove_item_with": "offering_mission_notes"
+          },
+          {
+            "u_spawn_item": "offering_mission_notes"
+          }
+        ]
+      },
+      {
+        "effect": [
+          {
+            "u_add_var": "sofia_mission_5_ready",
+            "type": "flag",
+            "context": "hermit",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_hermit_tablet_unlock",
+            "om_terrain": "arcana_hermitage_2",
+            "om_special": "Hermit Cabin"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前，我还有其他问题。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "非常感谢。我应该把这个带给他们。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_ALLIES_DEFERRED",
+    "dynamic_line": {
+      "npc_has_item": "offering_mission_notes",
+      "yes": "如果你坚持的话。你只要在任何时候问我，我会尽我所能的。至于这一点，我一直在用粘土写下自己的观察和研究。这里比纸更容易得到，而且更持久。我希望，如果我一生的工作发现我缺乏，有一天另一个人会找到它的用处。现在这一天到了。你可以得到它。",
+      "no": "如果你坚持。你只需要在任何时候问，我会尽我所能伸出援助之手。至于这一点，我一直在用粘土写下自己的观察和研究。比纸更容易得到，也更持久。我希望，如果我一生的工作发现我有所欠缺，总有一天另一个人会发现它的用处。现在那一天已经到来。在保险箱里，这里。"
+    },
+    "speaker_effect": [
+      {
+        "condition": {
+          "npc_has_item": "offering_mission_notes"
+        },
+        "effect": [
+          {
+            "npc_remove_item_with": "offering_mission_notes"
+          },
+          {
+            "u_spawn_item": "offering_mission_notes"
+          }
+        ]
+      },
+      {
+        "effect": [
+          {
+            "u_add_var": "sofia_mission_5_ready",
+            "type": "flag",
+            "context": "hermit",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_hermit_tablet_unlock",
+            "om_terrain": "arcana_hermitage_2",
+            "om_special": "Hermit Cabin"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前，我还有其他问题。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "非常感谢。我应该把这个带给他们。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_INTIMIDATE",
+    "dynamic_line": {
+      "npc_has_item": "offering_mission_notes",
+      "yes": "好吧，拿去吧。我只能希望他们比你配得上。拿着它，离开这个地方。",
+      "no": "好的我只能希望他们比你更值得。它在保险箱里，拿着它离开这个地方。"
+    },
+    "speaker_effect": [
+      {
+        "condition": {
+          "npc_has_item": "offering_mission_notes"
+        },
+        "effect": [
+          {
+            "npc_remove_item_with": "offering_mission_notes"
+          },
+          {
+            "u_spawn_item": "offering_mission_notes"
+          }
+        ]
+      },
+      {
+        "effect": [
+          {
+            "u_add_var": "sofia_mission_5_ready",
+            "type": "flag",
+            "context": "hermit",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_hermit_tablet_unlock",
+            "om_terrain": "arcana_hermitage_2",
+            "om_special": "Hermit Cabin"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "…",
+        "effect": "player_leaving",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_KNOWLEDGE",
+    "dynamic_line": "我一直在努力进一步保护我们的世界免受我们所面临的威胁，但我担心这是不完整的。不管怎样，我愿意相信你，如果你确信他们会好好利用它。而且，我知道他们寻求盟友。我当守门员的时间已经过去了，但我可以尽我所能去引导那些来这里的人，让他们找到合适的地方。",
+    "responses": [
+      {
+        "text": "听起来不错，当然。关于你的研究…",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES_DEAL"
+      },
+      {
+        "text": "暂时不用担心，保存这项研究更重要。",
+        "topic": "TALK_HERMIT_CF_REP_MISSION_ALLIES_DEFERRED"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_CF_REP_MISSION_BASIC",
+    "dynamic_line": {
+      "npc_has_item": "offering_mission_notes",
+      "yes": "恐怕在我这个年纪，我所能做的就是研究未来，看管我的书。然而，他们派你们来是对的，因为我已经把他们所寻求的保存在粘土中，以便更好地保存。恐怕这就是我能为派你来的人做的一切。你可以得到它。",
+      "no": "恐怕在我这个年纪，我所能做的就是研究《超越》和照看我的书。他们送你是正确的，但是，因为我有他们寻求保存在粘土，以更好地保存它。恐怕我只能为派你来的人做这些了。在保险箱里，这里。"
+    },
+    "speaker_effect": [
+      {
+        "condition": {
+          "npc_has_item": "offering_mission_notes"
+        },
+        "effect": [
+          {
+            "npc_remove_item_with": "offering_mission_notes"
+          },
+          {
+            "u_spawn_item": "offering_mission_notes"
+          }
+        ]
+      },
+      {
+        "effect": [
+          {
+            "u_add_var": "sofia_mission_5_ready",
+            "type": "flag",
+            "context": "hermit",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_hermit_tablet_unlock",
+            "om_terrain": "arcana_hermitage_2",
+            "om_special": "Hermit Cabin"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "在我走之前，我还有其他问题。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "我应该把这个带给他们。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SENT_DREAM",
+    "dynamic_line": "多奇怪啊。梦很少能提供任何有意义的预兆。我可以给你一点建议，除了在看到奇怪的景象时要谨慎。这是一个教训，一些研究困扰这个世界的事物的人从中吸取教训。",
+    "responses": [
+      {
+        "text": "…",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_1",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_BACKDOOR",
+    "dynamic_line": {
+      "npc_has_effect": "hermit_has_sanguine_codex",
+      "yes": "当你准备好了，把刀片递给我，我们就可以开始了。",
+      "no": {
+        "npc_has_effect": "hermit_has_blood_essence",
+        "yes": "最后，我要一份血法典。正如我之前所说，没有它，我们就不能引用血法师用来颠覆这件武器的仪式。你不需要知道和背诵他们的悲惨仪式来打破封印，只需要掌握他们抄写的图案。",
+        "no": {
+          "npc_has_effect": "hermit_has_salt",
+          "yes": "现在，随着准备好的圆形和奠基仪式，我们将需要源质来为它加油。一定是血之源质。乐观主义者设计他们的腐化仪式是依赖于从他人生活中汲取的，只有类似性质的力量才能打破这种诅咒。十二粒血迹将成为仪式的燃料。",
+          "no": "那好吧。我们需要的一些东西我已经准备好了。祂的圣言，一个足够的神圣象征，以及点燃火焰的方法。我要你记住并理解仪式中每一部分的重要性。用火抹刀锋，聚焦引出邪恶。帷幕彼端古神的智慧，你所不能掌握的权势话语。我们将按顺序，一步一步地走。我需要你做的第一件事就是盐，足够制造一圈盐。这会束缚刀锋，保护我们免受仪式的任何反弹。"
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "我有神器。我准备好了。",
+        "switch": true,
+        "topic": "TALK_HERMIT_QUEST_HELP_1_RITUAL",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_has_sanguine_codex"
+            },
+            {
+              "u_has_item": "stormbringer"
+            }
+          ]
+        },
+        "effect": {
+          "u_consume_item": "stormbringer"
+        }
+      },
+      {
+        "text": "我稍后再来。",
+        "switch": true,
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "npc_has_effect": "hermit_has_sanguine_codex"
+        }
+      },
+      {
+        "text": "这是你要的书。下一步是什么？",
+        "switch": true,
+        "topic": "TALK_HERMIT_QUEST_HELP_1_BACKDOOR",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_has_blood_essence"
+            },
+            {
+              "u_has_item": "book_bloodmagic"
+            }
+          ]
+        },
+        "effect": [
+          {
+            "npc_add_effect": "hermit_has_sanguine_codex",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_consume_item": "book_bloodmagic"
+          }
+        ]
+      },
+      {
+        "text": "我没有你需要的书。我一会儿回来。",
+        "switch": true,
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "npc_has_effect": "hermit_has_blood_essence"
+        }
+      },
+      {
+        "text": "这是你要的十二个猩血源质。",
+        "switch": true,
+        "topic": "TALK_HERMIT_QUEST_HELP_1_BACKDOOR",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "hermit_has_salt"
+            },
+            {
+              "u_has_items": {
+                "item": "essence_blood",
+                "count": 12
+              }
+            }
+          ]
+        },
+        "effect": [
+          {
+            "npc_add_effect": "hermit_has_blood_essence",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_consume_item": "essence_blood",
+            "count": 12
+          }
+        ]
+      },
+      {
+        "text": "我没有需要的东西。我一会儿回来。",
+        "switch": true,
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "npc_has_effect": "hermit_has_salt"
+        }
+      },
+      {
+        "text": "我有盐，希望这足够了…",
+        "switch": true,
+        "topic": "TALK_HERMIT_QUEST_HELP_1_BACKDOOR",
+        "condition": {
+          "u_has_items": {
+            "item": "salt",
+            "count": 100
+          }
+        },
+        "effect": [
+          {
+            "npc_add_effect": "hermit_has_salt",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_consume_item": "salt",
+            "count": 100
+          }
+        ]
+      },
+      {
+        "text": "我没有足够的盐做一个圆圈。我一会儿回来。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_RITUAL",
+    "dynamic_line": "很好。观察，知道所发生的事情的重要性。把刀片放在圆圈里。”让帷幕上的每一处伤口都是必须的，否则就不留痕迹了。”为了守卫和引导，我带着他的印记…",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_RITUAL_2"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_RITUAL_2",
+    "dynamic_line": "我读过的乐观的迹象，我想起的神圣的话语。但这些话是不能说的，除非一切都安排妥当了。”我们通过牺牲，烧掉自己不好的东西，培养好的东西。”火被点燃，刀锋被火焰涂抹。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_RITUAL_3"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_RITUAL_3",
+    "dynamic_line": "精髓，我把刀口挖出来，像癌症一样把腐朽的符文割下来。”打开的伤口是无法逆转的，只能修补…",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_RITUAL_4"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_RITUAL_4",
+    "dynamic_line": {
+      "npc_has_effect": "hermit_stage_2",
+      "yes": "给我点时间喘口气。我已经好几年没主持过一个仪式了…",
+      "no": "蒙着帷幕的国王，赐予我们洞察力。求你赐福给我们，护卫引导我们。这些任性的灵魂，以及你给我们的任性礼物，让他们再次为你服务。”不管付出什么代价，不管我们必须做什么，为了这个世界的力量和安全。而另一方面，世界的另一面。"
+    },
+    "responses": [
+      {
+        "text": "好的。",
+        "switch": true,
+        "condition": {
+          "npc_has_effect": "hermit_stage_2"
+        },
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "好吧。",
+        "switch": true,
+        "default": true,
+        "effect": [
+          "mission_success",
+          {
+            "npc_add_effect": "hermit_stage_2",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "veilblade"
+          }
+        ],
+        "topic": "TALK_MISSION_SUCCESS"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1",
+    "dynamic_line": "这件工作最好由你自己独立完成，我没法为你做些什么。但我可以提供建议和某种程度的帮助。你需要的主要东西是祂的圣言，圣杯誓言。你还需要参考血法典来破译最初的咒语。",
+    "responses": [
+      {
+        "text": "查阅这些书有一个问题…",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_PLAYER_DUN_GOOFED",
+        "condition": {
+          "u_has_trait": "ILLITERATE"
+        }
+      },
+      {
+        "text": "你有圣杯誓言吗？",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_CHALICE",
+        "effect": {
+          "u_spawn_item": "book_sacrifice"
+        },
+        "condition": {
+          "not": {
+            "u_has_item": "book_sacrifice"
+          }
+        }
+      },
+      {
+        "text": "你有血法典的副本吗？",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_SANGUINE",
+        "condition": {
+          "not": {
+            "u_has_item": "book_bloodmagic"
+          }
+        }
+      },
+      {
+        "text": "为了修复剑我还需要做什么？",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_GENERAL"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_PLAYER_DUN_GOOFED",
+    "dynamic_line": "去吧，年轻人。它是什么？出什么事了吗？",
+    "responses": [
+      {
+        "text": "一、 呃…不会读。",
+        "topic": "TALK_HERMIT_QUEST_HELP_1_ILLITERATE"
+      },
+      {
+        "text": "没什么。我会想办法的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_ILLITERATE",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_ARCANIST",
+        "PROF_ARCANIST2",
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2",
+        "PROF_SANGUINE",
+        "PROF_CHALICE",
+        "PROF_CHALICE2"
+      ],
+      "yes": "我很惊讶你在学习上取得了这么大的成绩。我要拿你怎么办？如果这就是他给我们带来的命中注定的命运，看来我需要引导你度过这一切。你准备好了再和我谈谈，我想我会看看能做些什么。",
+      "no": "帷幕彼端古神，赐予我力量……如果是奇怪的命运让我们走上了这条路，那么我想我们必须坚持到底。你准备好了再跟我谈谈，我看看我能做些什么。"
+    },
+    "responses": [
+      {
+        "text": "对不起…",
+        "effect": {
+          "u_add_effect": "hermit_quest_backdoor",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_CHALICE",
+    "dynamic_line": "好好读，好好用。这是帷幕彼端古神的圣言，衪高于一切地上的神。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_SANGUINE",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "然而，你似乎有他们的订单的工作标记在你身上。这会妨碍将刀片用于正确的用途，但我愿意相信您至少会帮助恢复它。不管你以这种方式结束，都需要一本他们的书。如果你没有它，寻找他们的藏身之处，远离文明。",
+      "no": "恐怕我手边没有那本书。不过，我可以为你提供我能提供的建议。如果你遇到他们的任何藏身之处，无论是隐藏在城市里还是远离文明，都要格外小心。这本书有时也习惯于落入富有收藏家的手中，具有不同寻常性质的不死生物可能暗示着早已死去的奥术主义者仍然坚持着他们的大部头。"
+    },
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_1_GENERAL",
+    "dynamic_line": "你需要火来燃去刀锋上的腐朽，一个神圣的象征来恢复它的圣洁。即使是这个世界上的信仰也足够了，甚至是是使用来自净化圣火的神圣工具也可以，或者是用我们用于仪式的圣杯。盐用于仪式循环，血之源质为血法典中包含的反咒语提供燃料。最好是你自己去寻找这些东西，以便更好地理解你的任务的重要性。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_2",
+    "dynamic_line": "有两种方法。第一种是利用入口释放的能量。你需要接近一个，尽可能的靠近它而不去踩它。除此之外，源质结晶也可以作为替代品。",
+    "responses": [
+      {
+        "text": "所以这就是为什么你提到了一个异常现象。",
+        "topic": "TALK_HERMIT_QUEST_HELP_2_ANOMALY"
+      },
+      {
+        "text": "璀璨源质？",
+        "topic": "TALK_HERMIT_QUEST_HELP_2_ESSENCE"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_2_ANOMALY",
+    "dynamic_line": "的确。最近，只要有正确的手段，人们就可以在新的时候感觉到这种干扰。准备好迎接任何怪物可能从帷幕上的伤口中走出来。",
+    "responses": [
+      {
+        "switch": true,
+        "text": "正如我们的书所说。任何超自然的怪物都必须回到它真正的领地，活着或死去…",
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我会准备好的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_2_ESSENCE",
+    "dynamic_line": "如果这就是你所追求的，前进之路就在圣杯誓言中。它被用来激发强大的魔法，尽管许多需要集中力量的仪式早已消失。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUEST_HELP_2_SIGNS",
+    "dynamic_line": "虽然某些神秘的祝福是通过其他方式进入这个世界的，但是他所给予的是不同的。他们的神圣起源可以被感知，他们更容易地通过身体和灵魂流动。我的眼睛可能会失去知觉，但有些感觉永远不会迟钝。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1",
+    "dynamic_line": "你已经找回了一件威力无比的物品。这曾经是帷幕彼端古神传下来的一件遗物，实际上是七件之一。只剩下这个了。",
+    "responses": [
+      {
+        "text": "一共有七件？",
+        "topic": "TALK_HERMIT_DISCUSS_1_SEVEN",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "你知道其他六件这么了吗？",
+        "topic": "TALK_HERMIT_DISCUSS_1_SIX"
+      },
+      {
+        "text": "它怎么了？",
+        "topic": "TALK_HERMIT_DISCUSS_1_HAPPENED"
+      },
+      {
+        "text": "如果我想毁掉这件遗物呢？",
+        "topic": "TALK_HERMIT_DISCUSS_1_DESTROY"
+      },
+      {
+        "switch": true,
+        "text": "现在到此为止。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "[询问]我们现在该做什么？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_SEVEN",
+    "dynamic_line": "确实有。七个祭物，七个来自帷幕彼端古神的恩赐，交给七个大祭司。他们要用这些来服侍他的意志，防止帷幕上的伤口恶化。我们失败了。",
+    "responses": [
+      {
+        "text": "其他六件怎么了",
+        "topic": "TALK_HERMIT_DISCUSS_1_SIX"
+      },
+      {
+        "text": "这一件怎么了？",
+        "topic": "TALK_HERMIT_DISCUSS_1_HAPPENED"
+      },
+      {
+        "text": "如果我想毁掉这件遗物呢？",
+        "topic": "TALK_HERMIT_DISCUSS_1_DESTROY"
+      },
+      {
+        "switch": true,
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我懂了。那现在怎么办？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_SIX",
+    "dynamic_line": "有几个已经被摧毁，其他的像这次一样丢失，尽管我怀疑我们是否能找回他们。",
+    "responses": [
+      {
+        "text": "这一件怎么了？",
+        "topic": "TALK_HERMIT_DISCUSS_1_HAPPENED"
+      },
+      {
+        "text": "如果我想毁掉这件遗物呢？",
+        "topic": "TALK_HERMIT_DISCUSS_1_DESTROY"
+      },
+      {
+        "switch": true,
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我懂了。那现在怎么办？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_HAPPENED",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "你不知道这一点，承受着乐观秩序的转变？他们通过某种方式找回了它，并在相互需要的时候归还了它，当时他们正处于自我毁灭的边缘。但它遭到了破坏，企图破坏我们以谋取自身利益，结果却破坏了我们在这一过程中的两项命令。",
+      "no": "是猩红教派。他们通过某种手段找回了它，并在他们的秩序濒临自我毁灭的时候归还了它。但这其实是蓄意的谋划，他们企图为了他们自己的利益而破坏我们的组织，结果却在这个过程中同时破坏了我们的两个组织秩序。"
+    },
+    "responses": [
+      {
+        "text": "我很抱歉。有什么办法弥补吗？",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "opinion": {
+          "trust": 1,
+          "anger": -1
+        },
+        "topic": "TALK_HERMIT_DISCUSS_1_SANGUINE_1"
+      },
+      {
+        "text": "这不是我干的。他们愚蠢地释放出他们无法控制的东西。",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "opinion": {
+          "trust": -1,
+          "anger": 1
+        },
+        "topic": "TALK_HERMIT_DISCUSS_1_SANGUINE_2"
+      },
+      {
+        "text": "我可能和他们走的是同一条路，但我不是他们中的一员。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "PROF_SANGUINE"
+              }
+            },
+            {
+              "u_has_trait": "THRESH_DRAGONBLOOD"
+            }
+          ]
+        },
+        "topic": "TALK_HERMIT_DISCUSS_1_DRAGONBLOOD"
+      },
+      {
+        "text": "这样的背叛就是为什么净化圣火被建立，团结起来反对那些害虫对人民的所作所为。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_HERMIT_DISCUSS_1_FLAME"
+      },
+      {
+        "text": "如果我想毁掉这件遗物呢？",
+        "topic": "TALK_HERMIT_DISCUSS_1_DESTROY"
+      },
+      {
+        "switch": true,
+        "text": "这就是我现在需要知道的。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "那我们该怎么办？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_SANGUINE_1",
+    "dynamic_line": "非常感谢。你有责任，你已经接受了取回这个遗物。我们将共同纠正我们两个命令的错误。",
+    "responses": [
+      {
+        "switch": true,
+        "text": "也许我们可以。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "那我们该怎么办？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_SANGUINE_2",
+    "dynamic_line": "嗯每小时。你有自己的责任。你一定比他们强。",
+    "responses": [
+      {
+        "text": "那能做什么呢？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "我们会看到的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_DRAGONBLOOD",
+    "dynamic_line": "那么，你面前的道路将是艰难的，但仍有希望。一旦刀片恢复，您将无法充分利用刀片，但您仍然可以提供帮助。",
+    "responses": [
+      {
+        "switch": true,
+        "text": "我们看看我能不能。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "那么，用什么方式呢？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_FLAME",
+    "dynamic_line": "这是真的。但不要让自己被仇恨蒙蔽双眼。我认识他们中的许多人，还有一些人为了不那么具有破坏性的理由而寻求权力。如果他们中的任何一个被留下，他们必须被引导去纠正他们的同伴所犯下的错误。",
+    "responses": [
+      {
+        "text": "那能做什么呢？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "我们会看到的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_1_DESTROY",
+    "dynamic_line": "什么？拜托，你不能！我知道这种腐败是危险的，要想解决它需要很大的努力，但如果它能恢复的话，它能起到很大的作用……我不能允许这样。",
+    "responses": [
+      {
+        "text": "好吧。告诉我我需要做什么来修复它。",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "我们会看到的。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]这是我的职责，这太危险了，不能冒险。试着阻止我，老头子。",
+        "topic": "TALK_DONE",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_2",
+    "dynamic_line": "现在看到了，你已经做了很多工作来修复这个遗迹。但我担心这种损害可能是永久性的。不管怎样，它仍然可以达到它的目的。",
+    "responses": [
+      {
+        "text": "还有什么损失？",
+        "topic": "TALK_HERMIT_DISCUSS_2_DAMAGE"
+      },
+      {
+        "text": "剑的用途是什么？",
+        "topic": "TALK_HERMIT_DISCUSS_2_PURPOSE"
+      },
+      {
+        "switch": true,
+        "text": "这已经足够了。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "告诉我该怎么做。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_2_DAMAGE",
+    "dynamic_line": "在它最初的状态下，它可以操纵和控制目前在这个领域徘徊的不稳定性，而不仅仅是封闭它们。有很多仪式可以使用，但即使这是一个选择，他们需要多年的训练，以安全地练习。我们将不得不勉强维持它所能达到的目的。",
+    "responses": [
+      {
+        "text": "这把剑的用途是什么？",
+        "topic": "TALK_HERMIT_DISCUSS_2_PURPOSE"
+      },
+      {
+        "switch": true,
+        "text": "那我现在只需要这些了。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "那我该怎么办？",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_2_PURPOSE",
+    "dynamic_line": "修补帷幕上的伤口。好吧，至少要治疗，最好是预防。毕竟，正如人们所说的那样，我们的责任是不恢复已经做的事情，而是确保我们将坚持下去。",
+    "responses": [
+      {
+        "text": "我们曾希望修补帷幕上的伤口，并防止任何进一步的混乱。尽管我们有分歧，但我们有一个共同的目标。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_HERMIT_DISCUSS_2_FLAME"
+      },
+      {
+        "switch": true,
+        "text": "很好。现在问题已经够多了。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "那好吧。告诉我该怎么做。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_2_FLAME",
+    "dynamic_line": "我们的职责有些重叠，为我们提供了共同工作的手段，但它们在各方面并不相同。正如我所说，扭转已经发生的一切可能永远不可能。如果你愿意的话，你可以自由地去追求，但是实现剑的目的将有助于任何一个目标。",
+    "responses": [
+      {
+        "text": "如果你坚持的话。我该怎么办？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "我们会看到的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL",
+    "dynamic_line": "我想请你进一步完成这项任务，但有一个复杂的问题。你知道某些影响，某些力量，会在身体上留下印记，对吗？",
+    "responses": [
+      {
+        "text": "当我们寻求对超越的理解时，不要忘记我们的人性…",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_TENET",
+        "opinion": {
+          "anger": 1,
+          "value": -1
+        },
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "text": "我想我明白…",
+        "opinion": {
+          "anger": -1
+        },
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_UNDERSTAND"
+      },
+      {
+        "text": "什么意思？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_EXPLAIN"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_TENET",
+    "dynamic_line": "你会引用你没有坚持的信条吗？我可以清楚地告诉你，你已经抛弃了你的人性。我们禁止这样做是有原因的。坚持他的誓言将使我们走上一条冲突的道路，一场对我们整个世界的战争，因为我们的敌人将会很多。",
+    "responses": [
+      {
+        "text": "是他的意愿，让我们不受变异的影响？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_MUTATION"
+      },
+      {
+        "text": "有什么办法能让我重获他的好感吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR"
+      },
+      {
+        "text": "我很抱歉。我要走了…",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_MUTATION",
+    "dynamic_line": "这并不是说你的形体偏离了自然之路。事实上，这些影响使你的身体依赖于不属于这个世界的力量。如果你与敌人为伍，那么你的生命就有可能取决于他们对这个世界的持续影响。我们永远无法真正扭转已经造成的破坏，但修复我们的世界对那些与外界联系太紧密的人来说可能是一个严重的风险。",
+    "responses": [
+      {
+        "text": "我不怕死，如果这意味着我们其他人不会灭绝。",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_UNAFRAID"
+      },
+      {
+        "text": "我有什么办法可以弥补吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR"
+      },
+      {
+        "text": "我懂了。我不会再麻烦你了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_UNAFRAID",
+    "dynamic_line": "我钦佩你的承诺。但是你已经动摇了，偏离了正确的方向。这不是我的，也是你的。",
+    "responses": [
+      {
+        "text": "我们能做些什么吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR"
+      },
+      {
+        "text": "那就这样吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR",
+    "dynamic_line": {
+      "npc_has_item": "veilblade",
+      "yes": "寻找另一个，在你看到帮助他人的机会的地方培养人类的生存。到时候，另一个会来拿剑的。命运给了我一个机会，我将等待另一个改正错误的机会，直到我最后一口气。给了我一些东西来防止这些老骨头再长一分钟，我想…",
+      "no": "你虽然走了这一步，仍然证明自己是值得信赖的，甚至在被引入歧途之后，仍然寻求我的建议。这把剑还能起作用，我想他还是会奖励你的。每一次通灵都是赎罪祭，是悔改。你仍然可以从中获得一些好处，但也有其他选择。"
+    },
+    "responses": [
+      {
+        "text": "其他选择？",
+        "condition": {
+          "not": {
+            "npc_has_item": "veilblade"
+          }
+        },
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_OPTIONS"
+      },
+      {
+        "text": "我懂了。我会尽我所能。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_OPTIONS",
+    "dynamic_line": "还有其他人，也许他们迟早会来这里的。如果你能走出去，培养我们的信仰，我们也许还能找到合适的人选。如果你愿意把刀锋交给我，我会尽我所能报答你。",
+    "responses": [
+      {
+        "text": "那好吧。干得好。",
+        "condition": {
+          "u_has_item": "veilblade"
+        },
+        "effect": [
+          {
+            "u_sell_item": "veilblade"
+          },
+          {
+            "u_lose_effect": "hermit_stage_3_backdoor"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "我现在没有，但我可以改天再给你拿回来。",
+        "condition": {
+          "not": {
+            "u_has_item": "veilblade"
+          }
+        },
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "我会找到另一个解决办法。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_UNDERSTAND",
+    "dynamic_line": "我希望你真的这么做。如果你想服侍他，而你却完全被束缚在外面，那很可能就是你的死亡。",
+    "responses": [
+      {
+        "text": "我会不惜一切代价，即使有风险。",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_UNAFRAID"
+      },
+      {
+        "text": "我能做些什么来弥补这个？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR"
+      },
+      {
+        "text": "我要走了…",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_FAIL_EXPLAIN",
+    "dynamic_line": "简单，年轻人。对这个世界的入侵已经威胁到我们所有人，给我们造成的影响可能永远无法消除。然而，你与这些力量联系得越多，你就越不适合作为他的选民。",
+    "responses": [
+      {
+        "text": "是他的意愿，让我们不受变异的影响？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_MUTATION",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "text": "所以你的上帝不接受变种人？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_MUTATION"
+      },
+      {
+        "text": "我能做些什么来解决这个问题吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_FAIL_FAVOR"
+      },
+      {
+        "text": "我要走了…",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR",
+    "dynamic_line": {
+      "u_has_item": "veilblade",
+      "yes": "我很高兴你愿意帮助我。你现在拥有的遗迹代表了那些在你之前的人的遗产。我怕我对这个世界的渴望不长，但你还有机会。我会尽我所能地引导你。",
+      "no": {
+        "u_has_effect": "hermit_stage_3_backdoor",
+        "yes": "我很高兴你愿意帮助我。你现在拥有的遗迹代表了那些在你之前的人的遗产。我怕我对这个世界的渴望不长，但你还有机会。我会尽我所能地引导你。",
+        "no": {
+          "npc_has_item": "veilblade",
+          "yes": "还有一个人想帮助我，但最终还是无法完成我的使命。他们把这个遗物交给了我，据我所知，这是我们最后的神圣武器。如果你愿意好好照顾它，它可能会对你有帮助。",
+          "no": "我很感谢你的提议。还有一个来过这里的人，有一次。我尽我所能地引导他们，在我能让自己休息之前帮助我完成一些未完成的工作，但我们又一次失败了。有一把剑，我们教团的神圣武器之一。一把刻有神圣符文的大刀。如果你再找到它，我会告诉你这项未完成的事业需要什么。"
+        }
+      }
+    },
+    "responses": [
+      {
+        "switch": true,
+        "text": "告诉我这把剑需要做什么。",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_SWORD",
+        "condition": {
+          "or": [
+            {
+              "u_has_item": "veilblade"
+            },
+            {
+              "u_has_effect": "hermit_stage_3_backdoor"
+            }
+          ]
+        }
+      },
+      {
+        "text": "在你的照料下，这是非常危险的魔法。你确定这是明智的吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_WISE",
+        "condition": {
+          "and": [
+            {
+              "npc_has_item": "veilblade"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CLEANSINGFLAME",
+                "PROF_CLEANSINGFLAME2"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "你要我加入你的邪教，守护者。",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_CULT",
+        "condition": {
+          "and": [
+            {
+              "npc_has_item": "veilblade"
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我接受。需要做什么？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_OFFER",
+        "effect": [
+          {
+            "u_add_effect": "hermit_stage_3_backdoor",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "veilblade"
+          },
+          {
+            "npc_remove_item_with": "veilblade"
+          }
+        ],
+        "condition": {
+          "npc_has_item": "veilblade"
+        }
+      },
+      {
+        "text": "你的命令有效吗？那是什么？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_WORK",
+        "condition": {
+          "and": [
+            {
+              "npc_has_item": "veilblade"
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "所以我们还有希望。还有别的吗？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_HOPE",
+        "condition": {
+          "and": [
+            {
+              "npc_has_item": "veilblade"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE"
+              ]
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "未完成的任务？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_BUSINESS"
+      },
+      {
+        "text": "我需要时间考虑一下。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_SWORD",
+    "dynamic_line": "它有能力利用在现实中的空洞中挥之不去的能量，那就是仍然存在的门户。损害已经造成了，但这是一个步骤，可以使我们重新获得某种程度的控制，并确保我们的世界继续存在，更不用说人类的生存了。运用这一行动赋予你的力量，你将亲眼看到接下来的一切。你会知道当这个努力的成果得到回报的时候，当这一切发生的时候找我。",
+    "responses": [
+      {
+        "text": "上帝和恶魔奴役我们是造成这场混乱的原因，你这个老傻瓜。",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_GODLESS",
+        "opinion": {
+          "anger": 1,
+          "value": -1
+        },
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "switch": true,
+        "text": "我们不会失败的。因为这是他的意愿。",
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "text": "这种力量是危险的。为什么我们要相信另一个闯入者会得救呢？",
+        "topic": "TALK_HERMIT_DISCUSS_3_BACKDOOR_DANGER",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我仍然有我的担心，但我们要看看能做些什么。",
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我看看能做些什么。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_GODLESS",
+    "dynamic_line": "你错了。人类的双手把它带到了我们的世界。我知道你的命令并没有引发这一切，尽管净化之火的指控。但这是人为造成的，我们需要我们能得到的一切帮助。你吩咐我的弟兄们行了这事以后，我仍然愿意信靠你，但你也要信靠我。",
+    "responses": [
+      {
+        "text": "我会考虑…",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]不。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_DANGER",
+    "dynamic_line": "你对所有的神都很忠诚，年轻人。你会发现，这件文物，如果小心使用，是安全的，因为它的损伤已经愈合。我们不是敌人，亨特。我相信你会做正确的事。",
+    "responses": [
+      {
+        "text": "到时候我们会看到的，守护者。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]我不能让这种情况继续下去。它必须被摧毁。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_WISE",
+    "dynamic_line": "你一定能辨别出一个危险的神器，就像你一样有经验。但别忘了，我也精通我们的秩序。这件武器在血骑士团手中受到了伤害，但它已经被清洗干净了。我也知道你不愿意用这个来达到它的目的，但是请你。我愿意相信你，因为我知道你会做正确的事。",
+    "responses": [
+      {
+        "text": "很好，守门员。我们将拭目以待。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_stage_3_backdoor",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "veilblade"
+          },
+          {
+            "npc_remove_item_with": "veilblade"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击] 我不知道这个遗物是否能被恰当地神圣净化，我宁可它被摧毁，也不愿冒它造成进一步破坏的风险。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      },
+      {
+        "text": "我不确定这是不是正确的方法，守门员。我需要时间思考。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_CULT",
+    "dynamic_line": "我要求你做正确的事。你点的是什么？”任何神圣的象征或圣像都不能左右那些走在道路上的人。如果你接受这一点，你就有了生存的手段，你就可以用这件古老的遗物做些好事。",
+    "responses": [
+      {
+        "text": "我们还说，这些权力只是我们可以利用的另一种工具。好吧，我一起玩。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_stage_3_backdoor",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "veilblade"
+          },
+          {
+            "npc_remove_item_with": "veilblade"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]你是这东西的奴隶。你最好死后加入你的邪教。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      },
+      {
+        "text": "我会考虑的。现在不行。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_OFFER",
+    "dynamic_line": "非常感谢。同时要保护好这件文物。当你旅行时，你会发现这一切开始时遗留下来的门户。站在他们面前，带着你的遗物，很快你就会知道该怎么做了。总有一天，一切都会得到答复。如果你需要进一步的建议，可以和我谈谈。",
+    "responses": [
+      {
+        "text": "我看看能做些什么。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_WORK",
+    "dynamic_line": "我们想尽一切办法来抚平帷幕上仍在溃烂的伤口。另一个经历过超越的团体，有他们自己的方法。有缺陷的，但不是没有价值的。最终，如果你接受了这把剑，找到了遗留下来的门户，你就会找到你所寻求的答案。这可能不足以拯救人类。其中一种是帮助。",
+    "responses": [
+      {
+        "text": "可以。我接受。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_stage_3_backdoor",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "veilblade"
+          },
+          {
+            "npc_remove_item_with": "veilblade"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "我需要时间考虑一下。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_HOPE",
+    "dynamic_line": "希望总是有的，年轻人。正如法师猎人所说，只要太阳照耀大地。我把七件遗物中的最后一件委托给你。愿帷幕彼端古神指引你，使你蒙膏他所拣选的。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_stage_3_backdoor",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "veilblade"
+          },
+          {
+            "npc_remove_item_with": "veilblade"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_BUSINESS",
+    "dynamic_line": "我们挣扎了这么长时间，经历了这么多的死亡和痛苦，希望首先能阻止这一天启，然后确保这个世界的生存，尽管现实之壁上有无数的眼泪。让别人确保人类继续生存，我们有自己的方式来确保这个世界的未来。但现在，它又一次从我的掌控中溜走了。只有通过看到我的圣物之一，恢复了它以前的荣耀，我才能够找到继续下去的力量。我们再看看有没有机会…",
+    "responses": [
+      {
+        "text": "“为了维护此世界的稳固与安全，不计代价、不问辛劳，同时，也是为了彼端的世界。”我们将坚持不懈。",
+        "switch": true,
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "text": "我不知道这会有什么结果，守门员，但你能坚持住，真是令人钦佩。我们还没有灭绝，不管是遗迹还是没有遗迹。",
+        "switch": true,
+        "topic": "TALK_HERMIT",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "我看看能做些什么。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_BACKDOOR_COMPLETE",
+    "dynamic_line": {
+      "u_has_effect": "hermit_earned_trust_2",
+      "yes": {
+        "npc_has_effect": "hermit_stage_failure",
+        "yes": "所以你成功了，而我和其他人都失败了。我终于看到了它，希望它能结出果实。毫无疑问，你会有问题，当你准备好的时候和我谈谈，我会尽我所能回答他们。",
+        "no": "我印象深刻，年轻人。帷幕彼端古神寻求在这些黑暗的时代给我们带来希望。看到这样的事情，毕竟已经过去了，我的旧心松了一口气。来吧，我们有很多事情要讨论。"
+      },
+      "no": {
+        "npc_has_effect": "hermit_stage_failure",
+        "yes": "所以这就是你来这里的原因。另一个人想完成他的工作，但我没有成功。但你在这里，被帷幕彼端古神选中，引导我们继续工作吗？我欠你的债。我会尽我所能回答你的问题。",
+        "no": "什么？如此奇怪的命运，会指引你来到这里。我担心我是最后一个点菜的，我们没有希望了。看来命运已经证明我错了。好吧，如果你有问题，准备好了再跟我说。"
+      }
+    },
+    "responses": [
+      {
+        "text": "我们会看到的。",
+        "topic": "TALK_HERMIT",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          },
+          {
+            "npc_add_effect": "hermit_stage_4",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3",
+    "dynamic_line": "的确。希望你亲眼看到这个遗迹能做些什么，即使是在它所处的贫困状态下。有了它，另一个人至少可以继续履行我们的誓言。尽我们所能确保这个世界不会被抛入深渊，其他人也不会因此而陷入深渊。如果你相信自己准备好了…",
+    "responses": [
+      {
+        "text": "我们的誓言？",
+        "topic": "TALK_HERMIT_DISCUSS_3_OATH",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "为什么是另一个？你为什么不能这么做？",
+        "topic": "TALK_HERMIT_DISCUSS_3_ANOTHER"
+      },
+      {
+        "text": "深渊？",
+        "topic": "TALK_HERMIT_DISCUSS_3_ABYSS"
+      },
+      {
+        "switch": true,
+        "text": "我现在没有更多的问题了。我们看看我能做些什么。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我准备好了。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_OATH",
+    "dynamic_line": "好吧，我和我的兄弟们发誓的。虽然我没有管理圣誓的权力，但你们已经开始走上了一条道路，如果沿着这条道路走下去，也会达到同样的目的。你会有一些我们很少人能做到的事情。",
+    "responses": [
+      {
+        "text": "你为什么不能这么做？",
+        "topic": "TALK_HERMIT_DISCUSS_3_ANOTHER"
+      },
+      {
+        "text": "你对深渊怎么说？",
+        "topic": "TALK_HERMIT_DISCUSS_3_ABYSS"
+      },
+      {
+        "switch": true,
+        "text": "这应该是我现在需要的所有答案。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我准备好了。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_ANOTHER",
+    "dynamic_line": "我已经过了青春年华。你已经证明了自己的能力，值得他的青睐。我最好尽我所能，引导你走上正确的道路。",
+    "responses": [
+      {
+        "text": "你对深渊怎么说？",
+        "topic": "TALK_HERMIT_DISCUSS_3_ABYSS"
+      },
+      {
+        "switch": true,
+        "text": "好吧。现在到此为止。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "好吧。我准备好了。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_ABYSS",
+    "dynamic_line": "这就是圣杯誓言所警告的，为什么这么多年前他回答了我们的请求。不仅仅是为了我们，也是为了其他世界的利益，那些被蒙上帷幕的伤口所影响的世界。",
+    "responses": [
+      {
+        "text": "所以你认为帷幕彼端古神想要关闭传送门？",
+        "topic": "TALK_HERMIT_DISCUSS_3_MOTIVE"
+      },
+      {
+        "text": "为什么我们要关心这些怪物来自什么地狱？",
+        "topic": "TALK_HERMIT_DISCUSS_3_CARE",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2",
+            "PROF_SANGUINE"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "我懂了。我准备好了。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_MOTIVE",
+    "dynamic_line": "也许。很难确定神，无论是在地上还是在另一个世界。毫无疑问，其他来自远方的强大的生命没有这种担心，但这是因为他们相信不会有这样的后果，还是他们不知道这些后果？或者更糟的是，渴望看到什么样的灾难会折磨其他存在的层面？这些问题没有一个凡人的头脑能够肯定地回答，只是这些力量中至少有一个对有益于我们的行为有兴趣，不管他的真实意图如何。",
+    "responses": [
+      {
+        "switch": true,
+        "text": "好吧……",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "好吧…我准备好了。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_3_CARE",
+    "dynamic_line": "我能理解为什么这很难关心。大多数来自远方的入侵者充其量只是动物，而其他大多数人似乎只渴望我们所有人的苦难和灭绝。但是在他们当中，有些灵魂，一些神，恶魔，无论他们是什么，都会看到我们生存下来，忍受我们前面黑暗的日子。不管他们是否出于私利行事，与其在无法形容的恐怖阴影中畏缩，不如有一个强大的盟友。",
+    "responses": [
+      {
+        "switch": true,
+        "text": "如果你这样说。",
+        "topic": "TALK_HERMIT",
+        "condition": "has_no_available_mission"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "如果你这样说。我想我准备好了。",
+        "topic": "TALK_MISSION_LIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4",
+    "dynamic_line": "我不能再给你更多的任务了。你的道路是你自己的，尽管在帷幕彼端古神的指引下。不过，如果你还有问题，我会尽我所能帮助你。",
+    "responses": [
+      {
+        "text": "我担心我的兄弟们会怎么想…",
+        "topic": "TALK_HERMIT_DISCUSS_4_FLAME",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "多有趣啊，你选了一个血法师。",
+        "topic": "TALK_HERMIT_DISCUSS_4_SANGUINE",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "text": "我可以听到在我的脑海中低语，奇怪的梦的碎片，我记不清了。",
+        "topic": "TALK_HERMIT_DISCUSS_4_DREAMS"
+      },
+      {
+        "text": "守誓者还剩下多少？",
+        "topic": "TALK_HERMIT_DISCUSS_4_KEEPERS"
+      },
+      {
+        "text": "为什么血法师背叛了你？",
+        "topic": "TALK_HERMIT_DISCUSS_4_BETRAYAL"
+      },
+      {
+        "text": "封闭这些传送门真的能保证人类的生存吗？",
+        "topic": "TALK_HERMIT_DISCUSS_4_SURVIVAL"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_FLAME",
+    "dynamic_line": "我们不是敌人，至少不再是。虽然有些人想毁掉这件文物，但他们有什么理由呢？正如你的圣书所说，如果学习不安全，就把它毁掉。但是你已经很清楚地看到了它的作用，并且可以确认它是安全的。",
+    "responses": [
+      {
+        "text": "是的。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "是的。现在到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_SANGUINE",
+    "dynamic_line": "真有趣。没有上帝，没有恶魔，不管圣经上说的是什么。然而，你所得到的是正当的。你不是仆人，而是他的选民。",
+    "responses": [
+      {
+        "text": "正确的。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "正确的。现在到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_DREAMS",
+    "dynamic_line": "另一个被选中的人写了关于听到他的意愿，描述了通过梦和预兆接受神的启示。这是这些遗物的另一个优点，能够听从他的命令，而不需要牺牲和仪式来维持与他的交流。如果他们是混乱和不清楚，这可能是另一个后果的猩红教派的工作，文物。即便如此，只要你能做到，我还是希望他会高兴。",
+    "responses": [
+      {
+        "text": "除了关闭传送门，还有什么可以服务古神的？",
+        "topic": "TALK_HERMIT_DISCUSS_4_SERVICE"
+      },
+      {
+        "text": "我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_SERVICE",
+    "dynamic_line": "他谈到了驱赶其他入侵对这一领域的影响，让不安的死者恢复正常状态，为人类在逆境中的生存铺平道路。我不知道他的意志是否真的是出于对人类的爱，但即使不是，如果我们被推向灭绝，那么谁能确保他的意志得到执行呢？如果现实结构进一步恶化，并且没有人能够阻止，那么会发生什么可怕的后果？",
+    "responses": [
+      {
+        "text": "我懂了。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "正确的。现在到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_KEEPERS",
+    "dynamic_line": "还有其他的。我确信这一点。只要我们中有一个人还活着，只要我们的誓言在文字中得以延续，我们就不会在短时间内死去。你可以问以前的世俗信仰。",
+    "responses": [
+      {
+        "text": "知道了。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "可以。现在到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_BETRAYAL",
+    "dynamic_line": "我们有权力，一个我们愿意与他们分享的避难所，可能是重建的手段。这是他们的愚蠢之举，以为我们本可以庇护他们的时候，一次就抓住了他们想要的东西。",
+    "responses": [
+      {
+        "text": "你学会了艰难的方法，不要相信猩红教派。",
+        "topic": "TALK_HERMIT_DISCUSS_4_BETRAYAL_FLAME",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "我们的行为注定了我们俩。",
+        "topic": "TALK_HERMIT_DISCUSS_4_BETRAYAL_SANGUINE",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "text": "我懂了。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "哦。现在到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_BETRAYAL_FLAME",
+    "dynamic_line": "也许。但我们有理由这么做。你可能只知道他们是食人的，牺牲人类的怪物，但野心的原因是多方面的，追求它的方式也是如此。他们的行为和你的命令一样一致。",
+    "responses": [
+      {
+        "text": "正确的。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_BETRAYAL_SANGUINE",
+    "dynamic_line": "也许。然而，我们仍然活着。也许这一点，一个乐观的选择和一个老的守护者，证明这样的背叛并不是庇护他们的必然结果…",
+    "responses": [
+      {
+        "text": "我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DISCUSS_4_SURVIVAL",
+    "dynamic_line": "人类的生存将取决于所有活着的人。有无数的威胁要克服。即使我们不去履行我们的职责，人类也会繁衍和适应。它也可能是，无论我们做什么，帷幕的织物仍然处于危险之中。但他的意愿是，我们要确保那些幸存下来的人拥有一切可能的优势。即使这些可怕的后果永远不会发生，你作为他的选民的责任仍然对这个世界有好处。",
+    "responses": [
+      {
+        "text": "好吧。我还有一件事要问。",
+        "topic": "TALK_HERMIT_DISCUSS_4"
+      },
+      {
+        "text": "就这样吧。现在到此为止。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_WHO",
+    "dynamic_line": {
+      "u_has_effect": "hermit_earned_trust_2",
+      "yes": "我曾经是帷幕彼端古神追随者。嗯，不，我仍然是。誓言是永恒的。但是一个老人只能做这么多。我们很多人都堕落了…",
+      "no": "我只是过去的幸存者。我想我是个学者，因为我除了读旧世界留下的东西外，几乎没什么可做的。"
+    },
+    "responses": [
+      {
+        "text": "然而人类仍在坚持，我们当中仍有人为他的意志服务。",
+        "topic": "TALK_HERMIT_VEIL_SOLIDARITY",
+        "condition": {
+          "and": [
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "你能告诉我关于帷幕彼端古神的什么？",
+        "topic": "TALK_HERMIT_QUERY_VEIL",
+        "condition": {
+          "u_has_effect": "hermit_earned_trust_2"
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "学者？你有什么书？",
+        "topic": "TALK_HERMIT_SCHOLAR"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_VEIL_SOLIDARITY",
+    "dynamic_line": "的确。尽管如此，还是有希望的。希望不仅仅是为了人类的生存或我们的信仰，而是希望我们的行为能取悦他，并确保它不会全部白费。非常感谢。",
+    "responses": [
+      {
+        "text": "没事的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUERY_VEIL",
+    "dynamic_line": "我们宣誓过的那个人。他为我们所行的一切权柄和旨意，只有大祭司知道，但我们都看见服事他所带来的好处。很多事情都是净化之火所认可的，试图修补帷幕上不断恶化的伤口，从远处驱赶入侵者…",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SCHOLAR",
+    "dynamic_line": {
+      "u_has_effect": "hermit_earned_trust_1",
+      "yes": "当然有一些古老的秘籍，但我所拥有的大部分仍然只是一些琐碎的文本、圣书和小说。",
+      "no": "古老的宗教经文、小说等琐碎的东西。我年轻时是个收藏家。"
+    },
+    "responses": [
+      {
+        "text": "什么样的宗教书籍？",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS",
+        "condition": {
+          "not": {
+            "u_has_effect": "hermit_earned_trust_1"
+          }
+        }
+      },
+      {
+        "text": "不管怎样，都很有趣。",
+        "topic": "TALK_HERMIT_BOOK_INTERESTING",
+        "condition": {
+          "not": {
+            "u_has_effect": "hermit_earned_trust_1"
+          }
+        }
+      },
+      {
+        "text": "那更多的异国情调的书呢？",
+        "topic": "TALK_HERMIT_BOOK_QUERY",
+        "condition": {
+          "not": {
+            "u_has_effect": "hermit_earned_trust_1"
+          }
+        }
+      },
+      {
+        "text": "在这些黑暗的时代，保持信仰的生命力仍然是有价值的。",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        },
+        "condition": {
+          "u_has_trait": "SPIRITUAL"
+        },
+        "topic": "TALK_HERMIT_SPIRITUAL"
+      },
+      {
+        "text": "几乎不是小事，每本书都有它的优点。",
+        "opinion": {
+          "value": 1
+        },
+        "condition": {
+          "u_has_trait": "LOVES_BOOKS"
+        },
+        "topic": "TALK_HERMIT_LOVES_BOOKS"
+      },
+      {
+        "text": "事实上，没有什么值得学习的东西是不能从经验中学习的。随你便，老头子。",
+        "condition": {
+          "u_has_trait": "HATES_BOOKS"
+        },
+        "opinion": {
+          "value": -1
+        },
+        "topic": "TALK_HERMIT_HATES_BOOKS"
+      },
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS",
+    "dynamic_line": "旧世界的各种信仰。我一直是一个学者，而不是神学家，但在这样的著作中可以窥见一些见解。无论是旧神还是新神。",
+    "responses": [
+      {
+        "switch": true,
+        "text": "我们都有共同的理解。我是在各种各样的教义中长大的，在我们的目标上团结一致。",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_CLEANSINGFLAME",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "我懂了。我被教导不要相信任何超出自己能力的力量。",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_SANGUINE",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "switch": true,
+        "text": "可以理解。我学会了一个新神的方法。",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_CHALICE",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "新神？",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_NEWGODS"
+      },
+      {
+        "text": "哈。我明白了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_CLEANSINGFLAME",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "多种多样，以你的龙血为标志。但是什么目的指引你呢？",
+      "no": "多么熟悉的观点。我那想知道，是为了什么…"
+    },
+    "responses": [
+      {
+        "text": "修补帷幕上不断增长的伤口。",
+        "opinion": {
+          "value": 1
+        },
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_HEALER"
+      },
+      {
+        "text": "保护人类，只要太阳照耀地球。",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_PROTECTOR"
+      },
+      {
+        "text": "摧毁危险的魔法，以及危险的魔法使用者。",
+        "opinion": {
+          "value": -1
+        },
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_HUNTER"
+      },
+      {
+        "text": "这些天我只是个幸存者。",
+        "topic": "TALK_HERMIT_BOOK_RELIGIOUS_SURVIVOR"
+      },
+      {
+        "text": "没什么。不要介意。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_HEALER",
+    "dynamic_line": "有价值的事业。我们有一个共同的目标，亨特。你就是这样，对吗？我可能有一个任务要给你，这符合我们的两个目标。",
+    "responses": [
+      {
+        "text": "那好吧。我们会看到…",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_PROTECTOR",
+    "dynamic_line": "我明白了，猎人。我对你的信条很熟悉，即使我是帷幕彼端古神的追随者。我敢说你早就知道了。我们不必成为敌人。事实上，如果你愿意的话，我愿意请你协助完成一项非常重要的任务。",
+    "responses": [
+      {
+        "text": "那我们就看看会有什么结果。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]我不能接受。我们有时可能是盟友，但我们也是敌人。这一次，我不会允许你给这个世界带来任何进一步的破坏。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_HUNTER",
+    "dynamic_line": "嗯每小时。还在消灭你不明白的东西。我认识你这种人，亨特。虽然我早就放弃了对奥术的研究，但我仍然记得你的命令所造成的破坏。",
+    "responses": [
+      {
+        "text": "现在不是更多流血的时候。你不是普通的神秘主义者，这点很清楚。",
+        "topic": "TALK_HERMIT_BOOK_HUNTER_PEACE"
+      },
+      {
+        "text": "我们成立是为了抵抗猩红教派。我们造成了多大的伤害，一群凶残的食人狂做得更糟。",
+        "topic": "TALK_HERMIT_BOOK_HUNTER_EXCUSES"
+      },
+      {
+        "text": "[攻击]我完全理解。我能看穿你的骗局，看到你“长期被遗弃”的研究仍在进行中。我不会再让你有机会欺骗我了。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_HUNTER_PEACE",
+    "dynamic_line": "我懂了。那我道歉。我所看到的，很难不小心。如果你能容忍一个年轻的看门人和一个年老的看门人一起闲逛，也许你能容忍。",
+    "responses": [
+      {
+        "text": "我们会看到的。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_HUNTER_EXCUSE",
+    "dynamic_line": "我也不太喜欢猩红教派，但这样的借口并不能证明你的兄弟们所做的一切。如果你想把危险的魔法从坏人手中夺走，我可以帮你做这件事，但你不能通过无谓的暴力找到你想要的东西。",
+    "responses": [
+      {
+        "text": "如果你坚持的话。告诉我你能提供什么，我们看看该怎么办。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]我自己能搞定。我不相信你会把我引向歧途，守护者。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_SURVIVOR",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "我们俩似乎都偏离了自己的道路。一、 尽管在绝望面前放弃了我的誓言。而你，以血魔法为标志。也许我们还有希望。我可能有一项任务，将再次赋予我们两个目标。",
+      "no": "我也是，这些天。也许我们可以一起努力，再次找到新的目标，亨特。如果你愿意，我可以给你一个提议。"
+    },
+    "responses": [
+      {
+        "text": "那好吧。我们会看到…",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_SANGUINE",
+    "dynamic_line": "嗯。我怀疑血法师的本性。听起来不错。即使你不愿意臣服帷幕彼端古神，你也有自己的见解。如果你接受，我有一个任务，对我们双方都有好处。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_CHALICE",
+    "dynamic_line": "我懂了。我能从你的眼睛里看出一个年轻人，在我的心里能感觉到。我们的另一个信徒。如果这是真的，那么你理解我们的共同使命。我很抱歉欺骗了你，但现在谁也不能太谨慎。来吧，我们有很多事情要讨论。",
+    "responses": [
+      {
+        "text": "那好吧。",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_RELIGIOUS_NEWGODS",
+    "dynamic_line": "深奥的研究和诸如此类的，大部分都是疯子在一个疯狂的世界里漫无目的的胡言乱语。然而，偶尔也会有一些洞察的曙光闪现出来，研究它至少是有趣的。",
+    "responses": [
+      {
+        "text": "也许你能教我一些见识？",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_1",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_HERMIT_NEWGODS_INSIGHT"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_NEWGODS_INSIGHT",
+    "dynamic_line": "我们再看看，也许下次吧。我学到了很多稀奇古怪的东西，也许过一段时间它会对另一个人有用。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_INTERESTING",
+    "dynamic_line": "我很高兴听到书籍仍然有价值，即使在这个黑暗的时代。你可以随意从架子上借，我积攒的钱不多。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_QUERY",
+    "dynamic_line": "一个奇怪的问题。你为什么要找这样的东西，为什么要找我？",
+    "responses": [
+      {
+        "text": "我感觉到一种本能的拉力。也许是被裹尸布的国王。",
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        },
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "topic": "TALK_HERMIT_BOOK_OUST",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ]
+      },
+      {
+        "text": "我已经看到了奥术能带来什么。伟大的事情，也有巨大的危险。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2",
+            "PROF_SANGUINE",
+            "PROF_ARCANIST",
+            "PROF_ARCANIST2",
+            "THRESH_DRAGONBLOOD"
+          ]
+        },
+        "topic": "TALK_HERMIT_BOOK_REVEAL",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_1",
+          "duration": "PERMANENT"
+        }
+      },
+      {
+        "text": "你的光环被隐藏的魔法和隐藏的物品照亮，我可以透过我的面具看到它。",
+        "opinion": {
+          "fear": 1,
+          "value": 1
+        },
+        "condition": {
+          "or": [
+            {
+              "u_is_wearing": "somen_clairvoyance"
+            },
+            {
+              "u_is_wearing": "somen_clairvoyance_on"
+            },
+            {
+              "u_is_wearing": "somen_clairvoyance_xl"
+            },
+            {
+              "u_is_wearing": "somen_clairvoyance_xl_on"
+            }
+          ]
+        },
+        "topic": "TALK_HERMIT_MASK_REVEAL"
+      },
+      {
+        "switch": true,
+        "text": "你似乎在这方面有经验。",
+        "topic": "TALK_HERMIT_BOOK_ASKED",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_intelligence": 10
+                },
+                {
+                  "u_has_perception": 10
+                }
+              ]
+            },
+            {
+              "u_has_effect": "hermit_inquire_denied"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "称之为预感。",
+        "topic": "TALK_HERMIT_BOOK_ASKED",
+        "condition": {
+          "u_has_effect": "hermit_inquire_denied"
+        }
+      },
+      {
+        "switch": true,
+        "text": "你似乎在这方面有经验。",
+        "condition": {
+          "or": [
+            {
+              "u_has_intelligence": 10
+            },
+            {
+              "u_has_perception": 10
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30
+        },
+        "success": {
+          "topic": "TALK_HERMIT_BOOK_ADMISSION",
+          "opinion": {
+            "trust": 1
+          },
+          "effect": {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "TALK_HERMIT_BOOK_DENIAL",
+          "effect": {
+            "u_add_effect": "hermit_inquire_denied",
+            "duration": 10800
+          }
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "称之为预感。",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 15
+        },
+        "success": {
+          "topic": "TALK_HERMIT_BOOK_ADMISSION",
+          "opinion": {
+            "trust": 1
+          },
+          "effect": {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "TALK_HERMIT_BOOK_DENIAL",
+          "effect": {
+            "u_add_effect": "hermit_inquire_denied",
+            "duration": 10800
+          }
+        }
+      },
+      {
+        "text": "没什么。不要介意。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_OUST",
+    "dynamic_line": "几乎没有人会无缘无故地谈论这种事情。也许他引导了两个任性的追随者一起为他的意志服务。如果你真的忠于帷幕彼端古神，那么我们将有很多事情要讨论。事实上你可以做些什么来帮助…",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_REVEAL",
+    "dynamic_line": "我懂了。或许我可以相信你。你是对的，因为我对奥术有一些熟悉，虽然它可能是有限的。我不知道我是否有什么有用的东西可以教你，如果那是你想要的。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_ADMISSION",
+    "dynamic_line": "你眼光敏锐，才智超群。这是真的，我学过奥术。不仅如此，我已经研究了很久。我还不知道我能相信你什么，但我们拭目以待。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_MASK_REVEAL",
+    "dynamic_line": "我应该这么怀疑的。我已经很久没见过那种面具了。但你是故意穿的吗？",
+    "responses": [
+      {
+        "switch": true,
+        "text": "我愿意。我不是你的敌人，守卫。你就是这样，对吗？",
+        "topic": "TALK_HERMIT_MASK_TRUST",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "opinion": {
+          "trust": 1,
+          "value": 1
+        },
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ]
+      },
+      {
+        "text": "[攻击]我的目的是结束我的兄弟们之前做的事，消灭对人类的威胁。因为你崇拜来自远方的怪物，也因为你的命令在帷幕上造成的伤害，我判你死刑。",
+        "topic": "TALK_DONE",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "effect": "insult_combat"
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "其实我不是法师猎人，但我已经学会了这些东西的用法。",
+        "topic": "TALK_HERMIT_MASK_NOT",
+        "effect": [
+          {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          },
+          {
+            "u_add_effect": "hermit_earned_trust_2",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_MASK_NOT",
+    "dynamic_line": "我懂了。好吧，事实已经向你暴露了，我学习的源质。如果你愿意，我会回答你的问题。我可能有事要你做。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_MASK_TRUST",
+    "dynamic_line": "你是对的。我希望我们的命令看到我们的共同点，而不是让我们的分歧导致如此多的流血。看来我们还有很多事情要做，一项任务也许能满足我们两个目标。",
+    "responses": [
+      {
+        "text": "同意。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_DENIAL",
+    "dynamic_line": "恐怕你弄错了。不管你想找什么，我都不能帮你解决这些奇怪的要求。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_BOOK_ASKED",
+    "dynamic_line": "你最近已经提出了你的特殊要求。我请求你现在不要再提这件事了。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SPIRITUAL",
+    "dynamic_line": "这是真的。我以前是个虔诚的人。我觉得我好像迷路了，但你不用担心。我仍然有信心，尽管我觉得这种自我强加的隐居是像我这样的人所能做到的。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_LOVES_BOOKS",
+    "dynamic_line": "我想你是对的。很高兴看到我并不是唯一一个考虑知识价值的人。尤其是当如此多的知识和那些堕落的人一起死去的时候…",
+    "responses": [
+      {
+        "text": "同意。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_HATES_BOOKS",
+    "dynamic_line": "读一点书会使你从中感到惊讶的。礼貌一点…",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DOING",
+    "dynamic_line": {
+      "u_has_effect": "hermit_earned_trust_1",
+      "yes": {
+        "u_has_effect": "hermit_earned_trust_2",
+        "yes": "事实上，我是在自我放逐。在我的许多同伴被猎杀，或者被各种可怕的事情屠杀之后，我与我的生命没有任何关系，我也不再发誓。",
+        "no": "冥想，让自己忙于我所学的东西，诸如此类的事情。不幸的是，在如此艰难的时期，价值微乎其微。"
+      },
+      "no": "过着平静的生活，相对平静的地方。这是像我这样的老人在这么繁忙的时候所能做的。"
+    },
+    "responses": [
+      {
+        "text": "我们仍将获胜。现在不要失去希望。",
+        "topic": "TALK_HERMIT_PREVAIL",
+        "condition": {
+          "and": [
+            {
+              "u_has_effect": "hermit_earned_trust_2"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "可怕的事情？",
+        "topic": "TALK_HERMIT_QUERY_THINGS",
+        "condition": {
+          "u_has_effect": "hermit_earned_trust_2"
+        }
+      },
+      {
+        "switch": true,
+        "text": "这种知识总是有价值的。你肯定有什么可以教的吗？",
+        "topic": "TALK_HERMIT_TEACH",
+        "condition": {
+          "u_has_effect": "hermit_earned_trust_1"
+        }
+      },
+      {
+        "switch": true,
+        "text": "你好像在隐藏什么东西。或者是什么人。没关系，你可以相信我。",
+        "topic": "TALK_HERMIT_DOING_ASKED",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_intelligence": 10
+                },
+                {
+                  "u_has_perception": 10
+                }
+              ]
+            },
+            {
+              "u_has_effect": "hermit_inquire_denied"
+            }
+          ]
+        }
+      },
+      {
+        "switch": true,
+        "text": "你就在这里干这些吗？",
+        "topic": "TALK_HERMIT_DOING_ASKED",
+        "condition": {
+          "u_has_effect": "hermit_inquire_denied"
+        }
+      },
+      {
+        "switch": true,
+        "text": "你好像在隐藏什么东西。或者是什么人。没关系，你可以相信我。",
+        "condition": {
+          "or": [
+            {
+              "u_has_intelligence": 10
+            },
+            {
+              "u_has_perception": 10
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30
+        },
+        "success": {
+          "topic": "TALK_HERMIT_DOING_ADMISSION",
+          "opinion": {
+            "trust": 1
+          },
+          "effect": {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "TALK_HERMIT_DOING_DENIAL",
+          "effect": {
+            "u_add_effect": "hermit_inquire_denied",
+            "duration": 10800
+          }
+        }
+      },
+      {
+        "switch": true,
+        "default": true,
+        "text": "你就在这里干这些吗？",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 15
+        },
+        "success": {
+          "topic": "TALK_HERMIT_DOING_ADMISSION",
+          "opinion": {
+            "trust": 1
+          },
+          "effect": {
+            "u_add_effect": "hermit_earned_trust_1",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "TALK_HERMIT_DOING_DENIAL",
+          "effect": {
+            "u_add_effect": "hermit_inquire_denied",
+            "duration": 10800
+          }
+        }
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUERY_THINGS",
+    "dynamic_line": "有一场灾难破坏了我们的秩序。只有少数人幸存并逃离了，我从他们那里听到了恐怖的故事：我们的圣所布满了裂痕，大祭司在一次失败的召唤中被某个可憎的人抓住了…",
+    "responses": [
+      {
+        "text": "一场灾难…是我们干的，不是吗？",
+        "topic": "TALK_HERMIT_QUERY_VEIL_SANGUINE",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "text": "尽管我们有分歧，但这听起来对我们都是个威胁。",
+        "topic": "TALK_HERMIT_QUERY_VEIL_CLEANSINGFLAME",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "什么样的憎恶？",
+        "topic": "TALK_HERMIT_ABOMINATION"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUERY_VEIL_SANGUINE",
+    "dynamic_line": "的确。你的弟兄们破坏了为我们取回的圣物，这导致了召唤……其他的东西，而不是我们打算与帷幕彼端古神交流。",
+    "responses": [
+      {
+        "text": "[重复]抱歉，我再考虑一下？",
+        "topic": "TALK_HERMIT_SANGUINE_APOLOGY"
+      },
+      {
+        "text": "不是我的问题。",
+        "topic": "TALK_HERMIT_SANGUINE_NOT_PROBLEM",
+        "opinion": {
+          "value": -1
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SANGUINE_APOLOGY",
+    "dynamic_line": "我很感激你的感情，但我们都必须承认我们的兄弟们犯了错误，但你却没有参与其中。也许在这些时间里是可以被纠正的。非常感谢。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SANGUINE_NOT_PROBLEM",
+    "dynamic_line": "你可以仅仅因为你没有个人的参与而否认你的责任，但是当我们的同伴犯了罪或被引入歧途时，我们必须愿意接受。也许你宝贵的“权力之路”会引导你做一些有成效的事情。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_QUERY_VEIL_CLEANSINGFLAME",
+    "dynamic_line": "的确如此。这个怪物，他们称之为执政官，如果它能在这个世界上站稳脚跟，可能会进一步危及我们所有人，而我们对人类的威胁已经足够大了。",
+    "responses": [
+      {
+        "text": "我们看看能做些什么。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_ABOMINATION",
+    "dynamic_line": "他们称之为执政官，帷幕之外的另一个强大的存在，但我不知道它的实体是什么，也不知道它想要什么，只是它的行动表明它远不如我们的主人仁慈。",
+    "responses": [
+      {
+        "text": "不要侵犯他们的领地，不要任性地与他们的权力勾结…",
+        "topic": "TALK_HERMIT_ABOMINATION_TENET",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_ABOMINATION_TENET",
+    "dynamic_line": "你的信条之一，猎人。我知道。尽管我们对帷幕彼端古神和祂的意图意见不一，但只要谨慎是以开放的心态调和的，它总是健康的。",
+    "responses": [
+      {
+        "text": "的确。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_PREVAIL",
+    "dynamic_line": "看来还是有希望的。我可能太老了，不能继续他的意志，但总会有另一个。我看到了你的潜力。非常感谢。",
+    "responses": [
+      {
+        "text": "没事的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_TEACH",
+    "dynamic_line": "也许这是对的。你寻求这些知识的目的是什么？",
+    "responses": [
+      {
+        "text": "教导下一代什么是正确和安全的。",
+        "topic": "TALK_HERMIT_TEACH_ACCEPT_FLAME",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_2",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "知识掌握在坏人手中是危险的。",
+        "topic": "TALK_HERMIT_TEACH_REJECTION",
+        "opinion": {
+          "trust": -1
+        },
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "知识就是力量，但如果不传下去就浪费了。",
+        "topic": "TALK_HERMIT_TEACH_ACCEPT_SANGUINE",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_2",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "text": "囤积知识是愚蠢的。你的琐碎学问很可能会随着你而消亡。",
+        "topic": "TALK_HERMIT_TEACH_REJECTION",
+        "opinion": {
+          "trust": -1
+        },
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        }
+      },
+      {
+        "text": "凝视远方就是要看到一千个世界的潜力，学习隐藏的真理…",
+        "topic": "TALK_HERMIT_TEACH_ACCEPT_OATH",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_2",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        }
+      },
+      {
+        "text": "我渴望学习，如果你愿意让我当学生。",
+        "topic": "TALK_HERMIT_TEACH_ACCEPT",
+        "effect": {
+          "u_add_effect": "hermit_earned_trust_2",
+          "duration": "PERMANENT"
+        }
+      },
+      {
+        "text": "嗯，你知道的。因为？",
+        "topic": "TALK_HERMIT_TEACH_REJECTION",
+        "opinion": {
+          "trust": -1
+        }
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_TEACH_ACCEPT_FLAME",
+    "dynamic_line": "这是一个谨慎行事的明智方法。为了那些将要继承我们的人的利益。如果你愿意的话，我有很多琐碎的事情要教你。我们有时是盟友，有时是敌人。原谅这位年迈的帷幕彼端古神跟随者的欺骗，让我们有机会一起努力改正过去的错误。",
+    "responses": [
+      {
+        "text": "那好吧。我能帮什么忙？",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "就这样吧。我们不必成为敌人。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]这就是你的本性。我不会屈尊为你这样的挥霍无度的人工作。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_TEACH_ACCEPT_SANGUINE",
+    "dynamic_line": "总是实用型的。但我能欣赏这种将知识充分利用的动力，而不是被浪费。如你所愿。从你的举止我可以看出你是个乐观的人。而我，守着誓言的人。也许他会让我们两个都忏悔。",
+    "responses": [
+      {
+        "text": "那就告诉我该怎么办。",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "我们会看到的。",
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "[攻击]我不需要你所谓的上帝的忏悔。我宁愿你的知识和你一起死去，也不愿和他这样的人打交道。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_TEACH_ACCEPT_OATH",
+    "dynamic_line": "……但在这些行为中要谨慎。让帷幕上的每一处伤口都是必须的，否则就不留痕迹。在他看来，我们是一样的。帷幕彼端古神似乎给了我们第二次机会。",
+    "responses": [
+      {
+        "text": "告诉我我能为他做些什么。",
+        "topic": "TALK_MISSION_LIST",
+        "condition": {
+          "not": "has_no_available_mission"
+        }
+      },
+      {
+        "text": "看来是这样。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_TEACH_ACCEPT",
+    "dynamic_line": "那好吧，也许我还是有东西可以教你。我是一个由学者和牧师组成的组织的追随者，服务于一个帷幕之外的仁慈的神。如果你愿意，我们可以一起看看你能做些什么。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_TEACH_REJECTION",
+    "dynamic_line": "如果这是你的理由，那么你还没有准备好。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DOING_ADMISSION",
+    "dynamic_line": "那好吧。在我的时代，我研究过一些关于奥术的暗示，虽然它可能很少，但是考虑到如果被滥用它可能会带来的危险，我选择过一种谦虚的生活，而不是继续追求这些东西。",
+    "responses": [
+      {
+        "text": "我懂了。非常感谢。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DOING_DENIAL",
+    "dynamic_line": "在这个麻烦的时候问一个老人一件奇怪的事。只不过是在这里生存的日常任务。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_DOING_ASKED",
+    "dynamic_line": "你最近已经对私人事务很感兴趣了。拜托，没关系。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SPELL_MENU",
+    "dynamic_line": "There are many secrets that He From Beyond The Veil will reward you with, if you make proper use of His relic.  I do know a few tricks from my youth that may compliment the tools He will give you, however.  I can pass onto you the Magic Signs of Free Action, Phase Shield, or Transcendent Aura.  I ask that you bring crystallized essence in exchange, as I can use it for these rituals and for other wards I maintain here.",
+    "responses": [
+      {
+        "text": "What can you tell me about Free Action?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_FREEACTION"
+          }
+        },
+        "topic": "TALK_HERMIT_SPELL_MENU_1"
+      },
+      {
+        "text": "What can you tell me about Phase Shield?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_PHASESHIELD"
+          }
+        },
+        "topic": "TALK_HERMIT_SPELL_MENU_2"
+      },
+      {
+        "text": "What can you tell me about Transcendent Aura?",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE2"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "SPELL_TRANSCENDENTAURA"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_HERMIT_SPELL_MENU_3"
+      },
+      {
+        "text": "I already know all of these.  Thanks anyway.",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "u_has_trait": "SPELL_FREEACTION"
+            },
+            {
+              "u_has_trait": "SPELL_PHASESHIELD"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE2",
+                "SPELL_TRANSCENDENTAURA"
+              ]
+            }
+          ]
+        },
+        "effect": {
+          "u_add_var": "hermit_all_spells_known",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "也许下次吧。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SPELL_MENU_1",
+    "dynamic_line": "Though both it and Surging Force can halt time briefly, the main purpose of Free Action is in traversing rough terrain, slipping out of a monster's grasp, or negating other hazards that might slow you down.  I use it to traverse the woods when gathering firewood or hunting, I'm not as light on my feet as I used to be.  If you bring me 1 crystallized essence, I can imprint this knowledge upon you.",
+    "responses": [
+      {
+        "text": "Sure，here you go.",
+        "condition": {
+          "u_has_item": "essence_pure"
+        },
+        "effect": [
+          {
+            "u_consume_item": "essence_pure"
+          },
+          {
+            "u_add_trait": "SPELL_FREEACTION"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need to obtain one.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_item": "essence_pure"
+          }
+        },
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "让我想想。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SPELL_MENU_2",
+    "dynamic_line": "It's a warding spell that lashes out against those who strike you, similar to the more well-known Shadowy Shield.  Rather than harming your attacker directly, it shunts them a short distance away from you.  It does the same to any other threats close enough, when it activates.  If you bring me 1 crystallized essence, I can imprint this knowledge upon you.",
+    "responses": [
+      {
+        "text": "Sure，here you go.",
+        "condition": {
+          "u_has_item": "essence_pure"
+        },
+        "effect": [
+          {
+            "u_consume_item": "essence_pure"
+          },
+          {
+            "u_add_trait": "SPELL_PHASESHIELD"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need to obtain one.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_item": "essence_pure"
+          }
+        },
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "让我想想。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_SPELL_MENU_3",
+    "dynamic_line": "This secret has been passed down among a few of the more learned ascetics of my order.  It shrouds your aura against monsters from Beyond, blinding them to your presence.  It doesn't hide you from the undead I've found, earthly life in general seems to spot you more easily under its effect, but it has its uses.  If you bring me 1 crystallized essence, I can imprint this knowledge upon you.",
+    "responses": [
+      {
+        "text": "Sure，here you go.",
+        "condition": {
+          "u_has_item": "essence_pure"
+        },
+        "effect": [
+          {
+            "u_consume_item": "essence_pure"
+          },
+          {
+            "u_add_trait": "SPELL_TRANSCENDENTAURA"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need to obtain one.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_item": "essence_pure"
+          }
+        },
+        "topic": "TALK_HERMIT"
+      },
+      {
+        "text": "让我想想。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_HERMIT_MISSION_NONE",
+    "dynamic_line": "除了我自己力所能及的以外，我没有什么急需的。谢谢你的关心，年轻人。",
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_HERMIT"
+      }
+    ]
+  }
+]

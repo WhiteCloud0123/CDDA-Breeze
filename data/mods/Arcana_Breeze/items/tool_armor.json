@@ -1,0 +1,1953 @@
+[
+  {
+    "id": "triffid_garland_empowered",
+    "copy-from": "triffid_garland",
+    "sub": "triffid_garland",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "青翠三尖树花环"
+    },
+    "description": "A wreath of brightly-colored flowers from another world, worn around the neck.  Elemental magic has been woven into its structure, converting it into a primitive magic item.  Using it will grant a burst of renewed stamina, recovering pain and speeding up the body's natural healing.  It will take a long time to recharge after each use, and activating it also fatigues the user.  It can hold up to 5 uses, each use takes 25 hours to charge.",
+    "price_postapoc": "12 USD",
+    "charges_per_use": 25,
+    "ammo": "primitive_magic_item_ammo_type",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "primitive_magic_item_ammo_type": 125
+        }
+      }
+    ],
+    "flags": [
+      "FANCY",
+      "NO_RELOAD",
+      "NO_UNLOAD",
+      "TARDIS"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "//": "Water talisman and earth talisman.  Each use has power equivalent to 250 mana.",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_triffid_garland_empowered",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "amulet_exotic_empowered",
+    "copy-from": "amulet_exotic",
+    "sub": "amulet_exotic",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "异域护身符"
+    },
+    "description": "A makeshift necklace with a single gem, a charm worked from some manner of unnatural material.  Elemental magic has been woven into its structure, converting it into a primitive magic item.  Activating it will shroud your life force, rendering you invisible (but not inaudible) to the undead, in exchange for making mundane wildlife more aggressive towards you.  It will take a long time to recharge after each use, and activating it also fatigues the user.  It can hold up to 5 uses, each use takes 28 hours to charge.",
+    "price_postapoc": "15 USD",
+    "charges_per_use": 35,
+    "ammo": "primitive_magic_item_ammo_type",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "primitive_magic_item_ammo_type": 175
+        }
+      }
+    ],
+    "flags": [
+      "FANCY",
+      "NO_RELOAD",
+      "NO_UNLOAD",
+      "TARDIS"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "//": "Flame talisman and air talisman.  Each use has power equivalent to 350 mana.",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_amulet_exotic_empowered",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "brooch_iridescent_empowered",
+    "copy-from": "brooch_iridescent",
+    "sub": "brooch_iridescent",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "镶嵌彩虹色胸针"
+    },
+    "description": "A hand-crafted disc brooch made from a strange, unearthly material vaguely resembling mother-of-pearl  Elemental magic has been woven into its structure, converting it into a primitive magic item.  Using it will double any armor or damage resistance you have.  It will take a long time to recharge after each use, and activating it also fatigues the user.  It can hold up to 5 uses, each use takes 45 hours to charge.",
+    "price_postapoc": "20 USD",
+    "charges_per_use": 45,
+    "ammo": "primitive_magic_item_ammo_type",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "primitive_magic_item_ammo_type": 225
+        }
+      }
+    ],
+    "flags": [
+      "FANCY",
+      "NO_RELOAD",
+      "NO_UNLOAD",
+      "TARDIS"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "//": "Earth talisman and air talisman.  Each use has power equivalent to 450 mana.",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_brooch_iridescent_empowered",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "gilded_aegis",
+    "type": "TOOL_ARMOR",
+    "copy-from": "cloak_leather",
+    "category": "armor",
+    "name": {
+      "str": "镀金斗篷",
+      "str_pl": "镀金斗篷"
+    },
+    "description": "一种简单的皮斗篷，用华丽的镀金铁鳞装饰。外表类似金龙或是蛇皮。使用它以疼痛为代价治愈轻伤。",
+    "material": [
+      "leather",
+      "iron",
+      "gold"
+    ],
+    "//": "A reusable healing item that's also armored?  Yeah, that's staying valuable for a while.",
+    "price": "700 USD",
+    "price_postapoc": "80 USD",
+    "color": "yellow",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_dull_type": 60
+        }
+      }
+    ],
+    "charges_per_use": 60,
+    "ammo": "essence_dull_type",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_gilded_aegis_healing",
+      "no_fail": true,
+      "level": 0,
+      "need_worn": true
+    },
+    "relative": {
+      "weight": 3020
+    },
+    "extend": {
+      "flags": [
+        "NO_SALVAGE",
+        "FANCY",
+        "TRADER_KEEP_EQUIPPED"
+      ]
+    },
+    "material_thickness": 5,
+    "armor": [
+      {
+        "encumbrance": 12,
+        "coverage": 100,
+        "covers": [
+          "torso",
+          "arm_l",
+          "arm_r",
+          "leg_l",
+          "leg_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "somen_clairvoyance",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "洞察面具",
+      "str_pl": "洞察面具"
+    },
+    "description": "一种用铁面和其他金属装饰的面具，描绘某个不知名的神圣人物的脸。用阴黯源质为它充能，会让佩戴者在有限的范围内拥有透视能力，并保护其免受明亮的闪光伤害，但会使你看不见任何超出其效果的东西。",
+    "weight": "710 g",
+    "volume": "1 L",
+    "price": "210 USD",
+    "price_postapoc": "40 USD",
+    "material": [
+      "iron",
+      "copper",
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "mask_bal",
+    "color": "light_red",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_dull_type": 24
+        }
+      }
+    ],
+    "charges_per_use": 1,
+    "ammo": "essence_dull_type",
+    "warmth": 10,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "mutations": [
+            "ARCANA_MASK_INSIGHT_EFFECT"
+          ],
+          "values": [
+            {
+              "value": "BONUS_DODGE",
+              "add": 2
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "mask_blind_immunity",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": {
+      "target": "somen_clairvoyance_on",
+      "msg": "面具似乎扭曲成可怕的样子，当一种奇怪的视觉取代了你的自然视觉时，它的眼孔似乎爆发出了光芒。",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "用神圣的精华为面具充能，让你睁开眼睛。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "flags": [
+      "NO_SALVAGE",
+      "TRADER_KEEP_EQUIPPED"
+    ],
+    "material_thickness": 3,
+    "environmental_protection": 1,
+    "armor": [
+      {
+        "encumbrance": 8,
+        "coverage": 100,
+        "covers": [
+          "eyes",
+          "mouth"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "somen_clairvoyance_on",
+    "type": "TOOL_ARMOR",
+    "copy-from": "somen_clairvoyance",
+    "repairs_like": "somen_clairvoyance",
+    "name": {
+      "str": "洞察面具（开）",
+      "str_pl": "洞察面具（开）"
+    },
+    "description": "一种用铁面和其他金属装饰的面具，描绘某个不知名的神圣人物的脸。面具上描绘的脸看起来比以前更具威胁性。",
+    "turns_per_charge": 100,
+    "revert_to": "somen_clairvoyance",
+    "qualities": [
+      [
+        "GLARE",
+        1
+      ]
+    ],
+    "use_action": {
+      "target": "somen_clairvoyance",
+      "msg": "面具的眉目还原成最初的冷漠表情。",
+      "menu_text": "关闭",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "SUN_GLASSES",
+        "BLIND",
+        "IR_EFFECT",
+        "PARTIAL_DEAF"
+      ]
+    }
+  },
+  {
+    "id": "somen_clairvoyance_xl",
+    "repairs_like": "somen_clairvoyance",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "猎手面罩"
+    },
+    "description": "一种覆盖脸部上半部的半面罩，由铁制成，用其他金属装饰。宽松合身，设计时考虑到变异解剖学，可穿在其他物品上。用神圣的精髓为它加油会使佩戴者在有限的范围内获得千里眼，并保护你免受闪光的伤害，但会使你对任何超出其效果的东西视而不见。",
+    "weight": "500 g",
+    "volume": "750 ml",
+    "price": "210 USD",
+    "price_postapoc": "40 USD",
+    "material": [
+      "iron",
+      "copper",
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "mask_bal",
+    "color": "light_red",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_dull_type": 24
+        }
+      }
+    ],
+    "charges_per_use": 1,
+    "ammo": "essence_dull_type",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "mutations": [
+            "ARCANA_MASK_INSIGHT_EFFECT"
+          ],
+          "values": [
+            {
+              "value": "BONUS_DODGE",
+              "add": 2
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "mask_blind_immunity",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": {
+      "target": "somen_clairvoyance_xl_on",
+      "msg": "遮阳板的表面会发生微妙的变化，当一种奇怪的感觉取代你的自然视觉时，眼孔会瞬间发光。",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "用神圣的精华给面甲加油，让你睁开眼睛。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "flags": [
+      "NO_SALVAGE",
+      "OVERSIZE",
+      "OUTER"
+    ],
+    "material_thickness": 3,
+    "environmental_protection": 1,
+    "armor": [
+      {
+        "encumbrance": 8,
+        "coverage": 100,
+        "covers": [
+          "eyes"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "somen_clairvoyance_xl_on",
+    "type": "TOOL_ARMOR",
+    "copy-from": "somen_clairvoyance_xl",
+    "name": {
+      "str": "猎手面罩（开）",
+      "str_pl": "猎手面罩（开）"
+    },
+    "description": "覆盖上半部分面部的半面罩，由铁制成，用其他金属装饰。它隐约给人一种可恨的怒目而视的感觉。",
+    "turns_per_charge": 100,
+    "revert_to": "somen_clairvoyance_xl",
+    "qualities": [
+      [
+        "GLARE",
+        1
+      ]
+    ],
+    "use_action": {
+      "target": "somen_clairvoyance_xl",
+      "msg": "遮阳板变回正常外观。",
+      "menu_text": "关闭",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "SUN_GLASSES",
+        "BLIND",
+        "IR_EFFECT",
+        "PARTIAL_DEAF"
+      ]
+    }
+  },
+  {
+    "id": "armor_wyrm",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "龙皮甲",
+      "str_pl": "龙皮甲套装"
+    },
+    "description": "A set of well-decorated leather armor, with serpentine patterns sewn into it and various adjustable straps added.  It can be used to conjure a long-lasting spray of acid.",
+    "weight": "4400 g",
+    "volume": "9 L",
+    "material": [
+      "wyrmskin",
+      "leather"
+    ],
+    "price": "450 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -5,
+    "bashing": 2,
+    "symbol": "[",
+    "looks_like": "armor_larmor",
+    "color": "green",
+    "material_thickness": 4,
+    "environmental_protection": 10,
+    "armor": [
+      {
+        "covers": [
+          "torso"
+        ],
+        "coverage": 95,
+        "encumbrance": 8,
+        "material": [
+          {
+            "type": "leather",
+            "covered_by_mat": 100,
+            "thickness": 2.5
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 2.5
+          }
+        ]
+      },
+      {
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ],
+        "coverage": 90,
+        "encumbrance": 7
+      },
+      {
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 85,
+        "encumbrance": 7
+      },
+      {
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 9,
+        "material": [
+          {
+            "type": "leather",
+            "covered_by_mat": 100,
+            "thickness": 2.5
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 2.5
+          }
+        ]
+      }
+    ],
+    "warmth": 20,
+    "charges_per_use": 2,
+    "ammo": "essence_blood_type",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_blood_type": 16
+        }
+      }
+    ],
+    "use_action": [
+      {
+        "type": "cast_spell",
+        "spell_id": "arcana_item_wyrmskin_acid",
+        "no_fail": true,
+        "level": 0,
+        "need_worn": true
+      }
+    ],
+    "flags": [
+      "OVERSIZE",
+      "NO_SALVAGE",
+      "ALLOWS_NATURAL_ATTACKS",
+      "FANCY",
+      "TRADER_KEEP_EQUIPPED",
+      "POCKETS",
+      "STURDY"
+    ]
+  },
+  {
+    "id": "revenant_crown",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "name": {
+      "str": "报应王冠"
+    },
+    "description": "一个装饰着“邪恶场景”的丹麦人的王冠。一颗璀璨的宝石装饰着它，在画面的中心。使用它可以产生对食物中毒和寄生虫的免疫力，以换取饥饿感的增加。它不能治愈现有的疾病，只能预防它们。",
+    "weight": "650 g",
+    "volume": "3500 ml",
+    "price": "150 USD",
+    "price_postapoc": "40 USD",
+    "to_hit": -1,
+    "material": [
+      "silver",
+      "diamond"
+    ],
+    "symbol": "[",
+    "looks_like": "crown_silver",
+    "color": "yellow",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_blood_type": 6
+        }
+      }
+    ],
+    "charges_per_use": 2,
+    "ammo": "essence_blood_type",
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "当你感到一种奇怪的饥饿感，对腐烂的肉和死水的渴望时，宝石闪烁着恶意的红光…",
+      "effects": [
+        {
+          "id": "revenant_hunger",
+          "duration": 1800
+        }
+      ]
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "NO_SALVAGE",
+      "ALLOWS_NATURAL_ATTACKS",
+      "TRADER_KEEP_EQUIPPED"
+    ],
+    "material_thickness": 1,
+    "armor": [
+      {
+        "coverage": 20,
+        "covers": [
+          "head"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "robe_shadow",
+    "type": "TOOL_ARMOR",
+    "copy-from": "robe",
+    "category": "armor",
+    "name": {
+      "str": "阴影之幔",
+      "str_pl": "阴影之幔"
+    },
+    "//": "misc properties were mostly made by averaging the values of all possible types of robe usable to make it, but no storage due to nested containers being buggy",
+    "description": "一件宽松的长袍，染成朴素的深灰色，肩上附加了大量的装饰。激活它将赋予你隐形能力，在使用过程中不断吸取源质。",
+    "price": "900 USD",
+    "price_postapoc": "70 USD",
+    "material": [
+      "cotton"
+    ],
+    "color": "dark_gray",
+    "charges_per_use": 1,
+    "ammo": "essence_type",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 20
+        }
+      }
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "ench_effects": [
+            {
+              "effect": "arcana_invis_lesser",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": [
+      {
+        "target": "robe_shadow_on",
+        "msg": "长袍的织物变暗为浓浓的黑色，将你周围的环境掩蔽在一种闪烁的幻觉中。",
+        "active": true,
+        "need_worn": true,
+        "need_charges": 1,
+        "need_charges_msg": "披风需要源质启动才能步入阴影之中。",
+        "menu_text": "激活阴影之幕",
+        "type": "transform",
+        "ammo_scale": 0
+      }
+    ],
+    "relative": {
+      "weight": 616,
+      "volume": -1
+    },
+    "extend": {
+      "flags": [
+        "NO_SALVAGE",
+        "TRADER_KEEP_EQUIPPED"
+      ]
+    },
+    "material_thickness": 4,
+    "armor": [
+      {
+        "covers": [
+          "torso",
+          "leg_l",
+          "leg_r",
+          "arm_l",
+          "arm_r"
+        ],
+        "coverage": 85,
+        "encumbrance": [
+          8,
+          8
+        ]
+      }
+    ]
+  },
+  {
+    "id": "robe_shadow_on",
+    "copy-from": "robe_shadow",
+    "repairs_like": "robe_shadow",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "阴影之幔（开）",
+      "str_pl": "阴影之幔（开）"
+    },
+    "description": "某种宽松的长袍，肩部有装饰物。空气在它周围扭曲，你几乎看不到它。",
+    "turns_per_charge": 300,
+    "revert_to": "robe_shadow",
+    "revert_msg": "The robe's fabric returns to its normal gray color, dispelling the illusion.",
+    "use_action": [
+      {
+        "target": "robe_shadow",
+        "msg": "长袍的面料恢复到正常的灰色，消除了之前的幻像。",
+        "menu_text": "关闭",
+        "type": "transform",
+        "ammo_scale": 0
+      }
+    ]
+  },
+  {
+    "id": "robe_shadow_xl",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "幻影斗篷"
+    },
+    "description": "一种宽松的短披风，肩部有装饰性的镶边，染成简单的深灰色。即使是变异幸存者也可以松松地搭在肩上。激活它将赋予隐身能力，在使用中不断吸取精华。",
+    "weight": "1100 g",
+    "volume": "1250 ml",
+    "price": "900 USD",
+    "price_postapoc": "70 USD",
+    "to_hit": -1,
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "looks_like": "poncho",
+    "repairs_like": "robe_shadow",
+    "color": "dark_gray",
+    "warmth": 20,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 20
+        }
+      }
+    ],
+    "charges_per_use": 1,
+    "ammo": "essence_type",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "ench_effects": [
+            {
+              "effect": "arcana_invis_lesser",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": [
+      {
+        "target": "robe_shadow_xl_on",
+        "msg": "斗篷的布料变暗为浓郁的黑色，将你的周围笼罩在闪烁的幻觉中。",
+        "active": true,
+        "need_worn": true,
+        "need_charges": 1,
+        "need_charges_msg": "披风需要源质启动才能步入阴影之中。",
+        "menu_text": "激活阴影之幕",
+        "type": "transform",
+        "ammo_scale": 0
+      }
+    ],
+    "flags": [
+      "OVERSIZE",
+      "OUTER",
+      "NO_SALVAGE"
+    ],
+    "material_thickness": 4,
+    "armor": [
+      {
+        "encumbrance": 8,
+        "coverage": 85,
+        "covers": [
+          "torso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "robe_shadow_xl_on",
+    "copy-from": "robe_shadow_xl",
+    "repairs_like": "robe_shadow",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "幻影斗篷（开）",
+      "str_pl": "幻影斗篷（开）"
+    },
+    "description": "一种宽松的短披风，肩部有装饰性的镶边，染成简单的深灰色。即使是变异幸存者也可以松松地搭在肩上。空气在它周围摇摆，你几乎看不到。",
+    "turns_per_charge": 300,
+    "revert_to": "robe_shadow_xl",
+    "revert_msg": "The cape's fabric returns to its normal gray color, dispelling the illusion.",
+    "use_action": [
+      {
+        "target": "robe_shadow_xl",
+        "msg": "斗篷的面料恢复到正常的灰色，消除了错觉。",
+        "menu_text": "关闭",
+        "type": "transform",
+        "ammo_scale": 0
+      }
+    ]
+  },
+  {
+    "id": "gauntlets_necro",
+    "copy-from": "qt_mitten_gaunt",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "雷电护手",
+      "str_pl": "雷电护手"
+    },
+    "description": "一套厚重的金属板护手，在每个金属板的边缘用银装饰。触摸裸露的金属会使你产生微弱的电刺痛感。使用它们给附近的敌人施加一次强力且惊人的电击，对你的目标造成伤害。",
+    "price": "600 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "qt_steel",
+      "qt_steel_chain",
+      "silver"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 4
+        }
+      }
+    ],
+    "charges_per_use": 1,
+    "ammo": "essence_type",
+    "use_action": [
+      {
+        "type": "cast_spell",
+        "spell_id": "arcana_item_thunder_gauntlets_taze",
+        "no_fail": true,
+        "level": 0,
+        "need_worn": true
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 1.25
+          },
+          {
+            "type": "qt_steel_chain",
+            "covered_by_mat": 100,
+            "thickness": 1.2
+          },
+          {
+            "type": "leather",
+            "covered_by_mat": 100,
+            "thickness": 0.05
+          },
+          {
+            "type": "silver",
+            "covered_by_mat": 20,
+            "thickness": 0.05
+          }
+        ],
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 20
+      }
+    ],
+    "relative": {
+      "weight": 210
+    },
+    "extend": {
+      "flags": [
+        "NO_SALVAGE",
+        "TRADER_KEEP_EQUIPPED"
+      ]
+    }
+  },
+  {
+    "id": "gauntlets_necro_xl",
+    "copy-from": "qt_demi_gaunt",
+    "looks_like": "gauntlets_necro",
+    "repairs_like": "gauntlets_necro",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str_sp": "无指雷霆手套"
+    },
+    "description": "Heavy fingerless plate gauntlets, decorated with silver and leaving the user free to wear them even if they have claws or other mutations, or over gloves.  Touching the bare metal sends a faint electric tingle through you.  Use them to give a nearby enemy a powerful stunning jolt, draining health from your target.",
+    "price": "600 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "qt_steel",
+      "qt_steel_chain",
+      "silver"
+    ],
+    "warmth": 15,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 4
+        }
+      }
+    ],
+    "charges_per_use": 1,
+    "ammo": "essence_type",
+    "use_action": [
+      {
+        "type": "cast_spell",
+        "spell_id": "arcana_item_thunder_gauntlets_taze",
+        "no_fail": true,
+        "level": 0,
+        "need_worn": true
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 60,
+            "thickness": 1.25
+          },
+          {
+            "type": "qt_steel_chain",
+            "covered_by_mat": 100,
+            "thickness": 1.2
+          },
+          {
+            "type": "leather",
+            "covered_by_mat": 100,
+            "thickness": 1
+          },
+          {
+            "type": "silver",
+            "covered_by_mat": 20,
+            "thickness": 0.05
+          }
+        ],
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 10
+      }
+    ],
+    "relative": {
+      "weight": 120
+    },
+    "extend": {
+      "flags": [
+        "NO_SALVAGE",
+        "ALLOWS_NATURAL_ATTACKS",
+        "OVERSIZE",
+        "OUTER"
+      ]
+    }
+  },
+  {
+    "id": "cyclopean_mirror",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "巨镜"
+    },
+    "category": "armor",
+    "description": "古色古香的华丽圆镜，因其尺寸而显得不自然。自然风景似乎被雕刻在其中，从中反射的光线投射出一种完全不同的、超凡脱俗的图案。装备后可以自行移动，像小盾牌一样阻挡近战攻击。当受到精髓的推动时，它会投射出一道屏障，为整个身体提供轻微的物理防御，消除电流和辐射，将其他形式的元素伤害减半，并对心理影响和极端温度给予部分抵抗。",
+    "weight": "500 g",
+    "volume": "4 L",
+    "price": "900 USD",
+    "price_postapoc": "90 USD",
+    "bashing": 8,
+    "material": [
+      "iron"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 25
+        }
+      }
+    ],
+    "symbol": "[",
+    "looks_like": "shield_round",
+    "color": "light_gray",
+    "charges_per_use": 1,
+    "ammo": "essence_type",
+    "use_action": [
+      {
+        "target": "cyclopean_mirror_on",
+        "msg": "The mirror glows and reveals its otherworldly reflection, as a faint protective aura envelops you.",
+        "active": true,
+        "need_worn": true,
+        "need_charges": 1,
+        "need_charges_msg": "镜子需要源质才能发挥作用。",
+        "menu_text": "激活防护光环",
+        "type": "transform",
+        "ammo_scale": 0
+      }
+    ],
+    "techniques": [
+      "WBLOCK_3"
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "ARMOR_BASH",
+              "add": -10
+            },
+            {
+              "value": "ARMOR_CUT",
+              "add": -10
+            },
+            {
+              "value": "ARMOR_STAB",
+              "add": -10
+            },
+            {
+              "value": "ARMOR_BULLET",
+              "add": -10
+            },
+            {
+              "value": "ARMOR_HEAT",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_COLD",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_ACID",
+              "multiply": -0.5
+            },
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 50
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 50
+            }
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "ALLOWS_NATURAL_ATTACKS",
+      "OVERSIZE",
+      "STURDY",
+      "UNBREAKABLE_MELEE",
+      "BLOCK_WHILE_WORN",
+      "NO_SALVAGE",
+      "AURA",
+      "ONLY_ONE",
+      "POWERARMOR_COMPATIBLE"
+    ],
+    "sided": true,
+    "material_thickness": 4,
+    "armor": [
+      {
+        "encumbrance": 10,
+        "coverage": 80,
+        "covers": [
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cyclopean_mirror_on",
+    "copy-from": "cyclopean_mirror",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "巨镜（开）"
+    },
+    "category": "armor",
+    "description": "古色古香的华丽圆镜。它投射出明亮发光的屏障，保护用户免受电和辐射的影响，同时部分保护用户免受心理影响，部分抵抗极端温度，增加物理抵抗力，并将其他元素伤害的伤害减半。",
+    "turns_per_charge": 600,
+    "revert_to": "cyclopean_mirror",
+    "use_action": {
+      "target": "cyclopean_mirror",
+      "menu_text": "关闭保护性光环",
+      "msg": "当后视镜停用时，保护性辉光消失。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "LIGHT_60",
+        "NO_TAKEOFF",
+        "PSYSHIELD_PARTIAL",
+        "RAD_PROOF",
+        "RAINPROOF",
+        "SUN_GLASSES",
+        "SWIM_GOGGLES",
+        "TRADER_AVOID",
+        "WATERPROOF",
+        "ZERO_WEIGHT",
+        "ELECTRIC_IMMUNE",
+        "DIMENSIONAL_ANCHOR"
+      ]
+    }
+  },
+  {
+    "id": "hauberk_jade",
+    "type": "TOOL_ARMOR",
+    "copy-from": "qt_chainmail_hauberk",
+    "name": {
+      "str": "玉锁甲"
+    },
+    "description": "A set of mail armor with a mantle made from a gilded aegis draped over it, splints of copper worked into the arms and sides.  Underneath the mantle is a gorget of copper, with otherworldly green stones set into it.  The copper conducts electric shocks around you, providing passive immunity to lightning.  Activating it will grant immunity to fire and blade, reduce ballistic damage to one-tenth what you would normally take, and give resistance to other environmental hazards.",
+    "//": "Requires an item that did not exist pre-cataclysm to make.",
+    "price_postapoc": "150 USD",
+    "material": [
+      "iron",
+      "copper",
+      "leather",
+      "cotton"
+    ],
+    "color": "light_red",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_dull_type": 300
+        }
+      }
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "ARMOR_HEAT",
+              "multiply": -1
+            },
+            {
+              "value": "ARMOR_STAB",
+              "multiply": -1
+            },
+            {
+              "value": "ARMOR_BULLET",
+              "multiply": -0.9
+            },
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 50
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 50
+            }
+          ]
+        }
+      ]
+    },
+    "ammo": "essence_dull_type",
+    "use_action": [
+      {
+        "target": "hauberk_jade_on",
+        "msg": "一束灿烂的光芒从护喉渗透到整个斗篷，直到你的身体笼罩在一种奇怪的光芒中。",
+        "active": true,
+        "need_worn": true,
+        "need_charges": 1,
+        "need_charges_msg": "它需要阴黯源质来启动。",
+        "menu_text": "屏障项目",
+        "type": "transform",
+        "ammo_scale": 0
+      },
+      {
+        "type": "cast_spell",
+        "spell_id": "arcana_item_jade_hauberk_healing",
+        "no_fail": true,
+        "level": 0,
+        "need_worn": true
+      }
+    ],
+    "relative": {
+      "weight": "3020 g",
+      "price": "550 USD"
+    },
+    "extend": {
+      "flags": [
+        "NO_SALVAGE",
+        "ELECTRIC_IMMUNE",
+        "RAINPROOF",
+        "TRADER_KEEP_EQUIPPED"
+      ]
+    },
+    "material_thickness": 7,
+    "environmental_protection": 1,
+    "armor": [
+      {
+        "encumbrance": 20,
+        "coverage": 100,
+        "covers": [
+          "torso",
+          "arm_l",
+          "arm_r",
+          "leg_l",
+          "leg_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hauberk_jade_on",
+    "type": "TOOL_ARMOR",
+    "copy-from": "hauberk_jade",
+    "repairs_like": "hauberk_jade",
+    "name": {
+      "str": "玉锁甲（开）",
+      "str_pl": "玉锁甲（开）"
+    },
+    "description": "A set of mail armor with a mantle made from a gilded aegis draped over it, splints of copper worked into the arms and sides.  Underneath the mantle is a gorget of copper, with otherworldly green stones set into it.  In addition to protecting against lightning, an aura of protective magic is radiating from it, granting immunity to fire and blade, reducing ballistic damage to one-tenth what you would normally take, and giving resistance to other environmental hazards.",
+    "environmental_protection": 10,
+    "turns_per_charge": 10,
+    "revert_to": "hauberk_jade",
+    "use_action": {
+      "target": "hauberk_jade",
+      "msg": "从你的玉锁甲散发出的光芒渐渐褪去。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "qualities": [
+      [
+        "GLARE",
+        1
+      ]
+    ],
+    "extend": {
+      "flags": [
+        "GAS_PROOF",
+        "RAD_PROOF",
+        "SUN_GLASSES",
+        "BULLET_IMMUNE",
+        "STAB_IMMUNE",
+        "HEAT_IMMUNE"
+      ]
+    }
+  },
+  {
+    "id": "armor_wyrm_berserker",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "深渊护甲"
+    },
+    "description": "What was once a modified suit of leather armor, now radically altered with heavy steel and unnatural magic made from desecrating a holy relic.  Fully covering the body with plates that shift to accommodate the user's form, just wearing it makes the user look inhuman.  Fueling it with blood essence will suppress pain and rapidly stabilize broken limbs, along with increasing the user's attack speed and reflexes.  However, its use will tax fatigue and healthiness over time, along with attracting attention both mundane and otherworldly.",
+    "weight": "20 kg",
+    "volume": "15 L",
+    "price": "900 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": -5,
+    "bashing": 8,
+    "material": [
+      "qt_steel",
+      "wyrmskin"
+    ],
+    "symbol": "[",
+    "looks_like": "armor_wyrm",
+    "color": "light_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_blood_type": 30
+        }
+      }
+    ],
+    "ammo": "essence_blood_type",
+    "warmth": 20,
+    "//": "Increased to be more on par with BN version's armor values.",
+    "material_thickness": 5,
+    "environmental_protection": 8,
+    "flags": [
+      "OUTER",
+      "STURDY",
+      "NO_SALVAGE",
+      "OVERSIZE",
+      "ALLOWS_NATURAL_ATTACKS"
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "mutations": [
+            "ARCANA_BERSERK_ARMOR_EFFECT"
+          ],
+          "values": [
+            {
+              "value": "INTELLIGENCE",
+              "add": -2
+            },
+            {
+              "value": "PERCEPTION",
+              "add": -2
+            },
+            {
+              "value": "BONUS_DODGE",
+              "add": 1
+            }
+          ],
+          "hit_me_effect": [
+            {
+              "id": "arcana_react_satchel_attention",
+              "hit_self": true,
+              "once_in": 20,
+              "message": "你觉得有什么东西在看着你…",
+              "npc_message": "一种奇怪的恶意气氛似乎短暂地围绕着%1$s。"
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "arcana_wyrm_berserker_decay",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": [
+      {
+        "target": "armor_wyrm_berserker_on",
+        "msg": "The plates of your armor shift and contort into an even more bestial form, a strange sense of power flowing through you!",
+        "active": true,
+        "need_worn": true,
+        "need_charges": 1,
+        "need_charges_msg": "Blood essence shall awaken the beast.",
+        "menu_text": "激活深渊护甲",
+        "type": "transform",
+        "ammo_scale": 0
+      }
+    ],
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "encumbrance": 17
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r",
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 12
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 1.5
+          }
+        ],
+        "covers": [
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 8
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 100,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 1.5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 20
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 100,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 1
+          }
+        ],
+        "covers": [
+          "eyes",
+          "mouth"
+        ],
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "NORMAL"
+        ],
+        "rigid_layer_only": true
+      }
+    ]
+  },
+  {
+    "id": "armor_wyrm_berserker_on",
+    "copy-from": "armor_wyrm_berserker",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "深渊护甲（开）",
+      "str_pl": "深渊护甲"
+    },
+    "description": "What was once a modified suit of leather armor, now radically altered with heavy armor and unnatural magic made from desecrating a holy relic.  It feels like it has a will of its own with how easy it is to move in this, currently helping to stave off pain and set broken limbs, along with increasing attack speed and reflexes.  A sickening aura wearing down on body and mind can also be felt, along with the feeling of being watched.",
+    "extend": {
+      "flags": [
+        "NO_TAKEOFF",
+        "TRADER_AVOID",
+        "SPLINT"
+      ]
+    },
+    "armor": [
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "torso"
+        ],
+        "coverage": 100,
+        "encumbrance": 9
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 2
+          }
+        ],
+        "covers": [
+          "arm_l",
+          "arm_r",
+          "leg_l",
+          "leg_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 6
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 95,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 1.5
+          }
+        ],
+        "covers": [
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r"
+        ],
+        "coverage": 100,
+        "encumbrance": 4
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 100,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 1.5
+          }
+        ],
+        "covers": [
+          "head"
+        ],
+        "coverage": 100,
+        "encumbrance": 10
+      },
+      {
+        "material": [
+          {
+            "type": "qt_steel",
+            "covered_by_mat": 100,
+            "thickness": 1.3
+          },
+          {
+            "type": "wyrmskin",
+            "covered_by_mat": 100,
+            "thickness": 1
+          }
+        ],
+        "covers": [
+          "eyes",
+          "mouth"
+        ],
+        "coverage": 100,
+        "encumbrance": 10,
+        "layers": [
+          "OUTER"
+        ],
+        "rigid_layer_only": true
+      }
+    ],
+    "turns_per_charge": 100,
+    "revert_to": "armor_wyrm_berserker",
+    "use_action": {
+      "target": "armor_wyrm_berserker",
+      "msg": "The armor's unnatural aura fades.",
+      "type": "transform",
+      "ammo_scale": 0
+    }
+  },
+  {
+    "id": "jade_wreath",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "name": {
+      "str": "玉冠"
+    },
+    "description": "一顶深绿色的石头王冠，上面雕刻着奇怪的几何图案。激活它会使身体变硬，抵抗热量和烟雾，在有效时消耗精血。",
+    "//": "The shrine lesser artifacts are all post-cataclysm items.",
+    "price_postapoc": "100 USD",
+    "weight": "600 g",
+    "volume": "3 L",
+    "price": "900 USD",
+    "to_hit": -1,
+    "material": [
+      "stone"
+    ],
+    "symbol": "[",
+    "looks_like": "crown_golden",
+    "repairs_like": "revenant_crown",
+    "color": "green",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_blood_type": 30
+        }
+      }
+    ],
+    "ammo": "essence_blood_type",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "ARMOR_HEAT",
+              "multiply": -0.5
+            },
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 50
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 50
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "heat_ward",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "use_action": {
+      "target": "jade_wreath_on",
+      "msg": "石头上的雕刻短暂地闪着红光，一股寒气穿过你的脊柱。",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "用猩血源质为玉冠充能。",
+      "menu_text": "激活避热结界",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "ALLOWS_NATURAL_ATTACKS",
+      "TRADER_KEEP_EQUIPPED"
+    ],
+    "material_thickness": 1,
+    "armor": [
+      {
+        "encumbrance": 10,
+        "coverage": 20,
+        "covers": [
+          "head"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "jade_wreath_on",
+    "type": "TOOL_ARMOR",
+    "copy-from": "jade_wreath",
+    "repairs_like": "jade_wreath",
+    "name": {
+      "str": "玉冠（激活）",
+      "str_pl": "玉冠（激活）"
+    },
+    "description": "一顶深绿色的石头王冠，上面雕刻着奇怪的几何图案。它目前处于活动状态，完全保护您免受高温和烟雾的伤害。",
+    "turns_per_charge": 150,
+    "revert_to": "jade_wreath",
+    "use_action": {
+      "target": "jade_wreath",
+      "msg": "玉环上闪闪发光的雕刻逐渐褪色。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "TRADER_AVOID",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "meteoric_talisman",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "流星护身符"
+    },
+    "category": "armor",
+    "description": "一种华丽的项链，有一个类似圆形盾牌的小饰物，由坚硬的彩虹色金属制成。激活它可以抵抗电流，但代价是稍微减慢你的速度，在活动时消耗沉闷的精华。",
+    "weight": "60 g",
+    "volume": "250 ml",
+    "price_postapoc": "100 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "[",
+    "looks_like": "jade_brooch",
+    "repairs_like": "mana_gem",
+    "color": "light_gray",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_dull_type": 300
+        }
+      }
+    ],
+    "ammo": "essence_dull_type",
+    "use_action": {
+      "target": "meteoric_talisman_on",
+      "msg": "当你激活护身符时，你感到一股奇怪的能量致使你绝缘了。",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "护符需要阴黯源质。",
+      "menu_text": "激活闪电结界",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "ench_effects": [
+            {
+              "effect": "lightning_ward",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "FANCY",
+      "NO_SALVAGE",
+      "TRADER_KEEP_EQUIPPED"
+    ]
+  },
+  {
+    "id": "meteoric_talisman_on",
+    "type": "TOOL_ARMOR",
+    "copy-from": "meteoric_talisman",
+    "repairs_like": "meteoric_talisman",
+    "name": {
+      "str": "流星护身符（激活）",
+      "str_pl": "流星护身符（激活）"
+    },
+    "description": "一种华丽的项链，有一个类似圆形盾牌的小饰物，由坚硬的彩虹色金属制成。它目前处于激活状态，使你免受电攻击，但也会使你的速度减慢一点。",
+    "turns_per_charge": 15,
+    "revert_to": "meteoric_talisman",
+    "use_action": {
+      "target": "meteoric_talisman",
+      "msg": "当护身符失效时，绝缘的感觉逐渐消失。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "TRADER_AVOID",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "divine_sealing_charm",
+    "looks_like": "small_relic",
+    "type": "TOOL_ARMOR",
+    "category": "tools",
+    "name": {
+      "str": "神圣封闭护符"
+    },
+    "description": "一种银和金的文物，环绕并装裱着一颗漆黑的宝石。整个金属上都是神圣的符号和雕刻的文字，混合了古拉丁语、古挪威语符文，以及似乎与人类设计的任何文字都不匹配的符号。将空间疲劳研究与多个奥术阶的知识相结合，使其与守护者的遗物和凯罗斯项目的目的相同。\n\n徘徊在一个入口附近，将其折叠成一种形式，你可以从中获取结晶精华，然后用结晶精华为其提供燃料。引导这种能量将产生一种强大的治疗效果，影响你和附近的盟友，消除外星对你周围环境的影响，以及恢复附近死亡的植物生命。请注意，无法卸载加载到其中的精华。",
+    "weight": "1200 g",
+    "volume": "750 ml",
+    "price_postapoc": "150 USD",
+    "material": [
+      "silver",
+      "gold",
+      "essencemat"
+    ],
+    "symbol": "[",
+    "color": "yellow",
+    "charges_per_use": 1,
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 10
+        }
+      }
+    ],
+    "ammo": "essence_pure_type",
+    "use_action": [
+      {
+        "type": "cast_spell",
+        "spell_id": "arcana_item_divine_seal",
+        "no_fail": true,
+        "need_worn": true,
+        "level": 0
+      }
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "intermittent_activation": {
+            "effects": [
+              {
+                "frequency": "3 minutes",
+                "spell_effects": [
+                  {
+                    "id": "arcana_react_veilblade"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "flags": [
+      "NO_SALVAGE",
+      "NO_UNLOAD",
+      "DIMENSIONAL_ANCHOR",
+      "PSYSHIELD_PARTIAL",
+      "PORTAL_PROOF"
+    ]
+  },
+  {
+    "id": "cleric_ring",
+    "type": "TOOL_ARMOR",
+    "copy-from": "ruby_silver_ring",
+    "repairs_like": "orb_veil",
+    "name": {
+      "str": "堕落天使之戒",
+      "str_pl": "堕落天使之戒"
+    },
+    "description": "A simple silver ring, adorned with a small red gem and a wing motif.  Activating it channels a powerful protective spell, guarding against many forms of supernatural harm.",
+    "//": "While unassuming, those who knew what rituals it was useful for would value it highly.  Those people are probably now dead.",
+    "price": "3600 USD",
+    "price_postapoc": "150 USD",
+    "material": [
+      "silver",
+      "essencemat"
+    ],
+    "color": "white",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "essence_type": 10
+        }
+      }
+    ],
+    "ammo": "essence_type",
+    "use_action": {
+      "target": "cleric_ring_on",
+      "msg": "一种奇怪的能量从戒指的宝石中散发出来，使你觉得内心平静。",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "提供精华，堕落的天使将展开翅膀。",
+      "menu_text": "激活辟邪结界",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 0,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "specifically_covers": [
+          "hand_fingers_l",
+          "hand_fingers_r"
+        ],
+        "rigid_layer_only": true
+      }
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "ench_effects": [
+            {
+              "effect": "cleric_warding",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "NO_SALVAGE",
+        "TRADER_KEEP_EQUIPPED",
+        "PSYSHIELD_PARTIAL"
+      ]
+    }
+  },
+  {
+    "id": "cleric_ring_on",
+    "type": "TOOL_ARMOR",
+    "copy-from": "cleric_ring",
+    "repairs_like": "cleric_ring",
+    "name": {
+      "str": "堕落天使之戒（激活）",
+      "str_pl": "堕落天使之戒（激活）"
+    },
+    "description": "一枚简单的银戒指，饰以红色小宝石和翅膀图案。翅膀环绕着宝石，闪烁着诡异的苍白光芒，它的保护魔法可以抵御各种异常的影响。",
+    "turns_per_charge": 450,
+    "revert_to": "cleric_ring",
+    "use_action": {
+      "target": "cleric_ring",
+      "msg": "戒指的能量消失，恢复正常。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "TRADER_AVOID",
+        "NO_TAKEOFF",
+        "DIMENSIONAL_ANCHOR",
+        "PORTAL_PROOF"
+      ]
+    }
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "type": "clothing_mod",
+    "id": "arcana_birchbark_weave",
+    "flag": "arcana_birchbark_weave",
+    "item": "birchbark",
+    "implement_prompt": "桦树皮附魔",
+    "destroy_prompt": "祛除桦树皮附魔",
+    "mod_value": [
+      {
+        "type": "bash",
+        "value": 0.75,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      },
+      {
+        "type": "cut",
+        "value": 0.75,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      },
+      {
+        "type": "bullet",
+        "value": 0.75,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "clothing_mod",
+    "id": "arcana_tanbark_weave",
+    "flag": "arcana_tanbark_weave",
+    "item": "tanbark",
+    "implement_prompt": "鞣料树皮附魔",
+    "destroy_prompt": "祛除鞣料树皮附魔",
+    "mod_value": [
+      {
+        "type": "acid",
+        "value": 0.75,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      },
+      {
+        "type": "fire",
+        "value": 0.75,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      },
+      {
+        "type": "warmth",
+        "value": -1,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "clothing_mod",
+    "id": "arcana_willowbark_weave",
+    "flag": "arcana_willowbark_weave",
+    "item": "willowbark",
+    "implement_prompt": "柳树皮附魔",
+    "destroy_prompt": "祛除柳树树皮附魔",
+    "mod_value": [
+      {
+        "type": "encumbrance",
+        "value": -1,
+        "round_up": true,
+        "proportion": [
+          "thickness"
+        ]
+      }
+    ]
+  }
+]

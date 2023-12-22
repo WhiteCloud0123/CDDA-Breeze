@@ -1,0 +1,190 @@
+[
+  {
+    "id": "arcane_accelerator_railgun",
+    "type": "GUNMOD",
+    "name": {
+      "str": "反磁性嵌条枪管"
+    },
+    "description": "沿着枪管的长度镶嵌了几条银条，每个镶嵌物上都有一个特殊的装置。在UPS电荷的催化下，通过嵌体传导的异常能量会给子弹注入异常效应。不能安装在锯下的桶上。\n该装置操纵抗磁效应，对每颗子弹中的有色金属材料施加作用力，以更高的速度加速，就像轨道炮一样，由于产生的电磁异常，产生一连串电火花。增加伤害和射程，以牺牲精度和反冲为代价。",
+    "weight": "540 g",
+    "volume": "1500 ml",
+    "integral_volume": "150 ml",
+    "price": "900 USD",
+    "price_postapoc": "90 USD",
+    "material": [
+      "silver",
+      "steel"
+    ],
+    "looks_like": "high_density_capacitor",
+    "symbol": ":",
+    "color": "light_gray",
+    "location": "barrel",
+    "blacklist_mod": "emitter",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun",
+      "pistol",
+      "launcher"
+    ],
+    "install_time": "45 m",
+    "handling_modifier": -5,
+    "range_modifier": 15,
+    "dispersion_modifier": 50,
+    "loudness_modifier": 15,
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 20
+    },
+    "ups_charges_modifier": 25,
+    "ammo_effects": [
+      "AMMO_ANOMALY_RAILGUN"
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "fabrication",
+        6
+      ],
+      [
+        "electronics",
+        4
+      ],
+      [
+        "magic",
+        5
+      ]
+    ],
+    "flags": [
+      "MAGIC_FOCUS"
+    ]
+  },
+  {
+    "id": "arcane_accelerator_plasma",
+    "type": "GUNMOD",
+    "name": {
+      "str": "热异常嵌条枪管"
+    },
+    "description": "沿着枪管的长度嵌有几条银条，每个镶嵌物上都有一个特殊的装置。当由UPS的电荷催化时，通过嵌体传导的异常能量会使子弹产生异常效果。不能安装在锯下的桶上。\n这个装置放大和塑造每一发子弹燃烧的火药所释放的热能，引导到子弹中，形成一股等离子体羽流。虽然这增加了杀伤力，但它以精度和射程为代价，有可能使武器无法使用。",
+    "weight": "540 g",
+    "volume": "1500 ml",
+    "integral_volume": "150 ml",
+    "price": "900 USD",
+    "price_postapoc": "90 USD",
+    "material": [
+      "silver",
+      "steel"
+    ],
+    "looks_like": "high_density_capacitor",
+    "symbol": ":",
+    "color": "light_gray",
+    "location": "barrel",
+    "blacklist_mod": "emitter",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun",
+      "pistol",
+      "launcher"
+    ],
+    "install_time": "45 m",
+    "handling_modifier": -10,
+    "range_modifier": -15,
+    "dispersion_modifier": 100,
+    "loudness_modifier": 30,
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 40
+    },
+    "ups_charges_modifier": 50,
+    "ammo_effects": [
+      "AMMO_ANOMALY_PLASMA"
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "fabrication",
+        6
+      ],
+      [
+        "electronics",
+        5
+      ],
+      [
+        "magic",
+        7
+      ]
+    ],
+    "flags": [
+      "MAGIC_FOCUS"
+    ]
+  },
+  {
+    "id": "arcane_accelerator_nuke",
+    "type": "GUNMOD",
+    "name": {
+      "str": "裂变异常嵌条枪管"
+    },
+    "description": "沿着枪管的长度嵌有几条银条，每个镶嵌物上都有一个特殊的装置。当由UPS的电荷催化时，通过嵌体传导的异常能量会使子弹产生异常效果。不能安装在锯下的桶上。\n这个装置产生了一个强大的空间异常，迫使每个弹丸的一小部分发生核裂变，以精确性和反冲为代价。虽然它与小型核弹相去甚远，但产生的爆炸力完全是致命的，每一次空间扭曲都有可能撕裂现实之壁。",
+    "weight": "540 g",
+    "volume": "1500 ml",
+    "integral_volume": "150 ml",
+    "price": "900 USD",
+    "price_postapoc": "90 USD",
+    "material": [
+      "silver",
+      "steel"
+    ],
+    "looks_like": "high_density_capacitor",
+    "symbol": ":",
+    "color": "light_gray",
+    "location": "barrel",
+    "blacklist_mod": "emitter",
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "shotgun",
+      "pistol",
+      "launcher"
+    ],
+    "install_time": "45 m",
+    "handling_modifier": -20,
+    "dispersion_modifier": 200,
+    "loudness_modifier": 60,
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": 80
+    },
+    "ups_charges_modifier": 100,
+    "ammo_effects": [
+      "AMMO_ANOMALY_NUKE"
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        4
+      ],
+      [
+        "fabrication",
+        6
+      ],
+      [
+        "electronics",
+        6
+      ],
+      [
+        "magic",
+        9
+      ]
+    ],
+    "flags": [
+      "MAGIC_FOCUS"
+    ]
+  }
+]

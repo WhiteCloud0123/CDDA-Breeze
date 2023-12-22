@@ -1,0 +1,632 @@
+[
+  {
+    "id": "halo_draconic_might",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "龙血光环",
+      "str_pl": "龙血光环"
+    },
+    "description": "一种奇异的光芒渗透你的身体，增加你的力量并减少身体伤害。",
+    "color": "dark_gray",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "STRENGTH",
+              "add": 5
+            },
+            {
+              "value": "ARMOR_BASH",
+              "add": -10
+            },
+            {
+              "value": "ARMOR_CUT",
+              "add": -20
+            },
+            {
+              "value": "ARMOR_STAB",
+              "add": -15
+            },
+            {
+              "value": "ARMOR_BULLET",
+              "add": -15
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_clairvoyance",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：乳白"
+    },
+    "description": "奇异的光辉弥漫在你的身边，你的目光得以穿透障壁。",
+    "color": "magenta",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "mutations": [
+            "ARCANA_CLAIRVOYANCE_LESSER"
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_phase_shield",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：日光石"
+    },
+    "description": "A strange radiance permeating your body, repelling nearby attackers away from you.",
+    "color": "dark_gray",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "hit_me_effect": [
+            {
+              "id": "arcana_react_phase_shield",
+              "once_in": 10,
+              "message": "%2$s is suddenly forced back!",
+              "npc_message": "%2$s is suddenly forced away from %1$s!"
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_shadowsnakes",
+    "//": "ID retained for simplicity.",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：黑曜石"
+    },
+    "description": "一种奇异的光芒渗透你的身体，用超自然的魔法蒙蔽攻击者。",
+    "color": "dark_gray",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "hit_me_effect": [
+            {
+              "id": "arcana_react_shadowy_shield",
+              "message": "在 %2$s 有一缕阴影突然出现",
+              "npc_message": "一缕影子从 %1$s 跳到 %2$s。"
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_drainlife",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：尖角"
+    },
+    "description": "一种奇怪的光芒渗透你的身体，给你一种生命的感觉。",
+    "color": "dark_gray",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "arcana_react_drain_life"
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_amulet_effect",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：护符"
+    },
+    "description": "A strange radiance permeating your body, obscuring your life force from the undead.  You will be invisible to them, but not to other creatures, and they will still be able to hear and smell you.",
+    "color": "white",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "mutations": [
+            "ARCANA_LIFE_SIGN_SUPPRESSION"
+          ],
+          "values": [
+            {
+              "value": "REGEN_HP",
+              "multiply": -1
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_fadedaura",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：褪色"
+    },
+    "description": "A strange radiance permeating your body, hiding your aura from otherworldly creatures in exchange for being more visible to wildlife and the undead.",
+    "color": "white",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "mutations": [
+            "ARCANA_TRANSCENDANT_AURA"
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_flute_effect",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：无影"
+    },
+    "description": "一种奇异的光芒渗透你的身体，增强你的运动和反应能力。",
+    "color": "white",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "MOVE_COST",
+              "multiply": -0.9
+            },
+            {
+              "value": "BONUS_DODGE",
+              "add": 10
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "halo_flute_effect",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "halo_brooch_effect",
+    "copy-from": "spell_base",
+    "type": "ARMOR",
+    "name": {
+      "str": "光环：守护"
+    },
+    "description": "一种奇怪的光芒渗透你的身体，增加你的防御能力。",
+    "color": "white",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "ARMOR_ACID",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_BASH",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_BIO",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_COLD",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_CUT",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_ELEC",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_HEAT",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_STAB",
+              "multiply": -0.5
+            },
+            {
+              "value": "ARMOR_BULLET",
+              "multiply": -0.5
+            }
+          ]
+        }
+      ]
+    },
+    "extend": {
+      "flags": [
+        "ONLY_ONE",
+        "NO_TAKEOFF"
+      ]
+    }
+  },
+  {
+    "id": "triffid_garland",
+    "type": "ARMOR",
+    "name": {
+      "str": "三尖树花环"
+    },
+    "description": "戴在脖子上的由另一个世界的鲜艳的花组成的花环。除了花瓣所提供的超凡美丽，它没有实际用途。",
+    "weight": "40 g",
+    "volume": "50 ml",
+    "//": "Arcanist trinkets are explicitly 100% post-cataclysm, minimal value but exotic, and have some minor crafting use.",
+    "price_postapoc": "120 cent",
+    "material": [
+      "veggy"
+    ],
+    "symbol": "[",
+    "looks_like": "holy_symbol_wood",
+    "color": "light_red",
+    "flags": [
+      "FANCY"
+    ]
+  },
+  {
+    "id": "amulet_exotic",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "异域护身符"
+    },
+    "description": "一条镶有一颗宝石的临时制成的项链，是一种由某种非自然材料制成的符咒。",
+    "weight": "60 g",
+    "volume": "50 ml",
+    "price_postapoc": "150 cent",
+    "material": [
+      "stone"
+    ],
+    "symbol": "[",
+    "looks_like": "aquamarine_silver_pendant_necklace",
+    "color": "light_gray",
+    "flags": [
+      "FANCY"
+    ],
+    "use_action": "MEDITATE"
+  },
+  {
+    "id": "brooch_iridescent",
+    "type": "ARMOR",
+    "name": {
+      "str": "五彩斑斓的胸针",
+      "str_pl": "五彩斑斓的胸针"
+    },
+    "description": "一枚手工制作的圆盘胸针，由一种奇怪的、异域材料制成，这种材料跟珍珠母十分类似。",
+    "weight": "52 g",
+    "volume": "50 ml",
+    "price_postapoc": "2 USD",
+    "material": [
+      "stone"
+    ],
+    "symbol": "[",
+    "looks_like": "jade_brooch",
+    "color": "dark_gray",
+    "flags": [
+      "FANCY"
+    ]
+  },
+  {
+    "id": "mana_gem",
+    "type": "ARMOR",
+    "name": {
+      "str": "源质宝石护符"
+    },
+    "description": "一种奇怪的红色石头，镶嵌在金色护身符中，戴在脖子上。它专门用来储存大量的魔法精华，如果戴上它，可以更快地重新装填魔法武器。",
+    "weight": "250 g",
+    "volume": "50 ml",
+    "price_postapoc": "90 USD",
+    "price": "30 USD",
+    "material": [
+      "gold",
+      "essencemat"
+    ],
+    "symbol": "[",
+    "looks_like": "gold_locket",
+    "color": "yellow",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "REGEN_MANA",
+              "multiply": 0.025
+            },
+            {
+              "value": "MAX_MANA",
+              "multiply": 0.025
+            }
+          ]
+        }
+      ]
+    },
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "essence_type": 200
+        },
+        "moves": 10
+      }
+    ],
+    "flags": [
+      "TARDIS"
+    ]
+  },
+  {
+    "id": "mana_gem_blood",
+    "copy-from": "mana_gem",
+    "type": "ARMOR",
+    "name": {
+      "str": "猩血源质宝石护符"
+    },
+    "description": "一种奇怪的黄色石头，镶嵌在银色护身符中，戴在脖子上。它专门用来储存大量的魔法精华，如果戴上它，可以更快地重新装填魔法武器。",
+    "material": [
+      "silver",
+      "essencemat"
+    ],
+    "looks_like": "silver_locket",
+    "color": "light_gray",
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "essence_blood_type": 600
+        },
+        "moves": 10
+      }
+    ]
+  },
+  {
+    "id": "mana_gem_dull",
+    "copy-from": "mana_gem",
+    "type": "ARMOR",
+    "name": {
+      "str": "阴黯源质宝石护符"
+    },
+    "description": "一种奇怪的蓝色石头，镶嵌在铜护身符中，戴在脖子上。它专门用来储存大量的暗物质，如果戴上它，可以更快地重新装填魔法武器。",
+    "material": [
+      "copper",
+      "essencemat"
+    ],
+    "looks_like": "copper_locket",
+    "color": "light_red",
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "essence_dull_type": 6000
+        },
+        "moves": 10
+      }
+    ]
+  },
+  {
+    "id": "mana_gem_pure",
+    "copy-from": "mana_gem",
+    "type": "ARMOR",
+    "name": {
+      "str": "璀璨源质宝石护符"
+    },
+    "description": "一种奇怪的宝石，镶嵌在白金护身符中，戴在脖子上。专用于储存大量结晶精华，佩戴后可以更快地重新装填魔法武器。",
+    "material": [
+      "platinum",
+      "essencemat"
+    ],
+    "looks_like": "platinum_locket",
+    "color": "white",
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "essence_pure_type": 20
+        },
+        "moves": 10
+      }
+    ]
+  },
+  {
+    "id": "satchel_eternity",
+    "type": "ARMOR",
+    "name": {
+      "str": "永恒背包",
+      "str_pl": "永恒背包"
+    },
+    "description": "一种小的织物袋，装饰有华丽的纺织图案，描绘了一种超凡脱俗的抽象图案，并用铜环和扣子进一步装饰。据说，它代表了对未知事物更深入的知识的探索，专注于在新发现中寻找效用和目的。它利用漩涡的力量储存大量易于访问的物品，但门户的不稳定性意味着被撞击可能会引起外界的注意或导致你远程传送。如果你把某些物品放在一边，甚至可以更快地使用它。",
+    "weight": "610 g",
+    "volume": "500 ml",
+    "price": "1000 USD",
+    "price_postapoc": "100 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "material": [
+      "cotton",
+      "copper"
+    ],
+    "symbol": "[",
+    "looks_like": "leather_pouch",
+    "color": "light_red",
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "hit_me_effect": [
+            {
+              "id": "arcana_react_satchel_attention",
+              "hit_self": true,
+              "once_in": 50,
+              "message": "你觉得有什么东西在看着你…",
+              "npc_message": "一种奇怪的恶意气氛似乎短暂地围绕着%1$s。"
+            },
+            {
+              "id": "arcana_react_satchel_teleport",
+              "hit_self": true,
+              "once_in": 50,
+              "message": "你觉得自己被拉向了一个不存在的方向！",
+              "npc_message": "%1$s突然扭曲了！"
+            }
+          ]
+        }
+      ]
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "rigid": true,
+        "spoil_multiplier": 0.9,
+        "weight_multiplier": 0.25,
+        "max_contains_volume": "75 L",
+        "max_contains_weight": "150 kg",
+        "moves": 80
+      },
+      {
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "25 kg",
+        "moves": 1,
+        "rigid": true,
+        "holster": true,
+        "flag_restriction": [
+          "MAGIC_FOCUS"
+        ]
+      },
+      {
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "25 kg",
+        "moves": 1,
+        "rigid": true,
+        "holster": true,
+        "flag_restriction": [
+          "MAGIC_FOCUS"
+        ]
+      },
+      {
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "25 kg",
+        "moves": 1,
+        "rigid": true,
+        "holster": true,
+        "flag_restriction": [
+          "MAGIC_FOCUS"
+        ]
+      },
+      {
+        "max_contains_volume": "5 L",
+        "max_contains_weight": "25 kg",
+        "moves": 1,
+        "rigid": true,
+        "holster": true,
+        "flag_restriction": [
+          "MAGIC_FOCUS"
+        ]
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存储何种亲和魔力的物品？",
+      "holster_msg": "你把你的%s"
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE",
+      "TRADER_KEEP_EQUIPPED",
+      "TARDIS"
+    ],
+    "material_thickness": 1,
+    "armor": [
+      {
+        "encumbrance": 15,
+        "coverage": 15,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ]
+  }
+]

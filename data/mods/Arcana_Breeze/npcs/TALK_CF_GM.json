@@ -1,0 +1,848 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": {
+        "u_male": "Greetings, Brother.  This is a sacred place.",
+        "no": "你好，姐姐。这是一个神圣的地方。"
+      },
+      "no": {
+        "u_has_any_trait": [
+          "PROF_SANGUINE",
+          "THRESH_DRAGONBLOOD"
+        ],
+        "yes": {
+          "u_has_effect": "cf_mission_1",
+          "yes": "很高兴看到你和我们一起工作。你需要什么？",
+          "no": "你在这里不受欢迎。陈述你的意图。"
+        },
+        "no": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ],
+          "yes": {
+            "u_has_effect": "cf_mission_1",
+            "yes": "欢迎，守门员。你需要什么？",
+            "no": "超自然的仆人，欢迎你来这里，只要你不惹麻烦。"
+          },
+          "no": {
+            "u_has_trait": "PROF_ARCANIST2",
+            "yes": {
+              "u_has_effect": "cf_mission_1",
+              "yes": "欢迎回来。你需要什么？",
+              "no": "我能感觉到你超凡脱俗的感觉。你来这里是为了什么？"
+            },
+            "no": "欢迎来到我们的圣地。"
+          }
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "[任务]索菲亚要求我在中心招募交易员或其他协助人员。有什么建议吗？",
+        "topic": "TALK_CF_GM_ADVICE_1",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      },
+      {
+        "text": "[任务]索菲亚让我去调查一个关于看守者残余的线索。她说你知道的更多？",
+        "topic": "TALK_CF_GM_ADVICE_2",
+        "condition": {
+          "u_has_mission": "MISSION_CF_REP_5"
+        }
+      },
+      {
+        "text": "[任务]索菲亚让我调查一伙背叛猩红教派的屠猎者的线索。你有什么建议吗？",
+        "topic": "TALK_CF_GM_ADVICE_3",
+        "condition": {
+          "u_has_mission": "MISSION_CF_REP_6"
+        }
+      },
+      {
+        "text": "[任务]尼古拉斯让我调查一个他需要的部件的研究机构。有什么建议吗？",
+        "topic": "TALK_CF_GM_ADVICE_4",
+        "condition": {
+          "u_has_mission": "MISSION_CF_PURIFIER_1_3"
+        }
+      },
+      {
+        "text": "那么，到目前为止，新来的人进展如何？",
+        "topic": "TALK_CF_GM_MISSION_4_OPINION",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "johnathan_opinion_given",
+                "type": "flag",
+                "context": "knowledge",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "sofia_mission_4_end",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_CF_GM_WHO"
+      },
+      {
+        "text": "你能告诉我这是个什么地方？",
+        "topic": "TALK_CF_GM_WHERE"
+      },
+      {
+        "text": "我们还有其他人吗？",
+        "condition": {
+          "u_has_trait": "PROF_CLEANSINGFLAME"
+        },
+        "topic": "TALK_CF_GM_OTHERS"
+      },
+      {
+        "text": "还有其他什么神秘团体？",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_ARCANIST",
+            "PROF_ARCANIST2",
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2",
+            "PROF_SANGUINE",
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "topic": "TALK_CF_GM_ARCANISTS"
+      },
+      {
+        "text": "你能告诉我关于你们团队的什么？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ]
+          }
+        },
+        "topic": "TALK_CF_GM_GROUP"
+      },
+      {
+        "text": "我能帮忙吗？",
+        "condition": {
+          "npc_has_var": "johnathan_prelude_ended",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "好吧，我想这就是我们追踪这异常现象所需要的一切。",
+        "condition": {
+          "u_has_var": "johnathan_prelude_data_5",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_CF_GM_PRELUDE_4_READY"
+      },
+      {
+        "text": "对这次任务有什么建议吗？",
+        "condition": {
+          "u_has_var": "johnathan_prelude_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_CF_GM_PRELUDE_4_MID_ADVICE"
+      },
+      {
+        "text": "我能帮上什么忙吗？",
+        "condition": {
+          "npc_has_effect": "cf_mission_3"
+        },
+        "switch": true,
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "我能帮上什么忙吗？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_ADVICE_1",
+    "dynamic_line": "我自己从来没有去过中心，所以我不知道该怎么建议。如果能有更多的人手来帮助建造和狩猎，那就太好了，不过我想有一个贸易来源会很有用，这样可以保证我们的物资储备充足。我相信你会运用你的判断力。",
+    "responses": [
+      {
+        "text": "我懂了。就这样吧。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_ADVICE_2",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CHALICE",
+        "PROF_CHALICE2",
+        "THRESH_VEIL"
+      ],
+      "yes": "我断断续续地追踪了他们一段时间的行踪，同时密切关注其他线索。没有任何迹象表明他们与其他守誓者有任何联系，但在这一切开始之前的一个月内，他们已经参与了异常活动。我相信你会发现一些信息，因为你与他们的雇佣关系，但一定要谨慎。",
+      "no": "我断断续续地追踪了他们一段时间的行踪，同时密切关注其他线索。没有任何迹象表明他们与其他守誓者有任何联系，但在这一切开始之前的一个月内，他们已经参与了异常活动。保持警惕，如果他们似乎不太可能合作，就根据需要处理他们。我们不能让这个情报从我们手中溜走。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_ADVICE_3",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_SANGUINE"
+      ],
+      "yes": "你应该知道伯劳有多危险，乐观主义者。我怀疑你是否能走进来，引诱他们给我们我们所需要的，但欢迎你试试。我个人建议你谨慎行事。",
+      "no": "你不可能是认真的。什么，她是要你走进来和他们交朋友吗？他们是乐观主义者，更糟糕的是他们是训练来和我们战斗的人。我肯定他们会等你的。如果你坚持要和平处理这件事，你最好做好准备，一旦事情变糟，事情就会变成伏击。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_ADVICE_4",
+    "dynamic_line": "我们订单上的大多数人对这些实验室都不熟悉。要是早知如此，我们肯定会用自己的手段逼迫他们。然而，我确实记得这个网站是我们的一个像尼古拉斯一样的净化者的城镇联系人的调查对象。至少在爆发前不久是这样的。",
+    "responses": [
+      {
+        "text": "他们发现了什么？",
+        "topic": "TALK_CF_GM_ADVICE_4_2"
+      },
+      {
+        "text": "我会调查的。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_ADVICE_4_2",
+    "dynamic_line": "他曾带领一个小型狩猎队跟踪一批货物，这是情报收集的一部分，情报收集产生了一份名单，让你可以确定这是一个威胁。他们没有发现任何异常，但提到了人口贩卖，可能是实验。当他试图潜入时，被跟他在一起的猎人告知不要靠近。",
+    "responses": [
+      {
+        "text": "发生什么了？",
+        "topic": "TALK_CF_GM_ADVICE_4_3"
+      },
+      {
+        "text": "那我看看能找到什么。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_ADVICE_4_3",
+    "dynamic_line": "他们找不到他，在那里等了一天才离开。他们被告知不要攻击该设施，因为我们有太多的人被暴露的风险，即使他的生命有危险。那个地方会很危险，即使他们现在已经屈服于天启。不管他们主要项目的意图有多好，都不知道在这个过程中他们会给世界带来什么样的损坏。",
+    "responses": [
+      {
+        "text": "我明白了。谢谢你提供的信息。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_GM_MISSION_4_OPINION",
+    "//": "Unlike Sofia, Johnathan does not trust the Old Guard if you've picked that particular resolution for Sofia's fourth mission.",
+    "dynamic_line": {
+      "u_has_var": "old_guard_presence",
+      "type": "knowledge",
+      "context": "rural_church",
+      "value": "yes",
+      "yes": "They're hard-working, but they know more than they let on.  At least, whoever sent them.  Be careful what you say around them.  They are here for a reason, and I'm concerned that it might endanger our purpose.",
+      "no": "我有我的担心，但它们似乎值得信赖。不是很精通奥术，但如果需要的话，我们可以教他们我们的方法。除此之外，他们似乎大多只是帮助完成日常任务。"
+    },
+    "responses": [
+      {
+        "text": "我明白了……",
+        "effect": {
+          "npc_add_var": "johnathan_opinion_given",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_READY",
+    "type": "talk_topic",
+    "dynamic_line": "很好。我花时间和其他人交谈，传递信息，研究我们的地图。我想从你带来的和其他侦察员发现的情况来看，我们已经找到了异常的来源。我想花点时间准备一下，等你准备好了再见我。这可能是一场艰难的战斗。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "effect": [
+          {
+            "npc_add_var": "johnathan_prelude_ended",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "u_add_var": "johnathan_prelude_ended",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "cf_church_upgrade_GM_4_prelude_a",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church"
+          },
+          {
+            "mapgen_update": "cf_church_upgrade_GM_4_prelude_b",
+            "om_terrain": "cf_church_2",
+            "om_special": "cf_rural_church"
+          },
+          {
+            "mapgen_update": "cf_church_upgrade_GM_4_prelude_c",
+            "om_terrain": "cf_church_3",
+            "om_special": "cf_rural_church"
+          },
+          {
+            "mapgen_update": "cf_church_upgrade_GM_4_prelude_d",
+            "om_terrain": "cf_church_4",
+            "om_special": "cf_rural_church"
+          }
+        ],
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_MID_ADVICE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_mission": "MISSION_CF_GM_4_PRELUDE",
+      "yes": "不管是什么东西杀死了大部分幸存者，现在还在这个地区，我们知道他们在晚上更危险。白天不要靠近。找些不合适的东西带过来。如果我想不出什么办法，我就把你推荐给索菲亚。",
+      "no": {
+        "u_has_var": "johnathan_prelude_penultimate",
+        "type": "mission",
+        "context": "rural_church",
+        "value": "yes",
+        "no": "首先参观中心，但是任何与商人和探险家有广泛联系的人都可能知道一些事情。得到至少五个确定的地点，我们应该对震中可能在哪里有一个更好的了解。",
+        "yes": "把你找到的东西交给索菲亚，她会帮上忙的。我也会考虑和其他人商量，直到你拿了什么回来。"
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_var": "johnathan_prelude_started",
+      "type": "mission",
+      "context": "rural_church",
+      "value": "yes",
+      "no": "最近我注意到了一个新问题，但恐怕比平常更复杂。我们一直在追踪有关食腐动物受到攻击的报告，以及大范围的异常活动，但没有任何来源的线索。我可以告诉你我所知道的，看看能不能找到什么线索。",
+      "yes": "恐怕我还没有得到新的情报。不过，我会回答任何问题，希望这能帮助缩小范围。你有什么给我的？"
+    },
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "u_add_var": "johnathan_prelude_started",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "发生了什么样的袭击？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS"
+      },
+      {
+        "text": "你能描述一下异常情况吗？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ANOMALIES"
+      },
+      {
+        "text": "你建议谁来问这个问题？",
+        "topic": "TALK_CF_GM_PRELUDE_4_PROGRESSION"
+      },
+      {
+        "text": "你还能告诉我什么？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2"
+      },
+      {
+        "text": "我去问问…",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS",
+    "type": "talk_topic",
+    "dynamic_line": "成群的反常怪物，有时是孤独的袭击者。大多数袭击发生在夜间，白天袭击的受害者大多毫发无损。",
+    "responses": [
+      {
+        "text": "异常，但在晚上更危险和活跃。你知道那是什么吗？",
+        "condition": {
+          "or": [
+            {
+              "u_has_intelligence": 9
+            },
+            {
+              "u_has_perception": 9
+            }
+          ]
+        },
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_1"
+      },
+      {
+        "text": "有什么怪物袭击他们的信息吗？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2"
+      },
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "我去问问…",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_1",
+    "type": "talk_topic",
+    "dynamic_line": "我自己也有一些想法，但到目前为止，我还没有幸存者的任何第一手资料来证实我们面临的是什么。到目前为止，我们收到的最详细信息是我们收到的最新二手账户。你也许能通过我们掌握的线索找到一些线索。",
+    "responses": [
+      {
+        "text": "值得一试，给我指出正确的方向。",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_ACCEPT"
+      },
+      {
+        "text": "那条线索给了你什么信息？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_1_INTEL"
+      },
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "暂时不要介意。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_ACCEPT",
+    "type": "talk_topic",
+    "dynamic_line": "好吧。我会尽我所能给你指路。这应该会把你带到他们回来前最后一个营地。他们在尸体上留下了一些装备，可能留下了一些线索。寻找任何突出的物品，可能是他们从该地区清除的异常物质。",
+    "speaker_effect": [
+      {
+        "effect": {
+          "add_mission": "MISSION_CF_GM_4_PRELUDE"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "text": "你有什么建议吗？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ACCEPT_ADVICE"
+      },
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "我稍后再来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ACCEPT_ADVICE",
+    "type": "talk_topic",
+    "dynamic_line": "我只能告诉你要小心。他们放松了警惕，以为自己已经清场了，有可能造成大部分生还者死亡的东西仍在该地区。也可能是他们带了一些异常的神器，可能会吸引怪物。",
+    "responses": [
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "我稍后再来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_1_INTEL",
+    "type": "talk_topic",
+    "dynamic_line": "当袭击发生时，一小群幸存者正在经过这片地区，一些人在试图中断联系时受了重伤。他们走了一段距离后才扎营休息，尝试救治伤员。在追兵到来之前，他们所能做的就是把死者埋了。如果你认为值得调查的话，我至少还记得那片营地的位置。",
+    "responses": [
+      {
+        "text": "我会做的。",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_ACCEPT"
+      },
+      {
+        "text": "不用了，谢谢，我们试试别的。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2",
+    "type": "talk_topic",
+    "dynamic_line": "袭击者显然是夜间活动的，这可能是为什么袭击在夜间最常见的原因。很少有报告表明它们不是自然野生动物或不死生物。如果有一个超自然的可恶的入侵，你会认为我们会更容易找到原因。然而，这些攻击分散在一个很宽的区域，所以我们可能有这么大的搜索区域。",
+    "responses": [
+      {
+        "text": "这可能是一个更微妙的事件，比如什么打破了守门员的背部。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1"
+      },
+      {
+        "text": "他们可能不是物理闯入者，他们可能像被召唤的怪物。",
+        "condition": {
+          "or": [
+            {
+              "u_has_trait": "PROF_ARCANIST2"
+            },
+            {
+              "u_has_skill": {
+                "skill": "magic",
+                "level": 6
+              }
+            }
+          ]
+        },
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_2"
+      },
+      {
+        "text": "我们能缩小范围吗？",
+        "topic": "TALK_CF_GM_PRELUDE_4_PROGRESSION"
+      },
+      {
+        "text": "我需要时间考虑一下。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1",
+    "type": "talk_topic",
+    "dynamic_line": "这是可能的。我知道追查这样的事件是很困难的。你也许能从我所掌握的最近的一次攻击中了解一些道理。",
+    "responses": [
+      {
+        "text": "实际上，我想我可以帮你找出原因。",
+        "condition": {
+          "u_has_trait": "THRESH_VEIL"
+        },
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_VEIL"
+      },
+      {
+        "text": "好吧，告诉我你的想法。",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_1"
+      },
+      {
+        "text": "也许下次吧。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_VEIL",
+    "type": "talk_topic",
+    "dynamic_line": "如果你确定的话。你是被选中的守门员之一，不是吗？不管是什么奇怪的魔法在起作用，你都可以利用它。我有一个粗略的区域，如果你手头有他们的文物？",
+    "responses": [
+      {
+        "text": "我愿意。告诉我我需要做些什么才能让它生效。",
+        "switch": true,
+        "condition": {
+          "u_has_item": "veilblade"
+        },
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_RITUAL"
+      },
+      {
+        "text": "别担心，让我们从头开始。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "我需要先找回神器。我一会儿回来。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_RITUAL",
+    "type": "talk_topic",
+    "dynamic_line": "我们将在这里追踪这个区域，用一个传统闯入者的暗影宝石，从你的刀刃上得到的共鸣，还有我的一个同胞提供的面具……就呆在那里。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_RITUAL_2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_RITUAL_2",
+    "type": "talk_topic",
+    "dynamic_line": "这就像是一种占卜，使用一个与这些攻击背后的怪物有联系的异常物品，在本例中是宝石。如果你和那个实体的…联系，如果这和影响守护者的圣地相似，你的刀刃应该对这个仪式做出反应…",
+    "responses": [
+      {
+        "text": "它有什么作用吗？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_RITUAL_3"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1_RITUAL_3",
+    "type": "talk_topic",
+    "dynamic_line": "在那里。我可以透过面具看到它，当以这种方式使用时，神器和宝石是如何反应的。给我一点时间和其他人商量一下，等你准备好了再跟我说话。我希望这确实能引导我们走上正确的道路。",
+    "responses": [
+      {
+        "text": "…",
+        "effect": [
+          {
+            "u_add_var": "johnathan_prelude_ended",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "johnathan_prelude_ended",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "u_add_effect": "cf_mission_1",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_2",
+    "type": "talk_topic",
+    "dynamic_line": "的确。我知道你可以帮上忙。我没有多少确切的袭击地点来缩小范围，但我有一个相关事件的地点。一些幸存者在应对这些怪物的攻击后扎营，我怀疑他们留下的异常发现可能有助于我们找到他们。你似乎有眼力，我想请你调查一下。",
+    "responses": [
+      {
+        "text": "我接受，告诉我去哪里。",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_ACCEPT"
+      },
+      {
+        "text": "你能先告诉我更多吗？",
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_1_INTEL"
+      },
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_CF_GM_PRELUDE_4"
+      },
+      {
+        "text": "下次再说吧。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_ANOMALIES",
+    "type": "talk_topic",
+    "dynamic_line": "在一般灾害中有一些间歇性异常的危险例子，通常不常见且没有典型的证据。此外，据在这一地区逗留者的少量报告称，他们有过一些噩梦般的奇怪的幻觉。其描述的生物似乎不属于通常的入侵者。",
+    "responses": [
+      {
+        "text": "这似乎很熟悉。饲养员在他们最重要的圣地也遭受了类似的命运，不是吗？",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "topic": "TALK_CF_GM_PRELUDE_4_ATTACKS_2_1"
+      },
+      {
+        "text": "也许有办法找到更准确的地点？",
+        "topic": "TALK_CF_GM_PRELUDE_4_PROGRESSION"
+      },
+      {
+        "text": "我需要时间考虑一下。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_PRELUDE_4_PROGRESSION",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_var": "johnathan_opinion_given",
+      "type": "flag",
+      "context": "knowledge",
+      "value": "yes",
+      "no": "我们需要更多关于实际发生了多少次袭击，以及在哪里发生的信息。我建议你和难民中心的人谈谈，这是一个经常受到拾荒者来访的地方。",
+      "yes": "我们需要更多关于实际发生了多少次袭击，以及在哪里发生的信息。我建议你和难民中心的人谈谈，这是一个经常受到拾荒者来访的地方。我还建议和新会议厅里的商人谈谈。"
+    },
+    "responses": [
+      {
+        "text": "我看看能做些什么。",
+        "effect": {
+          "u_add_var": "johnathan_prelude_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "我叫约翰纳森利昂。我和索菲亚一样，也是我们秩序的创始人之一。建国前，我在曾经参加过的教团中担任过大师的称号。",
+    "responses": [
+      {
+        "text": "大师？",
+        "topic": "TALK_CF_GM_GRANDMASTER"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_GRANDMASTER",
+    "type": "talk_topic",
+    "dynamic_line": "的确，在学院成立前，我们是在当地庄严宣誓过的。我怀疑教会会对我们现在的行为不以为然，我们现在的行为与我们的异教徒兄弟紧密相连。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": "索菲亚会更了解这个地方。可悲的是，我并不是命中注定要为这个地方服务的人，所以神圣的职责落在了塔恩·麦金农身上。",
+    "responses": [
+      {
+        "text": "那你的职责是什么？",
+        "topic": "TALK_CF_GM_DO"
+      },
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_DO",
+    "type": "talk_topic",
+    "dynamic_line": "目前，我负责其他队员的训练和准备，并组织侦察和补给。跟我商量一下，也许我能为你做点什么。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_OTHERS",
+    "type": "talk_topic",
+    "dynamic_line": "在那里我们并不孤单。我知道其他的狩猎队仍在坚持，尽管很难确定它们的位置。我已经把我掌握的信息告诉了索菲亚，如果你问她，她也许能用它做些什么。",
+    "responses": [
+      {
+        "text": "好的。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_ARCANISTS",
+    "type": "talk_topic",
+    "//": "It can be presumed that Johnathan can sense the difference between a member of the Sanguine Order and a non-Order Dragonblood, so only refers to them as sanguinists in the generic sense.",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": "尽管我们的冲突几乎把我们俩都消灭了，但还是有一些零星的迹象表现了你的命令。守誓者似乎也即将灭绝，这在很大程度上要感谢你们。据我所知，这只剩下各种各样的邪教徒和许多独立的从业者。我只能祈祷他们不要让事情变得更糟，没有人来领导他们。",
+      "no": "据我所知，猩红教派几乎已被消灭。感谢上帝。我几乎听不到守门员的任何消息，可能是最好的消息，因为我们之间不经常交谈。毫无疑问，这里和那里有少数的邪教，但我不知道有任何其他人会纠结在过去的争吵和争吵中。有可能的人肯定在那里，仍然涉猎潜在的危险魔法，没有人指导他们。"
+    },
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_GM_GROUP",
+    "type": "talk_topic",
+    "dynamic_line": "如果我们必须这样做的话，为那些危害人类的人伸张正义。如果可以的话，去修补世界之间日益增长的伤口。为了避免危险的道路，我们应该守卫和引导。只要太阳照耀地球。我们是邪恶和超凡脱俗的猎手，无辜者的保护者。至少，我们努力做到。我们没有那么多人，分散成小团体意味着我们并不是所有人都坚持正确的行为，尽管这从来没有达到争执和分裂的地步。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_GM"
+      }
+    ]
+  }
+]

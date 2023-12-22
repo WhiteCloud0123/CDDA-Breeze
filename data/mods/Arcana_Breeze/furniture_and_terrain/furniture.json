@@ -1,0 +1,374 @@
+[
+  {
+    "id": "f_blade_upright",
+    "type": "furniture",
+    "name": "直立的宝剑",
+    "description": "一把奇怪的剑在地上盘旋。下面的楼梯被一道坚固的光障挡住了，但是通过检查，这把剑应该很容易被移除。",
+    "symbol": "|",
+    "looks_like": "sun_sword_on",
+    "bgcolor": [
+      "yellow"
+    ],
+    "move_cost_mod": -2,
+    "light_emitted": 240,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT"
+    ],
+    "deployed_item": "sun_sword",
+    "examine_action": "deployed_furniture"
+  },
+  {
+    "id": "f_candle_barrier",
+    "type": "furniture",
+    "name": "发光的蜡烛",
+    "description": "一支发光的蜡烛，发出奇怪的能量并投射出不透明的发光屏障。调查它以消除屏障。",
+    "symbol": ",",
+    "looks_like": "candle_lit",
+    "bgcolor": [
+      "blue"
+    ],
+    "move_cost_mod": -2,
+    "light_emitted": 24,
+    "required_str": -1,
+    "crafting_pseudo_item": "candle_warding_active",
+    "flags": [
+      "TRANSPARENT",
+      "USABLE_FIRE"
+    ],
+    "deployed_item": "candle_barrier_aftermath",
+    "examine_action": "deployed_furniture"
+  },
+  {
+    "id": "f_candle_barrier_playermade",
+    "type": "furniture",
+    "name": "闪烁的蜡烛",
+    "description": "一支蜡烛，灯芯散发出幽灵般的火焰，并投射出一道发光的屏障。调查它以消除屏障，如果力气足够大的话也可以攻击屏障直至崩塌。",
+    "symbol": ",",
+    "looks_like": "candle_lit",
+    "bgcolor": [
+      "magenta"
+    ],
+    "move_cost_mod": -2,
+    "light_emitted": 12,
+    "required_str": -1,
+    "crafting_pseudo_item": "candle_warding_active",
+    "flags": [
+      "TRANSPARENT",
+      "USABLE_FIRE"
+    ],
+    "deployed_item": "candle_warding",
+    "examine_action": "deployed_furniture",
+    "bash": {
+      "str_min": 40,
+      "str_max": 210,
+      "sound": "crash!",
+      "sound_fail": "whump.",
+      "items": [
+        {
+          "item": "candle_warding",
+          "count": [
+            0,
+            1
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_altar_arcana",
+    "name": "石炉",
+    "symbol": "n",
+    "looks_like": "f_fireplace",
+    "description": "一种流动的活石结构，被塑造成一个开放的壁炉，表面会周期性地开裂和变形。它提供了适度的空间来安全地焚烧供品，或者提供了一个足够用于更病态仪式的平坦表面。",
+    "color": "dark_gray",
+    "move_cost_mod": 2,
+    "required_str": -1,
+    "crafting_pseudo_item": "boulder_anvil",
+    "flags": [
+      "INDOORS",
+      "SUN_ROOF_ABOVE",
+      "PLACE_ITEM",
+      "FIRE_CONTAINER",
+      "SUPPRESS_SMOKE",
+      "TRANSPARENT",
+      "MOUNTABLE",
+      "SHORT",
+      "MINEABLE",
+      "FLAT_SURF"
+    ],
+    "bash": {
+      "str_min": 10,
+      "str_max": 20,
+      "sound": "smash!",
+      "sound_fail": "thump."
+    },
+    "examine_action": "fireplace"
+  },
+  {
+    "type": "furniture",
+    "id": "f_pozdol_arcana",
+    "name": "森林垫草",
+    "description": "一片某个未知森林的地面，覆盖着一层扭曲、卷翘、不自然的绿色落叶，头顶用长着尖刺相互缠绕的发霉石块和树枝遮挡。至少比露天睡在空旷的地面上要好。",
+    "symbol": ",",
+    "looks_like": "t_moss",
+    "bgcolor": "green",
+    "comfort": 2,
+    "floor_bedding_warmth": 200,
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [
+      "FLAMMABLE_HARD",
+      "TRANSPARENT",
+      "INDOORS",
+      "SUN_ROOF_ABOVE",
+      "NOCOLLIDE"
+    ],
+    "bash": {
+      "str_min": 5,
+      "str_max": 30,
+      "sound": "smash!",
+      "sound_fail": "whump."
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_spires_arcana",
+    "name": "模制石墙",
+    "symbol": "#",
+    "looks_like": "t_drystone_wall",
+    "description": "一种由流动的石头、泥土和未开化的植物根系组成的相互交错的尖顶构成的墙，这些尖顶形成并附着在建筑物生长的原始地面上。流动的石头时不时地裂开碎裂，只是为了自我修复和再凝固。",
+    "color": "dark_gray",
+    "move_cost_mod": -1,
+    "required_str": -1,
+    "flags": [
+      "NOITEM",
+      "BLOCK_WIND",
+      "SUN_ROOF_ABOVE"
+    ],
+    "bash": {
+      "str_min": 20,
+      "str_max": 60,
+      "sound": "crash!",
+      "sound_fail": "thump!"
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_door_arcana_c",
+    "name": "编织门",
+    "description": "由奇怪的藤蔓、树枝和活体岩石组成的沉重的帷幕。每一触碰，都能异常轻松地移动，如液体般流动着，在周围散发着霉味的土地上编织出它的结构。",
+    "looks_like": "t_door_curtain_c",
+    "symbol": "+",
+    "color": "white",
+    "move_cost_mod": -1,
+    "required_str": -1,
+    "flags": [
+      "DOOR",
+      "FLAMMABLE_HARD",
+      "NOITEM",
+      "BLOCK_WIND",
+      "SUN_ROOF_ABOVE"
+    ],
+    "open": "f_door_arcana_o",
+    "bash": {
+      "str_min": 4,
+      "str_max": 40,
+      "sound": "smash!",
+      "sound_fail": "whump!"
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_door_arcana_o",
+    "name": "打开编织门",
+    "description": "由奇怪的藤蔓、树枝和活石组成的沉重的帷幕。每一触碰，都能异常轻松地移动，如液体般流动着，在周围散发着霉味的土地上编织出它的结构。它正处于这个状态，仿佛是在邀请你进入，十分奇怪。",
+    "looks_like": "t_door_curtain_o",
+    "symbol": ".",
+    "color": "white",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [
+      "FLAMMABLE_HARD",
+      "TRANSPARENT",
+      "INDOORS",
+      "SUN_ROOF_ABOVE"
+    ],
+    "close": "f_door_arcana_c",
+    "bash": {
+      "str_min": 4,
+      "str_max": 40,
+      "sound": "smash!",
+      "sound_fail": "whump!"
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_arcane_candlestick",
+    "name": "烛台",
+    "description": "一个短的石头基座，上面牢固地安装着一个华丽的烛台。",
+    "looks_like": "t_pedestal_wyrm",
+    "symbol": "&",
+    "color": "dark_gray",
+    "move_cost_mod": -1,
+    "coverage": 50,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT",
+      "SEALED",
+      "PLACE_ITEM"
+    ],
+    "bash": {
+      "str_min": 100,
+      "str_max": 400,
+      "sound": "crash!",
+      "sound_fail": "whump!",
+      "items": [
+        {
+          "item": "rock",
+          "count": [
+            2,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_arcane_candlestick_lit",
+    "name": "烛台",
+    "description": "一个短石砌成的台基，上面牢固地安装着一个华丽的烛台。一团诡异的蓝色火焰萦绕在本应是正常烛火的位置，散发出一种舒缓的光芒。",
+    "looks_like": "t_pedestal_wyrm",
+    "symbol": "&",
+    "color": "dark_gray",
+    "light_emitted": 120,
+    "move_cost_mod": -1,
+    "coverage": 50,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT",
+      "SEALED",
+      "PLACE_ITEM",
+      "USABLE_FIRE"
+    ],
+    "bash": {
+      "str_min": 100,
+      "str_max": 400,
+      "sound": "crash!",
+      "sound_fail": "whump!",
+      "items": [
+        {
+          "item": "rock",
+          "count": [
+            2,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "f_force_barrier",
+    "type": "furniture",
+    "name": "闪光的屏障",
+    "description": "空气在奇怪地摇摆变形，提供了最微弱的光照。当它被击中时，它会硬化成一道爆裂的光墙，检查它会允许你把它拆除。",
+    "symbol": "#",
+    "looks_like": "t_reinforced_glass",
+    "bgcolor": [
+      "blue"
+    ],
+    "move_cost_mod": -2,
+    "light_emitted": 1,
+    "required_str": -1,
+    "flags": [
+      "NOITEM",
+      "TRANSPARENT"
+    ],
+    "deployed_item": "candle_barrier_aftermath",
+    "examine_action": "deployed_furniture",
+    "bash": {
+      "str_min": 100,
+      "str_max": 400,
+      "sound": "crash!",
+      "sound_fail": "whump!"
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_alien_zapper_altered",
+    "looks_like": "f_alien_zapper",
+    "name": "摇摆蕨叶",
+    "description": "一根像飞蛾触须一样的带毛尖刺从地面伸出来，在空中轻轻摇摆。每隔一段时间，它就会向天花板发射出一连串的能量弧。",
+    "symbol": "F",
+    "color": "light_blue",
+    "move_cost_mod": 4,
+    "coverage": 20,
+    "required_str": -1,
+    "flags": [
+      "TRANSPARENT",
+      "EMITTER"
+    ],
+    "emissions": [
+      "emit_glimmer_altered",
+      "emit_shock_burst_altered"
+    ],
+    "bash": {
+      "str_min": 30,
+      "str_max": 60,
+      "sound": "splorch!",
+      "sound_fail": "whump!",
+      "furn_set": "f_null"
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "f_transmutation_crucible_deployed",
+    "name": "变形坩埚",
+    "description": "流动的石头在奇怪的石头坩埚周围滑动。用作金属加工的铁砧和坩埚，以及工作台和炼金术辅助。可以通过检查回收。\n\n提供以下内容：\n*3级铁砧质量。\n*二级沸腾质量。\n*二级化学品制造质量。\n*包含质量的1级。\n*1级食品烹饪质量。\n*2级清洁表面质量。\n*还用作坩埚。",
+    "symbol": "n",
+    "color": "dark_gray",
+    "looks_like": "f_slab",
+    "move_cost_mod": 2,
+    "coverage": 30,
+    "required_str": 12,
+    "crafting_pseudo_item": "transmutation_crucible_deployed_fake",
+    "flags": [
+      "PLACE_ITEM",
+      "BLOCKSDOOR",
+      "TRANSPARENT",
+      "ALLOW_FIELD_EFFECT",
+      "MOUNTABLE",
+      "SHORT",
+      "MINEABLE",
+      "FLAT_SURF"
+    ],
+    "deployed_item": "transmutation_crucible",
+    "bash": {
+      "str_min": 20,
+      "str_max": 40,
+      "sound": "smash!",
+      "sound_fail": "thump.",
+      "items": [
+        {
+          "item": "transmutation_crucible",
+          "prob": 75
+        },
+        {
+          "item": "rock",
+          "count": [
+            2,
+            7
+          ]
+        }
+      ]
+    },
+    "examine_action": "workbench",
+    "workbench": {
+      "multiplier": 1.05,
+      "mass": 500000,
+      "volume": "500L"
+    }
+  }
+]

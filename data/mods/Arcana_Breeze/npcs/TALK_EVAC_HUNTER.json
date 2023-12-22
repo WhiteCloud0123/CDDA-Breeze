@@ -1,0 +1,79 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_EVAC_HUNTER",
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_EVAC_HUNTER_GM_PRELUDE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_EVAC_HUNTER_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "几天前，在一个古老城镇的边缘，失去了一半的狩猎队。一开始什么都没想，但现在你提到了，事情听起来有点可疑。我想我会把事情的进展情况告诉你，看看这是否有助于你的努力。"
+  },
+  {
+    "id": "TALK_EVAC_HUNTER_DO",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": " [任务]有人要求我帮助吸引另一个幸存者社区的工作。有人知道可以提供帮助的人吗？",
+        "topic": "TALK_FREE_MERCHANT_STOCKS_CF_REP_MISSION_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_EVAC_HUNTER_LIFE",
+    "type": "talk_topic",
+    "dynamic_line": "你找错人了。如果你在找猎人和拾荒者这样的工作，最好找经纪人谈谈。他们会给你安排合同之类的东西。应该在那边的房间里。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

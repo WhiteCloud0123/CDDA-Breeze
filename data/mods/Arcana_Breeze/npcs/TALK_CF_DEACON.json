@@ -1,0 +1,456 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_DEACON",
+    "dynamic_line": {
+      "u_is_wearing": "badge_marshal",
+      "yes": "你好，执法官。需要我为你做些什么？",
+      "no": "你好。我能帮你什么忙？"
+    },
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_CF_DEACON_GM_PRELUDE"
+      },
+      {
+        "text": "[任务]我和索菲亚谈过了。到目前为止，他们做得还不错。",
+        "condition": {
+          "and": [
+            {
+              "u_has_effect": "sofia_deacon_message"
+            },
+            {
+              "not": {
+                "u_has_mission": "MISSION_CF_DEACON_1"
+              }
+            },
+            {
+              "not": {
+                "npc_has_effect": "rural_church_aware"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_CF_DEACON_MISSION_BACKDOOR"
+      },
+      {
+        "text": "[任务]索菲亚要求我寻找更多的贸易伙伴和劳动力，帮助他们建立前哨站。你能给我一些建议吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "sofia_refugee_convinced",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_CF_DEACON_WHO"
+      },
+      {
+        "text": "你在这里做什么？",
+        "topic": "TALK_CF_DEACON_DO"
+      },
+      {
+        "text": "能帮你什么忙吗？",
+        "condition": {
+          "not": {
+            "u_has_effect": "already_asked_deacon"
+          }
+        },
+        "topic": "TALK_CF_DEACON_HELP"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "我想索菲亚或者她的一个同胞要求你调查这件事。我最近不得不给一个严重受伤的人开高架桥，他是在几英里外的一次袭击中唯一的幸存者。他们太震惊了，无法叙述发生的事情，但我发现颈部和胸部有严重冻伤的迹象，甚至连盔甲都没有，严重的骨折没有裂伤或瘀伤。与其他袭击一致，在夜间与其他袭击范围相同。"
+  },
+  {
+    "id": "TALK_CF_DEACON_MISSION_CF_4",
+    "type": "talk_topic",
+    "dynamic_line": "我听说他们在附近建房子，是的。假设有必要确保他们的生存。你可以试着和这里的一些工作人员，一些常客，或者后面的难民谈谈。",
+    "responses": [
+      {
+        "text": "有人能帮忙吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_STAFF"
+      },
+      {
+        "text": "你觉得有人会感兴趣吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_VISITORS"
+      },
+      {
+        "text": "难民怎么办？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_REFUGEES"
+      },
+      {
+        "text": "我看看能做些什么。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_MISSION_CF_4_STAFF",
+    "type": "talk_topic",
+    "dynamic_line": "当地的商人已经和麦金农女士达成了某种协议，所以我怀疑这是否行得通。没有多少旅行者会去看医生，但值得一问。那只会把经纪人留在后面的房间里。或许值得一试，但如果不确保我们已经有稳定的粮食供应，任何贸易协议都是有风险的。",
+    "responses": [
+      {
+        "text": "你觉得有人会感兴趣吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_VISITORS"
+      },
+      {
+        "text": "难民怎么办？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_REFUGEES"
+      },
+      {
+        "text": "谢谢，我看看我能做些什么。",
+        "topic": "TALK_CF_DEACON"
+      },
+      {
+        "text": "现在到此为止。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_MISSION_CF_4_VISITORS",
+    "type": "talk_topic",
+    "dynamic_line": "有一个政府官员好像是被人派来的，我猜谁是真正的负责人可能知道些什么。除此之外，这里只有一两个当地的拾荒者，可能值得去问问他们。",
+    "responses": [
+      {
+        "text": "有人能帮忙吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_STAFF"
+      },
+      {
+        "text": "难民怎么办？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_REFUGEES"
+      },
+      {
+        "text": "我看看能做些什么。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_MISSION_CF_4_REFUGEES",
+    "type": "talk_topic",
+    "dynamic_line": "我怀疑他们中有谁会愿意冒险去那里找工作，即使索菲亚可能比这里的员工更热情。但如果你问对了问题，肯定会有人认识其他人，或者愿意留心，协助争取当地商人和拾荒者。如果你愿意，我可以帮你做同样的事。",
+    "responses": [
+      {
+        "text": "当然，那会有帮助的。",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_DEAL"
+      },
+      {
+        "text": "有人能帮忙吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_STAFF"
+      },
+      {
+        "text": "你觉得有人会感兴趣吗？",
+        "topic": "TALK_CF_DEACON_MISSION_CF_4_VISITORS"
+      },
+      {
+        "text": "我会想办法的。不过，谢谢。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_DEACON_MISSION_CF_4_DEAL",
+    "dynamic_line": "我会尽我所能和其他过来的拾荒者谈谈。我建议继续和这里的其他人商量一下，我们越是努力吸引当地商人，就越有可能成功。虽然我相信索菲亚的人可以处理任何不必要的注意，这可能会吸引，主要的担心是说服人们访问一个相对未知的定居点。",
+    "responses": [
+      {
+        "text": "非常感谢。我已经说服其他几个人帮忙了，我现在应该去找索菲亚问问。",
+        "effect": [
+          {
+            "u_add_var": "sofia_allies_secured",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_1",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_2",
+            "om_terrain": "cf_church_3",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_1",
+            "om_terrain": "cf_church_1_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_2",
+            "om_terrain": "cf_church_3_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          }
+        ],
+        "condition": {
+          "u_has_var": "sofia_ally_seeking_2",
+          "type": "mission",
+          "context": "flag",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "谢谢，我再四处看看，看看有没有人能帮忙。",
+        "effect": [
+          {
+            "u_add_var": "sofia_ally_seeking_2",
+            "type": "mission",
+            "context": "flag",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "sofia_refugee_convinced",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "condition": {
+          "u_has_var": "sofia_ally_seeking_1",
+          "type": "mission",
+          "context": "flag",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "那我继续四处打听。谢谢。",
+        "effect": [
+          {
+            "u_add_var": "sofia_ally_seeking_1",
+            "type": "mission",
+            "context": "flag",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "sofia_refugee_convinced",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "switch": true,
+        "default": true,
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "当地牧区教堂的执事。不幸的是，神父在这一切开始之前离开了，我从此再也没有他的消息。我担心最坏的情况可能已经发生，但事实上已经有太多的事情要做了。",
+    "responses": [
+      {
+        "text": "有什么倾向？",
+        "topic": "TALK_CF_DEACON_DO"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_DO",
+    "type": "talk_topic",
+    "dynamic_line": "这里的许多人都在挣扎着生存下去，而一个人却无能为力。但我能做的就是帮助他们振作起来，尽我所能照顾好死去的人。不管他们的信仰如何，我都会尽我所能为他们服务。",
+    "responses": [
+      {
+        "text": "能帮你什么忙吗？",
+        "condition": {
+          "not": {
+            "u_has_effect": "already_asked_deacon"
+          }
+        },
+        "topic": "TALK_CF_DEACON_HELP"
+      },
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_HELP",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_effect": "rural_church_aware",
+      "yes": "毫无疑问，这里的其他人还有很多工作要做。至于我自己，我会处理的。不过，离开教区无人看管我有点难过。有一群幸存者知道亚历山大神父目前在那里避难，他们可能也有工作要做。如果你愿意的话，我可以带你去那里，以防你自己去拜访他们。",
+      "no": "毫无疑问，这里的其他人还有很多工作要做。至于我自己，我会处理的。不过，离开教区无人看管我有点难过。有一群幸存者知道亚历山大神父目前在那里避难，虽然我有信心他们能自理，但我仍然担心他们。"
+    },
+    "responses": [
+      {
+        "text": "好吧，说吧。",
+        "condition": {
+          "and": [
+            {
+              "npc_has_effect": "rural_church_aware"
+            },
+            {
+              "not": {
+                "u_has_effect": "already_asked_deacon"
+              }
+            }
+          ]
+        },
+        "switch": true,
+        "effect": [
+          {
+            "u_add_effect": "already_asked_deacon",
+            "duration": "PERMANENT"
+          },
+          {
+            "mapgen_update": "arcana_dummy",
+            "om_terrain": "cf_church_4",
+            "om_special": "cf_rural_church",
+            "reveal_radius": 3
+          }
+        ],
+        "topic": "TALK_CF_DEACON_DESCRIBE"
+      },
+      {
+        "text": "也许我可以帮你查一下？",
+        "condition": {
+          "and": [
+            "has_no_available_mission",
+            {
+              "not": {
+                "u_has_effect": "already_asked_deacon"
+              }
+            }
+          ]
+        },
+        "switch": true,
+        "effect": [
+          {
+            "u_add_effect": "already_asked_deacon",
+            "duration": "PERMANENT"
+          },
+          {
+            "mapgen_update": "arcana_dummy",
+            "om_terrain": "cf_church_4",
+            "om_special": "cf_rural_church",
+            "reveal_radius": 3
+          }
+        ],
+        "topic": "TALK_CF_DEACON_DESCRIBE"
+      },
+      {
+        "text": "我能帮上忙吗？",
+        "condition": {
+          "not": {
+            "u_has_effect": "already_asked_deacon"
+          }
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_DESCRIBE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_effect": "rural_church_aware",
+      "yes": "这是路边的一个乡村教堂。我会尽我所能在你的地图上标出它，不过你得自己去。在那里找一个叫索菲亚·麦金农的女人，如果你想帮他们，她应该会为你工作的。",
+      "no": "我已经有一段时间没能和他们联系了，我知道他们需要尽可能多的帮助。如果你能抽出时间去拜访他们，和索菲亚谈谈。她带领一群幸存者在那里避难，她可能会为你工作。我会尽我所能在你的地图上标出它，但你得自己找。"
+    },
+    "responses": [
+      {
+        "text": "那我们拭目以待吧。",
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_DEACON_MISSION_BACKDOOR",
+    "type": "talk_topic",
+    "dynamic_line": "非常感谢。我希望他们能照顾好自己，现在我计划留在这里，尽我所能帮助他们。我知道这不算多，但在这里。这是我至少能做的。",
+    "responses": [
+      {
+        "text": "嗯，谢了！",
+        "effect": [
+          {
+            "u_spawn_item": "FMCNote",
+            "count": 5
+          },
+          {
+            "npc_add_effect": "rural_church_aware",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_CF_DEACON"
+      }
+    ]
+  }
+]

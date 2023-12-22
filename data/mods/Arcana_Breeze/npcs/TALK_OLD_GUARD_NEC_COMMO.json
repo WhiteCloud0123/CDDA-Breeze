@@ -1,0 +1,266 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO",
+    "responses": [
+      {
+        "text": "[任务]船长说你也许能帮助获得一些当地实验室的信息，这些实验室可能一直在处理异常物质。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_1",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "nicholas_mission_2_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "necro_comms_permission",
+              "type": "flag",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "u_has_mission": "MISSION_CF_PURIFIER_1_2"
+            },
+            {
+              "u_is_wearing": "badge_marshal"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_1",
+    "dynamic_line": "据我所知，一些研究材料在施工期间经过了这个地点，并与该地区的军事和研究设施进行了一些交流。不知道有没有帮助，你特别想找什么？",
+    "responses": [
+      {
+        "text": "我在找一个叫Kairos项目的信息。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_2"
+      },
+      {
+        "text": "实际上，算了。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_2",
+    "dynamic_line": "让我查一下数据库。有一些关于它记录被显示了出来，而且最近我也偶尔听到人们在闲聊中有提到这个问题。是你干的吗？",
+    "responses": [
+      {
+        "text": "派我去找它的人可能在四处打听。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_3"
+      },
+      {
+        "text": "我不确定。你发现了什么？",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_4"
+      },
+      {
+        "text": "他们给了我他们收集的信息列表，这有帮助吗？",
+        "condition": {
+          "u_has_item": "cf_purifier_project_data"
+        },
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_3",
+    "dynamic_line": "我明白了。我从难民通讯中听到一些非常奇怪的事情。但如果你相信调查这个警长的人，我会尽力而为。我想我找到了什么。",
+    "responses": [
+      {
+        "text": "那是什么？",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_4"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_4",
+    "dynamic_line": "你提到了异常物质，在那种描述下的一些货物通过了那里以及一些其他的地点。这个名字出现在一家工厂的发货清单上，果然，这台电脑记录的异常材料几乎有一半都去了一个地方。我会为你打印出装运信息。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_ACCEPT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_ACCEPT",
+    "dynamic_line": "好了，给你。不过，要小心。这是一大堆敏感信息，更别说危险了。随着时间的推移和更多的设备发生故障，这些优先站点只会变得更加危险。我相信你会运用你的判断力。",
+    "speaker_effect": {
+      "effect": [
+        {
+          "u_add_var": "nicholas_mission_2_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_spawn_item": "arcane_purifier_intel_2"
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "谢谢！在我走之前…",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO"
+      },
+      {
+        "text": "谢谢，我晚点回来！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5",
+    "dynamic_line": "你从哪儿弄来的？这里列出了几个机密地点，它们之间的联系…该死的，它甚至列出了这个地方的坐标！你从谁那里弄来的？",
+    "responses": [
+      {
+        "text": "我可以为发现这些信息的人担保，我们正在追踪对人类非常危险的威胁。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_1"
+      },
+      {
+        "text": "一个一直在监视异常活动的组织。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_2"
+      },
+      {
+        "text": "一位当地的研究员试图解决这个问题。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_3"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_1",
+    "dynamic_line": "想想我知道你会怎么样，警长。这太疯狂了。这些人嘲弄了国家安全。但我想他们没走那么远，如果你还需要我们的帮助。好吧，让它见鬼去吧。如果你让我保留那份信息清单，我会给你发货信息作为回报。那我下次下班的时候需要喝一杯烈酒。",
+    "responses": [
+      {
+        "text": "处理。",
+        "effect": [
+          {
+            "u_sell_item": "cf_purifier_project_data"
+          }
+        ],
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_ACCEPT"
+      },
+      {
+        "text": "我得考虑下。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_2",
+    "dynamic_line": "他们在监控这类事情上做得比我想象的要好得多。我真希望你知道你在做什么，元帅，和这些人一起工作。我会给你那些信息，但我得请你把这些情报文件给我作为交换。我们需要确保没有其他组织得到类似的信息。",
+    "responses": [
+      {
+        "text": "好的。",
+        "effect": [
+          {
+            "u_sell_item": "cf_purifier_project_data"
+          }
+        ],
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_ACCEPT"
+      },
+      {
+        "text": "我得考虑下。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_3",
+    "dynamic_line": "这里不可能只有一个研究人员，就算他们是能收集到所有这些信息的知情人。你为谁工作，执法官？",
+    "responses": [
+      {
+        "text": "当地的一个定居点吸引了少数研究人员，试图找出造成这一切的原因。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_4"
+      },
+      {
+        "text": "一个自称为“净化圣火”的奥术组织。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_5"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_4",
+    "dynamic_line": "我懂了。我不知道他们是怎么组织了一次这样的信息泄密事件，也不知道有多少内幕人士知道这件事，但我承认，这令人印象深刻。听着，你想要这些信息，我用那些文件来和你做个交易。你们可以怀疑我让你们呆在这里是因为什么好处，但我只是为了确保没有什么不好的结果而希望能够解开这些秘密。如何？",
+    "responses": [
+      {
+        "text": "处理。",
+        "effect": [
+          {
+            "u_sell_item": "cf_purifier_project_data"
+          }
+        ],
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_ACCEPT"
+      },
+      {
+        "text": "我得考虑下。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_5",
+    "dynamic_line": "神秘的什么？我要查一下。宗教垃圾，多年来警察的闲聊，小规模的义务警员。旧的记录表明联邦当局正在关注一些事情，但没有看到太多的威胁。我一点也不知道该怎么办。我想世界疯狂的时间比我想象的要长。",
+    "responses": [
+      {
+        "text": "我可以保证他们的意图。一段时间以来，我们一直意识到异常威胁的发展，但我们始终没有弄清楚是什么导致了这种情况。现在我们有机会纠正这一点。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_1"
+      },
+      {
+        "text": "你不是第一个低估他们的。他们的数量很少，影响也很小，但他们在世界末日之前就知道将要发生一些事情。他们只是不知道如何找到这一切的源头。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_SANGUINE",
+            "PROF_ARCANIST",
+            "PROF_ARCANIST2"
+          ]
+        },
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_2"
+      },
+      {
+        "text": "他们这样做是有原因的。他们不知道是什么毁灭了这个世界，但他们做了力所能及的事。这是一个机会，可以获得如何将事情摆正的宝贵的见解。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_2"
+      },
+      {
+        "text": "我能确定的是，他们正试图找到可能的对策来解决造成这一切的原因，或者至少找到一些可能有助于事情变得更好的方法。他们认为这个研究项目可能是关键。",
+        "topic": "TALK_OLD_GUARD_NEC_COMMO_NICHOLAS_5_4"
+      }
+    ]
+  }
+]

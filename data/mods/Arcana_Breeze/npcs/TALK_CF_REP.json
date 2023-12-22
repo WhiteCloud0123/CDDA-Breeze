@@ -1,0 +1,1792 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP",
+    "dynamic_line": {
+      "u_has_effect": "cf_mission_1",
+      "yes": "再次欢迎。我能帮你什么忙？",
+      "no": {
+        "u_has_trait": "PROF_SANGUINE",
+        "yes": {
+          "u_has_effect": "sofia_motive_explained",
+          "yes": "问候语。欢迎你来，只要你不惹麻烦。",
+          "no": "问候语。我知道你是，或者曾经是权力之路的追随者。你来这里是为了什么？"
+        },
+        "no": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ],
+          "yes": {
+            "u_male": "Welcome, Brother.  I knew we were not alone just yet.",
+            "no": "欢迎，姐姐。我知道我们并不孤单。"
+          },
+          "no": {
+            "u_has_any_trait": [
+              "PROF_CHALICE",
+              "PROF_CHALICE2",
+              "THRESH_VEIL"
+            ],
+            "yes": {
+              "u_has_effect": "sofia_motive_explained",
+              "yes": "你好。我希望我们能一起工作。",
+              "no": "你好，守卫。其他人看不见你上帝在你身上的印记，就像我一样。如果你的意图是和平的，我们不必成为敌人。"
+            },
+            "no": "欢迎，旅行者。如果需要的话，你可以在这里休息，尽管我们的圣所可能很贫乏。"
+          }
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "[任务]我需要另一份贸易协议的副本。",
+        "topic": "TALK_CF_REP_MISSION_2_COPY",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_item": "cf_rep_trade_arrangement"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_2"
+            },
+            {
+              "not": {
+                "u_has_effect": "cf_mission_receipt"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "[任务]你能告诉我为什么约翰纳森让我调查的“奇怪的小树林”吗？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1",
+        "condition": {
+          "u_has_mission": "MISSION_CF_GM_1"
+        }
+      },
+      {
+        "text": "[任务]你能告诉我为什么约翰纳森派我去调查的这个圣所吗？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2",
+        "condition": {
+          "u_has_mission": "MISSION_CF_GM_2"
+        }
+      },
+      {
+        "text": "[任务]你能告诉我为什么约翰纳森要我对付的这些乐观主义者吗？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_3",
+        "condition": {
+          "u_has_mission": "MISSION_CF_GM_3"
+        }
+      },
+      {
+        "text": "难民中心的执事让我来看看你。",
+        "topic": "TALK_CF_REP_DEACON_MISSION",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "sofia_deacon_message"
+              }
+            },
+            {
+              "not": {
+                "u_has_any_trait": [
+                  "PROF_CHALICE",
+                  "PROF_CHALICE2",
+                  "THRESH_VEIL",
+                  "PROF_SANGUINE"
+                ]
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_DEACON_1"
+            }
+          ]
+        }
+      },
+      {
+        "text": "[任务]约翰纳森派我去调查一个异常，我找到了这本日记。你能解释吗？",
+        "topic": "TALK_CF_REP_PRELUDE_JOURNAL",
+        "condition": {
+          "and": [
+            {
+              "u_has_item": "arcana_dream_journal"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "johnathan_prelude_penultimate",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "arcana_dream_journal"
+          }
+        ]
+      },
+      {
+        "text": "[任务]约翰纳森派我去调查一个异常，我在那里发现了一块奇怪的宝石。你怎么看的？",
+        "topic": "TALK_CF_REP_PRELUDE_GEM",
+        "condition": {
+          "and": [
+            {
+              "u_has_item": "arcana_strange_crystal"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "johnathan_prelude_penultimate",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            }
+          ]
+        },
+        "effect": [
+          {
+            "u_consume_item": "arcana_strange_crystal"
+          }
+        ]
+      },
+      {
+        "text": "[任务]约翰纳森问我他正在调查的一个异常情况，告诉我一个幸存者营地可能有线索。有什么建议吗？",
+        "topic": "TALK_CF_REP_PRELUDE_CAMP",
+        "condition": {
+          "u_has_mission": "MISSION_CF_GM_4_PRELUDE"
+        }
+      },
+      {
+        "text": "[任务]约翰纳森问我他正在调查的一个异常情况，并建议我向其他人询问信息。我该问谁？",
+        "topic": "TALK_CF_REP_JOHNATHAN_PRELUDE",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_mission": "MISSION_CF_GM_4_PRELUDE"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_penultimate",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_ended",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "[任务]尼古拉斯让我调查一个他需要的部件的研究机构。有什么建议吗？",
+        "topic": "TALK_CF_REP_NICHOLAS_ADVICE",
+        "condition": {
+          "u_has_mission": "MISSION_CF_PURIFIER_1_3"
+        }
+      },
+      {
+        "text": "[任务]关于你让我做的“骸骨护符”……",
+        "topic": "TALK_CF_REP_MISSION_1",
+        "condition": {
+          "u_has_mission": "MISSION_CF_REP_1"
+        }
+      },
+      {
+        "text": "那么，到目前为止，新来的人进展如何？",
+        "topic": "TALK_CF_REP_MISSION_4_OPINION",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_opinion_given",
+                "type": "flag",
+                "context": "knowledge",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "sofia_mission_4_end",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      {
+        "text": "这是哪里？",
+        "topic": "TALK_CF_REP_WHERE"
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_CF_REP_WHO"
+      },
+      {
+        "text": "你能告诉我其他人什么？",
+        "topic": "TALK_CF_REP_GM",
+        "condition": {
+          "npc_has_effect": "cf_mission_3"
+        }
+      },
+      {
+        "text": "你为什么不攻击我？",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_SANGUINE_ASK"
+      },
+      {
+        "text": "我不是来和你打架的。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_SANGUINE_MOTIVE_1"
+      },
+      {
+        "text": "我来这里有我自己的理由。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_SANGUINE_MOTIVE_2"
+      },
+      {
+        "text": "我是被他们选中的，虽然我不是看守人。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_CHALICE2"
+              }
+            },
+            {
+              "u_has_trait": "THRESH_VEIL"
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_CHOSEN"
+      },
+      {
+        "text": "我不是来打架的。帷幕彼端古神看出来，可以确保我们的会面。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2"
+              ]
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_CHALICE_MOTIVE_1"
+      },
+      {
+        "text": "我们过去既是盟友又是敌人。我相信这个循环不会重演。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2"
+              ]
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_CHALICE_MOTIVE_2"
+      },
+      {
+        "text": "难民中心的商人告诉我这个地方的情况，决定看看这里的情况是否好转。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_effect": "rural_church_aware"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL",
+                "PROF_SANGUINE"
+              ]
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_MERCHANT_MOTIVE"
+      },
+      {
+        "text": "我是被难民中心的执事派来检查你的。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "sofia_motive_explained"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_DEACON_1"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL",
+                "PROF_SANGUINE"
+              ]
+            }
+          ]
+        },
+        "topic": "TALK_CF_REP_DEACON_MOTIVE"
+      },
+      {
+        "text": "Can you teach me any spells？",
+        "topic": "TALK_CF_REP_SPELL_MENU",
+        "condition": {
+          "and": [
+            {
+              "u_has_effect": "cf_mission_1"
+            },
+            {
+              "not": {
+                "u_has_var": "sofia_all_spells_known",
+                "type": "flag",
+                "context": "knowledge",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "你有什么要交易的？",
+        "effect": "start_trade",
+        "condition": {
+          "u_has_effect": "cf_sofia_traded"
+        },
+        "switch": true,
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "你有什么要交易的？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP_TRADE"
+      },
+      {
+        "text": "我能帮上什么忙吗？",
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE",
+        "effect": {
+          "u_add_effect": "sofia_deacon_message",
+          "duration": "PERMANENT"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_MISSION_2_COPY",
+    "type": "talk_topic",
+    "dynamic_line": "哦，好吧。应该很容易替换，因为列表有点短。我们的需求和资源目前没有改变。干得好。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_CF_REP",
+        "effect": {
+          "u_spawn_item": "cf_rep_trade_arrangement"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_DEACON_MISSION",
+    "dynamic_line": "我懂了。我很高兴他在那边过得很好。如果你有机会过来，一定要告诉他我们没事。他应该放轻松点，我肯定那边需要他。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "topic": "TALK_CF_REP",
+        "effect": {
+          "u_add_effect": "sofia_deacon_message",
+          "duration": "PERMANENT"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_1",
+    "dynamic_line": "一个古老的神秘飞地，对吧？恐怕除了约翰纳森自己对潜在威胁的判断之外，我不知道有多少实际价值。但我确实记得一些关于这个地方在它的侵扰之前。",
+    "responses": [
+      {
+        "text": "你对这个地方以前的情况了解多少？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1_1"
+      },
+      {
+        "text": "知道这地方发生了什么事吗？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1_2"
+      },
+      {
+        "text": "也许下次吧。不过还是谢谢你。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_1_1",
+    "dynamic_line": "它被一群学者、神秘主义者等使用。在这一切开始之前，在帷幕上的巨大伤口之前，甚至在我们这群人卷入所有这些奇怪的事情之前。",
+    "responses": [
+      {
+        "text": "那时候他们在那里做了什么？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1_3"
+      },
+      {
+        "text": "我懂了。关于这个地方我还有别的事要问你。",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1"
+      },
+      {
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_1_3",
+    "dynamic_line": "研究，写作，无论他们在那里研究什么，都为你所看到的许多其他实践奠定了基础。它唯一缺少的是将假设变为实践的方法，其他人发现，一旦那里的人抛弃了这个地方，结果就出来了。",
+    "responses": [
+      {
+        "text": "我懂了。关于这个地方我还有别的事要问你。",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1"
+      },
+      {
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_1_2",
+    "dynamic_line": "据我所知，他们抛弃了这个地方，它就彻底毁了。我当时以为他们没有办法把他们的任何想法付诸实践，但是如果有异常情况困扰着这个地方，那么在他们离开后的这么长时间里，肯定有什么东西可以让这些问题爆发。",
+    "responses": [
+      {
+        "text": "我懂了。关于这个地方我还有别的事要问你。",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_1"
+      },
+      {
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_2",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "我知道那个地方，是的。圣约翰圣殿。不知道在这一切发生之前你是否有机会去参观它，但它是我们唯一亲手建造的圣殿。至少我只知道一个。任何你想知道的，我会尽我所能回答。",
+      "no": "我知道那个地方，是的。我们称之为圣约翰圣殿。据我所知，这是我们自己建造的唯一避难所，而不是被其他地方的人庇护。你想知道些什么？"
+    },
+    "responses": [
+      {
+        "text": "你能告诉我这个地方的布局吗？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2_1"
+      },
+      {
+        "text": "它怎么了？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2_2"
+      },
+      {
+        "text": "也许下次吧。不过还是谢谢你。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_2_1",
+    "dynamic_line": "Like any proper sanctum, there's a main hall just beyond the entrance, common rooms for the benefit of any people sheltered there, and downstairs past the shrine.  Workspaces, archives, armories and the like will be downstairs, and they're likely to be infested by abominations given what what others have mentioned.  The main room there will be divided into hallways by the stone supports and walls, you might be able to use them to keep any monsters down there bunched up.  As for what's beyond that, I…",
+    "responses": [
+      {
+        "text": "对？发生了什么？",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2_3"
+      },
+      {
+        "text": "也许最好问问别的事情。",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2"
+      },
+      {
+        "text": "很好。现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_2_3",
+    "dynamic_line": "The floor below that used to be our ritual room, along with the tomb for those that've fallen in battle.  What the others said, that part of the structure has been completely subverted by some unknown intrusion from Beyond.  It's bad enough that those who fell trying to hold those monsters back went unburied, but gods know what happened to those laid to rest there.  You'll need to take down a barrier sealing off the stairs, you'll see one of our swords.  You'll be able to remove it to dispel the barrier easily enough.  Whatever you do, please come back safely.",
+    "responses": [
+      {
+        "text": "我想问点别的事。",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2"
+      },
+      {
+        "text": "非常感谢。就这样吧。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_2_2",
+    "dynamic_line": "当这一切开始的时候，许多地方遭受了各种各样的异常和危险。我们在那里工作的本质，就是毁灭所有在狩猎中找到的危险物品，这显然允许这种事情发生在那里，尽管我们尽了一切努力保持谨慎。那里的猎人尽他们所能阻止了从帷幕之外爬出来的东西，但是他们不能……对不起。这在我们的工作中是不可避免的，但那天我们在那里损失了太多。不管上帝给他们什么样的命运，我希望他们能和平相处。",
+    "responses": [
+      {
+        "text": "也许最好问问别的事情。",
+        "topic": "TALK_CF_REP_JOHNATHAN_ADVICE_2"
+      },
+      {
+        "text": "现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_ADVICE_3",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "你知道你的职责。”如果他们是对人类的威胁，不管他们是血法师还是土匪，都不要手下留情，不求回报。”那些愿意放弃自己的道路，甚至仅仅向我们提出休战的教团中的人是非常罕见的。他们在继续研究，继续掠夺无辜者来助长他们的行为。愿奥丁赐予你战斗的胜利。",
+      "no": {
+        "u_has_trait": "PROF_SANGUINE",
+        "yes": "你已经看到了你最糟糕的任务。我建议谨慎行事，并做好战斗准备，即使他们认识到你是他们中的一员。你追求这个任务意味着我可以信任你做正确的事。几十年来，他们一直在掠夺人类，甚至人类灭绝的威胁也没有动摇他们。这很不幸，因为在这种时候，互相残杀是我们最不应该做的事情，他们必须被绳之以法。",
+        "no": "猩红教派是危险的。这不仅仅是他们涉足危险的力量，他们甚至在发现之前就已经是一个威胁。他们是杀人犯，比任何小土匪都要凶残。虽然我希望他们中的一些人可能面临人类末日的威胁，并逐渐明白这种情况不能继续下去，但这一群体已被证实仍像秩序一样毫无意义。不要相信他们，也不要低估他们。"
+      }
+    },
+    "responses": [
+      {
+        "text": "“天上地下之神，给予我们勇气。”我来对付他们。",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "我们看看结果如何，猎人。",
+        "switch": true,
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "就这样吧。”不管付出什么代价，不管我们必须做什么，为了这个世界的力量和安全……”",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2"
+          ]
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "理解。非常感谢。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_JOHNATHAN_PRELUDE",
+    "dynamic_line": {
+      "u_has_var": "sofia_opinion_given",
+      "type": "flag",
+      "context": "knowledge",
+      "value": "yes",
+      "yes": "在你离开之前问问这里的商人联系人，你也许可以先从他们那里得到一些信息。然后去难民中心看看。我们以前跟踪过类似这样的区域异常，只要得到更多关于这些攻击发生在哪里的信息，我们就可以从这里搞清楚。",
+      "no": "我主要建议难民中心，因为他们可以提供更多的信息。我们需要的只是确认袭击发生的具体地点。我们可以在那之后处理。"
+    },
+    "responses": [
+      {
+        "text": "OK，谢谢。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_PRELUDE_JOURNAL",
+    "type": "talk_topic",
+    "dynamic_line": "让我看看这个。看起来这些条目描述了一系列奇怪的事件和梦境，这些事件和梦境都是从穿越这一异常区域开始的。很多闲聊，也有点混乱。就像他们跳过几页，然后用后面的条目填空……但是，我想我大概看到了事情的发展。",
+    "responses": [
+      {
+        "text": "有什么有用的吗？",
+        "topic": "TALK_CF_REP_PRELUDE_JOURNAL_2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_PRELUDE_JOURNAL_2",
+    "type": "talk_topic",
+    "dynamic_line": "在旅途的前几天，他们的一些行动依赖附近的地标。在事情偏离轨道之前的最后一个成员提到了在他们的行进路线上最近产生的一个超自然的结构，我可以确定这是在哪一个位置。鉴于描述显示最近那里发生了一些不正常的事情，这很可能是来源于那里。去和约翰纳森谈谈，告诉他我们已经拥有了我们需要的东西。",
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "u_add_var": "johnathan_prelude_data_5",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "johnathan_prelude_data_5",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前还有一件事。",
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "非常感谢。再见。",
+        "topic": "TALK_DONE",
+        "effect": {
+          "u_add_effect": "sofia_deacon_message",
+          "duration": "PERMANENT"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_PRELUDE_GEM",
+    "type": "talk_topic",
+    "dynamic_line": "看起来像是用暗影宝石制成的神器。对它所做的改变不是人类的，这点很清楚。它也烧坏了，但我能弄清楚它激活时做了什么。事实上，据我们所知，这很可能导致了他们营地的二次袭击。让我从其他人那里得到一个面具。",
+    "responses": [
+      {
+        "text": "好吧……",
+        "topic": "TALK_CF_REP_PRELUDE_GEM_2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_PRELUDE_GEM_2",
+    "type": "talk_topic",
+    "dynamic_line": "它仍然有一些挥之不去的后遗症。就像一条能量的轨迹燃烧到它的附魔残余部分，基本上是指向源头的方向，从它激活的那一刻起。站在这里对我们没有好处，但我们知道异常区域的粗糙区域，我们知道它激活时的位置。去告诉Johnathan我们有找到来源所需的东西。",
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "u_add_var": "johnathan_prelude_data_5",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "johnathan_prelude_data_5",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前还有一件事。",
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "非常感谢。再见。",
+        "topic": "TALK_DONE",
+        "effect": {
+          "u_add_effect": "sofia_deacon_message",
+          "duration": "PERMANENT"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_PRELUDE_CAMP",
+    "type": "talk_topic",
+    "dynamic_line": "我听说了那件事。上帝啊，如果我记得他们在那里失去了三个人。在有人袭击他们之前，他们已经埋葬了两个之前受伤的人。第三个留下来给其他人争取时间用生命逃走。",
+    "responses": [
+      {
+        "text": "我应该找什么？",
+        "topic": "TALK_CF_REP_PRELUDE_CAMP_2"
+      },
+      {
+        "text": "现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_PRELUDE_CAMP_2",
+    "type": "talk_topic",
+    "dynamic_line": "任何你能在他们留下的物品中发现的异常文物，任何书籍或其他书面情报也可能有用。如果你找到什么东西，先把它交给约翰纳森，如果需要，他会让你给我看。我祈祷你平安归来，战胜一切造成这一切的一切。",
+    "responses": [
+      {
+        "text": "好吧。非常感谢。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SANGUINE_ASK",
+    "dynamic_line": "你一定知道你要走进什么地方。不是你来这里是为了和好，就是这里有个诡计。如果是这样的话，要知道我们在观察。请问，你来这里是为了什么？",
+    "responses": [
+      {
+        "text": "你是对的。我不是来打架的。",
+        "topic": "TALK_CF_REP_SANGUINE_MOTIVE_1"
+      },
+      {
+        "text": "我的理由是我自己的。",
+        "topic": "TALK_CF_REP_SANGUINE_MOTIVE_2"
+      },
+      {
+        "text": "[攻击]完成我本来要做的事。我用不着耍什么花招来打倒你这种人。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "u_faction_rep": -30
+          },
+          "insult_combat"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SANGUINE_MOTIVE_1",
+    "dynamic_line": "我明白了。如果你是诚心诚意来的，我可以指导你。让我们把事情摆正。",
+    "responses": [
+      {
+        "text": "我们看看能做些什么。",
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SANGUINE_MOTIVE_2",
+    "dynamic_line": "如果你能证明自己，我愿意相信你。你的理由是你自己的，但记住我们不会放松警惕。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "opinion": {
+          "value": -1
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_CHOSEN",
+    "dynamic_line": "我懂了。不管你怎么做到的，我都印象深刻。我希望你已经学会了谨慎和节制对于来自外部的力量。如果你接受的话，我可以提供我能提供的任何指导。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "opinion": {
+          "value": 1
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_CHALICE_MOTIVE_1",
+    "dynamic_line": "看来是这样。无论是你的上帝还是我们追随的人，我们的相遇是命中注定的。我肯定。这是一个合作的机会。",
+    "responses": [
+      {
+        "text": "也许我们会的。",
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "opinion": {
+          "trust": 1
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_CHALICE_MOTIVE_2",
+    "dynamic_line": "我向你保证。我们两个都不能再做敌人了。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "opinion": {
+          "value": 1,
+          "anger": -1
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_MERCHANT_MOTIVE",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": "但你来到这里，知道潜在的危险。或者你认为我们灭绝了？也许这意味着你可以信任。如果你的意图是诚实的，我们就不必成为敌人。但我们要拭目以待。",
+      "no": "希望这意味着我们不必成为敌人。众神确保凡人的手段会引导我们相遇。让我们想起我们共同的人性。我们看看这是否成立。"
+    },
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_DEACON_MOTIVE",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": "那个年轻人对我们的历史一无所知。我怕他可能是太轻信你才请你帮忙的。现在我姑且相信你，但如果我发现你伤害了他，我会亲手杀了你。明白？",
+      "no": "这个教堂的执事不了解我们的本性，不像通常会来这里的牧师。如果你有机会再去看望他，我相信他知道我们还在坚持，他会松一口气的。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "switch": true,
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "我懂了。",
+        "switch": true,
+        "default": true,
+        "effect": {
+          "u_add_effect": "sofia_motive_explained",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_NICHOLAS_ADVICE",
+    "dynamic_line": "我们对这些实验室从未了解多少，直到拾荒者的报告传来之后。如果他们参与了奥术或其他异常活动，那么帷幕在那里可能会特别脆弱。我们已经听说过这些地方充斥着尘世和异界的令人憎恶的遗留物，这种性质的实验室可能会更糟糕。全副武装，并确保你有一条逃生之路，然后再尝试深入它。你在那里找到的任何文件或日志都可能至关重要。",
+    "responses": [
+      {
+        "text": "那我会小心的。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_MISSION_1",
+    "dynamic_line": "你想知道什么？正如我所说，如果你愿意，我可以解释为什么我们需要一个。我也可以试着给你一些建议，告诉你什么样的生物可能对寻找制造生物所需的材料有用。",
+    "responses": [
+      {
+        "text": "我猜这是一个保护咒？",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2",
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_CF_REP_MISSION_1_HOW_KNOWN"
+      },
+      {
+        "text": "这需要什么样的仪式？",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_ARCANIST",
+            "PROF_ARCANIST2",
+            "PROF_SANGUINE",
+            "THRESH_DRAGONBLOOD"
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_CF_REP_MISSION_1_HOW_ARCANIST"
+      },
+      {
+        "text": "我不知道这对保护这个地方有什么帮助。",
+        "condition": {
+          "or": [
+            {
+              "u_has_effect": "cf_sofia_notes_given"
+            },
+            {
+              "u_has_skill": {
+                "skill": "magic",
+                "level": 1
+              }
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_CF_REP_MISSION_1_HOW"
+      },
+      {
+        "text": "这似乎是一个非常奇怪的要求。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP_MISSION_1_WHY"
+      },
+      {
+        "text": "我在哪里可以找到制作这些东西所需的材料？",
+        "topic": "TALK_CF_REP_MISSION_1_WHERE"
+      },
+      {
+        "text": "没关系，我来想办法。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_MISSION_1_HOW_KNOWN",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "确实如此。人们仍然担心面纱的结构可能仍然不稳定，容易受到新的异常现象的影响，以及超凡脱俗的怪物被吸引到这个地方的可能性。同样的方法，我们保护我们的圣地，直到他们中的大多数被淹没的一天，一切都沸腾了。",
+      "no": "你说得对。我们的方法可能不同于守门员，但目标是相似的。有了正确的仪式，我们就可以减少其他任何离我们太近的异常现象，让这个世界上已经存在的任何入侵者都看不到这个地方。这将允许我们最大限度地使用我们可以使用的奥术物品，否则我们基本上会为几英里内的每一个其他文字的怪物点亮一个灯塔。"
+    },
+    "responses": [
+      {
+        "text": "那我该怎么做呢？",
+        "topic": "TALK_CF_REP_MISSION_1_WHERE"
+      },
+      {
+        "text": "现在就这些，谢谢。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_MISSION_1_HOW_ARCANIST",
+    "type": "talk_topic",
+    "dynamic_line": "一个保护性的咒语，它将保护这个地方不被该地区的入侵者侵入，并降低任何异常的风险。没有这些，我们就不能使用我们所拥有的每一个工具来最大限度地保护这个地方。",
+    "responses": [
+      {
+        "text": "那我该怎么做呢？",
+        "topic": "TALK_CF_REP_MISSION_1_WHERE"
+      },
+      {
+        "text": "现在就这些，谢谢。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_MISSION_1_HOW",
+    "type": "talk_topic",
+    "dynamic_line": "保护这个地方是一种仪式。我希望你已经对奇怪的野兽和超凡脱俗的现象有所了解。我怀疑这对你也是有用的，去寻找这种生物，亲眼看看事情变得多么不正常，给这个组件增加一点个人色彩也是一种有益的学习体验。",
+    "responses": [
+      {
+        "text": "那我该怎么做呢？",
+        "topic": "TALK_CF_REP_MISSION_1_WHERE"
+      },
+      {
+        "text": "现在就这些，谢谢。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_MISSION_1_WHY",
+    "type": "talk_topic",
+    "dynamic_line": "可以理解，它的目的关系到这个地方的仪式保护。对你来说，这似乎不太重要，但请记住，寻找制造一个人所需的材料意味着至少减少一种危及他人的厌恶。这一点，以及你在狩猎中可能了解到的困扰我们现实的这些危险，将提供宝贵的经验。我希望这是可以接受的，如果没有别的？",
+    "responses": [
+      {
+        "text": "好的，有什么建议吗？",
+        "topic": "TALK_CF_REP_MISSION_1_WHERE"
+      },
+      {
+        "text": "或许我们会看到的。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_MISSION_1_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": "用于制作这些物品的材料通常是从其他幸存者所说的“格拉克人”和“克雷克人”等野兽身上抢来的，这些野兽在现实中一直徘徊在眼泪附近，或者潜伏在被杀士兵和其他群体的遗骸附近。一些人称之为狩猎恐惧和飞虫的令人憎恶的行为也可能是一个来源，尽管更危险。",
+    "responses": [
+      {
+        "text": "还有别的吗？",
+        "topic": "TALK_CF_REP_MISSION_1_WHERE_2"
+      },
+      {
+        "text": "我想我们会看看我能做什么。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_MISSION_1_WHERE_2",
+    "type": "talk_topic",
+    "dynamic_line": "一些不死生物，最突出的是扭曲成肉食形式的不死生物，以及那些受骨骼生长影响而占据身体的不死生物，已知也会产生此类物质。即使是一些土生土长的生物，受到突变的折磨，扭曲成自然过程无法模仿的形式，也会表现出异常的特性，在死后很长一段时间都会在体内徘徊。",
+    "responses": [
+      {
+        "text": "我想现在就这些了。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_MISSION_4_OPINION",
+    "dynamic_line": "到目前为止他们一直很有帮助。物资进进出出，速度缓慢，但确实如此。而且他们似乎和其他人相处得很好，多亏了你们的努力，我们最终可能会招收新员工。",
+    "responses": [
+      {
+        "text": "真是个好消息。",
+        "effect": {
+          "u_add_var": "sofia_opinion_given",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_WHERE",
+    "dynamic_line": "在这一切开始之前，一个古老的教区教堂。我们的许多庇护所采取的形式，任何教堂，霍夫，或其他类似的地方同情我们的事业。我在这里认识神父很多年了，他多次庇护我们，尽管我们很多人都是异教徒，包括我自己。这是一个自然的选择，意识到形势有多严峻，尽管我们发现在混乱的某个时候，这个地方被遗弃了。",
+    "responses": [
+      {
+        "text": "你说异教徒是什么意思？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ]
+          }
+        },
+        "topic": "TALK_CF_REP_HEATHEN"
+      },
+      {
+        "text": "那会是什么原因呢？",
+        "topic": "TALK_CF_REP_CAUSE"
+      },
+      {
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_HEATHEN",
+    "dynamic_line": "我们的秩序是由不同宗教的人组成的。不仅是各种各样的亚伯拉罕人，还有那些被认为是异教徒的人。Asatruan，在我的情况下。随着时间的推移，我们的实践融合在一起，共同的影响影响着我们接近奥术。",
+    "responses": [
+      {
+        "text": "那是什么方法？",
+        "condition": {
+          "or": [
+            {
+              "u_has_any_trait": [
+                "PROF_ARCANIST",
+                "PROF_ARCANIST2",
+                "PROF_SANGUINE",
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL",
+                "THRESH_DRAGONBLOOD"
+              ]
+            },
+            {
+              "u_has_skill": {
+                "skill": "magic",
+                "level": 1
+              }
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_CF_REP_ARCANE_2"
+      },
+      {
+        "text": "你什么意思，奥术？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP_ARCANE_2"
+      },
+      {
+        "text": "…",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_ARCANE_2",
+    "dynamic_line": {
+      "u_has_effect": "cf_sofia_notes_given",
+      "yes": "处理这些力量有很多方法。有些人选择了鲁莽，好像这是一种可以滥用的毒品。另一些，迷信的信仰和对不属于我们这个世界的力量的崇拜。我们寻求谨慎地研究这些异常现象，并在必要的情况下保护其他人远离更危险的人工制品。我记下这些笔记的侍从，我给你的那些，艰难地学会了谨慎的重要性，并没有从中受益。这就是为什么我们过去对危险文物采取极端措施的原因。",
+      "no": "处理这些力量有很多方法。有些人选择了鲁莽，好像这是一种可以滥用的毒品。另一些，迷信的信仰和对不属于我们这个世界的力量的崇拜。我们寻求谨慎地研究这些异常现象，并在必要的情况下保护其他人远离更危险的人工制品。如果这意味着遏制或毁灭，那就随它去吧。相反，我更愿意教别人如何安全地处理这些问题，因为谨慎是一个教训，很多人是从艰苦的道路上学到的，很少有人能在这样的经历中幸存下来。"
+    },
+    "responses": [
+      {
+        "text": "好吧……",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_ARCANE",
+    "dynamic_line": {
+      "u_has_effect": "cf_sofia_notes_given",
+      "yes": "事情可能在最近才达到沸点，但在这之前，破坏性较小的事件在这里和那里已经发生了一段时间。这是有逻辑的，我希望如果你自己去理解它，你会谨慎行事。",
+      "no": "我们提到了某些超自然事件，以及一些人发现的利用这些效应的方法。事情可能在最近才达到沸点，但在这之前，破坏性较小的事件在这里和那里已经发生了一段时间。考虑到一些事情，比如说从神灵那里召唤怪兽，邪教者用鲜血为仪式加油等等，很难不提及魔法，即使有某种逻辑。在这里。在某种程度上，这可能有助于你理解我们必须处理的事情。"
+    },
+    "responses": [
+      {
+        "text": "我懂了。我想…",
+        "switch": true,
+        "topic": "TALK_CF_REP",
+        "condition": {
+          "u_has_effect": "cf_sofia_notes_given"
+        }
+      },
+      {
+        "text": "哦…凯。我懂了。我想…",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP",
+        "effect": [
+          {
+            "u_spawn_item": "book_magicfordummies"
+          },
+          {
+            "u_add_effect": "cf_sofia_notes_given",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_CAUSE",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "一个有趣的问题，来自我的一个亲戚。我们没有偏离我们保护无辜者免受外界危险的目标。",
+      "no": "在这一切都结束之前，谁会相信我们呢？随着死亡的增加，奇异的力量正在腐朽现实的结构，我们可以释放更多自己的本性。我们寻求保护人们免受危险的魔法和超自然的怪物的伤害。这些威胁的最初迹象是孤立的，直到那些禁忌的生物穿过裂缝，我们都没有意识到那些轻微的现象会导致这种后果。我担心，现在任何一个组织都无法应对这件事。"
+    },
+    "responses": [
+      {
+        "text": "魔法？我还是不敢相信。",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_ARCANIST",
+              "PROF_ARCANIST2",
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2",
+              "PROF_SANGUINE",
+              "PROF_CHALICE",
+              "PROF_CHALICE2",
+              "THRESH_VEIL",
+              "THRESH_DRAGONBLOOD"
+            ]
+          }
+        },
+        "topic": "TALK_CF_REP_MAGIC"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_MAGIC",
+    "dynamic_line": {
+      "u_has_effect": "cf_sofia_notes_given",
+      "yes": "你完全有权认为这很荒谬。我们谈到魔法和奥术，当它是一些我们只有足够的理解力才能安全使用的效果时。也许，当它有一个命令，一个它自己的逻辑，这样称呼它可能也是不正确的。但提醒我们谨慎对待我们所熟悉的事物是很有用的，千万不要以为自己了解得足够多就犯了轻率的错误。",
+      "no": "你完全有权认为这很荒谬。我们谈到魔法和奥术，当它是一些我们只有足够的理解力才能安全使用的效果时。也许，当它有一个命令，一个它自己的逻辑，这样称呼它可能也是不正确的。在这里。这可能会比试图在无人帮助下玩弄未知事物要好。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "switch": true,
+        "topic": "TALK_CF_REP",
+        "condition": {
+          "u_has_effect": "cf_sofia_notes_given"
+        }
+      },
+      {
+        "text": "呃。谢谢，我想。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP",
+        "effect": [
+          {
+            "u_spawn_item": "book_magicfordummies"
+          },
+          {
+            "u_add_effect": "cf_sofia_notes_given",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_WHO",
+    "dynamic_line": "索菲亚·麦金农，被我们的创始者命名为塔恩，是净化圣火的姐妹。",
+    "responses": [
+      {
+        "text": "我们就剩下这些了吗？",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_CF_REP_CF_LEFT"
+      },
+      {
+        "text": "净化之火？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP_CF_QUERY"
+      },
+      {
+        "text": "你为什么叫Thane？",
+        "topic": "TALK_CF_REP_THANE"
+      },
+      {
+        "text": "我懂了。现在到此为止。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_CF_LEFT",
+    "dynamic_line": {
+      "npc_has_effect": "cf_mission_3",
+      "yes": "不要失去希望。我们的努力已经取得了成果，而且肯定还会有更多的成果。如果上帝愿意，我们会忍受的。",
+      "no": "我不确定。从试图通过无线电获取任何信息，到我们与难民中心的联系，到目前为止，我没有听到其他任何消息，但我会继续寻找。我们决不能放弃。"
+    },
+    "responses": [
+      {
+        "text": "只要太阳照在地球上…",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_CF_QUERY",
+    "dynamic_line": "一个宗教组织。有许多信仰，也有许多分支。我们的规模从来没有那么大，主要由于一些当地的社区因为被邪教掠夺而团结在一起。在这些神秘的事情发生之前，当世界屏障上的裂缝开始显现出它的效果时，我们就成了猩红教派。",
+    "responses": [
+      {
+        "text": "你什么意思，奥术？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_ARCANIST",
+              "PROF_ARCANIST2",
+              "PROF_SANGUINE",
+              "PROF_CHALICE",
+              "PROF_CHALICE2",
+              "THRESH_VEIL",
+              "THRESH_DRAGONBLOOD"
+            ]
+          }
+        },
+        "topic": "TALK_CF_REP_ARCANE"
+      },
+      {
+        "text": "帷幕？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_ARCANIST",
+              "PROF_ARCANIST2",
+              "PROF_SANGUINE",
+              "PROF_CHALICE",
+              "PROF_CHALICE2",
+              "THRESH_VEIL",
+              "THRESH_DRAGONBLOOD"
+            ]
+          }
+        },
+        "topic": "TALK_CF_REP_VEIL"
+      },
+      {
+        "text": "谁曾是猩红教派一员？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_SANGUINE",
+              "PROF_CHALICE",
+              "PROF_CHALICE2"
+            ]
+          }
+        },
+        "topic": "TALK_CF_REP_SANGUINE_QUERY"
+      },
+      {
+        "text": "…",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_VEIL",
+    "dynamic_line": "我们所说的任何效果似乎都与入侵这个领域的一些怪物有关。你可能在旅行中看到过这些裂缝或洞，或者听到其他人的报告。从他们身上出来的东西？不管是什么原因造成的，总有办法防止事情变得更糟。",
+    "responses": [
+      {
+        "text": "我…明白了。不要介意。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SANGUINE_QUERY",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "我原以为你对它们很熟悉。他们发展了你自己从中受益的实践。一群凶残的邪教分子，甚至在这一切开始之前，他们就找到了利用这些反常现象的方法。",
+      "no": "当地农村曾有一伙邪教十分猖獗，他们对我们社区的影响才让我们自发地组织起来。和我们一样，最初发生了一些超自然效应，紧接着有人借此谋利，事情才发展到无法挽回的地步。他们的仪式从单纯的谋杀演变成对大众都带来威胁的事情。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_THANE",
+    "dynamic_line": "回想起我们的历史。在我们建立组织之前，我们是几个不同宗教的不同团体。包括像我这样的旧神的追随者，使用头衔和等级来区分彼此，而现在我们都是同胞。",
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_REP_GM",
+    "type": "talk_topic",
+    "dynamic_line": "我们团中还有一些人，有些人与我们在城市附近工作的同事有过接触。利昂大师似乎是这群人中最年长的一个，他给了我很多需要仔细研究的信息。可能会让我们找到其他生还者与之取得联系。也许和他谈谈也是个好主意。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SPELL_MENU",
+    "dynamic_line": "There are a few Magic Signs I could pass on to you.  Since you've aided us, I could teach you the use of Heat Ward, Poison Armor, or Ward Against Evil, if you don't already know them.  I will need a given amount of Golden Scales, to cover the materials and essence that go into copying these secrets into a form others can use.",
+    "responses": [
+      {
+        "text": "What can you tell me about Heat Ward?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_FLAMEARMOR"
+          }
+        },
+        "topic": "TALK_CF_REP_SPELL_MENU_1"
+      },
+      {
+        "text": "What can you tell me about Poison Armor?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_POISONARMOR"
+          }
+        },
+        "topic": "TALK_CF_REP_SPELL_MENU_2"
+      },
+      {
+        "text": "What can you tell me about Ward Against Evil?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_CLERIC"
+          }
+        },
+        "topic": "TALK_CF_REP_SPELL_MENU_3"
+      },
+      {
+        "text": "There's nothing more I could learn from you.  Thanks anyway.",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "u_has_trait": "SPELL_FLAMEARMOR"
+            },
+            {
+              "u_has_trait": "SPELL_POISONARMOR"
+            },
+            {
+              "u_has_trait": "SPELL_CLERIC"
+            }
+          ]
+        },
+        "effect": {
+          "u_add_var": "sofia_all_spells_known",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "也许下次吧。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SPELL_MENU_1",
+    "dynamic_line": "It's a spell some of our hunters learn to protect against overheating and smoke inhalation.  It's not enough to negate being immersed in flame, but you won't catch alight from it.  I'll need 4 Golden Scales to cover the cost of materials and for warding the ritual preparations.",
+    "responses": [
+      {
+        "text": "[GS4] You have a deal，then.",
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 4
+          }
+        },
+        "effect": [
+          {
+            "u_consume_item": "CF_golden_scale",
+            "count": 4
+          },
+          {
+            "u_add_trait": "SPELL_FLAMEARMOR"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need more Scales for that.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "CF_golden_scale",
+              "count": 4
+            }
+          }
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "Not right now.",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SPELL_MENU_2",
+    "dynamic_line": "It guards the body against toxins of nearly any sort.  Poison gas, venom from mutant beasts, I've seen it ease signs of radiation sickness as well.  I'll need 3 Golden Scales to cover the cost of materials and for warding the ritual preparations.",
+    "responses": [
+      {
+        "text": "[GS3] You have a deal，then.",
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 3
+          }
+        },
+        "effect": [
+          {
+            "u_consume_item": "CF_golden_scale",
+            "count": 3
+          },
+          {
+            "u_add_trait": "SPELL_POISONARMOR"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need more Scales for that.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "CF_golden_scale",
+              "count": 3
+            }
+          }
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "Not right now.",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_SPELL_MENU_3",
+    "dynamic_line": "This is a sacred protective spell against otherworldly influences.  Things that draw attention from Beyond or instability on the victim, likely the most common example.  I'll need 4 Golden Scales to cover the cost of materials and for warding the ritual preparations.",
+    "responses": [
+      {
+        "text": "[GS4] You have a deal，then.",
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 4
+          }
+        },
+        "effect": [
+          {
+            "u_consume_item": "CF_golden_scale",
+            "count": 4
+          },
+          {
+            "u_add_trait": "SPELL_CLERIC"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need more Scales for that.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "CF_golden_scale",
+              "count": 4
+            }
+          }
+        },
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "Not right now.",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_REP_TRADE",
+    "dynamic_line": "入口和厨房有一些你需要时可以使用的东西。除此之外，我们没有什么多余的，但我会尽我所能给你。我们已经习惯于用称量好的一大筐子黄金来代替货币，过去我们用它来修理我们的一些物品。其他的可以保证纯度和重量是标准化的。",
+    "responses": [
+      {
+        "text": "那么让我们交易吧。",
+        "effect": [
+          {
+            "u_add_effect": "cf_sofia_traded",
+            "duration": "PERMANENT"
+          },
+          "start_trade"
+        ],
+        "topic": "TALK_CF_REP"
+      },
+      {
+        "text": "没关系，没关系。",
+        "topic": "TALK_CF_REP"
+      }
+    ]
+  }
+]

@@ -1,0 +1,208 @@
+[
+  {
+    "id": "TALK_RANCH_FOREMAN",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "[任务]我被要求寻找可能处理异常情况的实验室之间货物的信息。你能帮我吗？",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_1",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "nicholas_mission_2_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_PURIFIER_1_2"
+            }
+          ]
+        }
+      },
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_RANCH_FOREMAN_GM_PRELUDE"
+      },
+      {
+        "text": "[任务]我被要求帮助另一个幸存者社区吸引工作。有谁能帮上忙吗？",
+        "topic": "TALK_RANCH_CROP_OVERSEER_CF_REP_MISSION_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_1",
+    "type": "talk_topic",
+    "dynamic_line": "不要和知道那种事情的人有太多接触。尽管如此，我确实听说了难民中心派出的清道夫车队遇见了一些旧实验室。",
+    "responses": [
+      {
+        "text": "他们发现了什么？",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_2"
+      },
+      {
+        "text": "没关系。",
+        "topic": "TALK_RANCH_FOREMAN"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_2",
+    "type": "talk_topic",
+    "dynamic_line": "很明显，有件有趣的事足以让他们为之与强盗搏斗。他们在那之后的某个时候袭击了营地，然后再也没有出现在大路上。",
+    "responses": [
+      {
+        "text": "你能告诉我更多吗？",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_3"
+      },
+      {
+        "text": "我会四处打听其他线索。",
+        "topic": "TALK_RANCH_FOREMAN"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_3",
+    "type": "talk_topic",
+    "dynamic_line": "我想是的。但是首先我自己对一些东西感兴趣。你到底要这个干什么？",
+    "responses": [
+      {
+        "text": "我需要更多关于在这个列表上的站点之间运送什么的信息。",
+        "condition": {
+          "u_has_item": "cf_purifier_project_data"
+        },
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_4"
+      },
+      {
+        "text": "我被要求去尝试寻找一个特别的研究机构。",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_5"
+      },
+      {
+        "text": "没什么。",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_REFUSE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_4",
+    "type": "talk_topic",
+    "dynamic_line": "这很有趣。你可以说，你在这些地方做作业。我也很感兴趣，我们总是需要供应品，这可能会使我们得以用另一种方式来获得它们。无论你在这些货物中寻找什么，如果你愿意分享那些信息，我们可以就此相互配合，以避免互相干扰。",
+    "responses": [
+      {
+        "text": "当然可以。说说你知道的。",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_ACCEPT"
+      },
+      {
+        "text": "让我想想。",
+        "topic": "TALK_RANCH_FOREMAN"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_ACCEPT",
+    "type": "talk_topic",
+    "dynamic_line": "我会记下他们最后的消息。不用说，在那边要小心。我不知道他们找到了什么样的文件、地图或其他什么，但他们似乎已经足够兴奋了，听起来他们所做的一切都是他们计划的未来任何探索实验室更深处的关键。你带着这些信息回来，我会尽我所能补偿你。",
+    "speaker_effect": [
+      {
+        "effect": {
+          "add_mission": "MISSION_CF_PURIFIER_1_INTERLUDE_2"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "text": "谢谢！在我走之前…",
+        "topic": "TALK_EVAC_MERCHANT"
+      },
+      {
+        "text": "谢谢，我晚点回来！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_REFUSE",
+    "type": "talk_topic",
+    "dynamic_line": "一些旧的难民车队甚至没有朝我们的方向前进，这也没什么。可能是被野生动物吃了。如果你改变主意愿意告诉我你在找什么，也许我们可以做个交易。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_RANCH_FOREMAN"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_NICHOLAS_5",
+    "type": "talk_topic",
+    "dynamic_line": "我明白了。我会假设它是危险的，如果它像你描述的那样涉及异常的东西。我想我们可以在这里做个交易。如果你发现了商队如此兴奋的东西，它会带你找到你要找的东西，如果有任何其他有用的实验室，它也可以帮你找到。这样我们就知道在哪里寻找什么，所以我们就不会冒生命危险。",
+    "responses": [
+      {
+        "text": "那么，你达成协议。",
+        "topic": "TALK_RANCH_FOREMAN_NICHOLAS_ACCEPT"
+      },
+      {
+        "text": "下次再说吧。",
+        "topic": "TALK_RANCH_FOREMAN"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_FOREMAN_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "我听说过一些谣言，我知道有些人想在这里旅行，但遇到了这种麻烦。我会把我听到的最新消息转达给你，把它发给你代表的任何人。",
+    "responses": []
+  },
+  {
+    "id": "TALK_RANCH_CROP_OVERSEER_CF_REP_MISSION_4",
+    "type": "talk_topic",
+    "dynamic_line": "恐怕我帮不了你，我们的盘子已经够多了。一旦事情安排好了，我想问问周围的人，但我自己还有很多工作要做。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_RANCH_FOREMAN"
+      }
+    ]
+  }
+]

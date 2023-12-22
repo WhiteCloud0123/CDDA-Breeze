@@ -1,0 +1,1171 @@
+[
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "bandolier_flintlock_shrike",
+    "entries": [
+      {
+        "item": "flintlock_ammo",
+        "charges": 14
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "1911_gun_arcane_purifier",
+    "entries": [
+      {
+        "item": "m1911",
+        "ammo-item": "45_acp",
+        "charges": 7,
+        "contents-item": [
+          "arcane_accelerator_railgun"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "1911_mags_arcane_purifier",
+    "entries": [
+      {
+        "item": "m1911mag",
+        "ammo-item": "45_acp",
+        "charges": 7
+      },
+      {
+        "item": "m1911mag",
+        "ammo-item": "45_acp",
+        "charges": 7
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "bandolier_shotgun_shot_00_arcana",
+    "entries": [
+      {
+        "item": "reloaded_shot_00_arcana",
+        "charges": 25
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "charged_candle",
+    "entries": [
+      {
+        "item": "candle",
+        "charges": 100
+      }
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_apprentice",
+    "name": "学徒",
+    "description": "你是个聪明的学生，师从于一位掌握神秘技艺的大师。不幸的是，你才刚准备开始学习你的师父就被末日带走了。",
+    "points": 1,
+    "items": {
+      "both": {
+        "items": [
+          "tunic_rag",
+          "robe",
+          "socks",
+          "bastsandals",
+          "gloves_leather",
+          "knit_scarf",
+          "book_magicfordummies"
+        ],
+        "entries": [
+          {
+            "item": "makeshift_knife",
+            "container-item": "sheath"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "traits": [
+      "PROF_ARCANIST"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_alchemist",
+    "name": "炼金术士",
+    "description": "你师从一位博学多闻的学者，一位传说中的不死灵药的追寻者。虽然有着一位大师级的炼金术师的教导，你却从未能完成真正伟大的工作，连稍稍接近点都不成。",
+    "points": 2,
+    "skills": [
+      {
+        "level": 5,
+        "name": "chemistry"
+      },
+      {
+        "level": 2,
+        "name": "cooking"
+      },
+      {
+        "level": 1,
+        "name": "firstaid"
+      }
+    ],
+    "proficiencies": [
+      "prof_intro_chemistry",
+      "prof_distilling"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "tank_top",
+          "duster",
+          "pants",
+          "socks",
+          "boots",
+          "gloves_fingerless",
+          "mbag",
+          "chemistry_set_basic",
+          "red_black_vulnerary",
+          "chem_ethanol",
+          "bottle_glass",
+          "book_potioncraft",
+          "essence"
+        ],
+        "entries": [
+          {
+            "item": "punch_dagger",
+            "container-item": "sheath"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "briefs"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "traits": [
+      "PROF_ARCANIST"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_scribe",
+    "name": "言灵术士",
+    "description": "你是一位博学多才的学者，学习了给文字赋予力量的基础。你梦想掌握哪些保存着禁忌知识的伟大卷藏，但现在你眼前只剩下残破的世界。",
+    "points": 2,
+    "skills": [
+      {
+        "level": 2,
+        "name": "magic"
+      },
+      {
+        "level": 2,
+        "name": "fabrication"
+      }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "dress_shirt",
+          "peacoat",
+          "pants",
+          "socks",
+          "dress_shoes",
+          "mbag",
+          "pockknife",
+          "flask_hip",
+          "candle",
+          "survival_marker",
+          "scroll_blank",
+          "scroll_sun",
+          "book_scrollcraft",
+          "monster_tear",
+          "essence"
+        ],
+        "entries": [
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "briefs"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "traits": [
+      "PROF_ARCANIST"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_bloodmage",
+    "name": "血法师",
+    "description": "你掌握着真正的力量，就像那些血盟成员一般。内在的力量就是最强的力量。但是要为此付出什么代价？",
+    "points": 4,
+    "skills": [
+      {
+        "level": 3,
+        "name": "magic"
+      },
+      {
+        "level": 1,
+        "name": "firstaid"
+      },
+      {
+        "level": 1,
+        "name": "gun"
+      },
+      {
+        "level": 1,
+        "name": "melee"
+      },
+      {
+        "level": 1,
+        "name": "stabbing"
+      },
+      {
+        "level": 1,
+        "name": "dodge"
+      }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "dress_shirt",
+          "robe",
+          "socks",
+          "boots",
+          "backpack",
+          "waterskin",
+          "bowl_clay",
+          "book_bloodmagic"
+        ],
+        "entries": [
+          {
+            "item": "bloodscourge",
+            "ammo-item": "essence_blood",
+            "charges": 15,
+            "custom-flags": [
+              "auto_wield"
+            ]
+          },
+          {
+            "item": "revenant_crown",
+            "charges": 6
+          },
+          {
+            "item": "blood_athame",
+            "container-item": "sheath"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "boxer_briefs",
+        "pants"
+      ],
+      "female": [
+        "bra",
+        "panties",
+        "skirt"
+      ]
+    },
+    "traits": [
+      "PROF_SANGUINE"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_magehunter",
+    "name": "猎魔人",
+    "description": "你曾经是“净化之焰”教团的一员。万物之终焉已然来临，位面的边界已经破碎。死者渴望着活物，但你绝不会投降。",
+    "points": 4,
+    "skills": [
+      {
+        "level": 4,
+        "name": "magic"
+      },
+      {
+        "level": 2,
+        "name": "melee"
+      },
+      {
+        "level": 2,
+        "name": "bashing"
+      },
+      {
+        "level": 1,
+        "name": "dodge"
+      }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "dress_shirt",
+          "pants",
+          "socks",
+          "boots_larmor",
+          "gauntlets_larmor",
+          "helmet_galea",
+          "holy_symbol",
+          "backpack",
+          "waterskin",
+          "book_hexenhammer"
+        ],
+        "entries": [
+          {
+            "item": "hexenhammer",
+            "charges": 3,
+            "custom-flags": [
+              "auto_wield"
+            ]
+          },
+          {
+            "item": "somen_clairvoyance",
+            "charges": 24
+          },
+          {
+            "item": "gilded_aegis",
+            "charges": 60
+          },
+          {
+            "item": "knife_hunting",
+            "container-item": "sheath"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "sports_bra",
+        "boy_shorts"
+      ]
+    },
+    "traits": [
+      "PROF_CLEANSINGFLAME"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_dark_priest",
+    "name": "黑暗牧师",
+    "description": "死后未知世界之主召唤你，召唤着你的兄弟姐妹们。而那些忠诚的人，至少是留下的人，将把他带到这个世界上。",
+    "points": 6,
+    "skills": [
+      {
+        "level": 5,
+        "name": "magic"
+      },
+      {
+        "level": 2,
+        "name": "gun"
+      },
+      {
+        "level": 2,
+        "name": "dodge"
+      }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "loincloth",
+          "tunic",
+          "socks",
+          "bastsandals",
+          "backpack",
+          "waterskin",
+          "offering_chalice",
+          "book_sacrifice"
+        ],
+        "entries": [
+          {
+            "item": "thunder_sigil",
+            "ammo-item": "essence",
+            "charges": 5,
+            "custom-flags": [
+              "auto_wield"
+            ]
+          },
+          {
+            "item": "robe_shadow",
+            "charges": 20
+          },
+          {
+            "item": "gauntlets_necro",
+            "charges": 4
+          },
+          {
+            "item": "copper_knife",
+            "container-item": "sheath"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "female": [
+        "chestwrap"
+      ]
+    },
+    "traits": [
+      "PROF_CHALICE"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_summoner",
+    "name": "唤灵术士",
+    "description": "你是一位奥术师大师的学生。不是仅教你利用超自然力量，不是的。教你的是怎样从活物中提炼力量，并和你的意念绑定。要是你师父没有召唤出多于他所能控制的力量就太好了。",
+    "spells": [
+      {
+        "id": "arcana_magic_summon_shadow",
+        "level": 1
+      },
+      {
+        "id": "arcana_magic_summon_shadow_snake",
+        "level": 1
+      }
+    ],
+    "points": 7,
+    "skills": [
+      {
+        "level": 6,
+        "name": "magic"
+      },
+      {
+        "level": 5,
+        "name": "fabrication"
+      },
+      {
+        "level": 3,
+        "name": "survival"
+      },
+      {
+        "level": 2,
+        "name": "dodge"
+      }
+    ],
+    "proficiencies": [
+      "prof_fibers",
+      "prof_fibers_rope",
+      "prof_leatherworking_basic",
+      "prof_metalworking",
+      "prof_carving"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "tunic",
+          "cloak",
+          "socks",
+          "boots",
+          "gloves_leather",
+          "knit_scarf",
+          "backpack",
+          "waterskin",
+          "triffid_garland",
+          "bowl_pewter",
+          "rope_makeshift_6",
+          "air_talisman",
+          "summon_kreck",
+          "summon_blank",
+          "monster_fang",
+          "wyrmskin_piece",
+          "book_summoning"
+        ],
+        "entries": [
+          {
+            "item": "knife_hunting",
+            "container-item": "sheath"
+          },
+          {
+            "item": "essence",
+            "count": 10
+          },
+          {
+            "item": "q_staff",
+            "custom-flags": [
+              "auto_wield"
+            ]
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "traits": [
+      "PROF_ARCANIST2"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_dragonblood_aspirant",
+    "name": "龙血修行者",
+    "description": "你曾经是一个乐观派的学徒，尤其是一个试图研究从外部掌握生物的教派。你的导师和同龄人并没有活着看到这项研究取得成果，让你去追求他们留下的不完整的东西。",
+    "points": 6,
+    "skills": [
+      {
+        "level": 5,
+        "name": "magic"
+      },
+      {
+        "level": 3,
+        "name": "cooking"
+      },
+      {
+        "level": 1,
+        "name": "firstaid"
+      },
+      {
+        "level": 1,
+        "name": "survival"
+      }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "socks",
+          "boots",
+          "gloves_fingerless",
+          "cloak",
+          "keffiyeh",
+          "mbag",
+          "clay_pot",
+          "book_potioncraft",
+          "book_bloodmagic"
+        ],
+        "entries": [
+          {
+            "item": "blood_athame",
+            "container-item": "sheath"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts",
+        "dress_shirt",
+        "pants"
+      ],
+      "female": [
+        "bra",
+        "panties",
+        "dress"
+      ]
+    },
+    "traits": [
+      "PROF_SANGUINE",
+      "ARCANA_SCALYPATCHES",
+      "ARCANA_SCALYWINGS",
+      "ARCANA_SCALYTAIL",
+      "ARCANA_INNERHEAT"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_shrike",
+    "name": "猩红屠猎者",
+    "description": "你是猎人的猎人，在仪式和重要任务中保护你的血统法师。随着血腥血统的崩溃，你的许多弟兄都偏离了圣路，腐烂了血统。你会效仿吗？",
+    "spells": [
+      {
+        "id": "arcana_magic_harden_senses",
+        "level": 1
+      }
+    ],
+    "points": 8,
+    "skills": [
+      {
+        "level": 3,
+        "name": "fabrication"
+      },
+      {
+        "level": 3,
+        "name": "gun"
+      },
+      {
+        "level": 3,
+        "name": "magic"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      },
+      {
+        "level": 2,
+        "name": "throw"
+      },
+      {
+        "level": 2,
+        "name": "stabbing"
+      },
+      {
+        "level": 2,
+        "name": "dodge"
+      },
+      {
+        "level": 2,
+        "name": "pistol"
+      },
+      {
+        "level": 1,
+        "name": "mechanics"
+      },
+      {
+        "level": 1,
+        "name": "survival"
+      },
+      {
+        "level": 1,
+        "name": "firstaid"
+      }
+    ],
+    "proficiencies": [
+      "prof_leatherworking_basic",
+      "prof_metalworking",
+      "prof_tanning_basic",
+      "prof_handloading"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "duster",
+          "tricorne",
+          "keffiyeh",
+          "socks",
+          "flask_hip",
+          "backpack_leather",
+          "pipe_cleaner",
+          "screwdriver",
+          "bowl_clay",
+          "book_bloodmagic"
+        ],
+        "entries": [
+          {
+            "item": "armor_wyrm",
+            "ammo-item": "essence_blood",
+            "charges": 16
+          },
+          {
+            "item": "bloodaxe",
+            "ammo-item": "essence_blood",
+            "charges": 3
+          },
+          {
+            "item": "shrike_misericorde",
+            "charges": 2,
+            "container-item": "scabbard"
+          },
+          {
+            "item": "flintlock_pouch",
+            "contents-group": "bandolier_flintlock_shrike"
+          },
+          {
+            "item": "flintlock_ammo",
+            "charges": 4
+          },
+          {
+            "item": "blindfold",
+            "custom-flags": [
+              "no_auto_equip"
+            ]
+          },
+          {
+            "item": "ear_plugs",
+            "custom-flags": [
+              "no_auto_equip"
+            ]
+          },
+          {
+            "item": "vinegar",
+            "container-item": "bottle_plastic_small"
+          },
+          {
+            "item": "lamp_oil",
+            "container-item": "bottle_plastic_small"
+          },
+          {
+            "group": "charged_ref_lighter"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "sports_bra",
+        "boy_shorts"
+      ]
+    },
+    "traits": [
+      "PROF_SANGUINE"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_purifier",
+    "name": "奥术净化师",
+    "description": "在追求知识和防止大灾难的方式中，你已经接受了现代技术和神秘力量的保护。一旦发生了“净化火焰”，无论你是无赖还是仍然恪守他们的理想，这都不再重要。",
+    "spells": [
+      {
+        "id": "arcana_magic_capacitance",
+        "level": 1
+      }
+    ],
+    "points": 8,
+    "CBMs": [
+      "bio_lockpick",
+      "bio_fingerhack",
+      "bio_ups",
+      "bio_flashlight",
+      "bio_tools",
+      "bio_batteries",
+      "bio_watch",
+      "bio_life_sign_suppression",
+      "bio_power_storage_mkII"
+    ],
+    "skills": [
+      {
+        "level": 4,
+        "name": "magic"
+      },
+      {
+        "level": 3,
+        "name": "chemistry"
+      },
+      {
+        "level": 3,
+        "name": "gun"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      },
+      {
+        "level": 2,
+        "name": "pistol"
+      },
+      {
+        "level": 2,
+        "name": "computer"
+      },
+      {
+        "level": 2,
+        "name": "electronics"
+      },
+      {
+        "level": 2,
+        "name": "cutting"
+      },
+      {
+        "level": 2,
+        "name": "fabrication"
+      }
+    ],
+    "proficiencies": [
+      "prof_leatherworking_basic",
+      "prof_metalworking",
+      "prof_lockpicking",
+      "prof_elec_soldering"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "tshirt",
+          "pants_cargo",
+          "trenchcoat",
+          "socks",
+          "boots",
+          "gloves_fingerless",
+          "knit_scarf",
+          "slingpack",
+          "bowl_clay",
+          "book_hexenhammer"
+        ],
+        "entries": [
+          {
+            "item": "ethereal_hand_crossbow",
+            "container-item": "XL_holster",
+            "charges": 20
+          },
+          {
+            "item": "holster",
+            "contents-group": "1911_gun_arcane_purifier"
+          },
+          {
+            "item": "legpouch_large",
+            "contents-group": "1911_mags_arcane_purifier"
+          },
+          {
+            "item": "45_acp",
+            "charges": 9
+          },
+          {
+            "item": "sun_sword",
+            "charges": 20,
+            "container-item": "scabbard"
+          },
+          {
+            "item": "medium_battery_cell",
+            "charges": 500
+          },
+          {
+            "group": "charged_matches"
+          },
+          {
+            "group": "charged_smart_phone"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "sports_bra",
+        "boy_shorts"
+      ]
+    },
+    "traits": [
+      "PROF_CLEANSINGFLAME2"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "ident": "arcanist_operator",
+    "name": "奥术特工",
+    "description": "你已经接受了现代科技和神秘力量，武装和增强以调查异常情况，获取人工制品，并帮助确保奥术在日常生活中保持隐藏。一旦有了净化之火，无论你是流氓还是仍然尊重他们的理想，你都必须用你所学到的来生存。",
+    "spells": [
+      {
+        "id": "arcana_magic_capacitance",
+        "level": 1
+      }
+    ],
+    "points": 10,
+    "CBMs": [
+      "bio_targeting",
+      "bio_cqb",
+      "bio_shotgun",
+      "bio_blade",
+      "bio_carbon",
+      "bio_night_vision",
+      "bio_lockpick",
+      "bio_fingerhack",
+      "bio_ups",
+      "bio_metabolics",
+      "bio_essence_surge_cell",
+      "bio_power_storage_mkII"
+    ],
+    "skills": [
+      {
+        "level": 4,
+        "name": "magic"
+      },
+      {
+        "level": 3,
+        "name": "gun"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      },
+      {
+        "level": 3,
+        "name": "dodge"
+      },
+      {
+        "level": 2,
+        "name": "pistol"
+      },
+      {
+        "level": 2,
+        "name": "rifle"
+      },
+      {
+        "level": 2,
+        "name": "shotgun"
+      },
+      {
+        "level": 3,
+        "name": "unarmed"
+      },
+      {
+        "level": 2,
+        "name": "computer"
+      }
+    ],
+    "proficiencies": [
+      "prof_leatherworking_basic",
+      "prof_metalworking",
+      "prof_lockpicking",
+      "prof_elec_soldering"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "knit_scarf",
+          "longshirt",
+          "gloves_fingerless",
+          "pants_cargo",
+          "socks",
+          "boots_combat",
+          "trenchcoat",
+          "molle_pack",
+          "wristwatch",
+          "book_hexenhammer"
+        ],
+        "entries": [
+          {
+            "item": "ethereal_crossbow",
+            "charges": 20,
+            "contents-item": "shoulder_strap"
+          },
+          {
+            "item": "v29",
+            "container-item": "XL_holster"
+          },
+          {
+            "item": "bandolier_shotgun",
+            "contents-group": "bandolier_shotgun_shot_00_arcana"
+          },
+          {
+            "group": "charged_smart_phone"
+          }
+        ]
+      },
+      "male": [
+        "boxer_briefs"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "traits": [
+      "PROF_CLEANSINGFLAME2"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_mendicant",
+    "name": "守门员乞丐",
+    "description": "当你的秩序崩溃，世界很快陷入黑暗时，你被迫在生存的斗争中徘徊。但是你的誓言是不朽的，当星星对了的时候，你会找到一种方法再次为这位被笼罩的国王服务。",
+    "points": 10,
+    "spells": [
+      {
+        "id": "arcana_magic_temporal_aura",
+        "level": 1
+      }
+    ],
+    "skills": [
+      {
+        "level": 2,
+        "name": "fabrication"
+      },
+      {
+        "level": 3,
+        "name": "tailor"
+      },
+      {
+        "level": 2,
+        "name": "cooking"
+      },
+      {
+        "level": 5,
+        "name": "magic"
+      },
+      {
+        "level": 2,
+        "name": "gun"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      },
+      {
+        "level": 2,
+        "name": "stabbing"
+      },
+      {
+        "level": 3,
+        "name": "dodge"
+      },
+      {
+        "level": 3,
+        "name": "survival"
+      }
+    ],
+    "proficiencies": [
+      "prof_fibers",
+      "prof_fibers_rope",
+      "prof_leatherworking_basic",
+      "prof_metalworking",
+      "prof_carving"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "loincloth",
+          "armor_plarmor",
+          "robe",
+          "footrags",
+          "boots_larmor",
+          "gloves_wraps",
+          "gauntlets_larmor",
+          "helmet_larmor",
+          "patchwork_scarf",
+          "leather_pouch",
+          "charm_bone",
+          "waterskin",
+          "flint_steel",
+          "bowl_clay",
+          "book_sacrifice"
+        ],
+        "entries": [
+          {
+            "item": "spear_pestilence",
+            "ammo-item": "essence",
+            "charges": 9,
+            "container-item": "spearsling"
+          },
+          {
+            "item": "cyclopean_mirror",
+            "charges": 25
+          },
+          {
+            "item": "salt",
+            "container-item": "bag_canvas_small",
+            "charges": 100
+          },
+          {
+            "group": "charged_candle"
+          },
+          {
+            "item": "sewing_kit",
+            "charges": 50
+          },
+          {
+            "item": "copper_knife",
+            "container-item": "sheath"
+          }
+        ]
+      },
+      "female": [
+        "chestwrap"
+      ]
+    },
+    "traits": [
+      "PROF_CHALICE"
+    ],
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "arcanist_scholar",
+    "name": "奥术学者",
+    "description": "你一直是勤奋好学的人，收集有趣的书。随着时间的流逝，你的学习转向了古怪而异常的事物，随着世界末日的来临，你所收集的只是最珍贵的财产。",
+    "points": 2,
+    "items": {
+      "both": {
+        "items": [
+          "longshirt",
+          "jacket_light",
+          "pants",
+          "socks",
+          "boots",
+          "gloves_leather",
+          "knit_scarf",
+          "mbag",
+          "book_potioncraft",
+          "book_scrollcraft",
+          "book_syncretism",
+          "pockknife"
+        ],
+        "entries": [
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "boxer_briefs"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "traits": [
+      "PROF_ARCANIST"
+    ]
+  }
+]

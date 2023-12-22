@@ -1,0 +1,552 @@
+[
+  {
+    "id": "arcana_seal_agility",
+    "//": "Magic Seals are comparable to their related Magic Signs cast at level 5, with no stamina cost or spellcasting exertion.  They always use the maximum casting time, and any damage or duration is randomly between its level-5 value and the spell's max.",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：敏捷"
+    },
+    "description": "法术魔印\n使用此咒语将赋予暂时的速度和敏捷性增强效果。它可以用于你自己或盟友。",
+    "message": "“飘渺的风，指引我的旅程……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_agility",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 100,
+    "final_casting_time": 100,
+    "min_duration": 216000,
+    "max_duration": 288000
+  },
+  {
+    "id": "arcana_seal_clairvoyance",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：透视"
+    },
+    "description": "法术魔印\n使用此法术将为你笼罩一层乳白色光环，使你可以看见视野之外。",
+    "message": "“让我看看眼睛永远看不到的东西……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "halo_clairvoyance",
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 140,
+    "final_casting_time": 140,
+    "min_duration": 324000,
+    "max_duration": 432000
+  },
+  {
+    "id": "arcana_seal_clarity_blood",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：净化血液"
+    },
+    "description": "法术魔印\n使用此咒语可防止寄生虫和孢子侵袭。它可以在自己或盟友身上使用。",
+    "message": "“你们很多，但我比你们所有人都重要……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "blood_clarity",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 100,
+    "final_casting_time": 100,
+    "min_duration": 72000,
+    "max_duration": 96000
+  },
+  {
+    "id": "arcana_seal_confuse_monster",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：迷惑怪物"
+    },
+    "description": "法术魔印\n使用该咒语会使周围区域的所有敌对生物昏迷。",
+    "message": "“如果手不能击中真的，没有刀锋可以标记我……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "RANDOM_DURATION"
+    ],
+    "effect_str": "stunned",
+    "sound_description": "a faint rush of air",
+    "min_aoe": 5,
+    "max_aoe": 25,
+    "aoe_increment": 2,
+    "max_level": 10,
+    "skill": "magic",
+    "base_casting_time": 80,
+    "final_casting_time": 80,
+    "min_duration": 9000,
+    "max_duration": 12000
+  },
+  {
+    "id": "arcana_seal_conjure_acid",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：召唤酸"
+    },
+    "description": "法术魔印\n使用该法术会在目标位置飞溅酸液，并对位置中心造成双倍伤害。对盟友也有潜在的危险。",
+    "message": "“让它像时间一样，在它的道路上侵蚀一切……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_brief_acid_ward",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_aftermath_conjure_acid_spike",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_conjure_acid_noise",
+        "hit_self": false,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION"
+    ],
+    "effect_str": "corroding",
+    "min_damage": 60,
+    "max_damage": 80,
+    "min_range": 5,
+    "max_range": 15,
+    "range_increment": 1,
+    "min_aoe": 2,
+    "max_aoe": 6,
+    "aoe_increment": 0.4,
+    "max_level": 10,
+    "skill": "magic",
+    "base_casting_time": 100,
+    "final_casting_time": 100,
+    "min_duration": 4800,
+    "max_duration": 6400,
+    "damage_type": "acid",
+    "field_id": "fd_acid",
+    "field_chance": 6,
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 0.2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_seal_free_action",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：挣脱束缚"
+    },
+    "description": "法术魔印\n将获得对瘫痪效果、抓取和其他障碍的保护，同时短暂冻结时间以允许逃跑。它可以在自己或盟友身上使用。",
+    "message": "“让没有束缚我的枷锁……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_free_action_timestop",
+        "hit_self": false,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "free_action",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 80,
+    "final_casting_time": 80,
+    "min_duration": 54000,
+    "max_duration": 72000
+  },
+  {
+    "id": "arcana_seal_healing",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：治愈"
+    },
+    "description": "法术魔印\n使用此魔法将坚定流血和修复伤口。它可以在自己或盟友身上使用。",
+    "message": "“我们还不会灭绝……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DAMAGE"
+    ],
+    "effect_str": "arcane_healing_staunch",
+    "min_damage": -30,
+    "max_damage": -40,
+    "max_level": 10,
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "effect": "attack",
+    "shape": "blast",
+    "base_casting_time": 140,
+    "final_casting_time": 140,
+    "skill": "magic",
+    "min_duration": 100,
+    "max_duration": 100
+  },
+  {
+    "id": "arcana_seal_heat_ward",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：避热"
+    },
+    "description": "法术魔印\n使用此魔法会暂时抵抗高温和烟雾。但是，直接接触火焰仍会造成伤害。它可以用于你自己或盟友。",
+    "message": "“钢铁不怕燃烧它的火焰……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "heat_ward",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 120,
+    "final_casting_time": 120,
+    "min_duration": 90000,
+    "max_duration": 120000
+  },
+  {
+    "id": "arcana_seal_insight",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：洞察"
+    },
+    "description": "法术魔印\n使用此咒语将暂时增强感知能力。它可以在自己或盟友身上使用。",
+    "message": "“耐心观察和倾听的人都知道……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_insight",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 80,
+    "final_casting_time": 80,
+    "min_duration": 162000,
+    "max_duration": 216000
+  },
+  {
+    "id": "arcana_seal_lightning_ward",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：抗电"
+    },
+    "description": "法术魔印\n使用此法术会给予祝福，可以完全抵御闪电，但会降低你的速度。它可以投在你自己或一个盟友身上。",
+    "message": "“一只脚接一只脚，总是脚踏实地……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "lightning_ward",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 100,
+    "final_casting_time": 100,
+    "min_duration": 72000,
+    "max_duration": 96000
+  },
+  {
+    "id": "arcana_seal_might",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：强力"
+    },
+    "description": "法术魔印\n使用此魔法会暂时增强力量。它可以用于自己或友军。",
+    "message": "“让这是一场光荣的战斗……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_might",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 120,
+    "final_casting_time": 120,
+    "min_duration": 270000,
+    "max_duration": 360000
+  },
+  {
+    "id": "arcana_seal_overgrowth",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：过度生长"
+    },
+    "description": "法术魔印\n使用该法术会在目标位置召唤出超凡脱俗的活森林。它将摧毁受影响地区的大多数家具并破坏地形。",
+    "message": "“无论土地多么贫瘠，我们都会繁荣昌盛……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DAMAGE"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_plants",
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 3,
+    "max_damage": 2,
+    "min_aoe": 2,
+    "max_aoe": 10,
+    "aoe_increment": 0.8,
+    "min_range": 5,
+    "max_range": 10,
+    "range_increment": 0.5,
+    "base_casting_time": 80,
+    "final_casting_time": 80
+  },
+  {
+    "id": "arcana_seal_serpentine_shield",
+    "//": "ID retained to avoid breaking saves.",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：暗影盾"
+    },
+    "description": "法术魔印\n使用此法术将为你笼罩一层黑曜石光环，给予暂时的防御效果，攻击者将被异界黑暗致盲。",
+    "message": "“不要害怕黑暗，而要害怕那些引诱你进入黑暗的人……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "halo_shadowsnakes",
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 140,
+    "final_casting_time": 140,
+    "min_duration": 108000,
+    "max_duration": 144000
+  },
+  {
+    "id": "arcana_seal_shockstorm",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：冲击波"
+    },
+    "description": "法术魔印\n使用这个法术会在你周围召唤闪电。任何靠近你的东西都会受到双倍伤害。小心在盟友周围使用它。",
+    "message": "“让它成为分裂天地的雷声……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_brief_lightning_ward",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_spike",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_noise",
+        "hit_self": false,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION"
+    ],
+    "effect_str": "zapped",
+    "min_damage": 75,
+    "max_damage": 100,
+    "min_aoe": 4,
+    "max_aoe": 12,
+    "aoe_increment": 0.8,
+    "max_level": 10,
+    "skill": "magic",
+    "base_casting_time": 120,
+    "final_casting_time": 120,
+    "min_duration": 15000,
+    "max_duration": 20000,
+    "damage_type": "electric",
+    "field_id": "fd_electricity",
+    "field_chance": 10,
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 0.2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_seal_ward_against_evil",
+    "type": "SPELL",
+    "name": {
+      "str": "魔印：辟邪"
+    },
+    "description": "法术魔印\n使用该法术将获得祝福，可以抵御某些异常威胁它可以在自己或盟友身上使用。",
+    "message": "“恶人在警惕者面前蹒跚……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "cleric_warding",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 120,
+    "final_casting_time": 120,
+    "min_duration": 90000,
+    "max_duration": 120000
+  }
+]

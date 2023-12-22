@@ -1,0 +1,679 @@
+[
+  {
+    "type": "mutation",
+    "id": "SPELL_AGILE",
+    "name": {
+      "str": "魔法符号：敏捷"
+    },
+    "//": "Point costs for all Magic Sign mutations is equal to half its Spell Rank, rounded up where relevant.",
+    "points": 2,
+    "description": "Study of the beyond has granted you power, that can grant a temporary speed and agility-enhancing effect.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_agility",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_CAPACITANCE",
+    "name": {
+      "str": "Magic Sign: Capacitance"
+    },
+    "//": "Rounded up, Spell Rank 5.",
+    "points": 3,
+    "description": "Study of the beyond has granted you the power to channel stamina and fatigue into bionic energy, though doing so also stuns you on use.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "spells_learned": [
+      [
+        "arcana_magic_capacitance",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_CLAIRVOYANCE",
+    "name": {
+      "str": "魔法符号：透视"
+    },
+    "points": 3,
+    "description": "Study of the beyond has granted you power, that can grant sight beyond sight temporarily.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_clairvoyance",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_CLARITY",
+    "name": {
+      "str": "魔法符号：净化血液"
+    },
+    "points": 2,
+    "description": "Study of the beyond has granted you a power that can protect against parasites and the Mycus.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_clarity_blood",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_CONFUSE",
+    "name": {
+      "str": "魔法符号：迷惑怪物"
+    },
+    "//": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you a power that can confuse nearby monsters.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_confuse_monster",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_ACID",
+    "name": {
+      "str": "魔法符号：召唤酸"
+    },
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to conjure sprays of acid.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_conjure_acid",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_CONSECRATELESSER",
+    "name": {
+      "str": "魔法符号：祝圣"
+    },
+    "points": 3,
+    "description": "Study of the beyond has granted you the power to subvert otherworldly influences on the environment, within your immediate surroundings.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_consecrate",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_DAMPENING",
+    "//": "ID retained to avoid load errors.",
+    "name": {
+      "str": "魔法符号：移形换影"
+    },
+    "//2": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to instantly swap places with a target, dazing them and anything near where you emerge.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_dampening",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_FIRE",
+    "name": {
+      "str": "魔法符号：召唤火焰"
+    },
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to conjure a burst of flame, where you command.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_conjure_flame",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_DARK_LANCE",
+    "name": {
+      "str": "魔法符号：暗影长矛"
+    },
+    "//": "Rounded up, Spell Rank 5.",
+    "points": 3,
+    "description": "Study of the beyond has granted you the power to unleash beams of unearthly blinding power.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "max_stamina_modifier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_dark_lance",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_EARTHWEAVING",
+    "name": {
+      "str": "魔法符号：土石编织"
+    },
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to shape walls of earth and stone when targetting  the right terrain.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "max_stamina_modifier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_earthweaving",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_ECLIPSE",
+    "name": {
+      "str": "魔法符号：月蚀"
+    },
+    "//": "Rounded up, Spell Rank 9.",
+    "points": 5,
+    "description": "Study of the beyond has granted you the power to bring forth wicked omens, gaining a long-lasting adrenaline surge with night vision and life drain, in exchange for permanent scars upon the land.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_eclipse",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_ELEMENTALBURST",
+    "name": {
+      "str": "魔法符号：元素爆发"
+    },
+    "//": "Rounded up, Spell Rank 7.",
+    "points": 4,
+    "description": "Study of the beyond has granted you the power to conjure chaotic magic, blasting foes with elemental force.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_elemental_burst",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_FLAMEARMOR",
+    "name": {
+      "str": "魔法符号：避热"
+    },
+    "//": "Rounded up, Spell Rank 35",
+    "points": 3,
+    "description": "Study of the beyond has granted you power, that can grant temporary resistance to heat and smoke.  Direct contact with flame will still harm you.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_heat_ward",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_FROSTARMORLESSER",
+    "name": {
+      "str": "魔法符号：御寒"
+    },
+    "//": "Rounded up, Spell Rank 5.",
+    "points": 3,
+    "description": "Study of the beyond has granted you power, that can grant temporary resistance to the cold.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_cold_ward",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_FREEACTION",
+    "name": {
+      "str": "魔法符号：挣脱束缚"
+    },
+    "//": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you power, that can protect against paralytic effects and other hindrances.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_free_action",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_HEAL",
+    "name": {
+      "str": "魔法符号：治愈"
+    },
+    "points": 3,
+    "description": "Study of the beyond has granted you the power to heal the body, though overuse may have consequences.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_healing",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_INSIGHT",
+    "name": {
+      "str": "魔法符号：洞察"
+    },
+    "//": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you power, that can grant a temporary boost to perception.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_insight",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_LIGHT",
+    "name": {
+      "str": "魔法符号：光"
+    },
+    "points": 1,
+    "description": "Study of the beyond has granted you the power to conjure a temporary aura of illumination.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_light",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_ELECRESIST",
+    "name": {
+      "str": "魔法符号：抗电"
+    },
+    "points": 2,
+    "description": "Study of the beyond has granted you power, that can grant temporary protection against electricity.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_lightning_ward",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_STRENGTH",
+    "name": {
+      "str": "魔法符号：强力"
+    },
+    "//": "Rounded up, Spell Rank 5.",
+    "points": 3,
+    "description": "Study of the beyond has granted you power, that can provide a temporary strength-enhancing effect.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_might",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_LOCKPICK",
+    "name": {
+      "str": "魔法符号：开启"
+    },
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to open locks and barricades of various sorts.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_open_lock",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_PLANTS",
+    "name": {
+      "str": "魔法符号：过度生长"
+    },
+    "//": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to cause plants to spring up from nothingness.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_overgrowth",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_PHASESHIELD",
+    "name": {
+      "str": "魔法符号：相位盾"
+    },
+    "//": "Rounded up, Spell Rank 7.",
+    "points": 4,
+    "description": "Study of the beyond has granted you power, a defensive effect that will push nearby attackers away when you're struck.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "max_stamina_modifier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_phase_shield",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_POISONARMOR",
+    "name": {
+      "str": "魔法符号：防毒装甲"
+    },
+    "//": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you power, that can offer temporary protection from toxic gas and other poisons.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_poison_armor",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_SHADOWSNAKES",
+    "//": "ID retained to avoid breaking saves.",
+    "name": {
+      "str": "魔法符号：暗影盾"
+    },
+    "points": 3,
+    "description": "Study of the beyond has granted you power, a defensive effect that will lash out at attackers with shadows.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_serpentine_shield",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_LIGHTNING",
+    "name": {
+      "str": "魔法符号：冲击波"
+    },
+    "//": "Rounded up, Spell Rank 5.",
+    "points": 3,
+    "description": "Study of the beyond has granted you the power to create a shockwave of lightning around you.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_shockstorm",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_BUGSLESSER",
+    "name": {
+      "str": "魔法符号：召唤蜈蚣"
+    },
+    "points": 3,
+    "description": "Study of the beyond has granted you the power to summon scuttling abominations.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_summon_giant_centipedes",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_SUMMONDOG",
+    "name": {
+      "str": "魔法符号：召唤骷髅狗"
+    },
+    "//": "Rounded up, Spell Rank 3.",
+    "points": 2,
+    "description": "Study of the beyond has granted you the power to summon a skeletal dog.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_summon_skeletal_dog",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_SUNDERINGQUAKE",
+    "name": {
+      "str": "魔法符号：地震"
+    },
+    "points": 4,
+    "description": "Study of the beyond has granted you the power to topple structures, sundering foes and burying them in rubble.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_sundering_quake",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_DAYLIGHT",
+    "//": "ID retained to avoid load errors.",
+    "name": {
+      "str": "魔法符号：肾上腺素激增"
+    },
+    "points": 1,
+    "description": "Study of the beyond has granted you the power to provoke an uplifting rush through the body.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_surge_adrenaline",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_TRANSCENDENTAURA",
+    "name": {
+      "str": "Magic Sign: Transcendent Aura"
+    },
+    "points": 4,
+    "description": "Study of the beyond has granted you the power to shroud your aura, making otherworldly creatures blind to your presence, in exchange for making it easier for other creatures to spot you.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "spells_learned": [
+      [
+        "arcana_magic_temporal_aura",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SPELL_CLERIC",
+    "name": {
+      "str": "魔法符号：辟邪"
+    },
+    "//": "Rounded up, Spell Rank 5.",
+    "points": 3,
+    "description": "Study of the beyond has granted you power, that can offer temporary protection against various anomalous effects.  (( Remember to bind the \"spellcasting\" key! ))",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "cardio_multiplier": 1.025,
+    "fatigue_regen_modifier": 0.0125,
+    "spells_learned": [
+      [
+        "arcana_magic_ward_against_evil",
+        1
+      ]
+    ]
+  }
+]

@@ -1,0 +1,2609 @@
+[
+  {
+    "type": "effect_type",
+    "id": "arcana_dragonblood_blood_effigy_effect",
+    "max_duration": "10 s",
+    "name": [
+      "血像"
+    ],
+    "desc": [
+      "这只是用于奥秘诱变效应。如果你看到这一点，这可能意味着DDA在某种程度上又出了问题。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_dragonblood_sacramental_heart_effect",
+    "max_duration": "10 s",
+    "name": [
+      "圣心"
+    ],
+    "desc": [
+      "这只是用于奥秘诱变效应。如果你看到这一点，这可能意味着DDA在某种程度上又出了问题。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_paragon_veilblade_effect",
+    "max_duration": "10 s",
+    "name": [
+      "仪式刀"
+    ],
+    "desc": [
+      "这只是用于奥秘诱变效应。如果你看到这一点，这可能意味着DDA在某种程度上又出了问题。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "magic_sign_exertion",
+    "name": [
+      "Magic Sign Exertion"
+    ],
+    "desc": [
+      "过度使用魔法符号会增加疲劳增益。"
+    ],
+    "apply_message": "你感到施法引起的轻微劳累。",
+    "remove_message": "施法的耗能从你的脑海中消失。",
+    "rating": "bad",
+    "max_duration": "200 m",
+    "max_intensity": 200,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_tick": [
+        25
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "sanguine_mark_burnout",
+    "name": [
+      "龙形耗能"
+    ],
+    "desc": [
+      "过度使用猩红印记会增加饥饿感。"
+    ],
+    "apply_message": "你觉得你的内心火焰在施法时动摇了。",
+    "remove_message": "施法带来的奇怪的不安感消失了。",
+    "rating": "bad",
+    "max_duration": "200 m",
+    "max_intensity": 200,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "hunger_min": [
+        1
+      ],
+      "hunger_tick": [
+        25
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "triffid_garland_buff",
+    "name": [
+      "青翠促生"
+    ],
+    "desc": [
+      "你身体的自然耐力和疼痛恢复得到增强。"
+    ],
+    "remove_message": "花环的恢复效果减弱。",
+    "decay_messages": [
+      [
+        "青翠三尖树花环的效果开始消退。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_intensity": 15,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "pain_min": [
+        -1
+      ],
+      "stamina_min": [
+        20
+      ],
+      "health_min": [
+        1
+      ],
+      "h_mod_min": [
+        1
+      ],
+      "rad_min": [
+        -1
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "halo_flute_effect",
+    "//": "Effectively combines some of the perks of Free Action and yellow potion.",
+    "removes_effects": [
+      "downed",
+      "bouldering",
+      "grabbed",
+      "lack_sleep",
+      "sleep_deprived"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "life_sign_suppression_debuff",
+    "//": "This makes you health go down slowly while LSS is in use.",
+    "base_mods": {
+      "health_min": [
+        -1
+      ],
+      "health_tick": [
+        60
+      ],
+      "h_mod_min": [
+        -1
+      ],
+      "h_mod_tick": [
+        60
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_timestop_indicator",
+    "name": [
+      "时间停止"
+    ],
+    "desc": [
+      "A spell has given you bonus moves for the moment."
+    ],
+    "apply_message": "时间停滞了...",
+    "remove_message": "时间恢复了流动。",
+    "rating": "good",
+    "max_duration": "1 s"
+  },
+  {
+    "type": "effect_type",
+    "id": "temporal_stimulation_effect",
+    "name": [
+      "时间刺激"
+    ],
+    "//": "This adds the stamina and fatigue effects to TS.  And the speed boost, because speed enchantments can't be trusted to work.",
+    "base_mods": {
+      "speed_mod": [
+        100
+      ],
+      "stamina_min": [
+        20
+      ],
+      "hunger_min": [
+        1
+      ],
+      "hunger_tick": [
+        75
+      ],
+      "thirst_min": [
+        1
+      ],
+      "thirst_tick": [
+        75
+      ],
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_tick": [
+        75
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "potion_numbness",
+    "name": [
+      "极度麻木"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "desc": [
+      "你的身体感觉到难以置信的麻木和迟缓。"
+    ],
+    "remove_message": "麻木会消失。",
+    "//": "Only Mycus Adrenaline in this case can really shake off the sluggishness.",
+    "removes_effects": [
+      "shakes",
+      "formication",
+      "jetinjector",
+      "stimpack",
+      "adrenaline",
+      "meth"
+    ],
+    "decay_messages": [
+      [
+        "你的药剂的麻木效果开始消退。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "pain_tick": [
+        25
+      ],
+      "pain_min": [
+        -15
+      ],
+      "speed_mod": [
+        -25,
+        -15
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "potion_strength",
+    "name": [
+      "加强"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "desc": [
+      "你觉得自己很强大，好像你可以挑战世界。"
+    ],
+    "remove_message": "不自然的力量离开了你的身体。",
+    "decay_messages": [
+      [
+        "你的药剂的强化效果开始减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "str_mod": [
+        5
+      ],
+      "dex_mod": [
+        -1,
+        0
+      ],
+      "int_mod": [
+        -1,
+        0
+      ],
+      "per_mod": [
+        -1,
+        0
+      ],
+      "speed_mod": [
+        5
+      ],
+      "stamina_min": [
+        50
+      ],
+      "stamina_chance": [
+        6
+      ],
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_tick": [
+        300
+      ],
+      "fatigue_chance": [
+        6,
+        12
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "potion_speed",
+    "name": [
+      "迅捷"
+    ],
+    "desc": [
+      "你感觉你的心脏跳动的速度快得十分危险，你甚至不能考虑休息。"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "remove_message": "你的心跳减慢到正常速度。",
+    "//": "Hinders relaxing, but paralysis and similar effects are too strong to prevent.",
+    "removes_effects": [
+      "relax_gas",
+      "lack_sleep",
+      "sleep"
+    ],
+    "decay_messages": [
+      [
+        "你的药剂的加速效果开始消退了。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "str_mod": [
+        -2,
+        -1
+      ],
+      "dex_mod": [
+        2
+      ],
+      "int_mod": [
+        -2,
+        -1
+      ],
+      "per_mod": [
+        2
+      ],
+      "speed_mod": [
+        50
+      ],
+      "stamina_min": [
+        -25
+      ],
+      "stamina_tick": [
+        30
+      ],
+      "stamina_chance": [
+        6,
+        12
+      ],
+      "fatigue_min": [
+        -1
+      ],
+      "fatigue_chance": [
+        12
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "potion_healing",
+    "name": [
+      "灵药"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "desc": [
+      "不是永生，但感觉还是不错的。"
+    ],
+    "remove_message": "治疗效果消失。",
+    "removes_effects": [
+      "poison",
+      "badpoison",
+      "infected",
+      "fungus",
+      "bleed",
+      "common_cold",
+      "flu",
+      "tetanus",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "decay_messages": [
+      [
+        "你的药剂的舒缓作用开始消退了。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "health_min": [
+        1
+      ],
+      "health_chance": [
+        5
+      ],
+      "h_mod_min": [
+        1
+      ],
+      "h_mod_chance": [
+        5
+      ],
+      "pain_tick": [
+        25
+      ],
+      "pain_min": [
+        -5
+      ],
+      "speed_mod": [
+        -10,
+        -5
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "potion_vulnerary",
+    "name": [
+      "脆弱的"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "desc": [
+      "在你的伤口涂上药膏后，你会感觉到一种舒缓的感觉挥之不去。"
+    ],
+    "remove_message": "伤者的后遗症会消失。",
+    "removes_effects": [
+      "spores"
+    ],
+    "decay_messages": [
+      [
+        "伤者的后遗症正在消退。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "20 m",
+    "max_intensity": 20,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "health_min": [
+        1
+      ],
+      "health_chance": [
+        15
+      ],
+      "h_mod_min": [
+        1
+      ],
+      "h_mod_chance": [
+        15
+      ],
+      "pain_tick": [
+        50
+      ],
+      "pain_min": [
+        -10
+      ],
+      "speed_mod": [
+        -15,
+        -10
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "potion_incense",
+    "name": [
+      "熏香"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "desc": [
+      "你的大脑感到精力充沛，避免疲劳。"
+    ],
+    "remove_message": "香的效果会消失。",
+    "decay_messages": [
+      [
+        "熏香的效果正在消退。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "60 m",
+    "max_intensity": 60,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "str_mod": [
+        1
+      ],
+      "dex_mod": [
+        1
+      ],
+      "int_mod": [
+        -1,
+        0
+      ],
+      "per_mod": [
+        -1,
+        0
+      ],
+      "fatigue_min": [
+        -1
+      ],
+      "fatigue_tick": [
+        6
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "revenant_hunger",
+    "name": [
+      "报应饥饿"
+    ],
+    "desc": [
+      "对食物中毒和寄生虫有免疫力，增加饥饿感。不会清除预先存在的状况。"
+    ],
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "remove_message": "你对腐烂食物的渴望消退了。",
+    "blocks_effects": [
+      "poison",
+      "badpoison",
+      "foodpoison",
+      "paralyzepoison",
+      "bloodworms",
+      "paincysts",
+      "brainworms",
+      "tapeworm"
+    ],
+    "removes_effects": [
+      "hunger_full",
+      "hunger_engorged"
+    ],
+    "decay_messages": [
+      [
+        "你对腐烂食物的渴望开始减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "hunger_min": [
+        1
+      ],
+      "hunger_chance": [
+        18,
+        36
+      ],
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_chance": [
+        36,
+        72
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_lingering_chill",
+    "name": [
+      "挥之不去的寒意"
+    ],
+    "desc": [
+      "一股超凡脱俗的寒意渗透到你的内心深处，吞噬着你身体的生命！"
+    ],
+    "resist_traits": [
+      "ARCANA_INNERHEAT",
+      "ARCANA_INNERFIRE",
+      "ARCANA_DRAGONFIRE"
+    ],
+    "apply_message": "寒风刺骨！",
+    "remove_message": "超凡脱俗的寒冷离开了你的身体。",
+    "rating": "bad",
+    "max_duration": "30 s",
+    "base_mods": {
+      "speed_mod": [
+        -20,
+        -15
+      ],
+      "dex_mod": [
+        -1,
+        0
+      ],
+      "hurt_min": [
+        2,
+        1
+      ],
+      "hurt_chance": [
+        2,
+        3
+      ],
+      "hit_mod": [
+        -2
+      ],
+      "dodge_mod": [
+        -3
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "cold_ward",
+    "name": [
+      "御寒结界"
+    ],
+    "desc": [
+      "抵御寒冷的影响。"
+    ],
+    "remove_message": "有那么一刻，你感到空气中有一股可怕的寒意，因为寒冷防护结界渐渐褪去。",
+    "removes_effects": [
+      "cold",
+      "frostbite",
+      "frostbite_recovery",
+      "arcana_lingering_chill"
+    ],
+    "decay_messages": [
+      [
+        "增强你的御寒防护结界正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "cold_ward_true",
+    "name": [
+      "大御寒结界"
+    ],
+    "desc": [
+      "防止寒冷影响和任何直接损害来源。"
+    ],
+    "remove_message": "有那么一刻，你感到空气中有一股可怕的寒意，因为笼罩你的强效寒冷防护结界逐渐消失。",
+    "removes_effects": [
+      "cold",
+      "frostbite",
+      "frostbite_recovery",
+      "arcana_lingering_chill"
+    ],
+    "decay_messages": [
+      [
+        "你的御寒防护结界正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "flags": [
+      "COLD_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "cold_ward_hidden",
+    "removes_effects": [
+      "arcana_lingering_chill"
+    ],
+    "max_duration": "5 s"
+  },
+  {
+    "type": "effect_type",
+    "id": "free_action",
+    "name": [
+      "挣脱束缚"
+    ],
+    "desc": [
+      "防止麻痹和其他阻碍作用。"
+    ],
+    "remove_message": "你会感觉到你肌肉中超自然的紧绷感离开你的身体，因为麻痹防护结界在逐渐消退。",
+    "removes_effects": [
+      "downed",
+      "winded",
+      "stunned",
+      "dazed",
+      "bouldering",
+      "paralyzepoison",
+      "webbed",
+      "slimed",
+      "sap",
+      "crushed",
+      "relax_gas",
+      "grabbed"
+    ],
+    "decay_messages": [
+      [
+        "令你挣脱束缚的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "hardened_senses",
+    "name": [
+      "知觉硬化"
+    ],
+    "desc": [
+      "防止失明、耳聋、眩晕和眩晕。"
+    ],
+    "remove_message": "你会感觉到守卫你的视力和听力的病房逐渐消失。",
+    "removes_effects": [
+      "blind",
+      "deaf",
+      "stunned",
+      "dazed"
+    ],
+    "decay_messages": [
+      [
+        "你的感觉病房正在消失。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "heat_ward",
+    "name": [
+      "避热结界"
+    ],
+    "desc": [
+      "防止大多数热影响。"
+    ],
+    "remove_message": "你会感到一种奇怪的刺痛感，因为避热结界的效力正在消退。",
+    "removes_effects": [
+      "onfire",
+      "smoke",
+      "hot",
+      "blisters",
+      "hot_speed"
+    ],
+    "decay_messages": [
+      [
+        "避热结界的效力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "heat_ward_true",
+    "name": [
+      "防火结界"
+    ],
+    "desc": [
+      "对火和相关副作用完全免疫。"
+    ],
+    "remove_message": "你感觉到一种奇怪的刺痛感，因为火焰防护结界的效力正在消退。",
+    "removes_effects": [
+      "onfire",
+      "smoke",
+      "hot",
+      "blisters",
+      "hot_speed"
+    ],
+    "decay_messages": [
+      [
+        "火焰防护结界正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "flags": [
+      "HEAT_IMMUNE",
+      "HEATPROOF"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "heat_ward_hidden",
+    "removes_effects": [
+      "onfire",
+      "smoke",
+      "hot",
+      "blisters",
+      "hot_speed"
+    ],
+    "max_duration": "5 s",
+    "flags": [
+      "HEAT_IMMUNE",
+      "HEATPROOF"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "mask_blind_immunity",
+    "blocks_effects": [
+      "blind"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "heat_ward_dragonblood",
+    "name": [
+      "元素亲和力"
+    ],
+    "desc": [
+      "不再因中暑而减速。你仍然容易受到中暑的其他副作用的影响，在极端温度下可能会起水泡。"
+    ],
+    "removes_effects": [
+      "hot_speed"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "feather_fall_dragonblood",
+    "name": [
+      "龙翼"
+    ],
+    "desc": [
+      "抗坠落伤害。"
+    ],
+    "flags": [
+      "FEATHER_FALL"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "food_protect_dragonblood",
+    "blocks_effects": [
+      "tapeworm",
+      "bloodworms",
+      "brainworms",
+      "paincysts",
+      "foodpoison"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "blood_clarity",
+    "name": [
+      "净化血液"
+    ],
+    "desc": [
+      "防止寄生性和腐蚀性威胁，如Mycus。"
+    ],
+    "remove_message": "当保护性的魔力消失时，流经你血管的抚慰感就会消失。",
+    "resist_traits": [
+      "THRESH_MARLOSS",
+      "THRESH_MYCUS"
+    ],
+    "removes_effects": [
+      "spores",
+      "fungus",
+      "dermatik",
+      "formication",
+      "tapeworm",
+      "bloodworms",
+      "brainworms",
+      "paincysts"
+    ],
+    "decay_messages": [
+      [
+        "你施加的净化血液的效力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "hurt_min": [
+        0,
+        1
+      ],
+      "hurt_tick": [
+        0,
+        60
+      ],
+      "stamina_min": [
+        0,
+        -150
+      ],
+      "health_min": [
+        0,
+        -10
+      ],
+      "health_tick": [
+        0,
+        30
+      ],
+      "h_mod_min": [
+        0,
+        -10
+      ],
+      "h_mod_tick": [
+        0,
+        30
+      ],
+      "pain_min": [
+        0,
+        1
+      ],
+      "pain_tick": [
+        0,
+        5
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "acid_ward",
+    "name": [
+      "防腐蚀结界"
+    ],
+    "desc": [
+      "防止持续的酸影响。直接接触仍然会伤害你。"
+    ],
+    "remove_message": "当保护魔法消退时，你会感觉到皮肤上有刺痛感。",
+    "removes_effects": [
+      "corroding"
+    ],
+    "decay_messages": [
+      [
+        "增强你的防腐蚀防护结界的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "acid_ward_true",
+    "name": [
+      "防酸结界"
+    ],
+    "desc": [
+      "除了完全的抗酸性损伤外。"
+    ],
+    "remove_message": "当保护魔法消退时，你会感觉到皮肤上有刺痛感。",
+    "removes_effects": [
+      "corroding"
+    ],
+    "decay_messages": [
+      [
+        "增强你的防酸防护结界的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "flags": [
+      "ACID_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "acid_ward_hidden",
+    "removes_effects": [
+      "corroding"
+    ],
+    "max_duration": "5 s",
+    "flags": [
+      "ACID_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "poison_ward",
+    "name": [
+      "抗毒结界"
+    ],
+    "desc": [
+      "对有毒气体和毒液的保护，抑制辐射病的影响，同时稳定地减少累积辐射。"
+    ],
+    "remove_message": "当保护魔法消退时，你会感到暂时的虚弱。",
+    "removes_effects": [
+      "stung",
+      "poison",
+      "badpoison",
+      "paralyzepoison",
+      "teargas",
+      "migo_atmosphere",
+      "venom_dmg",
+      "venom_weaken",
+      "irradiated"
+    ],
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "rad_min": [
+        -1
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "poison_ward_hidden",
+    "removes_effects": [
+      "stung",
+      "poison",
+      "badpoison",
+      "paralyzepoison",
+      "teargas",
+      "migo_atmosphere",
+      "venom_dmg",
+      "venom_weaken",
+      "irradiated"
+    ],
+    "max_duration": "5 s"
+  },
+  {
+    "type": "effect_type",
+    "id": "cleric_warding",
+    "name": [
+      "辟邪结界"
+    ],
+    "desc": [
+      "防止各种异常影响。"
+    ],
+    "remove_message": "魔法保护消失了。",
+    "removes_effects": [
+      "darkness",
+      "rat",
+      "evil",
+      "arcana_evil_mimic",
+      "attention",
+      "teleglow",
+      "amigara",
+      "taint",
+      "tindrift"
+    ],
+    "decay_messages": [
+      [
+        "增强你抗邪防护结界的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "cleric_warding_true",
+    "name": [
+      "神圣结界"
+    ],
+    "desc": [
+      "对刀锋和子弹免疫，防止异常效应和冷损伤。"
+    ],
+    "remove_message": "包裹你身体的魔法保护会忽明忽暗。",
+    "removes_effects": [
+      "darkness",
+      "rat",
+      "evil",
+      "arcana_evil_mimic",
+      "attention",
+      "teleglow",
+      "amigara",
+      "taint",
+      "tindrift",
+      "archon_gaze_effect",
+      "chalice_offering_side_effects",
+      "blood_athame_side_effects"
+    ],
+    "decay_messages": [
+      [
+        "你的神圣防护结界正在衰弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "//": "Replace with resistances when implemented, physical immunities are way more OP than elemental immunities.",
+    "flags": [
+      "CUT_IMMUNE",
+      "STAB_IMMUNE",
+      "BULLET_IMMUNE",
+      "COLD_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "spell_might",
+    "name": [
+      "力量"
+    ],
+    "desc": [
+      "帷幕的布料织入你的身体。你的力量被魔法增强了。"
+    ],
+    "remove_message": "当你的魔法力量离开你时，你会感到虚弱。",
+    "decay_messages": [
+      [
+        "增强你力量的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "str_mod": [
+        1
+      ]
+    },
+    "scaling_mods": {
+      "str_mod": [
+        0.0825
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "spell_agility",
+    "name": [
+      "敏捷"
+    ],
+    "desc": [
+      "遥远王国的风在你身后。你的敏捷和速度被魔法增强了。"
+    ],
+    "remove_message": "当你的魔法感应敏捷离开你时，你会感到迟钝。",
+    "decay_messages": [
+      [
+        "增强你敏捷的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "dex_mod": [
+        1
+      ],
+      "speed_mod": [
+        3
+      ],
+      "stamina_min": [
+        1
+      ]
+    },
+    "scaling_mods": {
+      "dex_mod": [
+        0.0825
+      ],
+      "speed_mod": [
+        0.38
+      ],
+      "stamina_min": [
+        0.08
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "spell_insight",
+    "name": [
+      "洞察"
+    ],
+    "desc": [
+      "远方的眼睛将指引你。你的知觉被魔法增强了，在黑暗中你能看得很清楚。"
+    ],
+    "remove_message": "当你的魔法感应离开你的时候，你会感到麻木。",
+    "decay_messages": [
+      [
+        "增强你的洞察力的魔力正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "per_mod": [
+        1
+      ]
+    },
+    "scaling_mods": {
+      "per_mod": [
+        0.0825
+      ]
+    },
+    "flags": [
+      "NIGHT_VISION"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "spell_revelation",
+    "name": [
+      "神启"
+    ],
+    "desc": [
+      "一股奇怪的意识充斥着你的脑海。你的智力暂时被魔法增强，有助于施法和制造。"
+    ],
+    "remove_message": "事情开始恢复正常。",
+    "decay_messages": [
+      [
+        "你的启示咒语正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "360 m",
+    "max_intensity": 360,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "int_mod": [
+        1
+      ]
+    },
+    "scaling_mods": {
+      "int_mod": [
+        0.0275
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "spell_eclipse",
+    "name": [
+      "月蚀"
+    ],
+    "desc": [
+      "邪恶的力量为你提供燃料，以一种非自然的肾上腺素激增来强化你的身体。"
+    ],
+    "remove_message": "你感觉麻木了，被非自然魔法的重量所击退。",
+    "decay_messages": [
+      [
+        "日食的祝福正在减弱。",
+        "bad"
+      ]
+    ],
+    "blocks_effects": [
+      "bleed",
+      "winded",
+      "lack_sleep",
+      "sleep",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "pain_tick": [
+        10
+      ],
+      "pain_min": [
+        -5
+      ],
+      "int_mod": [
+        -4
+      ],
+      "per_mod": [
+        4
+      ],
+      "speed_mod": [
+        30
+      ],
+      "stamina_min": [
+        20
+      ],
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_tick": [
+        300
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "talisman_warding",
+    "name": [
+      "炼金结界"
+    ],
+    "desc": [
+      "暂时抵抗某些药剂的副作用。"
+    ],
+    "remove_message": "护身符的效果会消失。",
+    "decay_messages": [
+      [
+        "水符的祝福正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "talisman_pet_buff",
+    "name": [
+      "Defender's Ward"
+    ],
+    "desc": [
+      "Immunity to debuffs such as blindness, bleeding, stunning, etc.  Monsters (but not NPCs) additionally gain increased melee damage, accuracy, and dodge."
+    ],
+    "removes_effects": [
+      "bleed",
+      "blind",
+      "infected",
+      "bite",
+      "stunned",
+      "dazed",
+      "downed",
+      "poison",
+      "badpoison",
+      "smoke",
+      "boomered",
+      "glowing",
+      "taint",
+      "visuals"
+    ],
+    "blocks_effects": [
+      "bleed",
+      "blind",
+      "infected",
+      "bite",
+      "stunned",
+      "dazed",
+      "downed",
+      "poison",
+      "badpoison",
+      "smoke",
+      "boomered",
+      "glowing",
+      "taint",
+      "visuals"
+    ],
+    "base_mods": {
+      "hit_mod": [
+        5
+      ],
+      "dodge_mod": [
+        5
+      ],
+      "speed_mod": [
+        100
+      ],
+      "bash_mod": [
+        25
+      ]
+    },
+    "max_duration": "100 m"
+  },
+  {
+    "type": "effect_type",
+    "id": "dragonblood_clarity",
+    "name": [
+      "报应血"
+    ],
+    "desc": [
+      "对毒物、辐射和真菌的免疫力。"
+    ],
+    "remove_message": "你的血痕的保护作用会消退，在你的血管里留下短暂的瘙痒。",
+    "//": "Food poisoning and food parasites are already covered by Metabolic Adaptability.",
+    "removes_effects": [
+      "stung",
+      "poison",
+      "badpoison",
+      "paralyzepoison",
+      "teargas",
+      "migo_atmosphere",
+      "venom_dmg",
+      "venom_weaken",
+      "irradiated",
+      "spores",
+      "fungus",
+      "dermatik",
+      "formication",
+      "tapeworm",
+      "bloodworms",
+      "brainworms",
+      "paincysts"
+    ],
+    "decay_messages": [
+      [
+        "流过你血液的保护魔法开始减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "rad_min": [
+        -1
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "destructive_absorption_side_effects",
+    "name": [
+      "吸收后效应"
+    ],
+    "desc": [
+      "Rapidly recovers stamina, increases healthiness."
+    ],
+    "max_duration": "10 m",
+    "base_mods": {
+      "stamina_min": [
+        200
+      ],
+      "health_min": [
+        1
+      ],
+      "h_mod_min": [
+        1
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcane_healing_staunch",
+    "removes_effects": [
+      "bleed",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "max_duration": "1 s",
+    "base_mods": {
+      "pain_min": [
+        -5
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcane_healing_side_effects",
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "name": [
+      "愈合疲劳",
+      "治疗过度劳累",
+      "治疗过度劳累",
+      "治疗过度劳累",
+      "治疗过度劳累",
+      "治疗过度劳累"
+    ],
+    "desc": [
+      "利用来自外界的力量来治愈身体会使身心负担过重。现在感觉不太严重，但最好是恢复，除非是紧急情况。",
+      "从外而来的力量来治疗身体会减慢你的自然愈合，并使努力变得更加困难。",
+      "从外而来的力量来治疗身体会减慢你的自然愈合，并使努力变得更加困难。",
+      "从外而来的力量来治疗身体会减慢你的自然愈合，并使努力变得更加困难。",
+      "从外而来的力量来治疗身体会减慢你的自然愈合，并使努力变得更加困难。",
+      "从外而来的力量来治疗身体会减慢你的自然愈合，并使努力变得更加困难。"
+    ],
+    "max_intensity": 6,
+    "max_duration": "24 h",
+    "int_dur_factor": "2 h",
+    "base_mods": {
+      "health_min": [
+        -1
+      ],
+      "health_tick": [
+        1800,
+        2000
+      ],
+      "h_mod_min": [
+        -1
+      ],
+      "h_mod_tick": [
+        1800,
+        2000
+      ],
+      "stamina_min": [
+        -5
+      ],
+      "stamina_tick": [
+        10,
+        12
+      ]
+    },
+    "scaling_mods": {
+      "health_min": [
+        -1,
+        -0.8
+      ],
+      "h_mod_min": [
+        -1,
+        -0.8
+      ],
+      "stamina_min": [
+        -5
+      ],
+      "stamina_tick": [
+        -1,
+        -0.8
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcane_pulse_side_effects",
+    "//": "Proper Chosen are more acclimated to channeling He From Beyond The Veil's blessings.",
+    "resist_traits": [
+      "PROF_CHALICE",
+      "PROF_CHALICE2"
+    ],
+    "name": [
+      "Arcane Burnout"
+    ],
+    "desc": [
+      "人类的思想和身体并不是用来输送这种破坏性能量的管道。过度使用不会杀死你，但会让你更难集中精力施法。"
+    ],
+    "max_intensity": 6,
+    "max_duration": "24 h",
+    "int_dur_factor": "2 h",
+    "base_mods": {
+      "int_mod": [
+        -1
+      ],
+      "stamina_min": [
+        -5
+      ],
+      "pain_chance": [
+        1500,
+        2000
+      ],
+      "vomit_chance": [
+        2000,
+        2500
+      ],
+      "vomit_tick": [
+        60,
+        120
+      ]
+    },
+    "scaling_mods": {
+      "int_mod": [
+        -1.25,
+        -1
+      ],
+      "stamina_min": [
+        -2,
+        -1
+      ],
+      "pain_min": [
+        1,
+        0.5
+      ],
+      "pain_chance": [
+        -200,
+        100
+      ],
+      "vomit_chance": [
+        -200,
+        -100
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_aegis_mending",
+    "blocks_effects": [
+      "bleed",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "rating": "good"
+  },
+  {
+    "type": "effect_type",
+    "id": "drain_life_mending",
+    "removes_effects": [
+      "bleed",
+      "winded",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "rating": "good",
+    "max_duration": "15 s",
+    "base_mods": {
+      "pain_min": [
+        -3
+      ],
+      "stamina_min": [
+        30
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "sword_mending",
+    "removes_effects": [
+      "bleed",
+      "winded",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "rating": "good",
+    "max_duration": "15 s",
+    "base_mods": {
+      "pain_min": [
+        -6
+      ],
+      "stamina_min": [
+        60
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_wyrm_berserker_decay",
+    "name": [
+      "光环：深渊"
+    ],
+    "desc": [
+      "Constant pain and stamina recovery, in exchange for increased fatigue gain and steady healthiness decline."
+    ],
+    "base_mods": {
+      "pain_min": [
+        -1
+      ],
+      "pain_tick": [
+        30
+      ],
+      "stamina_min": [
+        30
+      ],
+      "health_min": [
+        -1
+      ],
+      "health_tick": [
+        125
+      ],
+      "h_mod_min": [
+        -1
+      ],
+      "h_mod_tick": [
+        125
+      ],
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_tick": [
+        125
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_invis",
+    "name": [
+      "幻觉斗篷"
+    ],
+    "desc": [
+      "光似乎以一种不自然的方式在你周围扭曲，使你看不见并保护你免受各种与感知有关的危险。"
+    ],
+    "remove_message": "你周围幻觉魔法的裹尸布会消失。",
+    "//": "Immunity to blindness in general is the only way to make an effect reliably protect against flashbangs, so best justification is to counter things that mess with vision as a whole.  Does NOT protect against Glimpse of The Beyond, just because the host can't see you doesn't mean the archon can't…",
+    "removes_effects": [
+      "glowy_led",
+      "laserlocked",
+      "was_laserlocked",
+      "glowing",
+      "attention",
+      "haslight",
+      "glare",
+      "snow_glare",
+      "blind",
+      "darkness",
+      "no_sight",
+      "visuals",
+      "hallu",
+      "taint"
+    ],
+    "decay_messages": [
+      [
+        "包围着你的幻想开始消失。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "per_mod": [
+        -2
+      ]
+    },
+    "flags": [
+      "INVISIBLE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_invis_lesser",
+    "name": [
+      "小幻觉斗篷"
+    ],
+    "desc": [
+      "光似乎以一种不自然的方式在你周围扭曲，使你看不见。"
+    ],
+    "removes_effects": [
+      "glowy_led",
+      "laserlocked",
+      "was_laserlocked",
+      "glowing",
+      "attention",
+      "haslight",
+      "taint"
+    ],
+    "flags": [
+      "INVISIBLE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "lightning_ward",
+    "name": [
+      "抗电结界"
+    ],
+    "desc": [
+      "完全抗闪电，减速。"
+    ],
+    "remove_message": "当你的保护魔法消退时，你会感到一阵电刺痛。",
+    "removes_effects": [
+      "zapped"
+    ],
+    "decay_messages": [
+      [
+        "雷击防护结界正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "base_mods": {
+      "dex_mod": [
+        -1
+      ],
+      "speed_mod": [
+        -10
+      ]
+    },
+    "flags": [
+      "ELECTRIC_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "lightning_ward_true",
+    "name": [
+      "大抗电结界"
+    ],
+    "desc": [
+      "完全抗闪电。"
+    ],
+    "remove_message": "当你的保护魔法消退时，你会感到一阵电刺痛。",
+    "removes_effects": [
+      "zapped"
+    ],
+    "decay_messages": [
+      [
+        "更大的抗电结界正在减弱。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "flags": [
+      "ELECTRIC_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "lightning_ward_hidden",
+    "removes_effects": [
+      "zapped"
+    ],
+    "max_duration": "5 s",
+    "flags": [
+      "ELECTRIC_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "archon_gaze_effect",
+    "//": "Regular Ward Against Evil will only protect you a bit, you need Holy Ward to actually stop the effect.  This will be relevant once I add an encounter you can access after restoring the ritual blade.",
+    "resist_effects": [
+      "cleric_warding"
+    ],
+    "name": [
+      "来自彼端的一瞥"
+    ],
+    "desc": [
+      "你引起了不属于这个世界的东西的注意…"
+    ],
+    "apply_message": "你觉得体内很冷…",
+    "remove_message": "你感到一种淡淡的解脱感笼罩着你。",
+    "miss_messages": [
+      [
+        "你视觉边缘的余像会分散你的注意力。",
+        10
+      ]
+    ],
+    "rating": "bad",
+    "max_duration": "250 m",
+    "max_intensity": 10,
+    "int_dur_factor": "25 m",
+    "base_mods": {
+      "int_mod": [
+        -1.5
+      ],
+      "per_mod": [
+        -1.5
+      ],
+      "vomit_chance": [
+        800
+      ],
+      "health_min": [
+        -6,
+        -5
+      ],
+      "health_chance": [
+        400
+      ],
+      "h_mod_min": [
+        -6,
+        -5
+      ],
+      "h_mod_chance": [
+        400
+      ],
+      "rad_min": [
+        5,
+        4
+      ],
+      "rad_chance": [
+        1000
+      ]
+    },
+    "scaling_mods": {
+      "int_mod": [
+        -0.75,
+        -0.6
+      ],
+      "per_mod": [
+        -0.75,
+        -0.6
+      ],
+      "speed_mod": [
+        -4,
+        -3
+      ],
+      "vomit_chance": [
+        -120,
+        -115
+      ],
+      "health_chance": [
+        -40,
+        -35
+      ],
+      "h_mod_chance": [
+        -40,
+        -35
+      ],
+      "rad_chance": [
+        -100,
+        -95
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "chalice_offering_side_effects",
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "resist_traits": [
+      "PROF_CHALICE",
+      "PROF_CHALICE2",
+      "THRESH_VEIL"
+    ],
+    "name": [
+      "",
+      "超自然的弱点",
+      "超自然的弱点",
+      "超自然的弱点",
+      "超自然疾病",
+      "超自然疾病",
+      "超自然疾病",
+      "超凡脱俗",
+      "超凡脱俗",
+      "超凡脱俗",
+      "超凡脱俗",
+      "超凡脱俗",
+      "超凡脱俗",
+      "严厉的超凡脱俗的奉献"
+    ],
+    "desc": [
+      "",
+      "你最近越来越累了，很难想清楚。过度使用圣杯似乎对你有影响。",
+      "开始越来越难集中注意力在你的周围。也许用你自己的生命力量为圣杯加油是个坏主意…。",
+      "即使你没有精疲力尽，你也很难保持清醒。如果你继续过度使用那该死的圣杯，你会死的！",
+      "你感到后脑有一种奇怪的感觉，一种无法解释的虚幻疼痛。就好像你的存在正在崩溃。",
+      "你感到后脑有一种奇怪的感觉，一种无法解释的虚幻疼痛。就好像你的存在正在崩溃。",
+      "你感到后脑有一种奇怪的感觉，一种无法解释的虚幻疼痛。就好像你的存在正在崩溃。",
+      "你的源质不过是柴薪…"
+    ],
+    "rating": "bad",
+    "max_duration": "49 d",
+    "max_intensity": 7,
+    "int_dur_factor": "7 d",
+    "//": "This will EVENTUALLY kill you if you max out the effects, unless you're abusing magical healing.",
+    "base_mods": {
+      "fatigue_min": [
+        1
+      ],
+      "fatigue_chance": [
+        30
+      ],
+      "fatigue_chance_bot": [
+        100
+      ],
+      "fatigue_tick": [
+        1000
+      ],
+      "int_mod": [
+        -0.25
+      ],
+      "sleep_min": [
+        10
+      ],
+      "sleep_max": [
+        30
+      ],
+      "sleep_chance": [
+        -10
+      ],
+      "sleep_chance_bot": [
+        100
+      ],
+      "sleep_tick": [
+        1800
+      ],
+      "hurt_min": [
+        1
+      ],
+      "hurt_chance": [
+        -45
+      ],
+      "hurt_chance_bot": [
+        100
+      ],
+      "hurt_tick": [
+        3600
+      ]
+    },
+    "scaling_mods": {
+      "fatigue_chance": [
+        10,
+        8
+      ],
+      "fatigue_tick": [
+        -100,
+        -80
+      ],
+      "int_mod": [
+        -0.75,
+        -0.6
+      ],
+      "per_mod": [
+        -0.75,
+        -0.6
+      ],
+      "sleep_chance": [
+        5,
+        4
+      ],
+      "hurt_chance": [
+        15,
+        10
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "blood_athame_side_effects",
+    "resist_effects": [
+      "talisman_warding"
+    ],
+    "resist_traits": [
+      "PROF_SANGUINE",
+      "THRESH_DRAGONBLOOD"
+    ],
+    "//": "This won't kill you, but the health and stat penalties will make you wish it did later on down the line.",
+    "name": [
+      "",
+      "奇异性贫血",
+      "奇异性贫血",
+      "奇异性贫血",
+      "奇异性贫血",
+      "严重奇异性贫血"
+    ],
+    "desc": [
+      "",
+      "你感觉你的肌肉最近更疲劳了，并且你感到有点恶心。也许过度使用这个仪式刀对你产生了一些影响…",
+      "你身体的虚弱加剧了，你一直有饥饿感。看来如果过度使用血魔法会有不良后果。",
+      "你的身体会感到乏力和精疲力竭，而且你越依赖血魔法，它似乎变得越来越糟糕。少依赖它可能有助于减轻你的痛苦。",
+      "你觉得你的身体在挣扎着支撑着你的身体。暂时停止使用那个该死的东西也许是个好主意…",
+      "使用那把仪式刀这么多次是一个可怕的错误，你觉得自己已经被榨了个半死…"
+    ],
+    "rating": "bad",
+    "max_duration": "30 d",
+    "max_intensity": 6,
+    "int_dur_factor": "5 d",
+    "base_mods": {
+      "health_min": [
+        1
+      ],
+      "health_tick": [
+        3600
+      ],
+      "h_mod_min": [
+        1
+      ],
+      "h_mod_tick": [
+        3600
+      ],
+      "hunger_min": [
+        1
+      ],
+      "hunger_chance": [
+        -20
+      ],
+      "hunger_chance_bot": [
+        100
+      ],
+      "hunger_tick": [
+        300
+      ],
+      "dex_mod": [
+        0.75
+      ],
+      "thirst_min": [
+        1
+      ],
+      "thirst_chance": [
+        -120
+      ],
+      "thirst_chance_bot": [
+        100
+      ],
+      "thirst_tick": [
+        600
+      ]
+    },
+    "scaling_mods": {
+      "health_tick": [
+        -360,
+        -300
+      ],
+      "h_mod_tick": [
+        -360,
+        -300
+      ],
+      "str_mod": [
+        -0.75,
+        -0.6
+      ],
+      "hunger_chance": [
+        20,
+        15
+      ],
+      "dex_mod": [
+        -0.75,
+        -0.6
+      ],
+      "thirst_chance": [
+        40,
+        35
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_scroll_nature_effect",
+    "//": "Explicitly punish Mycus players who will be immune to mutation, that's what you get for channeling a rival interloper's nature magic.",
+    "resist_traits": [
+      "THRESH_MARLOSS",
+      "THRESH_MYCUS"
+    ],
+    "removes_effects": [
+      "blind",
+      "deaf",
+      "infected",
+      "bite",
+      "bleed",
+      "poison",
+      "badpoison",
+      "spores",
+      "fungus",
+      "redcells_anemia",
+      "hypovolemia"
+    ],
+    "rating": "good",
+    "base_mods": {
+      "rad_min": [
+        -25,
+        25
+      ],
+      "fatigue_min": [
+        0,
+        50
+      ],
+      "health_min": [
+        0,
+        -10
+      ],
+      "h_mod_min": [
+        0,
+        -10
+      ],
+      "pain_min": [
+        0,
+        10
+      ],
+      "hunger_min": [
+        0,
+        25
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_evil_mimic",
+    "resist_effects": [
+      "arcana_evil_mimic_active"
+    ],
+    "apply_message": "你感觉到某种恶灵的存在……",
+    "rating": "bad",
+    "max_duration": "100 h",
+    "max_intensity": 25,
+    "int_dur_factor": "1 h",
+    "base_mods": {
+      "str_mod": [
+        2
+      ],
+      "dex_mod": [
+        1
+      ],
+      "int_mod": [
+        -1
+      ],
+      "per_mod": [
+        -1
+      ],
+      "fatigue_tick": [
+        1800
+      ],
+      "fatigue_chance": [
+        6,
+        12
+      ]
+    },
+    "scaling_mods": {
+      "str_mod": [
+        -0.24,
+        0.12
+      ],
+      "dex_mod": [
+        -0.2,
+        0.12
+      ],
+      "int_mod": [
+        -0.24
+      ],
+      "per_mod": [
+        -0.2
+      ],
+      "stamina_min": [
+        2.5
+      ],
+      "fatigue_min": [
+        0.25
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_evil_mimic_active",
+    "max_duration": "4 s"
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_moonstone_touch",
+    "max_duration": "4 s",
+    "base_mods": {
+      "health_min": [
+        1
+      ],
+      "h_mod_min": [
+        1
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_mech_laser_immunities",
+    "name": [
+      "环境屏蔽"
+    ],
+    "desc": [
+      "一个由你的机甲投射的屏障现在提供了对酸和火的抵抗力，以及对有毒气体的免疫力。同时保护你不被蒙蔽，并抵消坠落伤害。"
+    ],
+    "//": "Protects against blindness since flares can dazzle targets, feather fall effect since mech is supposed to be able to fly.  Some effects of Free Action, Clarity of Blood, Ward Against Poison, Ward Against Fire, and Ward Against Acid.",
+    "blocks_effects": [
+      "blind",
+      "downed",
+      "slimed",
+      "sap",
+      "relax_gas",
+      "grabbed",
+      "onfire",
+      "smoke",
+      "corroding",
+      "spores",
+      "stung",
+      "poison",
+      "badpoison",
+      "teargas",
+      "migo_atmosphere"
+    ],
+    "flags": [
+      "FEATHER_FALL",
+      "COLD_IMMUNE"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "adrenaline_arcana",
+    "name": [
+      "杀意涌动"
+    ],
+    "desc": [
+      "你会感觉到一股超凡脱俗的肾上腺素。"
+    ],
+    "remove_message": "你体内那超凡脱俗的肾上腺素消失了。",
+    "decay_messages": [
+      [
+        "你可以感觉到肾上腺素不自然的激增。",
+        "bad"
+      ]
+    ],
+    "rating": "good",
+    "max_duration": "120 m",
+    "max_intensity": 120,
+    "int_dur_factor": "1 m",
+    "removes_effects": [
+      "winded"
+    ],
+    "base_mods": {
+      "speed_mod": [
+        25
+      ],
+      "str_mod": [
+        2
+      ],
+      "dex_mod": [
+        2
+      ],
+      "per_mod": [
+        1
+      ],
+      "stamina_min": [
+        5
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_veilblade_halt_portal_storms",
+    "name": [
+      "以太指引"
+    ],
+    "desc": [
+      "如果你掌握了这把刀的秘密，挥舞它将迫使传送门风暴比正常情况更早烧毁。只有有价值的人才会得到保护。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "arcana_divine_healing_effects",
+    "name": [
+      "尺寸修补"
+    ],
+    "desc": [
+      "持续稳定恢复体力、疼痛和辐射，对出血、中毒和感染具有免疫力。"
+    ],
+    "max_duration": "30 m",
+    "max_intensity": 30,
+    "int_dur_factor": "1 m",
+    "removes_effects": [
+      "poison",
+      "badpoison",
+      "bite",
+      "infected",
+      "fungus",
+      "bleed",
+      "common_cold",
+      "flu",
+      "tetanus"
+    ],
+    "base_mods": {
+      "stamina_min": [
+        25
+      ],
+      "pain_min": [
+        -1
+      ],
+      "pain_tick": [
+        10
+      ],
+      "rad_min": [
+        -1
+      ],
+      "rad_tick": [
+        25
+      ],
+      "health_min": [
+        1
+      ],
+      "health_tick": [
+        25
+      ],
+      "h_mod_min": [
+        1
+      ],
+      "h_mod_tick": [
+        25
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "sent_to_hermit",
+    "//": "This marks a player as having been led to The Hermit via a quest chain, no name or description since this one is player-side.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_inquire_denied",
+    "//": "This marks a player as having asking The Hermit for personal information and failed the roll, no name or description since this one is player-side.  Intended duration 3 hours."
+  },
+  {
+    "type": "effect_type",
+    "id": "shrike_inquire_denied",
+    "//": "This marks a player as having asking Elena for intel and failed the roll, no name or description since this one is player-side.  Intended duration 3 hours."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_earned_trust_1",
+    "//": "This marks a player as having talked The Hermit into revealing general familiarity with the arcane.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_earned_trust_2",
+    "//": "This marks a player as having talked The Hermit into revealing their affiliation with the Keepers of The Oath, opening up quests.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_stage_1",
+    "name": [
+      "任务阶段1"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's quest progression, changing dialogue.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_quest_backdoor",
+    "//": "This marks a player as having talked The Hermit into helping an illiterate character complete the ritual.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_has_sanguine_codex",
+    "name": [
+      "拥有猩红法典"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's progress through the ritual.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_has_blood_essence",
+    "name": [
+      "拥有猩血源质"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's progress through the ritual.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_has_salt",
+    "name": [
+      "Has Salt"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's progress through the ritual.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_stage_2",
+    "//": "AI tag marking The Hermit's quest progression, changing dialogue.  Intended to be permanent.  Also given to players for achievement tracking purposes."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_stage_3",
+    "name": [
+      "任务阶段3"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's quest progression, changing dialogue.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_stage_failure",
+    "name": [
+      "任务阶段失败"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's quest progression, changing dialogue.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_stage_3_backdoor",
+    "//": "Effect for players, confirms that the hermit has given this specific player the restored ritual blade, beginning the backdoor quest.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "hermit_stage_4",
+    "name": [
+      "任务阶段4"
+    ],
+    "desc": [
+      "AI tag marking The Hermit's quest progression, changing dialogue.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "rural_church_aware",
+    "//": "Effect for both players and NPCs, to filter out whether the rural church has already spawned vs new players asking about the structure, and used by The Deacon to change dialogue after he's heard back from Sofia.  Intended to be permanent.  No name or description since players will get it too."
+  },
+  {
+    "type": "effect_type",
+    "id": "already_asked_deacon",
+    "//": "Effect for players, filters out dialogue in The Deacon's talk topic, once the player has already been directed to the rural church.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "sofia_deacon_message",
+    "//": "Effect for players, transmits mission info from Sofia to the Deacon.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "sofia_motive_explained",
+    "//": "Effect for both players and NPCs, for Sofia it filters out sanguinist and Keeper players that have explained their motivation for visiting the holdout."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_hunter_motive",
+    "//": "Effect for players, marks certain professions as having explained to the mage hunter guards why their mere presence gives them the heebie-jeebies.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_1",
+    "//": "Effect for players, marks them as being trustworthy and known to Sofia's camp.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_receipt",
+    "//": "Effect for both players and NPCs, changes dialogue for both the Evac Merchant and Sofia.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_3_recruited",
+    "//": "Effect for players, indicates that they asked one of the guards to assist in a hunt.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_3_recruited_2",
+    "//": "Effect for players, indicates that they asked another guard to assist in a hunt.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_3_recruited_3",
+    "//": "Effect for players, indicates that they asked another guard to assist in a hunt.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_3",
+    "name": [
+      "任务印记器"
+    ],
+    "desc": [
+      "AI tag marking that Sofia has attracted the first wave of allies to the rural church.  Also used to indicate to Jonathan that their third mission has been completed.  Intended to be permanent.  This is a bug if you have it."
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_sofia_3",
+    "//": "Effect for players, tracks having completed Sofia's third mission for achievement tracking.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_johnathan_3",
+    "//": "Effect for players, tracks having completed Johnathan's third mission for achievement tracking.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_mission_sofia_7",
+    "//": "Effect for players, tracks having completed Sofia's final mission for achievement tracking.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_sofia_notes_given",
+    "//": "Effect for players, indicates that Sofia has already given the player a copy of Apprentice's Notes.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_sofia_traded",
+    "//": "Effect for players, populates Sofia's initial menu with the trade option.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_seeker_traded",
+    "//": "Effect for players, populates Matthew's initial menu with the trade option.  Intended to be permanent."
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_purifier_making_item",
+    "name": [
+      "忙着做一些特别的事情"
+    ],
+    "desc": [
+      "AI标记Nicholas忙于修补您的任务奖励。预期持续时间为3天。这是一个错误，如果你有它。"
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_purifier_kairos",
+    "//": "This marks a player as having completed Nicholas' final mission and received the item made afterward, used mainly for achievement tracking.  Intended to be permanent."
+  }
+]

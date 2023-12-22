@@ -1,0 +1,1221 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_MAGE_HUNTER",
+    "dynamic_line": {
+      "u_has_effect": "cf_mission_1",
+      "yes": [
+        "我很高兴你现在还完好无损。",
+        "很高兴看到你还活得好好的。",
+        {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ],
+          "yes": {
+            "u_male": "Welcome back, Brother.",
+            "no": "Welcome back, Sister."
+          },
+          "no": "Welcome back."
+        },
+        {
+          "u_has_trait": "PROF_SANGUINE",
+          "yes": [
+            "I never thought we'd end up working together.  A welcome reprieve, I suppose.",
+            "I'm glad we aren't fighting each other for once."
+          ],
+          "no": "Thank you once again for your help here."
+        }
+      ],
+      "no": {
+        "u_has_effect": "cf_hunter_motive",
+        "yes": [
+          "再次向你问好。",
+          "只要你不惹麻烦，这里欢迎你。",
+          "你最好先和麦金农领主谈谈。",
+          "只要你不惹麻烦，这里欢迎你。"
+        ],
+        "no": {
+          "u_has_any_trait": [
+            "PROF_SANGUINE",
+            "THRESH_DRAGONBLOOD"
+          ],
+          "yes": [
+            "别惹麻烦，血法师。",
+            "我与你无话可说，猩红教徒。",
+            "即使没有面具，我也能感觉到血魔法的污染。你为什么来这里?",
+            "如果不是麦金农领主的命令，我会当场杀了你。你想要什么？",
+            "我们会容忍你的存在，只要你别露出任何意图，但是我们盯着你呢，猩红教徒。"
+          ],
+          "no": {
+            "u_has_any_trait": [
+              "PROF_ARCANIST2",
+              "THRESH_VEIL"
+            ],
+            "yes": [
+              "你身上有些不对劲的东西。别在这撒野…",
+              "我会盯着你。你在这儿干什么？",
+              "如果不是索菲亚的命令，我就得在你身上寻找任何危险的魔法。别让我后悔。",
+              "我能感觉到你身怀危险的魔法。小心点，这是神圣之地。",
+              "你的一些东西让我感到不适…"
+            ],
+            "no": [
+              "你好。",
+              "你好。如果需要，欢迎你逗留。",
+              "一个访客? 和麦金农领主谈谈吧，她可以回答你的任何问题。",
+              "欢迎光临。如果你是想做买卖，恐怕我们没什么货品。",
+              {
+                "u_has_any_trait": [
+                  "PROF_CLEANSINGFLAME",
+                  "PROF_CLEANSINGFLAME2"
+                ],
+                "yes": {
+                  "u_male": [
+                    "Welcome, Brother.  This is our sanctum, for now.",
+                    "Greetings, Brother.  I'm glad we aren't the only ones left."
+                  ],
+                  "no": [
+                    "Welcome, Sister.  This is our sanctum, for now.",
+                    "Greetings, Sister.  I'm glad we aren't the only ones left."
+                  ]
+                },
+                "no": "Cause no trouble, and you will be welcome here."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "[任务]约翰纳森说我应该请你们中的一个帮忙？",
+        "topic": "TALK_MAGE_HUNTER_RECRUIT_2",
+        "effect": {
+          "u_add_effect": "cf_mission_3_recruited_3",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_CF_GM_4"
+            },
+            {
+              "not": {
+                "u_has_effect": "cf_mission_3_recruited_3"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "[任务]约翰纳森说我应该请你们中的一个帮忙？",
+        "topic": "TALK_MAGE_HUNTER_RECRUIT_2",
+        "effect": {
+          "u_add_effect": "cf_mission_3_recruited_2",
+          "duration": "PERMANENT"
+        },
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_mission": "MISSION_CF_GM_3"
+                },
+                {
+                  "u_has_mission": "MISSION_CF_GM_4"
+                }
+              ]
+            },
+            {
+              "not": {
+                "u_has_effect": "cf_mission_3_recruited_2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "索菲亚说我应该请你们中的一个帮忙？",
+        "topic": "TALK_MAGE_HUNTER_RECRUIT",
+        "condition": {
+          "and": [
+            {
+              "u_has_mission": "MISSION_CF_REP_3"
+            },
+            {
+              "not": {
+                "u_has_effect": "cf_mission_3_recruited"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "这是哪里？",
+        "topic": "TALK_MAGE_HUNTER_WHERE"
+      },
+      {
+        "text": "你们是谁啊？",
+        "topic": "TALK_MAGE_HUNTER_WHO",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ]
+          }
+        }
+      },
+      {
+        "text": "我能帮上什么忙？",
+        "topic": "TALK_MAGE_HUNTER_HELP"
+      },
+      {
+        "text": "我们还剩下什么？",
+        "topic": "TALK_MAGE_HUNTER_REMAIN",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "我不是来找麻烦的。为什么会有这样的敌意？",
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "not": {
+                "u_has_effect": "cf_hunter_motive"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "PROF_SANGUINE"
+              }
+            },
+            {
+              "u_has_any_trait": [
+                "THRESH_DRAGONBLOOD",
+                "PROF_ARCANIST2",
+                "THRESH_VEIL"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "text": "我不是来和你战斗的，猎人。",
+        "topic": "TALK_MAGE_HUNTER_SANGUINE",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        }
+      },
+      {
+        "text": "把你的态度拿出来，法师猎人。",
+        "topic": "TALK_MAGE_HUNTER_INSULT",
+        "opinion": {
+          "value": -3,
+          "anger": 1
+        },
+        "effect": [
+          {
+            "u_faction_rep": -1
+          }
+        ],
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        }
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_RECRUIT",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "只要太阳照耀地球。我准备履行我的职责。",
+      "就这样吧。等你准备好了。",
+      "迪伊·瓦特。走吧。",
+      "我们会设法的，但谢谢你。跟索菲亚谈谈，她可能有事要你做。",
+      {
+        "u_has_trait": "PROF_CLEANSINGFLAME",
+        "yes": {
+          "u_male": "As you see fit, Brother.",
+          "no": "As you see fit, Sister."
+        },
+        "no": "As you see fit."
+      },
+      {
+        "u_has_trait": "PROF_SANGUINE",
+        "yes": [
+          "I sure hope Sofia knows what she's doing… let's go then.",
+          "Alright.  Stay in my sight.",
+          "I see.  Be careful, and remember.  This thing is a threat, not something to toy around with."
+        ],
+        "no": "At your command, then."
+      }
+    ],
+    "responses": [
+      {
+        "text": "一起走吧。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "u_add_effect": "cf_mission_3_recruited",
+            "duration": "PERMANENT"
+          },
+          "follow"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_RECRUIT_2",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "只要太阳照耀地球。我准备履行我的职责。",
+      "等你准备好了。",
+      "迪伊·瓦特。带路。",
+      {
+        "u_has_trait": "PROF_CLEANSINGFLAME",
+        "yes": {
+          "u_male": "As you see fit, Brother.",
+          "no": "As you see fit, Sister."
+        },
+        "no": "As you see fit."
+      },
+      {
+        "u_has_trait": "PROF_SANGUINE",
+        "yes": [
+          "If the Grandmaster trusts your judgment, so be it.",
+          "Alright.  Stay in my sight.",
+          {
+            "u_has_mission": "MISSION_CF_GM_3",
+            "yes": "I see.  You know full well how dangerous these sanguinists can be, be on your guard.",
+            "no": "I see.  I hope you are prepared for this, be on your guard."
+          }
+        ],
+        "no": {
+          "u_has_mission": "MISSION_CF_GM_3",
+          "yes": "May the blood mages find justice, under the hammer of the gods.",
+          "no": "May we find peace, through bringing light into unholy darkness."
+        }
+      }
+    ],
+    "responses": [
+      {
+        "text": "一起走吧。",
+        "topic": "TALK_DONE",
+        "effect": "follow"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "似乎是一座古老的教堂。我们能找到的最好的避难所。",
+      "当地的教区教堂，圣地是一个避难所的好地方，它是一座抵抗世俗威胁的坚固建筑。",
+      "教堂。为了更好地避风，他们搬了一些东西，其他一些人也加入了自己的个人风格。毕竟，在许多信仰中…",
+      "现在，我们的圣所。城市变得太危险了。",
+      "我对这个地方不太了解。Thane McKinnon可能会告诉你更多，我想。"
+    ],
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_HELP",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "我没有工作给你。",
+      "恐怕你帮不了我什么忙。",
+      "和塔恩·麦金农或其他负责人谈谈，他们应该有你可以帮忙的东西。",
+      "如果你需要，这里的其他人应该有工作。",
+      "我们会设法的，但谢谢你。跟索菲亚谈谈，她可能有事要你做。",
+      {
+        "u_has_trait": "PROF_SANGUINE",
+        "yes": {
+          "u_has_effect": "cf_mission_1",
+          "yes": [
+            "A pleasant surprise surprise to hear.  I have nothing for you however, speak to the others in charge here.",
+            "You know the drill.  Speak with Thane McKinnon.",
+            "I sure hope Sofia knows what she's doing …right.  Talk to her if you're looking for work."
+          ],
+          "no": [
+            "You?  A blood mage? Is this a trick of some kind?  If you're honest about it, speak with those in charge here.",
+            "Never thought I'd hear that from a blood mage.  Speak with Thane McKinnon.  If this is a trick of some kind, remember.  We.  Are.  Watching you.",
+            "I have nothing for you, sanguinist."
+          ]
+        },
+        "no": "I have nothing for you, sadly."
+      }
+    ],
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_WHO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": {
+        "u_has_effect": "cf_mission_1",
+        "yes": [
+          "以前从未遇到过猎人？考虑到你为我们所做的工作，我想你没有这么做是很幸运的。",
+          "你已经看到我们是谁了。虽然我很感谢你与我们结盟，但不要忘记，我们的骑士团是为了应对乐观的骑士团对他人的掠夺而成立的。",
+          "现在，除了收拾残局，我想幸存者和其他人一样，别无选择。",
+          "我们的使命是尽我们所能保护他人免受任何危险。我很高兴你没有像你的许多同僚那样成为我们的敌人。"
+        ],
+        "no": [
+          "以前从未遇到过猎人，乐观主义者？我想，活着讲述这个故事的血法师并不多。",
+          "我们的命令的目的是追捕像你的命令一样的威胁。你在这里的时候要记住这一点。",
+          "我们是邪恶和超凡的猎人，如果你制造麻烦，你将与许多遇到我们的血法师分享命运。",
+          "如果不是塞恩·麦金农的命令，在你有机会问之前，这个问题的答案将是“你最可怕的噩梦”。"
+        ]
+      },
+      "no": [
+        "猎杀来世怪物。在这样的时代，这是我们至少能做的。",
+        "信仰众多，目标一致。Thane McKinnon会更好地告诉你更多。",
+        "在这一切开始之前，不同宗教团体的聚会。恐怕在我来之前。",
+        "幸存者，现在。现在所有这些都很重要，只要我们在这个过程中不放弃我们的职责。",
+        "你见过怪物，对吧？也许是奇怪的事情，甚至是超自然的？我们的目的是尽我们所能，保护人们免受类似事件的伤害。"
+      ]
+    },
+    "responses": [
+      {
+        "text": "你知道吗，你可以操你自己。",
+        "topic": "TALK_MAGE_HUNTER_INSULT",
+        "opinion": {
+          "value": -3,
+          "anger": 1
+        },
+        "effect": [
+          {
+            "u_faction_rep": -1
+          }
+        ],
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        }
+      },
+      {
+        "text": "…",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        },
+        "topic": "TALK_MAGE_HUNTER"
+      },
+      {
+        "text": "我懂了。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_REMAIN",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "自从这场混乱开始以来，你是我们狩猎队之外的第一位兄弟。我希望我能告诉你更多。",
+      "如果我们中有人知道的话，塔恩·麦金农会的。问她。",
+      "我希望我能确定。索菲亚仍然相信还有其他人在那里，我想你的到来证实了这一点。除此之外，我们将拭目以待。",
+      "一定有。我不能确定，但上帝保佑我们不能成为剩下的一切…"
+    ],
+    "responses": [
+      {
+        "text": "你还坚持信仰吗？",
+        "topic": "TALK_MAGE_HUNTER_FAITH"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_FAITH",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "只要太阳照耀地球。我们还没摆脱这一切。",
+      "无论我信仰什么，都要平等地尊重神。我们不会偏离目标。",
+      "十字架和锤子，新月和大门。以及其他一些超越创始人的信仰。我们仍然站在一起。",
+      "我们没有动摇。索菲亚已经注意到了。"
+    ],
+    "responses": [
+      {
+        "text": "好。",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": [
+        "你的身体上有血魔法留下的伤痕。我为什么要相信你？",
+        "那么告诉我，为什么你会受到只有强大的血魔法才能产生的东西的折磨。",
+        "你身上的魔法印记我们只在“猩红教派”所见过。请解释一下。"
+      ],
+      "no": [
+        "我感受到你蕴含的魔力并不属于这个世界。那是什么？",
+        "我很抱歉。我能感觉到你身上有某种奇怪的力量，这可不是什么好兆头。你能解释一下原因吗?",
+        "你有一种超凡脱俗的感觉。我们有无数个对此类事情保持警惕的理由。这是什么原因？"
+      ]
+    },
+    "responses": [
+      {
+        "text": "我可以向你保证，我不是他们中的一员。",
+        "condition": {
+          "u_has_trait": "THRESH_DRAGONBLOOD"
+        },
+        "switch": true,
+        "effect": {
+          "u_add_effect": "cf_hunter_motive",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY_DRAGONBLOOD"
+      },
+      {
+        "text": "我被帷幕彼端古神选中了。",
+        "condition": {
+          "u_has_trait": "THRESH_VEIL"
+        },
+        "effect": {
+          "u_add_effect": "cf_hunter_motive",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY_VEIL"
+      },
+      {
+        "text": "我是一个神秘主义者的学生，受过召唤术的训练。",
+        "condition": {
+          "u_has_trait": "PROF_ARCANIST2"
+        },
+        "switch": true,
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY_ARCANIST"
+      },
+      {
+        "text": "我不需要向你解释任何事情。",
+        "opinion": {
+          "value": -1,
+          "trust": -1
+        },
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY_SECRETS"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY_DRAGONBLOOD",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "在这件事上我愿意相信你。我们在这里冒了很大的风险，我希望索菲亚的判断是正确的…",
+      "你的改变讲述了一个危险的魔法故事。但我能感觉到，你缺乏那种弥漫在乐观派成员身上的污点。别惹麻烦，欢迎你来。",
+      "我不知道你们是怎么变成这样的，但正如我们的信条所教导的那样，“不要对被外界腐蚀的人怀有恶意，因为后果是他们自己的惩罚。”只要你不证明我们的宽大被误导，我们欢迎你来这里。"
+    ],
+    "responses": [
+      {
+        "text": "了解。",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY_VEIL",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "我懂了。我对你没有恶意，不管我们过去与你的信仰有什么冲突。你还是人类。正如信条所说，“抛开你的分裂和冲突”。",
+      "理解。我相信你的主人会指引你走上正确的道路。当你有机会的时候，和塔恩·麦金农谈谈，她可能知道该怎么做。祝你好运。",
+      "你玩的是危险的力量，守门员。即使你以前不是他们订单的一部分，你现在实际上是他们订单的一部分。不管怎样，这总比一个乐观主义者好。在这里，我们不是敌人。愿你平安。",
+      "这就可以解释了。我对你服务的那家有保留意见，但只要你不造成伤害，我们就有更大的事情要担心。不管你是不是守门员，这里都欢迎你。愿上帝指引我们俩。"
+    ],
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY_ARCANIST",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "这就是原因。通常情况下，我会要求你交出任何与你的职业相关的物品，因为它们在坏人手中非常危险。索菲亚要求我们在未经她同意的情况下推迟搜索。",
+      "这种魔法如果被滥用，可能会非常危险，并且会对其实践者产生持久的影响。不囤积这种贸易工具是明智的，但我不能强迫你交出这种违禁品。至少没有索菲亚的。"
+    ],
+    "responses": [
+      {
+        "text": "如果我有这种东西，你能接受吗？",
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY_CONTRABAND"
+      },
+      {
+        "text": "我懂了。那我就和她谈谈。",
+        "effect": {
+          "u_add_effect": "cf_hunter_motive",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY_CONTRABAND",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "我希望你能做出这样的姿态。贸易中常用的工具是危险的，但我建议你去索菲亚那里交换这些东西。如果你允许的话，我会接受《普通召唤师》的副本。掌握未知。如果你有一份要交出的话，我会尽可能地赔偿你。",
+      "如果你愿意放弃召唤师的书，那就这样吧。召唤铭文本身由索菲亚这样更有经验的人更好地处理，但我会报答你一份《掌握未知》的副本。",
+      "如果你想把魔术师的遗物托付给其他人保管，请告诉索菲亚，但如果你手头有一本，我可以接受这本书。既然这是自愿投降，我将尽我所能赔偿你。"
+    ],
+    "responses": [
+      {
+        "text": "好的，给你。",
+        "condition": {
+          "u_has_item": "book_summoning"
+        },
+        "effect": {
+          "u_consume_item": "book_summoning"
+        },
+        "topic": "TALK_MAGE_HUNTER_OTHERWORLDLY_SURRENDER"
+      },
+      {
+        "text": "很好。我应该和索菲亚谈谈。",
+        "effect": {
+          "u_add_effect": "cf_hunter_motive",
+          "duration": "PERMANENT"
+        },
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY_SURRENDER",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "非常感谢。索菲亚和我们订单中的其他人使用这些硬币与与我们合作的外人进行贸易。如果她能提供什么，那就告诉她。恐怕这是我能腾出的全部，但它应该会有所帮助。",
+      "恐怕我只有足够的钱来补偿这些书中的一本，所以我祈祷你能将索菲亚和你找到的任何其他书交给你。",
+      "给你我会按照Thane McKinnon的建议处理，如果她命令销毁，请原谅我。在这一切开始之前，这应该是合理的报酬。"
+    ],
+    "responses": [
+      {
+        "text": "好的。",
+        "effect": [
+          {
+            "u_spawn_item": "CF_golden_scale",
+            "count": 20
+          },
+          {
+            "u_add_effect": "cf_hunter_motive",
+            "duration": "PERMANENT"
+          }
+        ],
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_OTHERWORLDLY_SECRETS",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "那就保守你的秘密吧。有了这种态度，你总有一天会把他们带到坟墓里去的。",
+      "必须赢得信任。如果你企图欺骗我们，这里就不欢迎你。",
+      "我很宽容，没有让你去寻找危险的文物。不要考验我的耐心。",
+      "如果不是索菲亚的命令，我会杀了你。要么回答她，要么离开。趁你还能的时候。",
+      "我们在监视你。站出来，我会亲自把你放下。"
+    ],
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_SANGUINE",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "如果是这样的话，情况可能比我最初想象的更糟。那就跟塔恩·麦金农谈谈。",
+      "这不是我所期待的。我们会看到结果的。",
+      "我们要看看这是不是真的。",
+      "如果这是真的，那就和这里的其他负责人谈谈。如果你有理由来这里，他们会知道该怎么做。"
+    ],
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MAGE_HUNTER_INSULT",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "索菲亚的命令是你活得够久的唯一原因。我建议你趁还可以的时候离开。",
+      "我们的成立是因为像你这样的害虫在掠夺无辜。你应该对被允许生活感到满意。",
+      "如果你蠢到在我们的圣殿里打架，我很乐意把你送到地狱里去。",
+      "继续给我一个理由，浪荡鬼。",
+      "那就证明你是可以信任的。或者你可以像蛇一样溜走，血法师。",
+      "我有充分的理由在你证明自己之前杀了你。如果不是我的命令，你早就死了。"
+    ],
+    "responses": [
+      {
+        "text": "[攻击]如果你是这样的话，那我就派你和你的冤家去见你所谓的神。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "u_faction_rep": -30
+          },
+          "insult_combat"
+        ],
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_effect": "cf_mission_1"
+              }
+            },
+            {
+              "u_has_trait": "PROF_SANGUINE"
+            }
+          ]
+        }
+      },
+      {
+        "text": "…",
+        "topic": "TALK_MAGE_HUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_FRIEND_CONVERSATION",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "<CWH_intro_question>",
+        "topic": "BGSS_CF_1_IDEAS1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_1"
+        }
+      },
+      {
+        "text": "<CWH_intro_question>",
+        "topic": "BGSS_CF_2_IDEAS1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_2"
+        }
+      },
+      {
+        "text": "<CWH_intro_question>",
+        "topic": "BGSS_CF_3_IDEAS1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_3"
+        }
+      },
+      {
+        "text": "<CWH_intro_question>",
+        "topic": "BGSS_CF_4_IDEAS1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_4"
+        }
+      },
+      {
+        "text": "<CWH_intro_question>",
+        "topic": "BGSS_CF_5_IDEAS1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_5"
+        }
+      },
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_CF_1_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_1"
+        },
+        "switch": true
+      },
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_CF_2_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_2"
+        },
+        "switch": true
+      },
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_CF_3_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_3"
+        },
+        "switch": true
+      },
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_CF_4_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_4"
+        },
+        "switch": true
+      },
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_CF_5_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_CF_5"
+        },
+        "switch": true
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_1_IDEAS1",
+    "type": "talk_topic",
+    "dynamic_line": "起初流行的理论是，乐观的秩序或誓言的维护者应该受到某种程度的谴责，但我们中的许多人开始对此表示怀疑。特别是来自净化者的报道，我们的联系人更密切地处理了文明问题。",
+    "responses": [
+      {
+        "text": "什么样的报告？",
+        "topic": "BGSS_CF_1_IDEAS2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_1_IDEAS2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "PROF_CLEANSINGFLAME2",
+      "yes": "我不知道你知道多少情报，但你肯定比我看得更近。一种来源于城市的污染物，很可能是造成最初一波死亡的罪魁祸首。很可能来自帷幕彼端，就像那些可憎的东西一样，但是除了合理的证据，原因不是神秘的，我们只有猜测。",
+      "no": "水里有某种东西，各种各样的疯狂和死亡，都是在公然入侵我们的世界之前发生的。我们怀疑，即使是那些早期的迹象，起源于另一个世界，某种起源于城市的东西。我们已经合理地排除了超自然现象的根本原因，但那只是意味着我们没有经验可以摆脱。我希望我能提供比猜测更多的东西。"
+    },
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_1_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": "我和其他几个人在一起。我们去一个计划好的集合点去会见另一个狩猎队，我们中的一个有手机。接待不到，我想可能是因为我们在一个相当偏远的地区。正当我们在争论为什么我们可能得不到任何信号时，其他人中的一个大声喊着要检查一下面罩。",
+    "responses": [
+      {
+        "text": "面具检查？",
+        "topic": "BGSS_CF_1_STORY2"
+      },
+      {
+        "text": "发生什么了？",
+        "topic": "BGSS_CF_1_STORY3"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_1_STORY2",
+    "type": "talk_topic",
+    "dynamic_line": "戴上面具激活它们。我们通常都会在外出途中定期戴着口罩四处张望，以免措手不及。",
+    "responses": [
+      {
+        "text": "你看到了什么？",
+        "topic": "BGSS_CF_1_STORY3"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_1_STORY3",
+    "type": "talk_topic",
+    "dynamic_line": "我们都差点瞎了眼。几乎在每个方向上，可怕的光线从超出我们面具感知范围的正常范围内涌入。只有非常强大的效果可以通过洞察从很远的地方看到，无论是什么原因导致了这一切，都可以在数英里之外的每个方向上被感知到。",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_2_IDEAS1",
+    "type": "talk_topic",
+    "dynamic_line": "我和其他人一样被它蒙蔽了双眼。当我看到城市所发生的一切时，我知道我们对令人担忧的现象的所有怀疑都相形见绌。",
+    "responses": [
+      {
+        "text": "你猜到了吗？",
+        "topic": "BGSS_CF_2_IDEAS2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_2_IDEAS2",
+    "type": "talk_topic",
+    "dynamic_line": "一场战争。这是我唯一想到的。有迹象表明不仅仅是通常的附带损害。第三次世界大战刚刚开始，核弹的威力很小。足够大的能量峰值可以与异常现象相互作用，所以至少有可能。不过，我们不能测试它。",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_2_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": "在过去的一周左右，我的狩猎队的其他成员都被取消了。我不知道还能去哪里，但我知道离我不远的地方有一个小镇，而且可能在郊区有人联系。",
+    "responses": [
+      {
+        "text": "我猜这个镇已经被占领了。",
+        "topic": "BGSS_CF_2_STORY2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_2_STORY2",
+    "type": "talk_topic",
+    "dynamic_line": "是 啊。当我看到的时候，我就知道了。不管是什么原因造成的，都比我们与猩红教派的冲突更大。比誓词的执行者更大，比我们卷入的每一场冲突都要大。有东西打开了地狱之门，吞噬了眼前的一切…",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_3_IDEAS1",
+    "type": "talk_topic",
+    "dynamic_line": "帷幕中的不稳定性越来越大，这就是导致这些恐怖事件蔓延到我们这个世界的原因。不管是什么，它造成的伤害比那些乐观主义者和守门员加起来都要大。但之前的一切…",
+    "responses": [
+      {
+        "text": "那之前发生的事呢？",
+        "topic": "BGSS_CF_2_IDEAS2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_3_IDEAS2",
+    "type": "talk_topic",
+    "dynamic_line": "老实说，我不相信暴乱和污染与此有关。其他大多数人怀疑亡灵可能与后者有关，但我也不确定。我个人对此的看法是，这是一场完美的灾难风暴，所有这些不仅使异常情况本身变得更糟，而且使其更难预防。",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_3_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "BGSS_CF_FILTER",
+      "yes": "我和莱昂爷爷和其他几个人在一起。我们打算在当地的一个庇护所会见另一个狩猎队。",
+      "no": "我和索菲亚和其他几个人在一起。她在来这里的路上，去见牧师，在去我们的一个安全屋的路上请求庇护。"
+    },
+    "responses": [
+      {
+        "text": "你到的时候发现了什么？",
+        "topic": "BGSS_CF_3_STORY2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_3_STORY2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "BGSS_CF_FILTER",
+      "yes": "当我们几乎看不见那个地方的时候，约翰纳森可以看出有什么不对劲。没有巡逻的迹象，没有面具散发出的光环，什么都没有。我们怀疑他们被攻破了，所以我们避开了这个地方。第二天发现发生了一件大事，不仅是在圣殿，而且似乎无处不在…",
+      "no": "那个地方是空的。没有牧师，没有其他人，什么都没有。也没有迹象表明他们最近去过那里。我们尽可能在贝斯特安顿下来，几天后才知道消息。比我们想象的更糟…"
+    },
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_4_IDEAS1",
+    "type": "talk_topic",
+    "dynamic_line": "我不能告诉你任何有用的东西。在世界末日之前，和我在一起的人花了整整一两个月的时间执行任务。我们最终获得了狭隘的视力，我想你可以说…",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_4_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": "我和我的狩猎队的其他人一起追踪可疑的血腥活动的报告。显然，结局并不好。",
+    "responses": [
+      {
+        "text": "什么样的运动？",
+        "topic": "BGSS_CF_4_STORY2"
+      },
+      {
+        "text": "发生什么了？",
+        "topic": "BGSS_CF_4_STORY3"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_4_STORY2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": "叶舒的手掌，你会以为你知道你会从你的亲戚那里得到什么。人类为神秘力量而牺牲。",
+      "no": "绑架，献祭，吃人。那些挥霍无度的人所做的一切都是上帝诅咒的。"
+    },
+    "responses": [
+      {
+        "text": "怎么了？",
+        "topic": "BGSS_CF_4_STORY3"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_4_STORY3",
+    "type": "talk_topic",
+    "dynamic_line": "我们错了。完全错了。我们发现一堆尸体匆忙地铲进了一个乱葬坑，但没有任何仪式活动。有辆军车，上帝知道他们在搞什么奇怪的事。我们本来会争先恐后地断绝联系，避免给我们的秩序带来不必要的注意，但那时所有的士兵都早已不见踪影。",
+    "responses": [
+      {
+        "text": "所以你搞了什么化妆舞会？",
+        "topic": "BGSS_CF_4_STORY4"
+      },
+      {
+        "text": "后来发生了什么？",
+        "topic": "BGSS_CF_4_STORY5"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_4_STORY4",
+    "type": "talk_topic",
+    "dynamic_line": "这不像我们是一个庞大的群体，我们有几个联系人，他们有既得利益，让我们远离麻烦。毫无疑问，他们已经意识到我们的存在，但很可能认为我们至多只是一小群义务警员。这实际上就是我们在过去的日子。",
+    "responses": [
+      {
+        "text": "那么，到底发生什么了？",
+        "topic": "BGSS_CF_4_STORY5"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_4_STORY5",
+    "type": "talk_topic",
+    "dynamic_line": "死者不是那样的。事实上，我们的到来激起了大部分的尸体。他们中有几十只，扭动着，爬出一条只有10英尺长，只有几英尺深的壕沟。在我们被迫中断联系而不是试图放下那些可怜的东西之前，我们失去了两个人。我们稍后会发现其他地方的情况有多糟糕。",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_5_IDEAS1",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "BGSS_CF_FILTER",
+      "yes": "我很惭愧地承认，如果不是约翰纳森，我不会知道发生了什么事。我只知道一些关于暴动的谣言。就我个人而言，我仍然有一半的理由相信猩红教派与此有关，但这不值得再指手画脚了。现在我宁愿专注于手头的工作。",
+      "no": "我听到一些谣言。一切照旧，但没有具体的东西。我太专注于生存。就我个人而言，我想知道守誓者是否以某种方式打开了通往地狱的大门，但我不再在乎了。我很高兴能活着，更不用独自面对这一切。现在我宁愿专注于手头的工作。"
+    },
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_NONE"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_CF_5_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "BGSS_CF_FILTER",
+      "yes": "我会保持简短。在我和约翰纳森联系之前，我避免了遇到任何群体或重大异常现象，这纯粹是运气好。当他意识到我的路线带我穿过一个相当安静的乡村后，他告诉了我发生了什么。",
+      "no": "我会保持简短。基本上我很幸运。我是狩猎队中最后一个想和别人见面的人。我不在主要城市或其他热点地区附近，所以我没有发现任何问题，直到我到达这里，并从Thane McKinnon本人那里听到了这个消息。"
+    },
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

@@ -1,0 +1,208 @@
+[
+  {
+    "type": "terrain",
+    "id": "t_archon_pedestral_backup",
+    "looks_like": "t_pedestal_temple",
+    "name": "奇怪的石杠杆底座",
+    "//": "This is a fallback in case someone has the bright idea of trying to teleport while in the finale, and ends up getting stuck.",
+    "description": "这是一个像石头一样的黑色玄武岩基座，底座上附着着不自然的外来树脂，就像常春藤一样。一个较轻的紫色斑岩的突出物嵌在里面，像是某种未知装置的杠杆。",
+    "symbol": "6",
+    "color": "dark_gray",
+    "move_cost": 0,
+    "flags": [
+      "TRANSPARENT",
+      "NOITEM",
+      "THIN_OBSTACLE"
+    ],
+    "examine_action": "controls_gate"
+  },
+  {
+    "type": "terrain",
+    "id": "t_rock_archon_vault",
+    "looks_like": "t_rock_wall",
+    "name": "暗色石墙",
+    "description": "用看起来像玄武岩的东西做成的砖墙，凿成一个非常光滑的表面。",
+    "symbol": "LINE_OXOX",
+    "color": "light_gray",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_flat_roof",
+    "//": "The fact it doesn't block wind, which you couldn't even notice given it spawns underground, is important for something.",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL"
+    ],
+    "connects_to": "WALL"
+  },
+  {
+    "type": "terrain",
+    "id": "t_rock_archon_barricade",
+    "looks_like": "t_rock_wall",
+    "name": "雕文墙",
+    "description": "一种由看起来像玄武岩的东西做成的砖墙，上面刻有奇怪的印记，发出一种奇特的光芒。",
+    "symbol": "LINE_OXOX",
+    "color": "light_gray",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_flat_roof",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL"
+    ],
+    "connects_to": "WALL"
+  },
+  {
+    "type": "terrain",
+    "id": "t_dimensional_lens_array_platform",
+    "looks_like": "t_rad_platform",
+    "name": "空间聚焦透镜阵列平台",
+    "description": "一个稍高的面板俯视着连接在上面的奇异机器，一个毁坏的控制面板悬挂在天花板上。一种微弱的光芒弥漫其中，仿佛充满了被压抑和释放的超凡脱俗的能量。不管它做什么，都有可能被激活。或者干脆把它拆开，希望能挽回来这里的理由。",
+    "symbol": "0",
+    "color": "light_blue",
+    "move_cost": 2,
+    "light_emitted": 5,
+    "trap": "tr_arcane_lab_map_regen_2",
+    "flags": [
+      "TRANSPARENT",
+      "INDOORS",
+      "FLAT"
+    ],
+    "deconstruct": {
+      "ter_set": "t_strconc_floor",
+      "items": [
+        {
+          "item": "dimensional_focus_lens",
+          "count": 1
+        },
+        {
+          "item": "cable",
+          "charges": [
+            8,
+            16
+          ]
+        },
+        {
+          "item": "scrap",
+          "count": [
+            8,
+            16
+          ]
+        },
+        {
+          "item": "sheet_metal",
+          "count": [
+            5,
+            10
+          ]
+        },
+        {
+          "item": "alloy_sheet",
+          "count": [
+            12,
+            18
+          ]
+        },
+        {
+          "item": "large_lcd_screen",
+          "count": 1
+        },
+        {
+          "item": "e_scrap",
+          "count": [
+            10,
+            16
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_root_wall_arcana",
+    "name": "树根墙",
+    "looks_like": "t_root_wall",
+    "description": "一堵被厚厚的树根渗透的坚实的土墙。",
+    "symbol": "#",
+    "color": "brown",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_dirt",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT"
+    ],
+    "bash": {
+      "str_min": 100,
+      "str_max": 400,
+      "sound": "wham!",
+      "sound_fail": "whump!",
+      "ter_set": "t_dirt",
+      "ter_set_bashed_from_above": "t_dirt",
+      "items": [
+        {
+          "group": "digging_soil_loam_50L",
+          "count": 20
+        },
+        {
+          "item": "splinter",
+          "count": [
+            2,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_wall_arcana_basement",
+    "name": "墙",
+    "looks_like": "t_wall",
+    "description": "这是一堵典型的坚固的砖墙，上面涂着干墙，给这个沉闷的地方增添了几分舒适感。油漆作业是非常常见的中性灰白色或奶油色。",
+    "symbol": "LINE_OXOX",
+    "color": "light_gray",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "t_flat_roof",
+    "flags": [
+      "NOITEM",
+      "SUPPORTS_ROOF",
+      "WALL",
+      "NO_SCENT",
+      "AUTO_WALL_SYMBOL",
+      "MINEABLE",
+      "BLOCK_WIND"
+    ],
+    "bash": {
+      "str_min": 60,
+      "str_max": 160,
+      "sound": "crash!",
+      "sound_fail": "bash!",
+      "ter_set": "t_null",
+      "items": [
+        {
+          "item": "rock",
+          "count": [
+            8,
+            15
+          ]
+        },
+        {
+          "item": "brick",
+          "count": [
+            2,
+            6
+          ]
+        }
+      ]
+    }
+  }
+]

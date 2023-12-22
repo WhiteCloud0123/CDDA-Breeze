@@ -1,0 +1,638 @@
+[
+  {
+    "type": "mutation",
+    "id": "MARTIAL_ARTS_CF",
+    "name": {
+      "str": "剑锤之道"
+    },
+    "points": 3,
+    "description": "无论是在超凡脱俗的猎人中成长，还是在流浪期间的好运和奉献，你们都可以通过Gladium et Malleo学习。武器艺术的重点是保持势头和打击多个对手，根据你选择的武器以不同的方式使用你的愤怒。刀锋武器有利于招架和穿甲，而棍棒则有利于躲避和防护。",
+    "initial_ma_styles": [
+      "style_cleansingflame"
+    ],
+    "valid": false
+  },
+  {
+    "type": "mutation",
+    "id": "MARTIAL_ARTS_SANGUINE",
+    "name": {
+      "str": "鞭爪之道"
+    },
+    "points": 3,
+    "description": "无论是来自权力之路追随者的背景，还是通过寻求生存优势，你都学会了伯劳鸟的爪子。一种专注于各种切割武器或变异爪子的武术，倾向于攻击而非防御。力量和灵巧将使这种风格更有效，但技能较低或较弱的用户可能会与之斗争。",
+    "initial_ma_styles": [
+      "style_shrike"
+    ],
+    "valid": false
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_CLEANSINGFLAME",
+    "name": {
+      "str": "净火法师"
+    },
+    "points": 0,
+    "description": "你宣誓加入了一个被称为净化圣火的教派。无论你是一个尽职的猎人还是一个叛徒，无论你现在忠于谁，你的过往经历在未来可能仍然能派上用场。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "//": "This prevents mage hunters from starting with forbidden summoning spells, along with blood magic.",
+    "cancels": [
+      "ILLITERATE",
+      "PACIFIST",
+      "SPELL_SHADOWSNAKES",
+      "SPELL_SUMMONDOG",
+      "MARTIAL_ARTS_SANGUINE",
+      "ARCANA_SCALYPATCHES",
+      "ARCANA_INNERHEAT",
+      "ARCANA_DRAGONCLAWS",
+      "ARCANA_DRAGONTEETH",
+      "ARCANA_DRAGONHORNS"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_CLEANSINGFLAME2",
+    "name": {
+      "str": "净火法师"
+    },
+    "points": 0,
+    "description": "你宣誓加入了一个被称为净化圣火的教派。无论你是一个尽职的猎人还是一个叛徒，无论你现在忠于谁，你的过往经历在未来可能仍然能派上用场。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "//": "This prevents purifiers from starting with with blood magic.",
+    "cancels": [
+      "ILLITERATE",
+      "PACIFIST",
+      "SPELL_CLARITY",
+      "MARTIAL_ARTS_SANGUINE",
+      "ARCANA_SCALYPATCHES",
+      "ARCANA_INNERHEAT",
+      "ARCANA_DRAGONCLAWS",
+      "ARCANA_DRAGONTEETH",
+      "ARCANA_DRAGONHORNS"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_SANGUINE",
+    "name": {
+      "str": "猩红教徒"
+    },
+    "points": 0,
+    "description": "你宣誓加入了一个被称为“猩红教派”的组织。尽管你是那些秘密学习的人中的一员，但你的过去在未来可能仍然有用。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "//": "This prevents blood mages from picking spells considered potentially too altruistic in nature, or from choosing a faction-specific martial art.  Non-faction arcanists are still allowed to pick it.",
+    "cancels": [
+      "ILLITERATE",
+      "SPIRITUAL",
+      "PACIFIST",
+      "SPELL_HEAL",
+      "SPELL_CLERIC",
+      "MARTIAL_ARTS_CF"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_CHALICE",
+    "name": {
+      "str": "守誓者"
+    },
+    "points": 0,
+    "description": "你们被立为守誓者。无论帷幕彼端古神是否指引你，你所发的誓言是永恒的，你的过去在将来可能仍然有用。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "//": "This prevents dark priests from picking a faction-specific martial art, nor to taint their bodies with strange magic.  Non-faction arcanists are still allowed to pick it.",
+    "cancels": [
+      "ILLITERATE",
+      "PACIFIST",
+      "MARTIAL_ARTS_CF",
+      "MARTIAL_ARTS_SANGUINE",
+      "ARCANA_SCALYPATCHES",
+      "ARCANA_INNERHEAT",
+      "ARCANA_DRAGONCLAWS",
+      "ARCANA_DRAGONTEETH",
+      "ARCANA_DRAGONHORNS"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_CHALICE2",
+    "//": "This is used to track if you're the mendicant profession, and thus whether you already know the bonus spell they start with.",
+    "name": {
+      "str": "守誓者"
+    },
+    "points": 0,
+    "description": "你们被立为守誓者。无论帷幕彼端古神是否指引你，你所发的誓言是永恒的，你的过去在将来可能仍然有用。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "ILLITERATE",
+      "PACIFIST",
+      "MARTIAL_ARTS_CF",
+      "MARTIAL_ARTS_SANGUINE",
+      "ARCANA_SCALYPATCHES",
+      "ARCANA_INNERHEAT",
+      "ARCANA_DRAGONCLAWS",
+      "ARCANA_DRAGONTEETH",
+      "ARCANA_DRAGONHORNS"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_ARCANIST",
+    "name": {
+      "str": "奥术学者"
+    },
+    "points": 0,
+    "description": "虽然你研究的范围很广，但你并没有直接与主要群体联系在一起，从而在你的学者中获得名声。不过，你对奥术的熟悉也许会有一天被证明是有用的。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "ILLITERATE"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_ARCANIST2",
+    "name": {
+      "str": "奥术学者"
+    },
+    "points": 0,
+    "description": "虽然你研究的范围很广，但你并没有直接与主要群体联系在一起，从而在你的学者中获得名声。不过，你对奥术的熟悉也许会有一天被证明是有用的。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "ILLITERATE"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_CF_1",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_CF_2",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_CF_3",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_CF_4",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_CF_5",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_BLOOD_MAGE_1",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_BLOOD_MAGE_2",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "CF_DEACON",
+    "name": {
+      "str": "执事之印记"
+    },
+    "points": 0,
+    "description": "This trait marks The Deacon, used for certain dialog checks to keep things working right.  Seeing this is probably a bug.",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_CF_FILTER",
+    "name": {
+      "str": "背景故事筛选器"
+    },
+    "points": 0,
+    "description": "这一点的存在使得法师猎人NPC在索菲亚的任务后产生，如果他们在未来被招募并产生某些背景故事，那么他们将指与约翰纳森而不是索菲亚联系。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "SHRIKE_MISSION_MARKER",
+    "name": {
+      "str": "伯劳任务印记"
+    },
+    "points": 0,
+    "description": "这一特点使得一个特定的血质伯劳鸟NPC作为任务的焦点，改变了他们的对话。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_1",
+    "name": {
+      "str": "辅助印记1"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_2",
+    "name": {
+      "str": "辅助印记2"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_3",
+    "name": {
+      "str": "辅助印记3"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_4",
+    "name": {
+      "str": "辅助印记4"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_5",
+    "name": {
+      "str": "辅助印记5"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_6",
+    "name": {
+      "str": "辅助印记6"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_7",
+    "name": {
+      "str": "辅助印记7"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "CF_AUX_MARKER_8",
+    "name": {
+      "str": "辅助印记8"
+    },
+    "points": 0,
+    "description": "这是用来区分不同的商人，在索非亚的第四个任务。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  },
+  {
+    "type": "mutation",
+    "id": "ARCANA_MASK_INSIGHT_EFFECT",
+    "name": {
+      "str": "猎手真视"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "你的眼睛被暂时打开，给予你在一定范围内透视的能力，直到引起它的能量消失。",
+    "player_display": false,
+    "flags": [
+      "CLAIRVOYANCE_PLUS"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ARCANA_CLAIRVOYANCE_LESSER",
+    "name": {
+      "str": "透视"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "你被暂时赋予了视而不见的天赋，被赋予了有限的透视能力，直到导致它的魔法消失。",
+    "player_display": false,
+    "flags": [
+      "CLAIRVOYANCE"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ARCANA_BERSERK_EFFECT",
+    "name": {
+      "str": "嗜血狂潮"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "一种对战斗的渴望暂时萦绕在你的脑海里，这使得狩猎变得更加容易，直到源头消失。",
+    "player_display": false,
+    "flags": [
+      "PRED4"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ARCANA_LIFE_SIGN_SUPPRESSION",
+    "name": {
+      "str": "生命体征抑制"
+    },
+    "points": 99,
+    "valid": false,
+    "player_display": false,
+    "description": "不死生物目前无法侦测到你，来自自然野生动物的攻击性增加。",
+    "ignored_by": [
+      "ZOMBIE"
+    ],
+    "anger_relations": [
+      [
+        "ZOMBIE",
+        -95
+      ],
+      [
+        "MAMMAL",
+        25
+      ],
+      [
+        "BIRD",
+        25
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ARCANA_TRANSCENDANT_AURA",
+    "name": {
+      "str": "光环：超越"
+    },
+    "points": 99,
+    "valid": false,
+    "player_display": false,
+    "description": "Otherworldly creatures are currently unable to detect you, increased visibility to all other creatures.",
+    "ignored_by": [
+      "NETHER",
+      "MIGO",
+      "SLIME",
+      "FUNGUS",
+      "LEECH_PLANT",
+      "PLANT",
+      "HORROR",
+      "ABERRATION",
+      "UNKNOWN"
+    ],
+    "anger_relations": [
+      [
+        "NETHER",
+        -95
+      ],
+      [
+        "MIGO",
+        -95
+      ],
+      [
+        "SLIME",
+        -95
+      ],
+      [
+        "FUNGUS",
+        -95
+      ],
+      [
+        "LEECH_PLANT",
+        -95
+      ],
+      [
+        "PLANT",
+        -95
+      ],
+      [
+        "HORROR",
+        -95
+      ],
+      [
+        "ABERRATION",
+        -95
+      ],
+      [
+        "UNKNOWN",
+        -95
+      ]
+    ],
+    "stealth_modifier": -45
+  },
+  {
+    "type": "mutation",
+    "id": "ARCANA_BERSERK_ARMOR_EFFECT",
+    "name": {
+      "str": "光环：深渊"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "The armor's effects seem to greatly aid in swift strikes and a speedy recovery.",
+    "player_display": false,
+    "attackcost_modifier": 0.8,
+    "dodge_modifier": 3,
+    "mending_modifier": 2500,
+    "anger_relations": [
+      [
+        "NETHER",
+        10
+      ],
+      [
+        "SLIME",
+        10
+      ],
+      [
+        "HORROR",
+        10
+      ],
+      [
+        "ABERRATION",
+        10
+      ],
+      [
+        "FUNGUS",
+        10
+      ],
+      [
+        "LEECH_PLANT",
+        10
+      ],
+      [
+        "MUTANT",
+        10
+      ],
+      [
+        "MAMMAL",
+        15
+      ],
+      [
+        "BIRD",
+        15
+      ],
+      [
+        "REPTILE",
+        15
+      ]
+    ],
+    "social_modifiers": {
+      "persuade": -25,
+      "intimidate": 25
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "FIX_CF_GM",
+    "//": "ID retained for save compatibility reasons",
+    "name": {
+      "str": "Nicholas"
+    },
+    "points": 0,
+    "description": "Formerly used to fix a dialogue bug, this trait is now used elsewhere in dialogue to distinguish two different NPCs that cite the same talk topics.",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false
+  }
+]

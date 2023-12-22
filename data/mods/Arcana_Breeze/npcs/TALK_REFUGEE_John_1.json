@@ -1,0 +1,164 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_REFUGEE_John_Situation",
+    "responses": [
+      {
+        "text": "如果他们需要的话，你是否认为他们愿意帮助其他解决方案？",
+        "topic": "TALK_REFUGEE_John_CF_REP_MISSION_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "sofia_refugee_convinced",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_REFUGEE_John_CF_REP_MISSION_4",
+    "dynamic_line": "我想问，不会伤害任何人。当然，那里的状况不会好得多。人们现在每时每刻都会停下来，然后流浪者可以自拔。",
+    "responses": [
+      {
+        "text": "认为你可以帮助将访客带到那里吗？",
+        "topic": "TALK_REFUGEE_John_CF_REP_MISSION_4_OFFER"
+      },
+      {
+        "text": "我看看是否可以问别人。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_REFUGEE_John_CF_REP_MISSION_4_OFFER",
+    "dynamic_line": "我可能会帮助你。这是什么？如果我不知道他们要去哪里，就不能告诉他们走这条路。",
+    "responses": [
+      {
+        "text": "当地一群在路边教区教堂外活动的怪物猎人，他们已经开始在附近筑筑和建造更多建筑物。",
+        "topic": "TALK_REFUGEE_John_CF_REP_MISSION_4_DEAL"
+      },
+      {
+        "text": "再三考虑，我也许可以解决其他问题。",
+        "topic": "TALK_REFUGEE_John_1"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_REFUGEE_John_CF_REP_MISSION_4_DEAL",
+    "dynamic_line": "声音就像正在兴旺的小镇，伙伴。我会看看我能从小径上走过的八卦。现在保重，听到了吗？",
+    "responses": [
+      {
+        "text": "你也是。我可能应该检查一下哨所，早些时候和其他人谈过。",
+        "effect": [
+          {
+            "u_add_var": "sofia_allies_secured",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_1",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_2",
+            "om_terrain": "cf_church_3",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_1",
+            "om_terrain": "cf_church_1_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_2",
+            "om_terrain": "cf_church_3_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          }
+        ],
+        "condition": {
+          "u_has_var": "sofia_ally_seeking_2",
+          "type": "mission",
+          "context": "flag",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "你也是。我现在就坚持下去。",
+        "effect": [
+          {
+            "u_add_var": "sofia_ally_seeking_2",
+            "type": "mission",
+            "context": "flag",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "sofia_refugee_convinced",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "condition": {
+          "u_has_var": "sofia_ally_seeking_1",
+          "type": "mission",
+          "context": "flag",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "你也是。我会提出更多要求，请更多的人帮助。",
+        "effect": [
+          {
+            "u_add_var": "sofia_ally_seeking_1",
+            "type": "mission",
+            "context": "flag",
+            "value": "yes"
+          },
+          {
+            "npc_add_var": "sofia_refugee_convinced",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ],
+        "switch": true,
+        "default": true,
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

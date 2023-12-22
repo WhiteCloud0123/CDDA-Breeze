@@ -1,0 +1,665 @@
+[
+  {
+    "id": "TALK_MERCHANT_CF_AUX",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "CF_AUX_MARKER_3",
+      "yes": {
+        "u_is_wearing": "badge_marshal",
+        "yes": "欢迎，元帅。我能为你做什么？",
+        "no": "欢迎光临，有什么事吗？"
+      },
+      "no": {
+        "npc_has_any_trait": [
+          "CF_AUX_MARKER_4",
+          "CF_AUX_MARKER_5"
+        ],
+        "yes": "你好，我能为你买些什么？",
+        "no": "你需要什么吗？"
+      }
+    },
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_GM_PRELUDE"
+      },
+      {
+        "text": "那么，你和这里的其他人相处得怎么样？",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "cf_aux_opinion_given",
+                "type": "flag",
+                "context": "knowledge",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_var": "sofia_mission_4_end",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            }
+          ]
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_SITUATION"
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_MERCHANT_CF_AUX_WHO"
+      },
+      {
+        "text": "你在这里干什么？",
+        "topic": "TALK_MERCHANT_CF_AUX_DO"
+      },
+      {
+        "text": "有什么要交易的吗？",
+        "effect": "start_trade",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "I'd like to ask about turning in a bounty.",
+        "condition": {
+          "u_has_var": "cf_aux_bounty_learned",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_ASK"
+      },
+      {
+        "text": "我能帮忙吗？",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "cf_aux_bounty_learned",
+                "type": "flag",
+                "context": "knowledge",
+                "value": "yes"
+              }
+            },
+            {
+              "npc_has_any_trait": [
+                "CF_AUX_MARKER_2",
+                "CF_AUX_MARKER_7"
+              ]
+            }
+          ]
+        },
+        "effect": {
+          "u_add_var": "cf_aux_bounty_learned",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_INTRO"
+      },
+      {
+        "text": "我能帮忙吗？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "CF_AUX_MARKER_3",
+      "yes": "前几天在通讯聊天中出现了一场符合你的战友们所描述的小冲突。没有人员伤亡，只要提到奇怪的模糊的X射线在一座被炸毁的旧建筑的阴影下游荡。有空的话把这个消息发给利昂先生，他可能更愿意听你说，而不是我们。",
+      "no": {
+        "npc_has_any_trait": [
+          "CF_AUX_MARKER_4",
+          "CF_AUX_MARKER_5"
+        ],
+        "yes": "今天早些时候，我们跟踪的一些玩家被你们的孩子们最近正在寻找的东西吓坏了。事情发生的时候我不在乎，但我没有早点提出来真是个愚蠢的错误。你们都是认真对待这件事的，这里是我们所知道的关于这次遭遇的情况，以及它发生在我们的游戏路线上。注意一下，把它传给大师，好吗？",
+        "no": {
+          "npc_has_any_trait": [
+            "CF_AUX_MARKER_2",
+            "CF_AUX_MARKER_7"
+          ],
+          "yes": "在最近的一次小冲突中，巡逻队遇到了什么。可能是在我们发现尸体的前一天晚上被什么东西打倒的。有时间把那些可怜的混蛋从补给中挑出来一个装备，不管对他们做了什么，都不是一场混乱，也不是一场枪战。我会把消息传给你。别杀了查辛是什么干的。",
+          "no": "几天前，一位旅行的商人来过，我们聊了聊，交换了一些货物。他提到在这里的路上绕着树林的一个老地方走了很长一段路，他说他在阴影中看到了运动，最近发生的一切听起来就像是大师在寻找什么。前几天我什么都没想到，我会替你转达给约翰纳森。继续努力。"
+        }
+      }
+    }
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_SITUATION",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "CF_AUX_MARKER_3",
+      "yes": "老实说，我不知道该怎么办。我的上级似乎也有自己的顾虑。高层知道一些我不知道的事情，这让我很担心。你和我之间不要说这个，好吗？",
+      "no": {
+        "npc_has_any_trait": [
+          "CF_AUX_MARKER_4",
+          "CF_AUX_MARKER_5"
+        ],
+        "yes": "奇怪的人，但我不介意。他们至少很友好，对这个地区也很了解。在狩猎区的压力会小很多。",
+        "no": {
+          "npc_has_any_trait": [
+            "CF_AUX_MARKER_2",
+            "CF_AUX_MARKER_7"
+          ],
+          "yes": "他们有战斗力，我能告诉你很多。不是雇佣兵或者类似的突袭者，更像是克鲁萨丁式的。至少比我想象的要好。",
+          "no": "他们让我的人非常努力地工作，以保持这个地方良好的工作秩序，这是肯定的。但他们和我们一起努力工作。我想他们的设备选择很奇怪，但似乎做得很好。"
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "好吧……",
+        "condition": {
+          "npc_has_trait": "CF_AUX_MARKER_3"
+        },
+        "switch": true,
+        "effect": {
+          "u_add_var": "cf_aux_opinion_given",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "很高兴听到，我想。",
+        "switch": true,
+        "default": true,
+        "effect": {
+          "u_add_var": "cf_aux_opinion_given",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_WHO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "CF_AUX_MARKER_3",
+      "yes": "只是一个被召来为“老兵”行动提供医疗援助的医生。",
+      "no": {
+        "npc_has_any_trait": [
+          "CF_AUX_MARKER_4",
+          "CF_AUX_MARKER_5"
+        ],
+        "yes": "只是一个当地的猎人。当一切都变得一团糟的时候，户外生存经验就派上了用场，所以我想是这样的。",
+        "no": {
+          "npc_has_any_trait": [
+            "CF_AUX_MARKER_2",
+            "CF_AUX_MARKER_7"
+          ],
+          "yes": "十年前曾是个军人。如果不是我在身边给他们点感觉的话，我其他的孩子们可能会变成袭击者。现在我们靠清理那些还在服役的人无法解开的烂摊子为生。",
+          "no": "这些天来，我想只是个拾荒者。据我所知，没有一个家庭离开，所以不像我以前那样做零工很重要。而不是谈论它。"
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_DO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "CF_AUX_MARKER_3",
+      "yes": "现在，我帮助人们保持健康，并管理好上级和当地人之间的安排。如果你需要的话，我可以从我们的供应货物中安排贸易。",
+      "no": {
+        "npc_has_any_trait": [
+          "CF_AUX_MARKER_4",
+          "CF_AUX_MARKER_5"
+        ],
+        "yes": "我主要安排狩猎和拾荒者跑步，同时让其他被派来的人四处奔波，保持忙碌。如果你需要什么，我可以从我们的狩猎中给你一笔好价钱。",
+        "no": {
+          "npc_has_any_trait": [
+            "CF_AUX_MARKER_2",
+            "CF_AUX_MARKER_7"
+          ],
+          "yes": "主要是帮助巡逻队加强安全，虽然这些人不需要太多的帮助。射杀怪物，从交易中取出弹药，用它来射杀更多的怪物…生命周期不是吗？或者死亡循环。如果你愿意可以卖给你一些。",
+          "no": "大部分只是帮忙，组织清理工作和管理贸易。我们带来的很多东西要么给当地人，要么回到中心，但我可以勉强应付。"
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "那我们交换吧。",
+        "effect": "start_trade",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_INTRO",
+    "type": "talk_topic",
+    "dynamic_line": "就稳定的工作而言，不多。不过，我代表管理这个地方的人拿到了奖金。不像是朝人的脸上开枪，更多的怪物狩猎之类的。有兴趣吗？",
+    "speaker_effect": {
+      "effect": {
+        "u_add_var": "cf_aux_bounty_learned",
+        "type": "flag",
+        "context": "knowledge",
+        "value": "yes"
+      }
+    },
+    "responses": [
+      {
+        "text": "有什么样的赏金？",
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_ASK"
+      },
+      {
+        "text": "也许下次吧。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_ASK",
+    "type": "talk_topic",
+    "dynamic_line": "那个“大师级”的家伙让我查了两种不同的赏金计划。首先，如果你有某些生物掉下来的那些奇怪的东西，我可以安排每个人按比例付款。扭曲的骨头，无定形的琥珀之类的东西。第二，他们对某些书有赏金。巫术传说之类的。",
+    "//": "Needing to actually remove the items, rather than handing them over to potentially be bought back, means using explicit responses rather than bulk_trade.",
+    "responses": [
+      {
+        "text": "上交一根铁棘刺",
+        "condition": {
+          "u_has_item": "iron_thorn"
+        },
+        "effect": {
+          "u_consume_item": "iron_thorn"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一个开花的根",
+        "condition": {
+          "u_has_item": "inflorescent_root"
+        },
+        "effect": {
+          "u_consume_item": "inflorescent_root"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一颗晶状尖牙",
+        "condition": {
+          "u_has_item": "graboid_fang"
+        },
+        "effect": {
+          "u_consume_item": "graboid_fang"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "Turning in a scarlet flower.",
+        "condition": {
+          "u_has_item": "triffid_queen_flower"
+        },
+        "effect": {
+          "u_consume_item": "triffid_queen_flower"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一根倒刺尖刺。",
+        "condition": {
+          "u_has_item": "dermatik_sting"
+        },
+        "effect": {
+          "u_consume_item": "dermatik_sting"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一片风碎。",
+        "condition": {
+          "u_has_item": "vortex_shard"
+        },
+        "effect": {
+          "u_consume_item": "vortex_shard"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一块无定形琥珀。",
+        "condition": {
+          "u_has_item": "blob_gem"
+        },
+        "effect": {
+          "u_consume_item": "blob_gem"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一滴蓝色晶泪。",
+        "condition": {
+          "u_has_item": "monster_tear"
+        },
+        "effect": {
+          "u_consume_item": "monster_tear"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一颗暗影宝石。",
+        "condition": {
+          "u_has_item": "shadow_gem"
+        },
+        "effect": {
+          "u_consume_item": "shadow_gem"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一块扭曲的骨头",
+        "condition": {
+          "u_has_item": "bone_twisted"
+        },
+        "effect": {
+          "u_consume_item": "bone_twisted"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一枚破裂的指骨",
+        "condition": {
+          "u_has_item": "gracken_knuckles"
+        },
+        "effect": {
+          "u_consume_item": "gracken_knuckles"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一片难闻的鳞片",
+        "condition": {
+          "u_has_item": "wyrmskin_piece"
+        },
+        "effect": {
+          "u_consume_item": "wyrmskin_piece"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一颗巨兽尖牙。",
+        "condition": {
+          "u_has_item": "monster_fang"
+        },
+        "effect": {
+          "u_consume_item": "monster_fang"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一份五彩斑斓的组织",
+        "condition": {
+          "u_has_item": "iridescent_plate"
+        },
+        "effect": {
+          "u_consume_item": "iridescent_plate"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "上交一块雕文石块",
+        "condition": {
+          "u_has_item": "engraved_stone"
+        },
+        "effect": {
+          "u_consume_item": "engraved_stone"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN"
+      },
+      {
+        "text": "他们要什么书？",
+        "condition": {
+          "npc_has_effect": "cf_merc_recent_book_bounty"
+        },
+        "switch": true,
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS"
+      },
+      {
+        "text": "他们要什么书？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS"
+      },
+      {
+        "text": "也许以后，我还有别的事要问。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "也许以后再说吧。再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN",
+    "type": "talk_topic",
+    "dynamic_line": "给你。一个金鳞片，我会把这个寄给老板的。还有别的吗？",
+    "speaker_effect": {
+      "effect": {
+        "u_spawn_item": "CF_golden_scale",
+        "count": 1
+      }
+    },
+    "responses": [
+      {
+        "text": "我想再问一次赏金的事。",
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_ASK"
+      },
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "谢谢，回头见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS",
+    "type": "talk_topic",
+    "dynamic_line": "只有一对夫妇在他们的心愿单上，为每一个付了一大笔钱。一个叫“血法典”，另一个叫圣杯誓言，然后是掌握未知。你有什么发现？",
+    "responses": [
+      {
+        "text": "猩红法典？他们只是想把它烧掉，不是吗？",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS_SANGUINE"
+      },
+      {
+        "text": "他们向圣杯誓言是为了什么？",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS_CHALICE"
+      },
+      {
+        "text": "我可以给你一份血法典。",
+        "condition": {
+          "u_has_item": "book_bloodmagic"
+        },
+        "effect": [
+          {
+            "u_consume_item": "book_bloodmagic"
+          },
+          {
+            "u_spawn_item": "CF_golden_scale",
+            "count": 12
+          }
+        ],
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN2"
+      },
+      {
+        "text": "我可以把一份圣杯誓言交给你。",
+        "condition": {
+          "u_has_item": "book_sacrifice"
+        },
+        "effect": [
+          {
+            "u_consume_item": "book_sacrifice"
+          },
+          {
+            "u_spawn_item": "CF_golden_scale",
+            "count": 16
+          }
+        ],
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN2"
+      },
+      {
+        "text": "我可以把一本交给《未知之主》。",
+        "condition": {
+          "u_has_item": "book_summoning"
+        },
+        "effect": [
+          {
+            "u_consume_item": "book_summoning"
+          },
+          {
+            "u_spawn_item": "CF_golden_scale",
+            "count": 20
+          }
+        ],
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN2"
+      },
+      {
+        "text": "别担心，也许下次吧。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "别担心，现在应该就这些了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS_SANGUINE",
+    "type": "talk_topic",
+    "dynamic_line": "我不知道。那个约翰纳森的男孩似乎是个爱读书的人，但当我们安排这笔交易时，另一位女士正密切注视着他。让我答应把它们交给她一起工作的人，而不是他。我们有没有交易？",
+    "responses": [
+      {
+        "text": "好吧，很好。我这里有一个。",
+        "condition": {
+          "u_has_item": "book_bloodmagic"
+        },
+        "effect": [
+          {
+            "u_consume_item": "book_bloodmagic"
+          },
+          {
+            "u_spawn_item": "CF_golden_scale",
+            "count": 12
+          }
+        ],
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN2"
+      },
+      {
+        "text": "我们拭目以待，也许下次吧。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "不用了，谢谢，我想就这些了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_BOOKS_CHALICE",
+    "type": "talk_topic",
+    "dynamic_line": "如果我知道的话。一些邪教书籍，麦金农女士想让我把它们交给为她工作的人，而不是大师。我猜她不相信他不会去烧它们。",
+    "responses": [
+      {
+        "text": "那好吧。我相信你会小心处理的。",
+        "condition": {
+          "u_has_item": "book_sacrifice"
+        },
+        "effect": [
+          {
+            "u_consume_item": "book_sacrifice"
+          },
+          {
+            "u_spawn_item": "CF_golden_scale",
+            "count": 16
+          }
+        ],
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN2"
+      },
+      {
+        "text": "我们拭目以待，也许下次吧。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "不用了，谢谢，我想就这些了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MERCHANT_CF_AUX_BOUNTY_TURNIN2",
+    "type": "talk_topic",
+    "dynamic_line": "很高兴和你做生意，我会小心把这个送到索菲亚的。还有别的吗？",
+    "responses": [
+      {
+        "text": "我想再问一次赏金的事。",
+        "topic": "TALK_MERCHANT_CF_AUX_BOUNTY_ASK"
+      },
+      {
+        "text": "我还有别的事要问。",
+        "topic": "TALK_MERCHANT_CF_AUX"
+      },
+      {
+        "text": "谢谢，回头见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

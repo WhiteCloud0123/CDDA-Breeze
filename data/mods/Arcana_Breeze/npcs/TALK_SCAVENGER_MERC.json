@@ -1,0 +1,217 @@
+[
+  {
+    "id": "TALK_SCAVENGER_MERC",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_SCAVENGER_MERC_GM_PRELUDE"
+      },
+      {
+        "text": "[任务]我被要求帮助另一个幸存者社区吸引工作。有谁能帮上忙吗？",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "我听说过，事实上有情报。我的一个老同事回来了，讲述了一些奇怪的影子怪兽，他们正在清理一个袭击者的藏身处。他看到其中一个东西抓住了那家伙，扭动脖子，直到他的头跳了出来。然后其他人中的一个撞到了地上，用240点亮了整个怪诞秀。"
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4",
+    "type": "talk_topic",
+    "dynamic_line": "听起来像是需要一个合适的船员。虽然我不在乎稳定的薪水，但不在乎我的工作。也许其他人更适合这样的工作。",
+    "responses": [
+      {
+        "text": "还有其他人会想到吗？",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_HELP"
+      },
+      {
+        "text": "哦，好吧。那就别说了…",
+        "topic": "TALK_SCAVENGER_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_HELP",
+    "type": "talk_topic",
+    "dynamic_line": "在这里，我不相信大多数流氓会做那样的工作。不过，我知道有几个团体从事这样的工作。我们不是最好的朋友，但我可以和他们一起解决问题。",
+    "responses": [
+      {
+        "text": "那就告诉我吧。",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_OFFER"
+      },
+      {
+        "text": "这是一个什么样的群体？",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_EXPLAIN"
+      },
+      {
+        "text": "我四处问问。不过还是谢谢你。",
+        "topic": "TALK_SCAVENGER_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_EXPLAIN",
+    "type": "talk_topic",
+    "dynamic_line": "像我这样的雇工，更有条理。参与当地安全工作的少数几个团体可以支付。有兴趣吗？",
+    "responses": [
+      {
+        "text": "你的报价是多少？",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_OFFER"
+      },
+      {
+        "text": "不过，现在不要介意，谢谢。",
+        "topic": "TALK_SCAVENGER_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_OFFER",
+    "type": "talk_topic",
+    "dynamic_line": "我可以安排首付款，比如375件商品，剩下的由他们来处理。",
+    "responses": [
+      {
+        "text": "[FMC375]你说好了。",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_DEAL",
+        "condition": {
+          "u_has_items": {
+            "item": "FMCNote",
+            "count": 375
+          }
+        },
+        "effect": {
+          "u_consume_item": "FMCNote",
+          "count": 375
+        }
+      },
+      {
+        "text": "商会币是什么玩意？",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_MERCH"
+      },
+      {
+        "text": "好吧，我会再回来找你的。",
+        "topic": "TALK_SCAVENGER_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_DEAL",
+    "type": "talk_topic",
+    "dynamic_line": "好吧，告诉我地点，我会通知他们的。假设引导他们从事稳定的工作，而不是在小时间的工作上竞争会很方便。",
+    "responses": [
+      {
+        "text": "在路边的一座坚固的教堂里建了一个小社区，离这里不远。",
+        "effect": [
+          {
+            "u_add_var": "sofia_allies_secured",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_1b",
+            "om_terrain": "cf_church_1",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_wasteland_scavengers_2b",
+            "om_terrain": "cf_church_3",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_1",
+            "om_terrain": "cf_church_1_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          },
+          {
+            "mapgen_update": "arcana_cf_4_roof_2",
+            "om_terrain": "cf_church_3_roof",
+            "om_special": "cf_rural_church",
+            "must_see": true,
+            "search_range": 256
+          }
+        ],
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_END"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_END",
+    "type": "talk_topic",
+    "dynamic_line": "我想我是从这里得到的。是吗？",
+    "responses": [
+      {
+        "text": "实际上，我应该去那边看看。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_MERCH",
+    "type": "talk_topic",
+    "dynamic_line": "他们用的当地货币，免费的商人信用票据。如果你想在这里买东西，又不想把枪换掉，你需要商品。",
+    "responses": [
+      {
+        "text": "我懂了。让我们从重头再来一次。",
+        "topic": "TALK_SCAVENGER_MERC"
+      },
+      {
+        "text": "好的，我需要多少商会币？",
+        "topic": "TALK_SCAVENGER_MERC_CF_REP_MISSION_4_OFFER"
+      },
+      {
+        "text": "好吧，谢谢你的信息。再见！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]
