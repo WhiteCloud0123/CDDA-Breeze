@@ -1,0 +1,20 @@
+[
+  {
+    "id": "VEIL",
+    "type": "mutation_category",
+    "threshold_mut": "THRESH_VEIL",
+    "name": "揭下帷幕之人",
+    "mutagen_message": "你感到那些超然的存在正在向你伸出援手。",
+    "memorial_message": "揭开了世界之间的帷幕。",
+    "vitamin": "null"
+  },
+  {
+    "id": "DRAGONBLOOD",
+    "type": "mutation_category",
+    "threshold_mut": "THRESH_DRAGONBLOOD",
+    "name": "圣礼侍从",
+    "mutagen_message": "你会感觉到整个身体的强烈共鸣，这是通往权力之路的另一不可逆转的一步。",
+    "memorial_message": "获取那源于龙血圣礼的力量。",
+    "vitamin": "null"
+  }
+]

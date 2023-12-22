@@ -1,0 +1,3788 @@
+[
+  {
+    "id": "arcana_item_athame_sanguine_art",
+    "type": "SPELL",
+    "name": {
+      "str": "血色艺术"
+    },
+    "description": "准备一个仪式，将你的生命力的一部分转化为可用的本质形式。这样做需要5分钟，最后会造成失血和伤害，如果过度使用，还会造成潜在后果…",
+    "message": "你按照惯例从自己的血液中汲取力量，当你用钝刃在皮肤上描绘图案时，本能会引导你的手。当你刻下最后一个符文——唯一一个将割裂皮肤的符文——之时，伤口会在你身体的其他地方裂开！",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DAMAGE"
+    ],
+    "valid_targets": [
+      "self"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_athame_sanguine_art_fatigue",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_athame_sanguine_art_corruption",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_generate_blood_essence",
+        "hit_self": true
+      }
+    ],
+    "affected_body_parts": [
+      "torso"
+    ],
+    "effect_str": "bleed",
+    "effect": "attack",
+    "shape": "blast",
+    "base_casting_time": 60000,
+    "final_casting_time": 60000,
+    "min_damage": 1,
+    "max_damage": 3,
+    "damage_type": "pure",
+    "min_duration": 30000,
+    "max_duration": 30000
+  },
+  {
+    "id": "arcana_item_athame_sanguine_art_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Sanguine Art Fatigue"
+    },
+    "description": "Dirty hack caused by DDA-specific fuckery.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -20,
+    "max_damage": -20,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_athame_sanguine_art_corruption",
+    "type": "SPELL",
+    "name": {
+      "str": "Sanguine Art Corruption"
+    },
+    "description": "This inflicts the more insidious effects of the athame.  That's 2 entire days of side-effect buildup per use, by the way.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "blood_athame_side_effects",
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 17280000,
+    "max_duration": 17280000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_brooch_iridescent_empowered",
+    "name": {
+      "str": "守护与指引"
+    },
+    "description": "Grants the recovery effect to the user.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "胸针放射出保护性的魔法场！",
+    "effect": "spawn_item",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "halo_brooch_effect",
+    "extra_effects": [
+      {
+        "id": "arcana_item_brooch_iridescent_empowered_fatigue",
+        "hit_self": true
+      }
+    ],
+    "min_duration": 198000,
+    "max_duration": 198000
+  },
+  {
+    "id": "arcana_item_brooch_iridescent_empowered_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Guard And Guide Fatigue"
+    },
+    "description": "And this makes it cost about 20% of its implied energy in fatigue.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -18,
+    "max_damage": -18,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_chalice_offering",
+    "type": "SPELL",
+    "name": {
+      "str": "献祭"
+    },
+    "description": "准备一个仪式，将你的生命力的一部分转化为可用的本质形式。这样做需要15分钟，最终会对你的身体造成伤害，如果过度使用也会造成可怕的后果…",
+    "message": "你逐渐熟悉从自己的呼吸中汲取力量，跟随本能用一种陌生的语言低语。祈祷结束后，你举起圣杯，好像要从中喝水，但这是为了将你的气息从你的肺中抽离！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DAMAGE"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_chalice_offering_fatigue",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_chalice_offering_winding",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_chalice_offering_corruption",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_generate_blood_essence",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_generate_blood_essence",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_generate_blood_essence",
+        "hit_self": true
+      }
+    ],
+    "affected_body_parts": [
+      "torso"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_damage": 8,
+    "max_damage": 10,
+    "damage_type": "pure",
+    "base_casting_time": 90000,
+    "final_casting_time": 90000
+  },
+  {
+    "id": "arcana_item_chalice_offering_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Offering Fatigue"
+    },
+    "description": "Dirty hack caused by DDA-specific fuckery.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -60,
+    "max_damage": -60,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_chalice_offering_winding",
+    "type": "SPELL",
+    "name": {
+      "str": "Offering Windedness"
+    },
+    "description": "This is so that the chalice ritual actually knocks the wind out of you.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -10000,
+    "max_damage": -10000,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "STAMINA"
+  },
+  {
+    "id": "arcana_item_chalice_offering_corruption",
+    "type": "SPELL",
+    "name": {
+      "str": "Offering Corruption"
+    },
+    "description": "This inflicts the more insidious effects of the chalice.  That's 2 entire days of side-effect buildup per use, by the way.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "chalice_offering_side_effects",
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 17280000,
+    "max_duration": 17280000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_charm_bone_empowered",
+    "name": {
+      "str": "震颤冲击"
+    },
+    "description": "Blasts nearby targets for heavy damage.",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "message": "一股强大的能量从护符中散发出来！",
+    "extra_effects": [
+      {
+        "id": "arcana_item_charm_bone_empowered_spike",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_charm_bone_empowered_paralyze",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_charm_bone_empowered_fatigue",
+        "hit_self": true
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_damage": 65,
+    "max_damage": 65,
+    "damage_type": "heat",
+    "min_aoe": 8,
+    "max_aoe": 8
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_charm_bone_empowered_spike",
+    "name": {
+      "str": "Stunning Blast Spike"
+    },
+    "description": "Doubles the damage for enemies that are close enough.",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_damage": 65,
+    "max_damage": 65,
+    "damage_type": "heat",
+    "min_aoe": 2,
+    "max_aoe": 2
+  },
+  {
+    "id": "arcana_item_charm_bone_empowered_paralyze",
+    "type": "SPELL",
+    "name": {
+      "str": "Stunning Blast Paralysis"
+    },
+    "description": "This makes the enemies brain-zapped for once!",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "message": "",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect": "mod_moves",
+    "shape": "blast",
+    "min_damage": -1300,
+    "max_damage": -1300,
+    "min_aoe": 8,
+    "max_aoe": 8
+  },
+  {
+    "id": "arcana_item_charm_bone_empowered_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Stunning Blast Fatigue"
+    },
+    "description": "And this makes it cost about about 20% of its implied energy in fatigue.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -8,
+    "max_damage": -8,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_coalescent_conversion",
+    "type": "SPELL",
+    "name": {
+      "str": "聚结转换"
+    },
+    "description": "This creates one crystallized essence, plus side effects.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "当火花从装置中跃出时，空气在颤动，当能量从现实之壁中被拉出来，凝固成水晶般的银时，空气中回荡着。\n在它存在的第一刹那间发出白热的光芒，稀薄的浓缩源质碎片迅速冷却成可以安全处理的东西。",
+    "flags": [
+      "PERMANENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_coalescent_conversion_sound",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_flash",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_side_effects",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_wonder",
+        "hit_self": false
+      }
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "essence_pure",
+    "min_duration": 1,
+    "max_duration": 1
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_coalescent_conversion_sound",
+    "name": {
+      "str": "Coalescent Conversion Noise"
+    },
+    "description": "Less spammy sound",
+    "message": "",
+    "sound_description": "a thundering boom!",
+    "sound_type": "combat",
+    "sound_ambient": true,
+    "sound_id": "misc",
+    "sound_variant": "shockwave",
+    "min_damage": 80,
+    "max_damage": 80,
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "noise",
+    "shape": "blast"
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_coalescent_conversion_flash",
+    "name": {
+      "str": "Coalescent Conversion Noise"
+    },
+    "description": "Aside from it doing fuck-all to NPCs, this works decently enough.",
+    "valid_targets": [
+      "hostile",
+      "ground",
+      "self"
+    ],
+    "effect": "flashbang",
+    "shape": "blast",
+    "message": "",
+    "min_range": 40,
+    "max_range": 40
+  },
+  {
+    "id": "arcana_item_coalescent_conversion_side_effects",
+    "type": "SPELL",
+    "name": {
+      "str": "Coalescent Conversion Side Effects"
+    },
+    "description": "Zaps the user briefly, creates hot air.",
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "valid_targets": [
+      "self"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "zapped",
+    "field_id": "fd_hot_air2",
+    "field_chance": 1,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2,
+    "field_intensity_variance": 0.5,
+    "min_duration": 500,
+    "max_duration": 1000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_coalescent_conversion_wonder",
+    "name": {
+      "str": "Coalescent Conversion Wonder"
+    },
+    "description": "Some risk of a few Fun consequences.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "none",
+    "shape": "blast",
+    "flags": [
+      "WONDER",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "extra_effects": [
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_wonder_archon"
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_wonder_tindalos"
+      }
+    ]
+  },
+  {
+    "id": "arcana_item_coalescent_conversion_wonder_archon",
+    "type": "SPELL",
+    "name": {
+      "str": "Coalescent Conversion Archon Rift"
+    },
+    "description": "Creates an archon rift nearby.",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "尽管新创造的水晶散发出热量，你还是感觉到一丝寒意…",
+    "flags": [
+      "RANDOM_TARGET",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_range": 10,
+    "max_range": 10,
+    "field_id": "fd_archon_rift",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1,
+    "min_duration": 45000,
+    "max_duration": 90000
+  },
+  {
+    "id": "arcana_item_coalescent_conversion_wonder_tindalos",
+    "type": "SPELL",
+    "name": {
+      "str": "Coalescent Conversion Tindalos Rift"
+    },
+    "description": "Creates a tindalos rift nearby.",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "你觉得好像有什么东西在跟踪你，一些看不见的观察者在释放一种超凡脱俗的杀戮意图。",
+    "flags": [
+      "RANDOM_TARGET",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_range": 10,
+    "max_range": 10,
+    "field_id": "fd_tindalos_rift",
+    "field_chance": 1,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3,
+    "min_duration": 200,
+    "max_duration": 400
+  },
+  {
+    "id": "arcana_item_coalescent_offering",
+    "type": "SPELL",
+    "name": {
+      "str": "聚结献祭"
+    },
+    "description": "准备仪式以获得结晶的精华。这样做需要15分钟，最终会对你的身体造成伤害，如果过度使用也会造成可怕的后果…",
+    "message": "你通过一种仪式从内心汲取力量，本能地用一种陌生的语言低语。诗句完成后，你把圣杯举得很高，一道耀眼的闪光在圣杯中凝固成一条神奇的能量！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "PERMANENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_coalescent_offering_fatigue",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_sound",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_coalescent_conversion_side_effects",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_chalice_offering_winding",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_chalice_offering_corruption",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_aftermath_wave_destruction_side_effects",
+        "hit_self": true
+      }
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "essence_pure",
+    "base_casting_time": 90000,
+    "final_casting_time": 90000
+  },
+  {
+    "id": "arcana_item_coalescent_offering_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Offering Fatigue"
+    },
+    "description": "Dirty hack caused by DDA-specific fuckery.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -300,
+    "max_damage": -300,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_divine_seal",
+    "name": {
+      "str": "神圣魔印"
+    },
+    "description": "强大的AoE治疗，也像奉献和转化死亡的植物生命。",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "message": "维度能量在魅力中脉动，在圣光波中向外辐射！",
+    "extra_effects": [
+      {
+        "id": "arcana_item_divine_seal_heal_aoe",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_divine_seal_consecrate",
+        "hit_self": false
+      }
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_plant_renewal",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT",
+      "IGNORE_WALLS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_aoe": 32,
+    "max_aoe": 32
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_divine_seal_heal_aoe",
+    "name": {
+      "str": "神圣魔印治愈"
+    },
+    "description": "这为盟友增加了治疗效果，是预期效果的一半。",
+    "valid_targets": [
+      "ally"
+    ],
+    "message": "",
+    "extra_effects": [
+      {
+        "id": "arcana_item_divine_seal_heal_spike",
+        "hit_self": true
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "arcana_divine_healing_effects",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT",
+      "IGNORE_WALLS"
+    ],
+    "min_damage": -50,
+    "max_damage": -100,
+    "min_aoe": 32,
+    "max_aoe": 32,
+    "min_duration": 18000,
+    "max_duration": 18000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_divine_seal_heal_spike",
+    "name": {
+      "str": "神圣魔印治愈"
+    },
+    "description": "这就赋予了更强大的自愈能力。",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "arcana_divine_healing_effects",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT",
+      "IGNORE_WALLS"
+    ],
+    "min_damage": -100,
+    "max_damage": -200,
+    "min_duration": 36000,
+    "max_duration": 36000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_divine_seal_consecrate",
+    "name": {
+      "str": "神圣魔印祝福"
+    },
+    "description": "这会增加奉献的效果，减去破坏性效果。",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "message": "",
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_consecrate",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT",
+      "IGNORE_WALLS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_aoe": 32,
+    "max_aoe": 32
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_amulet_exotic_empowered",
+    "name": {
+      "str": "隐蔽光环"
+    },
+    "description": "Spawns the item needed to make the effects work.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "一道奇怪的脉冲从护身符中缓缓流过你的身体！",
+    "effect": "spawn_item",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "halo_amulet_effect",
+    "extra_effects": [
+      {
+        "id": "arcana_item_amulet_exotic_empowered_fatigue",
+        "hit_self": true
+      }
+    ],
+    "min_duration": 450000,
+    "max_duration": 450000
+  },
+  {
+    "id": "arcana_item_amulet_exotic_empowered_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Hidden Aura Fatigue"
+    },
+    "description": "And this makes it cost about about 20% of its implied energy in fatigue.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -14,
+    "max_damage": -14,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_generate_blood_essence",
+    "type": "SPELL",
+    "name": {
+      "str": "生成猩血源质"
+    },
+    "description": "This is used by blood magic items to produce blood essence.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "PERMANENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "essence_blood",
+    "effect": "spawn_item",
+    "shape": "blast"
+  },
+  {
+    "id": "arcana_item_gilded_aegis_healing",
+    "type": "SPELL",
+    "name": {
+      "str": "斗篷之治愈"
+    },
+    "description": "Forces the body to heal itself, but also hurts quite a bit.",
+    "message": "你的斗篷闪烁着奇异的光芒，一股带来痛苦的治疗力量冲击着你！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_gilded_aegis_pain",
+        "hit_self": true
+      }
+    ],
+    "effect_str": "arcana_aegis_mending",
+    "min_damage": -10,
+    "max_damage": -20,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 100,
+    "max_duration": 100
+  },
+  {
+    "id": "arcana_item_gilded_aegis_pain",
+    "type": "SPELL",
+    "name": {
+      "str": "Aegis Pain Side Effect"
+    },
+    "description": "Take your medicine, Hunter.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -15,
+    "max_damage": -15,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "PAIN"
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_hammerzeit",
+    "name": {
+      "str": "雷霆之怒"
+    },
+    "description": "Flashbang on user, blinding anyone nearby.",
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground",
+      "self"
+    ],
+    "message": "“圣锤奥义！”锤子散发着金色的光芒，随后发出耀眼的闪光和响亮的巨响！",
+    "extra_effects": [
+      {
+        "id": "arcana_item_hammerzeit_attack",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_hammerzeit_dazzle",
+        "hit_self": false
+      }
+    ],
+    "effect": "flashbang",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 40,
+    "max_damage": 40,
+    "min_aoe": 6,
+    "max_aoe": 6
+  },
+  {
+    "id": "arcana_item_hammerzeit_attack",
+    "type": "SPELL",
+    "name": {
+      "str": "Hammer Secondary Effect"
+    },
+    "description": "对每一个具有SUNDEATH/NIGHT_隐身能力的香草怪物，以及每一个基于这种生物召唤的怪物，都有轻微的伤害和眩晕。",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "targeted_monster_ids": [
+      "mon_dark_wyrm",
+      "mon_albino_penguin",
+      "mon_blank",
+      "mon_darkman",
+      "mon_hunting_horror",
+      "mon_shadow",
+      "mon_shadow_snake",
+      "mon_unseen_hunter",
+      "mon_zougar_shady",
+      "mon_zombie_pupa_decoy_shady",
+      "mon_spawn_raptor_shady",
+      "mon_zombie_brute_ninja",
+      "mon_zombie_shady",
+      "mon_zombie_soldier_blackops_1",
+      "mon_zombie_soldier_blackops_2",
+      "mon_dark_wyrm_summoned",
+      "mon_dark_wyrm_summoned_glyph",
+      "mon_hunting_horror_summoned",
+      "mon_shadow_summoned",
+      "mon_shadow_summoned_fake",
+      "mon_shadow_snake_summoned",
+      "mon_shadow_snake_summoned_fake",
+      "mon_archon",
+      "mon_seraphic_shade",
+      "mon_seraphic_shade_fake"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "dazed",
+    "min_damage": 9,
+    "max_damage": 18,
+    "min_aoe": 6,
+    "max_aoe": 6,
+    "min_duration": 300,
+    "max_duration": 600,
+    "damage_type": "heat"
+  },
+  {
+    "id": "arcana_item_hammerzeit_dazzle",
+    "type": "SPELL",
+    "name": {
+      "str": "Hammer Blindness"
+    },
+    "description": "This is a hack for the flashbang effect not affecting NPCs.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "flags": [
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_aoe": 6,
+    "max_aoe": 6,
+    "min_duration": 300,
+    "max_duration": 600,
+    "field_id": "fd_dazzling",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_hammerzeit_greater",
+    "name": {
+      "str": "明亮的愤怒"
+    },
+    "description": "闪击用户，使附近任何人失明，并对AoE中的任何其他人造成额外伤害。",
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground",
+      "self"
+    ],
+    "message": "“马泰罗万岁！”伴随着雷鸣般的爆炸，铁锤发出灼热的光芒！",
+    "extra_effects": [
+      {
+        "id": "arcana_item_hammerzeit_greater_attack_1",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_hammerzeit_greater_attack_2",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_hammerzeit_dazzle",
+        "hit_self": false
+      }
+    ],
+    "effect": "flashbang",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 40,
+    "max_damage": 40,
+    "min_aoe": 6,
+    "max_aoe": 6
+  },
+  {
+    "id": "arcana_item_hammerzeit_greater_attack_1",
+    "type": "SPELL",
+    "name": {
+      "str": "Hammer Greater Secondary Effect 1"
+    },
+    "description": "对AoE中的任何东西造成火焰伤害和晕眩，除了用户。",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "dazed",
+    "min_damage": 15,
+    "max_damage": 25,
+    "min_aoe": 6,
+    "max_aoe": 6,
+    "min_duration": 1000,
+    "max_duration": 2000,
+    "damage_type": "heat"
+  },
+  {
+    "id": "arcana_item_hammerzeit_greater_attack_2",
+    "type": "SPELL",
+    "name": {
+      "str": "Hammer Greater Secondary Effect 2"
+    },
+    "description": "Bonus damage for every vanilla monster with SUNDEATH/NIGHT_INVISIBILITY, and every summoned monster based off such creatures.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "targeted_monster_ids": [
+      "mon_dark_wyrm",
+      "mon_albino_penguin",
+      "mon_blank",
+      "mon_darkman",
+      "mon_hunting_horror",
+      "mon_shadow",
+      "mon_shadow_snake",
+      "mon_unseen_hunter",
+      "mon_zougar_shady",
+      "mon_zombie_pupa_decoy_shady",
+      "mon_spawn_raptor_shady",
+      "mon_zombie_brute_ninja",
+      "mon_zombie_shady",
+      "mon_zombie_soldier_blackops_1",
+      "mon_zombie_soldier_blackops_2",
+      "mon_dark_wyrm_summoned",
+      "mon_dark_wyrm_summoned_glyph",
+      "mon_hunting_horror_summoned",
+      "mon_shadow_summoned",
+      "mon_shadow_summoned_fake",
+      "mon_shadow_snake_summoned",
+      "mon_shadow_snake_summoned_fake",
+      "mon_archon",
+      "mon_seraphic_shade",
+      "mon_seraphic_shade_fake"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_damage": 15,
+    "max_damage": 25,
+    "min_aoe": 6,
+    "max_aoe": 6,
+    "damage_type": "heat"
+  },
+  {
+    "id": "arcana_item_immolate",
+    "type": "SPELL",
+    "name": {
+      "str": "焚祭"
+    },
+    "description": "Blast a nearby target with fire.",
+    "message": "护身符燃烧殆尽，释放出一道火焰！",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_damage": 30,
+    "max_damage": 50,
+    "damage_type": "heat",
+    "min_range": 5,
+    "max_range": 5,
+    "base_casting_time": 5,
+    "final_casting_time": 5,
+    "field_id": "fd_fire",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_incense",
+    "name": {
+      "str": "柠檬熏香"
+    },
+    "description": "恢复大量耐力和疲劳。",
+    "valid_targets": [
+      "self"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_incense_fatigue",
+        "hit_self": true
+      }
+    ],
+    "message": "当熏香突然蒸发时，一缕缕烟雾迅速消失，让你充满能量。",
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "STAMINA",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 3000,
+    "max_damage": 3000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_incense_fatigue",
+    "name": {
+      "str": "柠檬熏香疲劳"
+    },
+    "description": "And the fatigue effect.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 30,
+    "max_damage": 30
+  },
+  {
+    "id": "arcana_item_jade_hauberk_healing",
+    "type": "SPELL",
+    "name": {
+      "str": "锁甲之治愈"
+    },
+    "description": "Weaker healing than gilded aegis, but less pain.",
+    "message": "你盔甲的披风闪烁着奇怪的光芒，将治愈魔法的隐痛穿透你的身体。",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_jade_hauberk_healing_fatigue",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_jade_hauberk_pain",
+        "hit_self": true
+      }
+    ],
+    "effect_str": "arcana_aegis_mending",
+    "min_damage": -5,
+    "max_damage": -10,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 100,
+    "max_duration": 100
+  },
+  {
+    "id": "arcana_item_jade_hauberk_healing_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Hauberk Mending Fatigue"
+    },
+    "description": "Dirty hack caused by DDA-specific fuckery.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -15,
+    "max_damage": -15,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_jade_hauberk_pain",
+    "type": "SPELL",
+    "name": {
+      "str": "Hauberk Pain Side Effect"
+    },
+    "description": "Still stings a bit.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DAMAGE"
+    ],
+    "min_damage": -7,
+    "max_damage": -8,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "PAIN"
+  },
+  {
+    "id": "arcana_item_lichhook",
+    "type": "SPELL",
+    "name": {
+      "str": "崩裂血肉"
+    },
+    "description": "Ensnares and poisons a single target.",
+    "message": "听你号令，带毒的卷须破地而出，捕获并侵扰你的敌人！",
+    "valid_targets": [
+      "hostile"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_lichhook_freeze",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_lichhook_slow",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_lichhook_poison",
+        "hit_self": false
+      }
+    ],
+    "effect_str": "badpoison",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_range": 3,
+    "max_range": 3,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 400,
+    "max_duration": 600,
+    "min_damage": 40,
+    "max_damage": 60,
+    "damage_type": "biological",
+    "field_id": "fd_gibs_flesh",
+    "field_chance": 1,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3
+  },
+  {
+    "id": "arcana_item_lichhook_freeze",
+    "type": "SPELL",
+    "name": {
+      "str": "冰裂血肉"
+    },
+    "description": "This paralyzes the target for a few seconds.",
+    "message": "",
+    "valid_targets": [
+      "hostile"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_range": 3,
+    "max_range": 3,
+    "effect": "mod_moves",
+    "shape": "blast",
+    "min_damage": -400,
+    "max_damage": -600
+  },
+  {
+    "id": "arcana_item_lichhook_poison",
+    "type": "SPELL",
+    "name": {
+      "str": "毒裂血肉"
+    },
+    "description": "This adds the lower level poison.",
+    "message": "",
+    "valid_targets": [
+      "hostile"
+    ],
+    "effect_str": "poison",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_range": 3,
+    "max_range": 3,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 1500,
+    "max_duration": 1500
+  },
+  {
+    "id": "arcana_item_lichhook_slow",
+    "type": "SPELL",
+    "name": {
+      "str": "Sundering Flesh Slow"
+    },
+    "description": "This adds paralytic poison.",
+    "message": "",
+    "valid_targets": [
+      "hostile"
+    ],
+    "effect_str": "paralyzepoison",
+    "flags": [
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_range": 3,
+    "max_range": 3,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 1500,
+    "max_duration": 1500
+  },
+  {
+    "id": "arcana_item_mana_potion",
+    "type": "SPELL",
+    "name": {
+      "str": "法力提升"
+    },
+    "description": "Restores 750 mana.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "你喝了药水，感到神奇的能量在你身上流动。",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 750,
+    "max_damage": 750,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "MANA"
+  },
+  {
+    "id": "arcana_item_mech_flare",
+    "type": "SPELL",
+    "name": {
+      "str": "幽灵耀光"
+    },
+    "description": "Fires an ethereal flare that will leave a lingering glow on whatever you directly target, and illuminate the surrounding area.",
+    "message": "一股奇异的蓝色火焰从机甲肩膀上的发射器中喷出，散发出的诡异光芒覆盖了附近整片区域！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_mech_flare_fatigue"
+      },
+      {
+        "id": "arcana_item_mech_flare_spike"
+      },
+      {
+        "id": "arcana_item_mech_flare_dazzle"
+      }
+    ],
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "RANDOM_DURATION",
+      "SILENT"
+    ],
+    "min_damage": 40,
+    "max_damage": 60,
+    "damage_type": "cold",
+    "min_range": 45,
+    "max_range": 45,
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "min_duration": 600000,
+    "max_duration": 600000,
+    "field_id": "fd_veil_light",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "id": "arcana_item_mech_flare_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Ghostly Flare Fatigue"
+    },
+    "description": "Dirty hack for DDA version.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT"
+    ],
+    "min_damage": -40,
+    "max_damage": -40,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_mech_flare_spike",
+    "type": "SPELL",
+    "name": {
+      "str": "Ghostly Flare Spike"
+    },
+    "description": "Doubles damage for anything in the center, and adds plasma for flavor.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "RANDOM_DURATION",
+      "SILENT"
+    ],
+    "min_damage": 40,
+    "max_damage": 60,
+    "damage_type": "cold",
+    "min_range": 45,
+    "max_range": 45,
+    "effect_str": "haslight",
+    "min_duration": 3000,
+    "max_duration": 3000,
+    "field_id": "fd_plasma",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "id": "arcana_item_mech_flare_dazzle",
+    "type": "SPELL",
+    "name": {
+      "str": "Ghostly Flare Dazzle"
+    },
+    "description": "And this adds dazzling fields to potentially blind targets.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "RANDOM_DURATION",
+      "SILENT"
+    ],
+    "min_range": 45,
+    "max_range": 45,
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "min_duration": 3000,
+    "max_duration": 3000,
+    "field_id": "fd_dazzling",
+    "field_chance": 5,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "id": "arcana_item_meteoric_verge_bolt",
+    "type": "SPELL",
+    "name": {
+      "str": "来自彼端之闪电"
+    },
+    "description": "Blasts everything in AoE with lightning.",
+    "message": "当你举起长棍时，一股能量冲击地面，发出雷鸣般的爆炸声！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_meteoric_verge_spike",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_meteoric_verge_pulse",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_meteoric_verge_noise",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_meteoric_verge_buff",
+        "hit_self": true
+      }
+    ],
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "blind",
+    "min_damage": 100,
+    "max_damage": 110,
+    "min_aoe": 9,
+    "max_aoe": 9,
+    "min_range": 50,
+    "max_range": 50,
+    "min_duration": 6000,
+    "max_duration": 6500,
+    "damage_type": "electric",
+    "field_id": "fd_electricity",
+    "field_chance": 3,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3
+  },
+  {
+    "id": "arcana_item_meteoric_verge_spike",
+    "type": "SPELL",
+    "name": {
+      "str": "Verge Spike"
+    },
+    "description": "Double damage in epicenter.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE",
+      "SILENT"
+    ],
+    "min_damage": 100,
+    "max_damage": 110,
+    "damage_type": "electric",
+    "min_aoe": 1,
+    "max_aoe": 1,
+    "min_range": 50,
+    "max_range": 50
+  },
+  {
+    "id": "arcana_item_meteoric_verge_pulse",
+    "type": "SPELL",
+    "name": {
+      "str": "Verge Pulse"
+    },
+    "description": "This adds the terrain damage.",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "bash",
+    "shape": "blast",
+    "min_damage": 100,
+    "max_damage": 110,
+    "min_aoe": 9,
+    "max_aoe": 9,
+    "min_range": 50,
+    "max_range": 50
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_meteoric_verge_noise",
+    "name": {
+      "str": "Verge Noise"
+    },
+    "description": "Less spammy sound",
+    "message": "",
+    "sound_description": "a thunderclap!",
+    "sound_type": "combat",
+    "sound_ambient": true,
+    "sound_id": "misc",
+    "sound_variant": "shockwave",
+    "flags": [
+      "RANDOM_DAMAGE"
+    ],
+    "min_damage": 100,
+    "max_damage": 110,
+    "min_range": 50,
+    "max_range": 50,
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "noise",
+    "shape": "blast"
+  },
+  {
+    "id": "arcana_item_meteoric_verge_buff",
+    "type": "SPELL",
+    "name": {
+      "str": "Verge Buff"
+    },
+    "description": "Grants brief lightning immunity to the user and any nearby allies.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "lightning_ward_true",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DURATION",
+      "SILENT"
+    ],
+    "min_duration": 500,
+    "max_duration": 1000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_orb_veil_mapping",
+    "name": {
+      "str": "凝视更广阔的视野"
+    },
+    "description": "知识就是力量，但力量是有代价的…",
+    "effect": "map",
+    "shape": "blast",
+    "valid_targets": [
+      "self"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_orb_veil_revelation",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_orb_veil_attention",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_artifice_pain",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder",
+        "hit_self": false
+      }
+    ],
+    "message": "你深入观察这个球体，看到一个隐藏在令人头痛的几何图形中的周围区域。",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_aoe": 30,
+    "max_aoe": 30,
+    "base_casting_time": 100
+  },
+  {
+    "id": "arcana_item_orb_veil_revelation",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Revelation"
+    },
+    "description": "Grants a long duration of the Revelation spell effect.",
+    "message": "一股奇怪的景象涌上你的脑海…",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_revelation",
+    "min_duration": 2160000,
+    "max_duration": 2160000
+  },
+  {
+    "id": "arcana_item_orb_veil_attention",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb Attention"
+    },
+    "description": "Applies nether attention, lower duration because the orb comes with a host of random side effects.",
+    "message": "",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "attention",
+    "min_duration": 90000,
+    "max_duration": 270000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_orb_veil_wonder",
+    "name": {
+      "str": "Orb Random Effects"
+    },
+    "description": "Random side effects to using the orb of the veil.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "none",
+    "shape": "blast",
+    "flags": [
+      "WONDER",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "extra_effects": [
+      {
+        "id": "arcana_item_orb_veil_wonder_archon"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_blind"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_citrine"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_hallu"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_insight"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_stunned"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_ward"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_2"
+      }
+    ]
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_archon",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Archon Effect"
+    },
+    "description": "Applies a decent dose of the archon's gaze effect.",
+    "message": "你看到一些东西在回头看你，远比外面的其他东西更专注…",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "archon_gaze_effect",
+    "min_duration": 90000,
+    "max_duration": 270000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_blind",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Blindness"
+    },
+    "description": "Blinds you for for a modest duration.",
+    "message": "你在一道刺眼白光中看见奇怪的幻象。",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "blind",
+    "min_duration": 100,
+    "max_duration": 3000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_citrine",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Incense"
+    },
+    "description": "Grants a random duration of citrine incense's effect.",
+    "message": "伴随着幻觉的是一缕衰弱的精华，看起来比幻觉要真实得多…",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_orb_veil_wonder_citrine2"
+      }
+    ],
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "STAMINA",
+    "min_damage": 3000,
+    "max_damage": 9000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_citrine2",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Incense 2"
+    },
+    "description": "And this adds fatigue restoaration.",
+    "sprite": "fd_veil_light",
+    "message": "",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE",
+    "min_damage": 30,
+    "max_damage": 90
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_hallu",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Hallucinations"
+    },
+    "description": "Grants hallucinations.",
+    "message": "即使在你把视线从球体上移开后，这些景象仍然萦绕在你的脑海中…",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_orb_veil_wonder_hallu2"
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "visuals",
+    "min_duration": 90000,
+    "max_duration": 90000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_hallu2",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Hallucinations 2"
+    },
+    "description": "Second hallucination effect.",
+    "message": "",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "hallu",
+    "min_duration": 90000,
+    "max_duration": 90000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_insight",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Insight"
+    },
+    "description": "Grants a random duration of the Insight spell effect.",
+    "message": "对异界洞察力的短暂领会灌满了你的脑海。",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_insight",
+    "min_duration": 30000,
+    "max_duration": 90000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_stunned",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Stun"
+    },
+    "description": "Stuns for for a short duration.",
+    "message": "球体中的幻象让你感到一阵眩晕。",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "stunned",
+    "min_duration": 100,
+    "max_duration": 3000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_ward",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb: Ward"
+    },
+    "description": "Grants a random duration of Ward Against Evil.",
+    "message": "你看到一个幻象，在球体中的奇怪景象中，有什么东西在看着你。",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "cleric_warding",
+    "min_duration": 30000,
+    "max_duration": 90000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_orb_veil_wonder_2",
+    "name": {
+      "str": "Orb Random Summon"
+    },
+    "description": "Wonder-ception, this summons a random monster.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "出于某种原因，球体中的景象似乎比它们应该的要真实得多…",
+    "effect": "none",
+    "shape": "blast",
+    "flags": [
+      "WONDER",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "extra_effects": [
+      {
+        "id": "arcana_item_orb_veil_wonder_2_krecks"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_2_fiend"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_2_shadows"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_2_angel"
+      },
+      {
+        "id": "arcana_item_orb_veil_wonder_2_vortices"
+      }
+    ]
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_2_krecks",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb Summon: Krecks"
+    },
+    "description": "在外面的某个地方，有些生物不应该是真的，但它们是…",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_TARGET",
+      "HOSTILE_50",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_kreck_summoned",
+    "min_damage": 1,
+    "max_damage": 3,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_range": 60,
+    "max_range": 60,
+    "min_duration": 120000,
+    "max_duration": 240000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_2_fiend",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb Summon: Fiend"
+    },
+    "description": "在外面的某个地方，有一种生物不应该是真的，但是…",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "RANDOM_TARGET",
+      "HOSTILE_50",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_zombie_fiend_summoned",
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_range": 60,
+    "max_range": 60,
+    "min_duration": 120000,
+    "max_duration": 240000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_2_shadows",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb Summon: Shadows"
+    },
+    "description": "在外面的某个地方，有些生物不应该是真的，但它们是…",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_TARGET",
+      "HOSTILE_50",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_summoned",
+    "min_damage": 1,
+    "max_damage": 3,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_range": 60,
+    "max_range": 60,
+    "min_duration": 120000,
+    "max_duration": 240000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_2_angel",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb Summon: Angel"
+    },
+    "description": "在外面的某个地方，有一种生物不应该是真的，但是…",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "RANDOM_TARGET",
+      "HOSTILE_50",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_flesh_angel_summoned",
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_range": 60,
+    "max_range": 60,
+    "min_duration": 120000,
+    "max_duration": 240000
+  },
+  {
+    "id": "arcana_item_orb_veil_wonder_2_vortices",
+    "type": "SPELL",
+    "name": {
+      "str": "Orb Summon: Vortices"
+    },
+    "description": "在外面的某个地方，有些生物不应该是真的，但它们是…",
+    "valid_targets": [
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_TARGET",
+      "HOSTILE_50",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_vortex_summoned",
+    "min_damage": 1,
+    "max_damage": 3,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_range": 60,
+    "max_range": 60,
+    "min_duration": 120000,
+    "max_duration": 240000
+  },
+  {
+    "id": "arcana_item_pestilence",
+    "type": "SPELL",
+    "name": {
+      "str": "瘟疫召唤"
+    },
+    "description": "Mutated vermin come to your aid.",
+    "message": "虫子从你脚下的地上滑出来，听到你的召唤，矛上发出雷鸣般的爆炸声！",
+    "extra_effects": [
+      {
+        "id": "arcana_item_pestilence_stun",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_pestilence_aftereffect",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_centipede_giant_summoned",
+    "min_damage": 1,
+    "max_damage": 3,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_duration": 540000,
+    "max_duration": 540000
+  },
+  {
+    "id": "arcana_item_pestilence_stun",
+    "type": "SPELL",
+    "name": {
+      "str": "瘟疫昏迷"
+    },
+    "description": "对附近的敌人造成AoE伤害和眩晕。",
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "message": "",
+    "effect_str": "stunned",
+    "damage_type": "cold",
+    "min_damage": 30,
+    "max_damage": 60,
+    "min_aoe": 3,
+    "max_aoe": 3,
+    "min_duration": 2400,
+    "max_duration": 3000
+  },
+  {
+    "id": "arcana_item_pestilence_aftereffect",
+    "type": "SPELL",
+    "name": {
+      "str": "Pestilence Aftermath"
+    },
+    "description": "Destruction of terrain around you.",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "message": "",
+    "effect_str": "arcana_pestilence",
+    "min_damage": 4,
+    "max_damage": 4,
+    "min_aoe": 6,
+    "max_aoe": 6
+  },
+  {
+    "id": "arcana_item_red_potion_healing",
+    "type": "SPELL",
+    "name": {
+      "str": "Elixir of Life"
+    },
+    "description": "Minor healing, and potion effects.",
+    "message": "你喝了药水，感觉到一股令人舒畅的温暖蔓延到全身。",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "potion_healing",
+    "min_damage": -5,
+    "max_damage": -10,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 90000,
+    "max_duration": 90000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_triffid_garland_empowered",
+    "name": {
+      "str": "青翠促生"
+    },
+    "description": "Grants the recovery effect to the user.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "一股能量从花环中流过你！",
+    "effect": "attack",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "triffid_garland_buff",
+    "extra_effects": [
+      {
+        "id": "arcana_item_triffid_garland_empowered_fatigue",
+        "hit_self": true
+      }
+    ],
+    "min_duration": 306000,
+    "max_duration": 306000
+  },
+  {
+    "id": "arcana_item_triffid_garland_empowered_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "青翠促生"
+    },
+    "description": "And this makes it cost 20% of its implied energy in fatigue.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -10,
+    "max_damage": -10,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_artifice",
+    "name": {
+      "str": "呼唤秩序"
+    },
+    "description": "Attempts to pacify monsters for a moderate duration, paralyzes user and inflicts pain.",
+    "effect": "charm_monster",
+    "shape": "blast",
+    "message": "“因为秩序，我们拥有了超越生物的能力。”能量如浪潮般向外辐射，在这个过程中，超自然的思维充斥着你的脑海！",
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_artifice_pain",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_scroll_artifice_paralyze",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_scroll_leftover",
+        "hit_self": false
+      }
+    ],
+    "min_damage": 180,
+    "max_damage": 240,
+    "min_duration": 1080000,
+    "max_duration": 1440000,
+    "min_aoe": 24,
+    "max_aoe": 24,
+    "valid_targets": [
+      "self",
+      "hostile"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "IGNORE_WALLS"
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_artifice_pain",
+    "name": {
+      "str": "Divine Scroll: Artifice Pain"
+    },
+    "description": "Used instead of Artifact Pain to suppress the message and make the range more narrow.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "PAIN",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -15,
+    "max_damage": -20
+  },
+  {
+    "id": "arcana_item_scroll_artifice_paralyze",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Artifice Paralysis"
+    },
+    "description": "This gives scrolls of command a brief brain-zap, longer than normal artifact paralysis.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "mod_moves",
+    "shape": "blast",
+    "min_damage": -200,
+    "max_damage": -300
+  },
+  {
+    "id": "arcana_item_scroll_destruction",
+    "type": "SPELL",
+    "name": {
+      "str": "怨泣"
+    },
+    "description": "Similar effects to Wave of Destruction, though with different side effects.",
+    "message": "“万物皆有尽头。”一阵可怕的杂音回响着，引发出雷鸣般的爆炸冲击你的四周！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_destruction_spike",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_scroll_destruction_noise",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_scroll_destruction_attention",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_scroll_destruction_cold",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_destruction_pulse",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_leftover",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "dazed",
+    "min_damage": 150,
+    "max_damage": 180,
+    "min_aoe": 24,
+    "max_aoe": 24,
+    "min_duration": 8000,
+    "max_duration": 12000,
+    "damage_type": "bash",
+    "field_id": "fd_toxic_gas",
+    "field_chance": 10,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3
+  },
+  {
+    "id": "arcana_item_scroll_destruction_spike",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Destruction Spike"
+    },
+    "description": "Increases damage in epicenter.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE"
+    ],
+    "min_damage": 150,
+    "max_damage": 180,
+    "effect_str": "downed",
+    "min_duration": 8000,
+    "max_duration": 12000,
+    "min_aoe": 6,
+    "max_aoe": 6,
+    "damage_type": "bash"
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_destruction_noise",
+    "name": {
+      "str": "Divine Scroll: Destruction Noise"
+    },
+    "description": "Less spammy sound",
+    "message": "",
+    "sound_description": "a huge explosion!",
+    "sound_type": "combat",
+    "sound_ambient": true,
+    "sound_id": "misc",
+    "sound_variant": "shockwave",
+    "min_damage": 150,
+    "max_damage": 180,
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE"
+    ],
+    "effect": "noise",
+    "shape": "blast"
+  },
+  {
+    "id": "arcana_item_scroll_destruction_attention",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Destruction Attention"
+    },
+    "description": "This is used instead of Artifact Attention to suppress the message and narrow the duration range.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "attention",
+    "flags": [
+      "RANDOM_DURATION",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_duration": 540000,
+    "max_duration": 900000
+  },
+  {
+    "id": "arcana_item_scroll_destruction_cold",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Destruction Coldness"
+    },
+    "description": "This adds a chill to the air, inflicted by scrolls of sundering.",
+    "effect": "attack",
+    "shape": "blast",
+    "message": "",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "min_aoe": 24,
+    "max_aoe": 24,
+    "field_id": "fd_cold_air1",
+    "field_chance": 1,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3
+  },
+  {
+    "id": "arcana_item_scroll_destruction_pulse",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Destruction Pulse"
+    },
+    "description": "This adds a highly-random pulse effect to the scroll.",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "bash",
+    "shape": "blast",
+    "min_damage": 150,
+    "max_damage": 180,
+    "min_aoe": 24,
+    "max_aoe": 24
+  },
+  {
+    "id": "arcana_item_scroll_leftover",
+    "type": "SPELL",
+    "name": {
+      "str": "Scroll: Leftovers"
+    },
+    "description": "This exists to make magic scrolls leave a blank scroll when used up, obsoleting the previous hack of making the item transform to exploit revert_to.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "PERMANENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "scroll_blank",
+    "min_duration": 1,
+    "max_duration": 1
+  },
+  {
+    "id": "arcana_item_scroll_moon",
+    "type": "SPELL",
+    "name": {
+      "str": "暗影屏障"
+    },
+    "description": "Overwhelming darkness, both in field and event form, blinds monsters.",
+    "message": "“不要害怕未知。”一团朦胧的薄雾向四面八方散开，鲜活的黑暗向上蔓延，遮蔽了一切！",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DURATION"
+    ],
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_moon_blind",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_moon_event",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_leftover",
+        "hit_self": false
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_aoe": 24,
+    "max_aoe": 24,
+    "field_id": "fd_veil_darkness",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1,
+    "min_duration": 360000,
+    "max_duration": 720000
+  },
+  {
+    "id": "arcana_item_scroll_moon_blind",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Moon Blinding Effect"
+    },
+    "description": "This blinds all targets in the area for a random amount of time.",
+    "effect": "attack",
+    "shape": "blast",
+    "message": "",
+    "valid_targets": [
+      "hostile"
+    ],
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "blind",
+    "min_aoe": 24,
+    "max_aoe": 24,
+    "min_duration": 1800,
+    "max_duration": 3600
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_moon_event",
+    "name": {
+      "str": "Divine Scroll: Moon Event"
+    },
+    "description": "This adds the darkness event.",
+    "message": "",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "timed_event",
+    "shape": "blast",
+    "effect_str": "dim",
+    "min_duration": 540000,
+    "max_duration": 540000
+  },
+  {
+    "id": "arcana_item_scroll_nature",
+    "type": "SPELL",
+    "name": {
+      "str": "混沌之治愈"
+    },
+    "description": "Massive dose of unpredictable healing, widespread application of Overgrowth, risk of mutation.",
+    "message": "“不要否定你的本能。”生命能量流过你的身体，继而如同混乱的洪流一般放射出来！",
+    "valid_targets": [
+      "self"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_nature_plants",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_nature_wonder",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_leftover",
+        "hit_self": false
+      }
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "arcana_scroll_nature_effect",
+    "min_damage": -25,
+    "max_damage": -50,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 100,
+    "max_duration": 100
+  },
+  {
+    "id": "arcana_item_scroll_nature_plants",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Nature Plant Effect"
+    },
+    "description": "Basically just a beefier version of Overgrowth.",
+    "message": "",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_plants",
+    "min_damage": 3,
+    "max_damage": 3,
+    "min_aoe": 12,
+    "max_aoe": 12
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_nature_wonder",
+    "name": {
+      "str": "Divine Scroll: Nature Wonder"
+    },
+    "description": "Randomizes what mutation spell the scroll rolls for.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "none",
+    "shape": "blast",
+    "flags": [
+      "WONDER",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_nature_mutate_dragonblood"
+      },
+      {
+        "id": "arcana_item_scroll_nature_mutate_plant"
+      }
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_nature_mutate_dragonblood",
+    "name": {
+      "str": "Divine Scroll: Nature Mutation 1"
+    },
+    "effect": "mutate",
+    "shape": "blast",
+    "effect_str": "DRAGONBLOOD",
+    "description": "Comparable to Artifact Mutate, except mimics effect of blood effigy.",
+    "message": "",
+    "min_damage": 2500,
+    "max_damage": 2500,
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "valid_targets": [
+      "self"
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_nature_mutate_plant",
+    "name": {
+      "str": "Divine Scroll: Nature Mutation 2"
+    },
+    "effect": "mutate",
+    "shape": "blast",
+    "effect_str": "PLANT",
+    "description": "Comparable to Artifact Mutate, except focused on Plant category.",
+    "message": "",
+    "min_damage": 2500,
+    "max_damage": 2500,
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "valid_targets": [
+      "self"
+    ]
+  },
+  {
+    "id": "arcana_item_scroll_subversion",
+    "type": "SPELL",
+    "name": {
+      "str": "诡术"
+    },
+    "description": "Teleports you away, leaving a mess of nasty shit behind you.  Uses a lot of Archon-specific effects, but that's mainly because they're more useful for what this spell should do, the entity the scroll is dedicated to probably isn't the Archon.",
+    "message": "“投影到帷幕的另一边。”你觉得自己被拉向了一个不存在的方向！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_subversion_shadows",
+        "hit_self": false
+      },
+      {
+        "id": "AEA_FATIGUE",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_subversion_teleport",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_leftover",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "archon_gaze_effect",
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "min_duration": 6000,
+    "max_duration": 30000,
+    "field_id": "fd_archon_rift",
+    "field_chance": 3,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_subversion_shadows",
+    "name": {
+      "str": "Divine Scroll: Subversion Shadows"
+    },
+    "description": "Neherit，otira atvess…除了，不是真的。",
+    "message": "",
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_summoned",
+    "min_damage": 5,
+    "max_damage": 10,
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "min_duration": 100,
+    "max_duration": 100,
+    "flags": [
+      "RANDOM_DAMAGE",
+      "HOSTILE_SUMMON",
+      "PERMANENT",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_subversion_teleport",
+    "name": {
+      "str": "Divine Scroll: Subversion Teleport"
+    },
+    "description": "是的，你离得很远。一个好处是它是一个安全的传送。效果是最后一个，希望你能留下其他副作用。",
+    "message": "",
+    "effect": "short_range_teleport",
+    "shape": "blast",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_range": 20,
+    "max_range": 40
+  },
+  {
+    "id": "arcana_item_scroll_sun",
+    "type": "SPELL",
+    "name": {
+      "str": "日之祝福"
+    },
+    "description": "Massive wave of light, sunlight event, adrenaline and morale.",
+    "message": "“让圣灵指引你的手和你的心。”一道璀璨的光芒笼罩着你的周围，一股力量流过你的身体，而后直冲云霄！",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DURATION"
+    ],
+    "valid_targets": [
+      "ground"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_scroll_sun_event",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_sun_adrenaline",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_sun_timewarp",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_scroll_leftover",
+        "hit_self": false
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_aoe": 24,
+    "max_aoe": 24,
+    "min_duration": 360000,
+    "max_duration": 720000,
+    "field_id": "fd_veil_light",
+    "field_chance": 1,
+    "min_field_intensity": 3,
+    "max_field_intensity": 1
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_sun_adrenaline",
+    "name": {
+      "str": "Divine Scroll: Sun Adrenaline"
+    },
+    "description": "Uses this instead of Artifact Adrenaline mainly to suppress the message, also changes duration range.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "adrenaline",
+    "min_duration": 108000,
+    "max_duration": 216000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_scroll_sun_event",
+    "name": {
+      "str": "Divine Scroll: Sun Event"
+    },
+    "description": "This adds the sunlight event.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "timed_event",
+    "shape": "blast",
+    "effect_str": "artifact_light",
+    "min_duration": 540000,
+    "max_duration": 540000
+  },
+  {
+    "id": "arcana_item_scroll_sun_timewarp",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Sun Timewarp"
+    },
+    "description": "哦，嘿，什么是神圣魔法结合肾上腺素和时间停止…",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "mod_moves",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_timestop_indicator",
+        "hit_self": true
+      }
+    ],
+    "min_damage": 600,
+    "max_damage": 1200
+  },
+  {
+    "id": "arcana_item_spatial_displacement",
+    "type": "SPELL",
+    "name": {
+      "str": "空间置换"
+    },
+    "description": "Controlled teleport, with some risk of side effects.",
+    "message": "你觉得自己被拉向了一个不存在的方向！",
+    "effect": "ter_transform",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_spatial_displacement_wonder",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_item_spatial_displacement_summon",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "arcana_pulse",
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_range": 50,
+    "max_range": 50
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_spatial_displacement_wonder",
+    "name": {
+      "str": "Spatial Displacement Wonder"
+    },
+    "description": "Random side effects to balance controlled teleportation.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "effect": "none",
+    "shape": "blast",
+    "flags": [
+      "WONDER",
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "extra_effects": [
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_react_nothing"
+      },
+      {
+        "id": "arcana_item_spatial_displacement_wonder_taint"
+      },
+      {
+        "id": "arcana_item_spatial_displacement_wonder_archon"
+      },
+      {
+        "id": "arcana_item_spatial_displacement_wonder_blind"
+      },
+      {
+        "id": "arcana_item_spatial_displacement_wonder_paralyze"
+      }
+    ]
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_spatial_displacement_wonder_taint",
+    "name": {
+      "str": "Spatial Displacement Touched Mind"
+    },
+    "description": "Hyperspace Is A Scary Place.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "在短暂的旅途中，你看到了一些东西，在你的脑海中挥之不去…",
+    "flags": [
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "hallu",
+    "min_duration": 12000,
+    "max_duration": 24000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_spatial_displacement_wonder_archon",
+    "name": {
+      "str": "Spatial Displacement Glimpse of The Beyond"
+    },
+    "description": "They're watching you.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "你在中间看到了一些东西…它看到了你，让你失去了方向感和麻木！",
+    "flags": [
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "archon_gaze_effect",
+    "min_duration": 24000,
+    "max_duration": 48000
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_spatial_displacement_wonder_blind",
+    "name": {
+      "str": "Spatial Displacement Paralysis"
+    },
+    "description": "Brief touch of blindness.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "当你从传送中出来时，你感到你的视野变暗了，视野中央的朦胧画面遮蔽了你的双眼！",
+    "flags": [
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "blind",
+    "min_duration": 1000,
+    "max_duration": 2000
+  },
+  {
+    "id": "arcana_item_spatial_displacement_wonder_paralyze",
+    "type": "SPELL",
+    "name": {
+      "str": "Spatial Displacement Paralysis"
+    },
+    "description": "Brain go zappy.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "当你从传送带出来的时候，你被眩晕了一会儿！",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect": "mod_moves",
+    "shape": "blast",
+    "min_damage": -250,
+    "max_damage": -500
+  },
+  {
+    "id": "arcana_item_spatial_displacement_summon",
+    "type": "SPELL",
+    "name": {
+      "str": "Spatial Summon"
+    },
+    "description": "This summons a critter afterward, enabling SWAP_POS hijinks.",
+    "message": "",
+    "effect": "summon",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_spatial_displacement_swap",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT",
+      "RANDOM_DURATION"
+    ],
+    "effect_str": "mon_shadow_summoned_fake",
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_range": 50,
+    "max_range": 50,
+    "min_duration": 500,
+    "max_duration": 1500
+  },
+  {
+    "id": "arcana_item_spatial_displacement_swap",
+    "type": "SPELL",
+    "name": {
+      "str": "Spatial Swap"
+    },
+    "description": "And this does the actual switching.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "SWAP_POS",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "stunned",
+    "min_range": 50,
+    "max_range": 50,
+    "min_duration": 500,
+    "max_duration": 1000
+  },
+  {
+    "id": "arcana_item_sparks",
+    "type": "SPELL",
+    "name": {
+      "str": "引火"
+    },
+    "description": "Spark a small fire nearby.",
+    "message": "余烬从你的指尖飞出，落在地上，点燃神奇的火焰。",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_sparks_fatigue",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "min_range": 2,
+    "max_range": 2,
+    "base_casting_time": 80,
+    "final_casting_time": 80,
+    "field_id": "fd_fire",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "id": "arcana_item_sparks_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Spark Flame Fatigue"
+    },
+    "description": "Dirty hack caused by DDA-specific fuckery.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -12,
+    "max_damage": -12,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_stinger_flute_empowered",
+    "name": {
+      "str": "诡步"
+    },
+    "description": "Spawns the item needed to make the effects work.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "一股能量从长笛中脉冲通过你的身体！",
+    "effect": "spawn_item",
+    "shape": "blast",
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "effect_str": "halo_flute_effect",
+    "extra_effects": [
+      {
+        "id": "arcana_item_amulet_exotic_empowered_fatigue",
+        "hit_self": true
+      }
+    ],
+    "min_duration": 522000,
+    "max_duration": 522000
+  },
+  {
+    "id": "arcana_item_stinger_flute_empowered_fatigue",
+    "type": "SPELL",
+    "name": {
+      "str": "Elusive Enhancement Fatigue"
+    },
+    "description": "And this makes it cost 20% of its implied energy in fatigue.",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -16,
+    "max_damage": -16,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "FATIGUE"
+  },
+  {
+    "id": "arcana_item_pet",
+    "type": "SPELL",
+    "name": {
+      "str": "Defender's Ward"
+    },
+    "description": "Buffs any nearby allies and heals them.",
+    "message": "Faint wisps of mist fly from the talisman, to reinforce those who fight by your side.",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_item_pet_heal",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "ally"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DURATION"
+    ],
+    "effect_str": "talisman_pet_buff",
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "base_casting_time": 5,
+    "final_casting_time": 5,
+    "min_duration": 252000,
+    "max_duration": 504000
+  },
+  {
+    "id": "arcana_item_pet_heal",
+    "type": "SPELL",
+    "name": {
+      "str": "Familiar Pact Healing"
+    },
+    "description": "Heals any ally in range, even if it isn't a summoned monster.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "RANDOM_DAMAGE"
+    ],
+    "min_damage": -25,
+    "max_damage": -50,
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "base_casting_time": 5,
+    "final_casting_time": 5
+  },
+  {
+    "id": "arcana_item_thunder_gauntlets_taze",
+    "type": "SPELL",
+    "name": {
+      "str": "雷霆之手"
+    },
+    "description": "A short-ranged jolt, doing minor damage and stunning the target.",
+    "message": "一道血红色的闪电从你的指尖划出弧线，当它穿过你的受害者时，它会褪色成自然的颜色！",
+    "valid_targets": [
+      "hostile"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_thunder_gauntlets_lifedrain",
+        "hit_self": true
+      }
+    ],
+    "effect_str": "stunned",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS",
+      "SILENT"
+    ],
+    "sound_description": "an electric buzzing",
+    "min_range": 2,
+    "max_range": 2,
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 2500,
+    "max_duration": 3000,
+    "min_damage": 80,
+    "max_damage": 100,
+    "damage_type": "pure",
+    "field_id": "fd_electricity",
+    "field_chance": 1,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_item_thunder_gauntlets_lifedrain",
+    "type": "SPELL",
+    "name": {
+      "str": "Gauntlet Lifedrain"
+    },
+    "description": "Oh, now the reference in the item ID makes sense!",
+    "valid_targets": [
+      "self"
+    ],
+    "message": "",
+    "flags": [
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": -7,
+    "max_damage": -8,
+    "effect": "attack",
+    "shape": "blast"
+  },
+  {
+    "id": "arcana_item_wyrmskin_acid",
+    "type": "SPELL",
+    "name": {
+      "str": "巨龙毒液"
+    },
+    "description": "一种低级的酸咒，更注重地面效果。",
+    "message": "流淌的毒液在你盔甲的表面滑过，直到一股刺鼻的毒雾喷出并浸湿地面！",
+    "effect": "attack",
+    "shape": "cone",
+    "extra_effects": [
+      {
+        "id": "arcana_item_wyrmskin_acid_noise",
+        "hit_self": false
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "min_damage": 40,
+    "max_damage": 60,
+    "min_range": 5,
+    "max_range": 5,
+    "min_aoe": 45,
+    "max_aoe": 45,
+    "min_duration": 400,
+    "max_duration": 600,
+    "damage_type": "acid",
+    "field_id": "fd_acid",
+    "field_chance": 1,
+    "min_field_intensity": 3,
+    "max_field_intensity": 3,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "type": "SPELL",
+    "id": "arcana_item_wyrmskin_acid_noise",
+    "name": {
+      "str": "Wyrm's Venom Noise"
+    },
+    "description": "Less spammy sound",
+    "message": "",
+    "sound_description": "a sizzling hiss.",
+    "sound_type": "combat",
+    "sound_ambient": true,
+    "sound_id": "misc",
+    "sound_variant": "shockwave",
+    "min_damage": 50,
+    "max_damage": 50,
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "noise",
+    "shape": "blast"
+  }
+]

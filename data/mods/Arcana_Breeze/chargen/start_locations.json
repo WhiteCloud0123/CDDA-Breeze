@@ -1,0 +1,77 @@
+[
+  {
+    "type": "start_location",
+    "id": "strange_grove",
+    "name": {
+      "str": "奇异的密林"
+    },
+    "terrain": [
+      "strange_grove"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "island_temple",
+    "name": {
+      "str": "Sanguine Ruins"
+    },
+    "terrain": [
+      "island_temple_1"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "impact_site",
+    "name": {
+      "str": "撞击地点"
+    },
+    "terrain": [
+      "impact_site"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "curious_structure",
+    "name": {
+      "str": "奇妙的建筑"
+    },
+    "terrain": [
+      "curious_structure_2"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "arcanist_basement",
+    "name": {
+      "str": "奥术学者地下室"
+    },
+    "terrain": [
+      "arcanist_basement",
+      "arcanist_basement_2"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "cathedral_basement",
+    "name": {
+      "str": "主教座堂"
+    },
+    "terrain": [
+      "cathedral_b_SE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "ident": "necropolis_basement",
+    "name": "废墟城市…？",
+    "terrain": [
+      "necropolis_b_54"
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "gate",
+    "id": "t_archon_pedestral_backup",
+    "door": "t_rock_archon_barricade",
+    "floor": "t_rock_floor",
+    "walls": "t_rock_archon_vault",
+    "messages": {
+      "pull": "你扳下了开关……",
+      "open": "石块碎成一块块然后消失了！",
+      "close": "石头自己动起来封住了路！",
+      "fail": "没有任何事情发生。"
+    },
+    "moves": 1000,
+    "bashing_damage": 120
+  }
+]

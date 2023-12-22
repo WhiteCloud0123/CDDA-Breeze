@@ -1,0 +1,931 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_PURIFIER",
+    "dynamic_line": {
+      "npc_has_trait": "FIX_CF_GM",
+      "yes": {
+        "u_has_effect": "cf_mission_1",
+        "yes": "欢迎回来。很高兴见到你。",
+        "no": {
+          "u_has_trait": "PROF_SANGUINE",
+          "yes": "不用麻烦，乐观主义者，欢迎你来这里。",
+          "no": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ],
+            "yes": {
+              "u_male": "Welcome, Brother.",
+              "no": "欢迎，姐姐。"
+            },
+            "no": {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL"
+              ],
+              "yes": "你好，守卫。",
+              "no": "你好。"
+            }
+          }
+        }
+      },
+      "no": {
+        "u_has_any_trait": [
+          "PROF_CLEANSINGFLAME",
+          "PROF_CLEANSINGFLAME2"
+        ],
+        "yes": {
+          "u_male": "Good to see you, Brother.  What can I do for you?",
+          "no": "很高兴见到你，姐姐。我能为你做什么？"
+        },
+        "no": "你好，我能为你效劳吗？"
+      }
+    },
+    "responses": [
+      {
+        "text": "你是谁？",
+        "topic": "TALK_CF_PURIFIER_WHO",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ]
+          }
+        }
+      },
+      {
+        "text": "只剩下你一个人了吗？",
+        "topic": "TALK_CF_PURIFIER_REMAIN",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        }
+      },
+      {
+        "text": "你在这里做什么？",
+        "topic": "TALK_CF_PURIFIER_DO"
+      },
+      {
+        "text": "你能告诉我这是个什么地方？",
+        "topic": "TALK_CF_PURIFIER_WHERE"
+      },
+      {
+        "text": "Can you teach me any spells？",
+        "topic": "TALK_CF_PURIFIER_SPELL_MENU",
+        "condition": {
+          "and": [
+            {
+              "u_has_effect": "cf_mission_1"
+            },
+            {
+              "npc_has_trait": "FIX_CF_GM"
+            },
+            {
+              "not": {
+                "u_has_var": "nicholas_all_spells_known",
+                "type": "flag",
+                "context": "knowledge",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "你有什么要交易的？",
+        "effect": "start_trade",
+        "condition": {
+          "not": {
+            "npc_has_trait": "FIX_CF_GM"
+          }
+        },
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "[任务]帮助我找到这些信息的人希望我们能帮助他们作为回报。",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "nicholas_mission_2_end",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "or": [
+                {
+                  "u_has_mission": "MISSION_CF_PURIFIER_1_INTERLUDE_1"
+                },
+                {
+                  "u_has_mission": "MISSION_CF_PURIFIER_1_INTERLUDE_2"
+                }
+              ]
+            },
+            {
+              "not": {
+                "u_has_var": "nicholas_info_sent",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_CF_PURIFIER_INTERLUDE_MISSION"
+      },
+      {
+        "text": "你的研究进展如何？",
+        "condition": {
+          "npc_has_var": "nicholas_final_completed",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_CF_PURIFIER_MISSION_FINAL"
+      },
+      {
+        "text": "那现在怎么办？",
+        "condition": {
+          "npc_has_var": "nicholas_mission_3_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3"
+      },
+      {
+        "text": "接下来呢？",
+        "condition": {
+          "npc_has_var": "nicholas_mission_3_ready",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "你想谈谈我们的发现吗？",
+        "condition": {
+          "npc_has_var": "nicholas_mission_2_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2"
+      },
+      {
+        "text": "我准备好了，你需要什么？",
+        "condition": {
+          "npc_has_var": "nicholas_mission_2_ready",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "那么，接下来呢？",
+        "condition": {
+          "npc_has_var": "nicholas_mission_1_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1"
+      },
+      {
+        "text": "那么，接下来呢？",
+        "condition": {
+          "npc_has_var": "nicholas_mission_1_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "我能帮上什么忙吗？",
+        "condition": {
+          "npc_has_trait": "FIX_CF_GM"
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_WHO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "FIX_CF_GM",
+      "yes": "我是尼古拉斯。对我过去的样子没什么可说的。我们都是兄弟，努力确保我们的生存。",
+      "no": "我自己？现在只是个幸存者，以前是个机械师。很少有电子方面的经验，当我和其他人一起工作时，这些经验就派上了用场。老实说，我不是专家，那是尼克的工作。"
+    },
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_REMAIN",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "FIX_CF_GM",
+      "yes": {
+        "u_has_trait": "PROF_CLEANSINGFLAME2",
+        "yes": "我知道还有其他一些孤立的联系方式，但与他们取得联系将是困难的。我知道我们的关系网没有了。",
+        "no": "索菲亚和我正在努力寻找并与其他人取得联系，但我不确定还有多少狩猎聚会，也不知道还有多少外部联系人还活着。只有时间会证明一切。"
+      },
+      "no": {
+        "u_has_trait": "PROF_CLEANSINGFLAME2",
+        "yes": "好吧，很明显就是你！你也是城市里的一个联系人，我凭直觉就知道，这是有意义的，对吧？然后这里到处都是真正的猎人，而且……嗯，我不知道别的。我希望尼克能知道更多。",
+        "no": "所有人都在这里，可能还有其他一些联系人尼古拉斯可能知道更多。但是，我们在这里，索菲亚和她的朋友们在这里，我们还活着。总比什么都没有好，比很多人都能说的好，对吧？好吧，除了前面提到的那些人因为他们死了而什么都不能说，但是你知道我的意思…"
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_DO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "FIX_CF_GM",
+      "yes": {
+        "u_has_trait": "PROF_CLEANSINGFLAME2",
+        "yes": "与您的联系人网络相同。我们中的一些人负责调查和研究，一些人负责实际进入并抓住我们想要的东西。从我个人的角度来看，大部分只是研究异常现象，并与外界保持联系，以密切关注事态发展。我们似乎也不是很多人。",
+        "no": "我们是兄弟们非正式联系网络的一部分。除了一些官员愿意另眼相看，还有一些古怪的收藏家表示支持，我们大多数人基本上都是童子军。我们会调查更多…公共区域潜在异常的线索，并尽可能保护他们。其实我们当中并没有那么多人，就像整个净化之火在整个地区蔓延开来一样。"
+      },
+      "no": "在这一切开始之前，我就是我们所说的“神秘净化器”。这只是一种花哨的说法，我们调查了那些普通猎人无法完全融入的地区的异常情况。从技术上讲，净水器只是专注于研究和与人接触，与其他人一起做令人兴奋的工作。但是，正如史密斯夫妇和医生们仍然是狩猎队的一员一样，这个头衔也流传开来。"
+    },
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "FIX_CF_GM",
+      "yes": "索菲亚是最能告诉你这个地方的人。教堂，不完全是我作为净化者的专长。你倾向于在旧的重新利用的工业建筑和研究设施中找到可操作的情报，而不是大教堂。再说一次，这些天你永远不知道。",
+      "no": "我很久没来了。在我成为“净化之火”成员之前，事实上可能是个青少年。回想起帕里塞德斯，我就别无选择了。但是，我敢打赌牧师就是索菲亚同意让我们使用这个地方的人。不过我想中心的执事现在应该负责了。"
+    },
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_PURIFIER_SPELL_MENU",
+    "dynamic_line": "With how you've helped us out, I could try to teach you a few things.  I have experience with Capacitance, Consecrate, and Opening, should you need it.  That said, I will need a few Golden Scales for the deed.  Binding a spell pattern safely takes a special touch, and the local scavengers don't part with materials easily.",
+    "responses": [
+      {
+        "text": "What can you tell me about Capacitance?",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_trait": "PROF_CLEANSINGFLAME2"
+              }
+            },
+            {
+              "not": {
+                "u_has_trait": "SPELL_CAPACITANCE"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_CF_PURIFIER_SPELL_MENU_1"
+      },
+      {
+        "text": "What can you tell me about Consecrate?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_CONSECRATELESSER"
+          }
+        },
+        "topic": "TALK_CF_PURIFIER_SPELL_MENU_2"
+      },
+      {
+        "text": "What can you tell me about Opening?",
+        "condition": {
+          "not": {
+            "u_has_trait": "SPELL_LOCKPICK"
+          }
+        },
+        "topic": "TALK_CF_PURIFIER_SPELL_MENU_3"
+      },
+      {
+        "text": "I already know all of those, nevermind.",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "u_has_any_trait": [
+                "PROF_CLEANSINGFLAME2",
+                "SPELL_CAPACITANCE"
+              ]
+            },
+            {
+              "u_has_trait": "SPELL_CONSECRATELESSER"
+            },
+            {
+              "u_has_trait": "SPELL_LOCKPICK"
+            }
+          ]
+        },
+        "effect": {
+          "u_add_var": "nicholas_all_spells_known",
+          "type": "flag",
+          "context": "knowledge",
+          "value": "yes"
+        },
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "也许下次吧。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_PURIFIER_SPELL_MENU_1",
+    "dynamic_line": "A specialty of the Cleansing Flame's associates and allies who dealt with bionics.  It dumps the energy it calls up directly into power storage, so it's only useful if you have any capacity for bionic power set up.  Not good to use in a fight either, doesn't hurt or anything but your muscles freeze up when it activates.  I'll need 4 Golden Scales to cover everything that a proper ritual will require.",
+    "responses": [
+      {
+        "text": "[GS4] You have a deal，then.",
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 4
+          }
+        },
+        "effect": [
+          {
+            "u_consume_item": "CF_golden_scale",
+            "count": 4
+          },
+          {
+            "u_add_trait": "SPELL_CAPACITANCE"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need more Scales for that.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "CF_golden_scale",
+              "count": 4
+            }
+          }
+        },
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "Not right now.",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_PURIFIER_SPELL_MENU_2",
+    "dynamic_line": "Consecrate is designed to purify the terrain, either petrifying or disintegrating most anomalous or otherworldly alterations to the landscape.  Less well-known is what it does to most otherworldly monsters caught in its effect.  It's not intended as an offensive spell first and foremost, but it'll damage most such monsters and leave them reeling.  I'll need 4 Golden Scales to cover everything that a proper ritual will require.",
+    "responses": [
+      {
+        "text": "[GS4] You have a deal，then.",
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 4
+          }
+        },
+        "effect": [
+          {
+            "u_consume_item": "CF_golden_scale",
+            "count": 4
+          },
+          {
+            "u_add_trait": "SPELL_CONSECRATELESSER"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need more Scales for that.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "CF_golden_scale",
+              "count": 4
+            }
+          }
+        },
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "Not right now.",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_PURIFIER_SPELL_MENU_3",
+    "dynamic_line": "An extremely versatile entry tool.  Most locked doors will yield silently, windows slide open, metal garage doors, what-have-you.  Some field reports have mentioned it clearing rubble or a few other sorts of obstacles too.  I'll need 3 Golden Scales to cover everything that a proper ritual will require.",
+    "responses": [
+      {
+        "text": "[GS3] You have a deal，then.",
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 3
+          }
+        },
+        "effect": [
+          {
+            "u_consume_item": "CF_golden_scale",
+            "count": 3
+          },
+          {
+            "u_add_trait": "SPELL_LOCKPICK"
+          }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "I'll need more Scales for that.  Maybe later.",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_items": {
+              "item": "CF_golden_scale",
+              "count": 3
+            }
+          }
+        },
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "Not right now.",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_INTERLUDE_MISSION",
+    "type": "talk_topic",
+    "dynamic_line": "我明白了。我们需要发送什么信息？毕竟这里有很多信息，我们需要保留一些信息，直到我们尽可能地保护好Kairos项目。",
+    "responses": [
+      {
+        "text": "难民中心的医生想知道可能有重要医疗用品的地点。",
+        "condition": {
+          "u_has_mission": "MISSION_CF_PURIFIER_1_INTERLUDE_1"
+        },
+        "topic": "TALK_CF_PURIFIER_INTERLUDE_MISSION_1"
+      },
+      {
+        "text": "当地的拾荒者想知道附近实验室的资源和威胁信息。",
+        "condition": {
+          "u_has_mission": "MISSION_CF_PURIFIER_1_INTERLUDE_2"
+        },
+        "topic": "TALK_CF_PURIFIER_INTERLUDE_MISSION_2"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_INTERLUDE_MISSION_1",
+    "type": "talk_topic",
+    "dynamic_line": "似乎很合理。我会和他们联系，找出我能从中获得什么信息。过些时候去看看他们，他们可能会很高兴收到你的到来。",
+    "speaker_effect": {
+      "effect": [
+        {
+          "u_add_var": "nicholas_info_sent",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "谢谢！在我走之前…",
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "谢谢，我晚点回来！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_INTERLUDE_MISSION_2",
+    "type": "talk_topic",
+    "dynamic_line": "我想这不会有什么坏处，不过为了安全起见，我更愿意建议他们对大多数旧实验室敬而远之。我会和他们联系，了解他们需要知道什么。你稍后也许应该检查一下。",
+    "speaker_effect": {
+      "effect": [
+        {
+          "u_add_var": "nicholas_info_sent",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "谢谢！在我走之前…",
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "谢谢，我晚点回来！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_3",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_effect": "cf_purifier_making_item",
+      "yes": "该设备是一种非常罕见的由同类组件组装而成的设备，并且被大量使用。从某种意义上说，它的标志是它在揭开面纱时的反复使用。结合对索非亚的研究，我们可以很好地利用它。它还没有准备好，但我们正在取得良好的进展。",
+      "no": "我们在抢救该设备方面取得了很多突破，使其再次功能和稳定。多亏了你帮助收集的所有研究和那些重要的组成部分，我们有了一些可以很好利用的东西。"
+    },
+    "responses": [
+      {
+        "text": "那还有什么要做的吗？",
+        "condition": {
+          "not": {
+            "npc_has_effect": "cf_purifier_making_item"
+          }
+        },
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_FINAL"
+      },
+      {
+        "text": "隐士和伯劳的研究？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_2"
+      },
+      {
+        "text": "那有什么用？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_3"
+      },
+      {
+        "text": "我过会儿再检查。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_3_FINAL",
+    "type": "talk_topic",
+    "dynamic_line": "如果我们想从中得到任何真正的用途，就需要在现场实际使用它。我已经记录了我所能记录的关于这些组件的所有信息，有一天，我们可能能够复制结果，而不需要从不再存在的设施中定制异常材料。我希望你们能利用它，有我们唯一可行的例子是有风险的，但如果它有好处的话，我愿意冒这个风险。",
+    "responses": [
+      {
+        "text": "那我试试看。",
+        "effect": [
+          {
+            "u_add_effect": "cf_purifier_kairos",
+            "duration": "PERMANENT"
+          },
+          {
+            "npc_add_var": "nicholas_final_completed",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          },
+          {
+            "u_spawn_item": "essence_pure",
+            "count": 0,
+            "container": "divine_sealing_charm"
+          }
+        ],
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_ACCEPT"
+      },
+      {
+        "text": "暂时留着，也许下次吧。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_3_ACCEPT",
+    "type": "talk_topic",
+    "dynamic_line": "那给你。它的工作原理很像守护者的遗物，如果你靠近一个入口足够长的时间，它就会坍塌，这可以用来给它通电。如果以错误的方式释放这些能量，或者将其用于破坏性目的，那么这些能量将非常危险，但我找到了一种方法，使其将这些能量转化为生命力。这是对乐观主义者从生命能量中汲取力量的既定做法的一次挫败，我想这对确保他们的研究有进一步的好处。你会亲眼看到它的作用，但它非常适合用来修补旧伤的东西。",
+    "responses": [
+      {
+        "text": "谢谢，在我走之前还有一件事…",
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "谢谢你，待会儿见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_3_2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_effect": "cf_purifier_making_item",
+      "yes": "是的，所有的信息都是从索非亚带来的。守誓者提供了一个有价值的理解他们的尺寸密封文物操作的规律。猩红教派的残余，他们坏事做尽，已经在操纵超越能量方面掌握了许多技术，大部分都十分难以理解。有了这个组件，我们有望制造出自己的尺寸密封装置。",
+      "no": "是的，所有的信息都是从索非亚带来的。守门员们对他们的操作原理有了有价值的了解。而乐观秩序的残余，尽管他们做了所有的坏事，在操纵超越的能量方面已经学到了很多教训，大多是艰难的方式。现在我们有了自己的尺寸密封装置。"
+    },
+    "responses": [
+      {
+        "text": "你打算用它做什么？",
+        "condition": {
+          "not": {
+            "npc_has_effect": "cf_purifier_making_item"
+          }
+        },
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_FINAL"
+      },
+      {
+        "text": "关于那个部件你能告诉我什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3"
+      },
+      {
+        "text": "它做什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_3"
+      },
+      {
+        "text": "我过会儿再检查。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_3_3",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_effect": "cf_purifier_making_item",
+      "yes": "我正在研究一种装置，它可以使用Kairos项目参与的操纵和控制裂缝的相同基本概念，以及守护者和猩红教派信徒关于如何操纵帷幕的知识。一旦准备好了，我们将有一个装置可以密封裂口，稳定帷幕的结构，一次一个区域。虽然不多，但会有所帮助。",
+      "no": "它使用与Kairos项目相同的操纵和控制裂痕的基本概念，以及如何操纵面纱的守护者和乐观主义者知识。它所做的是密封附近的裂口，帮助稳定面纱的织物。在这一切发生之后，它不会解决所有问题，但它是一种进步。"
+    },
+    "responses": [
+      {
+        "text": "现在准备好了，你需要我做什么吗？",
+        "condition": {
+          "not": {
+            "npc_has_effect": "cf_purifier_making_item"
+          }
+        },
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_FINAL"
+      },
+      {
+        "text": "关于那个部件你能告诉我什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3"
+      },
+      {
+        "text": "守护者和猩红教派是如何出力的？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_3_2"
+      },
+      {
+        "text": "我过会儿再检查。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_2",
+    "type": "talk_topic",
+    "dynamic_line": "你给我带来的这份清单向我们展示了更多关于货物装运地点的信息。如果我们幸运的话，这会让我们找到Kairos计划剩下的东西。",
+    "responses": [
+      {
+        "text": "关于Kairos计划你还知道什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_1"
+      },
+      {
+        "text": "到目前为止你发现了什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_2"
+      },
+      {
+        "text": "那告诉我我们在找什么。",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_3"
+      },
+      {
+        "text": "我回头再和你谈。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_2_1",
+    "type": "talk_topic",
+    "dynamic_line": "他们正在建造某种设施来测试门户操作。所有这些材料都致力于设计一种远程密封入口并提高尺寸稳定性的方法。我不知道他们是否成功，但我们也许可以将他们的进展与我们自己的研究结合起来。",
+    "responses": [
+      {
+        "text": "那会是什么研究？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_4"
+      },
+      {
+        "text": "我们在找什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_3"
+      },
+      {
+        "text": "我回头再和你谈。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_2_2",
+    "type": "talk_topic",
+    "dynamic_line": "要查看的东西很多，但通过浏览不同的网站，我可以看到关于医疗用品、机器人材料，以及各种各样的东西的记录。我还注意到了一些与传送门生成、裂隙透镜、空间操纵等相关的货物。从我们目前的研究来看，所有的这些东西对于这个项目来说都是必不可少的。",
+    "responses": [
+      {
+        "text": "那会是什么研究？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_4"
+      },
+      {
+        "text": "那告诉我我们在找什么。",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_3"
+      },
+      {
+        "text": "我回头再和你谈。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_2_3",
+    "type": "talk_topic",
+    "dynamic_line": "这里有一个关于这些科技的完整的运输网络，它对于这些项目来说非常有用，这个清单上超过90%的相关异常材料最终都出现在了同一个研究设施中。这正是我所希望找到的，在大灾变发生前的几次装运中，造出的原料只临时堆放了很短的时间。当你做好准备后，我会为你准备一份简报。",
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "npc_add_var": "nicholas_mission_3_ready",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "好吧。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_2_4",
+    "type": "talk_topic",
+    "dynamic_line": "我们所做的最重要的研究来自我们到达这里之前聚集的 intel Sofia公司。特别是守誓者对封门有一些有价值的见解。我们也许有分歧，但他们有一个真正的优势，这是我们以前无法复制的。但如果我们能挽救Kairos项目留下的东西，并将其与他们的发现结合起来，我希望这一切会有所改变。",
+    "responses": [
+      {
+        "text": "关于Kairos计划你还知道什么？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_1"
+      },
+      {
+        "text": "那告诉我我们在找什么。",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_2_3"
+      },
+      {
+        "text": "我回头再和你谈。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_1",
+    "type": "talk_topic",
+    "dynamic_line": "我仍在试图理解你带来的所有信息，但我有一个可能的线索。我可能需要你的帮助来获得更多的信息，以帮助把一切都整合起来。",
+    "responses": [
+      {
+        "text": "什么样的线索？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1_1"
+      },
+      {
+        "text": "我可以从哪里得到那些信息？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1_2"
+      },
+      {
+        "text": "告诉我我需要做什么。",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1_3"
+      },
+      {
+        "text": "我回头再和你谈。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_1_1",
+    "type": "talk_topic",
+    "dynamic_line": "这些笔记是关于试图追踪一个叫做Kairos计划的东西。一些门户网站的研究在事情平息后持续了一段时间，当时大多数其他实验室已经分崩离析。这些数据包含了零日期间和零日之后最后几个供应运动的信息、疑似与该项目有关的科学设施以及其他线索。但是我们还没有确定地点。",
+    "responses": [
+      {
+        "text": "那我们怎么找到它呢？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1_2"
+      },
+      {
+        "text": "有什么我能帮忙的吗？",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1_3"
+      },
+      {
+        "text": "我需要考虑一下。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_1_2",
+    "type": "talk_topic",
+    "dynamic_line": "这就是我希望你能帮忙的地方。必须有人对此有更多了解，如果没有，我们可以在那里找到更多信息。",
+    "responses": [
+      {
+        "text": "值得一试。",
+        "topic": "TALK_CF_PURIFIER_MISSION_END_1_3"
+      },
+      {
+        "text": "下次再说吧。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_END_1_3",
+    "type": "talk_topic",
+    "dynamic_line": "我刚刚完成了对项目的总结，已知的供货地点，以及我们所知甚少的其他内容。当你准备好的时候和我谈谈，我可能会有一个想法，我们如何才能得到我们需要的。",
+    "speaker_effect": [
+      {
+        "effect": [
+          {
+            "npc_add_var": "nicholas_mission_2_ready",
+            "type": "mission",
+            "context": "rural_church",
+            "value": "yes"
+          }
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "text": "到时候再说。",
+        "topic": "TALK_CF_PURIFIER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_PURIFIER_MISSION_FINAL",
+    "type": "talk_topic",
+    "dynamic_line": "慢慢地，但肯定的是，事情正在走到一起。我想我们会设法的。只要留意对人类的任何威胁，尽我们所能帮助其他社区，下一代可能还有希望。",
+    "responses": [
+      {
+        "text": "正确。在我走之前…",
+        "topic": "TALK_CF_PURIFIER"
+      },
+      {
+        "text": "我稍后再来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

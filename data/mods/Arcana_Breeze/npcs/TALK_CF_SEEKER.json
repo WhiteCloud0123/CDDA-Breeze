@@ -1,0 +1,173 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_CF_SEEKER",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": {
+        "u_male": "Welcome, Brother.  May you find peace here.",
+        "no": "欢迎，姐姐。愿你在这里找到宁静。"
+      },
+      "no": {
+        "u_has_trait": "PROF_SANGUINE",
+        "yes": {
+          "u_has_effect": "cf_mission_1",
+          "yes": "向你问候。我希望我们将继续合作。",
+          "no": "你来这里是为了什么？别人会得到你想要的。"
+        },
+        "no": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ],
+          "yes": {
+            "u_has_effect": "cf_mission_1",
+            "yes": "向你问候，守护者。我能为你提供什么帮助？",
+            "no": "我不知道我有没有想要的东西，守护者。不论如何，欢迎你的到来。"
+          },
+          "no": "欢迎。愿你在这里找到安宁。"
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "你是谁？",
+        "topic": "TALK_CF_SEEKER_WHO"
+      },
+      {
+        "text": "你能告诉我这是个什么地方？",
+        "topic": "TALK_CF_SEEKER_WHERE"
+      },
+      {
+        "text": "你在这里做什么？",
+        "topic": "TALK_CF_SEEKER_DO"
+      },
+      {
+        "text": "你有什么要交易的？",
+        "effect": "start_trade",
+        "condition": {
+          "u_has_effect": "cf_seeker_traded"
+        },
+        "topic": "TALK_CF_SEEKER"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_SEEKER_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "名叫马修（Matthew）是我们圣言的学者。我的父亲像索非亚（Sofia）和乔纳森（Jonathan）一样是创始人之一，并将他的旧教团的头衔传给了我。",
+    "responses": [
+      {
+        "text": "什么旧教团？",
+        "topic": "TALK_CF_SEEKER_ORDER"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_SEEKER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_SEEKER_ORDER",
+    "type": "talk_topic",
+    "dynamic_line": "一个学者和神学家的集合。乔纳森的小组和索菲亚的小组先于我的小组，第四小组紧随其后。从那里，我们聚集了其他人，他们信仰范围更广，就像最后的我们一样。",
+    "responses": [
+      {
+        "text": "关于这些团体，你还能告诉我什么？",
+        "topic": "TALK_CF_SEEKER_FAITHS"
+      },
+      {
+        "text": "哦，我懂了。",
+        "topic": "TALK_CF_SEEKER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_SEEKER_FAITHS",
+    "type": "talk_topic",
+    "dynamic_line": "这位大师的亲属来自一个自封的骑士团，出身天主教徒。索非亚，新异教徒的联谊会。我自己的，主要是穆斯林。第四个是另一种异教徒，如果他们中有人留下来找到这个地方，也许他们能告诉你更多。",
+    "responses": [
+      {
+        "text": "这似乎非常...和谐。",
+        "condition": {
+          "u_has_trait": "SPIRITUAL"
+        },
+        "topic": "TALK_CF_SEEKER_SPIRITUAL"
+      },
+      {
+        "text": "我明白了，谢谢。",
+        "topic": "TALK_CF_SEEKER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_SEEKER_SPIRITUAL",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "“抛开分裂和纷争吧。它们终结过无数团体，但不会终结我们。我们是兄弟姐妹，我们应当平等地尊重每一位神，尽管祂们可能迥然不同。“我们之间不止是有经者和异教徒的简单关系，我们是同胞。这是我们的职责要求。",
+      "no": "是的，但我们加入的条件相当严峻。这些年来，其他人一直在努力让我们专注于保护他人的目标。正如我们的一条信条所说，“我们是兄弟姐妹，我们应该平等地尊重神，尽管众神之间各不相同”如果这是在这个艰难时期所需要的，那就随它去吧。"
+    },
+    "responses": [
+      {
+        "text": "好吧……",
+        "topic": "TALK_CF_SEEKER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_SEEKER_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": "我只知道它被选为圣所。我在与一些幸存者一起探访时听说过它，他们自己在某个时候听说过这个地方。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_SEEKER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_SEEKER_DO",
+    "type": "talk_topic",
+    "dynamic_line": "我会帮助保存记录并保存其他人收集的知识。如果你有任何需要，我会收集一些物资和书籍以作备用，如果你愿意，可以进行交易。",
+    "responses": [
+      {
+        "text": "那么让我们交易吧。",
+        "effect": "start_trade",
+        "switch": true,
+        "condition": {
+          "u_has_effect": "cf_seeker_traded"
+        },
+        "topic": "TALK_CF_SEEKER"
+      },
+      {
+        "text": "那么让我们交易吧。",
+        "effect": [
+          {
+            "u_add_effect": "cf_seeker_traded",
+            "duration": "PERMANENT"
+          },
+          "start_trade"
+        ],
+        "switch": true,
+        "default": true,
+        "topic": "TALK_CF_SEEKER"
+      },
+      {
+        "text": "没关系。没关系。",
+        "topic": "TALK_CF_SEEKER"
+      }
+    ]
+  }
+]

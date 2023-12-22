@@ -1,0 +1,235 @@
+[
+  {
+    "type": "SPELL",
+    "id": "arcana_trap_archon_shadows",
+    "name": {
+      "str": "Trap: Shadowy Wonder"
+    },
+    "description": "真的还是假的？你得自己找出来！",
+    "valid_targets": [
+      "hostile"
+    ],
+    "message": "",
+    "effect": "none",
+    "shape": "blast",
+    "flags": [
+      "WONDER",
+      "SILENT"
+    ],
+    "min_damage": 1,
+    "max_damage": 1,
+    "extra_effects": [
+      {
+        "id": "arcana_trap_archon_shadows_1"
+      },
+      {
+        "id": "arcana_trap_archon_shadows_2"
+      },
+      {
+        "id": "arcana_trap_archon_shadows_3"
+      },
+      {
+        "id": "arcana_trap_archon_shadows_4"
+      }
+    ]
+  },
+  {
+    "id": "arcana_trap_archon_shadows_1",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Summoned Shadows"
+    },
+    "description": "这就创造了真正的交易。",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "HOSTILE_SUMMON",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "LOUD"
+    ],
+    "min_damage": 2,
+    "max_damage": 4,
+    "min_aoe": 20,
+    "max_aoe": 20,
+    "sound_description": "\"Begone, interloper…\"",
+    "min_duration": 30000,
+    "max_duration": 60000,
+    "sound_type": "speech",
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_summoned"
+  },
+  {
+    "id": "arcana_trap_archon_shadows_2",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Summoned Shadows"
+    },
+    "description": "假影怪物",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "HOSTILE_SUMMON",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "LOUD"
+    ],
+    "min_damage": 2,
+    "max_damage": 4,
+    "min_aoe": 20,
+    "max_aoe": 20,
+    "sound_description": "\"Begone, interloper…\"",
+    "min_duration": 30000,
+    "max_duration": 60000,
+    "sound_type": "speech",
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_summoned_fake"
+  },
+  {
+    "id": "arcana_trap_archon_shadows_3",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Summoned Shadow Snakes"
+    },
+    "description": "这就创造了真正的交易。",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "HOSTILE_SUMMON",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "LOUD"
+    ],
+    "min_damage": 1,
+    "max_damage": 3,
+    "min_aoe": 20,
+    "max_aoe": 20,
+    "sound_description": "\"Die…\"",
+    "min_duration": 30000,
+    "max_duration": 60000,
+    "sound_type": "speech",
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_snake_summoned"
+  },
+  {
+    "id": "arcana_trap_archon_shadows_4",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Fake Shadow Snakes"
+    },
+    "description": "冷嘲热讽是fek。",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "HOSTILE_SUMMON",
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "LOUD"
+    ],
+    "min_damage": 1,
+    "max_damage": 3,
+    "min_aoe": 20,
+    "max_aoe": 20,
+    "sound_description": "\"Die…\"",
+    "min_duration": 30000,
+    "max_duration": 60000,
+    "sound_type": "speech",
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_snake_summoned_fake"
+  },
+  {
+    "id": "arcana_trap_archon_hallu",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Hallu"
+    },
+    "description": "脑痛。",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "LOUD"
+    ],
+    "sound_description": "\"Cast aside the veil of reality…\"",
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "min_duration": 60000,
+    "max_duration": 60000,
+    "sound_type": "speech",
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "visuals",
+    "extra_effects": [
+      {
+        "id": "arcana_trap_archon_hallu2"
+      }
+    ]
+  },
+  {
+    "id": "arcana_trap_archon_hallu2",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Hallu 2"
+    },
+    "description": "更多的脑痛。",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT"
+    ],
+    "sound_description": "",
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "min_duration": 60000,
+    "max_duration": 60000,
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "hallu"
+  },
+  {
+    "id": "arcana_trap_archon_chill",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Chill"
+    },
+    "description": "真他妈的冷。",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "LOUD"
+    ],
+    "sound_description": "\"You do not belong here…\"",
+    "sound_type": "speech",
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "darkness",
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "min_duration": 18000,
+    "max_duration": 18000,
+    "field_id": "fd_cold_air3",
+    "field_chance": 1,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2,
+    "field_intensity_variance": 1
+  }
+]

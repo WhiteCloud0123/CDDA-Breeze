@@ -1,0 +1,2261 @@
+[
+  {
+    "id": "MISSION_FIND_HERMIT_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "到达立石"
+    },
+    "description": "把你的同伴带到森林里一个被怀疑有超自然活动的地方。",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 2,
+    "value": 20000,
+    "origins": [
+      "ORIGIN_OPENER_NPC",
+      "ORIGIN_ANY_NPC"
+    ],
+    "followup": "MISSION_FIND_HERMIT_2",
+    "destination": "standing_stones",
+    "start": {
+      "effect": "follow",
+      "assign_mission_target": {
+        "om_terrain": "standing_stones",
+        "om_special": "Standing stones",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      }
+    },
+    "dialogue": {
+      "describe": "If you see this, it's a bug!",
+      "offer": "尽管事情已经变得不真实，但我一直在努力寻找答案。如果不是这样的话，至少要结束。就在一切都结束前不久，我一直在做一个奇怪的梦，梦到了另一个世界的风景，现在一切都变成了地狱，我想知道它是否有任何意义。我知道这听起来很疯狂，但我记得我们可以调查一下。",
+      "accepted": "非常感谢。从零零开始，我就试着把这些熟悉的景色和一些梦境看完以后，再去看看那些真实的东西。我记得有一个地方藏在我以前露营的地方。我怀疑我们会找到什么，但也许这会让我安心，因为这些奇怪的梦与发生的事无关。",
+      "rejected": "我理解。我们要担心的事情比追逐那些记不清的梦更重要，这些梦可能毫无意义。也许下次吧…",
+      "advice": "永远不知道我们在路上会遇到什么，也许这段旅程会比我们在那里找到的更有用。梦里有奇怪的石头和黑暗的仪式。如果其中任何一个是真的，为了安全起见，最好在白天去看看。",
+      "inquire": "到目前为止有什么进展吗？",
+      "success": "我不相信。石头，中间的那个山洞？它看起来就像梦中的样子。也许我的脑子在捉弄我，但我可以发誓我从来没有遇到过这样的事情。我不知道该怎么解释。我现在会继续跟踪你，也许我们可以进一步调查。",
+      "success_lie": "这是什么疯狂？",
+      "failure": "如何…？"
+    }
+  },
+  {
+    "id": "MISSION_FIND_HERMIT_2",
+    "type": "mission_definition",
+    "name": {
+      "str": "到达毁坏的神殿"
+    },
+    "description": "带你的同伴去一个被破坏的神殿的可疑地点，据说在大灾变之前不存在…",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 4,
+    "value": 40000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_FIND_HERMIT_3",
+    "destination": "shrine_anomaly",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "shrine_anomaly",
+        "om_special": "Ruined Shrine",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      }
+    },
+    "dialogue": {
+      "describe": "If you see this, it's a bug!",
+      "offer": "我试着想想我能从梦中回忆起什么。亲眼看到最后一个地方，让我的记忆更加清晰。还有一个地方很突出，我去过的乡村的另一个地方，有着不该有的奇怪特征。调查可能比最后一个地方更有用。",
+      "accepted": "我以前去过乡下的那个地方，我在梦里看到的肯定不在那时候。看上去有点危险，但也许有什么值得弥补的。如果什么都没有，我很好。意味着那些梦就是这样，没有任何意义。",
+      "rejected": "好吧。如果你改变主意就跟我说。也许最后一个地方是个侥幸，也许它一直在那里，我只是直到现在才想起。",
+      "advice": "我看到了某种人造结构，超凡脱俗但绝对是人造的。或者至少是做的。期待异常的怪物，无论其他危险，如果任何一个是真的。",
+      "inquire": "到目前为止有什么进展吗？",
+      "success": "这个地方让我毛骨悚然。这是真的，好吧，太他妈的真实了。我们应该小心，如果你愿意的话，把这个地方打扫干净，但如果还有什么我能记得的地方值得一看。",
+      "success_lie": "这是什么疯狂？",
+      "failure": "如何…？"
+    }
+  },
+  {
+    "id": "MISSION_FIND_HERMIT_3",
+    "type": "mission_definition",
+    "name": {
+      "str": "到达奇异之家"
+    },
+    "description": "带你的同伴去一所怀疑有人居住的乡村房子。毕竟，那些奇怪的梦可能有些什么…",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 3,
+    "value": 30000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "destination": "arcana_hermitage_1",
+    "start": {
+      "effect": {
+        "u_add_effect": "sent_to_hermit",
+        "duration": "PERMANENT"
+      },
+      "assign_mission_target": {
+        "om_terrain": "arcana_hermitage_1",
+        "om_special": "Hermit Cabin",
+        "reveal_radius": 3,
+        "search_range": 360,
+        "z": 0
+      }
+    },
+    "dialogue": {
+      "describe": "If you see this, it's a bug!",
+      "offer": "我相信这是有道理的。我试着回顾我记忆中的任何东西，提出任何突出的东西。这不是给我任何答案，甚至没有任何结束，只是更多的问题。但有一件事很突出。一栋房子，在梦中我不仅仅看到它的图像。我看见有人在那里旅行，一个超凡脱俗的影子笼罩着这个地方。因为某种原因，我回忆起的事情让我平静下来。也许我们能找到点什么？",
+      "accepted": "好吧。我给你看看我对这个地区的记忆，也许这次我们能找到一些东西。不会比我们上次去的地方更糟了。",
+      "rejected": "我理解。但这是唯一的一个梦，在我记忆中所有奇怪的东西中，它实际上不仅仅是一个警告或预兆，或是其他一切。",
+      "advice": "这是一个类似农村的房子。在那个梦里，没有什么危险甚至怪异的东西。事实上，这似乎是最平凡的，但有一种不祥的预感，其中发生的事情要生动得多。",
+      "inquire": "到目前为止有什么进展吗？",
+      "success": "看起来像是那个地方。我能看到房子有人住的迹象。尽管这是我第一次在清醒的世界里看到它，但它看起来还是那么的亲切。也许梦是对未来的憧憬，如果是这样的话，我猜是关于在这里旅行，而不仅仅是一个预兆或其他什么。如果我们在这里遇到任何人，我会让你决定怎么做，我不知道其他的梦是否会对我们有多大好处。至少想弄清楚这些地方，亲眼看到这些地方让我感觉，我不知道，感觉好多了。不那么不安。非常感谢。",
+      "success_lie": "这是什么疯狂？",
+      "failure": "如何…？"
+    }
+  },
+  {
+    "id": "MISSION_HERMIT_RETRIEVE_SWORD",
+    "type": "mission_definition",
+    "name": {
+      "str": "找回诅咒之刃"
+    },
+    "description": "从飘浮的庙里获得被诅咒的宝剑，给隐士看。坠落的遗物可能仍然有用。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "or": [
+        {
+          "u_has_item": "stormbringer"
+        },
+        {
+          "u_has_item": "veilblade"
+        }
+      ]
+    },
+    "difficulty": 5,
+    "value": 250000,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "impact_site",
+        "om_special": "Floating Temple",
+        "reveal_radius": 3,
+        "search_range": 360,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_effect": "hermit_stage_1",
+          "duration": "PERMANENT"
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_HERMIT_RESTORE_SWORD",
+    "dialogue": {
+      "describe": "也许我们终于可以赎罪了……",
+      "offer": "这是一项不容轻视的任务，如果你认为自己没有准备好，我可以理解。我们曾经有一座庙宇，建在飞石上，地面上有一颗流星。在那里，我们最后一次为他服务的努力失败了。仍然有一个破坏我们秩序的危险威胁，还有一个倒下的遗迹。如果我能再次看到那件遗物，尽管它可能被污染了，我可以在我的时间到来时安息。",
+      "accepted": "非常感谢。愿他从面纱之外指引你，否则，无论你侍奉什么神。我会告诉你去哪里，但恐怕我不能亲自带你去那里。我请求你取回被诅咒的刀刃并把它带到这里，然后我会进一步解释。当心那些可能仍在庙里出没的邪恶怪物，以及……大祭司的遗骸。",
+      "rejected": "我理解。玷污古庙的威胁不容小觑。如果我觉得我可以踏上旅程，我会自己去尝试，即使失败了，我也会因为知道自己做了正确的事而死去。如果你改变主意，找我指点。",
+      "advice": "你很可能要杀死住在圣殿前大祭司身上的可憎之物。我不知道他还带着什么武器，也不知道拥有他的灵魂所具备的邪恶力量，但要小心面对将到来的事物。他很有可能会把属于我们的审判符号转向祂的会众，这意味着你将不得不面对闪电魔法。",
+      "inquire": "你完成这个任务了吗？",
+      "success": "杰出的我不需要这个东西，事实上，如果你小心的话，你可能更适合使用它。再跟我谈谈，我会告诉你你需要知道的一切。",
+      "success_lie": "这是什么愚蠢的想法？",
+      "failure": "正如我所担心的…"
+    }
+  },
+  {
+    "id": "MISSION_HERMIT_RESTORE_SWORD",
+    "type": "mission_definition",
+    "name": {
+      "str": "修复仪式刀"
+    },
+    "description": "学习圣杯誓言的净化仪式，将仪式剑恢复到可用状态，然后展示给隐士。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_item": "veilblade"
+    },
+    "difficulty": 5,
+    "value": 250000,
+    "end": {
+      "effect": [
+        {
+          "npc_add_effect": "hermit_stage_2",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_add_effect": "hermit_stage_2",
+          "duration": "PERMANENT"
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_HERMIT_AWAKEN_POWER",
+    "dialogue": {
+      "describe": "也许我们终于可以赎罪了……",
+      "offer": "我已经告诉你我知道的一些事情。这可能对你有用。刀锋可能被黑暗魔法损坏，但它可以被打捞出来。你有潜力，它可能会被证明比作为一个血淋淋的腐蚀武器更有用。",
+      "accepted": "太好了。前进之路在《圣杯誓言》中。承担这项任务就是接受随之而来的责任。我会尽我所能提供建议，但我不能为你进行净化仪式。那是你的职责。",
+      "rejected": "我明白，不过我希望你不要因为这件文物被用作武器而偏袒它的现状。如果你认为自己准备好了就去找我。",
+      "advice": "你需要对那些以前来过的人的研究，某些仪式成分。你还需要找到一份血法典的副本，以正确地反击对它的血诅咒。",
+      "inquire": "你做过仪式吗？让我看看…",
+      "success": "看到这一点，经过这么长时间……我很难用语言来形容。它永远不会恢复到曾经拥有的荣耀，作为神圣的礼物之一，它在来自远方的火焰中锻造，但即使是这也给了我希望。来吧，我们有很多要讨论的。",
+      "success_lie": "这是什么愚蠢的想法？",
+      "failure": "正如我所担心的…"
+    }
+  },
+  {
+    "id": "MISSION_HERMIT_AWAKEN_POWER",
+    "type": "mission_definition",
+    "name": {
+      "str": "赢得彼端的宠爱"
+    },
+    "description": "从传送门充电，为修复后的仪式之刃提供燃料，从面纱之外向他提供能量，然后在获得他的任何祝福后返回隐士。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_flag": "explorer_of_the_veil"
+    },
+    "difficulty": 5,
+    "value": 250000,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "new_anomaly_1",
+        "om_terrain_replace": "field",
+        "random": true,
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_effect": "hermit_stage_3",
+          "duration": "PERMANENT"
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_HERMIT_BECOME_PARAGON",
+    "dialogue": {
+      "describe": "也许我们终于可以赎罪了……",
+      "offer": "这是一项任务，我将留给你主动去做，但如果需要，我会给你建议。使用觉醒之刃需要一定的能量返回到超越。最能实现遗物目的的方法是让你找出帷幕上挥之不去的伤痕，而我日渐衰退的感官已经揭示了这样一个可能有用的地方。无论你选择怎样服侍他，你的行动都会有更大的目标。你愿意接受我的指导吗？",
+      "accepted": "愿帷幕彼端古神指引我们。我会尽我所能指导你让这件文物发挥作用。如果不能做到这一点，就有一些方法来维持这种力量，可以在圣杯誓言中找到。你会看到一些普通的，琐碎的东西。其他人是只有上帝才能赐予的奇迹，它们可能会很好地为你服务。到了时候，你们看见你们劳碌的果子，就再对我说话。",
+      "rejected": "很不幸。我希望你自己能听从召唤，准备好了就来找我。在追寻摆在你面前的道路时，你的命运与那些寻求确保这个世界不会进一步堕落的人交织在一起。不管怎样，你的路就在你面前。",
+      "advice": "在裂口上画画需要你在门前徘徊，直到刀锋吸取它的力量。当你收到信号时，你会及时知道的。如果你需要我能提供的一点指导，你只需要问。",
+      "inquire": "如果你赢得了他的青睐，让我看看你眼中的火花…",
+      "success": "因此，它已经成为现实。我希望这项任务对你来说不太麻烦，也不希望他的好意太难把握。这证明了这一点。你适合做他的选择。还有很多要讨论。",
+      "success_lie": "这是什么愚蠢的想法？",
+      "failure": "我相信我能感觉到原因。他所选择的人不能与外界有太大的联系，以免追求他的目标也会危及到他们。看来你已经做到了。不幸的是，也许还有希望。来吧，我们还有事情要讨论。"
+    }
+  },
+  {
+    "id": "MISSION_HERMIT_BECOME_PARAGON",
+    "type": "mission_definition",
+    "name": {
+      "str": "成为帷幕的典范"
+    },
+    "description": "继续寻找传送门或者通过被修复的仪式刀来引导力量，直到从帷幕彼端古神的青睐中得到一个清晰的符号。过度突变，变得与彼端联系太紧密，可能会危害这一目标。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_trait": "THRESH_VEIL"
+    },
+    "difficulty": 5,
+    "value": 250000,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "new_anomaly_2",
+        "om_terrain_replace": "field",
+        "random": true,
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_effect": "hermit_stage_4",
+          "duration": "PERMANENT"
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "也许我们终于可以赎罪了……",
+      "offer": "我怀疑这是一项长期的任务。你展示了帷幕彼端古神寻求的潜力。我已经告诉你们我们使命的性质，我们永恒的誓言。你让这颗苍老无力的心充满了新的希望。其他人可能会促进人类的生存，但是如果帷幕上的伤口继续流血，我们被扔进深渊，那又有什么好处呢？这就是我们的目的，是我们用净化圣火所坚持的一个共同点。但是，每一个裂痕被封闭，每一次入侵停止，都把我们从边缘拉了出来。我请你们继续沿着你们选择的道路前进。继续你的工作，小心而精确地使用你的奖励。你能接受这个要求吗？",
+      "accepted": "非常感谢。有另外一个这样的地方可能会有用，我会告诉你它在哪里。除此之外，你的旅程可能会很漫长，寻找不稳定因素，并从远处呈现这些产品。小心被突变所腐蚀，因为太强的束缚会使你不适合他的计划。当你做到了这一点，如果你想再找我。我会尽我所能给你一些指导。",
+      "rejected": "我懂了。也许你有信心帷幕会举行，因为它没有倒塌，尽管发生了一切。但是你已经走了这么远，我们能确定什么时候后果如此严重吗？如果你改变主意，我会等你的。",
+      "advice": "在你用什么方法来获得股票时要谨慎。只有在对帷幕造成必要的伤害时才使用召唤仪式，不要让血魔法的诱惑给自己造成不应有的伤害。至于其他的裂痕要封住，记住你所看到的每一个被奥术影响的地方，以及世俗的危险。我对造成如此大破坏的实验室几乎没有经验，但它们可能保存着可以修复的残余物。",
+      "inquire": "他膏你为他所拣选的吗？",
+      "success": "你已经证明了自己，很少有人能做到。每一件圣物，只有一位大祭司像你们一样受膏。我会尽我所能提供委员会，但我没有任务要给你了。跟随命运的指引。",
+      "success_lie": "这是什么愚蠢的想法？",
+      "failure": "我可以很清楚地感觉到这其中的原因。他的选择不能与外界联系太紧密，以免追求他的目标也会危及他们。看来你就是这么做的。不幸的是，但仍有希望。来吧，我们有事情要讨论似乎…"
+    }
+  },
+  {
+    "id": "MISSION_CF_DEACON_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "乡村教堂检查"
+    },
+    "description": "参观乡村教堂，与索菲亚·麦金农交谈。把消息告诉道林。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_effect": "sofia_deacon_message"
+    },
+    "difficulty": 2,
+    "value": 10000,
+    "has_generic_rewards": false,
+    "start": {
+      "effect": [
+        {
+          "u_add_effect": "already_asked_deacon",
+          "duration": "PERMANENT"
+        }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "cf_church_4",
+        "om_special": "cf_rural_church",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 180,
+        "min_distance": 10
+      }
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "希望一切顺利…",
+      "offer": "虽然我很想回去看看在教堂避难的人，但我一直在忙着帮助这里的人。如果你能去拜访他们，请找索菲亚·麦金农谈谈。你能代我向她问好，并为我耽误了回来向她道歉吗？",
+      "accepted": "非常感谢。毫无疑问，如果你问她，她也会为你工作的。如果你的旅行带你回到这里，请随时通知我。我没有什么可以作为奖励，但我会尽我所能。祝你好运。",
+      "rejected": "我理解。即使在这里也有很多事情要做。不过，我想我在这里要忙的时间比我预期的要长得多，所以如果你有机会，请找我谈谈。我没有什么可供回报的，但我会尽我所能去争取。",
+      "advice": "这是路边的一个乡村教堂。如果需要的话，那里的幸存者应该能够帮助你。恐怕我对这群人不太了解，因为亚历山大神父是认识他们的人。",
+      "inquire": "你有消息吗？",
+      "success": "非常感谢。听到他们的回音让我松了一口气。我可能会在这里呆一段时间，这些人需要他们能得到的所有帮助，索菲亚的团队可以很好地照顾自己。我知道这不多，但请拿着这个。",
+      "success_lie": "你想拉什么？",
+      "failure": "你怎么会在这件事上失败的？"
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_effect": "rural_church_aware",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "FMCNote",
+          "count": 5
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "找到或制造骸骨护符"
+    },
+    "description": "获得或制作一个骨符，一个临时的神圣符号，从某些超自然的怪物的身体部位雕刻而成，然后带到索非亚。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 1,
+    "value": 10000,
+    "has_generic_rewards": false,
+    "item": "charm_bone",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_REP_2",
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "我们一直在努力加强这个地点，并试图与我们的订单中的任何其他人恢复联系。但光靠世俗的方法可能还不够。我请求你们获得一种被称为骨咒的东西，它是用现在世界上一些更加超凡脱俗的生物的骨头雕刻而成的。如果你愿意，我会解释这有什么作用。",
+      "accepted": "非常感谢。我知道这是一个奇怪的要求，就像要求你自己做一样。但我觉得，给它添加你自己的个人风格可能会证明是一个有用的学习经验，因为每一个用超凡脱俗野兽的骨头制作的护身符都反映了它的创造者的本性。",
+      "rejected": "我明白这可能是一件小事，也是一个奇怪的要求。但这个仪式对我们来说比你想象的更重要。",
+      "advice": "有许多怪物的骨头、象牙等都带有超自然的印记。幸存者中被称为“克雷克斯”的顽皮动物很容易成为猎物，而所谓的“格拉肯”应该是更安全的捕猎方式。或者你可以去寻找像飞虫或猎杀恐怖的野兽。",
+      "inquire": "打猎怎么样，手艺怎么样？你找到我们要找的东西了吗？",
+      "success": "精彩的我很快会安排好的，其他人一直在努力进一步保护这个地方。在我们确保这个地方安全之前，还有很多工作要做。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 2
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_1_a"
+              ],
+              "x": 3,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_1_b"
+              ],
+              "x": 14,
+              "y": 22
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_1_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_1_d"
+              ],
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_2",
+    "type": "mission_definition",
+    "name": {
+      "str": "提供贸易安排"
+    },
+    "description": "向难民中心的商人提供贸易安排表，以及交易所需的黄金鳞片。将提供的收据送还索非亚。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 1,
+    "value": 10000,
+    "has_generic_rewards": false,
+    "item": "cf_rep_trade_receipt",
+    "start": {
+      "effect": [
+        {
+          "u_spawn_item": "cf_rep_trade_arrangement"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 20
+        }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_18",
+        "om_special": "evac_center",
+        "must_see": true,
+        "reveal_radius": 1
+      }
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_REP_3",
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "这应该是件简单的事，不过我希望你会觉得这次旅行可以忍受。我偶尔会到当地的难民中心去交换必要的工具和物资，但我暂时需要在这里，其他人则忙于收集物资和继续施工。我们已经安排好了供给品的运送，但有时我们必须把我们所需要的和我们必须提供的东西的清单寄去。你能把这个交给他们的商人，然后把他们通常写的收据还给他们吗？",
+      "accepted": "非常感谢。商人要求预付款，多余的清仓用品或贵重金属。这应该足以完成安排，我们用这些来留出一定数量的材料来修理我们的设备。有了你们的帮助，我们就能集中精力使这个地方适合居住，一旦交易达成，我们就有了更大的喘息空间。希望在物资再次短缺的时候，我们会有更多的人来照顾自己。",
+      "rejected": "拜托，只要你能再跟我说话，我们不能长期只依赖于拾荒，因为很少有人能抽出时间来完成这项任务。",
+      "advice": "如果你能说服他们接受较低的首期付款利率，你就可以保留剩下的部分。现在没有多少人看到黄金的价值，但它有一些相同的用途。我们使用的修复毛坯上印有已知的重量和纯度，这比任何随机废料都要好。",
+      "inquire": "中心同意我们的提议了吗？他们通常会提供一张收据，确认已经安排好了。",
+      "success": "非常感谢。我们离把这个地区建成一个可用的避难所有点近了。我只希望我们中有更多人听从我们的呼吁。我也可以为你的麻烦多留点钱。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 4
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_2_a"
+              ],
+              "x": 3,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_1_roof",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_2_b"
+              ],
+              "x": 3,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_2_c"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_3",
+    "type": "mission_definition",
+    "name": {
+      "str": "杀死未知怪物"
+    },
+    "description": "在附近猎杀一个性质不明的怪物。有选择地招募一个教堂的警卫来协助。",
+    "goal": "MGOAL_KILL_MONSTER",
+    "difficulty": 4,
+    "value": 15000,
+    "has_generic_rewards": false,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "forest_thick",
+        "reveal_radius": 1,
+        "random": true,
+        "search_range": 20,
+        "min_distance": 5
+      },
+      "update_mapgen": {
+        "place_monster": [
+          {
+            "monster": "mon_flesh_angel",
+            "x": 11,
+            "y": 11,
+            "target": true
+          }
+        ]
+      }
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_REP_4",
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "我有好消息和坏消息。好消息是，我们已经与我们的一群兄弟取得了联系，他们预计很快就会到达。坏消息是，他们报道说，我们的病房还吸引了其他一些人来到这一地区，由于魔法本身阻止了它，他们在周围的树林里潜行。这可能是对旅行者的威胁，此外，在旅途中可能危及我们的同志。我想请求你侦察该地区，如果需要的话，杀死该生物。",
+      "accepted": "愿奥丁在战斗中给你胜利，如果真是这样的话。任何被我们的防御魔法所吸引的生物可能不仅是超凡脱俗的，而且与其他神秘力量有联系。期待麻烦。如果你认为有必要的话，我会允许你帮助我们的一个兄弟，但我们不能为一个适当的狩猎腾出必要的力量。",
+      "rejected": "这件事可能会危及其他人的生命。我还不知道威胁的全面程度，但我们不能危及我们在这里的地位。请你一有空，再跟我说话。",
+      "advice": "它很可能有某种非自然的感觉，许多这样的生物能够利用这些能力来吸引或以其他方式压倒弱者。如果可能的话，避免出现在它的视线内，因为当用户可以看到受害者时，大多数这样的威胁是最有力的。",
+      "inquire": "野兽已经被杀死了吗？",
+      "success": "我很感激你胜利归来。现在听到它，以及其他人的侦察报告，这种生物确实是罕见的。编织成对神圣的嘲弄的人形。很抱歉让你面临未知的威胁。然而，多亏了你的帮助，其他人安全抵达，我们订单的创始人之一。他会在我们最近完工的大楼里，他可能也会为你工作。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_sofia_3",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "npc_add_effect": "cf_mission_3",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 6
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_3_a"
+              ],
+              "x": 1,
+              "y": 1
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_3_b"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_3_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "mapgen_update_id": "cf_church_upgrade_3_d"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_4",
+    "type": "mission_definition",
+    "name": {
+      "str": "保护索菲亚的盟友"
+    },
+    "description": "安排更多的盟友加入索菲亚在乡村教堂的团体。难民中心的大多数商人，可能还有其他地方，都值得和他们谈谈寻求帮助。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_var": "sofia_allies_secured",
+      "type": "mission",
+      "context": "rural_church",
+      "value": "yes"
+    },
+    "difficulty": 3,
+    "value": 20000,
+    "has_generic_rewards": false,
+    "start": {
+      "effect": [
+        {
+          "u_add_var": "sofia_mission_4",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_4_a"
+              ],
+              "x": 3,
+              "y": 16
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_4_b"
+              ],
+              "x": 3,
+              "y": 0
+            }
+          ]
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_REP_5",
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "不管我们为保护这个地方付出了多少努力，最终我们需要的不仅仅是避难所。我的希望不仅是保存我们多年积累的知识，而且要用它来帮助别人。但为此，我们需要与外界密切合作。如果我们想吸引其他人加入我们的事业，我们需要的不仅仅是与中心的商人断断续续的交易。你能帮我们吗？",
+      "accepted": "非常感谢。如果有人在你的社区工作，最好看看有谁在你的社区工作。如果我们能安排商人或工人在这里建立，这就为我们提供了另一个联系点，以吸引新兵和建立联盟。",
+      "rejected": "我懂了。这并不像猎杀怪物那么可怕，但如果你改变主意，从长远来看，这对我们是一个巨大的恩惠。",
+      "advice": "不同的商人和其他负责该中心的人可能会提供一些帮助。这可能取决于他们寻求什么，但任何商人或财富之兵都将为我们提供一个联系方式，以进一步保障我们的未来。",
+      "inquire": "你的搜索进展顺利吗？",
+      "success": "太赞了！我们已经在努力建设这个圣殿，使之更适合居住，你和其他人的安排已经提供了急需的劳动力，帮助完成会议厅的装修。我希望他们会对我们有很大的帮助，而且一起工作会使我们更容易与其他幸存者结成同盟。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_var": "sofia_mission_4_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "npc_add_var": "sofia_mission_4_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 8
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_4_h"
+              ],
+              "x": 4,
+              "y": 17
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_4_i"
+              ],
+              "x": 4,
+              "y": 0
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_3_roof",
+          "mapgen_update_id": "cf_church_upgrade_4_j"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_5",
+    "type": "mission_definition",
+    "name": {
+      "str": "从守誓者那里带回研究结果"
+    },
+    "description": "找到一个疑似的饲养员残余，他们可能有研究和情报带回索非亚。索菲亚建议说，正在寻找的信息可以保存在比书更耐用的东西上。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 4,
+    "value": 25000,
+    "has_generic_rewards": false,
+    "item": "offering_mission_notes",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_REP_6",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "arcana_hermitage_1",
+        "om_special": "Hermit Cabin",
+        "reveal_radius": 1,
+        "search_range": 360
+      },
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_2",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_5"
+              ],
+              "x": 2,
+              "y": 3
+            }
+          ]
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "现在我们有更多的帮手在这里，我们可以花更多的时间来跟进Johnathan的笔记提供给我们的一些线索。他们指出，在守誓者中有一名幸存者，与他们的高级祭司有密切接触。我希望你能从他们那里找到任何你能得到的东西，他们可能提供的任何研究或帮助。",
+      "accepted": "谢谢，我带你去看看他被怀疑在哪里。我的主要兴趣是任何可能幸存下来的研究笔记，任何超出其神圣文本常规内容的东西。知道了保管人，任何新的研究都可能首先以比纸张更持久的形式保存下来。如果他们还有其他联系方式，他们可以提供任何其他帮助，看看能做些什么。我希望，现在是弥补和一起战斗的时候了。",
+      "rejected": "我懂了。好吧，如果你愿意的话，你准备好了就问我。我担心不久我们就会失去这一领先优势。",
+      "advice": "我不确定这个人在被要求向净化圣火提供信息时会有什么反应。约翰纳森也许能提供更多的信息，但我怀疑他宁愿看到守门员被扑灭。至于要找什么，他们在开始手工临摹和印刷作品之前，都会把神圣的信条保存下来，并用石刻、泥版等书写给后人。在某些方面甚至比我们更传统，不管是不是神…",
+      "inquire": "你找到我们要找的东西了吗？",
+      "success": "非常感谢。我希望你在追求这个知识的过程中一切顺利，没有过度的暴力。这确实是一件奇怪的事，但它将使一些有价值的研究成为可能。它似乎主要是关于一些更危险的闯入者威胁人类的残余，我希望这将产生成果。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_var": "sofia_mission_5_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 10
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_2",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_6"
+              ],
+              "x": 2,
+              "y": 3
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_6",
+    "type": "mission_definition",
+    "name": {
+      "str": "来自叛徒伯劳的安全研究"
+    },
+    "description": "找到一个怀疑是猩红教派的分裂派别，他们可能有研究和情报带回索非亚。把他们所有的独特研究都带回来。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 4,
+    "value": 30000,
+    "has_generic_rewards": false,
+    "item": "sanguine_mission_notes",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_REP_7",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "sanguine_holdout_2",
+        "om_special": "sanguine_holdout_shrikes",
+        "om_terrain_replace": "forest",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 180,
+        "min_distance": 20
+      },
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_2",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_7_a"
+              ],
+              "x": 2,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_2_roof",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_7_b"
+              ],
+              "x": 2,
+              "y": 3
+            }
+          ]
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "这个可能风险更大一些。Johnathan的情报证实了在猩红教派内部存在分裂的嫌疑，特别是在他们的屠猎者中。他们是猎人的猎人，当我们对他们的藏身处进行突袭时，他们是我们最大的威胁。我们已经分离出一个叛徒分子的位置，这个叛徒分子的行为与其他分裂集团不一致。我希望你调查，并确保他们可能获得的任何研究。即使它被证明对我们来说不安全，最好防止它落入坏人之手。",
+      "accepted": "非常感谢。小心点，他们似乎积极参与了反对正规的血腥教派的敌对行动，但我们不知道他们有多分歧。他们可能仍然对我们怀有敌意。如果可以的话，试着劝说他们和平合作，但是要有一场战斗。",
+      "rejected": "如果你改变主意，找我谈谈。我不愿意和乐观主义者打交道，因为我们不知道他们是否还在敌对行动中，但是保护他们发现的一切对我们是有用的。",
+      "advice": "小心。他们很可能在你见到他们之前就知道你要来了，准备好对抗，或者更糟的是一次伏击。",
+      "inquire": "你有吗？",
+      "success": "我会小心的。其中一些可能有助于我们自己的研究，但一般的经验法则是避免大量的工作与任何发展需要血液魔术或空间变化的功能。我希望我没有让你陷入太大的危险，让你去追他们。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 12
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_2",
+          "place_nested": [
+            {
+              "chunks": [
+                "cf_church_upgrade_8_a"
+              ],
+              "x": 8,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_2_roof",
+          "mapgen_update_id": "cf_church_upgrade_8_b"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_REP_7",
+    "type": "mission_definition",
+    "name": {
+      "str": "返回中继信标"
+    },
+    "description": "从一个电台取回一个无线电中继信标，该电台最近被一个与净化圣火联盟的联系所保护。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 5,
+    "value": 35000,
+    "has_generic_rewards": false,
+    "item": "arcana_radio_relay_beacon",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "station_radio_1",
+        "search_range": 360,
+        "reveal_radius": 3
+      },
+      "update_mapgen": [
+        {
+          "mapgen_update_id": "arcana_radio_station"
+        },
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_9_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_9_b"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "奥丁，牵着我的手…",
+      "offer": "我们一直在努力改进我们的前哨基地。我一直在研究的一个问题是改进我们的收音机，以便与其他人取得联系。不久前，我们收到一个简短的无线电谈话，这将使我们有机会一举两得。在世界末日之前，我们的一个联系人显然在有什么东西破坏了信号之前，固定了一个无线电发射器并建立了联系。我想让你调查一下。",
+      "accepted": "非常感谢。他们在一个老城里搞到了一个电台，我建议你小心点。他们确认使用他们所称的中继信标来利用空间站的发射机。它不仅包含了他们用来把信号传给我们的东西，还有一个跟踪器，不管他们和谁一起工作，都可以用来联系我们。带着它回去，我们就能重新建立联系了。",
+      "rejected": "如果你改变主意，请跟我说。我们不知道他们还会和谁联系，也不知道他们是否会在我们联系他们之前离开。",
+      "advice": "准备战斗。他们提到了被跟踪的东西，这将是除了通常在城市中流行的可憎的东西。",
+      "inquire": "你找到了吗？",
+      "success": "非常感谢。这应该是最后的润色。我马上就去工作，我知道其他人已经在找我们了。他们应该很快就到这里，现在我们有办法扩大我们的信号，以及他们可以跟踪的信号。这应该是我们现在需要的一切。",
+      "success_lie": "你觉得你想拉什么？",
+      "failure": "但是如何…"
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_add_effect": "cf_mission_sofia_7",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 14
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_10_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_10_b"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_GM_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "找回贝恩杖"
+    },
+    "description": "从奇怪的小树林里取回毒蛇杖，把它带给约翰纳森。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 5,
+    "item": "scourge_staff",
+    "value": 15000,
+    "has_generic_rewards": false,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_GM_2",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "strange_grove",
+        "om_special": "Strange Grove",
+        "reveal_radius": 3,
+        "search_range": 360,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 6
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_GM_1_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_GM_1_b"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_GM_1_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "mapgen_update_id": "cf_church_upgrade_GM_1_d"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "赐予我们力量……",
+      "offer": "在我们的旅程中，我们看到了一些仍在困扰某些地区的危险的零星证据，从前的异常活动热点现在变得更加危险，自从现实中的漏洞开始出现以来。我想请你调查一下失传文物的位置，我希望能帮助我们找回失物。",
+      "accepted": "非常感谢。如果你还没亲眼看到的话，我会带你去那个地方。几十年前这里有人居住，但现在这里似乎杂草丛生，到处都是怪物。做你必须做的事情来清理这个地方，找回那些被称为“祸根杖”的文字。迪瓦特。",
+      "rejected": "当你相信你准备好了，再跟我谈谈。这些老地方越久得不到处理，就越可能成为威胁。",
+      "advice": "这个地方过度生长的程度是不自然的。我认为在绿树丛中的怪物是最常见的威胁，我们有理由相信一些大的东西已经在那里生根发芽了。除此之外，我可以告诉你一点关于那个地方的历史，索菲亚可能知道得更多。",
+      "inquire": "打猎怎么样？",
+      "success": "非常感谢。该员工与那些曾经居住在那个地方的人有关联，但似乎无论是什么异常导致了这一切，都在一定程度上腐蚀了它。我会照顾它，你在那里找到的任何其他东西，你可以根据自己的意愿处理。我们其余的人将试图辨别这些异常现象的成因。",
+      "success_lie": "这是什么白痴的行为？",
+      "failure": "但是怎么做呢？"
+    }
+  },
+  {
+    "id": "MISSION_CF_GM_2",
+    "type": "mission_definition",
+    "name": {
+      "str": "找回魔爪"
+    },
+    "description": "从奇妙的建筑中找回恶魔爪，并把它带给约翰纳森。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 5,
+    "item": "hand_of_armok",
+    "value": 20000,
+    "has_generic_rewards": false,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_GM_3",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "curious_structure_2",
+        "om_special": "Curious Structure",
+        "reveal_radius": 3,
+        "search_range": 360,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 8
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_GM_2_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_GM_2_b"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_GM_2_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "mapgen_update_id": "cf_church_upgrade_GM_2_d"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "赐予我们力量……",
+      "offer": "我相信我现在可以信任你，让你承担一项更危险、更重要的任务。在过去，我们很少有专门的安全屋，我们中的大多数人都住在农村家庭和兄弟会的教堂里，以及他们可以信任的地方。只有一个地方是真正由我们亲手建造的，它经历了许多其他地方在零小时内所经历的同样的奇怪事件。为数不多的逃难幸存者带来了活生生的火焰和超凡恐怖的故事，扭曲了圣所下面的石头。如果你相信自己准备好了，我希望你带领一场狩猎来净化它，并用恶魔的爪子作为狩猎的证据。",
+      "accepted": "托尔和上帝在三个人身上，祝你胜利。潜伏在那里的邪恶被描述为挥舞着利爪的武器，用地狱之火扭曲了帷幕，直到它被一次幸运的一击从它炽热的手中击中。他们能够用我们的一把剑作为基石把它封住，你需要解开封印来对抗它。如果你能在狩猎中找回那凶器，我们就能安全地摧毁它。如果我们能放过任何一个人，我会安排一个完整的狩猎队。迪伊·瓦特！",
+      "rejected": "理解。这项任务很危险，他们设立的封印不应该被撤销，除非你准备好坚持到底。当你认为合适的时候跟我说。",
+      "advice": "带上你能提供的任何帮助，并期待着各种各样的可憎之物伴随着它穿过帷幕上的伤口。为地狱之火做好准备，任何能抵御火焰的魔法或装备都会有所帮助。尽你所能组建一个合适的狩猎队，但遗憾的是，我们现在已经精疲力尽了。",
+      "inquire": "打猎怎么样？",
+      "success": "上上下下的诸神，想想这件事导致了我们最神圣的地方之一的毁灭。我怀疑很快收回那个地方是否安全。你从他们那里找到的任何东西都是你的，只要你觉得合适就可以使用。我希望那些阻止这件事的人是和平的。你觉得合适的时候跟我说。",
+      "success_lie": "这是什么白痴的行为？",
+      "failure": "但是怎么做呢？"
+    }
+  },
+  {
+    "id": "MISSION_CF_GM_3",
+    "type": "mission_definition",
+    "name": {
+      "str": "肃清血族"
+    },
+    "description": "杀死当地猩红教派的血法师。有选择地招募一个教堂的警卫来协助。",
+    "goal": "MGOAL_ASSASSINATE",
+    "difficulty": 10,
+    "value": 25000,
+    "has_generic_rewards": false,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "sanguine_holdout_1",
+        "om_special": "sanguine_holdout",
+        "om_terrain_replace": "forest",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 180,
+        "min_distance": 10
+      },
+      "update_mapgen": [
+        {
+          "om_terrain": "sanguine_holdout_b1",
+          "place_npcs": [
+            {
+              "class": "sanguine_order_magus",
+              "x": 14,
+              "y": 12,
+              "target": true,
+              "add_trait": "MUTE"
+            }
+          ]
+        }
+      ]
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_add_effect": "cf_mission_johnathan_3",
+          "duration": "PERMANENT"
+        },
+        {
+          "npc_add_effect": "cf_mission_3",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 10
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_GM_3_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_GM_3_b"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_GM_3_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "mapgen_update_id": "cf_church_upgrade_GM_3_d"
+        }
+      ]
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_GM_4",
+    "dialogue": {
+      "describe": "赐予我们力量……",
+      "offer": "我们不仅有证据表明一群仍在实践的乐观主义者，而且证实了他们最可能的藏身之处。你知道该怎么做。他们的教派将集中在一个当地的法师周围，优先考虑他们将减少威胁，即使他们的部下逃脱法律制裁。当你准备好完成任务时，把他们找出来。",
+      "accepted": "上帝和众神愿意，愿你平安归来。这将是一项危险的任务，虽然我们可能捉襟见肘，但我允许你酌情请求援助。我们可以让另一个猎人来完成这么危险的任务。",
+      "rejected": "我理解。准备好了再回来。",
+      "advice": "他们会追求任何他们能得到的好处。任何武器，任何邪恶的魔法，任何身体和灵魂的堕落。尽可能多的为你的事业召集盟友，任何适合你的武器。",
+      "inquire": "他们被处理了吗？",
+      "success": "感谢上帝，你安全回来了！愿这对任何进一步危害人类的人发出警告。我希望你在处理从那个地方取回的任何危险物品时能有适当的判断力。当你离开的时候，我们的一个侦察任务与我们兄弟中的一个小顽固分子取得了联系，这应该可以减轻这里的一些工作量。",
+      "success_lie": "这是什么白痴的行为？",
+      "failure": "但是怎么做呢？"
+    }
+  },
+  {
+    "id": "MISSION_CF_GM_4_PRELUDE",
+    "type": "mission_definition",
+    "name": {
+      "str": "调查幸存者营地"
+    },
+    "description": "搜索最近发现的一群幸存者的营地，他们最近遇到了异常活动。把在那里发现的任何不寻常的物品带回来，这些物品可能会证明有助于识别和定位这种威胁的来源。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "or": [
+        {
+          "u_has_item": "arcana_dream_journal"
+        },
+        {
+          "u_has_item": "arcana_strange_crystal"
+        }
+      ]
+    },
+    "difficulty": 3,
+    "value": 10000,
+    "has_generic_rewards": false,
+    "start": {
+      "effect": [
+        {
+          "u_add_var": "johnathan_prelude_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "forest",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 50,
+        "min_distance": 20
+      },
+      "update_mapgen": {
+        "set": [
+          {
+            "square": "terrain",
+            "id": "t_region_groundcover_forest",
+            "x": 4,
+            "x2": 19,
+            "y": 4,
+            "y2": 19
+          },
+          {
+            "square": "terrain",
+            "id": "t_region_groundcover_barren",
+            "x": 8,
+            "x2": 15,
+            "y": 8,
+            "y2": 15
+          },
+          {
+            "square": "furniture",
+            "id": "f_null",
+            "x": 8,
+            "x2": 15,
+            "y": 8,
+            "y2": 15
+          },
+          {
+            "line": "terrain",
+            "id": "t_grave_new",
+            "x": 11,
+            "x2": 12,
+            "y": 7,
+            "y2": 7
+          },
+          {
+            "point": "furniture",
+            "id": "f_brazier",
+            "x": 12,
+            "y": 11
+          },
+          {
+            "point": "furniture",
+            "id": "f_plastic_groundsheet",
+            "x": 14,
+            "y": 12
+          },
+          {
+            "point": "furniture",
+            "id": "f_tourist_table",
+            "x": 14,
+            "y": 10
+          },
+          {
+            "point": "trap",
+            "id": "tr_rollmat",
+            "x": 12,
+            "y": 9
+          },
+          {
+            "point": "trap",
+            "id": "tr_rollmat",
+            "x": 10,
+            "y": 10
+          },
+          {
+            "point": "trap",
+            "id": "tr_rollmat",
+            "x": 10,
+            "y": 12
+          },
+          {
+            "point": "trap",
+            "id": "tr_rollmat",
+            "x": 12,
+            "y": 13
+          }
+        ],
+        "place_loot": [
+          {
+            "group": "trash_forest",
+            "x": [
+              1,
+              22
+            ],
+            "y": [
+              1,
+              2
+            ],
+            "repeat": 2,
+            "chance": 75
+          },
+          {
+            "group": "cannedfood",
+            "x": 14,
+            "y": 10,
+            "repeat": 5,
+            "chance": 50
+          },
+          {
+            "group": "drugs_heal_simple",
+            "x": 14,
+            "y": 10,
+            "repeat": 5,
+            "chance": 50
+          },
+          {
+            "group": "weapons",
+            "x": 14,
+            "y": 12,
+            "repeat": 2,
+            "chance": 25
+          },
+          {
+            "group": "guns_survival",
+            "x": 14,
+            "y": 12,
+            "repeat": 2,
+            "chance": 25
+          },
+          {
+            "group": "ammo_reloaded",
+            "x": 14,
+            "y": 12,
+            "repeat": 5,
+            "chance": 50
+          },
+          {
+            "item": "shovel",
+            "x": 14,
+            "y": 12,
+            "chance": 80
+          },
+          {
+            "group": "remains_soldier",
+            "x": 10,
+            "y": 16,
+            "chance": 100
+          },
+          {
+            "item": "223_casing",
+            "x": [
+              10,
+              15
+            ],
+            "y": [
+              13,
+              15
+            ],
+            "repeat": 10,
+            "chance": 50
+          },
+          {
+            "group": "map_extra_drugdeal",
+            "x": 11,
+            "y": 7,
+            "chance": 100
+          },
+          {
+            "group": "map_extra_college_camping",
+            "x": 12,
+            "y": 7,
+            "chance": 100
+          },
+          {
+            "item": "arcana_strange_crystal",
+            "x": 11,
+            "y": 7,
+            "chance": 100
+          },
+          {
+            "group": "bed",
+            "x": 10,
+            "y": 10,
+            "chance": 75
+          },
+          {
+            "item": "arcana_dream_journal",
+            "x": 10,
+            "y": 10,
+            "chance": 100
+          },
+          {
+            "group": "bed",
+            "x": 10,
+            "y": 12,
+            "chance": 75
+          },
+          {
+            "group": "bed",
+            "x": 12,
+            "y": 9,
+            "chance": 75
+          },
+          {
+            "group": "bed",
+            "x": 12,
+            "y": 13,
+            "chance": 75
+          }
+        ],
+        "place_monster": [
+          {
+            "monster": "mon_shadow_summoned",
+            "x": [
+              1,
+              22
+            ],
+            "y": [
+              1,
+              22
+            ],
+            "repeat": [
+              2,
+              4
+            ]
+          },
+          {
+            "monster": "mon_hunting_horror_summoned",
+            "x": 12,
+            "y": 12
+          }
+        ],
+        "place_vehicles": [
+          {
+            "vehicle": "motorcycle",
+            "x": 11,
+            "y": 16,
+            "rotation": 90,
+            "fuel": 500,
+            "status": 1,
+            "chance": 100
+          }
+        ],
+        "place_fields": [
+          {
+            "x": [
+              10,
+              11
+            ],
+            "y": [
+              15,
+              16
+            ],
+            "field": "fd_blood",
+            "intensity": 1
+          },
+          {
+            "x": [
+              10,
+              11
+            ],
+            "y": [
+              15,
+              16
+            ],
+            "field": "fd_blood",
+            "intensity": 1
+          },
+          {
+            "x": [
+              10,
+              11
+            ],
+            "y": [
+              15,
+              16
+            ],
+            "field": "fd_blood",
+            "intensity": 1
+          },
+          {
+            "x": [
+              9,
+              10
+            ],
+            "y": [
+              16,
+              17
+            ],
+            "field": "fd_blood",
+            "intensity": 1
+          }
+        ]
+      }
+    },
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "Seeing this is probably a bug, as this mission is actually started via add_mission in dialogue.",
+      "offer": "Seeing this is probably a bug.",
+      "accepted": "Seeing this is probably a bug.",
+      "rejected": "Seeing this is probably a bug.",
+      "advice": "Seeing this is probably a bug.",
+      "inquire": "你找到什么了吗？",
+      "success": "好吧，让我看看。这也许会有帮助，但我觉得我现在还做不了什么。先把它拿给索菲亚，看看她能不能想出别的办法。我会尽我所能复习我掌握的有关攻击的其他情报。缩小范围，再加上对我们所面临的情况有一个更好的感觉，这应该让我们找到原因。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_var": "johnathan_prelude_penultimate",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_GM_4",
+    "type": "mission_definition",
+    "name": {
+      "str": "清除异常"
+    },
+    "description": "寻找一个最近强行进入我们世界的反常结构。杀掉心中所有可憎的东西。",
+    "goal": "MGOAL_KILL_MONSTER",
+    "difficulty": 8,
+    "value": 50000,
+    "has_generic_rewards": false,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "arcana_structure_anomalous_entrance",
+        "om_special": "arcana_anomaly_resurgence",
+        "om_terrain_replace": "field",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 180,
+        "min_distance": 20
+      },
+      "update_mapgen": [
+        {
+          "om_terrain": "arcana_structure_anomalous_finale",
+          "place_monster": [
+            {
+              "monster": "mon_seraphic_shade",
+              "x": 20,
+              "y": 5,
+              "target": true
+            }
+          ]
+        },
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_GM_4_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_GM_4_b"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_GM_4_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "mapgen_update_id": "cf_church_upgrade_GM_4_d"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "赐予我们力量……",
+      "offer": "时间到了。我们已经讨论了这种异常的性质，确认了来源。有一些东西，很微妙，但一天比一天更容易察觉。无论内部有什么破坏，都必须加以清理。如果你接受这项任务，我相信你。",
+      "accepted": "上帝和上帝愿意，平安归来。如果你需要的话，我将再次授权你请求我们的一个猎人的帮助。此外，如果你上次没有寻求他们的帮助，你仍然可以这样做。我们至少能负担得起这么重要的任务。",
+      "rejected": "我们已经精疲力竭了，请你一接受这个任务就回来。我担心，如果这种威胁得不到遏制，情况只会恶化。",
+      "advice": "报告指出，这是一些邪恶的外星结构扭曲、毁坏的残余物，类似于那些甲壳质可憎的生物所建造的。我毫不怀疑，这里面有更大的异常和危险。要格外小心，带上你能得到的任何火力以及物理和魔法保护。",
+      "inquire": "你摧毁了威胁吗？",
+      "success": "很好。看到你活着走进来，我几乎能感觉到事情已经完成了。我不知道原因，也不知道未来会怎样。只是我们为自己赢得了急需的时间，去从事任何可能防止未来发生更大灾难的研究。我不能再给你更多的任务，也不能给你更多的奖励。我们，也许从长远来看，全人类都欠你们的债。",
+      "success_lie": "这是什么白痴的行为？",
+      "failure": "但是怎么做呢？"
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_var": "johnathan_mission_finale",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 20
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_GM_5_a"
+        },
+        {
+          "om_terrain": "cf_church_2",
+          "mapgen_update_id": "cf_church_upgrade_GM_5_b"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_GM_5_c"
+        },
+        {
+          "om_terrain": "cf_church_4",
+          "mapgen_update_id": "cf_church_upgrade_GM_5_d"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_AUX_A",
+    "type": "mission_definition",
+    "name": {
+      "str": "带5张空白卷轴"
+    },
+    "description": "为乡村教堂外的拾荒者寻找或制作5个空白卷轴。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 2,
+    "item": "scroll_blank",
+    "count": 5,
+    "value": 12500,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "has_generic_rewards": false,
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 5
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_aux_a"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "一些拾荒者团队对当地人处理的奇怪的东西产生了兴趣。我和麦金农女士谈过了，她说她可以帮助教学，我们决定把重点放在卷轴上。它们为我们提供了一个相对可重用的方法来处理侦察过程中的麻烦。如果你能给我们大约5个空格，我们就可以从那里找到答案。",
+      "accepted": "谢谢。他们似乎对自己的东西了如指掌，有助于教我们基础知识，所以一旦我们有了一些空白卷轴，我们就可以制作一些更安全的卷轴给我们的侦察兵使用。",
+      "rejected": "好吧。如果你改变主意，就来看我。",
+      "advice": "他们提到教你如何使用这些物品的书叫做六大支柱。如果你找不到合适的卷轴，那本书可能有助于获得制作卷轴所需的规范。",
+      "inquire": "到目前为止有什么进展吗？",
+      "success": "谢谢，这里有足够的天平，希望能弥补这些麻烦。至少我能做到。根据索菲亚的说法，当你激活它们的效果后，它们就会变成空白。所以我们可以让这些持续一段时间，只要清道夫不是太粗糙的纸。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    }
+  },
+  {
+    "id": "MISSION_CF_AUX_B",
+    "type": "mission_definition",
+    "name": {
+      "str": "收集狩灵弩"
+    },
+    "description": "为乡村教堂外的拾荒者寻找或制作一把杀灵者弩。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 3,
+    "item": "ethereal_crossbow",
+    "value": 50000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "has_generic_rewards": false,
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 20
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_aux_b_1"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_aux_b_2"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "嗯，这里的一些男孩一直对这些家伙所宣扬的神秘的东西感兴趣，但我个人最感兴趣的是他们喜欢的魔法无弦弩。弹药是真正的便携式，他们似乎有足够的，它通过坚硬的隐藏，我从来没有见过。我不知道他们有没有多余的，但如果你能弄到一个，我会尽我所能付清。",
+      "accepted": "那好吧。我不认为他们会因为我们直接带着这些东西到处跑而显得太和蔼可亲，但我稍后会和他们谈的。只是不想太麻烦他们，你知道吗？",
+      "rejected": "妈的，你改变主意了过来见我，听到了吗？",
+      "advice": "我想他们有办法做这些东西，如果你拿不到的话…",
+      "inquire": "成功了没？",
+      "success": "该死的，这东西看起来很花哨，我希望这足够解决你的麻烦了。事实上，我和孩子们不久前刚刚赚了不少钱，我能做的比付钱给你更好。我会把最后一次狩猎的一部分放在主房间的桌子上，给你摆好。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    }
+  },
+  {
+    "id": "MISSION_CF_AUX_C",
+    "type": "mission_definition",
+    "name": {
+      "str": "收集一本炼金术史"
+    },
+    "description": "为驻扎在乡村教堂的老护卫医生找一本炼金术历史。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 3,
+    "item": "book_potioncraft",
+    "value": 25000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 10
+        },
+        {
+          "u_spawn_item": "rx12_injector"
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_aux_c"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "I need you to do something discreet for me, if you could.  The locals here are still a bit reluctant to work with us, and I can understand why.  Personally, I just want to go about my duties here as best as I'm able, and I think the best way to keep my superiors from causing trouble would be if I provided them with information that'd give them good reason to work with this place, instead of working against them.  I have something in mind that'd kill two birds with one stone, as it were.  If you can provide me with a copy of their medical text, History of Alchemy, I'll be able to better treat people here, and it'll give me a bargaining chip to keep things civil between the locals and my superiors.",
+      "accepted": "非常好。我知道这是一个有点奇怪的任务，但它将大大卸下我的心上的负担。不用说你也知道，这一切看起来都很反常，但如果有机会更好地了解我自己的处境，我将不胜感激。",
+      "rejected": "请重新考虑，如果你能帮我处理这件事，我会尽我所能报答你。",
+      "advice": "你可以看看他们是否有多余的书，但不要过于明显…",
+      "inquire": "你有吗？",
+      "success": "非常感谢。我已经和我的公司联系过了，他们也有兴趣得到更多的情报。我还是有点担心，但我觉得他们不会做出鲁莽的事。正如承诺的，公平的付款和一些额外的东西。这是一个RX-12兴奋剂输送模块。你可能会发现它对紧急情况很有用。带来了最新的装备。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    }
+  },
+  {
+    "id": "MISSION_CF_AUX_D",
+    "type": "mission_definition",
+    "name": {
+      "str": "寻找猩红之花"
+    },
+    "description": "获得一朵与超自然植物怪物相关联的红花，并将其归还给农夫。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 1,
+    "value": 15000,
+    "has_generic_rewards": false,
+    "item": "triffid_queen_flower",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "new_anomaly_t",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 90,
+        "min_distance": 10
+      }
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "我到这儿不久就对当地人收集的东西产生了兴趣。事实是，在大便砸到电扇的时候，我就买了几本书和一些其他的经历。不多，但足以让我再过一天就死了。我曾经帮助照料庄稼，这些新的经验和我见过的一些奇怪的生物给了我一个想法，可以提高作物产量。有兴趣吗？",
+      "accepted": "好吧。事实上，捕杀那些怪物有点危险。大型步行植物，在地下筑巢。当我带着这个想法去找麦金农女士时，她说她会留意任何线索。我会告诉你去当地的一个热点，她从她的侦察员那里得到消息。如果你去参观的话，请留意那些开着鲜艳红色花朵的植物，因为它们能培育出像野火一样的地狱植物。我需要花本身。",
+      "rejected": "好吧，如果你改变主意随时回来。我怀疑这对这里或公社的后勤工作是否会有很大的改善，但值得一看。",
+      "advice": "这些东西大部分都是有毒的，很难纠结在一起。小心点把它们烧掉，我不想冒着伤害你的风险。",
+      "inquire": "成功了没？",
+      "success": "好吧。索菲亚的人怀疑我能否在这方面取得大规模突破。我可以利用我所学到的东西，并从她那里得到一点帮助，使这里的化合物变得活跃起来，并长出一些东西，但这似乎需要大量的能量，并消耗掉这些花瓣中仍然存在的任何力量。他们有一种方法可以把它的效果附加到某个人的身体里，这样他们就不需要去猎杀怪物，并且这只会让使用它的人消耗能量。不过，谢谢你的帮助，接下来应该很快就能完成收尾工作。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 8
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_aux_d_1"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_aux_d_2"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_AUX_E",
+    "type": "mission_definition",
+    "name": {
+      "str": "调查异常伏击"
+    },
+    "description": "记下最近一次商队遭袭的原因，然后向店主汇报。",
+    "goal": "MGOAL_KILL_MONSTER",
+    "difficulty": 1,
+    "value": 15000,
+    "has_generic_rewards": false,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "new_anomaly_w",
+        "om_terrain_replace": "field",
+        "random": true,
+        "search_range": 60,
+        "min_distance": 10
+      },
+      "update_mapgen": [
+        {
+          "om_terrain": "new_anomaly_w",
+          "place_monster": [
+            {
+              "monster": "mon_alpha_razorclaw",
+              "x": 12,
+              "y": 20,
+              "target": true
+            }
+          ]
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "我一直在准备一些设备来扩大我们的生产范围。我的人带了些补给品，我们可以自己安排。问题是，我不得不和一个新的运输队取得联系，因为最后一个运输队失踪了。从其他拾荒者那里传来的消息让我估计了发生了什么，但听起来不太好。我想让你去调查一下，找出是谁造成的。",
+      "accepted": "谢谢。你可以从大篷车里截获任何东西，我更感兴趣的是处理伏击他们的任何东西。",
+      "rejected": "好吧。不过，如果你改变主意，我希望你能来看我。",
+      "advice": "我不知道在那里会发生什么，情报显示，一些不在当地路线图上的岩层，可能是一个藏身处、集结地、巢穴或是谁知道的。可能有点反常。",
+      "inquire": "找到了吗？",
+      "success": "很好。和我一起工作的那些人是我的朋友。从我对外面发生的事情和你看到的情况的了解来看，这似乎是一种狗屎的外出方式。Lil的回报至少能防止这些东西威胁到其他骗子。不管怎样，事情现在应该已经准备好了。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 8
+        }
+      ],
+      "update_mapgen": [
+        {
+          "om_terrain": "cf_church_1",
+          "mapgen_update_id": "cf_church_upgrade_aux_e_1"
+        },
+        {
+          "om_terrain": "cf_church_3",
+          "mapgen_update_id": "cf_church_upgrade_aux_e_2"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "检索侦察案例"
+    },
+    "description": "在最后一个已知的净化圣火侦察点的位置找到一个笔记本电脑公文包，把它拿回来让尼古拉斯检查有用的信息。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 4,
+    "value": 100000,
+    "has_generic_rewards": false,
+    "item": "arcane_purifier_intel",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_PURIFIER_1_2",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "s_gas_arcana_bandit",
+        "om_special": "arcana_purifer_ambushed",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 180,
+        "min_distance": 15
+      }
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "当我们在来这里的路上时，我们一直试图与我们组织的另一名成员重新取得联系。她一直在执行一项侦察任务，收集我们怀疑会导致我们在这场灾难的原因上取得突破的信息，或者在防止事态恶化的方法上失败。我想请你帮忙找到她，如果对她来说太晚了，那就找回她存储情报的设备。",
+      "accepted": "我们最后听到的消息是她正前往一个旧的休息站寻找补给，并说她会随后与我们联系。我会告诉你他们报告的地点。如果你找不到她的踪迹，那就去找我们称之为侦察的箱子。那是一个装有笔记本电脑的公文包，里面还有一些其他的用于观测和通信的物品。我希望并祈祷这些数据仍然可以挽救回来。",
+      "rejected": "如果这条线索走到任何地方，它可能是我们扭转现实结构所遭受的至少一些损害的最后希望。我也不太乐观，但值得一试。如果你改变主意，请回来和我谈谈。",
+      "advice": "如果她有通讯故障，她可能会把笔记本电脑藏在一个死角那里，因为我们知道那是她最后的目的地。除非她出了什么事，这才是我担心的。它不应该离城市太近，但是总是有危险的东西可能在这个地区，所以要警惕。",
+      "inquire": "你找到她了吗？那情报呢？",
+      "success": "众神保佑，我很高兴你安然无恙地回来了。我猜她没来。从这个角度来看，笔记本电脑几乎没有。但看起来我能从中得到情报，所以她的死不会白费。你休息好了就来看我，只要你觉得准备好了。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_var": "nicholas_mission_1_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 10
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_1_2",
+    "type": "mission_definition",
+    "name": {
+      "str": "查找有关Kairos项目的信息"
+    },
+    "description": "Investigate for further information about Project Kairos, talking to others familiar with military or science facilities.  Bring any findings back to Nicholas.",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 4,
+    "value": 150000,
+    "has_generic_rewards": false,
+    "item": "arcane_purifier_intel_2",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "followup": "MISSION_CF_PURIFIER_1_3",
+    "start": {
+      "effect": [
+        {
+          "u_spawn_item": "cf_purifier_project_data"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "I'd like for you to find anyone else you think might be familiar with the military's experiments, the research labs, that sort of thing.  People who might be able to help us get a definite location out of what little information we have to go on.  If they give us any leads, I'd like you to bring whatever intel you find back here.",
+      "accepted": "Here's a printout of all the useful information I got out of the laptop concerning Project Kairos.  It contains a list of known Priority Sites and records of shipments between them.  Show this to someone who might know more about what these specific Priority Sites were up to, and ideally which of those shipments contained anomalous materials.  We might get a namedrop of the project, or just confirmation that one location in particular was getting the bulk of the anomalous items.",
+      "rejected": "如果你改变主意就回来。你需要明白我们离突破还有多远。索菲亚收集的所有信息，如果我们有这个项目的发现，我们也许能解决一些问题。",
+      "advice": "难民中心的一些人可能和旧世守护者有联系。我不知道他们是否愿意帮助我们，但如果他们了解形势的严峻性，他们可能是我们最好的选择。亦或者，如果你知道任何从其他政府实验室幸存的研究人员，他们可能值得一谈。",
+      "inquire": "成功了没？",
+      "success": "这将使我们更好地了解哪些地方实际上接收到了异常物质。让我们一起准备一下接下来的行程。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_var": "nicholas_mission_2_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 15
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_1_INTERLUDE_1",
+    "type": "mission_definition",
+    "name": {
+      "str": "调查实验室服务器室"
+    },
+    "description": "调查一个科学实验室，并从他们的服务器室取回尼古拉斯正在寻找的情报。在把运输清单带回给尼古拉斯后，你可以稍后回到难民中心去看看永生守卫的医生。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_var": "nicholas_info_sent",
+      "type": "mission",
+      "context": "rural_church",
+      "value": "yes"
+    },
+    "difficulty": 5,
+    "has_generic_rewards": false,
+    "value": 10000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "microlab_arcana_surface",
+        "om_special": "4x4_microlab_arcana",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      },
+      "effect": [
+        {
+          "npc_add_var": "nicholas_mission_2_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug, as this mission is actually started via add_mission in dialogue.",
+      "offer": "Seeing this is probably a bug.",
+      "accepted": "Seeing this is probably a bug.",
+      "rejected": "Seeing this is probably a bug.",
+      "advice": "Seeing this is probably a bug.",
+      "inquire": "你找到你要找的东西了吗？",
+      "success": "很好。我一直在查看你的联系人发给我们的信息，也许有一天我们会有足够的人手去调查其中的一些地方。我会把这个“Kairos项目”的事情留给你的联系人来处理，我相信他们可以安全地处理他们正在寻找的任何事情。这是解决你麻烦的办法，至少可以让你帮忙安排我能在那之后做点什么。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "FMCNote",
+          "count": 20
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_1_INTERLUDE_2",
+    "type": "mission_definition",
+    "name": {
+      "str": "调查失踪的拾荒者队伍"
+    },
+    "description": "调查最后一批幸存者的已知位置，他们可能已经找到了尼古拉斯正在寻找的信息文件。把信息带给尼古拉斯后，你可以回来告诉我拾荒者们到底遭遇了什么。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "u_has_var": "nicholas_info_sent",
+      "type": "mission",
+      "context": "rural_church",
+      "value": "yes"
+    },
+    "difficulty": 5,
+    "has_generic_rewards": false,
+    "value": 10000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "arcana_cave_caravan",
+        "om_special": "Cave_arcana_caravan",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      },
+      "effect": [
+        {
+          "npc_add_var": "nicholas_mission_2_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug, as this mission is actually started via add_mission in dialogue.",
+      "offer": "Seeing this is probably a bug.",
+      "accepted": "Seeing this is probably a bug.",
+      "rejected": "Seeing this is probably a bug.",
+      "advice": "Seeing this is probably a bug.",
+      "inquire": "你找到他们了吗？",
+      "success": "我猜对他们来说太晚了。不过，我确实收到了索非亚的来信，我们现在对哪些地方可能是有价值的物资来源以及哪些地方最好避免有了更好的了解。从长远来看，这将拯救许多生命。我知道这对你而言风险并不大，但它确实存在。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_spawn_item": "FMCNote",
+          "count": 15
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_1_INTERLUDE_3",
+    "type": "mission_definition",
+    "name": {
+      "str": "Investigate Research Material Transport Site"
+    },
+    "description": "Investigate the location known to be used for organizing the transportation of items from local science labs, which may have the documents Nicholas is looking for.  Additionally, bring a t-substrate sample back to Hub 01.",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 5,
+    "has_generic_rewards": false,
+    "item": "sample_t_substrate",
+    "value": 10000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "arcana_warehouse_lab",
+        "om_special": "Lab_arcana_warehouse",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      },
+      "effect": [
+        {
+          "npc_add_var": "nicholas_mission_2_mid",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      ]
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug, as this mission is actually started via add_mission in dialogue.",
+      "offer": "Seeing this is probably a bug.",
+      "accepted": "Seeing this is probably a bug.",
+      "rejected": "Seeing this is probably a bug.",
+      "advice": "Seeing this is probably a bug.",
+      "inquire": "你找到了吗？",
+      "success": "Good.  Here is your payment.",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "u_buy_item": "RobofacCoin",
+          "count": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_1_3",
+    "type": "mission_definition",
+    "name": {
+      "str": "从Kairos项目设施中取回空间聚焦透镜"
+    },
+    "description": "调查现在被怀疑是凯罗斯项目所在地的研究设施，并从中取回一个被称为空间聚焦透镜的重要部件。",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 8,
+    "value": 200000,
+    "has_generic_rewards": false,
+    "item": "dimensional_focus_lens",
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "lab_arcane_1_6_north",
+        "om_special": "lab_arcane",
+        "om_terrain_replace": "field",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 180,
+        "min_distance": 10
+      }
+    },
+    "dialogue": {
+      "describe": "Seeing this is probably a bug.",
+      "offer": "这些运输记录上的大量异常物品最终被运到了一个地点。这就是我们所追求的，我也已经弄清楚了我们到底需要什么。记录在案的早期发货之一提到了一种称为维度聚焦透镜的东西。鉴于我们对该项目的了解以及他们试图实现的目标，这是我们需要获得的组件，以利用他们的发现来推进我们自己的工作。你能帮我们吗？",
+      "accepted": "非常感谢。我会告诉你目标的方向。不管这个组件是用来做什么的，它都很可能是安全的，除非发生了安全壳破裂或其他灾难。把你在下面发现的任何不正常的机器拆开，我们不知道它是否会被用于便携式设备，或者必须报废才能恢复部件的机器。",
+      "rejected": "如果你改变主意，请回到我身边。我们正处于一个突破的边缘，这可能会为我们提供大规模改善我们现有的处境的手段。",
+      "advice": "它们不可能现在还没有被占领。如果你曾经探索过那些古老的设施，你就会知道那里很有可能爬满不死生物。谁知道还有什么异常呢？小心点。",
+      "inquire": "你找到了吗？",
+      "success": "正如我所想。几个不同的研究设施的顶峰，一个将这些作品结合在一起的项目，以及一个非常微弱的光环。他们用他们制造的机器做了很多测试，不是吗？这对我们也有帮助。这对我来说有很多需要接受和分析的地方，给我大约三天的时间，我应该会有一些结果，你可能有兴趣看看。同时，如果你有任何问题，我会看看我能回答什么。",
+      "success_lie": "Seeing this is probably a bug.",
+      "failure": "Seeing this is probably a bug."
+    },
+    "end": {
+      "effect": [
+        {
+          "npc_add_var": "nicholas_mission_3_end",
+          "type": "mission",
+          "context": "rural_church",
+          "value": "yes"
+        },
+        {
+          "u_add_effect": "cf_mission_1",
+          "duration": "PERMANENT"
+        },
+        {
+          "npc_add_effect": "cf_purifier_making_item",
+          "duration": 259200
+        },
+        {
+          "u_spawn_item": "CF_golden_scale",
+          "count": 20
+        }
+      ]
+    }
+  }
+]

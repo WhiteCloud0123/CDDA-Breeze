@@ -1,0 +1,16 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "Arcana_Breeze",
+    "name": "<color_cyan>奥术与魔法物品</color>",
+    "authors": [
+      "Chaosvolt"
+    ],
+    "description": "添加了大量可制作的魔法物品和法术，以使用奥术技能为中心，研究和利用异界怪物和异常现象。",
+    "version": "DDA version, update 2/26/2023",
+    "category": "content",
+    "dependencies": [
+      "dda"
+    ]
+  }
+]

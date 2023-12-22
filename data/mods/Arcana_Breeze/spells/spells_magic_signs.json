@@ -1,0 +1,1868 @@
+[
+  {
+    "id": "arcana_magic_agility",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：敏捷"
+    },
+    "description": "魔法符号\n使用此咒语将赋予暂时的速度和敏捷性增强效果。它可以用于你自己或盟友。",
+    "message": "“飘渺的风，指引我的旅程……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_4",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_agility",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 40,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125,
+    "min_duration": 144000,
+    "max_duration": 288000,
+    "duration_increment": 14400,
+    "spell_class": "SPELL_AGILE"
+  },
+  {
+    "id": "arcana_magic_capacitance",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：电容"
+    },
+    "description": "使用此法术的魔法符号\n将把你的能量导入体内的技巧，以耐力为代价恢复仿生能量。然而，这样做会让你自己暂时晕眩。",
+    "message": "“赐我勇气……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_capacitance_zap",
+        "hit_self": true,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_capacitance_stun",
+        "hit_self": true,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "min_damage": 100,
+    "max_damage": 200,
+    "damage_increment": 10,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "max_level": 10,
+    "effect": "recover_energy",
+    "shape": "blast",
+    "effect_str": "BIONIC",
+    "energy_source": "STAMINA",
+    "difficulty": 50,
+    "skill": "magic",
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12
+  },
+  {
+    "id": "arcana_magic_clairvoyance",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：透视"
+    },
+    "description": "魔法符号\n使用此法术将为你笼罩一层乳白色光环，使你可以看见视野之外。",
+    "message": "“让我看看眼睛永远看不到的东西……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_6",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "halo_clairvoyance",
+    "energy_source": "STAMINA",
+    "difficulty": 60,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 280,
+    "final_casting_time": 140,
+    "casting_time_increment": -14,
+    "base_energy_cost": 3500,
+    "final_energy_cost": 1750,
+    "energy_increment": -175,
+    "min_duration": 216000,
+    "max_duration": 432000,
+    "duration_increment": 21600,
+    "spell_class": "SPELL_CLAIRVOYANCE"
+  },
+  {
+    "id": "arcana_magic_clarity_blood",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：血液净化"
+    },
+    "description": "魔法符号\n使用此咒语可防止寄生虫和孢子侵袭。它可以在自己或盟友身上使用。",
+    "message": "“你们很多，但我比你们所有人都重要……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_4",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "blood_clarity",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 40,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125,
+    "min_duration": 48000,
+    "max_duration": 96000,
+    "duration_increment": 4800,
+    "spell_class": "SPELL_CLARITY"
+  },
+  {
+    "id": "arcana_magic_cold_ward",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：御寒"
+    },
+    "description": "魔法符号\n使用此咒语可预防感冒及其所有副作用。它可以在自己或盟友身上使用。",
+    "message": "“我是那个在困难时期给予保护和怜悯的人……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "cold_ward",
+    "energy_source": "STAMINA",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "difficulty": 50,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "min_duration": 60000,
+    "max_duration": 120000,
+    "duration_increment": 6000
+  },
+  {
+    "id": "arcana_magic_confuse_monster",
+    "type": "SPELL",
+    "name": {
+      "str": "Sign: Confuse Monsters"
+    },
+    "description": "魔法符号\n使用该咒语会使周围区域的所有敌对生物昏迷。",
+    "message": "“如果手不能击中真的，没有刀锋可以标记我……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect_str": "stunned",
+    "sound_description": "a faint rush of air",
+    "min_aoe": 5,
+    "max_aoe": 15,
+    "aoe_increment": 1,
+    "max_level": 10,
+    "difficulty": 30,
+    "skill": "magic",
+    "energy_source": "STAMINA",
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100,
+    "min_duration": 1800,
+    "max_duration": 3600,
+    "duration_increment": 180,
+    "spell_class": "SPELL_CONFUSE"
+  },
+  {
+    "id": "arcana_magic_conjure_acid",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：召唤酸"
+    },
+    "description": "魔法符号\n将在目标点上召唤出一道酸液飞溅，并击中中心造成双倍伤害。对盟国也有潜在的危险。",
+    "message": "“让它像时间一样，在它的道路上侵蚀一切……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_brief_acid_ward",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_aftermath_conjure_acid_spike",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_conjure_acid_noise",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_4",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL",
+      "NO_PROJECTILE"
+    ],
+    "effect_str": "corroding",
+    "min_damage": 40,
+    "max_damage": 80,
+    "damage_increment": 4,
+    "min_range": 5,
+    "max_range": 15,
+    "range_increment": 1,
+    "min_aoe": 2,
+    "max_aoe": 6,
+    "aoe_increment": 0.4,
+    "max_level": 10,
+    "difficulty": 40,
+    "skill": "magic",
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "energy_source": "STAMINA",
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125,
+    "min_duration": 800,
+    "max_duration": 1600,
+    "duration_increment": 80,
+    "damage_type": "acid",
+    "field_id": "fd_acid",
+    "field_chance": 6,
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 0.2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_magic_conjure_flame",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：召唤火焰"
+    },
+    "description": "魔法符号\n使用该法术会在目标位置召唤火焰爆炸，引发火灾并破坏地形。任何在中心的东西都会受到双倍伤害，并且对附近的盟友来说是危险的。",
+    "message": "“让这成为你的柴堆吧……”你施放了 %s！",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_brief_fire_ward",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_aftermath_conjure_flame_spike",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_conjure_flame_bash",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_conjure_flame_noise",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL",
+      "NO_PROJECTILE"
+    ],
+    "min_damage": 40,
+    "max_damage": 80,
+    "damage_increment": 4,
+    "min_range": 12,
+    "max_range": 24,
+    "range_increment": 1.2,
+    "min_aoe": 1,
+    "max_aoe": 5,
+    "aoe_increment": 0.4,
+    "max_level": 10,
+    "difficulty": 40,
+    "skill": "magic",
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "energy_source": "STAMINA",
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125,
+    "min_duration": 800,
+    "max_duration": 1600,
+    "duration_increment": 80,
+    "damage_type": "heat",
+    "field_id": "fd_fire",
+    "field_chance": 6,
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 0.2,
+    "field_intensity_variance": 0.5,
+    "spell_class": "SPELL_FIRE"
+  },
+  {
+    "id": "arcana_magic_consecrate",
+    "type": "SPELL",
+    "name": {
+      "str": "标记：祝圣"
+    },
+    "description": "魔法符号\n使用此法术将改变你周围的地形，驱散困扰这片土地的各种异界迹象。它还会伤害一部分特定的异界怪物。",
+    "message": "“我就是那揭露恶人，用火焰鞭打他们的人……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_consecrate",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_consecrate_lesser",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_6",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "energy_source": "STAMINA",
+    "max_level": 10,
+    "difficulty": 60,
+    "skill": "magic",
+    "min_damage": 4,
+    "max_damage": 2,
+    "damage_increment": -0.2,
+    "min_aoe": 8,
+    "max_aoe": 12,
+    "aoe_increment": 0.4,
+    "min_range": 8,
+    "max_range": 16,
+    "range_increment": 0.8,
+    "base_casting_time": 280,
+    "final_casting_time": 140,
+    "casting_time_increment": -14,
+    "base_energy_cost": 3500,
+    "final_energy_cost": 1750,
+    "energy_increment": -175
+  },
+  {
+    "id": "arcana_magic_dark_lance",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：暗影长矛"
+    },
+    "description": "Magic Sign\nUsing this spell will loose a beam of otherworldly energy, blinding all in its path.  Machines and some otherworldly creatures will be immune, and its use will attract otherworldly attention.",
+    "message": "\"消灭一切生灵……\"你施放了 %s！",
+    "effect": "attack",
+    "shape": "line",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL"
+    ],
+    "effect_str": "blind",
+    "min_damage": 100,
+    "max_damage": 200,
+    "damage_increment": 5,
+    "min_range": 10,
+    "max_range": 20,
+    "range_increment": 2,
+    "max_level": 10,
+    "difficulty": 50,
+    "skill": "magic",
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "energy_source": "STAMINA",
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "min_duration": 3000,
+    "max_duration": 6000,
+    "duration_increment": 300,
+    "damage_type": "cold",
+    "field_id": "fd_fog",
+    "field_chance": 3,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "id": "arcana_magic_dampening",
+    "//": "ID retained for save compatibility.",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：移形换影"
+    },
+    "description": "魔法符号\n使用此咒语将为你涂上珊瑚光环，从烈火中汲取能量并从你的身体吸收辐射。",
+    "message": "“如果已知，就可以获得……”你施放了 %s！",
+    "valid_targets": [
+      "hostile"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "SWAP_POS"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_magic_dampening_aoe",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "dazed",
+    "energy_source": "STAMINA",
+    "difficulty": 30,
+    "skill": "magic",
+    "max_level": 10,
+    "min_range": 20,
+    "max_range": 40,
+    "range_increment": 2,
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100,
+    "min_duration": 1800,
+    "max_duration": 3600,
+    "duration_increment": 180,
+    "field_id": "fd_fog",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 0.2,
+    "field_intensity_variance": 0.5,
+    "spell_class": "SPELL_DAMPENING"
+  },
+  {
+    "id": "arcana_magic_earthweaving",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：土石编织"
+    },
+    "description": "Magic Sign\nUsing this spell will alter terrain at a single targeted point, raising and lowering earthen barriers from any diggable terrain, or raising and lowering solid rock from natural stone.",
+    "message": "\"愿我们重建这个世界，一砖一瓦地……\"你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_4",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_earthweaving",
+    "energy_source": "STAMINA",
+    "difficulty": 40,
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_range": 10,
+    "max_range": 15,
+    "range_increment": 0.5,
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125
+  },
+  {
+    "id": "arcana_magic_eclipse",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：月蚀"
+    },
+    "description": "魔法符号\n将在面纱上造成浅层伤害，带来怪物和黑暗，以换取非自然肾上腺素、生命消耗和夜视的激增。",
+    "message": "“我是那个站着反抗的人，有限使无限……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_eclipse",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_eclipse_darkness",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_eclipse_halo",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_eclipse_wonder",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_aftermath_eclipse_fatigue",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_9",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "energy_source": "STAMINA",
+    "max_level": 10,
+    "difficulty": 90,
+    "skill": "magic",
+    "base_casting_time": 400,
+    "final_casting_time": 200,
+    "casting_time_increment": -10,
+    "base_energy_cost": 5000,
+    "final_energy_cost": 2500,
+    "energy_increment": -250,
+    "min_duration": 324000,
+    "max_duration": 648000,
+    "duration_increment": 32400
+  },
+  {
+    "id": "arcana_magic_elemental_burst",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：元素爆发"
+    },
+    "description": "魔法符号\n使用此咒语将爆炸具有随机元素效果的锥形区域。",
+    "message": "“我是存在于所有生物中的，隐藏在混乱中的秩序……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "cone",
+    "extra_effects": [
+      {
+        "id": "arcana_magic_elemental_burst_wonder",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_7",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL"
+    ],
+    "min_damage": 70,
+    "max_damage": 140,
+    "damage_increment": 7,
+    "damage_type": "pure",
+    "min_range": 8,
+    "max_range": 16,
+    "range_increment": 0.8,
+    "min_aoe": 15,
+    "max_aoe": 30,
+    "aoe_increment": 1.5,
+    "max_level": 10,
+    "difficulty": 70,
+    "skill": "magic",
+    "base_casting_time": 320,
+    "final_casting_time": 160,
+    "casting_time_increment": -16,
+    "energy_source": "STAMINA",
+    "base_energy_cost": 4000,
+    "final_energy_cost": 2000,
+    "energy_increment": -200
+  },
+  {
+    "id": "arcana_magic_free_action",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：挣脱束缚"
+    },
+    "description": "魔法符号\n使用这个法术将提供对麻痹效果、抓取和其他障碍的保护，以及短暂的冻结时间以允许逃跑。可以用在自己身上，也可以用在盟友身上。",
+    "message": "“让没有束缚我的枷锁……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_free_action_timestop",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "free_action",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 30,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100,
+    "min_duration": 36000,
+    "max_duration": 72000,
+    "duration_increment": 3600
+  },
+  {
+    "id": "arcana_magic_harden_senses",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：知觉硬化"
+    },
+    "description": "魔法符号\n可以保护你的感官免受眩目闪光和有限的其他眩晕效果的影响。它可以用在你自己或盟友身上。",
+    "message": "“有了清晰的视野，被追捕的人就变成了猎人……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_2",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "hardened_senses",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 20,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 120,
+    "final_casting_time": 60,
+    "casting_time_increment": -6,
+    "base_energy_cost": 1500,
+    "final_energy_cost": 750,
+    "energy_increment": -75,
+    "min_duration": 24000,
+    "max_duration": 48000,
+    "duration_increment": 2400
+  },
+  {
+    "id": "arcana_magic_healing",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：治愈"
+    },
+    "description": "魔法符号\n使用此魔法将坚定流血和修复伤口，但从长远来看可能会有害。它可以在自己或盟友身上使用。",
+    "message": "“我们还不会灭绝……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "SILENT"
+    ],
+    "effect_str": "arcane_healing_staunch",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_healing_side_effects",
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "min_damage": -20,
+    "max_damage": -40,
+    "damage_increment": -2,
+    "max_level": 10,
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "effect": "attack",
+    "shape": "blast",
+    "base_casting_time": 280,
+    "final_casting_time": 140,
+    "casting_time_increment": -14,
+    "base_energy_cost": 3500,
+    "final_energy_cost": 1750,
+    "energy_increment": -175,
+    "difficulty": 60,
+    "skill": "magic",
+    "min_duration": 100,
+    "max_duration": 100,
+    "energy_source": "STAMINA",
+    "spell_class": "SPELL_HEAL"
+  },
+  {
+    "id": "arcana_magic_heat_ward",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：避热"
+    },
+    "description": "魔法符号\n使用此魔法会暂时抵抗高温和烟雾。但是，直接接触火焰仍会造成伤害。它可以用于你自己或盟友。",
+    "message": "“钢铁不怕燃烧它的火焰……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "heat_ward",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 50,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "min_duration": 60000,
+    "max_duration": 120000,
+    "duration_increment": 6000
+  },
+  {
+    "id": "arcana_magic_insight",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：洞察"
+    },
+    "description": "Magic Sign\nUsing this spell will grant a temporary boost to perception, and night vision.  It can be used on yourself or an ally.",
+    "message": "“耐心观察和倾听的人都知道……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_insight",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 30,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100,
+    "min_duration": 108000,
+    "max_duration": 216000,
+    "duration_increment": 10800,
+    "spell_class": "SPELL_INSIGHT"
+  },
+  {
+    "id": "arcana_magic_light",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：光"
+    },
+    "description": "魔法符号\n使用此法术会产生魔幻般的光芒，在你周围的区域中徘徊。",
+    "message": "“最小的烛光带来希望，直到黎明……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "SILENT"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_light_searing",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_2",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "energy_source": "STAMINA",
+    "min_aoe": 4,
+    "max_aoe": 8,
+    "aoe_increment": 0.4,
+    "difficulty": 20,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 120,
+    "final_casting_time": 60,
+    "casting_time_increment": -6,
+    "base_energy_cost": 1500,
+    "final_energy_cost": 750,
+    "energy_increment": -75,
+    "min_duration": 240000,
+    "max_duration": 480000,
+    "duration_increment": 24000,
+    "field_id": "fd_veil_light",
+    "field_chance": 2,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1,
+    "spell_class": "SPELL_LIGHT"
+  },
+  {
+    "id": "arcana_magic_lightning_ward",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：抗电"
+    },
+    "description": "魔法符号\n使用此法术会给予祝福，可以完全抵御闪电，但会降低你的速度。它可以投在你自己或一个盟友身上。",
+    "message": "“一只脚接一只脚，总是脚踏实地……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_4",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "lightning_ward",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 40,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125,
+    "min_duration": 48000,
+    "max_duration": 96000,
+    "duration_increment": 4800
+  },
+  {
+    "id": "arcana_magic_might",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：强力"
+    },
+    "description": "魔法符号\n使用此魔法会暂时增强力量。它可以用于自己或友军。",
+    "message": "“让这是一场光荣的战斗……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "spell_might",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 50,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "min_duration": 180000,
+    "max_duration": 360000,
+    "duration_increment": 18000,
+    "spell_class": "SPELL_STRENGTH"
+  },
+  {
+    "id": "arcana_magic_open_lock",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：开启"
+    },
+    "description": "魔法符号\n使用此法术将有几率解开门锁、清理路障或在目标地区开辟前进的道路。",
+    "message": "“人类制造的东西总是可以用人类的手来解开……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_open_lock_spike",
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_4",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_open_lock",
+    "energy_source": "STAMINA",
+    "difficulty": 40,
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 5,
+    "max_damage": 3,
+    "damage_increment": -0.2,
+    "min_range": 5,
+    "max_range": 10,
+    "range_increment": 0.5,
+    "min_aoe": 1,
+    "max_aoe": 5,
+    "aoe_increment": 0.4,
+    "base_casting_time": 200,
+    "final_casting_time": 100,
+    "casting_time_increment": -10,
+    "base_energy_cost": 2500,
+    "final_energy_cost": 1250,
+    "energy_increment": -125,
+    "spell_class": "SPELL_LOCKPICK"
+  },
+  {
+    "id": "arcana_magic_overgrowth",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：过度生长"
+    },
+    "description": "魔法符号\n将在你的目标位置召唤出活森林喷发。它将摧毁受影响地区的大多数家具，并破坏地形。",
+    "message": "“无论土地多么贫瘠，我们都会繁荣昌盛……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "effect_str": "arcana_plants",
+    "energy_source": "STAMINA",
+    "difficulty": 30,
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 4,
+    "max_damage": 2,
+    "damage_increment": -0.2,
+    "min_aoe": 2,
+    "max_aoe": 10,
+    "aoe_increment": 0.8,
+    "min_range": 5,
+    "max_range": 10,
+    "range_increment": 0.5,
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100
+  },
+  {
+    "id": "arcana_magic_phase_shield",
+    "type": "SPELL",
+    "name": {
+      "str": "符号符号：相位屏障"
+    },
+    "description": "Magic Sign\nUsing this spell will anoint you with a sunstone halo, granting a temporary defensive effect that will push any nearby attackers away from you in random directions, activating at random when you're struck.",
+    "message": "\"不要转开刀刃，要转开挥舞它的手……\"你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_7",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "halo_phase_shield",
+    "energy_source": "STAMINA",
+    "difficulty": 70,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 320,
+    "final_casting_time": 160,
+    "casting_time_increment": -16,
+    "base_energy_cost": 4000,
+    "final_energy_cost": 2000,
+    "energy_increment": -200,
+    "min_duration": 84000,
+    "max_duration": 168000,
+    "duration_increment": 8400
+  },
+  {
+    "id": "arcana_magic_poison_armor",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：防毒装甲"
+    },
+    "description": "魔法符号\n使用该法术会给予祝福，以防止有毒气体和其他形式的毒药。它可以在自己或盟友身上使用。",
+    "message": "“我不怕毒液，无论是文字还是刀锋……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "poison_ward",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 30,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100,
+    "min_duration": 36000,
+    "max_duration": 72000,
+    "duration_increment": 3600,
+    "spell_class": "SPELL_POISONARMOR"
+  },
+  {
+    "id": "arcana_magic_serpentine_shield",
+    "//": "ID retained to avoid breaking saves.",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：暗影盾"
+    },
+    "description": "魔法符号\n使用此法术将为你笼罩一层黑曜石光环，给予暂时的防御效果，攻击者将被异界黑暗致盲。",
+    "message": "“不要害怕黑暗，而要害怕那些引诱你进入黑暗的人……”你施放了 %s！",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_6",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "halo_shadowsnakes",
+    "energy_source": "STAMINA",
+    "difficulty": 60,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 280,
+    "final_casting_time": 140,
+    "casting_time_increment": -14,
+    "base_energy_cost": 3500,
+    "final_energy_cost": 1750,
+    "energy_increment": -175,
+    "min_duration": 72000,
+    "max_duration": 144000,
+    "duration_increment": 7200,
+    "spell_class": "SPELL_SHADOWSNAKES"
+  },
+  {
+    "id": "arcana_magic_shockstorm",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：冲击波"
+    },
+    "description": "使用此咒语的魔法符号\n将在你周围发出闪电。任何靠近你的东西都会受到双倍伤害。小心在盟友周围使用它。",
+    "message": "“让它成为分裂天地的雷声……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_brief_lightning_ward",
+        "hit_self": true
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_spike",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_line",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_shockstorm_noise",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL"
+    ],
+    "effect_str": "zapped",
+    "min_damage": 50,
+    "max_damage": 100,
+    "damage_increment": 5,
+    "min_aoe": 4,
+    "max_aoe": 12,
+    "aoe_increment": 0.8,
+    "max_level": 10,
+    "difficulty": 20,
+    "skill": "magic",
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "energy_source": "STAMINA",
+    "min_duration": 1000,
+    "max_duration": 2000,
+    "duration_increment": 100,
+    "damage_type": "electric",
+    "field_id": "fd_electricity",
+    "field_chance": 10,
+    "min_field_intensity": 1,
+    "max_field_intensity": 3,
+    "field_intensity_increment": 0.2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_magic_sundering_quake",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：地震"
+    },
+    "description": "魔法符号\n将摧毁建筑物，并在你身后留下碎石头，伤害在爆炸中捕获的任何敌人（或盟友）。震中的敌人将受到双倍伤害。",
+    "message": "“我就是那个躺在下面的人，只用一个字就把大陆分裂开来……”你施放了 %s！",
+    "effect": "attack",
+    "shape": "blast",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_sundering_quake_spike",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_sundering_quake_noise",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_sundering_quake_pulse",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_sundering_quake_boulders",
+        "hit_self": false,
+        "max_level": 10
+      },
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_8",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "min_damage": 80,
+    "max_damage": 160,
+    "damage_increment": 8,
+    "damage_type": "bash",
+    "min_range": 10,
+    "max_range": 20,
+    "range_increment": 1,
+    "min_aoe": 3,
+    "max_aoe": 8,
+    "aoe_increment": 0.5,
+    "max_level": 10,
+    "difficulty": 80,
+    "skill": "magic",
+    "energy_source": "STAMINA",
+    "base_casting_time": 360,
+    "final_casting_time": 180,
+    "casting_time_increment": -18,
+    "base_energy_cost": 4500,
+    "final_energy_cost": 2250,
+    "energy_increment": -225
+  },
+  {
+    "id": "arcana_magic_summon_giant_centipedes",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：召唤蜈蚣"
+    },
+    "description": "魔法符号\n使用该法术将召唤变异的害虫，这将是忠诚的，但不是永久的。",
+    "message": "“我是冷酷而必要的，因为没有没有没有死亡的生命……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_6",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_centipede_giant_summoned",
+    "energy_source": "STAMINA",
+    "max_level": 10,
+    "difficulty": 60,
+    "skill": "magic",
+    "min_damage": 1,
+    "max_damage": 3,
+    "damage_increment": 0.2,
+    "min_range": 3,
+    "max_range": 8,
+    "range_increment": 0.5,
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "base_casting_time": 280,
+    "final_casting_time": 140,
+    "casting_time_increment": -14,
+    "base_energy_cost": 3500,
+    "final_energy_cost": 1750,
+    "energy_increment": -175,
+    "min_duration": 720000,
+    "max_duration": 1440000,
+    "duration_increment": 72000
+  },
+  {
+    "id": "arcana_magic_summon_skeletal_dog",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：召唤骷髅犬"
+    },
+    "description": "魔法符号\n使用该法术会召唤动物性的回响，这将是忠诚的但不是永久的。",
+    "message": "“忠于死亡，甚至超越……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_3",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_dog_skeleton_summoned",
+    "energy_source": "STAMINA",
+    "difficulty": 30,
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_range": 3,
+    "max_range": 8,
+    "range_increment": 0.5,
+    "base_casting_time": 160,
+    "final_casting_time": 80,
+    "casting_time_increment": -8,
+    "base_energy_cost": 2000,
+    "final_energy_cost": 1000,
+    "energy_increment": -100,
+    "min_duration": 360000,
+    "max_duration": 720000,
+    "duration_increment": 36000,
+    "spell_class": "SPELL_SUMMONDOG"
+  },
+  {
+    "id": "arcana_magic_summon_shadow",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：召唤幽影"
+    },
+    "description": "魔法符号\n使用该法术会召唤一个活影，这将是忠诚的，但不是永久的。",
+    "message": "“Neherit，otira atvess……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_shadow_summoned",
+    "energy_source": "STAMINA",
+    "difficulty": 50,
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_range": 3,
+    "max_range": 8,
+    "range_increment": 0.5,
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "min_duration": 600000,
+    "max_duration": 1200000,
+    "duration_increment": 60000
+  },
+  {
+    "id": "arcana_magic_summon_shadow_snake",
+    "//": "ID retained for compatibility.",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：召唤漩涡"
+    },
+    "description": "魔法符号\n使用该法术会召唤出蛇形的活影，这将是忠诚的但不是永久的。",
+    "message": "“Tvakaros，ievona karoh……”你施放了 %s！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_6",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_vortex_summoned",
+    "energy_source": "STAMINA",
+    "difficulty": 60,
+    "skill": "magic",
+    "max_level": 10,
+    "min_damage": 1,
+    "max_damage": 1,
+    "min_range": 3,
+    "max_range": 8,
+    "range_increment": 0.5,
+    "base_casting_time": 280,
+    "final_casting_time": 140,
+    "casting_time_increment": -14,
+    "base_energy_cost": 3500,
+    "final_energy_cost": 1750,
+    "energy_increment": -175,
+    "min_duration": 720000,
+    "max_duration": 1440000,
+    "duration_increment": 72000
+  },
+  {
+    "id": "arcana_magic_surge_adrenaline",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：肾上腺素激增"
+    },
+    "description": "魔法符号\n使用此法术会在紧急情况下激起肾上腺素激增，尽管此后也有同样的缺点。它可以在自己或盟友身上使用。",
+    "message": "“战斗还没有结束……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_2",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect_str": "adrenaline",
+    "max_level": 10,
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "effect": "attack",
+    "shape": "blast",
+    "base_casting_time": 120,
+    "final_casting_time": 60,
+    "casting_time_increment": -6,
+    "base_energy_cost": 1500,
+    "final_energy_cost": 750,
+    "energy_increment": -75,
+    "difficulty": 20,
+    "skill": "magic",
+    "min_duration": 72000,
+    "max_duration": 144000,
+    "duration_increment": 7200,
+    "energy_source": "STAMINA",
+    "spell_class": "SPELL_DAYLIGHT"
+  },
+  {
+    "id": "arcana_magic_temporal_aura",
+    "//": "ID retained for save compatibility",
+    "type": "SPELL",
+    "name": {
+      "str": "光环符号：超越"
+    },
+    "description": "Magic Sign\nUsing this spell will shroud you with a faded halo, which will make you undetectable to otherworldly creatures (Nether creatures, fungus, triffids, etc), in exchange for being easier to spot by any other creatures.",
+    "message": "“保护和引导我，脱离恶人的魔爪……”你施放了 %s！",
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_8",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "spawn_item",
+    "shape": "blast",
+    "effect_str": "halo_fadedaura",
+    "valid_targets": [
+      "self"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "SILENT",
+      "NO_FAIL",
+      "NO_PROJECTILE"
+    ],
+    "max_level": 10,
+    "difficulty": 80,
+    "skill": "magic",
+    "min_duration": 96000,
+    "max_duration": 192000,
+    "duration_increment": 9600,
+    "base_casting_time": 360,
+    "final_casting_time": 180,
+    "casting_time_increment": -18,
+    "energy_source": "STAMINA",
+    "base_energy_cost": 4500,
+    "final_energy_cost": 2250,
+    "energy_increment": -225
+  },
+  {
+    "id": "arcana_magic_ward_against_evil",
+    "type": "SPELL",
+    "name": {
+      "str": "符号：辟邪"
+    },
+    "description": "魔法符号\n使用该法术将获得祝福，可以抵御某些异常威胁它可以在自己或盟友身上使用。",
+    "message": "“恶人在警惕者面前蹒跚……”你施放了 %s！",
+    "valid_targets": [
+      "self",
+      "ally"
+    ],
+    "flags": [
+      "NO_HANDS",
+      "NO_LEGS",
+      "VERBAL",
+      "NO_FAIL"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_aftermath_magic_sign_exertion_5",
+        "hit_self": true,
+        "max_level": 10
+      }
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "effect_str": "cleric_warding",
+    "min_range": 1,
+    "max_range": 10,
+    "range_increment": 0.9,
+    "energy_source": "STAMINA",
+    "difficulty": 50,
+    "skill": "magic",
+    "max_level": 10,
+    "base_casting_time": 240,
+    "final_casting_time": 120,
+    "casting_time_increment": -12,
+    "base_energy_cost": 3000,
+    "final_energy_cost": 1500,
+    "energy_increment": -150,
+    "min_duration": 60000,
+    "max_duration": 120000,
+    "duration_increment": 6000,
+    "spell_class": "SPELL_CLERIC"
+  }
+]

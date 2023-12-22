@@ -1,0 +1,371 @@
+[
+  {
+    "type": "speech",
+    "speaker": "mon_archon",
+    "sound": "“这具尸体不够，不…”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_archon",
+    "sound": "“这具肉体可能会死，但我将永恒。”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_archon",
+    "sound": "“你将在死亡中得到启迪。”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“入侵者，你玷污了这个地方。”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade",
+    "sound": "“我能看见你。懦弱的凡人灵魂。”",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade",
+    "sound": "“你们世界上的神不会回应你们的祈祷……”",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade",
+    "sound": "“你的主人来让你送死了！”",
+    "volume": 60
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade",
+    "sound": "“我会把你复活的外壳送回给那些派你来的人。”",
+    "volume": 60
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_archon",
+    "sound": "“臣服于我…”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“你的世界只是注定要燃烧的万千世界中的一个。”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“你要为你的傲慢付出代价！”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“睁开你的眼睛，凡人。”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“掀开帷幕，看到真相。”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“掀开吧…掀开吧…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_archon",
+    "sound": "“跪下…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade"
+    ],
+    "sound": "“很快，我就要得到属于我的东西。”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_archon",
+      "mon_seraphic_shade",
+      "mon_feral_keeper"
+    ],
+    "sound": "用超自然的语言吟唱！",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_mi_go",
+      "mon_mi_go_slaver",
+      "mon_mi_go_myrmidon",
+      "mon_feral_magehunter"
+    ],
+    "sound": "“啊，圣洁的马格姆！”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_mi_go",
+      "mon_mi_go_slaver",
+      "mon_mi_go_myrmidon",
+      "mon_feral_magehunter"
+    ],
+    "sound": "“亵渎神灵！”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_mi_go",
+      "mon_mi_go_slaver",
+      "mon_mi_go_myrmidon",
+      "mon_feral_magehunter"
+    ],
+    "sound": "“你将死亡…”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_mi_go",
+      "mon_mi_go_slaver",
+      "mon_mi_go_myrmidon",
+      "mon_feral_magehunter"
+    ],
+    "sound": "“…在神的重锤之下！”",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_summoned",
+    "sound": "微弱的，模糊的耳语。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_summoned",
+    "sound": "安静的，超凡脱俗的嗡嗡声。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_summoned",
+    "sound": "柔和的嗡嗡声。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_summoned",
+    "sound": "几乎听不见的翅膀拍打声。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_summoned",
+    "sound": "“入侵者…”",
+    "volume": 4
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_snake_summoned",
+    "sound": "微弱的、模糊的杂音。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_snake_summoned",
+    "sound": "安静的，超凡脱俗的声音。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_snake_summoned",
+    "sound": "微弱的嘶嘶声。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_snake_summoned",
+    "sound": "几乎听不见的刮擦声。",
+    "volume": 3
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_shadow_snake_summoned",
+    "sound": "“掀开吧…”",
+    "volume": 4
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade_fake",
+    "sound": "“掀开吧…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade_fake",
+    "sound": "“入侵者…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade_fake",
+    "sound": "“尼赫斯阿森，瓦拉特…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_seraphic_shade_fake",
+    "sound": "“瓦塔洛斯，阿罗维斯克…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_seraphic_shade_fake",
+      "mon_feral_summoner"
+    ],
+    "sound": "“内赫里特，奥提拉·阿特维斯……”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_seraphic_shade_fake",
+      "mon_feral_summoner"
+    ],
+    "sound": "“Tvakaros，ievona karoh…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_feral_summoner",
+      "mon_feral_magehunter",
+      "mon_feral_keeper",
+      "mon_feral_sanguinist"
+    ],
+    "sound": "“滚开！”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_feral_summoner",
+      "mon_feral_magehunter",
+      "mon_feral_keeper",
+      "mon_feral_sanguinist"
+    ],
+    "sound": "“他们为什么总是在看着？”",
+    "volume": 25
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_feral_summoner",
+      "mon_feral_sanguinist"
+    ],
+    "sound": "“阴影，阴影的反射…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_magehunter",
+    "sound": "“神为什么抛弃了我们？”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_keeper",
+    "sound": "“被笼罩的国王，守护并指引我…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_keeper",
+    "sound": "“背叛了我们，他背叛了我们，让我们去死！”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_keeper",
+    "sound": "“让这成为面纱上必要的伤口…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_sanguinist",
+    "sound": "“我能报答他们的牺牲吗？”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_sanguinist",
+    "sound": "“生存、适应、生存……饥饿……”",
+    "volume": 15
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_sanguinist",
+    "sound": "“让血液流动，赋予那些应得的人力量。”",
+    "volume": 25
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_sanguinist",
+    "sound": "“这还不够，我需要更多！更多的血，更多的柴堆燃料！”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_feral_sanguinist",
+    "sound": "“我们都是软弱的，我们都是不配的，这一切都是徒劳的！”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": [
+      "mon_feral_summoner",
+      "mon_feral_magehunter",
+      "mon_feral_keeper",
+      "mon_feral_sanguinist"
+    ],
+    "sound": "语无伦次，吓人的胡言乱语！",
+    "volume": 30
+  }
+]

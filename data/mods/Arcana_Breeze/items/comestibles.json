@@ -1,0 +1,1267 @@
+[
+  {
+    "id": "numbness_potion",
+    "type": "COMESTIBLE",
+    "comestible_type": "DRINK",
+    "category": "drugs",
+    "name": {
+      "str": "黑色药水",
+      "str_pl": "黑色药水"
+    },
+    "description": "一种奇怪的黑色液体，闻起来像死亡本身。据称，这是创造长生不老药的第一步。喝这种饮料会很快恢复疼痛，但代价是暂时的懒散。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "//": "Uncommon but still producible, medical items generally shot up in value post-cataclysm.",
+    "price": "200 USD",
+    "price_postapoc": "40 USD",
+    "phase": "liquid",
+    "container": "flask_glass",
+    "looks_like": "poppy_pain",
+    "symbol": "~",
+    "color": "dark_gray",
+    "charges": 2,
+    "healthy": -4,
+    "fun": -4,
+    "freezing_point": -150,
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝了药水，感到一种奇怪的麻木感蔓延到全身。",
+      "effects": [
+        {
+          "id": "potion_numbness",
+          "duration": 900
+        }
+      ]
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "strength_potion",
+    "type": "COMESTIBLE",
+    "comestible_type": "DRINK",
+    "category": "drugs",
+    "name": {
+      "str": "白色药水",
+      "str_pl": "白色药水"
+    },
+    "description": "A strange white liquid with a scent that makes your nose itch.  The second step towards creating the elixir of life, allegedly.  Drinking this will strengthen the body, lowering other attributes and draining fatigue for the duration.",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "300 USD",
+    "price_postapoc": "60 USD",
+    "phase": "liquid",
+    "container": "flask_glass",
+    "looks_like": "poppy_pain",
+    "symbol": "~",
+    "color": "dark_gray",
+    "charges": 2,
+    "healthy": -2,
+    "fun": -2,
+    "freezing_point": -150,
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下药水，感觉邪恶的力量在你的身体里蔓延。",
+      "effects": [
+        {
+          "id": "potion_strength",
+          "duration": 900
+        }
+      ]
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "speed_potion",
+    "type": "COMESTIBLE",
+    "comestible_type": "DRINK",
+    "category": "drugs",
+    "name": {
+      "str": "黄色药水",
+      "str_pl": "黄色药水"
+    },
+    "description": "A strange yellow liquid with an intoxicating smell to it.  The third step towards creating the elixir of life, allegedly.  Drinking this will enhance your speed, dexterity, and perception.  In exchange it will lower strength and intelligence, and intermittently drain stamina.",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "400 USD",
+    "price_postapoc": "80 USD",
+    "phase": "liquid",
+    "container": "flask_glass",
+    "looks_like": "poppy_pain",
+    "symbol": "~",
+    "color": "dark_gray",
+    "charges": 2,
+    "healthy": 2,
+    "fun": 2,
+    "freezing_point": -150,
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝了药水，感到一种僵硬感在你的身体里蔓延开来。",
+      "effects": [
+        {
+          "id": "potion_speed",
+          "duration": 900
+        }
+      ]
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "healing_potion",
+    "type": "COMESTIBLE",
+    "comestible_type": "DRINK",
+    "category": "drugs",
+    "name": {
+      "str": "红色药水",
+      "str_pl": "红色药水"
+    },
+    "description": "一种奇怪的微红色液体，散发出甜味。生命的长生不老药，还是仅仅是一种模仿？喝下它可以治愈许多疾病，并治愈一些伤害。它可以治疗出血，防止感染或中毒，并清除包括真菌感染在内的一些疾病。然而，它不能治愈深度咬伤或孢子，除非它们成为全面感染。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "500 USD",
+    "price_postapoc": "100 USD",
+    "phase": "liquid",
+    "container": "flask_glass",
+    "looks_like": "poppy_pain",
+    "symbol": "~",
+    "color": "light_red",
+    "charges": 2,
+    "healthy": 4,
+    "fun": 4,
+    "freezing_point": -150,
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_red_potion_healing",
+      "no_fail": true,
+      "level": 0
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "arcana_mana_potion",
+    "type": "COMESTIBLE",
+    "comestible_type": "DRINK",
+    "category": "drugs",
+    "name": {
+      "str": "银色药剂",
+      "str_pl": "银色药剂"
+    },
+    "description": "A strange liquid that looks like mercury, albeit quite a bit less dense and significantly less toxic.  Drinking it will imbue you with magical energy.  Highly useful to someone who uses mana for spells, but worthless to someone limited to stamina-draining Magic Signs.\n\nEach dose will restore 750 mana.",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "750 USD",
+    "price_postapoc": "750 cent",
+    "phase": "liquid",
+    "container": "flask_glass",
+    "looks_like": "poppy_pain",
+    "symbol": "~",
+    "color": "blue",
+    "charges": 2,
+    "healthy": 2,
+    "freezing_point": -150,
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_mana_potion",
+      "no_fail": true,
+      "level": 0
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "red_black_vulnerary",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "category": "drugs",
+    "//": "Technically carmine is purpleish-red, not black and red.  Lower base healing than water talisman, but better results with first aid skill.",
+    "name": {
+      "str": "胭脂红",
+      "str_pl": "胭脂红"
+    },
+    "description": "浸在炼金术混合物中的一块块布，形成一种能提炼和集中其效果的膏药。它的愈合效果集中在单个肢体上，并且可以在感染伤口变得脓毒性之前清除它们。然而，它对更深层次的疾病失去了作用，只能延缓失血和孢子，同时提供一些止痛效果。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "price": "450 USD",
+    "price_postapoc": "90 USD",
+    "looks_like": "disinrag",
+    "symbol": "!",
+    "color": "red",
+    "charges": 2,
+    "stack_size": 9,
+    "use_action": {
+      "type": "heal",
+      "limb_power": 20,
+      "head_power": 20,
+      "torso_power": 20,
+      "limb_scaling": 2.5,
+      "head_scaling": 2.5,
+      "torso_scaling": 2.5,
+      "bleed": 30,
+      "bite": 0.95,
+      "move_cost": 200,
+      "effects": [
+        {
+          "id": "potion_vulnerary",
+          "duration": 300
+        }
+      ]
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "yellow_white_incense",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "category": "drugs",
+    "name": {
+      "str": "柠檬香",
+      "str_pl": "柠檬香"
+    },
+    "//": "Citrine isn't quite white-yellow either, but jasmine incense would imply the flower rather than the color.",
+    "description": "An alchemical mixture permeating a combustible base of charcoal or resin, resulting in a peculiar sort of incense.  Using it will invigorate the user with a focused effect similar to the potions originally used to make it.  Rather than affecting strength and speed, it will directly restore a large burst of stamina and fatigue.\n\nEach use will restore 30 fatigue, and 3000 stamina.",
+    "weight": "550 g",
+    "volume": "250 ml",
+    "price": "350 USD",
+    "price_postapoc": "70 USD",
+    "looks_like": "charcoal",
+    "symbol": "!",
+    "color": "light_gray",
+    "charges": 2,
+    "stack_size": 9,
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_incense",
+      "no_fail": true,
+      "level": 0
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "dragonblood_mutagen",
+    "type": "COMESTIBLE",
+    "comestible_type": "DRINK",
+    "category": "drugs",
+    "name": {
+      "str": "血相",
+      "str_pl": "血相"
+    },
+    "looks_like": "blood",
+    "description": "一种凝固的液体，有点像血，似乎有自己的生命在跳动。目前开发超凡生物的研究工作表明，它可以永久地改变身体和思想。然而，如果没有这种力量的原始来源，它走不了多远。",
+    "weight": "250 g",
+    "volume": "250 ml",
+    "price": "120 USD",
+    "price_postapoc": "30 USD",
+    "phase": "liquid",
+    "container": "flask_glass",
+    "symbol": "~",
+    "color": "red",
+    "healthy": -6,
+    "fun": -8,
+    "freezing_point": -10,
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你喝下了血相。",
+      "effects": [
+        {
+          "id": "arcana_dragonblood_blood_effigy_effect",
+          "duration": 5
+        }
+      ]
+    },
+    "flags": [
+      "NO_INGEST",
+      "EATEN_COLD",
+      "NPC_SAFE",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "flame_talisman",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "category": "other",
+    "name": {
+      "str": "火焰护身符"
+    },
+    "description": "一种粗糙的纸制护身符，上面有奇怪的图案，并涂有少量的祭品。它可以用来近距离献祭敌人，或者在你绝望的情况下迅速点燃一团更可控的火焰。",
+    "//": "Talismans are natural magic, rare to non-existent pre-cataclysm as they develop from survivors studying otherworldly phenomena and connecting it to familiar concepts.",
+    "price_postapoc": 300,
+    "weight": "150 g",
+    "volume": "100 ml",
+    "material": [
+      "paper"
+    ],
+    "looks_like": "birchbark",
+    "symbol": ",",
+    "color": "cyan",
+    "charges": 1,
+    "use_action": [
+      {
+        "type": "cast_spell",
+        "spell_id": "arcana_item_immolate",
+        "no_fail": true,
+        "level": 0
+      },
+      {
+        "type": "firestarter",
+        "moves": 5
+      }
+    ],
+    "flags": [
+      "NO_SALVAGE",
+      "NO_INGEST",
+      "FIRESTARTER",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "water_talisman",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "category": "other",
+    "name": {
+      "str": "水系护身符"
+    },
+    "description": "一种粗糙的纸护身符，上面有奇怪的图案，上面涂有猎人的祭品。它可以用来治疗小伤口，同时对某些炼金术效果提供有限的抵抗力。",
+    "price_postapoc": 600,
+    "weight": "150 g",
+    "volume": "100 ml",
+    "material": [
+      "paper"
+    ],
+    "looks_like": "birchbark",
+    "symbol": ",",
+    "color": "cyan",
+    "use_action": {
+      "type": "heal",
+      "limb_power": 25,
+      "head_power": 25,
+      "torso_power": 25,
+      "limb_scaling": 2.5,
+      "head_scaling": 2.5,
+      "torso_scaling": 2.5,
+      "bleed": 15,
+      "bite": 0.5,
+      "move_cost": 25,
+      "effects": [
+        {
+          "id": "talisman_warding",
+          "duration": 600
+        }
+      ]
+    },
+    "flags": [
+      "NO_SALVAGE",
+      "NO_INGEST",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "earth_talisman",
+    "type": "TOOL",
+    "category": "other",
+    "name": {
+      "str": "大地护身符"
+    },
+    "description": "一种粗糙的纸制护身符，上面有奇怪的图案，并涂有特殊的祭品。使用它将召唤或改变出一个奇怪的土石方结构，在绝望的时候可以充当一个贫瘠的避难所。",
+    "price_postapoc": "12 USD",
+    "weight": "150 g",
+    "volume": "100 ml",
+    "material": [
+      "paper"
+    ],
+    "looks_like": "birchbark",
+    "symbol": ",",
+    "color": "cyan",
+    "use_action": {
+      "type": "deploy_tent",
+      "radius": 2,
+      "broken_type": "candle_barrier_aftermath",
+      "wall": "f_spires_arcana",
+      "floor": "f_pozdol_arcana",
+      "floor_center": "f_altar_arcana",
+      "door_opened": "f_door_arcana_o",
+      "door_closed": "f_door_arcana_c"
+    },
+    "flags": [
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "id": "air_talisman",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "category": "other",
+    "name": {
+      "str": "空气护身符"
+    },
+    "description": "A crude paper talisman marked with strange patterns, anointed with a pure sacrifice.  Using it will heal any nearby ally, pet, or friendly creature near you, along with enhancing them temporarily.  Friendly NPCs and monsters alike will gain increased speed as well as immunities to various debuffs such as blindness, bleeding, or stunning; while friendly monsters/pets specfically will gain increased melee damage, accuracy, and dodge.",
+    "price_postapoc": "24 USD",
+    "weight": "150 g",
+    "volume": "100 ml",
+    "material": [
+      "paper"
+    ],
+    "looks_like": "birchbark",
+    "symbol": ",",
+    "color": "cyan",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_pet",
+      "no_fail": true,
+      "level": 0
+    },
+    "flags": [
+      "NO_SALVAGE",
+      "NO_INGEST",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "scroll_sun",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "神圣的光明卷轴",
+      "str_pl": "神圣的光明卷轴"
+    },
+    "description": "这是一个卷轴，上面有奇怪的文字和太阳图案的插图，代表着一个超凡脱俗的太阳神。使用它会使肾上腺素激增，瞬间减慢时间，同时发出耀眼的光芒。",
+    "price": "120 USD",
+    "price_postapoc": "40 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_scroll_sun",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_moon",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "神圣的黑暗卷轴",
+      "str_pl": "神圣的黑暗卷轴"
+    },
+    "description": "这是一个卷轴，上面有奇怪的文字和对月亮周期的描绘，代表着一个超凡脱俗的月亮神。使用它将在黑暗中笼罩该区域，使敌人暂时失明。",
+    "price": "120 USD",
+    "price_postapoc": "40 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_scroll_moon",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_artiface",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "神圣的指令卷轴",
+      "str_pl": "神圣的指令卷轴"
+    },
+    "description": "这是一个卷轴，上面有奇怪的文字和士兵的形象，代表着一个超自然的秩序神。使用它会尝试将生物暂时束缚在你的意志上。然而，将你的思想向外投射的突如其来的冲击会让你痛苦地眩晕。",
+    "price": "140 USD",
+    "price_postapoc": "50 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_scroll_artifice",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_nature",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "神圣的再生神圣卷轴",
+      "str_pl": "神圣的再生卷轴"
+    },
+    "description": "这是一幅卷轴，上面写着奇怪的文字和奇异的自然风光，代表着一位超凡脱俗的混沌之神。使用它将召唤一个强大的治疗咒语，同时使该地区的生命变得狂野。然而，使用它有可能以不正常的方式变异。",
+    "price": "140 USD",
+    "price_postapoc": "50 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_scroll_nature",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_destruction",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "神圣的毁灭卷轴",
+      "str_pl": "神圣的毁灭卷轴"
+    },
+    "description": "这是一幅卷轴，上面写着奇怪的文字和无尽的战斗场面，代表着一个超凡脱俗的战神。使用它会引起雷鸣般的轰鸣，倒塌建筑物，伤害周围的生物，代价是吸引超自然的注意力。",
+    "price": "160 USD",
+    "price_postapoc": "60 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_scroll_destruction",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_subversion",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "category": "tools",
+    "name": {
+      "str": "神圣的诡术卷轴",
+      "str_pl": "神圣的诡术卷轴"
+    },
+    "description": "这是一幅卷轴，上面有奇怪的文字和奇特的旋转符号，代表着一个超凡脱俗的骗子神。使用它会传送你离开，留下你曾经存在过的危险。虽然你总能安全抵达目的地，但你可能会遭受其他后果。",
+    "price": "160 USD",
+    "price_postapoc": "60 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_item_scroll_subversion",
+      "no_fail": true,
+      "level": 0
+    },
+    "flags": [
+      "NO_SALVAGE",
+      "NO_INGEST",
+      "NUTRIENT_OVERRIDE"
+    ]
+  },
+  {
+    "id": "totem_agile",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Agility)",
+      "str_pl": "Magic Seals (Agility)"
+    },
+    "description": "A small set of dice carved from otherworldly bones.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant a temporary speed and agility-enhancing effect.\"",
+    "//": "Magic seals are all explicitly a post-cataclysm development, as this path towards development of natural magic did not exist without more monsters to study.",
+    "price_postapoc": "45 USD",
+    "color": "white",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_agility",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_clairvoyance",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Clairvoyance)",
+      "str_pl": "Magic Seals (Clairvoyance)"
+    },
+    "description": "A small cabochon of dark, shimmering ivory.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will anoint you with an ivory halo, granting you sight beyond sight.\"",
+    "price_postapoc": "45 USD",
+    "color": "light_gray",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_clairvoyance",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_clarity",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Clarity of Blood)",
+      "str_pl": "Magic Seals (Clarity of Blood)"
+    },
+    "description": "A sharp needle carved from a monstrous thorn.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant protection against parasites and the Mycus.\"",
+    "price_postapoc": "45 USD",
+    "color": "magenta",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_clarity_blood",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_confusion",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Confuse Monsters)",
+      "str_pl": "Magic Seals (Confuse Monsters)"
+    },
+    "description": "A small token carved from a wicked stinger.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will stun all hostiles in the area around you.\"",
+    "price_postapoc": "40 USD",
+    "color": "dark_gray",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_confuse_monster",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_acidspray",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Conjure Acid)",
+      "str_pl": "Magic Seals (Conjure Acid)"
+    },
+    "description": "A carved scale of acrid-smelling, otherworldly flesh.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will conjure a splash of acid at the point targeted, with double damage for enemies caught in the center.\"",
+    "price_postapoc": "45 USD",
+    "color": "blue",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_conjure_acid",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_free_action",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Free Action)",
+      "str_pl": "Magic Seals (Free Action)"
+    },
+    "description": "A small ornament of vibrant purple petals.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant protection against paralytic effects and other hindrances, along with briefly freezing time.\"",
+    "price_postapoc": "40 USD",
+    "color": "magenta",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_free_action",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_heal",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Healing)",
+      "str_pl": "Magic Seals (Healing)"
+    },
+    "description": "A tangled knot of flowing, molded bone.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will staunch bleeding and mend wounds, though overuse can be harmful in the long run.\"",
+    "price_postapoc": "55 USD",
+    "color": "white",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_healing",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_flamearmor",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Heat Ward)",
+      "str_pl": "Magic Seals (Heat Ward)"
+    },
+    "description": "A shimmering disc carved from a seemingly meteoric material.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant temporary resistance to heat and smoke, but not direct contact with fire.\"",
+    "price_postapoc": "50 USD",
+    "color": "dark_gray",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_heat_ward",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_insight",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Insight)",
+      "str_pl": "Magic Seals (Insight)"
+    },
+    "description": "A curiously-refractive gem carved from an unearthly blue orb.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant a temporary boost to perception, and night vision.\"",
+    "price_postapoc": "40 USD",
+    "color": "white",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_insight",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_elecresist",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Lightning Ward)",
+      "str_pl": "Magic Seals (Lightning Ward)"
+    },
+    "description": "A small chunk of carved otherworldly amber.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant you immunity to lightning, at the cost of slowing you down.\"",
+    "price_postapoc": "45 USD",
+    "color": "light_gray",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_lightning_ward",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_strength",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Might)",
+      "str_pl": "Magic Seals (Might)"
+    },
+    "description": "A miniature dagger carved from strange ivory.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant a temporary boost to strength.\"",
+    "price_postapoc": "50 USD",
+    "color": "white",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_might",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_plants",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Overgrowth)",
+      "str_pl": "Magic Seals (Overgrowth)"
+    },
+    "description": "A small ornament of woven petals, an otherworldly vibrant red in hue.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will conjure an eruption of the living forest, at the location you target.\"",
+    "price_postapoc": "40 USD",
+    "color": "red",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_overgrowth",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_invis",
+    "copy-from": "totem_base",
+    "//": "ID retained to avoid breaking stuff.",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Shadowy Shield)",
+      "str_pl": "Magic Seals (Shadowy Shield)"
+    },
+    "description": "A piece of unnaturally dark stone, shaped into an eccentric design.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will anoint you with an obsidian halo, granting a temporary defensive effect that will strike your attackers blind.\"",
+    "price_postapoc": "55 USD",
+    "color": "dark_gray",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_serpentine_shield",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_lightning",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Shockstorm)",
+      "str_pl": "Magic Seals (Shockstorm)"
+    },
+    "description": "A small sliver of strange crystal, flickering as though distant storms rage within.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will call forth lightning all around you, with close enemies taking double damage.\"",
+    "price_postapoc": "50 USD",
+    "color": "pink",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_shockstorm",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "totem_cleric",
+    "copy-from": "totem_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Magic Seal (Ward Against Evil)",
+      "str_pl": "Magic Seals (Ward Against Evil)"
+    },
+    "description": "An small winged figurine, carved from a strange iridescent stone.  Activate it to focus your mind and create a magic sign, expending the item entirely.\n\"This spell will grant a blessing that protects against certain anomalous threats.\"",
+    "price_postapoc": "50 USD",
+    "color": "light_green",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_seal_ward_against_evil",
+      "no_fail": true,
+      "level": 5
+    }
+  },
+  {
+    "id": "scroll_spell_phase_shield",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（相位盾）",
+      "str_pl": "彩纹绘卷（相位盾）"
+    },
+    "description": "This is a scroll with ornate patterns written on the paper，depicting strange geometric designs with an unnatural order to them.  Activate it to explore its secrets.  （（ Remember to bind the “spellcasting” key！ ））\n“Using this spell will anoint you with a sunstone halo，granting a temporary defensive effect that will push any nearby attackers away from you in random directions，activating at random when you're struck.”",
+    "//": "Barter value is 50 baseline, plus 10 times the Spell Rank of the spell it teaches you.  Magic Seals have a value half that of its related pattern scroll.",
+    "price_postapoc": "120 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_phase_shield",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_earthweaving",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（土石编织）",
+      "str_pl": "彩纹绘卷（土石编织）"
+    },
+    "description": "This is a scroll with ornate patterns written on the paper, depicting strange geometric designs with an unnatural order to them.  Activate it to explore its secrets.  (( Remember to bind the \"spellcasting\" key! ))\n\"Using this spell will reshape the ground at a chosen location, raising or lowering walls in diggable terrain and solid stone.\"",
+    "price_postapoc": "90 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_earthweaving",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_dark_lance",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（暗影长矛）",
+      "str_pl": "彩纹绘卷（暗影长矛）"
+    },
+    "description": "This is a scroll with ornate patterns written on the paper, depicting strange geometric designs with an unnatural order to them.  Activate it to explore its secrets.  (( Remember to bind the \"spellcasting\" key! ))\n\"Using this spell will loose a beam of otherworldly energy, blinding all in its path and inflicting double damage at close range.  Machines and some otherworldly creatures will be immune.\"",
+    "price_postapoc": "100 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_dark_lance",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_sun",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（祝福）",
+      "str_pl": "彩纹绘卷（祝福）"
+    },
+    "description": "这是一幅画着华丽图案的卷轴，纸上用不自然的顺序描绘出奇怪的几何图案。激活它以探索其中的秘密。（记得绑定“施法”键！）\n“这个法术将驱除各种折磨大地的异界侵蚀，并眩晕少数来自彼端的生物。”",
+    "//": "Pattern scrolls were extremely rare pre-cataclysm as spell development was in its infancy, but now they're all quite useful in various ways.  Divine pattern scrolls especially were almost non-existent.",
+    "price_postapoc": "110 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_consecrate",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_moon",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Pattern Scroll (Cold Ward)",
+      "str_pl": "Pattern Scrolls (Cold Ward)"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语可以抵御寒冷及其所有副作用。”",
+    "price_postapoc": "100 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_frost_armor",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_artiface",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（地震）",
+      "str_pl": "彩纹绘卷（地震）"
+    },
+    "description": "这是一幅在纸上写有华丽图案的卷轴，描绘了奇怪的几何图案，其顺序不自然。激活它来探索它的秘密。（记得系上“施法”钥匙！）\n“这个咒语会摧毁建筑物并将它们埋在瓦砾中，伤害被炸毁的生物。”",
+    "price_postapoc": "130 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_sundering_quake",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_nature",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（元素爆发）",
+      "str_pl": "彩纹绘卷（元素爆发）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将以随机元素效果爆炸一个锥形区域，对中心的敌人造成双倍伤害",
+    "price_postapoc": "120 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_elemental_burst",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_destruction",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（召唤蜈蚣）",
+      "str_pl": "彩纹绘卷（召唤蜈蚣）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“这个咒语将召唤变异的害虫，这将是忠诚的但不是永久的",
+    "price_postapoc": "110 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_summon_giant_centipedes",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_subversion",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（月蚀）",
+      "str_pl": "彩纹绘卷（月蚀）"
+    },
+    "description": "这是一幅在纸上写有华丽图案的卷轴，描绘了奇怪的几何图案，其顺序不自然。激活它来探索它的秘密。（记住绑定“施法”键！）\n“这个法术会带来怪物和黑暗，以换取持久的肾上腺素激增、生命消耗能力和夜视。”",
+    "price_postapoc": "140 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_eclipse",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_agile",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（迅捷）",
+      "str_pl": "彩纹绘卷（敏捷）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将获得暂时的速度和敏捷增强效果。”",
+    "//": "Unlike divine pattern scrolls, basic pattern scrolls were rare but at least existed pre-cataclysm.",
+    "price": "3000 USD",
+    "price_postapoc": "90 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_agility",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_clairvoyance",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（透视）",
+      "str_pl": "彩纹绘卷（透视）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“这个咒语会用象牙色的光环涂抹你，让你看不见东西。”",
+    "price": "3000 USD",
+    "price_postapoc": "110 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_clairvoyance",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_clarity",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（净化血液）",
+      "str_pl": "彩纹绘卷（净化血液）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“这个咒语可以保护你不受寄生虫和瞳孔的伤害。”",
+    "price": "3000 USD",
+    "price_postapoc": "90 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_clarity_blood",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_confusion",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（迷惑怪物）",
+      "str_pl": "彩纹绘卷（迷惑怪物）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将击昏你周围区域的所有敌人。”",
+    "price": "3000 USD",
+    "price_postapoc": "80 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_confuse_monster",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_acidspray",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（召唤酸）",
+      "str_pl": "彩纹绘卷（召唤酸）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将在目标点召唤出一股酸液喷溅，对中心的敌人造成双倍伤害。”",
+    "price": "3000 USD",
+    "price_postapoc": "90 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_conjure_acid",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_free_action",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（挣脱束缚）",
+      "str_pl": "彩纹绘卷（挣脱束缚）"
+    },
+    "description": "This is a scroll with ornate patterns written on the paper, depicting strange geometric designs with an unnatural order to them.  Activate it to explore its secrets.  (( Remember to bind the \"spellcasting\" key! ))\n\"This spell will grant protection against paralytic effects and other hindrances, along with briefly freezing time.\"",
+    "price": "3000 USD",
+    "price_postapoc": "80 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_free_action",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_heal",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（治愈）",
+      "str_pl": "彩纹绘卷（治愈）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“这个咒语可以止血和愈合伤口，尽管长期使用可能是有害的。”",
+    "price": "3000 USD",
+    "price_postapoc": "110 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_healing",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_flame_armor",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "Pattern Scroll (Heat Ward)",
+      "str_pl": "Pattern Scrolls (Heat Ward)"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将对热量和烟雾产生暂时的抵抗力，但不能直接接触火",
+    "price": "3000 USD",
+    "price_postapoc": "100 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_flame_armor",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_insight",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（洞悉）",
+      "str_pl": "彩纹绘卷（洞悉）"
+    },
+    "description": "This is a scroll with ornate patterns written on the paper, depicting strange geometric designs with an unnatural order to them.  Activate it to explore its secrets.  (( Remember to bind the \"spellcasting\" key! ))\n\"This spell will grant a temporary boost to perception, and night vision.\"",
+    "price": "3000 USD",
+    "price_postapoc": "80 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_insight",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_elecresist",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（抗电）",
+      "str_pl": "彩纹绘卷（抗电）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“这个法术将给予你闪电免疫，代价是减慢你的速度。”",
+    "price": "3000 USD",
+    "price_postapoc": "90 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_lightning_ward",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_might",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（强力）",
+      "str_pl": "彩纹绘卷（强力）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将暂时增强力量。”",
+    "price": "3000 USD",
+    "price_postapoc": "100 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_might",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_plants",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（过度生长）",
+      "str_pl": "彩纹绘卷（过度生长）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将召唤活森林在你目标位置喷发。”",
+    "price": "3000 USD",
+    "price_postapoc": "80 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_overgrowth",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_invis",
+    "copy-from": "scroll_magic_base",
+    "//": "ID retained to avoid breaking stuff.",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（暗影屏障）",
+      "str_pl": "彩纹绘卷（暗影屏障）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将用黑曜石光环涂抹你，给予你的攻击者一个暂时的防御效果，使你的攻击者失明。”",
+    "price": "3000 USD",
+    "price_postapoc": "110 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_serpentine_shield",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_lightning",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（冲击波）",
+      "str_pl": "彩纹绘卷（冲击波）"
+    },
+    "description": "这是一幅在纸上写有华丽图案的卷轴，描绘了奇怪的几何图案，其顺序不自然。激活它来探索它的秘密。（记得系上“施法”键！）\n“这个法术会在你周围发出闪电，近身敌人受到双倍伤害。”",
+    "price": "3000 USD",
+    "price_postapoc": "100 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_shockstorm",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "scroll_spell_cleric",
+    "copy-from": "scroll_magic_base",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "彩纹绘卷（辟邪）",
+      "str_pl": "彩纹绘卷（辟邪）"
+    },
+    "description": "这是一幅写在纸上的华丽图案的卷轴，用不自然的顺序描绘出奇怪的几何图案。激活它来探索它的秘密。（记住绑定“施法”键！）\n“此咒语将给予一个祝福，保护你免受某些异常的威胁。”",
+    "price": "3000 USD",
+    "price_postapoc": "100 USD",
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "arcana_pattern_ward_against_evil",
+      "no_fail": true,
+      "level": 0
+    }
+  }
+]

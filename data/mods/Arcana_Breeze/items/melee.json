@@ -1,0 +1,722 @@
+[
+  {
+    "id": "candle_barrier_aftermath",
+    "copy-from": "spell_base",
+    "type": "GENERIC",
+    "name": {
+      "str": "candle barrier aftermath"
+    },
+    "description": "Workaround so candle barriers do not leave anything behind.  If you find one of these, it's a bug,",
+    "color": "green"
+  },
+  {
+    "id": "silver_glyph",
+    "type": "GENERIC",
+    "category": "other",
+    "name": {
+      "str": "银制雕文"
+    },
+    "description": "一个银制徽章，形似一个圆形的16角星。你觉得它可能是一个强大的神秘装置，但里面没有魔力。的确如此。",
+    "weight": "285 g",
+    "volume": "100 ml",
+    "price": "80 USD",
+    "price_postapoc": "8 USD",
+    "to_hit": -3,
+    "bashing": 1,
+    "material": [
+      "silver"
+    ],
+    "symbol": ",",
+    "looks_like": "jade_brooch",
+    "color": "light_gray"
+  },
+  {
+    "id": "scroll_blank",
+    "type": "GENERIC",
+    "category": "other",
+    "name": {
+      "str": "空白卷轴"
+    },
+    "description": "一张简单的，用木制滚轴支撑的纸。你觉得应该有古老的，巫术的文字写在它上面。但遗憾的是，它是空白的。",
+    "weight": "415 g",
+    "volume": "250 ml",
+    "price": "20 USD",
+    "price_postapoc": "2 USD",
+    "material": [
+      "paper"
+    ],
+    "symbol": "!",
+    "looks_like": "recipe_creepy",
+    "color": "light_gray"
+  },
+  {
+    "type": "GENERIC",
+    "id": "graboid_fang",
+    "category": "other",
+    "//": "Obtained from graboids, rarely from dark wyrms.",
+    "name": {
+      "str": "晶状尖牙"
+    },
+    "description": "一种从一个巨大的蠕虫状生物的喉咙中折断的象牙质感的黑色颗粒状长针。可以作为一个糟糕的近战武器，或者可以做成某种战利品。",
+    "weight": "650 g",
+    "to_hit": -1,
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "spike",
+    "material": [
+      "bone"
+    ],
+    "techniques": [
+      "PRECISE"
+    ],
+    "volume": "500 ml",
+    "cutting": 10,
+    "flags": [
+      "SPEAR",
+      "SHEATH_KNIFE",
+      "NO_SALVAGE"
+    ],
+    "price_postapoc": "5 USD"
+  },
+  {
+    "type": "GENERIC",
+    "id": "inflorescent_root",
+    "category": "other",
+    "symbol": ",",
+    "looks_like": "biollante_bud",
+    "color": "magenta",
+    "name": {
+      "str": "开花的根"
+    },
+    "description": "扭曲的一串超自然的根，被小的外生植物覆盖，开成淡淡的靛蓝花。它可能有用，或者可以做成某种奖杯。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "veggy"
+    ],
+    "weight": "120 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "triffid_queen_flower",
+    "category": "other",
+    "symbol": ",",
+    "looks_like": "poppy_bud",
+    "color": "red",
+    "name": {
+      "str": "猩红之花"
+    },
+    "description": "一朵从超凡脱俗的动物身上落下的鲜艳花朵，依然盛开。它可能有用，或者可以做成某种奖杯。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "veggy"
+    ],
+    "weight": "60 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "iron_thorn",
+    "category": "other",
+    "name": {
+      "str": "铁棘刺"
+    },
+    "description": "尖刺，一种弯曲的七英寸长的尖刺，类似于某种刺或爪，有一种超凡的金属光泽。可以用来作为一个普通的近战武器，或者做成某种战利品。",
+    "weight": "860 g",
+    "color": "dark_gray",
+    "symbol": ",",
+    "looks_like": "fighter_sting",
+    "material": [
+      "iron"
+    ],
+    "techniques": [
+      "PRECISE",
+      "WBLOCK_1"
+    ],
+    "volume": "250 ml",
+    "cutting": 10,
+    "flags": [
+      "SPEAR"
+    ],
+    "price_postapoc": "5 USD"
+  },
+  {
+    "type": "GENERIC",
+    "id": "dermatik_sting",
+    "category": "other",
+    "//": "ID retained for compatibility reasons",
+    "name": {
+      "str": "倒刺尖刺"
+    },
+    "description": "一个八英寸长的带倒钩的尖刺，来自某种怪物。是一种普通的近战武器，或者可以做成某种战利品。",
+    "weight": "570 g",
+    "to_hit": -1,
+    "color": "dark_gray",
+    "symbol": ",",
+    "looks_like": "wasp_sting",
+    "material": [
+      "flesh"
+    ],
+    "techniques": [
+      "PRECISE",
+      "DEF_DISARM"
+    ],
+    "volume": "250 ml",
+    "cutting": 10,
+    "flags": [
+      "SPEAR",
+      "MESSY"
+    ],
+    "price_postapoc": "5 USD"
+  },
+  {
+    "type": "GENERIC",
+    "id": "vortex_shard",
+    "category": "other",
+    "symbol": "*",
+    "color": "magenta",
+    "//": "Obtained from vortices, rarely flying polyps.",
+    "name": {
+      "str": "风碎"
+    },
+    "description": "一小块粗糙的粉色石英。它异乎寻常的轻，举到耳边时，似乎能听到它在低语。它也许有某种作用，也许能被做成某种宝物。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "stone"
+    ],
+    "looks_like": "tourmaline",
+    "volume": "250 ml",
+    "flags": [
+      "ZERO_WEIGHT"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "blob_gem",
+    "category": "other",
+    "symbol": "*",
+    "color": "dark_gray",
+    "//": "Obtained from breather hubs, amoebic molds, and brain blobs.  Rarely from large blobs and shoggoths.",
+    "name": {
+      "str": "无定形琥珀",
+      "str_pl": "一片无定形琥珀"
+    },
+    "description": "一块浓稠的凝固软泥，模糊地像不自然的暗琥珀。它可能有用，或者可以做成某种战利品。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "stone"
+    ],
+    "looks_like": "aquamarine",
+    "weight": "714 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "monster_tear",
+    "category": "other",
+    "symbol": "*",
+    "color": "blue",
+    "name": {
+      "str": "蓝色晶泪"
+    },
+    "//": "Obtained from flaming eyes, rarely from cyclopeans.",
+    "description": "一颗光滑如玻璃，呈现出超自然的深蓝色的石球。它也许有某种作用，也许能被做成某种宝物。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "stone"
+    ],
+    "looks_like": "sapphire",
+    "weight": "230 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "shadow_gem",
+    "category": "other",
+    "symbol": "*",
+    "color": "dark_gray",
+    "//": "Obtained from wraiths.  Rarely from shadows and shadow snakes.",
+    "name": {
+      "str": "暗影宝石"
+    },
+    "description": "一种粗糙的宝石，类似未加工的钻石，黑色，参杂着银灰色的斑点。它可能有用，或者可以做成某种战利品。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "stone"
+    ],
+    "looks_like": "material_limestone",
+    "weight": "100 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "bone_twisted",
+    "category": "other",
+    "name": {
+      "str": "扭曲骨头",
+      "str_pl": "扭曲骨头"
+    },
+    "weight": "225 g",
+    "color": "white",
+    "symbol": "%",
+    "looks_like": "bone_human",
+    "//": "Obtained from amigara horrors, twisted bodies. More rarely from crawlers, things.",
+    "description": "一种由编织的、融合在一起的骨头组成的碎钉。它可能有用，或者可以做成某种战利品。",
+    "to_hit": -1,
+    "cutting": 8,
+    "flags": [
+      "SPEAR",
+      "NO_SALVAGE"
+    ],
+    "material": [
+      "bone",
+      "hflesh"
+    ],
+    "volume": "250 ml",
+    "price_postapoc": "5 USD"
+  },
+  {
+    "type": "GENERIC",
+    "id": "gracken_knuckles",
+    "category": "other",
+    "symbol": "*",
+    "looks_like": "bone_human",
+    "color": "white",
+    "//": "Be glad I didn't name it gracked knucklebones for pun value.",
+    "name": {
+      "str": "破裂的指骨",
+      "str_pl": "破裂的指骨"
+    },
+    "description": "一些来源于某种怪异生物的破裂的手指骨骼，在它非自然的死亡痛苦中被撕扯和剥离出来。它可能有用，或者可以做成某种战利品。",
+    "flags": [
+      "NO_SALVAGE"
+    ],
+    "price_postapoc": "5 USD",
+    "material": [
+      "bone"
+    ],
+    "weight": "225 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "wyrmskin_piece",
+    "//": "ID retained for compatibility reasons.",
+    "category": "other",
+    "symbol": ",",
+    "looks_like": "chitin_piece",
+    "color": "blue",
+    "name": {
+      "str": "难闻的鳞片"
+    },
+    "description": "鳞片从一个超自然的怪物身上脱落下来的一块变色的、坚韧的组织，像一个巨大的棚屋鳞片。它可能有用，或者可以做成某种奖杯。",
+    "price_postapoc": "5 USD",
+    "flags": [
+      "NO_SALVAGE"
+    ],
+    "material": [
+      "wyrmskin"
+    ],
+    "weight": "120 g",
+    "volume": "250 ml",
+    "bashing": 3,
+    "to_hit": -2
+  },
+  {
+    "type": "GENERIC",
+    "id": "monster_fang",
+    "category": "other",
+    "//": "Obtained from hunting horrors, flying polyps.  Rarely from krecks.",
+    "name": {
+      "str": "巨兽尖牙"
+    },
+    "description": "一种有着不自然的乳白色的长而弯曲的尖状物，握在手里感觉比它看上去要轻。可以作为一个糟糕的近战武器，或者可以做成某种战利品。",
+    "weight": "650 g",
+    "color": "dark_gray",
+    "symbol": ",",
+    "looks_like": "spike",
+    "material": [
+      "bone"
+    ],
+    "techniques": [
+      "PRECISE",
+      "RAPID"
+    ],
+    "volume": "500 ml",
+    "cutting": 8,
+    "flags": [
+      "SPEAR",
+      "SHEATH_KNIFE",
+      "NO_SALVAGE"
+    ],
+    "price_postapoc": "5 USD"
+  },
+  {
+    "type": "GENERIC",
+    "id": "iridescent_plate",
+    "category": "other",
+    "//": "Obtained from yuggs.  Rarely from mi-gos, human snails.",
+    "symbol": ",",
+    "looks_like": "chitin_piece",
+    "color": "pink",
+    "name": {
+      "str": "五彩斑斓的组织"
+    },
+    "description": "鳞片从一个垂死的怪物身上脱落下来的一块闪光的硬化组织，如一块巨大的鳞片或几丁质碎片。它可能有用，或者可以做成某种奖杯。",
+    "material": [
+      "flesh"
+    ],
+    "weight": "89 g",
+    "volume": "250 ml",
+    "bashing": 1,
+    "to_hit": -2,
+    "price_postapoc": "5 USD"
+  },
+  {
+    "type": "GENERIC",
+    "id": "engraved_stone",
+    "category": "other",
+    "//": "Obtained from shoggoths.  More rarely from amigara horrors, flesh angels, homunculi.",
+    "symbol": ",",
+    "looks_like": "spiral_stone",
+    "color": "light_green",
+    "name": {
+      "str": "雕文石块"
+    },
+    "description": "一种类似眼睛的大而圆的石头，外表呈鲜绿色。它的一半被雕刻着看起来不熟悉的符文，在表面之下露出一种更暗的彩虹色材料。它可能有用，或者可以做成某种战利品。",
+    "price_postapoc": "5 USD",
+    "material": [
+      "stone"
+    ],
+    "weight": "89 g",
+    "volume": "250 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "draconic_heart",
+    "category": "other",
+    "symbol": "*",
+    "color": "red",
+    "name": {
+      "str": "石化之心"
+    },
+    "description": "一块充满活力的红色石化肉，死后从一些鳞片状的可憎物上撕下。似乎有人试图在野兽复活之前从尸体上刻下这个东西，因为他们计划了什么扭曲的仪式…",
+    "//": "The fact it has a pre-cata pricing is effectively a plot spoiler, but yes it was basically the primary focus of on major sect of the Sanguine Order.  Extremely valuable to a decent number of people who are now extremely dead.",
+    "price": "80000 USD",
+    "price_postapoc": "75 USD",
+    "material": [
+      "stone"
+    ],
+    "looks_like": "flesh_golem_heart",
+    "weight": "1500 g",
+    "volume": "1 L"
+  },
+  {
+    "type": "GENERIC",
+    "id": "CF_golden_scale",
+    "name": {
+      "str": "金鳞"
+    },
+    "description": "这是一小块柔软的黄金，形状像一个细长的鳞片或羽毛。上面有印记，证明它的重量和纯度。唯一的另一个身份标志是一个类似十字架的符号，它的下半部分过渡到锤子Mjölnir。对大多数人来说，只不过是废品，尽管质量一致。",
+    "//": "Soft, meant to be dismantled when needed.  Faction attitude toward how its used plus little authority to back the currency up magnify how devalued it is compared to lower-carat Robofac coins.",
+    "price": "1200 USD",
+    "price_postapoc": "25 USD",
+    "stackable": true,
+    "weight": "25 g",
+    "to_hit": -3,
+    "color": "yellow",
+    "looks_like": "RobofacCoin",
+    "symbol": "$",
+    "material": [
+      "gold"
+    ],
+    "volume": "2 ml"
+  },
+  {
+    "type": "GENERIC",
+    "id": "arcana_strange_crystal",
+    "category": "other",
+    "symbol": "*",
+    "color": "dark_gray",
+    "name": {
+      "str": "奇怪的水晶护符"
+    },
+    "description": "一种巨大的、深黑色的宝石，抛光后切割成一种不寻常的古怪形状，每个侧面都有奇怪的银色漩涡。它被安置在一个由金属丝组成的扭曲的笼子里，由一种灰色的金属制成。石头本身摸起来很冷。不管它是什么，它可能对那些能弄清楚它应该做什么的人有用。",
+    "material": [
+      "stone",
+      "superalloy",
+      "essencemat"
+    ],
+    "looks_like": "amulet_exotic",
+    "weight": "200 g",
+    "volume": "500 ml",
+    "flags": [
+      "TRADER_AVOID"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "arcana_radio_relay_beacon",
+    "symbol": ",",
+    "looks_like": "radio_repeater_mod",
+    "color": "light_gray",
+    "name": {
+      "str": "中继信标"
+    },
+    "category": "spare_parts",
+    "description": "一个坚固的金属匣子，装有一个由多余的军用设备改装而成的收发机、一组用于连接无线电终端的连接器和一个跟踪装置。在外观上看起来像是临时制成，似乎是专门为一些特殊任务而制作的。",
+    "material": [
+      "steel"
+    ],
+    "weight": "21000 g",
+    "volume": "2 L",
+    "bashing": 4,
+    "to_hit": 1,
+    "flags": [
+      "TRADER_AVOID"
+    ]
+  },
+  {
+    "id": "arcane_purifier_intel",
+    "type": "GENERIC",
+    "category": "tools",
+    "name": {
+      "str": "侦察设备"
+    },
+    "description": "一种耐用的公文包，里面装有一台过时的笔记本电脑，由一个完整的钚电池供电。盒子里还内置了一个隐藏的摄像头，里面还有一个老式的卫星电话。手机似乎没几分钟了，相机镜头也坏了，但笔记本电脑里有各种神秘的笔记、各种奇怪地标的照片，以及横跨三县地区的位置地图。也许有人可以利用从这个设备上收集到的情报。",
+    "weight": "10 g",
+    "volume": "2500 ml",
+    "price": "200 USD",
+    "price_postapoc": "5 USD",
+    "to_hit": -1,
+    "bashing": 1,
+    "material": [
+      "steel",
+      "aluminum"
+    ],
+    "symbol": ";",
+    "looks_like": "weather_reader",
+    "color": "light_gray",
+    "flags": [
+      "WATCH",
+      "NO_SALVAGE",
+      "TRADER_AVOID"
+    ]
+  },
+  {
+    "id": "cf_purifier_project_data",
+    "copy-from": "arcana_note_base",
+    "type": "GENERIC",
+    "name": {
+      "str": "Kairos项目智能打印输出"
+    },
+    "description": "当地研究设施的印刷清单，还列出了从清单上的地点往返的各种货物。一些更熟悉机密军事或实验室项目的人可能可以利用这些信息，找出哪个位置是哪个。"
+  },
+  {
+    "id": "arcane_purifier_intel_2",
+    "copy-from": "arcana_note_base",
+    "type": "GENERIC",
+    "name": {
+      "str": "优先运输地点清单-分类"
+    },
+    "description": "一份向该地区各种科学和军事设施运送货物的详细清单，其中涉及往返于不同地点的设备和运送的物品。列出的很多项目都涉及奇怪的术语和深奥的代号。在合适的人手里应该很容易搞清楚哪些地方被送来了异常物质。"
+  },
+  {
+    "type": "GENERIC",
+    "id": "dimensional_focus_lens",
+    "looks_like": "portal",
+    "name": {
+      "str": "空间聚焦透镜",
+      "str_pl": "空间聚焦透镜"
+    },
+    "description": "一种奇特的装置，至少在一定程度上，明显来自于超凡脱俗的起源。一个类似于沥青黑色石头的小圆球，每个圆球由刻有奇异技术标记的部分组成。不管它曾经的目的是什么，它似乎是在这个被诅咒的地方进行的所有门户研究的遗迹。一些更精通奥术的人可能会发现这个方法非常有用。",
+    "weight": "7 kg",
+    "color": "light_cyan",
+    "price": "20000 USD",
+    "price_postapoc": "0 cent",
+    "symbol": ",",
+    "material": [
+      "superalloy",
+      "essencemat"
+    ],
+    "volume": "5 L",
+    "category": "other",
+    "flags": [
+      "NO_SALVAGE",
+      "TRADER_AVOID"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "broken_mech_arcana",
+    "name": {
+      "str": "异常侦察机甲（损坏）"
+    },
+    "description": "这曾经是一台原型侦察机，现在变成了一堆破烂不堪的机器。拆解它的一部分可能可以获得再次改造它的部件。",
+    "volume": "250 L",
+    "weight": "375 kg",
+    "price": "10 USD",
+    "price_postapoc": "1 USD",
+    "to_hit": -3,
+    "bashing": 7,
+    "material": [
+      "steel"
+    ],
+    "symbol": ";",
+    "color": "cyan",
+    "looks_like": "broken_mech_recon",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "broken_mech_arcana_boss",
+    "name": {
+      "str": "自动异常侦察机（损坏）"
+    },
+    "description": "这曾经是一台原型侦察机，现在变成了一堆破烂不堪的机器。它可以被拆解出稀有的、有价值的以及一些蕴含不寻常的性质的零件。",
+    "volume": "250 L",
+    "weight": "375 kg",
+    "price": "10 USD",
+    "price_postapoc": "1 USD",
+    "to_hit": -3,
+    "bashing": 7,
+    "material": [
+      "steel"
+    ],
+    "symbol": ";",
+    "color": "cyan",
+    "looks_like": "broken_mech_recon",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "id": "arcana_mech_shem_copy",
+    "type": "GENERIC",
+    "name": {
+      "str": "雕文金属板"
+    },
+    "description": "一块钢板，用超凡脱俗的方法在其表面刻上奇异的图案。它包含了一个神秘的示意图的原始复制品，可以作为动画的关键点来再现它所描述的异常驱动机器。",
+    "weight": "12880 g",
+    "volume": "3 L",
+    "price": "120 USD",
+    "price_postapoc": "5 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "?",
+    "looks_like": "steel_plate",
+    "color": "light_gray",
+    "flags": [
+      "NO_SALVAGE",
+      "TRADER_AVOID"
+    ]
+  },
+  {
+    "id": "AID_bio_electrothermal_arc_projector",
+    "type": "GENERIC",
+    "copy-from": "AID_abstract",
+    "name": {
+      "str_sp": "电热电弧发射器CBM安装数据"
+    },
+    "description": "一套用于安装电热弧发射器CBM的精确到每个步骤的指令和数据，存储于特殊规格的专有数据卡中，能够用于全自动医疗仪来将CBM安装失败率降到最低。其中包含的安全子程序会使其在安装完CBM后立刻失效。"
+  },
+  {
+    "id": "AID_bio_rift_focus_projector",
+    "type": "GENERIC",
+    "copy-from": "AID_abstract",
+    "name": {
+      "str_sp": "裂痕聚焦发射器CBM安装数据"
+    },
+    "description": "一套用于安装裂痕聚焦发射器CBM的精确到每个步骤的指令和数据，存储于特殊规格的专有数据卡中，能够用于全自动医疗仪来将CBM安装失败率降到最低。其中包含的安全子程序会使其在安装完CBM后立刻失效。"
+  },
+  {
+    "id": "AID_bio_essence_surge_cell",
+    "type": "GENERIC",
+    "copy-from": "AID_abstract",
+    "name": {
+      "str_sp": "源质浪涌电池CBM安装数据"
+    },
+    "description": "一套用于安装源质浪涌电池CBM的精确到每个步骤的指令和数据，存储于特殊规格的专有数据卡中，能够用于全自动医疗仪来将CBM安装失败率降到最低。其中包含的安全子程序会使其在安装完CBM后立刻失效。"
+  },
+  {
+    "id": "AID_bio_temporal_stimulation",
+    "type": "GENERIC",
+    "copy-from": "AID_abstract",
+    "name": {
+      "str_sp": "时间刺激CBM安装数据"
+    },
+    "description": "一套用于安装时间刺激CBM的精确到每个步骤的指令和数据，存储于特殊规格的专有数据卡中，能够用于全自动医疗仪来将CBM安装失败率降到最低。其中包含的安全子程序会使其在安装完CBM后立刻失效。"
+  },
+  {
+    "id": "AID_bio_life_sign_suppression",
+    "type": "GENERIC",
+    "copy-from": "AID_abstract",
+    "name": {
+      "str_sp": "生命体征抑制CBM安装数据"
+    },
+    "description": "一套用于安装生命体征抑制CBM的精确到每个步骤的指令和数据，存储于特殊规格的专有数据卡中，能够用于全自动医疗仪来将CBM安装失败率降到最低。其中包含的安全子程序会使其在安装完CBM后立刻失效。"
+  },
+  {
+    "id": "AID_bio_kinetic_amplifier",
+    "type": "GENERIC",
+    "copy-from": "AID_abstract",
+    "name": {
+      "str_sp": "动能放大装置CBM安装数据"
+    },
+    "description": "一套用于安装动能放大装置CBM的精确到每个步骤的指令和数据，存储于特殊规格的专有数据卡中，能够用于全自动医疗仪来将CBM安装失败率降到最低。其中包含的安全子程序会使其在安装完CBM后立刻失效。"
+  },
+  {
+    "type": "GENERIC",
+    "category": "weapons",
+    "id": "bio_kinetic_amplifier_weapon",
+    "name": {
+      "str_sp": "动能放大装置"
+    },
+    "description": "A band of steel slid into place over your knuckles, etched with strange markings.  When used as an unarmed weapon, it can give your strikes the ability to send victims flying, with amplified damage and armor penetration.  Its impacts have a chance of letting loose a blinding flashbang effect, making this weapon a double-edged sword without protection.",
+    "color": "light_gray",
+    "symbol": "{",
+    "material": [
+      "steel"
+    ],
+    "volume": "250 ml",
+    "weight": "300 g",
+    "bashing": 24,
+    "flags": [
+      "UNARMED_WEAPON",
+      "BIONIC_WEAPON",
+      "UNBREAKABLE_MELEE",
+      "TRADER_AVOID"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        1
+      ]
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "tec_weapon_kinetic_knockback"
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "arcana_react_kinetic_amplifier_flashbang",
+              "once_in": 10,
+              "message": "Your kinetic resonates with a blinding flash and thunderous sound!",
+              "npc_message": "%1$s suddenly gives off a blinding flash and thunderous sound!"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

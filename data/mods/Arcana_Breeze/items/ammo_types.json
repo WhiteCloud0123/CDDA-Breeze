@@ -1,0 +1,38 @@
+[
+  {
+    "id": "essence_type",
+    "name": "源质",
+    "default": "essence",
+    "type": "ammunition_type"
+  },
+  {
+    "id": "essence_blood_type",
+    "name": "猩血源质",
+    "default": "essence_blood",
+    "type": "ammunition_type"
+  },
+  {
+    "id": "essence_dull_type",
+    "name": "阴黯源质",
+    "default": "essence_dull",
+    "type": "ammunition_type"
+  },
+  {
+    "id": "essence_pure_type",
+    "name": "璀璨源质",
+    "default": "essence_pure",
+    "type": "ammunition_type"
+  },
+  {
+    "id": "essence_fake_type",
+    "name": "位移浪涌能量",
+    "default": "essence_fake",
+    "type": "ammunition_type"
+  },
+  {
+    "id": "primitive_magic_item_ammo_type",
+    "name": "充能",
+    "default": "primitive_magic_item_ammo",
+    "type": "ammunition_type"
+  }
+]

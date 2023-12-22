@@ -1,0 +1,111 @@
+[
+  {
+    "type": "material",
+    "id": "essencemat",
+    "name": "魔法能量",
+    "density": 1,
+    "bash_resist": 20,
+    "cut_resist": 20,
+    "bullet_resist": 20,
+    "acid_resist": 99,
+    "fire_resist": 99,
+    "elec_resist": 99,
+    "chip_resist": 99,
+    "soft": true,
+    "breathability": "SECOND_SKIN",
+    "dmg_adj": [
+      "轻微损坏",
+      "损坏",
+      "严重损坏",
+      "彻底损坏"
+    ],
+    "bash_dmg_verb": "损坏",
+    "cut_dmg_verb": "损坏",
+    "fuel_data": {
+      "energy": "1000 kJ"
+    }
+  },
+  {
+    "type": "material",
+    "id": "arcana_fuel_essence",
+    "copy-from": "essencemat",
+    "name": "源质",
+    "fuel_data": {
+      "energy": "15000 kJ"
+    }
+  },
+  {
+    "type": "material",
+    "id": "arcana_fuel_essence_blood",
+    "copy-from": "essencemat",
+    "name": "猩血源质",
+    "fuel_data": {
+      "energy": "10000 kJ"
+    }
+  },
+  {
+    "type": "material",
+    "id": "arcana_fuel_essence_dull",
+    "copy-from": "essencemat",
+    "name": "阴黯源质",
+    "fuel_data": {
+      "energy": "5000 kJ"
+    }
+  },
+  {
+    "type": "material",
+    "id": "arcana_fuel_essence_pure",
+    "copy-from": "essencemat",
+    "name": "璀璨源质",
+    "fuel_data": {
+      "energy": "100000 kJ"
+    }
+  },
+  {
+    "type": "material",
+    "id": "wyrmskin",
+    "copy-from": "leather",
+    "name": "龙之硬肤",
+    "acid_resist": 99
+  },
+  {
+    "type": "material",
+    "id": "clay",
+    "copy-from": "clay",
+    "name": "黏土",
+    "repaired_with": "clay_lump"
+  },
+  {
+    "type": "material",
+    "id": "stone",
+    "copy-from": "stone",
+    "name": "石",
+    "repaired_with": "rock"
+  },
+  {
+    "type": "material",
+    "id": "dragon_scale",
+    "//": "double of Hardened Chitin",
+    "name": "龙鳞",
+    "density": 2.9,
+    "specific_heat_liquid": 4.186,
+    "specific_heat_solid": 2.108,
+    "latent_heat": 333,
+    "bash_resist": 5,
+    "cut_resist": 8,
+    "bullet_resist": 2.8,
+    "acid_resist": 12,
+    "fire_resist": 5,
+    "chip_resist": 28,
+    "breathability": "GOOD",
+    "wind_resist": 90,
+    "dmg_adj": [
+      "刮花",
+      "斩击",
+      "裂纹",
+      "破碎"
+    ],
+    "bash_dmg_verb": "裂纹",
+    "cut_dmg_verb": "缺口"
+  }
+]

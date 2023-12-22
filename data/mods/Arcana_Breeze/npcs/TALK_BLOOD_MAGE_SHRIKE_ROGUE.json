@@ -1,0 +1,749 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": "你不是个小捣蛋鬼吗？这里的魔术师对于潜在的竞争对手插手把事情搞得一团糟有点自大。你来这里干什么？",
+      "no": {
+        "u_has_any_trait": [
+          "PROF_CLEANSINGFLAME",
+          "PROF_CLEANSINGFLAME2"
+        ],
+        "yes": "…猎人。",
+        "no": "你不应该在这里，干涉你不了解的事情。这可能会让你自己受伤。"
+      }
+    },
+    "responses": [
+      {
+        "text": "\"月夜的天空涂油给那些寻找回家之路的人.\"",
+        "condition": {
+          "u_has_var": "horace_password_known",
+          "type": "flag",
+          "context": "shrike",
+          "value": "yes"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_PASSWORD"
+      },
+      {
+        "text": "[任务]我是来阻止这一切的。",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_any_trait": [
+                  "PROF_CLEANSINGFLAME",
+                  "PROF_CLEANSINGFLAME2"
+                ]
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_GM_3"
+            }
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_ITS_TIME_TO_STOP"
+      },
+      {
+        "text": "……屠猎者。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LANIUS",
+        "opinion": {
+          "value": 1
+        }
+      },
+      {
+        "text": "[攻击]啊，圣洁的马格姆...",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "effect": "insult_combat",
+        "topic": "TALK_DONE",
+        "opinion": {
+          "value": -1
+        }
+      },
+      {
+        "text": "你为什么跟着这个法师？我们应该站在一起。",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_MAGUS"
+      },
+      {
+        "text": "你是谁？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2",
+              "PROF_SANGUINE"
+            ]
+          }
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_WHO"
+      },
+      {
+        "text": "你能告诉我这是个什么地方？",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2",
+              "PROF_SANGUINE"
+            ]
+          }
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_WHERE"
+      },
+      {
+        "text": "我要走了…",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ]
+          }
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 5
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LEAVE",
+          "opinion": {
+            "value": -2
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_NICE_TRY",
+          "opinion": {
+            "value": -4
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_PASSWORD",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "PROF_SANGUINE",
+      "yes": "从古时候开始就没听过了，在门户和混乱之前。你看起来不眼熟，也许是埃琳娜的一个朋友？",
+      "no": {
+        "u_has_any_trait": [
+          "PROF_CLEANSINGFLAME",
+          "PROF_CLEANSINGFLAME2"
+        ],
+        "yes": "这是我最不希望你们猎人说的话。那么，是谁给了你那句口头禅？",
+        "no": "好吧，你引起了我的注意。你一定是从谁那里听到的，谁派你来的？"
+      }
+    },
+    "responses": [
+      {
+        "text": "其他伯劳鸟委托我们提供重要信息。我们不需要成为敌人，拉纽斯。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LANIUS"
+      },
+      {
+        "text": "埃琳娜的一只伯劳鸟告诉你了。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_PASSWORD_ELENA"
+      },
+      {
+        "text": "[攻击]…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LANIUS",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "看来你已经很好地利用了这些信息。或者你最终完成了龙血圣礼。你想在这里完成什么，亨特？",
+      "no": "有个惊喜。不知道你们中谁误入歧途了，是他们的还是你们的？你来这里显然是为了打猎，为什么还要来这里谈结盟？"
+    },
+    "responses": [
+      {
+        "text": "难道不是按照你的本性，用你所学去保护别人吗？这里的人们正走在自我毁灭的道路上，我们可以一起努力保护全人类。",
+        "condition": {
+          "u_has_trait": "THRESH_DRAGONBLOOD"
+        },
+        "switch": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 40
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE_FLAME",
+          "opinion": {
+            "trust": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE_FLAME",
+          "opinion": {
+            "anger": 1,
+            "trust": -1
+          }
+        }
+      },
+      {
+        "text": "你追随的人只会走向失败。如果有人可以纠正，那么值得一试。",
+        "switch": true,
+        "default": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 20
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE_FLAME"
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE_FLAME",
+          "opinion": {
+            "anger": 1,
+            "trust": -3,
+            "value": -2
+          }
+        }
+      },
+      {
+        "text": "[攻击]算了吧。闭嘴去死吧。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE_FLAME",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "对。我们的目的是保护这些白痴，但也许是时候改变重点了。我很乐意看到这一切。",
+      "no": "也许你是对的。有更好的方法来利用我们所学的知识。我想我会信任你的，亨特。看看这是怎么回事可能会很有趣。"
+    },
+    "responses": [
+      {
+        "text": "那就跟我来。",
+        "topic": "TALK_AGREE_FOLLOW",
+        "effect": "follow"
+      },
+      {
+        "text": "我有一个更好的主意。去死吧。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE_FLAME",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "你迷路了，亨特。让我纠正你的路线，到坟墓。好好战斗，死吧，亨特。",
+      "no": "足够地你来这里是为了战斗和死亡，所以战斗和死亡吧，亨特。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_ELENA",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "真的吗？我不确定哪一个更令人印象深刻，她的团队仍然存在，或者你设法说服她与你结盟。希望我跟着你？",
+      "no": "她还活着，是吗？这有法师猎人的味道，但我知道她的人也变得无赖了。有意思，但我还有我的职责。你希望我抛弃他们？"
+    },
+    "responses": [
+      {
+        "text": "我们都应该有第二次机会。我们有机会把事情做好，做对整个人类最好的事情，而不仅仅是我们自己。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "switch": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 45
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE_FLAME",
+          "opinion": {
+            "trust": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE_FLAME",
+          "opinion": {
+            "anger": 1,
+            "trust": -1
+          }
+        }
+      },
+      {
+        "text": "这是不对的。如果我们在这个世界上把对方撕成碎片，我们都完了。我们可以一起工作。",
+        "switch": true,
+        "default": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 50
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE_BASIC"
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE_BASIC",
+          "opinion": {
+            "anger": 1,
+            "trust": -3,
+            "value": -2
+          }
+        }
+      },
+      {
+        "text": "[攻击]我希望你死。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE_BASIC",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "那么你涉猎过我们的艺术，龙血，看到了其中的潜力？但很明显，你来这里也是为了流血。也许我喜欢在正确的方向上导演一些暴力，所以我可能愿意看看这会发生什么。",
+      "no": "我喜欢你的想法。小问题，杀戮还没结束吧？你来这里是为了纠正错误，但你来这里是为了流血。我想法师们说他们的方法是解决问题的正确方法也是愚蠢的。好吧，让我们看看会发生什么。"
+    },
+    "responses": [
+      {
+        "text": "那就跟我来。",
+        "topic": "TALK_AGREE_FOLLOW",
+        "effect": "follow"
+      },
+      {
+        "text": "[攻击]转念一想，我宁愿重新整理你的脸。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE_BASIC",
+    "type": "talk_topic",
+    "dynamic_line": "哦，你对自己遇到的事情知之甚少。当我能闻到你身上的血迹时，所有这些关于做正确事情的言论。至少我们没有在生存的本质上欺骗自己。说够了。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_ITS_TIME_TO_STOP",
+    "type": "talk_topic",
+    "dynamic_line": "我是来阻止你阻止这一切的。很有意思。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LANIUS",
+    "type": "talk_topic",
+    "dynamic_line": "猎手，奋战至死吧！",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_MAGUS",
+    "type": "talk_topic",
+    "dynamic_line": "总得有人阻止这些白痴互相残杀。不是你在帮我。",
+    "responses": [
+      {
+        "text": "他们被误导了。这只会让我们剩下的秩序消失。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_MISGUIDED"
+      },
+      {
+        "text": "[攻击]他们的自杀速度还不够快。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_MISGUIDED",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "有趣的是，当你明显地把你的鼻子伸进了法师正在涉足的同一个坏主意里。",
+      "no": {
+        "u_has_trait": "THRESH_VEIL",
+        "yes": "我想我看到了问题所在。让我猜猜，退出秩序，找到了宗教信仰，现在看守者的小朋友在牵线搭桥？”没有上帝，没有恶魔，没有灵魂可以信任你。“你已经妥协了你的原则，朋友。",
+        "no": "我有我的职责。他们可能是白痴，但他们是我的白痴。如果你不想把这个秩序拖到灭绝的地步，那么在你有机会的时候，你应该保持足够的孤独。"
+      }
+    },
+    "responses": [
+      {
+        "text": "不是因为这个。我们不能继续沿着我们要走的路走下去，否则他们就什么都没有了。",
+        "condition": {
+          "u_has_trait": "THRESH_DRAGONBLOOD"
+        },
+        "switch": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE",
+          "opinion": {
+            "trust": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE",
+          "opinion": {
+            "anger": 1,
+            "trust": -1
+          }
+        }
+      },
+      {
+        "text": "我不受他支配。我做了我的选择。我们必须适应，在这种情况下，它需要结束旧的方式。",
+        "condition": {
+          "u_has_trait": "THRESH_VEIL"
+        },
+        "switch": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 10
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE"
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE",
+          "opinion": {
+            "anger": 1,
+            "trust": -3,
+            "value": -2
+          }
+        }
+      },
+      {
+        "text": "我们不能老是背着我们遇到的每个人，我们必须在实践中有分寸。",
+        "switch": true,
+        "default": true,
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 20
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE",
+          "opinion": {
+            "trust": 1,
+            "value": 1,
+            "anger": -1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE",
+          "opinion": {
+            "value": -1
+          }
+        }
+      },
+      {
+        "text": "[攻击]我听够了。死吧。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_CONVINCE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_VEIL",
+      "yes": "还是坚持走自己的路，对吧？也许是真的，但我有我的责任。为了别人的利益而走这条路，一个猎人的猎人。你希望我做什么，木偶？",
+      "no": "也许。像个屠猎者那样思考大局，而不仅仅是下一个被杀，嗯？我对这些人还是有责任的，不管是不是无能。你想让我忽略这个？"
+    },
+    "responses": [
+      {
+        "text": "加入我。还会有其他人，我们可以让他们走上正轨。",
+        "topic": "TALK_AGREE_FOLLOW",
+        "effect": "follow"
+      },
+      {
+        "text": "[攻击]我希望你死。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_FAILURE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "我有个更好的主意，麻烦制造者。你那有鳞的皮也许能做一双普通的靴子。",
+      "no": {
+        "u_has_trait": "THRESH_VEIL",
+        "yes": "你真的看不见东西了，不是吗？让我看看能不能帮你把重点说清楚。去你妈的，去你所谓的上帝。怎么样？",
+        "no": "在我的练习中，我很有分寸，我想你再多说点背后的话会让你看起来更好。"
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "猎人的猎人。正如你所看到的，其他人无法完全避免自己的崩溃，通常是字面上的。",
+    "responses": [
+      {
+        "text": "哦。我懂了。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE"
+      },
+      {
+        "text": "我要走了…",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 5
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LEAVE",
+          "opinion": {
+            "value": -2,
+            "fear": -1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_NICE_TRY",
+          "opinion": {
+            "value": -4,
+            "fear": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LEAVE",
+    "type": "talk_topic",
+    "dynamic_line": "今天是你的幸运日，我可不是那个要收拾烂摊子的人。继续。快跑。",
+    "responses": [
+      {
+        "text": "好好，我现在就走。",
+        "topic": "TALK_DONE",
+        "effect": "player_leaving"
+      },
+      {
+        "text": "[攻击]仔细想想，我重新面对你怎么样？",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_NICE_TRY",
+    "type": "talk_topic",
+    "dynamic_line": "去试试吧，入侵者。你只会累死。开始狩猎吧。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": "我可以告诉你这么多：你不应该在下面。还有问题吗？",
+    "responses": [
+      {
+        "text": "你是谁？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_WHO"
+      },
+      {
+        "text": "算了……",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE"
+      },
+      {
+        "text": "[攻击]滚开。",
+        "topic": "TALK_DONE",
+        "effect": "insult_combat"
+      },
+      {
+        "text": "我要走了…",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 5
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_LEAVE",
+          "opinion": {
+            "value": -2,
+            "fear": -1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_ROGUE_NICE_TRY",
+          "opinion": {
+            "value": -4,
+            "fear": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_FRIEND_CONVERSATION",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "<CWH_intro_question>",
+        "topic": "BGSS_BLOOD_MAGE_2_IDEAS1",
+        "condition": {
+          "npc_has_trait": "BGSS_BLOOD_MAGE_2"
+        }
+      },
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_BLOOD_MAGE_2_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_BLOOD_MAGE_2"
+        },
+        "switch": true
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BLOOD_MAGE_2_IDEAS1",
+    "type": "talk_topic",
+    "dynamic_line": "这不是什么超自然现象，我们可以肯定的是。骑士团怀疑麻烦正在酝酿，我们已经准备了几十年。更好地适应和生存。还是让我们有点措手不及，你不会只是某天醒来说“今天是它最终发生的一天”之类的话。",
+    "responses": [
+      {
+        "text": "你的订单预测到了？",
+        "topic": "BGSS_BLOOD_MAGE_2_IDEAS2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BLOOD_MAGE_2_IDEAS2",
+    "type": "talk_topic",
+    "dynamic_line": "简短的回答？不，在我们任何人真正理解这条路之前，在帷幕的第一道裂缝让一丝光线穿过之前，年长的东方三博士就已经这样做了。我不知道是什么原因造成的，我也不在乎。我们只是坚持了足够长的时间，准备工作终于有了回报。世界终究要结束了，我们要在那里看着。",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BLOOD_MAGE_2_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": "我在打猎。没什么好说的，只是又一个法师猎人在捣乱。没能完成我和他们的生意。",
+    "responses": [
+      {
+        "text": "发生什么了？",
+        "topic": "BGSS_CF_1_STORY2"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BLOOD_MAGE_2_STORY2",
+    "type": "talk_topic",
+    "dynamic_line": "你期待什么，战场上绽放的爱情？有东西偷了我的命，一路上吸引了几个客人。不习惯被猎杀。",
+    "responses": [
+      {
+        "text": "什么样的客人？",
+        "topic": "BGSS_CF_1_STORY3"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BLOOD_MAGE_2_STORY3",
+    "type": "talk_topic",
+    "dynamic_line": "你不想邀请你参加你的生日聚会的那种人。太吵了，没有个人空间感，有不死心的坏习惯，都是不死族常见的问题。我把它放在腿上向派我来的人报告，就这样。",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

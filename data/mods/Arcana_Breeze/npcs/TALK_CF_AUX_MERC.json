@@ -1,0 +1,255 @@
+[
+  {
+    "id": "TALK_CF_AUX_MERC",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_marshal",
+      "yes": "你好，元帅。",
+      "no": {
+        "u_male": true,
+        "yes": "你好，先生。",
+        "no": "你好，女士。"
+      }
+    },
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_CF_AUX_MERC_GM_PRELUDE"
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_CF_AUX_MERC_WHO"
+      },
+      {
+        "text": "有什么生存诀窍吗？",
+        "topic": "TALK_CF_AUX_MERC_TIPS"
+      },
+      {
+        "text": "你…打扮得像个牛仔吗？",
+        "topic": "TALK_CF_AUX_MERC_YEEHAW"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "我听说你们都在干什么。上一次巡逻时碰到了一只这些家伙在找我的东西，把一只摘下来，把其他的松鼠留下。我会把我发现的情况告诉教士，你就随便问问。小心点。"
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "我只是个老雇工。只要有好的薪水，我就做不该做的事。",
+    "responses": [
+      {
+        "text": "你是做什么工作的？",
+        "topic": "TALK_CF_AUX_MERC_WORK"
+      },
+      {
+        "text": "你能告诉我关于你自己的其他情况吗？",
+        "topic": "TALK_CF_AUX_MERC_PERSONAL"
+      },
+      {
+        "text": "要花多少钱才能雇你啊？",
+        "topic": "TALK_CF_AUX_MERC_HIRE"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_AUX_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_WORK",
+    "type": "talk_topic",
+    "dynamic_line": "雇佣兵的工作，现在。守卫商队，为一个团队提供一点火力，那是一件很糟糕的事。即使越来越难看清，但还是要用猎枪好好看一眼。",
+    "responses": [
+      {
+        "text": "你能告诉我关于你自己的其他情况吗？",
+        "topic": "TALK_CF_AUX_MERC_PERSONAL"
+      },
+      {
+        "text": "要花多少钱才能雇你啊？",
+        "topic": "TALK_CF_AUX_MERC_HIRE"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_AUX_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_PERSONAL",
+    "type": "talk_topic",
+    "dynamic_line": "以前在州外的牧场工作，长大后也打猎。拼命挣扎才爬到这里，一切都是这样，我很惊讶我还在踢。一路上有很多激烈的争吵和奇怪的事情。",
+    "responses": [
+      {
+        "text": "你是做什么工作的？",
+        "topic": "TALK_CF_AUX_MERC_WORK"
+      },
+      {
+        "text": "要花多少钱才能雇你啊？",
+        "topic": "TALK_CF_AUX_MERC_HIRE"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CF_AUX_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_HIRE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_marshal",
+      "yes": "好吧，现在，元帅，我愿意以我现行工资的一半做副手。15个金鳞片，他们在这里用的东西，应该可以支付我的费用。在那之后，领导我跟着。",
+      "no": "30个黄金鳞片就可以雇佣我。对我而言，只要有地方可以去探险和打劫就可以了。"
+    },
+    "responses": [
+      {
+        "text": "[GS15]你说好了。",
+        "topic": "TALK_CF_AUX_MERC_HIRE_SUCCESS",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "u_is_wearing": "badge_marshal"
+            },
+            {
+              "u_has_items": {
+                "item": "CF_golden_scale",
+                "count": 15
+              }
+            }
+          ]
+        },
+        "effect": {
+          "u_consume_item": "CF_golden_scale",
+          "count": 15
+        }
+      },
+      {
+        "text": "[GS30]你说好了。",
+        "topic": "TALK_CF_AUX_MERC_HIRE_SUCCESS",
+        "switch": true,
+        "default": true,
+        "condition": {
+          "u_has_items": {
+            "item": "CF_golden_scale",
+            "count": 30
+          }
+        },
+        "effect": {
+          "u_consume_item": "CF_golden_scale",
+          "count": 30
+        }
+      },
+      {
+        "text": "关于金鳞片你能告诉我些什么？",
+        "topic": "TALK_CF_AUX_MERC_SCALES"
+      },
+      {
+        "text": "好吧，我会再回来找你的。",
+        "topic": "TALK_CF_AUX_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_HIRE_SUCCESS",
+    "type": "talk_topic",
+    "dynamic_line": "那就带路吧。",
+    "responses": [
+      {
+        "text": "欢迎入队。",
+        "success": {
+          "effect": "follow",
+          "opinion": {
+            "trust": 1,
+            "value": 1
+          },
+          "topic": "TALK_DONE"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_SCALES",
+    "type": "talk_topic",
+    "dynamic_line": "金鳞是当地人使用的小硬币。似乎它作为一种货币正在回升。就我个人而言，如果我们谈的是硬通货，我更喜欢银元，但是如果你不喜欢用你的衬衫来换取一顿热饭，你就用你能得到的。这些人似乎也有其他用处。",
+    "responses": [
+      {
+        "text": "我懂了。让我们从重头再来一次。",
+        "topic": "TALK_CF_AUX_MERC"
+      },
+      {
+        "text": "好吧，我需要多少钱？",
+        "topic": "TALK_CF_AUX_MERC_HIRE"
+      },
+      {
+        "text": "好吧，谢谢你的信息。再见！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_TIPS",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "先杀死威胁你的东西，然后治疗任何伤亡。当然很冷，但是每一个退出战斗的人都会让敌人更容易对付，而且当你的手忙着绑住某个可怜人的内脏时，很难反击。",
+      "一枚放置得很好的手榴弹、一根炸药棒，或者更好的C4，既是一种武器，也是一种方便的工具。如果你有时间把它放好，然后放弃，那么你犯一个代价高昂的错误的可能性比扔掉它要小。",
+      "好好保管好所有能正常行驶的车辆。以高速行驶的几吨金属是鹿药，而以超音速行驶的几百格令也是鹿药。",
+      "如果它太小，太晚了，不能称之为撤退，那就是溃败。最好保持距离或断开联系，如果这样做太麻烦了。",
+      "不要带你不需要的东西，但要记住，在你需要之前，你永远不知道什么是必要的。如果你仍然对一件装备犹豫不决，而且拿着它不会伤害任何人，那么你最好带着它。",
+      "如果你没有足够的弹药来完成所有可能出现的任务，那么对任务不熟悉只是一个劣势。",
+      "一定要带枪，最好是你能负担得起的最大的枪。即使你更喜欢撕扯式的，最终还是会有回报的。",
+      "如果有机会，慢慢瞄准。有些事情很艰难，但很慢，投篮的位置可以让你避免这样的事情。",
+      "如果你要和怪物战斗，要么准备好应对任何可能存在的威胁，要么保持低调。如果它让你慢下来，那就值得。"
+    ],
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_AUX_MERC"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CF_AUX_MERC_YEEHAW",
+    "type": "talk_topic",
+    "dynamic_line": "是的。以前是个农场工人，现在在荒野上游荡还是很实用的。邪恶可憎的人不太在乎花哨的盘子载体，任何能阻止步枪子弹的东西都会减慢你的速度。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CF_AUX_MERC"
+      }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_RANCH_BARKEEP_INFORMATION",
+    "responses": [
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_RANCH_BARKEEP_GM_PRELUDE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_RANCH_BARKEEP_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "你得继续努力，哈？好吧，如果这就是你想要的，我不喜欢处理谣言，但这听起来很严重。你经常听到醉酒幸存者的愚蠢故事，只有一个故事是来自一个更有经验的家伙，她说她和鬼魂或是什么东西发生了冲突。在河边。她的手背被冰柜烫伤，还有几处发际骨折。如果她不是一个彻头彻尾的清醒的人，而且是我可以信任的少数不会胡扯我的拾荒者之一，我就不会再考虑她的故事了。",
+    "responses": []
+  }
+]

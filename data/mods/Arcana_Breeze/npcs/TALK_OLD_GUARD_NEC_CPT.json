@@ -1,0 +1,110 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_CPT",
+    "responses": [
+      {
+        "text": "[任务]我被要求寻找可能处理异常情况的实验室之间货物的信息。你能帮我吗？",
+        "topic": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_1",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "nicholas_mission_2_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "necro_comms_permission",
+                "type": "flag",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_PURIFIER_1_2"
+            },
+            {
+              "u_is_wearing": "badge_marshal"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_1",
+    "dynamic_line": "根据目前的情况，我不确定我们是否能取得当地实验室中的数据。我得知数量有限的研究材料可能已经通过了该站点，而较低优先级的材料仍在制作。长官，我能先问问您为什么需要这些信息吗？",
+    "responses": [
+      {
+        "text": "当地有一名研究人员正在研究异常材料项目，希望能有所改进。",
+        "topic": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_2"
+      },
+      {
+        "text": "我被派去试图获得足够的信息来定位一个与Kairos项目相关的研究机构。",
+        "topic": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_3"
+      },
+      {
+        "text": "我宁愿不说。",
+        "topic": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_REFUSE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_2",
+    "dynamic_line": "我不知道这能如何改善事情，但我会看看我能做些什么。如果你能联系到我们的通讯团队，和他们谈谈，他们可能会找到一些东西。",
+    "speaker_effect": [
+      {
+        "effect": {
+          "u_add_var": "necro_comms_permission",
+          "type": "flag",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "text": "好吧，我看看我能做什么。",
+        "topic": "TALK_OLD_GUARD_NEC_CPT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_3",
+    "dynamic_line": "我不知道那是什么，但好吧。通信记录中可能有与此相关的东西，或者至少有助于你弄清楚的东西。如果你能联系到我们的沟通团队，问问他们。",
+    "speaker_effect": [
+      {
+        "effect": {
+          "u_add_var": "necro_comms_permission",
+          "type": "flag",
+          "context": "rural_church",
+          "value": "yes"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_OLD_GUARD_NEC_CPT"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_OLD_GUARD_NEC_CPT_NICHOLAS_REFUSE",
+    "dynamic_line": "如果你不解释，我也帮不了你，元帅。我们这里有重要的工作要做。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_OLD_GUARD_NEC_CPT"
+      }
+    ]
+  }
+]

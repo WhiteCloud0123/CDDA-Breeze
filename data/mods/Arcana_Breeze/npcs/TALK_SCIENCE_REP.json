@@ -1,0 +1,245 @@
+[
+  {
+    "id": "TALK_SCIENCE_REP",
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "[任务]我被要求寻找可能处理异常情况的实验室之间货物的信息。你能帮我吗？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_1",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "nicholas_mission_2_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_PURIFIER_1_2"
+            }
+          ]
+        }
+      },
+      {
+        "text": "我被派去询问最近有什么异常生物袭击幸存者。知道吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_var": "johnathan_prelude_mid",
+              "type": "mission",
+              "context": "rural_church",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "johnathan_prelude_mid",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "u_has_var": "johnathan_prelude_data_5",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_SCIENCE_REP_GM_PRELUDE"
+      },
+      {
+        "text": " [任务]有人要求我帮助吸引另一个幸存者社区的工作。有人知道可以提供帮助的人吗？",
+        "topic": "TALK_SCIENCE_REP_MISSION_4",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "sofia_allies_secured",
+                "type": "mission",
+                "context": "rural_church",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_CF_REP_4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_1",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "PROF_FED",
+      "yes": "我无能为力，元帅。异常材料在当时不是我最喜欢的研究领域，我也无法准确地从稀薄的空气中提取信息。",
+      "no": "如果你是问这个的话，我们没有人力去破败的旧实验室里闲逛。我不知道你希望我能做什么。"
+    },
+    "responses": [
+      {
+        "text": "我有一份我们目前所知的打印资料，对你有帮助吗？",
+        "condition": {
+          "u_has_item": "cf_purifier_project_data"
+        },
+        "switch": true,
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_2"
+      },
+      {
+        "text": "我可能需要尼古拉斯给我的打印件来帮我…",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "算了。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_2",
+    "type": "talk_topic",
+    "dynamic_line": "我想知道你的资助人究竟是从哪里找到的。嗯，这关系到整个州相当一部分地区的几个相当机密的研究机构。我应该找什么？",
+    "responses": [
+      {
+        "text": "有没有哪批货看起来异常？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_3"
+      },
+      {
+        "text": "你知道这些地点中有没有一个能帮我们弄清楚要运送的物品？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_4"
+      },
+      {
+        "text": "在第二天，我稍后会回来。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_3",
+    "type": "talk_topic",
+    "dynamic_line": "我一眼就能看出的唯一异常之处是你的朋友是如何获得所有这些机密信息的。这是一堆乱七八糟的识别码，它没有告诉我他们在发送什么，也很少告诉我他们在哪里。你想要什么？",
+    "responses": [
+      {
+        "text": "我们从哪里可以得到更多关于他们的信息？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_4"
+      },
+      {
+        "text": "有可能弄清楚这些代码是什么意思吗？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_5"
+      },
+      {
+        "text": "好吧，没关系。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_4",
+    "type": "talk_topic",
+    "dynamic_line": "我想我有主意了。我认得这里提到的一个地方。我曾在一个地方短暂工作过。它们是一种加工中心，因此这些货物中有很大一部分要经过这里。",
+    "responses": [
+      {
+        "text": "有什么有用的吗？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_6"
+      },
+      {
+        "text": "让我想想。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_5",
+    "type": "talk_topic",
+    "dynamic_line": "我在看这个，我想它确实给了我一个大概的想法。我曾经工作过的一个地方似乎在这个名单上，可能还有他们的货运记录。",
+    "responses": [
+      {
+        "text": "多说点。",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_6"
+      },
+      {
+        "text": "让我想想。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_6",
+    "type": "talk_topic",
+    "dynamic_line": "里面有一个服务器机房，里面可能存放着通过该站点发送的信息。但如果你将去探索这样的危险废墟的话，我想请你帮个小忙。",
+    "responses": [
+      {
+        "text": "那是什么？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_7"
+      },
+      {
+        "text": "我需要时间来考虑。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_7",
+    "type": "talk_topic",
+    "dynamic_line": "如果你找到了你要找的东西，我希望你能让你的联系人，不管是谁让你这么做的，给我们发送任何关于医疗用品运输的信息。我们需要所有我们能得到的帮助，如果他们在寻找异常物质，他们有希望保留这些信息。",
+    "responses": [
+      {
+        "text": "成交。我需要做什么呢？",
+        "topic": "TALK_SCIENCE_REP_NICHOLAS_ACCEPT"
+      },
+      {
+        "text": "让我考虑一下。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_NICHOLAS_ACCEPT",
+    "type": "talk_topic",
+    "dynamic_line": "我会给你一条通往那个地方入口的路，但这就是我能给你的全部指引。服务器机房应该是死中心，但不知道下面可能有什么威胁。如果你能从试图疏散的人员身上找到一张钥匙卡的话，即使它被封锁了，也应该可以把你带进去。",
+    "speaker_effect": [
+      {
+        "effect": {
+          "add_mission": "MISSION_CF_PURIFIER_1_INTERLUDE_1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "text": "谢谢！在我走之前…",
+        "topic": "TALK_SCIENCE_REP"
+      },
+      {
+        "text": "谢谢，我晚点回来！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SCIENCE_REP_GM_PRELUDE",
+    "type": "talk_topic",
+    "dynamic_line": "我不愿意把它描述为超自然的或任何类似的东西，但反常也许是合适的。事实上，最近的信息表明，一些未知的异种生物可能会发起新的攻击。我还没有机会收集大量的数据，但是最近我和我的上级讨论了一些事情，关于最近一次巡逻时，我避开了不符合常规模式的生物。我想我会把这个消息转达给你的恩人。"
+  },
+  {
+    "id": "TALK_SCIENCE_REP_MISSION_4",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "PROF_FED",
+      "yes": "恐怕我对此一无所知，执法官。军方派来的代表也许能帮上忙，要不然你去四处打听一下。",
+      "no": "恐怕我对此一无所知。军方派来的代表也许能帮上忙，但他们最近一直疲于奔命。如果你想找工作，最好问问周围的人。"
+    },
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_SCIENCE_REP"
+      }
+    ]
+  }
+]

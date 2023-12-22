@@ -1,0 +1,58 @@
+[
+  {
+    "id": "TALK_GUARD_CF_AUX",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "npc_has_trait": "CF_AUX_MARKER_3",
+      "yes": [
+        "我只是个守卫，如果你需要什么，老大在里屋。",
+        "伙计，我觉得这个地方根本不需要安保…",
+        "如果你想找一个商人或做生意，里屋在那边。",
+        "对不起，这里不归我管。",
+        "如果是强盗或丧尸的问题，去告诉老大，如果是那些狗屎鬼东西，去见蒙面人。别的我也帮不了你。"
+      ],
+      "no": {
+        "npc_has_trait": "CF_AUX_MARKER_2",
+        "yes": [
+          "为什么我觉得这远远不是我工资范围内的事…",
+          "恐怕这不归我负责。医生在后面，这片地盘归教堂的人管。",
+          "你好。这里有点忙，你应当和这里的管事的人谈谈。",
+          "嘿，恐怕有点忙。",
+          {
+            "u_is_wearing": "badge_marshal",
+            "yes": [
+              "Sorry Marshal, no time to chat.  They're keeping us fairly busy these days.",
+              "How did you find this bunch of eccentrics, Marshal…",
+              "Nice to see a friendly face, Marshal.",
+              "I really hope top brass doesn't screw this assignment up…"
+            ],
+            "no": "Sorry, don't have time to chat."
+          }
+        ],
+        "no": {
+          "npc_has_trait": "CF_AUX_MARKER_1",
+          "yes": [
+            "不知道这地方是怎么回事。这里打猎很好，虽然有点奇怪的氛围…",
+            "你好。如果你需要什么，老板在里屋。",
+            "我只是雇来帮忙的，如果你需要什么可以找别人谈谈。",
+            "对不起，我不是负责人。我只是帮忙清除垃圾。",
+            "后面的人负责打猎，戴面具的人负责表演。",
+            "这些天没多少时间说话，他们让我忙得团团转。不过很高兴见到你。"
+          ],
+          "no": [
+            "嗯，这个地方被好好清理过了，应该跟他们谈谈，要是工作量没这么大了就开个派对...",
+            "如果你要买东西，商人在后面的房间里。",
+            "有点忙，最近忙得不可开交。",
+            "你好。没时间谈话了，对不起。"
+          ]
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "忙你的吧……",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

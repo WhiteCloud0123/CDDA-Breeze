@@ -1,0 +1,1053 @@
+[
+  {
+    "id": "arcana_aftermath_conjure_flame_bash_extra",
+    "type": "SPELL",
+    "name": {
+      "str": "Conjure Flame Bash Extra (obsolete)"
+    },
+    "description": "Dirty hack to work around bugs in magic code.",
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "message": "",
+    "effect_str": "arcana_pulse",
+    "max_level": 10,
+    "min_damage": 24,
+    "max_damage": 12,
+    "damage_increment": -1.2,
+    "min_range": 12,
+    "max_range": 24,
+    "range_increment": 1.2,
+    "min_aoe": 1,
+    "max_aoe": 5,
+    "aoe_increment": 0.4
+  },
+  {
+    "id": "arcana_aftermath_sundering_quake_extra",
+    "type": "SPELL",
+    "name": {
+      "str": "Sundering Quake Extra (obsolete)"
+    },
+    "description": "Dirty hack to work around bugs in magic code.",
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "message": "",
+    "effect_str": "arcana_pulse",
+    "max_level": 10,
+    "min_damage": 15,
+    "max_damage": 5,
+    "damage_increment": -1,
+    "min_range": 10,
+    "max_range": 20,
+    "range_increment": 1,
+    "min_aoe": 3,
+    "max_aoe": 8,
+    "aoe_increment": 0.5
+  },
+  {
+    "id": "arcana_aftermath_wave_destruction_pulse_extra",
+    "type": "SPELL",
+    "name": {
+      "str": "Wave of Destruction Pulse Extra (obsolete)"
+    },
+    "description": "Dirty hack to work around bugs in magic code.",
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "message": "",
+    "effect_str": "arcana_pulse",
+    "max_level": 20,
+    "min_damage": 12,
+    "max_damage": 4,
+    "damage_increment": -0.4,
+    "min_aoe": 8,
+    "max_aoe": 30,
+    "aoe_increment": 1.4
+  },
+  {
+    "id": "arcana_item_meteoric_verge_pulse_extra",
+    "type": "SPELL",
+    "name": {
+      "str": "Verge Pulse Extra (obsolete)"
+    },
+    "description": "Dirty hack to work around bugs in magic code.",
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "message": "",
+    "effect_str": "arcana_pulse",
+    "min_damage": 10,
+    "max_damage": 10,
+    "min_aoe": 9,
+    "max_aoe": 9,
+    "min_range": 50,
+    "max_range": 50
+  },
+  {
+    "id": "arcana_item_scroll_destruction_pulse_extra",
+    "type": "SPELL",
+    "name": {
+      "str": "Divine Scroll: Destruction Pulse Extra (obsolete)"
+    },
+    "description": "Dirty hack to work around bugs in magic code.",
+    "valid_targets": [
+      "ground"
+    ],
+    "effect": "ter_transform",
+    "shape": "blast",
+    "flags": [
+      "SILENT",
+      "IGNORE_WALLS",
+      "NO_PROJECTILE"
+    ],
+    "message": "",
+    "effect_str": "arcana_pulse",
+    "max_level": 20,
+    "min_damage": 5,
+    "max_damage": 5,
+    "min_aoe": 24,
+    "max_aoe": 24
+  },
+  {
+    "id": "arcana_ench_somen_clairvoyance",
+    "type": "enchantment",
+    "has": "WORN",
+    "condition": "ACTIVE",
+    "mutations": [
+      "ARCANA_MASK_INSIGHT_EFFECT"
+    ],
+    "values": [
+      {
+        "value": "BONUS_DODGE",
+        "add": 2
+      }
+    ],
+    "ench_effects": [
+      {
+        "effect": "mask_blind_immunity",
+        "intensity": 1
+      }
+    ]
+  },
+  {
+    "id": "ENCH_MANTLE_SHADOWS",
+    "type": "enchantment",
+    "has": "WORN",
+    "condition": "ACTIVE",
+    "ench_effects": [
+      {
+        "effect": "arcana_invis_lesser",
+        "intensity": 1
+      }
+    ]
+  },
+  {
+    "id": "arcana_ench_halo_flute_effect",
+    "type": "enchantment",
+    "has": "WORN",
+    "condition": "ALWAYS",
+    "values": [
+      {
+        "value": "MOVE_COST",
+        "multiply": -0.9
+      },
+      {
+        "value": "BONUS_DODGE",
+        "add": 10
+      }
+    ],
+    "ench_effects": [
+      {
+        "effect": "halo_flute_effect",
+        "intensity": 1
+      }
+    ]
+  },
+  {
+    "id": "arcana_ench_mech_laser",
+    "type": "enchantment",
+    "has": "WIELD",
+    "condition": "ALWAYS",
+    "values": [
+      {
+        "value": "ARMOR_BASH",
+        "add": -25
+      },
+      {
+        "value": "ARMOR_CUT",
+        "add": -35
+      },
+      {
+        "value": "ARMOR_STAB",
+        "add": -30
+      },
+      {
+        "value": "ARMOR_BULLET",
+        "add": -40
+      },
+      {
+        "value": "ARMOR_HEAT",
+        "add": -20
+      },
+      {
+        "value": "ARMOR_ACID",
+        "add": -20
+      }
+    ],
+    "ench_effects": [
+      {
+        "effect": "arcana_mech_laser_immunities",
+        "intensity": 1
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "THRESH_SERAPHIC_SIDE_EFFECTS",
+    "name": {
+      "str": "Dummy Mutation Threshold"
+    },
+    "description": "这只存在于确保天使之影的精神疤痕能力表现正常。",
+    "points": 0,
+    "valid": false,
+    "purifiable": false,
+    "threshold": true
+  },
+  {
+    "type": "effect_type",
+    "id": "cf_aux_merchant_restocked",
+    "name": [
+      "最近重新进货"
+    ],
+    "desc": [
+      "AI tag marking an NPC as having triggered their merchant restock effect recently.  Intended duration 1 week.  This is a bug if you have it."
+    ]
+  },
+  {
+    "id": "MISSION_CF_PURIFIER_2",
+    "//": "This missions is here so that I can expand on the mission chain later on without old saves being stuck.",
+    "type": "mission_definition",
+    "name": {
+      "str": "占位任务"
+    },
+    "goal": "MGOAL_KILL_MONSTER",
+    "difficulty": 4,
+    "value": 150000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "…",
+      "offer": "…",
+      "accepted": "…",
+      "rejected": "…",
+      "advice": "…",
+      "inquire": "…",
+      "success": "…",
+      "success_lie": "…",
+      "failure": "…"
+    }
+  },
+  {
+    "type": "recipe",
+    "result": "gloves_plate",
+    "id_suffix": "arcana",
+    "obsolete": true
+  },
+  {
+    "id": "summon_kreck_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：欺诈（激活）",
+      "str_pl": "雕文：欺诈（激活）"
+    },
+    "description": "一种奇怪的银徽章，上面刻有怪诞生物的描述。使用它会召唤出一个克雷克，并把它与你的意志捆绑在一起。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "10 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_kreck_summoned_glyph",
+      "friendly_msg": "克雷克期待地看着你，好像想知道你在谋划怎样的恶作剧。",
+      "hostile_msg": "克雷克会不规则地模仿你的动作，到处蹦蹦跳跳地嘲笑你！",
+      "difficulty": 1,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_blank_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：树根（激活）",
+      "str_pl": "雕文：树根（激活）"
+    },
+    "description": "一个奇怪的银色徽章，上面刻着一种来自外星的植物。使用它会召唤出一个三尖树，并将其绑定到你的意志上。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "20 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_triffid_summoned",
+      "friendly_msg": "这个移动的植物生物很难理解，但你怀疑它要么是友好的，要么不把你视作威胁。",
+      "hostile_msg": "即使没有任何语言或可辨认的肢体语言，你很快感觉到这个植物怪物是敌对的。",
+      "difficulty": 2,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_flaming_eye_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：欣嫩谷（激活）",
+      "str_pl": "雕文：欣嫩谷（激活）"
+    },
+    "description": "一枚奇怪的银制徽章，上面刻着扭曲的天使形象。使用它会召唤出一个血肉天使，并绑定在你的意志上。希望如此。",
+    "price": "1500 USD",
+    "price_postapoc": "30 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_flesh_angel_summoned_glyph",
+      "friendly_msg": "一个扭曲的神使的模仿物被召唤出来，并被你的意志所束缚。",
+      "hostile_msg": "血肉天使邪恶地注视着你，无视你的命令。",
+      "difficulty": 3,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_hunting_horror_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：爬行混沌（激活）",
+      "str_pl": "雕文：爬行混沌（激活）"
+    },
+    "description": "奇怪的银徽章，不规则地刻着难以辨认的符文。使用它会将一个狩猎恐惧与你的意志捆绑在一起。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "40 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_hunting_horror_summoned",
+      "friendly_msg": "狩猎恐惧随时听候你的吩咐。也许是星间潜行者的恩赐？",
+      "hostile_msg": "你能感觉到奈亚拉托提普的目光停在你身上。你真愚蠢，试图偷走无名古神的鹞！",
+      "difficulty": 4,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_dark_wyrm_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：眼珠（激活）",
+      "str_pl": "雕文：眼珠（激活）"
+    },
+    "description": "一枚奇怪的银制徽章，上面刻着双翼龙形图案。使用它会召唤出一只暗龙，并绑定在你的意志上。希望如此。",
+    "price": "1500 USD",
+    "price_postapoc": "50 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_dark_wyrm_summoned_glyph",
+      "friendly_msg": "暗龙突然出现，似乎被动地看待你，或者至少忽视你的存在。",
+      "hostile_msg": "暗龙突然出现，对陌生的声音和气味做出反应，发出恶毒的尖叫声！",
+      "difficulty": 5,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_mi_go_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：尤格斯（激活）",
+      "str_pl": "雕文：尤格斯（激活）"
+    },
+    "description": "一种奇怪的银徽章，上面刻有奇怪的几丁质实体的描绘。使用它会将一个米·戈与你的意志绑定在一起。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "60 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_mi_go_summoned",
+      "friendly_msg": "你念诵咒语，米-戈用某种未知的语言轻声回应你。感觉它很友好。",
+      "hostile_msg": "你开始念诵咒语，当米·戈听到你的声音时，它开始嘲笑你努力控制它！",
+      "difficulty": 6,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_jabberwock_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：傀儡（激活）",
+      "str_pl": "雕文：傀儡（激活）"
+    },
+    "description": "一种奇怪的银徽章，上面用一种未知的语言刻着反写。使用它会将一个伽卜沃克与你的意志捆绑在一起。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "70 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_jabberwock_summoned_glyph",
+      "friendly_msg": "你听到一种奇怪的嗡嗡声，这种生物被你的意志所束缚。",
+      "hostile_msg": "这个生物用它那火焰般的眼睛与你对视，抗拒着你对它的控制！",
+      "difficulty": 7,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_flying_polyp_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：奈克特（激活）",
+      "str_pl": "雕文：奈克特（激活）"
+    },
+    "description": "一种奇怪的银徽章，上面刻着一种类似珊瑚的奇怪图案。使用它会召唤出一个盲目者，并将它绑定到你的意志上。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "80 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_flying_polyp_summoned",
+      "friendly_msg": "盲目者抽搐了一会儿，然后它的运动才稳定下来。现在它看起来很友好。",
+      "hostile_msg": "盲目者不稳定地抽搐着，对你的出现做出明显的敌意反应！",
+      "difficulty": 8,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_yugg_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：哈迪斯（激活）",
+      "str_pl": "雕文：哈迪斯（激活）"
+    },
+    "description": "一个奇怪的银质徽章，上面刻有古代克托尼亚人的财富。使用它会召唤出一个尤格，并把它束缚在你的意志上。如果成功的话。",
+    "price": "1500 USD",
+    "price_postapoc": "90 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_yugg_summoned",
+      "friendly_msg": "用死亡世界的财富作为祭品，你束缚育格巨噬虫为你服务。你觉得这和它通常的行动方式是相反的。",
+      "hostile_msg": "献上的财富不足以安抚Ubb的仆人。这个生物变得充满敌意！",
+      "difficulty": 9,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "summon_shoggoth_on",
+    "type": "TOOL",
+    "copy-from": "silver_glyph",
+    "name": {
+      "str": "雕文：古老者（激活）",
+      "str_pl": "雕文：古老者（激活）"
+    },
+    "description": "一个奇怪的银徽章，上面刻着许多奇怪的眼睛符号。使用它会把一个修格斯束缚在你的意志上。如果成功的话。这很难控制。",
+    "price": "1500 USD",
+    "price_postapoc": "100 USD",
+    "max_charges": 1,
+    "charges_per_use": 1,
+    "turns_per_charge": 1,
+    "revert_to": "silver_glyph",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_shoggoth_summoned",
+      "friendly_msg": "你在脑海里听到一个声音。“特基利……李？”你的思想对shoggoth产生了一种奇怪的影响。",
+      "hostile_msg": "你听到脑海里有个声音。“Tekeli-li!”修格斯抗拒你控制它的努力！",
+      "difficulty": 10,
+      "moves": 60,
+      "place_randomly": true,
+      "is_pet": true,
+      "skills": [
+        "magic"
+      ]
+    }
+  },
+  {
+    "id": "arcana_item_pet_buff",
+    "type": "SPELL",
+    "name": {
+      "str": "Familiar Pact Buff Effect"
+    },
+    "description": "Binds friendly summoned monsters to you, making it serve as a pet if it isn't already fully tamed.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally"
+    ],
+    "//": "Glyph monsters will already count as pets if friendly, so not subject to this.",
+    "targeted_monster_ids": [
+      "mon_dark_wyrm_summoned",
+      "mon_zombie_fiend_summoned",
+      "mon_jabberwock_summoned",
+      "mon_homunculus_summoned",
+      "mon_thing_summoned",
+      "mon_dog_skeleton_summoned",
+      "mon_skeleton_summoned",
+      "mon_vortex_summoned",
+      "mon_yugg_summoned",
+      "mon_kreck_summoned",
+      "mon_triffid_summoned",
+      "mon_flesh_angel_summoned",
+      "mon_hunting_horror_summoned",
+      "mon_mi_go_summoned",
+      "mon_flying_polyp_summoned",
+      "mon_shoggoth_summoned",
+      "mon_shadow_summoned",
+      "mon_shadow_snake_summoned",
+      "mon_centipede_giant_summoned"
+    ],
+    "flags": [
+      "SILENT",
+      "NO_HANDS",
+      "NO_LEGS"
+    ],
+    "effect_str": "talisman_pet_buff",
+    "min_aoe": 5,
+    "max_aoe": 5,
+    "base_casting_time": 5,
+    "final_casting_time": 5,
+    "min_duration": 8640000,
+    "max_duration": 8640000
+  },
+  {
+    "type": "trap",
+    "id": "tr_arcana_item_hexenhammer",
+    "name": "眩晕符文",
+    "color": "yellow",
+    "symbol": "^",
+    "action": "spell",
+    "visibility": -1,
+    "avoidance": 99,
+    "difficulty": 0,
+    "drops": [
+      {
+        "item": "essence_dull",
+        "quantity": 1
+      }
+    ],
+    "spell_data": {
+      "id": "arcana_trap_hexenhammer"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_arcana_item_armor_wyrm",
+    "name": "腐蚀符文",
+    "color": "green",
+    "symbol": "^",
+    "action": "spell",
+    "visibility": -1,
+    "avoidance": 99,
+    "difficulty": 0,
+    "drops": [
+      {
+        "item": "essence_blood",
+        "quantity": 1
+      }
+    ],
+    "spell_data": {
+      "id": "arcana_trap_armor_wyrm"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_arcana_item_lightning",
+    "name": "电击符文",
+    "color": "white",
+    "symbol": "^",
+    "action": "spell",
+    "visibility": -1,
+    "avoidance": 99,
+    "difficulty": 0,
+    "drops": [
+      {
+        "item": "essence",
+        "quantity": 1
+      }
+    ],
+    "spell_data": {
+      "id": "arcana_trap_lightning"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_arcana_item_spear_pestilence",
+    "name": "瘟疫符文",
+    "color": "blue",
+    "symbol": "^",
+    "action": "spell",
+    "visibility": -1,
+    "avoidance": 99,
+    "difficulty": 0,
+    "drops": [
+      {
+        "item": "essence",
+        "quantity": 1
+      }
+    ],
+    "spell_data": {
+      "id": "arcana_trap_spear_pestilence"
+    }
+  },
+  {
+    "type": "trap",
+    "id": "tr_arcana_item_lichhook",
+    "name": "蛇行符文",
+    "color": "brown",
+    "symbol": "^",
+    "action": "spell",
+    "visibility": -1,
+    "avoidance": 99,
+    "difficulty": 0,
+    "drops": [
+      {
+        "item": "essence_blood",
+        "quantity": 1
+      }
+    ],
+    "spell_data": {
+      "id": "arcana_trap_lichhook"
+    }
+  },
+  {
+    "id": "arcana_trap_hexenhammer",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Hammer Flash"
+    },
+    "description": "闪光弹效果堪比猎人之锤，但更弱。",
+    "message": "一道耀眼的金色闪光和雷鸣般的巨响从符号中爆发！",
+    "valid_targets": [
+      "ally",
+      "hostile",
+      "ground",
+      "self"
+    ],
+    "flags": [
+      "RANDOM_DURATION"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_item_hammerzeit_attack",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_item_hammerzeit_dazzle",
+        "hit_self": false
+      }
+    ],
+    "effect": "flashbang",
+    "shape": "blast",
+    "min_damage": 15,
+    "max_damage": 15,
+    "min_aoe": 2,
+    "max_aoe": 2
+  },
+  {
+    "id": "arcana_trap_hexenhammer_attack",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Hammer Secondary Effect"
+    },
+    "description": "对每一个具有SUNDEATH/NIGHT_隐身能力的香草怪物，以及每一个基于这种生物召唤的怪物，都有轻微的伤害和眩晕。",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "ally",
+      "hostile"
+    ],
+    "targeted_monster_ids": [
+      "mon_dark_wyrm",
+      "mon_albino_penguin",
+      "mon_blank",
+      "mon_darkman",
+      "mon_hunting_horror",
+      "mon_shadow",
+      "mon_shadow_snake",
+      "mon_unseen_hunter",
+      "mon_zougar_shady",
+      "mon_zombie_pupa_decoy_shady",
+      "mon_spawn_raptor_shady",
+      "mon_zombie_brute_ninja",
+      "mon_zombie_shady",
+      "mon_zombie_soldier_blackops_1",
+      "mon_zombie_soldier_blackops_2",
+      "mon_dark_wyrm_summoned",
+      "mon_dark_wyrm_summoned_glyph",
+      "mon_hunting_horror_summoned",
+      "mon_shadow_summoned",
+      "mon_shadow_summoned_fake",
+      "mon_shadow_snake_summoned",
+      "mon_shadow_snake_summoned_fake",
+      "mon_archon",
+      "mon_seraphic_shade",
+      "mon_seraphic_shade_fake"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION",
+      "SILENT"
+    ],
+    "effect_str": "dazed",
+    "min_damage": 2,
+    "max_damage": 4,
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "min_duration": 100,
+    "max_duration": 300,
+    "damage_type": "heat"
+  },
+  {
+    "id": "arcana_trap_hexenhammer_dazzle",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Hammer Blindness"
+    },
+    "description": "This is a hack for the flashbang effect not affecting NPCs.",
+    "message": "",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile"
+    ],
+    "flags": [
+      "RANDOM_DURATION",
+      "SILENT"
+    ],
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "min_duration": 100,
+    "max_duration": 300,
+    "field_id": "fd_dazzling",
+    "field_chance": 1,
+    "min_field_intensity": 1,
+    "max_field_intensity": 1
+  },
+  {
+    "id": "arcana_trap_armor_wyrm",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Wyrmskin Acid"
+    },
+    "description": "暗龙毒液的较弱版本。",
+    "message": "流动的毒液向前滑动！",
+    "effect": "attack",
+    "shape": "blast",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "sound_description": "splash",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION"
+    ],
+    "min_damage": 8,
+    "max_damage": 15,
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "min_duration": 4500,
+    "max_duration": 13500,
+    "damage_type": "acid",
+    "field_id": "fd_acid",
+    "field_chance": 2,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_trap_lightning",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Lightning"
+    },
+    "description": "随机伤害的闪电爆炸，由雷霆战锤和流星边缘使用。",
+    "message": "一道闪电从地面迸射出！",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "effect_str": "stunned",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION"
+    ],
+    "sound_description": "an electric buzzing",
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 800,
+    "max_duration": 1600,
+    "min_damage": 15,
+    "max_damage": 60,
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "damage_type": "electric",
+    "field_id": "fd_electricity",
+    "field_chance": 2,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_trap_spear_pestilence",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Pestilence"
+    },
+    "description": "类似于长矛效果，但专注于仆从召唤。",
+    "message": "害虫从地球上溜出来帮助你！",
+    "valid_targets": [
+      "ground"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE"
+    ],
+    "effect": "summon",
+    "shape": "blast",
+    "effect_str": "mon_centipede_giant_summoned",
+    "min_damage": 2,
+    "max_damage": 6,
+    "min_aoe": 6,
+    "max_aoe": 6,
+    "min_duration": 1800000,
+    "max_duration": 1800000
+  },
+  {
+    "id": "arcana_trap_lichhook",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Sundering Flesh"
+    },
+    "description": "诱捕并毒害一个目标，物品版本效果的一半。",
+    "message": "剧毒的触手从地里冒了出来！",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "extra_effects": [
+      {
+        "id": "arcana_trap_lichhook_freeze",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_trap_lichhook_slow",
+        "hit_self": false
+      },
+      {
+        "id": "arcana_trap_lichhook_poison",
+        "hit_self": false
+      }
+    ],
+    "effect_str": "badpoison",
+    "flags": [
+      "RANDOM_DAMAGE",
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 18000,
+    "max_duration": 24000,
+    "min_damage": 15,
+    "max_damage": 25,
+    "min_aoe": 2,
+    "max_aoe": 2,
+    "damage_type": "biological",
+    "field_id": "fd_gibs_flesh",
+    "field_chance": 2,
+    "min_field_intensity": 2,
+    "max_field_intensity": 2,
+    "field_intensity_variance": 0.5
+  },
+  {
+    "id": "arcana_trap_lichhook_freeze",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Sundering Flesh Freeze"
+    },
+    "description": "This paralyzes the target for a few seconds.",
+    "message": "",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "flags": [
+      "RANDOM_DAMAGE"
+    ],
+    "effect": "mod_moves",
+    "shape": "blast",
+    "min_damage": -300,
+    "max_damage": -500,
+    "min_aoe": 2,
+    "max_aoe": 2
+  },
+  {
+    "id": "arcana_trap_lichhook_poison",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Sundering Flesh Poison"
+    },
+    "description": "这会增加低等级毒药，持续时间减半。",
+    "message": "",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "effect_str": "poison",
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 24000,
+    "max_duration": 24000,
+    "min_aoe": 2,
+    "max_aoe": 2
+  },
+  {
+    "id": "arcana_trap_lichhook_slow",
+    "type": "SPELL",
+    "name": {
+      "str": "Trap: Sundering Flesh Slow"
+    },
+    "description": "This adds paralytic poison.",
+    "message": "",
+    "valid_targets": [
+      "self",
+      "ally",
+      "hostile",
+      "ground"
+    ],
+    "effect_str": "paralyzepoison",
+    "flags": [
+      "RANDOM_DURATION"
+    ],
+    "effect": "attack",
+    "shape": "blast",
+    "min_duration": 18000,
+    "max_duration": 24000,
+    "min_aoe": 2,
+    "max_aoe": 2
+  }
+]

@@ -1,0 +1,1110 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER",
+    "dynamic_line": {
+      "npc_has_trait": "SHRIKE_MISSION_MARKER",
+      "yes": {
+        "npc_has_var": "elena_convinced",
+        "type": "flag",
+        "context": "shrike",
+        "value": "yes",
+        "yes": "欢迎光临。尽量不要惹麻烦。",
+        "no": {
+          "npc_has_var": "elena_failed",
+          "type": "flag",
+          "context": "shrike",
+          "value": "yes",
+          "yes": "我们没什么可讨论的了。离开。",
+          "no": {
+            "u_has_any_trait": [
+              "PROF_CLEANSINGFLAME",
+              "PROF_CLEANSINGFLAME2"
+            ],
+            "yes": "…猎人。他们不会只派一个完整的狩猎队。你为什么在这里？",
+            "no": {
+              "u_has_any_trait": [
+                "PROF_SANGUINE",
+                "THRESH_DRAGONBLOOD"
+              ],
+              "yes": "嗯，你不觉得很惊喜吗？我知道猎人在这里侦察，跟踪我们。但他们让你通过了。我想知道为什么？",
+              "no": "猎人派你来的，不是吗？不寻常的。他们的角度是什么？"
+            }
+          }
+        }
+      },
+      "no": {
+        "u_has_any_trait": [
+          "PROF_CLEANSINGFLAME",
+          "PROF_CLEANSINGFLAME2"
+        ],
+        "yes": [
+          "我没什么好说的，猎人。如果你还没有惹麻烦的话，就去和猎人长官谈谈。",
+          "嗯。你们其他人手呢，他们通常一次来一打…",
+          "你胆子还真大，竟敢闯进来。",
+          "如果你有什么要说的话，就跟猎人长官说。",
+          "我会让你活着走出大门，别让我遗憾..."
+        ],
+        "no": [
+          "如果你有什么事，要找我们的领导。",
+          "你知道，在这里不安全。",
+          "这儿不归我管，抱歉。"
+        ]
+      }
+    },
+    "responses": [
+      {
+        "text": "【任务】你有关于被诅咒的仪式刀的信息吗？",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_mission": "MISSION_HERMIT_RESTORE_SWORD"
+                },
+                {
+                  "u_has_effect": "hermit_quest_backdoor"
+                }
+              ]
+            },
+            {
+              "npc_has_trait": "SHRIKE_MISSION_MARKER"
+            },
+            {
+              "npc_has_var": "elena_convinced",
+              "type": "flag",
+              "context": "shrike",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_blade_help",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE"
+      },
+      {
+        "text": "……屠猎者。我来这里是为了了解情况。",
+        "condition": {
+          "and": [
+            {
+              "npc_has_trait": "SHRIKE_MISSION_MARKER"
+            },
+            {
+              "u_has_any_trait": [
+                "PROF_CLEANSINGFLAME",
+                "PROF_CLEANSINGFLAME2"
+              ]
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_convinced",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_failed",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CLEANSINGFLAME"
+      },
+      {
+        "text": "我要我们做的任何研究都能帮上忙。",
+        "condition": {
+          "and": [
+            {
+              "npc_has_trait": "SHRIKE_MISSION_MARKER"
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_convinced",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_failed",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_QUERY"
+      },
+      {
+        "text": "你是谁？",
+        "condition": {
+          "and": [
+            {
+              "npc_has_trait": "SHRIKE_MISSION_MARKER"
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_failed",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_WHO"
+      },
+      {
+        "text": "你能告诉我这是个什么地方？",
+        "condition": {
+          "and": [
+            {
+              "npc_has_trait": "SHRIKE_MISSION_MARKER"
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_failed",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_WHERE"
+      },
+      {
+        "text": "你有什么要交易的？",
+        "effect": "start_trade",
+        "condition": {
+          "and": [
+            {
+              "npc_has_trait": "SHRIKE_MISSION_MARKER"
+            },
+            {
+              "u_has_var": "elena_trade",
+              "type": "flag",
+              "context": "shrike",
+              "value": "yes"
+            },
+            {
+              "not": {
+                "npc_has_var": "elena_failed",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "[攻击]啊，圣洁的马格姆...",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "effect": [
+          {
+            "u_faction_rep": -30
+          },
+          "insult_combat"
+        ],
+        "topic": "TALK_DONE",
+        "opinion": {
+          "value": -1
+        }
+      },
+      {
+        "text": "我要走了…",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "你听说过守誓者，是吗？那些仆从们从远方来到他们的新神那里。撇开我们的分歧不谈，我们不应该向他们隐瞒我们的行为。我不知道你听过多少故事，猎人，所以请你走开。",
+      "no": {
+        "u_has_any_trait": [
+          "PROF_CHALICE",
+          "PROF_CHALICE2"
+        ],
+        "yes": "你一定知道，不是吗？巫师，腐败仪式，把我们两个教团的最后一口气都淹没在血腥和疯狂之中的东西。我希望策划这个阴谋的法师和祭司们一起死在那里，他的灵魂被他们最后召唤的可憎之物吞噬。告诉我，守护者。你在寻找什么答案？",
+        "no": {
+          "u_has_trait": "PROF_SANGUINE",
+          "yes": "我不知道你知道多少。我们的秩序因短视而自我毁灭的故事让人记忆犹新。我可以回答你的问题。",
+          "no": "这让我想起了一个有趣的故事，从过去的日子。三博士篡改另一个骑士团的圣物。如果我记得的话，他们几乎被炸飞了。一个鼓励我们打破猩红教派的事件。关于那个古老的故事你想知道什么？"
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "他们对剑做了什么？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_WHAT1"
+      },
+      {
+        "text": "那时候发生了什么？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_WHAT2"
+      },
+      {
+        "text": "我需要帮助解除诅咒。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_HELP"
+      },
+      {
+        "text": "也许下次吧。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_WHAT1",
+    "type": "talk_topic",
+    "dynamic_line": "他们暗地里诅咒它。我不知道它是如何运作的，但它是为了破坏守护者的圣餐仪式。致命的反冲，召唤一些在他们控制下的小地狱生物，谁知道呢？我们的命令已经走到了尽头，一些该死的傻瓜马格斯有一个计划，他们认为会把我们从悬崖边拖回来，代价是守门员。显然没用。",
+    "responses": [
+      {
+        "text": "我懂了。就像你说的？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE"
+      },
+      {
+        "text": "让我们谈点其他的事情吧。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_WHAT2",
+    "type": "talk_topic",
+    "dynamic_line": "据我所知，他们引起了其他人的注意。我不知道他们在想什么，也不知道他们有什么计划会从中受益。只是负责那个计划的法师得到了他们应得的。我几乎希望我能在那里看到它，尽管没人能在那里存活很长时间…",
+    "responses": [
+      {
+        "text": "正确的。我们在哪里？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE"
+      },
+      {
+        "text": "我们换个话题吧。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_HELP",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "你也和他们一起工作？也许我们大家终究还是有希望的。我已经习惯于看到你们这些法师猎人试图用他们的小锤子砸碎任何他们无法利用的遗迹。我不熟悉诅咒的功能，但它的基本原理可以在血红法典中找到。如果你能接触到守誓者自己的献祭仪式，你也可以用它做些什么。",
+      "no": {
+        "u_has_any_trait": [
+          "PROF_CHALICE",
+          "PROF_CHALICE2"
+        ],
+        "yes": "我知道你的圣书中包括了可以用来做这件事的祭祀仪式。你可能需要关于诅咒如何运作的信息来正确地修复它，其中一些可能会从一本乐观的法典中被弄明白。",
+        "no": {
+          "u_has_trait": "PROF_SANGUINE",
+          "yes": "你需要守誓者的魔法来修复守护者的遗物，这是肯定的。很少有法师能处理缠绕的诅咒，所以你可能也需要一份血红法典。否则你更有可能把诅咒连同魔力一起烧掉，令它变成一块无用的金属。",
+          "no": "I don't know if I can help you very directly.  You'll need information on the curse itself first, from a copy of the Sanguine Codex.  Then you'll want the rituals the sword's old owners used for consecrating relics.  That's probably in their book, Oaths To The Chalice."
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "我们不只是用锤子砸东西，信不信由你。让它既安全又实用是一个更好的结果。",
+        "condition": {
+          "u_has_trait": "PROF_CLEANSINGFLAME2"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_1"
+      },
+      {
+        "text": "我们有更多的方法不仅仅是破坏，而且每种方法都有原因。因此，不想销毁这件物品。",
+        "condition": {
+          "u_has_trait": "PROF_CLEANSINGFLAME"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_1"
+      },
+      {
+        "text": "所以我需要一份乐观的法典，太好了。",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_2"
+      },
+      {
+        "text": "你有我可以用的血法典吗？",
+        "switch": true,
+        "condition": {
+          "not": {
+            "u_has_item": "book_bloodmagic"
+          }
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CODEX"
+      },
+      {
+        "text": "我还有其他问题。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE"
+      },
+      {
+        "text": "我会设法弄清楚的。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_1",
+    "type": "talk_topic",
+    "dynamic_line": "我知道。抛开过去的习惯，有一个好的机会朝着这个目标努力。我猜你需要一份抄本？如果仪式需要的话，我会相信你的。",
+    "responses": [
+      {
+        "text": "我已经有一个了。不过，谢谢你。",
+        "switch": true,
+        "condition": {
+          "u_has_item": "book_bloodmagic"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_3"
+      },
+      {
+        "text": "谢谢，是的。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CODEX"
+      },
+      {
+        "text": "我自己会想办法的。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_3",
+    "type": "talk_topic",
+    "dynamic_line": "你似乎充满了惊讶。我不管你从哪儿想出来的问题。千万不要把它烧了，希望那把旧剑对此会有所帮助。",
+    "speaker_effect": {
+      "effect": {
+        "npc_add_var": "elena_blade_help",
+        "type": "flag",
+        "context": "shrike",
+        "value": "yes"
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_2",
+    "type": "talk_topic",
+    "dynamic_line": "是的，你会的。我想我可以借给你一个。我相信你会好好照顾的，明白吗？",
+    "responses": [
+      {
+        "text": "没有必要。我已经有一个了。",
+        "switch": true,
+        "condition": {
+          "u_has_item": "book_bloodmagic"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CF_3"
+      },
+      {
+        "text": "了解。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CODEX"
+      },
+      {
+        "text": "我下次再考虑。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BLADE_CODEX",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CLEANSINGFLAME",
+        "PROF_CLEANSINGFLAME2"
+      ],
+      "yes": "就这样吧。我会给你一份复印件，但可以考虑借阅。这意味着，首先，要好好照顾它。总有一天，当人类可以期待片刻的和平和在废墟上重建的希望时，我希望你们能活到最后。然后我们再考虑归还那本书。",
+      "no": "那好吧。干得好。好好照顾它，并小心地应用你将在里面发现的教训。正如我们当年所说，通往权力的道路并不容易走。"
+    },
+    "speaker_effect": {
+      "effect": [
+        {
+          "npc_add_var": "elena_blade_help",
+          "type": "flag",
+          "context": "shrike",
+          "value": "yes"
+        },
+        {
+          "u_spawn_item": "book_bloodmagic"
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "到时候我们再看看情况如何。",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "谢谢你。",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "非常感谢。再见了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CLEANSINGFLAME",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_DRAGONBLOOD",
+      "yes": "我是对的。你还是个猎人。然而，你已经偏离了你的秩序。他们还是派你来的，不是吗？你自己解释一下。",
+      "no": {
+        "u_has_trait": "THRESH_VEIL",
+        "yes": "你有些事，猎人。不正常的事。你不是来这里代表净化圣火的吧？你在找什么？",
+        "no": "你凭什么认为我会相信你的意图？你们这帮人毁了这么多本可以用来适应和生存的知识。"
+      }
+    },
+    "responses": [
+      {
+        "text": "我用了我认为必要的方法。我来这里是为了确保我们的未来，而不仅仅是为了我自己的生存。",
+        "condition": {
+          "u_has_trait": "THRESH_DRAGONBLOOD"
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_FALLEN"
+      },
+      {
+        "text": "我现在不仅仅是个猎人。我理解为确保人类生存而共同努力的重要性，使用任何必要的手段。你能帮我们吗？",
+        "condition": {
+          "and": [
+            {
+              "u_has_trait": "THRESH_VEIL"
+            },
+            {
+              "u_has_effect": "shrike_inquire_denied"
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CEASE",
+        "opinion": {
+          "anger": 2
+        }
+      },
+      {
+        "text": "我现在不仅仅是个猎人。我理解为确保人类生存而共同努力的重要性，使用任何必要的手段。你能帮我们吗？",
+        "condition": {
+          "u_has_trait": "THRESH_VEIL"
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 50
+        },
+        "switch": true,
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CHOSEN",
+          "opinion": {
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_FAILURE",
+          "opinion": {
+            "value": -1,
+            "fear": -1
+          }
+        }
+      },
+      {
+        "text": "我们有一个欣欣向荣的社区，不断发展以确保我们的生存。如果人类的生存也是你关注的焦点，那么我们不是敌人。",
+        "condition": {
+          "u_has_effect": "shrike_inquire_denied"
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CEASE",
+        "opinion": {
+          "anger": 3
+        }
+      },
+      {
+        "text": "我们有一个欣欣向荣的社区，不断发展以确保我们的生存。如果人类的生存也是你关注的焦点，那么我们不是敌人。",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 15
+        },
+        "switch": true,
+        "default": true,
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_SUCCESS",
+          "opinion": {
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BRASH",
+          "opinion": {
+            "value": -1,
+            "fear": -1
+          }
+        }
+      },
+      {
+        "text": "如果我在这里有什么恶意，你早就死了，而我只会拿走我们想要的东西。这充分证明了吗？",
+        "trial": {
+          "type": "INTIMIDATE",
+          "difficulty": 30
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_DEFIANT",
+          "opinion": {
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_DONE",
+          "opinion": {
+            "value": -1,
+            "fear": -1
+          },
+          "effect": [
+            {
+              "u_faction_rep": -30
+            },
+            "insult_combat"
+          ]
+        }
+      },
+      {
+        "text": "别担心…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_FALLEN",
+    "type": "talk_topic",
+    "dynamic_line": "So that is why you seek information from us.  I guess will trust you with this.  The truth is, we seek to persevere and adapt as well.  That is the purpose of a shrike, to use what we have gained for the sake of others.  It's only now, after all this bloodshed, that it seems we can do more than protect the magi with this gift.",
+    "responses": [
+      {
+        "text": "你的人现在在干什么？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_DOING"
+      },
+      {
+        "text": "也许我们可以一起工作。他们主要寻求研究，但我们有可能达成协议。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_ALLIANCE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_DOING",
+    "type": "talk_topic",
+    "dynamic_line": "主要是生存。如果教团中有其他人因为离开而惹麻烦，我们将按我们认为合适的方式自卫。",
+    "responses": [
+      {
+        "text": "那我们就不用打架了。我可以保证你的研究不会被破坏。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_SUCCESS"
+      },
+      {
+        "text": "也许我们可以一起工作。他们主要寻求研究，但我们有可能达成协议。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_ALLIANCE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CEASE",
+    "type": "talk_topic",
+    "dynamic_line": "你太不耐烦了。如果你继续催促这个问题，我们在这件事上也会失去耐心。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_SUCCESS",
+    "type": "talk_topic",
+    "dynamic_line": "那么就这样吧。我会相信你的。保险箱在后面的房间，我会通知他们为你打开的。带上你需要的，然后上路。",
+    "speaker_effect": {
+      "effect": [
+        {
+          "npc_add_var": "elena_convinced",
+          "type": "flag",
+          "context": "shrike",
+          "value": "yes"
+        },
+        {
+          "mapgen_update": "arcana_shrikes_unlock_safe",
+          "om_terrain": "sanguine_holdout_2",
+          "om_special": "sanguine_holdout_shrikes"
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前还有一件事…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "谢谢，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_ALLIANCE",
+    "type": "talk_topic",
+    "dynamic_line": "好吧。别让我失望。保险箱在后面，我把它打开，拿到你需要的东西。我想我也可以派人去你住的地方检查一下。我们要看看这次合作是否能成功。",
+    "speaker_effect": {
+      "effect": [
+        {
+          "npc_add_var": "elena_convinced",
+          "type": "flag",
+          "context": "shrike",
+          "value": "yes"
+        },
+        {
+          "mapgen_update": "arcana_shrikes_unlock_safe",
+          "om_terrain": "sanguine_holdout_2",
+          "om_special": "sanguine_holdout_shrikes"
+        },
+        {
+          "mapgen_update": "arcana_shrikes_send_ally",
+          "om_terrain": "cf_church_2",
+          "om_special": "cf_rural_church",
+          "must_see": true
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前还有一件事…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "谢谢，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CHOSEN",
+    "type": "talk_topic",
+    "dynamic_line": "也许你是对的。我不知道我们是否能真正合作，但我们拭目以待。我会派人去检查的。同时，我让他们打开保险箱，保险箱里有一份我们的研究报告，就在后面的房间里。",
+    "speaker_effect": {
+      "effect": [
+        {
+          "npc_add_var": "elena_convinced",
+          "type": "flag",
+          "context": "shrike",
+          "value": "yes"
+        },
+        {
+          "mapgen_update": "arcana_shrikes_unlock_safe",
+          "om_terrain": "sanguine_holdout_2",
+          "om_special": "sanguine_holdout_shrikes"
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "非常感谢。在我走之前还有一件事…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "谢谢，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_FAILURE",
+    "type": "talk_topic",
+    "dynamic_line": "恐怕我做不到。我会和其他人商量的，我们会考虑的，但这将是一个严重的风险。",
+    "speaker_effect": {
+      "effect": {
+        "u_add_effect": "shrike_inquire_denied",
+        "duration": 10800
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BRASH",
+    "type": "talk_topic",
+    "dynamic_line": "我还没傻到相信你。我们有自己的方式。我们不会像以前那样掠夺别人，但我们不会向你们让步。和平地离开，尽管这仍然是一个选择。",
+    "speaker_effect": {
+      "effect": {
+        "npc_add_var": "elena_failed",
+        "type": "flag",
+        "context": "shrike",
+        "value": "yes"
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_DEFIANT",
+    "type": "talk_topic",
+    "dynamic_line": "你有胆量，我给你。如果我们仍然是命令的一部分，他们现在已经散落到地板上了。时代变了，我想我们可以达成协议。",
+    "responses": [
+      {
+        "text": "我们不需要战斗。我可以保证你的研究不会被破坏。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_SUCCESS"
+      },
+      {
+        "text": "我们可以一起工作。他们主要是寻求研究，但我们没有理由不做更多的研究。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_ALLIANCE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_QUERY",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_trait": "THRESH_VEIL",
+      "yes": "你比这些猎人服务的还多，不是吗？有趣。不管是不是守门员，你和他们结盟确实是件奇怪的事。",
+      "no": {
+        "u_has_any_trait": [
+          "PROF_SANGUINE",
+          "THRESH_DRAGONBLOOD"
+        ],
+        "yes": "你相信他们不会简单地烧掉你带给他们的任何信息？",
+        "no": "所以他们派你来？你能真正相信他们的意图吗？"
+      }
+    },
+    "responses": [
+      {
+        "text": "时代在变。不管你喜不喜欢，我们必须一起工作。你愿意相信我吗？",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_FALLEN"
+      },
+      {
+        "text": "他们在寻找可以用来提高生存机会的信息，就像我们一样。",
+        "condition": {
+          "u_has_trait": "THRESH_DRAGONBLOOD"
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_FALLEN"
+      },
+      {
+        "text": "我们不是敌人。我们可以一起工作，结合我们的知识来生存。",
+        "condition": {
+          "and": [
+            {
+              "u_has_any_trait": [
+                "PROF_CHALICE",
+                "PROF_CHALICE2",
+                "THRESH_VEIL"
+              ]
+            },
+            {
+              "u_has_effect": "shrike_inquire_denied"
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CEASE",
+        "opinion": {
+          "anger": 1
+        }
+      },
+      {
+        "text": "我们不是敌人。我们可以一起工作，结合我们的知识来生存。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHALICE",
+            "PROF_CHALICE2",
+            "THRESH_VEIL"
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 60
+        },
+        "switch": true,
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CHOSEN",
+          "opinion": {
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_FAILURE",
+          "opinion": {
+            "value": -1,
+            "fear": -1
+          }
+        }
+      },
+      {
+        "text": "他们有一个繁荣的社区，并且正在努力为任何与他们一起工作的人争取一个未来。我们可以一起工作。",
+        "condition": {
+          "u_has_effect": "shrike_inquire_denied"
+        },
+        "switch": true,
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CEASE",
+        "opinion": {
+          "anger": 2
+        }
+      },
+      {
+        "text": "他们有一个繁荣的社区，并且正在努力为任何与他们一起工作的人争取一个未来。我们可以一起工作。",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 15
+        },
+        "switch": true,
+        "default": true,
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_ALLIANCE",
+          "opinion": {
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BASIC_FAILURE",
+          "opinion": {
+            "value": -1,
+            "fear": -1
+          }
+        }
+      },
+      {
+        "text": "说够了。把它交过来就不会有任何麻烦了。",
+        "trial": {
+          "type": "INTIMIDATE",
+          "difficulty": 10
+        },
+        "success": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_DEFIANT",
+          "opinion": {
+            "value": 1
+          }
+        },
+        "failure": {
+          "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_BRASH",
+          "opinion": {
+            "value": -1,
+            "fear": -1
+          }
+        }
+      },
+      {
+        "text": "别担心…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "我们是那些猎杀猎人的人，那些曾经威胁我们秩序的人。那些日子已经过去了。长期以来，我们一直在浪费我们的权力，保护那些利用自己的天赋达到自我毁灭目的的人。我们现在要捕食这个世界上那些可憎的东西，并以我们认为合适的方式保卫我们自己。",
+    "responses": [
+      {
+        "text": "其他的似乎是用更传统的设备。为什么是阴影的外衣？",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_skill": {
+                    "skill": "magic",
+                    "level": 7
+                  }
+                },
+                {
+                  "u_has_any_trait": [
+                    "PROF_CLEANSINGFLAME",
+                    "PROF_CLEANSINGFLAME2",
+                    "PROF_SANGUINE",
+                    "PROF_CHALICE",
+                    "PROF_CHALICE2"
+                  ]
+                },
+                {
+                  "u_has_intelligence": 9
+                },
+                {
+                  "u_has_perception": 9
+                }
+              ]
+            },
+            {
+              "not": {
+                "u_has_var": "elena_mentioned_mantle",
+                "type": "flag",
+                "context": "shrike",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "opinion": {
+          "value": 4,
+          "anger": -2
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_MANTLE"
+      },
+      {
+        "text": "那么我们就没有理由成为敌人。我们的目标是一致的。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CLEANSINGFLAME",
+            "PROF_CLEANSINGFLAME2"
+          ]
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_CHOSEN"
+      },
+      {
+        "text": "我明白了……",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_MANTLE",
+    "type": "talk_topic",
+    "dynamic_line": "你很善于观察，我给你这个。这是他们的一个牧师送的礼物，我怀疑他现在可能已经死了。这让我想起了骑士团被毁灭之前的日子，他们背叛了守护者。这就是我愿意谈论的所有这样的时刻。未来现在更重要。",
+    "speaker_effect": {
+      "effect": {
+        "u_add_var": "elena_mentioned_mantle",
+        "type": "flag",
+        "context": "shrike",
+        "value": "yes"
+      }
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_WHERE",
+    "type": "talk_topic",
+    "dynamic_line": "作为一个古老的藏身之处，我们经常会带上物资和其他物资，安排主要教派之间的会议，等等。",
+    "responses": [
+      {
+        "text": "博士们有可能找到这个地方吗？",
+        "condition": {
+          "u_has_trait": "PROF_SANGUINE"
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_MAGI"
+      },
+      {
+        "text": "架子上的东西是怎么回事？",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_SHELF"
+      },
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_MAGI",
+    "type": "talk_topic",
+    "dynamic_line": "如果他们想让他们知道这是一个很清楚的消息，但如果他们想让他们知道这是一个很好的消息。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER_SHELF",
+    "type": "talk_topic",
+    "dynamic_line": "Some items that have been traded around among our old suppliers, and some surplus equipment.  I suppose I could do without it, it's not like we need most of it.  It's not going anywhere else, as it is.",
+    "responses": [
+      {
+        "text": "或许我们可以交易？",
+        "effect": [
+          {
+            "u_add_var": "elena_trade",
+            "type": "flag",
+            "context": "shrike",
+            "value": "yes"
+          },
+          "start_trade"
+        ],
+        "condition": {
+          "not": {
+            "u_has_var": "elena_trade",
+            "type": "flag",
+            "context": "shrike",
+            "value": "yes"
+          }
+        },
+        "opinion": {
+          "value": 2,
+          "anger": -1,
+          "fear": -1
+        },
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      },
+      {
+        "text": "好吧。",
+        "topic": "TALK_BLOOD_MAGE_SHRIKE_SPLINTER"
+      }
+    ]
+  }
+]

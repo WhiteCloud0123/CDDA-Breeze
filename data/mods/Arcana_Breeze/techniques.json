@@ -1,0 +1,582 @@
+[
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_interial_sweep",
+    "name": "惯性扫频",
+    "messages": [
+      "你将武器的动量推向%s的横扫",
+      "<npcname>向%s提供了全面的打击"
+    ],
+    "skill_requirements": [
+      {
+        "name": "bashing",
+        "level": 4
+      }
+    ],
+    "weapon_damage_requirements": [
+      {
+        "type": "bash",
+        "min": 20
+      }
+    ],
+    "melee_allowed": true,
+    "required_buffs_all": [
+      "buff_cleansingflame_onattack"
+    ],
+    "aoe": "wide",
+    "crit_tec": true,
+    "weighting": 3,
+    "down_dur": 2,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.8
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_blade_flare",
+    "name": "叶片光斑",
+    "messages": [
+      "你将你的动量推进%s，并通过它们发出能量脉冲",
+      "<npcname>把他们的武器硬塞进%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "cutting",
+        "level": 4
+      },
+      {
+        "name": "magic",
+        "level": 5
+      }
+    ],
+    "weapon_damage_requirements": [
+      {
+        "type": "cut",
+        "min": 20
+      }
+    ],
+    "melee_allowed": true,
+    "required_buffs_all": [
+      "buff_cleansingflame_onattack"
+    ],
+    "aoe": "impale",
+    "crit_tec": true,
+    "weighting": 3,
+    "stun_dur": 2,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.8
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_sundering_strike",
+    "name": "突击罢工",
+    "messages": [
+      "你将动能引导到对%s的解除武装打击中",
+      "<npcname>对%s产生了解除武装的打击"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 5
+      }
+    ],
+    "melee_allowed": true,
+    "required_buffs_all": [
+      "buff_cleansingflame_onattack"
+    ],
+    "crit_ok": true,
+    "weighting": 3,
+    "stun_dur": 1,
+    "disarms": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.8
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_break",
+    "name": "反擒拿",
+    "messages": [
+      "%s试图抓住你，但你溜走了！",
+      "%s试图抢夺<npcname>，但是他们溜走了！"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 3
+      }
+    ],
+    "melee_allowed": true,
+    "unarmed_allowed": true,
+    "defensive": true,
+    "grab_break": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_illusory_counter",
+    "name": "虚幻的柜台",
+    "messages": [
+      "你轻易地回避并反对%s",
+      "<npcname>回避并计数器%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "bashing",
+        "level": 3
+      },
+      {
+        "name": "melee",
+        "level": 4
+      },
+      {
+        "name": "magic",
+        "level": 6
+      }
+    ],
+    "weapon_damage_requirements": [
+      {
+        "type": "bash",
+        "min": 20
+      }
+    ],
+    "melee_allowed": true,
+    "dodge_counter": true,
+    "crit_ok": true,
+    "stun_dur": 2,
+    "flat_bonuses": [
+      {
+        "stat": "arpen",
+        "type": "bash",
+        "scale": 5
+      }
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_lightning_riposte",
+    "name": "闪电回应",
+    "messages": [
+      "你巧妙地招架和回应%s",
+      "<npcname>招架和ripostes%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "cutting",
+        "level": 3
+      },
+      {
+        "name": "melee",
+        "level": 4
+      },
+      {
+        "name": "magic",
+        "level": 6
+      }
+    ],
+    "weapon_damage_requirements": [
+      {
+        "type": "cut",
+        "min": 20
+      }
+    ],
+    "melee_allowed": true,
+    "block_counter": true,
+    "crit_ok": true,
+    "stun_dur": 2,
+    "flat_bonuses": [
+      {
+        "stat": "arpen",
+        "type": "cut",
+        "scale": 5
+      }
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_cleansingflame_shifting_takedown",
+    "name": "转移下架",
+    "messages": [
+      "你仔细使用动量来摆动和降低%s",
+      "<npcname>枢轴和楼层%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "unarmed",
+        "level": 3
+      },
+      {
+        "name": "melee",
+        "level": 4
+      },
+      {
+        "name": "magic",
+        "level": 6
+      }
+    ],
+    "unarmed_allowed": true,
+    "unarmed_weapons_allowed": false,
+    "dodge_counter": true,
+    "crit_ok": true,
+    "stun_dur": 2,
+    "down_dur": 2,
+    "flat_bonuses": [
+      {
+        "stat": "arpen",
+        "type": "bash",
+        "scale": 5
+      }
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0
+      }
+    ],
+    "attack_vectors": [
+      "THROW"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_shrike_crit",
+    "name": "连环猛击",
+    "messages": [
+      "你的罢工使%s人错开了",
+      "<npcname>人的罢工使%s人步履蹒跚"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 3
+      }
+    ],
+    "melee_allowed": true,
+    "unarmed_allowed": true,
+    "unarmed_weapons_allowed": false,
+    "required_buffs_all": [
+      "buff_shrike_onattack1"
+    ],
+    "crit_tec": true,
+    "stun_dur": 2,
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_shrike_counter",
+    "name": "偏斜格挡",
+    "messages": [
+      "你转移攻击方向，用他们的冲力将%s击落地面",
+      "<npcname>座及楼层%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 5
+      }
+    ],
+    "melee_allowed": true,
+    "block_counter": true,
+    "unarmed_allowed": true,
+    "unarmed_weapons_allowed": false,
+    "crit_ok": true,
+    "down_dur": 2,
+    "stun_dur": 2,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_shrike_finisher",
+    "name": "撕裂爪击",
+    "messages": [
+      "你以恶毒的一击猛击%s",
+      "<npcname>以恶毒的罢工猛烈抨击%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 5
+      },
+      {
+        "name": "magic",
+        "level": 4
+      }
+    ],
+    "melee_allowed": true,
+    "unarmed_allowed": true,
+    "unarmed_weapons_allowed": false,
+    "required_buffs_all": [
+      "buff_shrike_oncrit"
+    ],
+    "stunned_target": true,
+    "crit_ok": true,
+    "weighting": 3,
+    "flat_bonuses": [
+      {
+        "stat": "arpen",
+        "type": "cut",
+        "scaling-stat": "dex",
+        "scale": 1
+      },
+      {
+        "stat": "arpen",
+        "type": "stab",
+        "scaling-stat": "dex",
+        "scale": 1
+      }
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 1.5
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 1.5
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_shrike_break",
+    "name": "反擒拿",
+    "messages": [
+      "%s 试图抓住你，但你强行挣脱了。",
+      "%s 试着抓住 <npcname>，但被强行挣脱了！"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 4
+      }
+    ],
+    "melee_allowed": true,
+    "unarmed_allowed": true,
+    "defensive": true,
+    "grab_break": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_weapon_incorruptible_slash",
+    "name": "烈焰打击",
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "flat_bonuses": [
+      {
+        "stat": "damage",
+        "type": "heat",
+        "scale": 30
+      }
+    ],
+    "crit_ok": true,
+    "weighting": -25,
+    "messages": [
+      "你的刀刃上闪烁着%s耀眼的光芒",
+      "<npcname>的刀锋闪烁着%s耀眼的光芒。"
+    ],
+    "description": "+30火焰伤害，仅暴击。",
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_weapon_stormbringer_slash",
+    "name": "暗影顺劈",
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "flat_bonuses": [
+      {
+        "stat": "damage",
+        "type": "cold",
+        "scale": 40
+      }
+    ],
+    "crit_ok": true,
+    "weighting": -30,
+    "messages": [
+      "当你侵入%s时，剑刃上的符文闪烁着",
+      "<npcname>'s blade shimmers as they hack into %s"
+    ],
+    "description": "+40 寒冷伤害，仅暴击",
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_weapon_kinetic_knockback",
+    "name": "动能击退",
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "flat_bonuses": [
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scaling-stat": "str",
+        "scale": 0.5
+      },
+      {
+        "stat": "arpen",
+        "type": "bash",
+        "scaling-stat": "str",
+        "scale": 0.5
+      }
+    ],
+    "knockback_dist": 3,
+    "powerful_knockback": true,
+    "down_dur": 1,
+    "crit_tec": true,
+    "weighting": 2,
+    "messages": [
+      "Your impact blasts %s back",
+      "<npcname> blasts %s back"
+    ],
+    "description": "每点力量值增加0.5钝击伤害和护甲穿透，击倒1回合，击退3格，仅暴击",
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_veil_chosen_enervation",
+    "name": "Enervation",
+    "melee_allowed": true,
+    "required_buffs_all": [
+      "buff_veil_chosen_onpause"
+    ],
+    "flat_bonuses": [
+      {
+        "stat": "arpen",
+        "type": "bash",
+        "scaling-stat": "per",
+        "scale": 0.5
+      },
+      {
+        "stat": "arpen",
+        "type": "cut",
+        "scaling-stat": "per",
+        "scale": 0.5
+      },
+      {
+        "stat": "arpen",
+        "type": "stab",
+        "scaling-stat": "per",
+        "scale": 0.5
+      }
+    ],
+    "crit_ok": true,
+    "weighting": -10,
+    "stun_dur": 2,
+    "messages": [
+      "Your strike resonates through %s",
+      "<npcname>'s strike resonates through %s"
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_veil_chosen_dimension_cutter",
+    "name": "Dimension-Cutter",
+    "weapon_damage_requirements": [
+      {
+        "type": "bash",
+        "min": 15
+      },
+      {
+        "type": "cut",
+        "min": 35
+      }
+    ],
+    "melee_allowed": true,
+    "required_buffs_all": [
+      "buff_veil_chosen_ondodge"
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.75
+      }
+    ],
+    "flat_bonuses": [
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scaling-stat": "per",
+        "scale": 1
+      },
+      {
+        "stat": "arpen",
+        "type": "cut",
+        "scaling-stat": "per",
+        "scale": 0.75
+      }
+    ],
+    "crit_tec": true,
+    "weighting": 2,
+    "down_dur": 2,
+    "messages": [
+      "Your blade flickers and sunders through %s",
+      "<npcname>'s blade flickers and sunders through %s"
+    ],
+    "attack_vectors": [
+      "WEAPON"
+    ]
+  }
+]
