@@ -78,6 +78,7 @@
 #include "weather.h"
 #include "weather_gen.h"
 #include "weather_type.h"
+#include "parallel_hashmap/phmap.h"
 
 /*
  * Speed up all those if ( blarg == "structure" ) statements that are used everywhere;
@@ -5199,15 +5200,14 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
     }
     // Breadth-first search! Initialize the queue with a pointer to ourselves and go!
     std::vector< std::pair<Vehicle *, int> > connected_vehs = std::vector< std::pair<Vehicle *, int> > { std::make_pair( start_veh, 0 ) };
-    std::vector<Vehicle *> visited_vehs;
-    std::vector<tripoint> visited_targets;
-
+    phmap::flat_hash_set<Vehicle *> visited_vehs;
+    phmap::flat_hash_set<tripoint> visited_targets;
     while( amount > 0 && !connected_vehs.empty() ) {
         auto current_node = connected_vehs.back();
         Vehicle *current_veh = current_node.first;
         int current_loss = current_node.second;
-
-        visited_vehs.push_back( current_veh );
+        
+        visited_vehs.insert( current_veh );
         connected_vehs.pop_back();
 
         add_msg_debug( debugmode::DF_VEHICLE, "Traversing graph with %d power", amount );
@@ -5217,17 +5217,16 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
                 continue; // ignore loose parts that aren't power transfer cables
             }
 
-            if( std::find( visited_targets.begin(), visited_targets.end(),
-                           current_veh->parts[p].target.second ) != visited_targets.end() ) {
+            if( visited_targets.find(current_veh->parts[p].target.second ) != visited_targets.end() ) {
                 // If we've already looked at the target location, don't bother the expensive vehicle lookup.
                 continue;
             }
 
-            visited_targets.push_back( current_veh->parts[p].target.second );
+            visited_targets.insert( current_veh->parts[p].target.second );
 
             vehicle *target_veh = vehicle::find_vehicle( current_veh->parts[p].target.second );
             if( target_veh == nullptr ||
-                std::find( visited_vehs.begin(), visited_vehs.end(), target_veh ) != visited_vehs.end() ) {
+                visited_vehs.find(target_veh) != visited_vehs.end() ) {
                 // Either no destination here (that vehicle's rolled away or off-map) or
                 // we've already looked at that vehicle.
                 continue;
