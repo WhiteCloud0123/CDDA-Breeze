@@ -1,0 +1,149 @@
+[
+  {
+    "id": "MISSION_LOOT_BIO_LAB",
+    "type": "mission_definition",
+    "name": "调查生物武器实验室",
+    "description": "探索最近遭遇安全漏洞的生物武器实验室。要么找到访问该位置的人并与他们交谈，要么找到使用过的RFID访问徽章并带给露特尔。",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": {
+      "or": [
+        {
+          "u_has_item": "badge_bio_weapon_evy"
+        },
+        {
+          "u_has_var": "searching_for_msci",
+          "type": "dialogue",
+          "context": "evelynn",
+          "value": "yes"
+        }
+      ]
+    },
+    "difficulty": 6,
+    "value": 60000,
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "Bio_Weapon_Lab_2",
+        "om_special": "Bio_Weapon_Lab_s",
+        "reveal_radius": 3,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": {
+        "u_add_var": "proven_worthy",
+        "type": "dialogue",
+        "context": "router",
+        "value": "yes"
+      }
+    },
+    "count": 1,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "如果你看见这条文字，说明出BUG了！",
+      "offer": "如果你看见这条文字，可能也是一个BUG。",
+      "accepted": "看到这个可能也是一个BUG。",
+      "rejected": "喂，别再胡闹了，你个用调试的家伙！",
+      "advice": "事实上这个大部分对话都是BUG，因为这个任务完全是通过对话开始的。",
+      "inquire": "到目前为止有什么进展吗？",
+      "success": "因此，这证实了超级战士项目还没有完全结束。我希望这不是一次太痛苦的经历，但我们正在应对一些极其危险的威胁，而且情况只会变得更糟。保留你在那里找到的任何东西，它可能会有用。准备好了就来看我。",
+      "success_lie": "我怀疑……事实上看到这个可能是另一个BUG，因为你不可能退出这个任务。",
+      "failure": "这肯定是个bug，因为你死了才能使这个任务失败。"
+    }
+  },
+  {
+    "id": "MISSION_PROOF_APOPHIS_DEAD",
+    "type": "mission_definition",
+    "name": "杀死生物武器-阿波菲斯",
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 10,
+    "value": 100000,
+    "item": "badge_bio_weapon_apophis",
+    "start": {
+      "effect": {
+        "u_add_effect": "router_mission",
+        "duration": "PERMANENT"
+      },
+      "assign_mission_target": {
+        "om_terrain": "Unknown_Lab_4",
+        "om_special": "Unknown_Lab_s",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      }
+    },
+    "end": {
+      "effect": [
+        {
+          "u_add_var": "apophis_dead",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        },
+        {
+          "npc_add_var": "apophis_dead",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        }
+      ]
+    },
+    "count": 1,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "dialogue": {
+      "describe": "如果你看见这条文字，说明出BUG了！",
+      "offer": "你看起来是个能干的人，所以你可能有机会。我们拼凑出了阿波菲斯用作基地的实验室的坐标。我希望你把它干掉，让阿波菲斯彻底消失！那个实验室里有很多贵重的设备；如果你能杀死那东西，那就全是你的了。我也希望我们自己能做到，但机会因传送门突破，炸弹和丧尸失去了。",
+      "accepted": "你确定吗？谢谢你…这对我来说意义重大。一定要带些证据，要有创意。我会等你回来的。我建议你离开前与西格玛和兰姆达谈谈。",
+      "rejected": "我理解。在这一点上几乎是注定会失败的。我会继续想办法阻止它的。",
+      "advice": "找些像样的盔甲和武器，这场战斗可不容易。组建团队会容易些。如果你愿意的话可以去问兰姆达和西格玛是否愿意加入你。一个人可无法承受……",
+      "inquire": "它……死了吗？",
+      "success": "那是……你做到了！这对我们来说意义重大！在这个黑暗时代，你真是人间的传奇。这里永远欢迎你！",
+      "success_lie": "哦，没有证据？我希望你说的是实话……",
+      "failure": "至少你还活着。我不应该让你做那样的事。对不起……"
+    }
+  },
+  {
+    "id": "MISSION_FIND_COMMAND_CENTER",
+    "type": "mission_definition",
+    "name": "前往指挥中心",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 2,
+    "value": 80000,
+    "origins": [
+      "ORIGIN_SECONDARY"
+    ],
+    "destination": "makeshift_command_center_b",
+    "start": {
+      "effect": [
+        "follow",
+        {
+          "u_add_var": "searching_for_msci",
+          "type": "dialogue",
+          "context": "evelynn",
+          "value": "yes"
+        }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "makeshift_command_center_2",
+        "om_special": "makeshift_command_center_s",
+        "reveal_radius": 3,
+        "search_range": 180,
+        "z": 0
+      }
+    },
+    "dialogue": {
+      "describe": "如果你看见这条文字，说明出BUG了！",
+      "offer": "我正试图去一处由生物武器计划的前科学家建造的藏身处。我想我知道他们在哪了，如果你能帮我的话我会很感谢。我带了个同伴过来，但他被出现的那些家伙杀了。",
+      "accepted": "非常感谢。我会跟着你，也许我们会得到一些答案。",
+      "rejected": "哦。我宁愿在别人的帮助下去那里，如果你待会愿意的话，也许……",
+      "advice": "我在这间旧实验室里搜寻可能有用的情报。你可以看看有没有什么有用的东西。另外，我同伴的悍马车应该还停在外面，希望那些东西没有把它弄坏……",
+      "inquire": "找到其他人了吗?",
+      "success": "很好。我先去四处看看。看起来他们在这里建立了一个像样的营地。也许四处打听打听能让我们找到正确的方向。",
+      "success_lie": "感谢你的努力……我想是吧。",
+      "failure": "一切都是徒劳的，不是吗？"
+    }
+  }
+]

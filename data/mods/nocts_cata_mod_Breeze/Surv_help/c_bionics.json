@@ -1,0 +1,729 @@
+[
+  {
+    "id": "bio_laser_minigun",
+    "type": "GUN",
+    "name": {
+      "str": "激光加特林臂"
+    },
+    "description": "你的左臂现在变成了一个USP供电的激光加特林。就像用其他枪一样开枪。",
+    "volume": "3 L",
+    "weight": "3 kg",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "magenta",
+    "skill": "rifle",
+    "range": 30,
+    "ranged_damage": {
+      "damage_type": "heat",
+      "amount": 20,
+      "armor_penetration": 15
+    },
+    "dispersion": 10,
+    "sight_dispersion": 150,
+    "durability": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        5
+      ]
+    ],
+    "reload": 500,
+    "ammo_effects": [
+      "LASER",
+      "INCENDIARY"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_DROP",
+      "TRADER_AVOID",
+      "NON-FOULING",
+      "NEEDS_NO_LUBE",
+      "USES_BIONIC_POWER"
+    ]
+  },
+  {
+    "type": "bionic",
+    "id": "bio_laser_armgun",
+    "name": {
+      "str": "激光加特林臂"
+    },
+    "//": "To be re-added if this ever gets accessible in JSON: However, you are unable to use or carry two-handed items, and your strength limits what you can use with your one hand.",
+    "occupied_bodyparts": [
+      [
+        "arm_l",
+        10
+      ]
+    ],
+    "act_cost": "50 kJ",
+    "fake_weapon": "bio_laser_minigun",
+    "description": "你的左臂配备了一个复杂的多管激光发射器。或者用外行的话说，激光加特林！你能够使用生化能量发射大量的激光。",
+    "flags": [
+      "BIONIC_GUN"
+    ]
+  },
+  {
+    "id": "bio_laser_armgun",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "激光加特林臂CBM"
+    },
+    "description": "你的左臂配备了一个复杂的多管激光发射器。或者用外行的话说，激光加特林！你能够使用生化能量发射大量的激光。",
+    "price": "2200 USD",
+    "difficulty": 3
+  },
+  {
+    "type": "GENERIC",
+    "id": "bio_sword_weapon",
+    "name": {
+      "str": "单分子剑"
+    },
+    "description": "使用尖端科技打造的约一码长的合金剑，号称只有一个分子宽的纳米晶体组成了它的锋刃。",
+    "weight": "300 g",
+    "to_hit": 3,
+    "color": "dark_gray",
+    "symbol": "{",
+    "material": [
+      "superalloy"
+    ],
+    "techniques": [
+      "RAPID",
+      "WBLOCK_2"
+    ],
+    "volume": "2250 ml",
+    "cutting": 48,
+    "flags": [
+      "BIONIC_WEAPON",
+      "UNBREAKABLE_MELEE",
+      "TRADER_AVOID"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "BUTCHER",
+        20
+      ]
+    ]
+  },
+  {
+    "type": "bionic",
+    "id": "bio_sword",
+    "name": {
+      "str": "单分子剑"
+    },
+    "occupied_bodyparts": [
+      [
+        "arm_r",
+        5
+      ],
+      [
+        "hand_r",
+        2
+      ]
+    ],
+    "act_cost": "1 kJ",
+    "fake_weapon": "bio_sword_weapon",
+    "description": "约一码长的先进材料刀片隐藏在受体的前臂内部，使用少量能量可以从手腕背部伸出。异常锋利，伸展时会妨碍使用者拿取其他物品。",
+    "flags": [
+      "BIONIC_TOGGLED",
+      "BIONIC_WEAPON",
+      "USES_BIONIC_POWER"
+    ]
+  },
+  {
+    "id": "bio_sword",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "单分子剑CBM"
+    },
+    "description": "约一码长的先进材料刀片隐藏在受体的前臂内部，使用少量能量可以从手腕背部伸出。异常锋利，伸展时会妨碍使用者拿取其他物品。",
+    "price": "250 USD",
+    "difficulty": 8
+  },
+  {
+    "id": "bio_flamethrower_gun",
+    "type": "GUN",
+    "name": {
+      "str": "双手火焰喷射器"
+    },
+    "description": "你的手掌被手术植入了一套紧凑火焰喷射器系统，它利用生化能量和空气中的氧气作为点火装置，就像其他枪一样使用。",
+    "volume": "3 L",
+    "weight": "3 kg",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "red",
+    "skill": "rifle",
+    "range": 5,
+    "ranged_damage": {
+      "damage_type": "heat",
+      "amount": 5
+    },
+    "dispersion": 300,
+    "sight_dispersion": 150,
+    "durability": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        5
+      ]
+    ],
+    "reload": 500,
+    "ammo_effects": [
+      "FLAME",
+      "INCENDIARY"
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "NO_DROP",
+      "TRADER_AVOID",
+      "NON-FOULING",
+      "NEEDS_NO_LUBE",
+      "USES_BIONIC_POWER"
+    ]
+  },
+  {
+    "type": "bionic",
+    "id": "bio_flamethrower",
+    "name": {
+      "str": "双手火焰喷射器"
+    },
+    "occupied_bodyparts": [
+      [
+        "hand_r",
+        2
+      ],
+      [
+        "hand_l",
+        2
+      ]
+    ],
+    "act_cost": "100 kJ",
+    "fake_weapon": "bio_flamethrower_gun",
+    "description": "你的手掌被手术植入了一套紧凑火焰喷射器系统，它利用生化能量和空气中的氧气作为点火装置，就像其他枪一样使用。",
+    "flags": [
+      "BIONIC_GUN"
+    ]
+  },
+  {
+    "id": "bio_flamethrower",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "双手火焰喷射器 CBM"
+    },
+    "description": "你的手掌被手术植入了一套紧凑火焰喷射器系统，它利用生化能量和空气中的氧气作为点火装置，就像其他枪一样使用。",
+    "price": "2200 USD",
+    "difficulty": 4
+  },
+  {
+    "id": "bio_plasma_cell",
+    "type": "bionic",
+    "name": {
+      "str": "等离子体脉冲电池"
+    },
+    "//": "Spikes of power at low efficiency because the available fuels have much smaller stack sizes than most fuels.  Since hydrogen is energy-dense, power per unit is massive.",
+    "description": "植入你胸部的是一种小型的高级氢燃料电池。旨在为尖端军事设备提供峰值功率，其效率明显低于传统的氢燃料电池，但每一次脉冲仍能释放大量能量与热量，这使得在密闭空间里使用它很危险。它有两个腔室，也可以使用密度更大的军用固态氢罐。",
+    "occupied_bodyparts": [
+      [
+        "torso",
+        15
+      ]
+    ],
+    "encumbrance": [
+      [
+        "torso",
+        5
+      ]
+    ],
+    "fuel_options": [
+      "hydrogen_cell"
+    ],
+    "fuel_efficiency": 0.25,
+    "exothermic_power_gen": true,
+    "time": 1,
+    "flags": [
+      "BIONIC_TOGGLED",
+      "BIONIC_POWER_SOURCE",
+      "BIONIC_NPC_USABLE"
+    ],
+    "included_bionics": [
+      "bio_plasma_cell_hydrogen"
+    ],
+    "passive_pseudo_items": [
+      "c_internal_plasma_tank"
+    ]
+  },
+  {
+    "id": "c_internal_plasma_tank",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "内置等离子体罐"
+    },
+    "description": "用于等离子体脉冲电池CBM的内置储罐。",
+    "volume": "501 ml",
+    "weight": "1 g",
+    "price": 0,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "magenta",
+    "flags": [
+      "INTEGRATED",
+      "UNBREAKABLE",
+      "PERSONAL",
+      "NO_REPAIR",
+      "ALLOWS_NATURAL_ATTACKS",
+      "BIONIC_FUEL_SOURCE",
+      "TARDIS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "watertight": true,
+        "rigid": true,
+        "max_contains_volume": "1000 ml",
+        "max_item_volume": "200 ml",
+        "max_contains_weight": "1 kg",
+        "material_restriction": [
+          "hydrogen_cell"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bio_plasma_cell_hydrogen",
+    "type": "bionic",
+    "name": {
+      "str": "氢脉冲电池"
+    },
+    "description": "一种小型的高级氢燃料电池，旨在为尖端军事设备提供峰值功率。这是一个单独用于燃烧低压氢气的燃烧室，产生强度较低的生化能量。",
+    "fuel_options": [
+      "c_hydrogen_gas"
+    ],
+    "fuel_efficiency": 0.25,
+    "exothermic_power_gen": true,
+    "time": 1,
+    "flags": [
+      "BIONIC_TOGGLED",
+      "BIONIC_POWER_SOURCE",
+      "BIONIC_NPC_USABLE"
+    ],
+    "included": true,
+    "passive_pseudo_items": [
+      "c_internal_hydrogen_tank"
+    ]
+  },
+  {
+    "id": "c_internal_hydrogen_tank",
+    "type": "GENERIC",
+    "category": "container",
+    "name": {
+      "str": "内置氢气罐"
+    },
+    "description": "用于氢脉冲电池的内置储罐。",
+    "volume": "501 ml",
+    "weight": "1 g",
+    "price": 0,
+    "material": [
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "magenta",
+    "flags": [
+      "INTEGRATED",
+      "UNBREAKABLE",
+      "PERSONAL",
+      "NO_REPAIR",
+      "ALLOWS_NATURAL_ATTACKS",
+      "BIONIC_FUEL_SOURCE",
+      "TARDIS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "watertight": true,
+        "rigid": true,
+        "max_contains_volume": "1000 ml",
+        "max_item_volume": "200 ml",
+        "max_contains_weight": "1 kg",
+        "material_restriction": [
+          "c_hydrogen_gas"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bio_plasma_cell",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "等离子体脉冲电池CBM"
+    },
+    "looks_like": "bio_fuel_cell_gasoline",
+    "description": "这种植入物提供了一种实验性的军用氢电池，能够为高强度的使用产生较大峰值功率。它的加压储存系统有两个腔室，一个可以容纳500毫升氢气，另一个可以容纳5发用于等离子武器的高密度氢气罐。标签建议不要在密闭空间使用，由于废热的危险程度，军事行动使用时需保持移动。",
+    "price": "4500 USD",
+    "weight": "600 g",
+    "difficulty": 7
+  },
+  {
+    "id": "bio_atomic_battery",
+    "type": "bionic",
+    "name": {
+      "str": "原子电池"
+    },
+    "description": "Your body has been implanted with a compact, advanced plutonium-cell generator for military use.  A true atomic battery, using advanced materials to create a practical alphavoltaic power source.  While its power output is still very low, it's also consistent with negligible waste heat, making it a useful backup to another power generation method.",
+    "occupied_bodyparts": [
+      [
+        "torso",
+        10
+      ]
+    ],
+    "power_trickle": "5 J",
+    "flags": [
+      "BIONIC_POWER_SOURCE",
+      "BIONIC_NPC_USABLE",
+      "BIONIC_SHOCKPROOF"
+    ]
+  },
+  {
+    "id": "bio_atomic_battery",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "原子电池CBM"
+    },
+    "description": "An old form of non-thermal radioisotope generator, given new life and military applications using cutting-edge plutonium-catalyst developments.  Effectively a plutonium fuel cell converted into an alphavoltaic battery, with greater power output and longevity than older implants.  Its output is still very low at only 5 watts, but it also provides a continuous source of power, making it a good supplement to a more intensive power generation method.",
+    "price": "8000 USD",
+    "difficulty": 8
+  },
+  {
+    "id": "bio_hazard_shield",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "危害稳定剂系统CBM"
+    },
+    "looks_like": "bio_faraday",
+    "description": "植入皮下的专业医疗设备系统。激活它将诱导身体化学的暂时变化，提供对酸和生物损伤的免疫力，并防止接触式毒素和毒液。",
+    "price": "50 USD",
+    "weight": "500 g",
+    "difficulty": 9
+  },
+  {
+    "id": "bio_hazard_shield",
+    "type": "bionic",
+    "name": {
+      "str": "危害稳定剂系统"
+    },
+    "description": "一套安装在你身体各处的皮肤下面的专业医疗设备系统。当被激活时，它会合成抗毒素，并催化肌肉和皮肤中的暂时化学反应。在活动的同时，你将对酸和生物伤害免疫，即使严重中毒也能保持身体相对稳定。它还能预防但不能治愈接触和注射危害(如毒液)的影响。食物中毒和有毒气体仍然会影响你，但你不会从它们那里得到长期的损害。",
+    "occupied_bodyparts": [
+      [
+        "torso",
+        5
+      ],
+      [
+        "head",
+        2
+      ],
+      [
+        "arm_l",
+        2
+      ],
+      [
+        "arm_r",
+        2
+      ],
+      [
+        "hand_l",
+        1
+      ],
+      [
+        "hand_r",
+        1
+      ],
+      [
+        "leg_l",
+        3
+      ],
+      [
+        "leg_r",
+        3
+      ],
+      [
+        "foot_l",
+        1
+      ],
+      [
+        "foot_r",
+        1
+      ]
+    ],
+    "flags": [
+      "BIONIC_TOGGLED"
+    ],
+    "enchantments": [
+      "C_ENCH_HAZARD_SHIELD"
+    ],
+    "act_cost": "1 kJ",
+    "react_cost": "1 kJ",
+    "time": 1
+  },
+  {
+    "type": "enchantment",
+    "id": "C_ENCH_HAZARD_SHIELD",
+    "condition": "ACTIVE",
+    "ench_effects": [
+      {
+        "effect": "hazard_shield_effect",
+        "intensity": 1
+      }
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "hazard_shield_effect",
+    "name": [
+      "危害稳定剂"
+    ],
+    "desc": [
+      "对酸和生物伤害产生免疫力。预防但不能治愈接触和注射危害(如毒液)的影响。食物中毒和有毒气体仍然会影响你，但你不会从它们那里得到长期的损害。"
+    ],
+    "blocks_effects": [
+      "stung",
+      "poison",
+      "badpoison",
+      "venom_dmg",
+      "venom_weaken",
+      "bite",
+      "spores",
+      "paralyzepoison",
+      "dermatik",
+      "tetanus",
+      "corroding"
+    ],
+    "flags": [
+      "EFFECT_ACID_IMMUNE",
+      "EFFECT_BIO_IMMUNE"
+    ]
+  },
+  {
+    "id": "bio_cutting_torch",
+    "type": "bionic",
+    "name": {
+      "str": "内置割炬"
+    },
+    "description": "等离子切割机隐藏在你的右臂，需要少量的生化能量来展开。展开后可以用来破坏金属屏障。比传统的焊机更耗能，如果需要也可以用于焊接。",
+    "occupied_bodyparts": [
+      [
+        "arm_r",
+        5
+      ]
+    ],
+    "act_cost": "50 J",
+    "fake_weapon": "bio_cutting_torch_item",
+    "flags": [
+      "BIONIC_TOGGLED",
+      "BIONIC_WEAPON"
+    ]
+  },
+  {
+    "id": "bio_cutting_torch",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "内置割炬CBM"
+    },
+    "looks_like": "bio_tools",
+    "description": "一个植入右臂的可展开等离子焊炬，需要少量的生化能量来展开。它可以用来破坏金属屏障。比传统的焊机更耗能，如果需要也可以用于焊接。",
+    "price": "8000 USD",
+    "difficulty": 6
+  },
+  {
+    "id": "bio_cutting_torch_item",
+    "sub": "oxy_torch",
+    "type": "TOOL",
+    "name": {
+      "str": "内置割炬（展开）"
+    },
+    "description": "一个内置等离子焊炬，展开并占据了你整个手。激活它来摧毁金属屏障，就像你用割炬一样。",
+    "symbol": "#",
+    "color": "white",
+    "weight": "226 g",
+    "bashing": 3,
+    "flags": [
+      "NO_UNWIELD",
+      "NO_DROP",
+      "UNBREAKABLE_MELEE",
+      "TRADER_AVOID",
+      "USES_BIONIC_POWER"
+    ],
+    "max_charges": 1000,
+    "charges_per_use": 6,
+    "use_action": [
+      "OXYTORCH"
+    ],
+    "qualities": [
+      [
+        "WELD",
+        2
+      ]
+    ]
+  },
+  {
+    "id": "bio_animal_empathy",
+    "copy-from": "bionic_general",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str": "生理失真CBM"
+    },
+    "looks_like": "bio_face_mask",
+    "description": "一种可以掩盖能让野生动物察觉到的信息的植入物系统。虽然它对丧尸似乎没有效果，但激活后足以愚弄大多数野生动物，让你接近它们而不被察觉。",
+    "price": "8500 USD",
+    "weight": "500 g",
+    "difficulty": 7
+  },
+  {
+    "id": "bio_animal_empathy",
+    "type": "bionic",
+    "name": {
+      "str": "生理失真"
+    },
+    "description": "一个能巧妙地改变气味，掩盖心跳声，并破坏其他线索的高级植入系统。它不会对丧尸或其他非自然的威胁起作用，但它可以让你不受阻碍地接近大多数野生动物，包括变异动物。",
+    "occupied_bodyparts": [
+      [
+        "torso",
+        5
+      ],
+      [
+        "head",
+        3
+      ]
+    ],
+    "flags": [
+      "BIONIC_TOGGLED"
+    ],
+    "enchantments": [
+      "C_ENCH_BIOPATTERN_DISTORTION"
+    ],
+    "act_cost": "1250 J",
+    "react_cost": "1250 J",
+    "time": 1
+  },
+  {
+    "type": "enchantment",
+    "id": "C_ENCH_BIOPATTERN_DISTORTION",
+    "condition": "ACTIVE",
+    "mutations": [
+      "C_BIOPATTERN_DISTORTION"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "C_BIOPATTERN_DISTORTION",
+    "name": {
+      "str": "生理失真"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "地球上的野生/变异/其他动物，目前将忽略你的存在。",
+    "player_display": false,
+    "ignored_by": [
+      "MAMMAL",
+      "AMPHIBIAN",
+      "BIRD",
+      "REPTILE",
+      "FISH",
+      "INSECT",
+      "CENTIPEDE",
+      "INSECT_FLYING",
+      "SPIDER",
+      "MOLLUSK",
+      "WORM"
+    ],
+    "anger_relations": [
+      [
+        "MAMMAL",
+        -95
+      ],
+      [
+        "AMPHIBIAN",
+        -95
+      ],
+      [
+        "BIRD",
+        -95
+      ],
+      [
+        "REPTILE",
+        -95
+      ],
+      [
+        "FISH",
+        -95
+      ],
+      [
+        "INSECT",
+        -95
+      ],
+      [
+        "CENTIPEDE",
+        -95
+      ],
+      [
+        "INSECT_FLYING",
+        -95
+      ],
+      [
+        "SPIDER",
+        -95
+      ],
+      [
+        "MOLLUSK",
+        -95
+      ],
+      [
+        "WORM",
+        -95
+      ]
+    ]
+  },
+  {
+    "id": "bio_power_storage_sentinel",
+    "type": "bionic",
+    "name": {
+      "str": "哨兵储能模块"
+    },
+    "capacity": "1000 kJ",
+    "description": "罕见的实验性小型生化电池插件，可以为你增加 1000kJ 的生化能量储备上限。",
+    "flags": [
+      "BIONIC_NPC_USABLE"
+    ]
+  },
+  {
+    "id": "bio_power_storage_sentinel",
+    "copy-from": "bionic_general_npc_usable",
+    "type": "BIONIC_ITEM",
+    "name": {
+      "str_sp": "哨兵储能模块CBM"
+    },
+    "looks_like": "bio_power_storage_mkII",
+    "description": "Omnitech实验室基于大受欢迎的储能模块研发的用于军事行动的生化插件。可以为你增加 1000kJ 的生化能量储备上限。",
+    "price": 1000000,
+    "weight": "50 g",
+    "difficulty": 1
+  }
+]

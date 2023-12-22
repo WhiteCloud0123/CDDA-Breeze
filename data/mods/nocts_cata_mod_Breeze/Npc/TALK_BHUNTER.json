@@ -1,0 +1,644 @@
+[
+  {
+    "id": "TALK_BHUNTER",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "你戴的那个……一个生物武器徽章……",
+      "no": "嘿，你也在追查生物武器吗？"
+    },
+    "responses": [
+      {
+        "text": "[任务]是你触发了这里的警报吗？",
+        "topic": "TALK_BHUNTER_MISSION",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "searching_for_msci",
+                "type": "dialogue",
+                "context": "evelynn",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_LOOT_BIO_LAB"
+            }
+          ]
+        }
+      },
+      {
+        "text": "是的，我是其中一员。",
+        "topic": "TALK_BHUNTER_IAM_BIO",
+        "condition": {
+          "u_has_flag": "BIO_WEAPON_ANY"
+        }
+      },
+      {
+        "text": "准确来说是超级战士计划的一部分。",
+        "topic": "TALK_BHUNTER_IAM_SOLDAT",
+        "condition": {
+          "u_has_trait": "SUPER_SOLDIER_MARKER"
+        }
+      },
+      {
+        "text": "生物武器？",
+        "topic": "TALK_BHUNTER_ASK_BIO"
+      },
+      {
+        "text": "外面发生了什么事？",
+        "topic": "TALK_BHUNTER_ASK_SITUATION"
+      },
+      {
+        "text": "你在这里干什么？",
+        "topic": "TALK_BHUNTER_ASK_DOING",
+        "condition": {
+          "not": {
+            "u_has_var": "searching_for_msci",
+            "type": "dialogue",
+            "context": "evelynn",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "[询问]我们现在该做什么？",
+        "topic": "TALK_BHUNTER_ASK_DO"
+      },
+      {
+        "text": "[任务]我能为你做什么？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_MISSION",
+    "type": "talk_topic",
+    "dynamic_line": "我的朋友和我在调查这个地方试图从中寻找答案，我本可以做到的。如果不是那些东西在我们出现后袭击了我们的话。谁派你来的？",
+    "responses": [
+      {
+        "text": "我被要求调查一个由涉事科学家所引发的安全漏洞。",
+        "topic": "TALK_BHUNTER_MISSION_2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_MISSION_2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "这真是个惊喜。我就是在找这个，看看是否还有人知道更多关于这个项目的信息。所以他们不仅仍然活着，而且根据你佩戴的徽章，他们还提供了一些帮助。如果你让我跟着，我愿意协助他们并提供情报。",
+      "no": "我就是在找这个，看看是否还有人知道更多关于这个项目的信息。很高兴听到他们还活着。如果你让我跟着，我愿意协助他们并提供情报。"
+    },
+    "responses": [
+      {
+        "text": "好的，我来带路。",
+        "topic": "TALK_BHUNTER_MISSION_3",
+        "effect": "assign_mission"
+      },
+      {
+        "text": "我想先问你一些其他问题。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_MISSION_3",
+    "type": "talk_topic",
+    "dynamic_line": "非常感谢。我会跟着你，希望共同努力会改善现状。",
+    "responses": [
+      {
+        "text": "一起走吧。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_ASK_SITUATION",
+    "type": "talk_topic",
+    "dynamic_line": "不是很好。有一个同伴陪我抵达这里，当那些东西出现的时候他正在看管车。幸运的是，它们似乎不愿意闯入地堡，外面的情况变得越来越糟糕，似乎我的同伴死前干掉几个，但很快它们就爬起来了……",
+    "responses": [
+      {
+        "text": "那些是什么东西？",
+        "topic": "TALK_BHUNTER_THINGS"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_THINGS",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "BIO_WEAPON_FAILED",
+        "BIO_WEAPON_FAILED_SCEN"
+      ],
+      "yes": "那些生物武器，和我找到的一个生化武器计划的文件相关。你看起来和他们一样，虽然你并不想杀我。我能相信你吗？",
+      "no": "生物武器，这就是实验室里的笔记所说的那些东西。至少他们应该是。我不知道出了什么问题或是谁指使他们的，但他们似乎执意要破坏与项目有关的一切。"
+    },
+    "responses": [
+      {
+        "text": "我不是他们中的一员。你可以相信我。",
+        "condition": {
+          "u_has_any_trait": [
+            "BIO_WEAPON_FAILED",
+            "BIO_WEAPON_FAILED_SCEN"
+          ]
+        },
+        "topic": "TALK_BHUNTER"
+      },
+      {
+        "text": "我不想最后变成那样。我不想变成怪物，拜托……",
+        "trial": {
+          "type": "NONE"
+        },
+        "success": {
+          "opinion": {
+            "fear": -1,
+            "trust": 1
+          },
+          "topic": "TALK_BHUNTER_THINGS_FAILED"
+        },
+        "condition": {
+          "u_has_any_trait": [
+            "BIO_WEAPON_FAILED",
+            "BIO_WEAPON_FAILED_SCEN"
+          ]
+        }
+      },
+      {
+        "text": "我懂了。",
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "BIO_WEAPON_FAILED",
+              "BIO_WEAPON_FAILED_SCEN"
+            ]
+          }
+        },
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_THINGS_FAILED",
+    "type": "talk_topic",
+    "dynamic_line": "没关系。我不会伤害你的。你我可以互相信任。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_IAM_BIO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "喔，好家伙!我怎么知道你不是在哪儿找到的?好吧，这不重要。你拥有它说明你至少见过一个。如果你需要什么，我可以帮你。",
+      "no": "好~吧，你说得对。但是你连徽章都没有。下次骗人要小心点。"
+    },
+    "responses": [
+      {
+        "text": "我可以证明。如果我没记错的话……Mesektet计划，第一系列，外部名称为RD-Z-01。",
+        "topic": "TALK_BHUNTER_CONFIRM_BIO",
+        "condition": {
+          "u_has_flag": "BIO_WEAPON_SERIES_1"
+        }
+      },
+      {
+        "text": "再看看我，告诉我我在说谎。",
+        "condition": {
+          "u_has_any_trait": [
+            "BIO_WEAPON_FAILED",
+            "BIO_WEAPON_FAILED_SCEN"
+          ]
+        },
+        "trial": {
+          "type": "NONE"
+        },
+        "success": {
+          "opinion": {
+            "fear": 1
+          },
+          "topic": "TALK_BHUNTER_CONFIRM_FAILED"
+        }
+      },
+      {
+        "text": "我没戴上我的徽章。",
+        "topic": "TALK_BHUNTER_NOBADGE",
+        "condition": {
+          "not": {
+            "u_is_wearing": "badge_bio_weapon"
+          }
+        }
+      },
+      {
+        "text": "…",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_IAM_SOLDAT",
+    "type": "talk_topic",
+    "dynamic_line": "是这样吗?我怎么知道你不是什么拾荒者?再说一次，你能来到这里就说明你可以照顾好自己了，我猜这是个好兆头。",
+    "responses": [
+      {
+        "text": "你不认得这个，猎人？",
+        "topic": "TALK_BHUNTER_CONFIRM_OUST",
+        "condition": {
+          "u_has_any_trait": [
+            "SUPER_SOLDIER_MARKER"
+          ]
+        },
+        "effect": {
+          "u_add_effect": "evy_ousted",
+          "duration": "PERMANENT"
+        }
+      },
+      {
+        "text": "挺好的，我猜。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_CONFIRM_BIO",
+    "type": "talk_topic",
+    "dynamic_line": "计划……你说得对。你说的那些和你的身体强化，很难否认摆在面前的证据。抱歉我怀疑了你。",
+    "responses": [
+      {
+        "text": "没关系。",
+        "trial": {
+          "type": "NONE"
+        },
+        "success": {
+          "opinion": {
+            "trust": 1,
+            "fear": -1,
+            "value": 1,
+            "anger": -1
+          },
+          "topic": "TALK_BHUNTER"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_CONFIRM_FAILED",
+    "type": "talk_topic",
+    "dynamic_line": "好吧，你说得对。看起来他们真的对你做了很多。很抱歉他们这样对你。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_CONFIRM_OUST",
+    "type": "talk_topic",
+    "dynamic_line": "倒霉。似乎比我想象的更难隐藏。他们派我来调查这些设施发生了什么，重新联系上剩余的人员或者没有失控的生物武器，然后看看能做些什么。我不知道你最后的命令是什么也不知道你为什么来这里，但也许我们有一个共同的目标。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_NOBADGE",
+    "type": "talk_topic",
+    "dynamic_line": "我本想说你满嘴屁话，但看看你，这可真够厉害的。我不知道你是决定不戴，还是把它弄丢了，但无论如何我都很欣赏你的诚实。",
+    "responses": [
+      {
+        "text": "谢谢你。",
+        "trial": {
+          "type": "NONE"
+        },
+        "success": {
+          "opinion": {
+            "trust": 1,
+            "value": 1
+          },
+          "topic": "TALK_BHUNTER"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_ASK_BIO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "你没开玩笑吧？你真的不知道？那个徽章真的是你的吗…？也许抹去记忆的传言是真的……",
+      "no": "所以你不知道他们，嗯？也许我是在浪费时间…但你确实找到了这个地方，所以你可能知道你在做什么。"
+    },
+    "responses": [
+      {
+        "text": "你能给我解释一下吗？",
+        "trial": {
+          "type": "NONE"
+        },
+        "success": {
+          "opinion": {
+            "trust": 1,
+            "fear": 0,
+            "value": 1,
+            "anger": 0
+          },
+          "topic": "TALK_BHUNTER_EXPLAIN_BIO"
+        }
+      },
+      {
+        "text": "不管那是什么，我真的不在乎。",
+        "trial": {
+          "type": "NONE"
+        },
+        "success": {
+          "opinion": {
+            "trust": 0,
+            "fear": 0,
+            "value": -1,
+            "anger": -2
+          },
+          "topic": "TALK_BHUNTER_NOCARE"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_EXPLAIN_BIO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "我想抹去记忆是有道理的。不久前，军方启动了一项联合研究项目，最终目标是制造人造战士，用于执行各种具体任务——基本上是生物武器。他们希望尽可能地降低维护成本。因此，为了实现这一目标，研究团队利用现存项目中的资源，首先对人类进行变异，然后用生化插件进行改造，专注于培养军队所需的质量。你其中一员，他们称之为生物武器。这是你被创造出来的实验室。",
+      "no": "让我给你些基本知识。不久前，军方启动了一项联合研究项目，最终目标是制造人造战士，用于执行各种具体任务——基本上是生物武器。他们希望尽可能地降低维护成本。因此，为了实现这一目标，研究团队利用现存项目中的资源，首先对人类进行变异，然后用生化插件进行改造，专注于培养军队所需的质量。这个实验室是进行改造的几个地方之一。"
+    },
+    "responses": [
+      {
+        "text": "我会被诅咒的……",
+        "topic": "TALK_BHUNTER"
+      },
+      {
+        "text": "你是怎么知道这些的？",
+        "topic": "TALK_BHUNTER_ASK_LEARN"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_ASK_LEARN",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_effect": "evy_ousted",
+      "yes": "我奉命调查这个地方并找到幸存者。在大学期间，我曾是一名电脑黑客，因此追踪这些线索并不太难。最难的部分是寻找补给并活下去。",
+      "no": "在世界毁灭之前，我曾是一名电脑黑客。在那之后，当无需为生计奔波时，我就在寻找这个地点的线索。军方并不擅长保守秘密。"
+    },
+    "responses": [
+      {
+        "text": "对于黑客来说，你似乎装备得相当精良。",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_intelligence": 10
+                },
+                {
+                  "u_has_perception": 10
+                }
+              ]
+            },
+            {
+              "not": {
+                "or": [
+                  {
+                    "u_has_effect": "evy_ousted"
+                  },
+                  {
+                    "u_has_effect": "evy_asked_info_recently"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 3
+        },
+        "success": {
+          "topic": "TALK_BHUNTER_ADMIT",
+          "opinion": {
+            "trust": 1
+          },
+          "effect": {
+            "u_add_effect": "evy_ousted",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "TALK_BHUNTER_DENY",
+          "opinion": {
+            "trust": -1,
+            "anger": 1
+          },
+          "effect": {
+            "u_add_effect": "evy_asked_info_recently",
+            "duration": 1800
+          }
+        }
+      },
+      {
+        "text": "对于黑客来说，你似乎装备得相当精良。",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_intelligence": 11
+                },
+                {
+                  "u_has_perception": 11
+                }
+              ]
+            },
+            {
+              "not": {
+                "u_has_effect": "evy_ousted"
+              }
+            },
+            {
+              "u_has_effect": "evy_asked_info_recently"
+            }
+          ]
+        },
+        "topic": "TALK_BHUNTER_NOPE"
+      },
+      {
+        "text": "正确的。研究指令Z-12对你有影响吗，猎人？",
+        "topic": "TALK_BHUNTER_CONFIRM_OUST",
+        "condition": {
+          "and": [
+            {
+              "u_has_any_trait": [
+                "SUPER_SOLDIER_MARKER"
+              ]
+            },
+            {
+              "not": {
+                "u_has_effect": "evy_ousted"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "u_add_effect": "evy_ousted",
+          "duration": "PERMANENT"
+        }
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_ADMIT",
+    "type": "talk_topic",
+    "dynamic_line": "你说得对。但我不想谈论太多细节，我的任务是找出发生了什么，并与任何还活着的人取得联系。",
+    "responses": [
+      {
+        "text": "知道了。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_DENY",
+    "type": "talk_topic",
+    "dynamic_line": "一路上搜刮装备。如果我不是机智又幸运，我就不会活到现在。我不想谈论我为了生存所经历的一切，至少现在不是时候。好吗?",
+    "responses": [
+      {
+        "text": "好吧……",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_NOPE",
+    "type": "talk_topic",
+    "dynamic_line": "不久前你已经问过我了。我真的不想讨论这个。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_NOCARE",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "推测。你要么是个骗子，要么就是不在乎自己是谁。不过你能来到这里，说明你能力很强。",
+      "no": "那你在这里干什么？你是无意中跌入这个地方的吗？你又不是控制不住你自己。"
+    },
+    "responses": [
+      {
+        "text": "我想你是对的。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_ASK_DOING",
+    "type": "talk_topic",
+    "dynamic_line": "我来这里看看能否对他们的研究有什么发现。你呢？",
+    "responses": [
+      {
+        "text": "我被要求调查一个由涉事科学家所引发的安全漏洞。",
+        "topic": "TALK_BHUNTER_MISSION_2",
+        "switch": true,
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "u_has_var": "searching_for_msci",
+                "type": "dialogue",
+                "context": "evelynn",
+                "value": "yes"
+              }
+            },
+            {
+              "u_has_mission": "MISSION_LOOT_BIO_LAB"
+            }
+          ]
+        }
+      },
+      {
+        "text": "我没有接到任何命令，醒来前的事也不太记得了。有什么想法吗？",
+        "topic": "TALK_MISSION_LIST",
+        "switch": true,
+        "condition": {
+          "u_has_flag": "BIO_WEAPON_SERIES_1"
+        }
+      },
+      {
+        "text": "听起来是个不错的开始，无需遵守其他的常规命令了。你什么活要给我吗?",
+        "topic": "TALK_MISSION_LIST",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "SUPER_SOLDIER_MARKER"
+          ]
+        }
+      },
+      {
+        "text": "我不知道自己该怎么办。你需要我干什么？",
+        "topic": "TALK_MISSION_LIST",
+        "switch": true,
+        "condition": {
+          "u_has_any_trait": [
+            "BIO_WEAPON_FAILED",
+            "BIO_WEAPON_FAILED_SCEN"
+          ]
+        }
+      },
+      {
+        "text": "我不知道。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  },
+  {
+    "id": "TALK_BHUNTER_ASK_DO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_var": "searching_for_msci",
+      "type": "dialogue",
+      "context": "evelynn",
+      "value": "yes",
+      "yes": "既然你已经告诉我该去哪里找了，我们也许应该尽快离开这个地方。你可以搜索该地区以获得补给或装备，但要小心。袭击我们的那些东西可能仍在附近。",
+      "no": "我正试图去一个由生物武器计划的前科学家建造的藏身处。谣传他们住在树林里的某个地方。也许你能帮我找到它……"
+    },
+    "responses": [
+      {
+        "text": "到时候再说。",
+        "topic": "TALK_BHUNTER"
+      }
+    ]
+  }
+]

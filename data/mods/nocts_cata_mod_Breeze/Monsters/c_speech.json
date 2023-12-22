@@ -1,0 +1,146 @@
+[
+  {
+    "type": "speech",
+    "speaker": "mon_zombie_failed_weapon",
+    "sound": "痛苦的呻吟。",
+    "volume": 10
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_zombie_failed_weapon",
+    "sound": "怒吼！",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_zombie_failed_weapon",
+    "sound": "电流的噼啪声！",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_failed_weapon",
+    "sound": "痛苦的呻吟。",
+    "volume": 10
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_failed_weapon",
+    "sound": "怒吼！",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_failed_weapon",
+    "sound": "电流的噼啪声！",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_failed_weapon",
+    "sound": "“扫描区域……”",
+    "volume": 10
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_failed_weapon",
+    "sound": "“系统检查……错-误……”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_failed_weapon",
+    "sound": "“去死！”",
+    "volume": 40
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "金属的摩擦声！",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "电流的噼啪声！",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "野蛮无情的笑声！",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "一声响亮的动物咆哮！",
+    "volume": 60
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "“RD-Z-13……一号单元，操作权限已完全接入…”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "“系统检查。系统正常。”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "“净化！消灭！杀戮！”",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "“你在这个世界上已经过时了。”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "hulk_weapon",
+    "sound": "“无论你跑到哪里，躲到哪里，我都会找到你。”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_fungus_failed_weapon",
+    "sound": "怒吼！",
+    "volume": 50
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_fungus_failed_weapon",
+    "sound": "电流的噼啪声！",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_fungus_failed_weapon",
+    "sound": "“系统检查。错误。吾等需要继续生长。”",
+    "volume": 20
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_fungus_failed_weapon",
+    "sound": "“吾等会接受你的。投降。”",
+    "volume": 30
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_fungus_failed_weapon",
+    "sound": "“吾等……必须生长。”",
+    "volume": 25
+  },
+  {
+    "type": "speech",
+    "speaker": "mon_fungus_failed_weapon",
+    "sound": "“马卡斯必将壮大……”",
+    "volume": 20
+  }
+]

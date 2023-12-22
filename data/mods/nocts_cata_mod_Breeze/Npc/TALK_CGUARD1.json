@@ -1,0 +1,100 @@
+[
+  {
+    "id": "TALK_CGUARD1",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "嘿，又有一个人被困在这个烂摊子里了，是吗？",
+      "no": "嘿。有什么需要我帮忙的吗，客人？"
+    },
+    "responses": [
+      {
+        "text": "这是哪里？",
+        "topic": "TALK_CGUARD1_ASK_PLACE"
+      },
+      {
+        "text": "能告诉我怎么走吗？",
+        "topic": "TALK_CGUARD1_DIR"
+      },
+      {
+        "text": "这里怎么样？",
+        "topic": "TALK_CGUARD1_AKS_HOWRU"
+      },
+      {
+        "text": "我能待在这儿吗？",
+        "topic": "TALK_CGUARD1_ASK_STAY"
+      },
+      {
+        "text": "好的，再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD1_ASK_PLACE",
+    "type": "talk_topic",
+    "dynamic_line": "这是一个避难所，为生物武器研究小组建造的。我碰巧是这个计划的警卫之一。很快就变得一团糟。只有一位最初的科学家还在这里。",
+    "responses": [
+      {
+        "text": "生物武器？",
+        "topic": "TALK_CGUARD1_BIO"
+      },
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CGUARD1"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD1_DIR",
+    "type": "talk_topic",
+    "dynamic_line": "当然！这是娱乐室和大堂，厨房就在旁边。下面是主走廊。左边的第一个门是宿舍，生物武器们通常都在那里，对门则堆着一堆废金属。沿着大厅往下走，洗手间在右边，研究室在左边。我们的领导人，露特尔，就在那里，他是个怪人，但他一直保护着我们。如果你需要什么，可以随意去和别人谈谈。",
+    "responses": [
+      {
+        "text": "生物武器？",
+        "topic": "TALK_CGUARD1_BIO"
+      },
+      {
+        "text": "会的。",
+        "topic": "TALK_CGUARD1"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD1_BIO",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "我以为你会从你戴的徽章上知道。他们拥有我一样的基因标记，但也有一些变异和其他改变，使他们在当兵时表现得更好。基本上是生物武器。不管你在外面遇到什么，别担心。我们都站在同一边，尽管他们的能力增强了，但他们的行为更像两个无聊的青少年，而不是军事实验品。",
+      "no": "从某种意义上说是活的武器，但他们仍然和你我一样是人类。他们都被改造并注射了大量的诱变剂，医生说他们失去了很多记忆，但他们的行为并不像那些书呆子想要的杀人机器……"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_CGUARD1"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD1_AKS_HOWRU",
+    "type": "talk_topic",
+    "dynamic_line": "没什么可抱怨的。我们很安全，有食物，水和武器。露特尔一直在做他认为重要的事情。生活并不糟糕。",
+    "responses": [
+      {
+        "text": "很高兴听到你这么说。",
+        "topic": "TALK_CGUARD1"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD1_ASK_STAY",
+    "type": "talk_topic",
+    "dynamic_line": "这不是我能决定的。去问问露特尔他怎么想。",
+    "responses": [
+      {
+        "text": "谢了。",
+        "topic": "TALK_CGUARD1"
+      }
+    ]
+  }
+]

@@ -1,0 +1,2193 @@
+[
+  {
+    "id": "solar_flashlight",
+    "type": "TOOL",
+    "category": "tools",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "flashlight",
+    "name": {
+      "str": "太阳能手电筒（关）",
+      "str_pl": "太阳能手电筒（关）"
+    },
+    "description": "这是一个耐用的太阳能LED手电筒。使用内置充电电池提供照明。需要阳光或充电站充电。",
+    "price": "8 USD",
+    "price_postapoc": "2 USD",
+    "material": [
+      "plastic",
+      "aluminum"
+    ],
+    "flags": [
+      "RECHARGE",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "weight": "400 g",
+    "volume": "500 ml",
+    "bashing": 1,
+    "to_hit": 2,
+    "ammo": [
+      "battery"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你打开了手电筒。",
+      "target": "solar_flashlight_on",
+      "active": true,
+      "need_charges": 1,
+      "need_charges_msg": "手电的电池耗尽了。"
+    }
+  },
+  {
+    "id": "solar_flashlight_on",
+    "type": "TOOL",
+    "category": "tools",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "flashlight_on",
+    "name": {
+      "str": "太阳能手电筒（开）",
+      "str_pl": "太阳能手电筒（开）"
+    },
+    "description": "这是一个耐用的太阳能LED手电筒。使用内置充电电池提供照明。现在是打开状态，激活它来关闭。",
+    "price": "8 USD",
+    "price_postapoc": "2 USD",
+    "material": [
+      "plastic",
+      "aluminum"
+    ],
+    "flags": [
+      "LIGHT_450",
+      "CHARGEDIM",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "weight": "400 g",
+    "volume": "500 ml",
+    "bashing": 1,
+    "to_hit": 2,
+    "ammo": [
+      "battery"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "turns_per_charge": 15,
+    "revert_to": "solar_flashlight",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "你关闭了手电筒。",
+      "target": "solar_flashlight",
+      "ammo_scale": 0
+    }
+  },
+  {
+    "id": "wear_solar_flashlight",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "wearable_light",
+    "name": {
+      "str": "穿戴式太阳能手电筒（关）",
+      "str_pl": "穿戴式太阳能手电筒（关）"
+    },
+    "description": "这是一个耐用的带肩带的太阳能LED手电筒。使用内置充电电池提供照明。需要阳光或充电站充电。",
+    "price": "8 USD",
+    "price_postapoc": "2 USD",
+    "material": [
+      "plastic",
+      "aluminum"
+    ],
+    "flags": [
+      "OVERSIZE",
+      "BELTED",
+      "ALLOWS_NATURAL_ATTACKS",
+      "RECHARGE",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "weight": "400 g",
+    "volume": "500 ml",
+    "bashing": 1,
+    "to_hit": 2,
+    "ammo": [
+      "battery"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "你打开了手电筒。",
+      "target": "wear_solar_flashlight_on",
+      "active": true,
+      "need_charges": 1,
+      "need_charges_msg": "手电的电池耗尽了。"
+    },
+    "armor": [
+      {
+        "encumbrance": 1,
+        "coverage": 15,
+        "covers": [
+          "head"
+        ],
+        "material": [
+          "plastic",
+          "aluminum"
+        ],
+        "material_thickness": 2
+      }
+    ]
+  },
+  {
+    "id": "wear_solar_flashlight_on",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "wearable_light_on",
+    "name": {
+      "str": "穿戴式太阳能手电筒（开）",
+      "str_pl": "穿戴式太阳能手电筒（开）"
+    },
+    "description": "这是一个耐用的带肩带的太阳能LED手电筒。使用内置充电电池提供照明。现在是打开状态，激活它来关闭。",
+    "price": "8 USD",
+    "price_postapoc": "2 USD",
+    "material": [
+      "plastic",
+      "aluminum"
+    ],
+    "flags": [
+      "OVERSIZE",
+      "BELTED",
+      "ALLOWS_NATURAL_ATTACKS",
+      "LIGHT_450",
+      "CHARGEDIM",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "weight": "400 g",
+    "volume": "500 ml",
+    "bashing": 1,
+    "to_hit": 2,
+    "ammo": [
+      "battery"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "turns_per_charge": 15,
+    "revert_to": "wear_solar_flashlight",
+    "use_action": {
+      "type": "transform",
+      "menu_text": "关闭",
+      "msg": "你关闭了手电筒。",
+      "target": "wear_solar_flashlight",
+      "ammo_scale": 0
+    },
+    "armor": [
+      {
+        "encumbrance": 1,
+        "coverage": 15,
+        "covers": [
+          "head"
+        ],
+        "material": [
+          "plastic",
+          "aluminum"
+        ],
+        "material_thickness": 2
+      }
+    ]
+  },
+  {
+    "id": "solar_crude_firestarter",
+    "type": "TOOL",
+    "category": "tools",
+    "symbol": ",",
+    "color": "light_gray",
+    "looks_like": "crude_firestarter",
+    "name": {
+      "str": "太阳能生火工具 "
+    },
+    "description": "一个做工简陋的太阳能电子生火工具，也可以当作一只效率不高的打火机。",
+    "price": "2 USD",
+    "price_postapoc": "50 cent",
+    "material": [
+      "steel"
+    ],
+    "flags": [
+      "RECHARGE",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "weight": "14 g",
+    "volume": "500 ml",
+    "ammo": [
+      "battery"
+    ],
+    "charges_per_use": 5,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "use_action": {
+      "type": "firestarter"
+    }
+  },
+  {
+    "id": "solar_torch",
+    "type": "TOOL",
+    "sub": "torch",
+    "symbol": "/",
+    "color": "brown",
+    "looks_like": "torch",
+    "name": {
+      "str": "太阳能火把",
+      "str_pl": "太阳能火把"
+    },
+    "description": "一种利用太阳的能量（和变形怪糊）来点燃的神秘的火把。不知何故，汽油变形怪糊会在阳光下不断产生汽油并浸泡抹布，从某种意义上说，抹布是“可充电的”。你需要一个打火机来点着它。一旦点燃就无法熄灭直到燃料耗尽。",
+    "flags": [
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "material": [
+      "wood"
+    ],
+    "weight": "956 g",
+    "volume": "1 L",
+    "bashing": 8,
+    "to_hit": 1,
+    "ammo": [
+      "gasoline"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "watertight": true,
+        "ammo_restriction": {
+          "gasoline": 25
+        }
+      }
+    ],
+    "use_action": {
+      "type": "transform",
+      "target": "solar_torch_lit",
+      "need_fire": 1,
+      "need_fire_msg": "You need a source of fire to light this.",
+      "menu_text": "点燃火把",
+      "active": true,
+      "msg": "你点燃了火把。"
+    }
+  },
+  {
+    "id": "solar_torch_lit",
+    "type": "TOOL",
+    "sub": "torch_lit",
+    "symbol": "/",
+    "color": "brown",
+    "looks_like": "torch_lit",
+    "name": {
+      "str": "太阳能火把（点燃）",
+      "str_pl": "太阳能火把（点燃）"
+    },
+    "description": "一种利用太阳的能量（和变形怪糊）来点燃的神秘的火把。不知何故，汽油变形怪糊会在阳光下不断产生汽油并浸泡抹布，从某种意义上说，抹布是“可充电的”。正在燃烧，光芒四射直到燃料耗尽。",
+    "material": [
+      "wood"
+    ],
+    "flags": [
+      "FIRE",
+      "LIGHT_310",
+      "CHARGEDIM",
+      "FLAMING",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "weight": "942 g",
+    "volume": "1 L",
+    "bashing": 8,
+    "to_hit": 1,
+    "ammo": [
+      "gasoline"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "watertight": true,
+        "ammo_restriction": {
+          "gasoline": 25
+        }
+      }
+    ],
+    "turns_per_charge": 60,
+    "revert_to": "solar_torch",
+    "revert_msg": "The torch is extinguished.",
+    "use_action": [
+      {
+        "type": "transform",
+        "menu_text": "熄灭",
+        "msg": "火把熄灭了。",
+        "target": "solar_torch",
+        "ammo_scale": 0
+      }
+    ]
+  },
+  {
+    "id": "fr_22",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": ".22 全自动机匣"
+    },
+    "description": "一个使用 .22 LR子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "530 g",
+    "volume": "750 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_223",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": ".223 全自动机匣"
+    },
+    "description": "一个使用 .223 雷明顿子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "600 g",
+    "volume": "750 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_308",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": ".308 全自动机匣"
+    },
+    "description": "一个使用 .308 温彻斯特子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "620 g",
+    "volume": "1 L",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_9mm",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": "9mm 全自动机匣"
+    },
+    "description": "一个使用 9x19mm 子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "530 g",
+    "volume": "750 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_45",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": ".45 全自动机匣"
+    },
+    "description": "一个使用 .45 ACP子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "530 g",
+    "volume": "750 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_12",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": "12 号口径全自动机匣"
+    },
+    "description": "一个使用 12 号口径子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "650 g",
+    "volume": "1250 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_762",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": "7.62x39 全自动机匣"
+    },
+    "description": "一个使用 7.62x39mm 子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "620 g",
+    "volume": "1 L",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_762R",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": "7.62x54 全自动机匣"
+    },
+    "description": "一个使用 7.62x54mmR 子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "620 g",
+    "volume": "1 L",
+    "to_hit": -1
+  },
+  {
+    "id": "fr_50",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": ".50 全自动机匣"
+    },
+    "description": "一个使用 .50 BMG 子弹的自制机匣，可以用来制造自动武器。",
+    "price": "200 USD",
+    "price_postapoc": "250 cent",
+    "material": [
+      "steel"
+    ],
+    "weight": "650 g",
+    "volume": "1250 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "surcan",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "can_medium",
+    "name": {
+      "str": "罐装救生用具",
+      "str_pl": "罐装救生用具"
+    },
+    "description": "一个被标签和封条固定在一起的大锡罐。拆下封条可以将容器分成两个小罐并露出其中的内容物。里面有精心包装的救生物品，并在罐头的一侧列出了它们的清单。拆开后无法还原。",
+    "price": "6 USD",
+    "material": [
+      "steel"
+    ],
+    "flags": [
+      "WATERPROOF"
+    ],
+    "weight": "103 g",
+    "volume": "500 ml",
+    "to_hit": -1,
+    "use_action": "DISASSEMBLE"
+  },
+  {
+    "id": "elc_bld",
+    "type": "TOOL",
+    "symbol": ";",
+    "color": "dark_gray",
+    "name": {
+      "str": "幸存者电击刀"
+    },
+    "description": "一把带有护指的自制刀，兼作电击枪。手柄上的胶带能防止触电。",
+    "price": "180 USD",
+    "price_postapoc": "18 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "flags": [
+      "STAB",
+      "DURABLE_MELEE",
+      "SHEATH_KNIFE"
+    ],
+    "weight": "638 g",
+    "volume": "1250 ml",
+    "bashing": 8,
+    "cutting": 6,
+    "to_hit": -1,
+    "charges_per_use": 100,
+    "ammo": [
+      "battery"
+    ],
+    "category": "weapons",
+    "use_action": "TAZER",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "holster": true,
+        "rigid": true,
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "20 kg",
+        "item_restriction": [
+          "medium_battery_cell",
+          "medium_plus_battery_cell",
+          "medium_atomic_battery_cell",
+          "medium_disposable_cell"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "elc_blds",
+    "type": "TOOL",
+    "symbol": ";",
+    "color": "dark_gray",
+    "name": {
+      "str_sp": "幸存者电击双刀"
+    },
+    "description": "两把带有护指的自制刀，兼作电击枪。手柄上的胶带能防止触电。",
+    "price": "360 USD",
+    "price_postapoc": "36 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "flags": [
+      "STAB",
+      "DURABLE_MELEE"
+    ],
+    "weight": "1276 g",
+    "volume": "2500 ml",
+    "bashing": 16,
+    "cutting": 12,
+    "to_hit": -1,
+    "//": "Tazer use action can't really be tweaked to justify power consumption changing, since no dual-tazing.  Plus, battery amounts mean keeping it an even 100 is sanest.",
+    "charges_per_use": 100,
+    "ammo": [
+      "battery"
+    ],
+    "category": "weapons",
+    "use_action": "TAZER",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "holster": true,
+        "rigid": true,
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "20 kg",
+        "item_restriction": [
+          "medium_battery_cell",
+          "medium_plus_battery_cell",
+          "medium_atomic_battery_cell",
+          "medium_disposable_cell"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "can_forge",
+    "type": "TOOL",
+    "symbol": ";",
+    "color": "light_gray",
+    "looks_like": "hobo_stove",
+    "name": {
+      "str": "罐式锻炉"
+    },
+    "sub": "forge",
+    "description": "这是一个配有自制进气口和隔热衬里的便携式锻造炉。它可以用于轻金属加工，修理物品和加热食品，但它的实用性受到它的尺寸和容量的限制。",
+    "price": "100 USD",
+    "price_postapoc": "15 USD",
+    "material": [
+      "steel"
+    ],
+    "weight": "1800 g",
+    "volume": "2 L",
+    "bashing": 1,
+    "to_hit": -2,
+    "charges_per_use": 1,
+    "ammo": [
+      "charcoal"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "charcoal": 60
+        }
+      }
+    ],
+    "use_action": [
+      "HOTPLATE",
+      {
+        "type": "repair_item",
+        "item_action_type": "repair_metal",
+        "materials": [
+          "iron",
+          "steel",
+          "lc_steel",
+          "mc_steel",
+          "hc_steel",
+          "ch_steel",
+          "qt_steel",
+          "aluminum",
+          "copper",
+          "bronze",
+          "silver",
+          "gold",
+          "platinum",
+          "superalloy"
+        ],
+        "skill": "fabrication",
+        "tool_quality": 4,
+        "cost_scaling": 0.1,
+        "move_cost": 1000
+      }
+    ],
+    "flags": [
+      "ALLOWS_REMOTE_USE"
+    ]
+  },
+  {
+    "id": "molded_hammer",
+    "type": "TOOL",
+    "symbol": ";",
+    "color": "light_gray",
+    "looks_like": "makeshift_hammer",
+    "name": {
+      "str": "模铸锤"
+    },
+    "description": "一把由铸铁铸成的锤子。作为武器来说它有点脆弱，但足以用作工具，虽然没有撬钉子的角。",
+    "price": "5 USD",
+    "material": [
+      "steel"
+    ],
+    "weight": "1600 g",
+    "volume": "500 ml",
+    "bashing": 12,
+    "qualities": [
+      [
+        "HAMMER",
+        3
+      ]
+    ],
+    "flags": [
+      "FRAGILE_MELEE",
+      "BELT_CLIP"
+    ]
+  },
+  {
+    "id": "molded_knife",
+    "type": "TOOL",
+    "symbol": ";",
+    "color": "light_gray",
+    "looks_like": "makeshift_knife",
+    "name": {
+      "str": "模铸刀",
+      "str_pl": "模铸刀"
+    },
+    "description": "一把由铸铁铸成的小刀。作为武器来说它脆弱且沉重，但足以用作切割工具。至少比磨尖金属片效果更好。",
+    "price": "2 USD",
+    "material": [
+      "steel"
+    ],
+    "weight": "800 g",
+    "volume": "250 ml",
+    "bashing": 4,
+    "cutting": 8,
+    "to_hit": -1,
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        18
+      ]
+    ],
+    "flags": [
+      "FRAGILE_MELEE",
+      "STAB",
+      "SHEATH_KNIFE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "molded_pot",
+    "category": "tools",
+    "symbol": ";",
+    "color": "dark_gray",
+    "looks_like": "pot_makeshift",
+    "name": {
+      "str": "模铸锅"
+    },
+    "description": "一个由铸铁铸成的锅。按预期用途来说。",
+    "price": "2 USD",
+    "material": [
+      "iron"
+    ],
+    "weight": "1600 g",
+    "volume": "2005 ml",
+    "bashing": 8,
+    "to_hit": -1,
+    "pocket_data": [
+      {
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "2 kg",
+        "watertight": true,
+        "rigid": true
+      }
+    ],
+    "qualities": [
+      [
+        "COOK",
+        3
+      ],
+      [
+        "BOIL",
+        2
+      ],
+      [
+        "CONTAIN",
+        1
+      ],
+      [
+        "CHEM",
+        1
+      ]
+    ],
+    "use_action": "HEAT_FOOD",
+    "//": "In the unlikely event some lunatic mistakes this for the frying pan of doom.",
+    "flags": [
+      "ALLOWS_REMOTE_USE",
+      "FRAGILE_MELEE"
+    ]
+  },
+  {
+    "id": "molded_shovel",
+    "type": "TOOL",
+    "symbol": "/",
+    "color": "brown",
+    "looks_like": "shovel",
+    "name": {
+      "str": "模铸铲"
+    },
+    "description": "一把由铸铁铸成的铲子。脆弱且沉重，但至少能起作用。",
+    "price": "2 USD",
+    "material": [
+      "iron"
+    ],
+    "//": "Get a further discount in weight because we're already getting crazy poundage here.",
+    "weight": "9800 g",
+    "volume": 14,
+    "to_hit": 3,
+    "bashing": 16,
+    "cutting": 1,
+    "qualities": [
+      [
+        "DIG",
+        3
+      ],
+      [
+        "COOK",
+        1
+      ],
+      [
+        "BUTCHER",
+        -70
+      ]
+    ],
+    "flags": [
+      "FRAGILE_MELEE"
+    ]
+  },
+  {
+    "id": "molded_axe",
+    "type": "TOOL",
+    "symbol": "/",
+    "color": "light_gray",
+    "looks_like": "ax",
+    "name": {
+      "str": "模铸斧"
+    },
+    "description": "一把由铸铁铸成的斧头。经得起正常使用，但作为武器来说它脆弱且沉重。",
+    "price": "2 USD",
+    "material": [
+      "iron"
+    ],
+    "weight": "8000 g",
+    "to_hit": -1,
+    "volume": "2500 ml",
+    "bashing": 24,
+    "cutting": 10,
+    "qualities": [
+      [
+        "AXE",
+        2
+      ],
+      [
+        "BUTCHER",
+        -36
+      ]
+    ],
+    "flags": [
+      "FRAGILE_MELEE",
+      "SHEATH_AXE"
+    ]
+  },
+  {
+    "type": "TOOL",
+    "id": "fishing_string",
+    "symbol": "/",
+    "color": "white",
+    "looks_like": "string_36",
+    "name": {
+      "str": "钓鱼绳"
+    },
+    "description": "一根末端有钩子的长绳子。一种原始的捕鱼工具。需要诱饵作为饵料和下沉器。",
+    "material": [
+      "cotton"
+    ],
+    "weight": "170 g",
+    "volume": "250 ml",
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "fish_bait": 1
+        }
+      }
+    ],
+    "charges_per_use": 1,
+    "ammo": [
+      "fish_bait"
+    ],
+    "flags": [
+      "FISH_POOR"
+    ],
+    "use_action": "FISH_ROD",
+    "to_hit": -1
+  },
+  {
+    "id": "shmap",
+    "category": "maps",
+    "type": "GENERIC",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "survivormap",
+    "name": {
+      "str_sp": "应急撤离点坐标"
+    },
+    "description": "一张地图和一组方位，指向某人的集合点。角落里潦草的名字似乎有点熟悉。",
+    "material": [
+      "paper"
+    ],
+    "weight": "30 g",
+    "volume": "250 ml",
+    "to_hit": -1,
+    "use_action": {
+      "type": "reveal_map",
+      "radius": 180,
+      "terrain": [
+        "Survivor_Holdout_1"
+      ],
+      "message": "仔细看地图，你记住所示的位置。"
+    }
+  },
+  {
+    "id": "auto_case",
+    "category": "spare_parts",
+    "type": "TOOL",
+    "color": "light_gray",
+    "symbol": ",",
+    "looks_like": "llink",
+    "name": {
+      "str": "全自动机匣零件"
+    },
+    "description": "可调节插入式自动阻铁和将其安装在枪械上的零件。笨重且纯手工，需要进一步加工才能制成一个可用的机匣。",
+    "material": [
+      "steel"
+    ],
+    "weight": "320 g",
+    "volume": "750 ml",
+    "to_hit": -1
+  },
+  {
+    "id": "survbowstored",
+    "type": "TOOL",
+    "color": "brown",
+    "symbol": "{",
+    "name": {
+      "str": "幸存者战斗弓（折叠）"
+    },
+    "description": "折叠状态的幸存者战斗弓，便于存放。激活以展开到战斗状态。",
+    "price": "880 USD",
+    "price_postapoc": "88 USD",
+    "material": [
+      "wood",
+      "steel"
+    ],
+    "weight": "1144 g",
+    "volume": "1 L",
+    "to_hit": -1,
+    "use_action": {
+      "type": "transform",
+      "msg": "你展开弓，锁定弓臂。",
+      "target": "survbow",
+      "ammo_scale": 0
+    }
+  },
+  {
+    "id": "semap",
+    "category": "maps",
+    "type": "GENERIC",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "survivormap",
+    "name": {
+      "str": "营地计划提醒"
+    },
+    "description": "描述一群人建立预备定居点的笔记。你试着想起附近是否有这样的人。也许纸条的背面有他们定居点的坐标。",
+    "material": [
+      "paper"
+    ],
+    "weight": "30 g",
+    "volume": "250 ml",
+    "to_hit": -1,
+    "use_action": {
+      "type": "reveal_map",
+      "radius": 180,
+      "terrain": [
+        "surv_emcampn",
+        "surv_emcampb",
+        "surv_emcampz"
+      ],
+      "message": "你读了纸条后面的内容，并计划下一步的行动。"
+    }
+  },
+  {
+    "//": "The hammer multi-tool is a disassembler",
+    "id": "hammer_multitool",
+    "type": "TOOL",
+    "symbol": ";",
+    "color": "brown",
+    "name": {
+      "str": "多功能工具锤组"
+    },
+    "description": "由一把小锤子和一对钳子组成的多用工具。小而实用，幸存者的迷你工具箱。",
+    "price": "50 USD",
+    "price_postapoc": "5 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "flags": [
+      "STAB",
+      "BELT_CLIP"
+    ],
+    "weight": "820 g",
+    "volume": "500 ml",
+    "bashing": 8,
+    "cutting": 4,
+    "to_hit": -4,
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "SAW_W",
+        1
+      ],
+      [
+        "SAW_M",
+        1
+      ],
+      [
+        "WRENCH",
+        1
+      ],
+      [
+        "SCREW",
+        1
+      ],
+      [
+        "SCREW_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        8
+      ],
+      [
+        "HAMMER",
+        2
+      ],
+      [
+        "HAMMER_FINE",
+        1
+      ]
+    ]
+  },
+  {
+    "type": "BOOK",
+    "id": "recipe_surv",
+    "name": {
+      "str": "幸存者手稿"
+    },
+    "description": "一本记录了许多自制小发明和小玩意的点子的笔记本。 曾经是有太多空闲时间的疯子的想法，现在则是无价的知识。",
+    "weight": "1700 g",
+    "volume": "500 ml",
+    "price": "500 USD",
+    "price_postapoc": "10 USD",
+    "skill": "fabrication",
+    "max_level": 8,
+    "required_level": 5,
+    "intelligence": 10,
+    "color": "light_green",
+    "symbol": "!",
+    "looks_like": "recipe_melee",
+    "material": [
+      "paper"
+    ],
+    "to_hit": -2,
+    "time": "40 m",
+    "fun": -1
+  },
+  {
+    "id": "megamap",
+    "type": "TOOL_ARMOR",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "侦查者平板"
+    },
+    "description": "这是一个笨重的电子腕装工具，使用时可提供周围环境的精确地形图。 它还带有电子时钟和闹钟功能。 内置电池需要阳光或充电站来充电。",
+    "price": "5000 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel"
+    ],
+    "weight": "230 g",
+    "volume": "500 ml",
+    "bashing": 1,
+    "to_hit": -1,
+    "ammo": "battery",
+    "charges_per_use": 250,
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "c_topographical_scan",
+      "no_fail": true,
+      "level": 0
+    },
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 250
+        }
+      }
+    ],
+    "flags": [
+      "BELTED",
+      "WATCH",
+      "ALARMCLOCK",
+      "RECHARGE",
+      "NO_UNLOAD",
+      "NO_RELOAD"
+    ],
+    "phase": "solid",
+    "sided": true,
+    "armor": [
+      {
+        "encumbrance": 5,
+        "coverage": 10,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "material": [
+          "steel"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stim",
+    "type": "TOOL",
+    "category": "tools",
+    "symbol": ">",
+    "color": "red",
+    "looks_like": "rx11_stimpack",
+    "name": {
+      "str": "生物注射器"
+    },
+    "description": "一种奇怪的、看起来像有机物的自动注射器，能慢慢分泌出某种红色的、类似血液的物质。从标签上可以看出，这是一种实验性兴奋剂，可以稳定轻微伤口，以造成疼痛为代价提高表现。标签还提醒使用者不要在2小时内使用超过1次。 ",
+    "price": "50000 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "plastic",
+      "flesh"
+    ],
+    "weight": "150 g",
+    "volume": "250 ml",
+    "cutting": 1,
+    "to_hit": -1,
+    "flags": [
+      "NO_RELOAD",
+      "NO_UNLOAD"
+    ],
+    "ammo": [
+      "c_bioampoule_type"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "c_bioampoule_type": 1
+        }
+      }
+    ],
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "c_biostim",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "blood_m",
+    "type": "TOOL",
+    "category": "tools",
+    "symbol": ">",
+    "color": "red",
+    "looks_like": "rx12_injector",
+    "name": {
+      "str": "生物变异注入套组"
+    },
+    "description": "一套奇怪的输液器，有几个看起来像器官一样的的部件。 它有多个管子可以同时抽血和输血。 其上的标签称一种名为XE037的物质是主要活性成分。其内部使用的生物安瓿将每个小时自动净化一次。",
+    "price": "50000 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "plastic",
+      "flesh"
+    ],
+    "weight": "150 g",
+    "volume": "750 ml",
+    "cutting": 1,
+    "to_hit": -1,
+    "flags": [
+      "NO_RELOAD",
+      "NO_UNLOAD"
+    ],
+    "ammo": [
+      "c_bioampoule_type"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "c_bioampoule_type": 1
+        }
+      }
+    ],
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "c_infusion",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "blood_p",
+    "type": "TOOL",
+    "category": "tools",
+    "symbol": ">",
+    "color": "blue",
+    "looks_like": "rx12_injector",
+    "name": {
+      "str": "生物变异祛除套组"
+    },
+    "description": "一套奇怪的输液器，有几个看起来像器官一样的的部件。 它有多个管子可以同时抽血和输血。 其上的标签称其为快速干细胞治疗，用以恢复使用者原本的基因结构。其内部使用的生物安瓿将每个小时自动净化一次。",
+    "price": "50000 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "plastic",
+      "flesh"
+    ],
+    "weight": "150 g",
+    "volume": "750 ml",
+    "cutting": 1,
+    "to_hit": -1,
+    "flags": [
+      "NO_RELOAD",
+      "NO_UNLOAD"
+    ],
+    "ammo": [
+      "c_bioampoule_type"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "c_bioampoule_type": 1
+        }
+      }
+    ],
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "c_defusion",
+      "no_fail": true,
+      "level": 0
+    }
+  },
+  {
+    "id": "ulmap",
+    "category": "maps",
+    "type": "GENERIC",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "survivormap",
+    "name": {
+      "str": "未知实验室地图",
+      "str_pl": "未知实验室地图"
+    },
+    "description": "这是一张由生物武器项目的前科学家绘制的地图。它标志着一个废弃实验室的位置，存在一个强大的敌人。",
+    "price": "5 USD",
+    "material": [
+      "paper"
+    ],
+    "weight": "30 g",
+    "volume": "250 ml",
+    "to_hit": -1,
+    "use_action": {
+      "type": "reveal_map",
+      "radius": 180,
+      "terrain": [
+        "Unknown_Lab_1",
+        "Unknown_Lab_2",
+        "Unknown_Lab_3",
+        "Unknown_Lab_4"
+      ],
+      "message": "你看了地图。意识到必须做什么……"
+    }
+  },
+  {
+    "id": "mccmap",
+    "category": "maps",
+    "type": "GENERIC",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "survivormap",
+    "name": {
+      "str": "神秘笔记"
+    },
+    "description": "“我们必须马上离开这个地方。那些东西就要来了，如果不及时撤离，我们就都死定了。拿上你能拿的东西前往这个地点——我们将在那里建立一个临时藏身处。”",
+    "price": "5 USD",
+    "material": [
+      "paper"
+    ],
+    "weight": "30 g",
+    "volume": "250 ml",
+    "to_hit": -1,
+    "use_action": {
+      "type": "reveal_map",
+      "radius": 180,
+      "terrain": [
+        "makeshift_command_center_1",
+        "makeshift_command_center_2"
+      ],
+      "message": "低头看笔记，你记住所示的位置。"
+    }
+  },
+  {
+    "id": "biomap",
+    "category": "maps",
+    "type": "GENERIC",
+    "symbol": ";",
+    "color": "blue",
+    "looks_like": "survivormap",
+    "name": {
+      "str": "手绘地图"
+    },
+    "description": "“终于。我找到了终端记录中提到的实验室的坐标。据我所知，里面肯定还剩下一些有价值的东西，我想应该没有人会介意我去看一眼。”",
+    "price": "5 USD",
+    "material": [
+      "paper"
+    ],
+    "weight": "30 g",
+    "volume": "250 ml",
+    "to_hit": -1,
+    "use_action": {
+      "type": "reveal_map",
+      "radius": 180,
+      "terrain": [
+        "Bio_Weapon_Lab_1",
+        "Bio_Weapon_Lab_2"
+      ],
+      "message": "你对地图上的地点很感兴趣。你不知道去那里是不是个好主意。"
+    }
+  },
+  {
+    "id": "mil_surp_pack_1",
+    "type": "GENERIC",
+    "symbol": ")",
+    "color": "brown",
+    "name": {
+      "str": "过时军品包"
+    },
+    "category": "other",
+    "description": "军需品商店里出售的一种面向民用市场的装备包。提供过时的军用步枪、枪背带、弹药、基本维修包和袖珍指南。里面有莫辛纳甘 1891/30 步枪。",
+    "price": "4635 USD",
+    "price_postapoc": "60 USD",
+    "weight": "8932 g",
+    "volume": "4500 ml",
+    "to_hit": -2,
+    "material": [
+      "wood",
+      "steel"
+    ],
+    "use_action": "DISASSEMBLE"
+  },
+  {
+    "id": "mil_surp_pack_2",
+    "type": "GENERIC",
+    "symbol": ")",
+    "color": "brown",
+    "name": {
+      "str": "过时军品包"
+    },
+    "category": "other",
+    "description": "军需品商店里出售的一种面向民用市场的装备包。提供过时的军用步枪、枪背带、弹药、基本维修包和袖珍指南。里面有SKS 卡宾枪。",
+    "price": "4635 USD",
+    "price_postapoc": "70 USD",
+    "weight": "8932 g",
+    "volume": "4500 ml",
+    "to_hit": -2,
+    "material": [
+      "wood",
+      "steel"
+    ],
+    "use_action": "DISASSEMBLE"
+  },
+  {
+    "id": "mil_surp_pack_3",
+    "type": "GENERIC",
+    "symbol": ")",
+    "color": "brown",
+    "name": {
+      "str": "过时军品包"
+    },
+    "category": "other",
+    "description": "军需品商店里出售的一种面向民用市场的装备包。提供过时的军用步枪、枪背带、弹药、基本维修包和袖珍指南。里面有M1903 春田步枪。",
+    "price": "4635 USD",
+    "price_postapoc": "65 USD",
+    "weight": "8932 g",
+    "volume": "4500 ml",
+    "to_hit": -2,
+    "material": [
+      "wood",
+      "steel"
+    ],
+    "use_action": "DISASSEMBLE"
+  },
+  {
+    "id": "parawatch",
+    "type": "ARMOR",
+    "name": {
+      "str": "伞绳救生手表",
+      "str_pl": "伞绳救生手表"
+    },
+    "description": "一个款式简约的腕表，表带是塑料材质。裹着一个带温度计的降落伞手链。可以计时，还有闹钟功能。",
+    "weight": "100 g",
+    "volume": "500 ml",
+    "price": "10 USD",
+    "price_postapoc": "1 USD",
+    "to_hit": -1,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "bead_bracelet",
+    "sided": true,
+    "use_action": [
+      "WEATHER_TOOL",
+      "DISASSEMBLE"
+    ],
+    "flags": [
+      "WATCH",
+      "ALARMCLOCK",
+      "BELTED",
+      "FRAGILE",
+      "ALLOWS_NATURAL_ATTACKS",
+      "THERMOMETER"
+    ],
+    "armor": [
+      {
+        "encumbrance": 1,
+        "coverage": 5,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "material": [
+          "plastic",
+          "steel"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "parabracelets",
+    "type": "ARMOR",
+    "name": {
+      "str": "伞绳手链"
+    },
+    "description": "一根由伞绳制成的简单手链。可以拆解出一些棉线。",
+    "weight": "50 g",
+    "volume": "250 ml",
+    "price": "5 USD",
+    "price_postapoc": "50 cent",
+    "to_hit": -1,
+    "material": [
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "bead_bracelet",
+    "sided": true,
+    "flags": [
+      "BELTED",
+      "FRAGILE",
+      "ALLOWS_NATURAL_ATTACKS"
+    ],
+    "use_action": "DISASSEMBLE",
+    "armor": [
+      {
+        "encumbrance": 1,
+        "coverage": 5,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ],
+        "material": [
+          "cotton"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "flesh_weapon_kit",
+    "type": "GENERIC",
+    "symbol": ")",
+    "color": "red",
+    "name": {
+      "str": "生物武器转换套件"
+    },
+    "category": "other",
+    "description": "一个可疑的盒子，里面有很多零件，工具和……肉？盒子里有一本手册，给出了如何使用的最少信息。它说要查看介绍信息包以获取更多信息，不管那是什么。",
+    "price": "5035 USD",
+    "price_postapoc": "25 USD",
+    "weight": "10958 g",
+    "volume": "3 L",
+    "to_hit": -2,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "CUT_FINE",
+        3
+      ],
+      [
+        "BUTCHER",
+        8
+      ],
+      [
+        "FABRIC_CUT",
+        1
+      ],
+      [
+        "DISTILL",
+        1
+      ],
+      [
+        "CHEM",
+        3
+      ],
+      [
+        "BOIL",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "omnitech_weapon_ups_kit",
+    "type": "GENERIC",
+    "symbol": ")",
+    "color": "blue",
+    "name": {
+      "str": "Omnitech UPS转换套件"
+    },
+    "category": "other",
+    "description": "一个装有许多工具和少量电子元件的盒子。上面有Omnitech的标志和设备名称。在背面的描述说，你可以用它来转换Omnitech武器的电池供电为UPS电源，如果你有手册的话。",
+    "price": "5035 USD",
+    "price_postapoc": "25 USD",
+    "weight": "10958 g",
+    "volume": "3 L",
+    "to_hit": -2,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        2
+      ],
+      [
+        "HAMMER_FINE",
+        1
+      ],
+      [
+        "WRENCH",
+        1
+      ],
+      [
+        "WRENCH_FINE",
+        1
+      ],
+      [
+        "SAW_M",
+        1
+      ],
+      [
+        "SAW_M_FINE",
+        1
+      ],
+      [
+        "SCREW",
+        1
+      ],
+      [
+        "SCREW_FINE",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "cbm_rtg_inductor",
+    "type": "TOOL_ARMOR",
+    "category": "tools",
+    "symbol": ";",
+    "color": "light_green",
+    "looks_like": "adv_UPS_off",
+    "name": {
+      "str": "便携式聚变CBM充能器"
+    },
+    "description": "一个正发出明显热量的原型装置，其内部容纳了一个紧凑型放射性同位素热能发电机。 它似乎没有电池槽，甚至不提供UPS连接，而是内置了一个专为CBM储能系统设计的感应式充电系统。 然而其作为一个未完成的原型装置，使用它向你的CBM系统传输电力而不触电的唯一方法是：打开部分外壳结构，但这会使你暴露于辐射中。",
+    "price": "12000 USD",
+    "price_postapoc": "60 USD",
+    "material": [
+      "plastic",
+      "aluminum"
+    ],
+    "flags": [
+      "LEAK_DAM",
+      "RADIOACTIVE",
+      "BELTED",
+      "OVERSIZE",
+      "NO_RELOAD",
+      "NO_UNLOAD"
+    ],
+    "weight": "2200 g",
+    "volume": "3 L",
+    "bashing": 4,
+    "warmth": 20,
+    "ammo": [
+      "battery"
+    ],
+    "charges_per_use": 1,
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "battery": 25
+        }
+      }
+    ],
+    "use_action": {
+      "type": "cast_spell",
+      "spell_id": "c_cbm_rtg_induction",
+      "no_fail": true,
+      "level": 0
+    },
+    "armor": [
+      {
+        "encumbrance": 5,
+        "coverage": 25,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ],
+        "material": [
+          "plastic",
+          "aluminum"
+        ],
+        "material_thickness": 2
+      }
+    ]
+  },
+  {
+    "id": "thermal_lance_makeshift",
+    "type": "TOOL",
+    "name": {
+      "str": "自制焊炬"
+    },
+    "description": "一种自制的焊接工具，根据铁的富氧燃烧，加上氧气供应，制造出足以熔化金属的切割工具。它可以作为一个自制的低效金工工具，你也可以激活它开摧毁金属栅栏。",
+    "looks_like": "oxy_torch",
+    "sub": "oxy_torch",
+    "weight": "2000 g",
+    "volume": "1750 ml",
+    "price": "100 USD",
+    "price_postapoc": "5 USD",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": ";",
+    "color": "red",
+    "max_charges": 30,
+    "initial_charges": 30,
+    "charges_per_use": 1,
+    "use_action": "OXYTORCH",
+    "qualities": [
+      [
+        "WELD",
+        1
+      ]
+    ],
+    "flags": [
+      "ALLOWS_REMOTE_USE"
+    ]
+  },
+  {
+    "id": "molded_crowbar",
+    "looks_like": "crowbar",
+    "type": "TOOL",
+    "name": {
+      "str": "模铸撬棍"
+    },
+    "description": "这是一个沉重的撬棍，由铸铁铸成。作为武器来说它脆弱且沉重，但足以撬开上锁的门。虽然不是很理想，但相对于自制工具来说已经是一种进步了。",
+    "weight": "1250 g",
+    "volume": "1 L",
+    "price": "13 USD",
+    "to_hit": 1,
+    "bashing": 14,
+    "cutting": 1,
+    "material": [
+      "steel"
+    ],
+    "symbol": ";",
+    "color": "dark_gray",
+    "qualities": [
+      [
+        "PRY",
+        2
+      ],
+      [
+        "HAMMER",
+        1
+      ]
+    ],
+    "use_action": [
+      "HAMMER",
+      "CROWBAR"
+    ],
+    "techniques": [
+      "WBLOCK_1"
+    ],
+    "flags": [
+      "BELT_CLIP",
+      "FRAGILE_MELEE"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_claw_broken",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "米·戈手术爪"
+    },
+    "description": "一簇由异界树脂制成的纤维状组织和不规则结构，从里面伸出一个18英寸长的锋利的刀片。它似乎部分是由同样的绿色玻璃状树脂制成的，逐渐褪色并塑形成锋利的灰白色合成骨或角蛋白。它仍然锋利无比，可作为一种笨拙的切割工具，但它的制造(或生长)并没有考虑到人体工程学，因此目前无法有效作为武器。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh"
+    ],
+    "weight": "1 kg",
+    "volume": "1500 ml",
+    "to_hit": -2,
+    "bashing": 6,
+    "cutting": 8,
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        5
+      ]
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_beam_broken",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "生物棱镜"
+    },
+    "description": "一个主要由奇怪的玻璃状树脂制成的小型长方形物体。一端有一个由这种几乎完全透明的材料覆盖表面的开口，而另一端则是乱七八糟的断筋和破烂的血肉。这种武器可能有用，尽管它的血肉端似乎不适合人类操作。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh"
+    ],
+    "weight": "3 kg",
+    "volume": "2 L",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_rifle_broken",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "树脂发射器"
+    },
+    "description": "一个由外星树脂混合着一堆彩虹色的几丁质血肉和撕裂肌肉制成的长管发射器。这显然是一种枪械武器，但另一端的残破混乱让人很难知道如何使用，也很难判断它在人类手中是否有用。它看起来显然不是为了四肢而设计的，更不用说人手了。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh"
+    ],
+    "weight": "7 kg",
+    "volume": "5 L",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_carapace_broken",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "甲壳装甲"
+    },
+    "description": "一种由多片异星树脂和彩虹色的血肉组成的外壳，由肌腱网连接在一起。它更像是一个非人生物的生物盔甲而非防护具体的身体部位，尽管里面磨损的有机线路更加生动地描绘出了它是如何运作的。它似乎仍然可以使用，尽管它的形状和功能显然从未考虑过人类使用。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh"
+    ],
+    "weight": "35 kg",
+    "volume": "40 L",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_extruder_broken",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "异界纺丝器"
+    },
+    "description": "拳头大小的血块和撕裂的肌肉纤维，从中伸出三根纤细的刺，似乎是合成骨，也可能是角蛋白。在这些刺之间，有无数条看起来像亮绿色玻璃纤维的细线，很可能是异界树脂。这似乎是用来生产或塑造这种奇怪的物质的，可能有用但它现在的样子肯定是无法使用的，无论人类还是异界生物。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh"
+    ],
+    "weight": "750 g",
+    "volume": "500 ml",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_wings_broken",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "虹色翅膀",
+      "str_pl": "虹色翅膀"
+    },
+    "description": "几对有光泽的昆虫状翅膀，薄薄的偏绿彩虹色血肉中凝结的液体似乎是静脉，组成了一个浅灰色的蜘蛛网图案。它们混合在一起，形成一团覆盖着灰白色神经索的破碎的几丁质板，如果拉错了方向，就会引发相当强烈的抽搐。无论它们是在太空中飞行，还是用于其他用途，很明显，这些翅膀的制造和进化程度相当。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh"
+    ],
+    "weight": "4 kg",
+    "volume": "10 L",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_REPAIR"
+    ]
+  },
+  {
+    "id": "c_mi_go_extruder_salvaged",
+    "type": "TOOL",
+    "symbol": "/",
+    "color": "green",
+    "name": {
+      "str": "改装树脂挤出机"
+    },
+    "description": "一种由异界血肉和科技制成的奇怪装置。三根合成象牙的细刺围绕着某种喷嘴，喷嘴内的物质不断再生。激活它可以产生树脂碎片，无论你对这种东西有什么用途。激活它会将其设置为更缓慢地涂抹树脂，使其用于修复改装的米·戈生物技术。",
+    "price_postapoc": "25 USD",
+    "material": [
+      "alien_resin",
+      "flesh",
+      "steel"
+    ],
+    "weight": "300 g",
+    "volume": "250 ml",
+    "ammo": [
+      "battery"
+    ],
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "periodic",
+        "time": "1 h",
+        "regenerate_ammo": true
+      }
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "charges_per_use": 25,
+    "use_action": [
+      {
+        "type": "cast_spell",
+        "spell_id": "c_resin_create",
+        "no_fail": true,
+        "level": 0
+      },
+      {
+        "type": "transform",
+        "msg": "你将%s切换到编织模式",
+        "target": "c_mi_go_extruder_salvaged_alt",
+        "menu_text": "切换模式",
+        "ammo_scale": 0
+      }
+    ]
+  },
+  {
+    "id": "c_mi_go_extruder_salvaged_alt",
+    "copy-from": "c_mi_go_extruder_salvaged",
+    "type": "TOOL",
+    "color": "green",
+    "name": {
+      "str": "改装树脂挤出机（备用模式）",
+      "str_pl": "改装树脂挤出机（备用模式）"
+    },
+    "description": "一种由异界血肉和科技制成的奇怪装置。三根合成象牙的细刺围绕着某种喷嘴，喷嘴内的物质不断再生。目前，它将以更慢的速度使用树脂，让其用于修复改装的米·戈生物技术。激活它以切换回正常模式，为其他项目产生更大的树脂碎片。",
+    "charges_per_use": 1,
+    "use_action": [
+      {
+        "type": "repair_item",
+        "item_action_type": "repair_metal",
+        "materials": [
+          "alien_resin"
+        ],
+        "skill": "fabrication",
+        "tool_quality": 10,
+        "cost_scaling": 0.1,
+        "move_cost": 500
+      },
+      {
+        "type": "transform",
+        "msg": "你将%s切换到其正常模式",
+        "target": "c_mi_go_extruder_salvaged",
+        "menu_text": "切换模式",
+        "ammo_scale": 0
+      }
+    ]
+  },
+  {
+    "id": "ups_rifle_crank_charge",
+    "type": "TOOL",
+    "category": "tools",
+    "name": {
+      "str": "幸存者曲柄步枪（充能模式）",
+      "str_pl": "幸存者曲柄步枪（充能模式）"
+    },
+    "description": "在幸存者 UPS步枪的基础上进一步改造，用集成的手摇柄和电容器为自制动力电池充电。无限弹药，以可靠性为代价。激活它以充能电容器，或准备发射。",
+    "color": "yellow",
+    "symbol": "(",
+    "looks_like": "ups_rifle_crank",
+    "price": "7490 USD",
+    "price_postapoc": "60 USD",
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "weight": "4964 g",
+    "volume": "4250 ml",
+    "bashing": 8,
+    "to_hit": -1,
+    "ammo": [
+      "battery"
+    ],
+    "use_action": [
+      "HAND_CRANK",
+      {
+        "type": "transform",
+        "msg": "你将枪转换为射击模式。",
+        "menu_text": "切换到射击模式",
+        "target": "ups_rifle_crank",
+        "ammo_scale": 0
+      }
+    ],
+    "pocket_data": [
+      {
+        "magazine_well": "300 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "holster": true,
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "20 kg",
+        "item_restriction": [
+          "rifle_crank_battery_cell"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "wire_saw_makeshift",
+    "type": "GENERIC",
+    "category": "tools",
+    "name": {
+      "str": "自制线锯"
+    },
+    "description": "一种由细金属丝和磨料制成的柔性锯子，两端都有自制手柄。它应该可以满足轻型金属和木材锯切。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "price": "10 USD",
+    "price_postapoc": "50 cent",
+    "material": "iron",
+    "symbol": ";",
+    "color": "light_gray",
+    "looks_like": "chain",
+    "qualities": [
+      [
+        "SAW_M",
+        1
+      ],
+      [
+        "SAW_W",
+        1
+      ]
+    ]
+  }
+]

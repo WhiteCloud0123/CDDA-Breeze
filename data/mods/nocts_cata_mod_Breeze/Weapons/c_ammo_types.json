@@ -1,0 +1,20 @@
+[
+  {
+    "type": "ammunition_type",
+    "id": "c_hydrogen",
+    "name": "氢气",
+    "default": "c_hydrogen_gas"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "c_bioampoule_type",
+    "name": "生物安瓿",
+    "default": "c_bioampoule"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "c_alien_resin_bullet_type",
+    "name": "树脂球弹",
+    "default": "c_alien_resin_bullet"
+  }
+]

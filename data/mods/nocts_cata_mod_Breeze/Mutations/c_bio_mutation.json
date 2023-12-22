@@ -1,0 +1,713 @@
+[
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_ALPHA",
+    "name": {
+      "str": "生物武器-α"
+    },
+    "points": 0,
+    "description": "你的基因组是独一无二的，这个DNA标记会表明你是生物武器-阿尔法。也许有一天会有用的。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "flags": [
+      "BIO_WEAPON_SCEN",
+      "BIO_WEAPON_SERIES_1",
+      "BIO_WEAPON_ANY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_BETA",
+    "name": {
+      "str": "生物武器-β"
+    },
+    "points": 0,
+    "description": "你的基因组是独一无二的，这个DNA标记会表明你是生物武器-贝塔，也许有一天会有用的。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "flags": [
+      "BIO_WEAPON_SCEN",
+      "BIO_WEAPON_SERIES_1",
+      "BIO_WEAPON_ANY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_GAMMA",
+    "name": {
+      "str": "生物武器-γ"
+    },
+    "points": 0,
+    "description": "你的基因组是独一无二的，这个DNA标记会表明你是生物武器-伽玛，也许有一天会有用的。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "flags": [
+      "BIO_WEAPON_SCEN",
+      "BIO_WEAPON_SERIES_1",
+      "BIO_WEAPON_ANY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_DELTA",
+    "name": {
+      "str": "生物武器-δ"
+    },
+    "points": 0,
+    "description": "你的基因组是独一无二的，这个DNA标记会表明你是生物武器-德尔塔，也许有一天会有用的。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "flags": [
+      "BIO_WEAPON_SCEN",
+      "BIO_WEAPON_SERIES_1",
+      "BIO_WEAPON_ANY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_GENERIC",
+    "name": {
+      "str": "生物武器"
+    },
+    "points": 0,
+    "description": "这个DNA标记可以提醒你是一个生物武器。AI专用标签，如果你有的话，请提交给Noctifer！",
+    "valid": false,
+    "purifiable": false,
+    "profession": true
+  },
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_FAILED",
+    "name": {
+      "str": "失败的生物武器"
+    },
+    "points": 0,
+    "description": "这个DNA标记可以提醒你是一个失败的生物武器。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "anger_relations": [
+      [
+        "FBIO-WEAPON",
+        -25
+      ]
+    ],
+    "flags": [
+      "BIO_WEAPON_ANY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "BIO_WEAPON_FAILED_SCEN",
+    "//": "This trait is split off to distinguish failed bio-weapons who started in the Bio-Weapon Lab scenario vs. others.",
+    "name": {
+      "str": "失败的生物武器"
+    },
+    "points": 0,
+    "description": "这个DNA标记可以提醒你是一个失败的生物武器。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "anger_relations": [
+      [
+        "FBIO-WEAPON",
+        -25
+      ]
+    ],
+    "flags": [
+      "BIO_WEAPON_SCEN",
+      "BIO_WEAPON_ANY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SUPER_SOLDIER_MARKER",
+    "name": {
+      "str": "超级战士基因标记"
+    },
+    "points": 0,
+    "description": "这个DNA标记会表明你是超级士兵计划的一部分。它曾经给你生物识别扫描仪和特殊武器的许可证，但现在看来没用了。",
+    "initial_ma_styles": [
+      "style_krav_maga"
+    ],
+    "valid": false,
+    "purifiable": false,
+    "profession": true
+  },
+  {
+    "type": "mutation",
+    "id": "ARMOR_BIOWEAPON",
+    "name": {
+      "str": "自体装甲"
+    },
+    "points": 0,
+    "mixed_effect": true,
+    "description": "你的皮肤和肌肉像石头一样坚硬。你对所有形式的物理伤害都有抵抗力并且不太可能流血，但会承受额外的累赘。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "THINSKIN",
+      "THICKSKIN"
+    ],
+    "types": [
+      "SKIN"
+    ],
+    "bleed_resist": 1,
+    "encumbrance_always": [
+      [
+        "torso",
+        5
+      ],
+      [
+        "head",
+        5
+      ],
+      [
+        "arm_l",
+        5
+      ],
+      [
+        "arm_r",
+        5
+      ],
+      [
+        "hand_l",
+        5
+      ],
+      [
+        "hand_r",
+        5
+      ],
+      [
+        "leg_l",
+        5
+      ],
+      [
+        "leg_r",
+        5
+      ],
+      [
+        "foot_l",
+        5
+      ],
+      [
+        "foot_r",
+        5
+      ]
+    ],
+    "armor": [
+      {
+        "parts": "ALL",
+        "physical": 10
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "HUNGER_BIOWEAPON",
+    "name": {
+      "str": "代谢失稳"
+    },
+    "points": 0,
+    "mixed_effect": true,
+    "description": "你消耗比众人更多的资源，增多的食物与卡路里消耗使你更容易暖和起来。你还可以更好地耐受突变毒素。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "types": [
+      "METABOLISM"
+    ],
+    "cancels": [
+      "THIRST"
+    ],
+    "bodytemp_modifiers": [
+      0,
+      2000
+    ],
+    "metabolism_modifier": 1.25,
+    "thirst_modifier": 0.75,
+    "vitamins_absorb_multi": [
+      [
+        "all",
+        [
+          [
+            "mutant_toxin",
+            0.25
+          ]
+        ]
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "NEURO_BAD_BIOWEAPON",
+    "name": {
+      "str": "神经退化"
+    },
+    "points": 0,
+    "description": "你患有一种人为诱发的返祖症。你的阅读速度很慢，而且更难制造物品。说服他人会更难，但威胁他们会更容易。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "NEURO_GOOD_BIOWEAPON",
+      "FASTREADER",
+      "SLOWREADER"
+    ],
+    "reading_speed_multiplier": 1.5,
+    "craft_skill_bonus": [
+      [
+        "electronics",
+        -2
+      ],
+      [
+        "tailor",
+        -2
+      ],
+      [
+        "mechanics",
+        -2
+      ],
+      [
+        "firstaid",
+        -2
+      ],
+      [
+        "computer",
+        -2
+      ],
+      [
+        "traps",
+        -2
+      ],
+      [
+        "fabrication",
+        -2
+      ],
+      [
+        "cooking",
+        -2
+      ],
+      [
+        "survival",
+        -2
+      ]
+    ],
+    "social_modifiers": {
+      "persuade": -40,
+      "lie": -20,
+      "intimidate": 15
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "NEURO_GOOD_BIOWEAPON",
+    "name": {
+      "str": "神经增强"
+    },
+    "points": 0,
+    "mixed_effect": true,
+    "description": "你的大脑基本上已经被改造以便于处理技术任务。你的阅读速度很快，也更容易制造物品。然而，这种增强的活性也会让你需要更多的睡眠。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "NEURO_BAD_BIOWEAPON",
+      "FASTREADER",
+      "SLOWREADER"
+    ],
+    "reading_speed_multiplier": 0.75,
+    "craft_skill_bonus": [
+      [
+        "electronics",
+        2
+      ],
+      [
+        "tailor",
+        2
+      ],
+      [
+        "mechanics",
+        2
+      ],
+      [
+        "firstaid",
+        2
+      ],
+      [
+        "computer",
+        2
+      ],
+      [
+        "traps",
+        2
+      ],
+      [
+        "fabrication",
+        2
+      ],
+      [
+        "cooking",
+        2
+      ],
+      [
+        "survival",
+        2
+      ]
+    ],
+    "fatigue_modifier": 0.75
+  },
+  {
+    "type": "mutation",
+    "id": "PAINREC_BIOWEAPON",
+    "name": {
+      "str": "疼痛抑制"
+    },
+    "points": 0,
+    "description": "你的身体更容易从疼痛中恢复。你积累的任何疼痛都会逐渐消失。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "enchantments": [
+      "C_MEP_BIO_PAINREC"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PONDEROUS_BIOWEAPON",
+    "name": {
+      "str": "脚步不稳"
+    },
+    "points": 0,
+    "description": "对像你这样的人来说站在那里防御攻击要容易得多。你在平坦地形和水中的移动速度要慢10%，在崎岖地形中的移动速度要慢30%，并且会受到额外闪避惩罚。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "types": [
+      "RUNNING"
+    ],
+    "cancels": [
+      "BADKNEES"
+    ],
+    "movecost_flatground_modifier": 1.1,
+    "movecost_swim_modifier": 1.1,
+    "movecost_obstacle_modifier": 1.3,
+    "dodge_modifier": -6
+  },
+  {
+    "type": "mutation",
+    "id": "ROBOT_FRIEND_BIOWEAPON",
+    "name": {
+      "str": "机器共情"
+    },
+    "points": 0,
+    "description": "他们对你做的事情似乎混淆了面部识别软件。减缓大多数失控机器人视你为敌对目标的速度。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "anger_relations": [
+      [
+        "ROBOT",
+        -45
+      ]
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "REGEN_BIOWEAPON",
+    "name": {
+      "str": "愈合增强"
+    },
+    "points": 0,
+    "description": "你的伤口愈合速度比正常快很多，尤其是在你活动的时候。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "types": [
+      "HEALING"
+    ],
+    "healing_awake": 2.5,
+    "healing_resting": 1,
+    "mending_modifier": 10
+  },
+  {
+    "type": "mutation",
+    "id": "SCOUT_BIOWEAPON",
+    "name": {
+      "str": "领航员"
+    },
+    "points": 0,
+    "description": "你的心理状态让你更容易应对户外环境，也更容易找到自己的路。你的大地图视野扩大了，同时也稍微减少湿身心情惩罚。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "EAGLEEYED",
+      "MYOPIC",
+      "UNOBSERVANT",
+      "OUTDOORSMAN"
+    ],
+    "overmap_sight": 5,
+    "wet_protection": [
+      {
+        "part": "head",
+        "neutral": 5
+      },
+      {
+        "part": "leg_l",
+        "neutral": 10
+      },
+      {
+        "part": "leg_r",
+        "neutral": 10
+      },
+      {
+        "part": "foot_l",
+        "neutral": 5
+      },
+      {
+        "part": "foot_r",
+        "neutral": 5
+      },
+      {
+        "part": "arm_l",
+        "neutral": 7
+      },
+      {
+        "part": "arm_r",
+        "neutral": 7
+      },
+      {
+        "part": "hand_l",
+        "neutral": 10
+      },
+      {
+        "part": "hand_r",
+        "neutral": 10
+      },
+      {
+        "part": "torso",
+        "neutral": 15
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SLOW_METABOLISM_BIOWEAPON",
+    "name": {
+      "str": "代谢迟缓"
+    },
+    "points": 0,
+    "mixed_effect": true,
+    "description": "你的身体会以更慢的速度运行以保存能量。与正常人相比，你需要更少的食物、水和睡眠，但你的耐力恢复得更慢，愈合速度也更慢。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "types": [
+      "METABOLISM",
+      "HEALING"
+    ],
+    "cancels": [
+      "THIRST"
+    ],
+    "metabolism_modifier": -0.25,
+    "thirst_modifier": -0.25,
+    "fatigue_modifier": -0.25,
+    "stamina_regen_modifier": -0.5,
+    "healing_resting": -0.5,
+    "mending_modifier": 0.25
+  },
+  {
+    "type": "mutation",
+    "id": "SPEED_BIOWEAPON",
+    "name": {
+      "str": "猎杀者"
+    },
+    "points": 0,
+    "description": "你的反应能力和敏捷大大增强了。你的移动速度和攻击速度加快，并且更容易闪避攻击。更重要的是，你已经磨练你的直觉使你更容易学习战斗技能，而且更容易接受杀戮。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "types": [
+      "RUNNING"
+    ],
+    "cancels": [
+      "BADKNEES"
+    ],
+    "movecost_flatground_modifier": 0.75,
+    "movecost_obstacle_modifier": 0.75,
+    "movecost_swim_modifier": 0.75,
+    "attackcost_modifier": 0.5,
+    "dodge_modifier": 3,
+    "flags": [
+      "PRED2"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "STAMINA_BIOWEAPON",
+    "name": {
+      "str": "心肺增强"
+    },
+    "points": 0,
+    "description": "你从乏力中恢复的速度要比一般人要快很多，增加耐力回复速度。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "stamina_regen_modifier": 0.25
+  },
+  {
+    "type": "mutation",
+    "id": "SUBTLE_BIOWEAPON",
+    "name": {
+      "str": "阴险"
+    },
+    "points": 0,
+    "description": "你的特性使你更容易潜行或者言语操纵他人。你更难被发现并且移动也更安静，而且更容易说服和欺骗他人。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "LIGHTSTEP",
+      "CLUMSY"
+    ],
+    "stealth_modifier": 30,
+    "noise_modifier": 0.5,
+    "social_modifiers": {
+      "persuade": 25,
+      "lie": 50
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "TOUGH_BIOWEAPON",
+    "name": {
+      "str": "不灭之躯"
+    },
+    "points": 0,
+    "description": "你的韧性和恢复能力远远超过正常人，而且你的体型比正常人要大。HP上限增加50，并且你的耐力上限和耐力回复速度比正常高30%。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "TOUGH",
+      "FLIMSY",
+      "FLIMSY2",
+      "FLIMSY3",
+      "GLASSJAW",
+      "GOODCARDIO",
+      "BADCARDIO"
+    ],
+    "hp_adjustment": 50,
+    "cardio_multiplier": 1.3,
+    "types": [
+      "SIZE"
+    ],
+    "flags": [
+      "LARGE"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "WEAK_BIOWEAPON",
+    "name": {
+      "str": "脆弱"
+    },
+    "points": 0,
+    "description": "你的身体韧性要差得多。HP上限减少50%，而且身体更容易受伤。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true,
+    "cancels": [
+      "TOUGH",
+      "FLIMSY",
+      "FLIMSY2",
+      "FLIMSY3",
+      "GLASSJAW",
+      "THICKSKIN",
+      "THINSKIN"
+    ],
+    "hp_modifier": -0.5,
+    "armor": [
+      {
+        "parts": "ALL",
+        "physical": -5
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "MARTIAL_ARTS_SURV_COM",
+    "name": {
+      "str": "幸存者格斗术"
+    },
+    "points": 3,
+    "description": "你学会了如何应对灾难中的危机，你很擅长使用自制武器来进行战斗，偶尔还使用你的拳头。虽然幸存者格斗术并不华丽，但它能让你活下去。",
+    "initial_ma_styles": [
+      "style_surv_com"
+    ],
+    "valid": false
+  },
+  {
+    "type": "mutation",
+    "id": "MARTIAL_ARTS_BIOJUTSU",
+    "name": {
+      "str": "生化格斗术"
+    },
+    "points": 3,
+    "description": "一种后现代的先进格斗术，简称“生化术”。生化格斗术将武器、护甲和其它生化插件结合，产生了这种统一的武术流派。",
+    "initial_ma_styles": [
+      "style_biojutsu"
+    ],
+    "valid": false
+  },
+  {
+    "type": "mutation",
+    "id": "MARTIAL_ARTS_MUT_COM",
+    "name": {
+      "str": "后人类格斗术"
+    },
+    "points": 3,
+    "description": "你开始使用后人类格斗术。你已经学会了一些放弃人性所带来战斗优势的技巧。后人类格斗术注重于使用强大的重型武器或变异肢体，超自然般强大的后人类可以利用他们的能力发挥巨大的作用。",
+    "initial_ma_styles": [
+      "style_mut_com"
+    ],
+    "valid": false
+  },
+  {
+    "type": "mutation",
+    "id": "BGSS_BHunter",
+    "name": {
+      "str": "幸存者故事"
+    },
+    "//": "Used by Evelynn Rose.",
+    "points": 0,
+    "description": "这名NPC可以告诉你他们是如何在大灾变中幸存下来的。",
+    "player_display": false,
+    "valid": false,
+    "purifiable": false,
+    "types": [
+      "BACKGROUND_SURVIVAL_STORY"
+    ],
+    "flags": [
+      "BG_SURVIVAL_STORY"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PROF_GLADIATOR",
+    "name": {
+      "str": "角斗士"
+    },
+    "points": 0,
+    "description": "你被绑架了，被迫参加地下血腥角斗，为了取悦富有的客户而被迫与他人战斗。你可能不是唯一一个幸运地活下来而没有受伤的人。",
+    "valid": false,
+    "purifiable": false,
+    "profession": true
+  }
+]

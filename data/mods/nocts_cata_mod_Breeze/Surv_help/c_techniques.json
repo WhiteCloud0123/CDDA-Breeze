@@ -1,0 +1,266 @@
+[
+  {
+    "type": "technique",
+    "id": "tec_surv_com_break",
+    "name": "反擒拿",
+    "messages": [
+      "%s试图抓住你，但你用力挣脱了！",
+      "%s试图抓住<npcname>，但他用力挣脱了！"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 7
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "defensive": true,
+    "grab_break": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_surv_com_counter_dodge",
+    "name": "扫腿反击",
+    "messages": [
+      "你避开攻击并绊倒%s",
+      "<npcname> 避开攻击并绊倒%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 6
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "dodge_counter": true,
+    "crit_ok": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 0.5
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 0.5
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 0.5
+      }
+    ],
+    "down_dur": 1,
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_surv_com_counter_block",
+    "name": "反击",
+    "messages": [
+      "你控制住了%s的攻击，并猛力打退",
+      "<npcname>  控制住了%s的攻击，并还击击退了%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 6
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "block_counter": true,
+    "crit_ok": true,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0
+      },
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 0.5
+      },
+      {
+        "stat": "damage",
+        "type": "cut",
+        "scale": 0.5
+      },
+      {
+        "stat": "damage",
+        "type": "stab",
+        "scale": 0.5
+      }
+    ],
+    "knockback_dist": 1,
+    "stun_dur": 1,
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_surv_com_feint",
+    "name": "佯攻",
+    "messages": [
+      "你佯攻%s。",
+      "<npcname> 佯攻了%s。"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 4
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "defensive": true,
+    "miss_recovery": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_surv_com_disarm",
+    "name": "缴械",
+    "messages": [
+      "你打落了%s的的武器。",
+      "<npcname>打落了%s的武器。"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 9
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "disarms": true,
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_mut_com_battering_ram",
+    "name": "击槌",
+    "messages": [
+      "你的猛烈一击使%s飞了起来",
+      "<npcname> 的猛烈一击使%s飞了起来"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 6
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "required_buffs_all": [
+      "buff_mut_com_onmove"
+    ],
+    "crit_tec": true,
+    "stun_dur": 2,
+    "knockback_dist": 4,
+    "powerful_knockback": true,
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_mut_com_overrun",
+    "name": "沦陷",
+    "messages": [
+      "你迅速地猛击%s并将其击倒",
+      "<npcname> 迅速地猛击%s并将其击倒"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 5
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "crit_tec": true,
+    "down_dur": 2,
+    "mult_bonuses": [
+      {
+        "stat": "movecost",
+        "scale": 0.9
+      }
+    ],
+    "attack_vectors": [
+      "WEAPON",
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_mut_com_stampeding_strike",
+    "name": "冲压打击",
+    "messages": [
+      "你用可怕的力量冲向%s",
+      "<npcname> 以可怕的力量冲向%s"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 7
+      }
+    ],
+    "unarmed_allowed": true,
+    "crit_tec": true,
+    "downed_target": true,
+    "stun_dur": 1,
+    "flat_bonuses": [
+      {
+        "stat": "arpen",
+        "type": "bash",
+        "scaling-stat": "str",
+        "scale": 0.9
+      }
+    ],
+    "mult_bonuses": [
+      {
+        "stat": "damage",
+        "type": "bash",
+        "scale": 1.3
+      }
+    ],
+    "attack_vectors": [
+      "HAND"
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_mut_com_feint",
+    "name": "佯攻",
+    "messages": [
+      "你佯攻%s。",
+      "<npcname> 佯攻了%s。"
+    ],
+    "skill_requirements": [
+      {
+        "name": "melee",
+        "level": 5
+      }
+    ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "defensive": true,
+    "miss_recovery": true
+  }
+]

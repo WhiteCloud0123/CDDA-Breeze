@@ -1,0 +1,41 @@
+[
+  {
+    "type": "mutation_category",
+    "id": "BIO-WEAPON",
+    "name": "生物武器",
+    "threshold_mut": "THRESH_BIO-WEAPON",
+    "mutagen_message": "如果你看见这条文字，说明出BUG了！请报告给Noctifer。",
+    "memorial_message": "你的生化插件并未让你成为不朽。"
+  },
+  {
+    "type": "mutation",
+    "id": "THRESH_BIO-WEAPON",
+    "name": "生物武器",
+    "points": 0,
+    "description": "你不是人类。你甚至都不记得自己一开始是不是人类了。但现在重要的是，你比人类更强。",
+    "valid": false,
+    "purifiable": false,
+    "threshold": true
+  },
+  {
+    "type": "mutation_category",
+    "id": "SUPER_SOLDIER",
+    "name": "哨兵",
+    "threshold_mut": "THRESH_SUPER_SOLDIER",
+    "mutagen_message": "化学药剂改造身体会使你感到头晕目眩。",
+    "memorial_message": "你找到了你的战友，在地狱里重新集结。"
+  },
+  {
+    "type": "mutation",
+    "id": "THRESH_SUPER_SOLDIER",
+    "name": "哨兵",
+    "points": 0,
+    "description": "你已经改造了你的心智和肉体；你的身体从血肉的枷锁中解放出来。现在你是一个血管里流淌着战斗的战士，你就是人类进化的下一步。",
+    "valid": false,
+    "purifiable": false,
+    "threshold": true,
+    "allowed_category": [
+      "SUPER_SOLDIER"
+    ]
+  }
+]

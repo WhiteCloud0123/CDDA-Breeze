@@ -1,0 +1,232 @@
+[
+  {
+    "type": "faction",
+    "id": "commandeers",
+    "name": "指挥中心成员",
+    "likes_u": 20,
+    "respects_u": 0,
+    "known_by_u": false,
+    "size": 30,
+    "power": 60,
+    "food_supply": 100000,
+    "wealth": 10000000,
+    "relations": {
+      "commandeers": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "super_soldiers": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "bio_weapons": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "old_guard": {
+        "watch your back": true,
+        "guard your stuff": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "your_followers": {
+        "knows your voice": true
+      },
+      "hells_raiders": {
+        "kill on sight": true
+      }
+    },
+    "description": "指挥中心的成员在躲避……某物。他们有军事情报还和旧世守护者有联系。"
+  },
+  {
+    "type": "faction",
+    "id": "super_soldiers",
+    "name": "超级战士",
+    "likes_u": 0,
+    "respects_u": 0,
+    "known_by_u": false,
+    "size": 10,
+    "power": 100,
+    "food_supply": 40000,
+    "wealth": 1000,
+    "relations": {
+      "super_soldiers": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "commandeers": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "bio_weapons": {
+        "watch your back": true,
+        "guard your stuff": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "old_guard": {
+        "watch your back": true,
+        "guard your stuff": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "your_followers": {
+        "knows your voice": true
+      },
+      "hells_raiders": {
+        "kill on sight": true
+      }
+    },
+    "description": "在大灾变中幸存下来的军队支部。他们与指挥中心结盟，在这个新世界寻求领导权。"
+  },
+  {
+    "type": "faction",
+    "id": "preppers",
+    "name": "末日准备者",
+    "likes_u": 20,
+    "respects_u": 0,
+    "known_by_u": false,
+    "size": 50,
+    "power": 100,
+    "food_supply": 500000,
+    "wealth": 10000000,
+    "relations": {
+      "preppers": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "wasteland_scavengers": {
+        "watch your back": true,
+        "defends your space": true,
+        "knows your voice": true
+      }
+    },
+    "description": "在大灾变爆发前就已经做好准备的幸存者。他们有重建的想法。"
+  },
+  {
+    "type": "faction",
+    "id": "bio_weapons",
+    "name": "生物武器",
+    "likes_u": 0,
+    "respects_u": 0,
+    "known_by_u": false,
+    "size": 10,
+    "power": 100,
+    "food_supply": 40000,
+    "wealth": 1000,
+    "relations": {
+      "bio_weapons": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "commandeers": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "super_soldiers": {
+        "watch your back": true,
+        "guard your stuff": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "old_guard": {
+        "watch your back": true,
+        "guard your stuff": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "your_followers": {
+        "knows your voice": true
+      },
+      "hells_raiders": {
+        "kill on sight": true
+      }
+    },
+    "description": "与大灾变有关的未知计划的造物。他们与指挥中心结盟，因为指挥中心的成员创造了他们。"
+  },
+  {
+    "type": "faction",
+    "id": "slave_fighter_allied",
+    "name": "奴隶斗士（蓝队）",
+    "likes_u": 40,
+    "respects_u": 70,
+    "known_by_u": false,
+    "size": 50,
+    "power": 100,
+    "food_supply": 0,
+    "wealth": 0,
+    "relations": {
+      "slave_fighter_allied": {
+        "watch your back": true,
+        "share my stuff": true,
+        "guard your stuff": true,
+        "lets you in": true,
+        "defends your space": true,
+        "knows your voice": true
+      },
+      "your_followers": {
+        "knows your voice": true
+      },
+      "slave_fighter": {
+        "kill on sight": true
+      }
+    },
+    "description": "一群一辈子只能在角斗场为取悦富人而斗殴的人。大多数理智的俘虏和新人最终都会加入蓝队，与久经沙场和“坏了”的战士进行角斗。"
+  },
+  {
+    "type": "faction",
+    "id": "slave_fighter",
+    "name": "奴隶斗士（红队）",
+    "likes_u": -20,
+    "respects_u": -10,
+    "known_by_u": false,
+    "size": 50,
+    "power": 100,
+    "food_supply": 0,
+    "wealth": 0,
+    "relations": {
+      "slave_fighter": {
+        "watch your back": true
+      },
+      "your_followers": {
+        "kill on sight": true
+      },
+      "slave_fighter_allied": {
+        "kill on sight": true
+      }
+    },
+    "description": "一群一辈子只能在角斗场为取悦富人而斗殴的人。他们毫无理由地认为这场大灾难不过是下一轮决斗，几乎无法分辨彼此和其他团队。"
+  }
+]

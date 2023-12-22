@@ -1,0 +1,332 @@
+[
+  {
+    "type": "scenario",
+    "name": "生物武器实验室",
+    "description": "你醒来了，你在哪里？你是谁？你是什么？！现在没关系了……一脸懵逼的你却有一种不好的感觉……",
+    "flags": [
+      "LONE_START",
+      "SUR_START"
+    ],
+    "custom_initial_date": {
+      "season": "summer"
+    },
+    "id": "bio_weapon_lab",
+    "points": 0,
+    "start_name": "生物武器实验室",
+    "allowed_locs": [
+      "Bio_Weapon_Lab_l"
+    ],
+    "professions": [
+      "bio_weapon_a",
+      "bio_weapon_b",
+      "bio_weapon_g",
+      "bio_weapon_d",
+      "failed_weapon_scen"
+    ],
+    "traits": [
+      "MARTIAL_ARTS_MUT_COM",
+      "MARTIAL_ARTS_BIOJUTSU"
+    ],
+    "forbidden_traits": [
+      "GOURMAND",
+      "SPIRITUAL",
+      "STYLISH",
+      "HOARDER",
+      "NOMAD",
+      "PACIFIST",
+      "TABLEMANNERS",
+      "SQUEAMISH",
+      "WAYFARER",
+      "XS",
+      "XXXL"
+    ]
+  },
+  {
+    "type": "scenario",
+    "name": "真菌 B.W.N.D.",
+    "description": "在本地化成功后，吾等之系统被指示为同胞们争取更多的领土，附近游荡着敌对生命体，小心行事。",
+    "flags": [
+      "LONE_START",
+      "SUR_START"
+    ],
+    "custom_initial_date": {
+      "season": "autumn"
+    },
+    "id": "mycus_bwmd",
+    "points": 2,
+    "start_name": "真菌领域",
+    "allowed_locs": [
+      "sloc_forest",
+      "sloc_field"
+    ],
+    "professions": [
+      "mycus_weapon"
+    ],
+    "traits": [
+      "MARTIAL_ARTS_MUT_COM",
+      "MARTIAL_ARTS_BIOJUTSU"
+    ],
+    "forbidden_traits": [
+      "GOURMAND",
+      "SPIRITUAL",
+      "STYLISH",
+      "HOARDER",
+      "NOMAD",
+      "PACIFIST",
+      "TABLEMANNERS",
+      "SQUEAMISH",
+      "WAYFARER",
+      "XS",
+      "XXXL"
+    ]
+  },
+  {
+    "type": "scenario",
+    "name": "准备者家庭",
+    "description": "你知道有什么东西要来了，你做好了准备。当死人重新站起来时，你知道自己该做什么。你的房子已经被加固，是时候将你的计划付诸行动了。",
+    "id": "prep_house",
+    "points": 2,
+    "start_name": "民宅（木板封死）",
+    "allowed_locs": [
+      "sloc_house_boarded"
+    ],
+    "professions": [
+      "survivalist",
+      "jr_survivalist",
+      "prepper"
+    ],
+    "traits": [
+      "MARTIAL_ARTS_SURV_COM"
+    ]
+  },
+  {
+    "type": "scenario",
+    "name": "奴隶斗士的自由",
+    "description": "你一生都在被试验，并为了取悦你的主人而被迫与他人战斗，你从来没有见过太阳和外界，大灾变给了你自由的机会，现在你只需逃离你的“战友”……",
+    "flags": [
+      "LONE_START",
+      "CHALLENGE"
+    ],
+    "id": "house_fight_scenario",
+    "points": -2,
+    "start_name": "简陋小屋",
+    "allowed_locs": [
+      "house_fight_s"
+    ],
+    "traits": [
+      "ARM_FEATHERS",
+      "BEAK",
+      "CARNIVORE",
+      "CHITIN",
+      "ELFAEYES",
+      "FANGS",
+      "FELINE_EARS",
+      "GROWL",
+      "LIGHT_BONES",
+      "MARTIAL_ARTS_BIOJUTSU",
+      "MARTIAL_ARTS_MUT_COM",
+      "MARTIAL_ARTS_SURV_COM",
+      "NAILS",
+      "PADDED_FEET",
+      "PLANTSKIN",
+      "PONDEROUS1",
+      "RADIOACTIVE1",
+      "RAP_TALONS",
+      "SLIMY",
+      "SLIT_NOSTRILS",
+      "TAIL_LONG",
+      "TROGLO",
+      "URSINE_EYE",
+      "WEB_WALKER",
+      "WHISKERS"
+    ],
+    "professions": [
+      "sf_blade",
+      "sf_claw",
+      "sf_shock",
+      "sf_weapon"
+    ]
+  },
+  {
+    "type": "scenario",
+    "name": "原型士兵",
+    "description": "你是超级士兵特殊部队中的一员，该部队在大灾变来临之际被部署到几个优先保护地点之一，上级要求以尽一切之努力使局势得到控制。延误和人员伤亡以及在混乱中战斗导致你在达到目的地时仅剩一人，而且情况并没有丝毫好转。",
+    "id": "experiment_soldier_start",
+    "points": -4,
+    "flags": [
+      "LONE_START",
+      "CITY_START",
+      "HELI_CRASH"
+    ],
+    "start_name": "临时指挥中心",
+    "allowed_locs": [
+      "lab_surface_brick_blockC0",
+      "robofachq_surface_parking",
+      "makeshift_command_center_1",
+      "Bio_Weapon_Lab",
+      "haz_sar_1_2"
+    ],
+    "professions": [
+      "bio_infantry",
+      "bio_scout",
+      "bio_knight",
+      "bio_tool"
+    ],
+    "traits": [
+      "MARTIAL_ARTS_BIOJUTSU"
+    ]
+  },
+  {
+    "copy-from": "alone",
+    "type": "scenario",
+    "id": "alone",
+    "extend": {
+      "traits": [
+        "MARTIAL_ARTS_SURV_COM"
+      ]
+    }
+  },
+  {
+    "copy-from": "summer_advanced_start",
+    "type": "scenario",
+    "id": "summer_advanced_start",
+    "extend": {
+      "traits": [
+        "MARTIAL_ARTS_SURV_COM"
+      ],
+      "professions": [
+        "bio_infantry",
+        "bio_scout",
+        "bio_knight",
+        "bio_tool",
+        "surv_drifter",
+        "surv_knight_errant",
+        "bionic_silencer"
+      ]
+    }
+  },
+  {
+    "copy-from": "ambushed",
+    "type": "scenario",
+    "id": "ambushed",
+    "extend": {
+      "traits": [
+        "MARTIAL_ARTS_SURV_COM"
+      ],
+      "professions": [
+        "bio_infantry",
+        "bio_scout",
+        "bio_knight",
+        "bio_tool",
+        "surv_drifter",
+        "surv_knight_errant",
+        "bionic_silencer"
+      ]
+    }
+  },
+  {
+    "copy-from": "wilderness",
+    "type": "scenario",
+    "add_professions": true,
+    "extend": {
+      "allowed_locs": [
+        "surv_camp_l"
+      ],
+      "professions": [
+        "surv_drifter",
+        "surv_knight_errant"
+      ]
+    },
+    "id": "wilderness"
+  },
+  {
+    "copy-from": "mutant",
+    "type": "scenario",
+    "id": "mutant",
+    "extend": {
+      "traits": [
+        "MARTIAL_ARTS_MUT_COM"
+      ],
+      "professions": [
+        "failed_weapon"
+      ]
+    }
+  },
+  {
+    "copy-from": "lab_chal",
+    "type": "scenario",
+    "id": "lab_chal",
+    "extend": {
+      "professions": [
+        "failed_weapon"
+      ]
+    }
+  },
+  {
+    "copy-from": "lab_staff",
+    "type": "scenario",
+    "id": "lab_staff",
+    "extend": {
+      "professions": [
+        "bio_infantry",
+        "bio_scout",
+        "bio_knight",
+        "bio_tool",
+        "bionic_silencer"
+      ]
+    }
+  },
+  {
+    "copy-from": "heli_crash",
+    "type": "scenario",
+    "id": "heli_crash",
+    "extend": {
+      "professions": [
+        "bio_infantry",
+        "bio_scout",
+        "bio_knight",
+        "bio_tool",
+        "bionic_silencer"
+      ]
+    }
+  },
+  {
+    "copy-from": "overrun",
+    "type": "scenario",
+    "id": "overrun",
+    "extend": {
+      "professions": [
+        "bio_infantry",
+        "bio_scout",
+        "bio_knight",
+        "bio_tool"
+      ]
+    }
+  },
+  {
+    "copy-from": "surrounded",
+    "type": "scenario",
+    "add_professions": true,
+    "extend": {
+      "allowed_locs": [
+        "sloc_mansion"
+      ],
+      "professions": [
+        "surv_drifter",
+        "surv_knight_errant",
+        "bionic_silencer"
+      ]
+    },
+    "id": "surrounded"
+  },
+  {
+    "copy-from": "migo_prisoner",
+    "type": "scenario",
+    "id": "migo_prisoner",
+    "extend": {
+      "professions": [
+        "failed_weapon"
+      ]
+    }
+  }
+]

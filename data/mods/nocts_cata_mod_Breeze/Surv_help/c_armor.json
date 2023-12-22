@@ -1,0 +1,2063 @@
+[
+  {
+    "type": "charge_removal_blacklist",
+    "list": [
+      "lmil_helm",
+      "mil_helm",
+      "hmil_helm"
+    ]
+  },
+  {
+    "id": "survbowpack",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者弓箭手背包"
+    },
+    "//": "This adds the quiver function.",
+    "description": "一件自制的弓箭手背包。储存空间大，累赘小还配有内置箭袋。",
+    "weight": "1200 g",
+    "volume": "3 L",
+    "price": "360 USD",
+    "price_postapoc": "36 USD",
+    "phase": "solid",
+    "material": [
+      "leather",
+      "cotton"
+    ],
+    "symbol": "[",
+    "looks_like": "survivor_pack",
+    "color": "brown",
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "arrow": 50,
+          "bolt": 50
+        },
+        "moves": 20
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "16 L",
+        "max_contains_weight": "32 kg",
+        "moves": 300
+      }
+    ],
+    "warmth": 10,
+    "material_thickness": 2,
+    "flags": [
+      "WATER_FRIENDLY",
+      "STURDY",
+      "BELTED"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          4,
+          16
+        ],
+        "coverage": 35,
+        "covers": [
+          "torso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "surv_suit",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "幸存者侦察套装"
+    },
+    "description": "一种为在陆地上生活而自制的衣服。配有充足的储物空间、毛皮衬里、环保和物理保护、内置手表和临时护套环。它需要一个单独的防毒面具来充分保护。",
+    "weight": "12840 g",
+    "volume": "12500 ml",
+    "price": "1800 USD",
+    "price_postapoc": "70 USD",
+    "to_hit": -3,
+    "bashing": 6,
+    "phase": "solid",
+    "material": [
+      "leather",
+      "kevlar"
+    ],
+    "symbol": "[",
+    "looks_like": "anbc_suit",
+    "color": "brown",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "6 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "6 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "8 L",
+        "max_contains_weight": "16 kg",
+        "moves": 150
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "4 L",
+        "max_contains_weight": "8 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "4 L",
+        "max_contains_weight": "8 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "500 ml",
+        "max_contains_volume": "2500 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 10,
+        "flag_restriction": [
+          "SHEATH_KNIFE",
+          "SHEATH_SWORD"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "500 ml",
+        "max_contains_volume": "2500 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 10,
+        "flag_restriction": [
+          "SHEATH_KNIFE",
+          "SHEATH_SWORD"
+        ]
+      }
+    ],
+    "warmth": 25,
+    "material_thickness": 4,
+    "environmental_protection": 15,
+    "valid_mods": [
+      "steel_padded"
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "鞘刀/剑",
+      "holster_msg": "你将%s收鞘"
+    },
+    "flags": [
+      "VARSIZE",
+      "OVERSIZE",
+      "WATERPROOF",
+      "RAINPROOF",
+      "RAD_RESIST",
+      "GAS_PROOF",
+      "STURDY",
+      "ALLOWS_NATURAL_ATTACKS",
+      "WATCH",
+      "NONCONDUCTIVE",
+      "ALARMCLOCK"
+    ],
+    "armor": [
+      {
+        "encumbrance": 25,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r",
+          "head"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "surv_armor_suit",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "幸存者装甲侦察套装"
+    },
+    "//": "Harder to repair but more durable.",
+    "description": "一种为在陆地上生活而自制的衣服。配有充足的储物空间、温暖的毛皮衬里、环保和物理保护、内置手表和临时护套环。这套西装是由凯夫拉纤维精心制作，并用金属加固。它需要一个单独的防毒面具来充分保护。",
+    "weight": "26360 g",
+    "volume": "12500 ml",
+    "price": "1800 USD",
+    "price_postapoc": "90 USD",
+    "to_hit": -3,
+    "bashing": 6,
+    "phase": "solid",
+    "material": [
+      "kevlar",
+      "steel"
+    ],
+    "symbol": "[",
+    "looks_like": "anbc_suit",
+    "color": "brown",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "6 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "2 L",
+        "max_contains_weight": "6 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "8 L",
+        "max_contains_weight": "16 kg",
+        "moves": 150
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "4 L",
+        "max_contains_weight": "8 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "max_contains_volume": "4 L",
+        "max_contains_weight": "8 kg",
+        "moves": 80
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "500 ml",
+        "max_contains_volume": "2500 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 10,
+        "flag_restriction": [
+          "SHEATH_KNIFE",
+          "SHEATH_SWORD"
+        ]
+      },
+      {
+        "pocket_type": "CONTAINER",
+        "min_item_volume": "500 ml",
+        "max_contains_volume": "2500 ml",
+        "max_contains_weight": "4 kg",
+        "moves": 10,
+        "flag_restriction": [
+          "SHEATH_KNIFE",
+          "SHEATH_SWORD"
+        ]
+      }
+    ],
+    "warmth": 25,
+    "material_thickness": 5,
+    "environmental_protection": 15,
+    "valid_mods": [
+      "steel_padded"
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "鞘刀/剑",
+      "holster_msg": "你将%s收鞘"
+    },
+    "flags": [
+      "VARSIZE",
+      "OVERSIZE",
+      "WATERPROOF",
+      "RAINPROOF",
+      "RAD_RESIST",
+      "GAS_PROOF",
+      "STURDY",
+      "ALLOWS_NATURAL_ATTACKS",
+      "WATCH",
+      "NONCONDUCTIVE",
+      "ALARMCLOCK"
+    ],
+    "armor": [
+      {
+        "encumbrance": 35,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r",
+          "head"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "armor_lightplate_surv",
+    "copy-from": "armor_lightplate",
+    "//": "No storage or other amenities, but a modest increase in protection relative to the added encumbrance.",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者板甲"
+    },
+    "description": "一套用凯夫拉和皮革改良的哥特式板甲，可以更好地保护钢板间的缝隙并提供更好的保护。",
+    "weight": "12100 g",
+    "price": "900 USD",
+    "price_postapoc": "130 USD",
+    "material": [
+      "steel",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 30,
+    "material_thickness": 5,
+    "environmental_protection": 3,
+    "extend": {
+      "flags": [
+        "WATERPROOF"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 25,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cuirass_lightplate_surv",
+    "copy-from": "cuirass_lightplate",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者胸甲",
+      "str_pl": "幸存者胸甲"
+    },
+    "description": "一件中世纪式的钢制胸甲，用凯夫拉和皮革改进，可以更好地提供环境防护。",
+    "weight": "4620 g",
+    "price": "300 USD",
+    "price_postapoc": "45 USD",
+    "material": [
+      "steel",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 30,
+    "material_thickness": 5,
+    "environmental_protection": 3,
+    "extend": {
+      "flags": [
+        "WATERPROOF"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 25,
+        "coverage": 100,
+        "covers": [
+          "torso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "armguard_lightplate_surv",
+    "copy-from": "armguard_lightplate",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者钢护臂",
+      "str_pl": "幸存者钢护臂"
+    },
+    "description": "一套完美复刻的中世纪式手臂防具。用皮革条把上臂甲片，肘弯甲片，前臂甲片连结成一体，并且用凯夫拉加固，一双完美坚实的战争工艺品。",
+    "weight": "2992 g",
+    "price": "300 USD",
+    "price_postapoc": "130 USD",
+    "material": [
+      "steel",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 30,
+    "material_thickness": 5,
+    "environmental_protection": 3,
+    "extend": {
+      "flags": [
+        "WATERPROOF"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 25,
+        "coverage": 100,
+        "covers": [
+          "arm_l",
+          "arm_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "legguard_lightplate_surv",
+    "copy-from": "legguard_lightplate",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者钢护腿",
+      "str_pl": "幸存者钢护腿"
+    },
+    "description": "一套完美复刻的中世纪式腿部防具。用皮革条把护腿甲片，护膝甲片，护胫甲片连结成一体，并且用凯夫拉加固，一双完美坚实的战争工艺品。 ",
+    "weight": "4488 g",
+    "price": "300 USD",
+    "price_postapoc": "45 USD",
+    "material": [
+      "steel",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 30,
+    "material_thickness": 5,
+    "environmental_protection": 3,
+    "extend": {
+      "flags": [
+        "WATERPROOF"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 25,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "helmet_plate_surv",
+    "copy-from": "helmet_plate",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者巨盔"
+    },
+    "description": "一个自制的中世纪的头盔，扩大了眼睛的缝隙和呼吸，带有防弹镜片和凯夫拉面甲，有助于弥补修改增加的脆弱性。",
+    "weight": "2395 g",
+    "price": "500 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 20,
+    "material_thickness": 6,
+    "environmental_protection": 3,
+    "extend": {
+      "flags": [
+        "WATERPROOF",
+        "SUN_GLASSES"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 35,
+        "coverage": 100,
+        "covers": [
+          "head",
+          "eyes",
+          "mouth"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gloves_plate_surv",
+    "copy-from": "gloves_plate",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者装甲护手",
+      "str_pl": "幸存者装甲护手"
+    },
+    "description": "一套中世纪式的板甲手套，用凯夫拉改进以更好地提供环境防护。",
+    "weight": "1080 g",
+    "price": "500 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "iron",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 25,
+    "material_thickness": 5,
+    "environmental_protection": 3,
+    "extend": {
+      "flags": [
+        "WATERPROOF"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 25,
+        "coverage": 100,
+        "covers": [
+          "hand_l",
+          "hand_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "boots_plate_surv",
+    "copy-from": "boots_plate",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者装甲靴",
+      "str_pl": "幸存者装甲靴"
+    },
+    "description": "一套厚重的装甲靴，用凯夫拉改进以更好地提供环境防护。",
+    "weight": "2080 g",
+    "price": "600 USD",
+    "price_postapoc": "60 USD",
+    "material": [
+      "iron",
+      "kevlar",
+      "leather"
+    ],
+    "warmth": 25,
+    "material_thickness": 5,
+    "environmental_protection": 3,
+    "armor": [
+      {
+        "encumbrance": 30,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "badge_bio_weapon",
+    "type": "ARMOR",
+    "name": {
+      "str": "生物武器徽章"
+    },
+    "description": "一枚圆形银质徽章，表明佩戴者是生物武器项目的一部分。",
+    "weight": "60 g",
+    "volume": "5 ml",
+    "price": "50 USD",
+    "price_postapoc": "5 USD",
+    "phase": "solid",
+    "material": [
+      "silver"
+    ],
+    "symbol": "[",
+    "looks_like": "badge_cybercop",
+    "color": "yellow"
+  },
+  {
+    "id": "badge_bio_weapon_apophis",
+    "type": "ARMOR",
+    "name": {
+      "str": "生物武器-阿波菲斯 徽章"
+    },
+    "description": "一枚圆形银质徽章，表明佩戴者是生物武器项目的一部分。这个刻有“阿波菲斯”。",
+    "weight": "60 g",
+    "volume": "5 ml",
+    "price": "100 USD",
+    "phase": "solid",
+    "material": [
+      "silver"
+    ],
+    "symbol": "[",
+    "looks_like": "badge_cybercop",
+    "color": "red",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "id": "badge_bio_weapon_evy",
+    "type": "ARMOR",
+    "name": {
+      "str": "RFID访问徽章"
+    },
+    "description": "一枚正面嵌入RFID芯片的圆形银质徽章，表明佩戴者是生物武器项目的一部分。",
+    "weight": "60 g",
+    "volume": "5 ml",
+    "price": "100 USD",
+    "phase": "solid",
+    "material": [
+      "silver"
+    ],
+    "symbol": "[",
+    "looks_like": "badge_cybercop",
+    "color": "red",
+    "flags": [
+      "TRADER_AVOID",
+      "NO_SALVAGE"
+    ]
+  },
+  {
+    "id": "acs_74_stealth_cloak_on",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "ACS-74 隐形斗篷"
+    },
+    "description": "一个实验性的斗篷，其使用了高度复杂的摄像头和LED网络，让使用者完全隐形。 它由其内置的扭力棘轮提供动力。 由于其特殊的结构，让它非常难以穿上，同时也阻碍了佩戴者的力量、敏捷和移动速度。",
+    "weight": "1556 g",
+    "volume": "3 L",
+    "price": "84000 USD",
+    "price_postapoc": "84 USD",
+    "to_hit": -1,
+    "phase": "solid",
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "symbol": "[",
+    "looks_like": "optical_cloak",
+    "color": "light_gray",
+    "warmth": 15,
+    "material_thickness": 1,
+    "environmental_protection": 4,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "SPEED",
+              "add": -20
+            },
+            {
+              "value": "STRENGTH",
+              "add": -4
+            },
+            {
+              "value": "DEXTERITY",
+              "add": -4
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "invisibility",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "OVERSIZE",
+      "HOOD",
+      "WATERPROOF",
+      "OUTER",
+      "VARSIZE",
+      "PADDED"
+    ],
+    "armor": [
+      {
+        "encumbrance": 15,
+        "coverage": 75,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "head"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "C_MUTE_BOOTS",
+    "name": {
+      "str": "声波干扰"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "你的装备正在努力掩盖你的脚步声。",
+    "player_display": false,
+    "noise_modifier": 0
+  },
+  {
+    "id": "boots_stealth",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "name": {
+      "str": "磁震消音靴",
+      "str_pl": "磁震消音靴"
+    },
+    "description": "能使你移动完全无声的实验性加强靴，但会减慢你的速度。",
+    "weight": "1280 g",
+    "volume": "2500 ml",
+    "price": "260 USD",
+    "price_postapoc": "26 USD",
+    "to_hit": -1,
+    "bashing": 1,
+    "phase": "solid",
+    "material": [
+      "kevlar",
+      "leather"
+    ],
+    "looks_like": "boots_combat",
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 25,
+    "material_thickness": 3,
+    "environmental_protection": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "mutations": [
+            "C_MUTE_BOOTS"
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "VARSIZE",
+      "WATERPROOF",
+      "STURDY"
+    ],
+    "armor": [
+      {
+        "encumbrance": 18,
+        "coverage": 100,
+        "covers": [
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "C_RADIOGENIC_GOGGLES",
+    "name": {
+      "str": "放射性视觉"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "你现在可以看穿墙壁。顺便说一句，这东西散发的辐射可能对你不好。",
+    "player_display": false,
+    "flags": [
+      "CLAIRVOYANCE"
+    ]
+  },
+  {
+    "id": "goggles_nv_clairvoyance",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "透视护目镜",
+      "str_pl": "透视护目镜"
+    },
+    "description": "使用伽马辐射发射器的实验性护目镜，使佩戴者可以透过墙壁看到物体。由于有辐射中毒的危险，不建议长时间使用。",
+    "weight": "158 g",
+    "volume": "500 ml",
+    "price": "260 USD",
+    "to_hit": -3,
+    "phase": "solid",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "warmth": 10,
+    "material_thickness": 4,
+    "environmental_protection": 5,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ALWAYS",
+          "mutations": [
+            "C_RADIOGENIC_GOGGLES"
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "GNV_EFFECT",
+      "WATERPROOF",
+      "STURDY",
+      "RADIOACTIVE",
+      "LIGHT_25",
+      "PADDED"
+    ],
+    "armor": [
+      {
+        "encumbrance": 30,
+        "coverage": 100,
+        "covers": [
+          "eyes"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lmil_armor",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str_sp": "轻型作战装甲"
+    },
+    "description": "一套尺寸适合大多数人的灰色轻型连身防弹装甲，有额外配套的头盔。由织物连体衣和高级复合板制成，相对容易移动，但防护作用很小，仅能抵挡手枪口径的子弹和弹片。 它有两个可以放入中小型弹匣的口袋。",
+    "weight": "9045 g",
+    "volume": "10250 ml",
+    "price": "1600 USD",
+    "price_postapoc": "16 USD",
+    "to_hit": -3,
+    "bashing": 5,
+    "material": [
+      "c_superalloy_composite",
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "power_armor_light",
+    "warmth": 30,
+    "material_thickness": 1,
+    "environmental_protection": 5,
+    "//": "Designed to be able to hold military light and medium atomic cells.",
+    "pocket_data": [
+      {
+        "moves": 40,
+        "min_volume": "35 ml",
+        "max_contains_volume": "525 ml",
+        "max_contains_weight": "5 kg",
+        "holster": true,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "item_restriction": [
+          "light_atomic_battery_cell",
+          "medium_atomic_battery_cell"
+        ]
+      },
+      {
+        "moves": 40,
+        "min_volume": "35 ml",
+        "max_contains_volume": "525 ml",
+        "max_contains_weight": "5 kg",
+        "holster": true,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "item_restriction": [
+          "light_atomic_battery_cell",
+          "medium_atomic_battery_cell"
+        ]
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入弹匣",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "STURDY",
+      "NO_SALVAGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": 12,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mil_armor",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str_sp": "作战装甲"
+    },
+    "description": "一套尺寸适合大多数人的灰色连身防弹装甲，有额外配套的头盔。由皮革衬里和高级复合板制成，可以提供足够的防护来抵挡中等口径子弹，但可能无法防御全威力弹。它有两个可以放入中小型弹匣的口袋。",
+    "weight": "11700 g",
+    "volume": "11250 ml",
+    "price": "1750 USD",
+    "price_postapoc": "1750 cent",
+    "to_hit": -3,
+    "bashing": 5,
+    "material": [
+      "c_superalloy_composite_medium",
+      "leather"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "power_armor_basic",
+    "warmth": 30,
+    "material_thickness": 1,
+    "environmental_protection": 5,
+    "//": "Designed to be able to hold military light and medium atomic cells.",
+    "pocket_data": [
+      {
+        "moves": 40,
+        "min_volume": "35 ml",
+        "max_contains_volume": "525 ml",
+        "max_contains_weight": "5 kg",
+        "holster": true,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "item_restriction": [
+          "light_atomic_battery_cell",
+          "medium_atomic_battery_cell"
+        ]
+      },
+      {
+        "moves": 40,
+        "min_volume": "35 ml",
+        "max_contains_volume": "525 ml",
+        "max_contains_weight": "5 kg",
+        "holster": true,
+        "flag_restriction": [
+          "MAG_COMPACT"
+        ],
+        "item_restriction": [
+          "light_atomic_battery_cell",
+          "medium_atomic_battery_cell"
+        ]
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入弹匣",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "STURDY",
+      "NO_SALVAGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": 24,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hmil_armor",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str_sp": "重型作战装甲"
+    },
+    "description": "一套尺寸适合大多数人的灰色重型连身防弹装甲，有额外配套的头盔。由重型衬里和高级防弹板制成，可以很好地保护身体免受大多数步枪子弹的攻击，但在大多数情况下可能过于笨重。它有两个可以放入中大型弹匣的口袋。",
+    "weight": "20250 g",
+    "volume": "13500 ml",
+    "price": "2000 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -3,
+    "bashing": 5,
+    "material": [
+      "c_superalloy_composite_heavy",
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "power_armor_heavy",
+    "warmth": 30,
+    "material_thickness": 1,
+    "environmental_protection": 5,
+    "//": "Designed to be able to hold military medium and heavy atomic cells.",
+    "pocket_data": [
+      {
+        "moves": 40,
+        "min_volume": "525 ml",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "5 kg",
+        "holster": true,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "item_restriction": [
+          "medium_atomic_battery_cell",
+          "heavy_atomic_battery_cell"
+        ]
+      },
+      {
+        "moves": 40,
+        "min_volume": "525 ml",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "5 kg",
+        "holster": true,
+        "flag_restriction": [
+          "MAG_COMPACT",
+          "MAG_BULKY"
+        ],
+        "item_restriction": [
+          "medium_atomic_battery_cell",
+          "heavy_atomic_battery_cell"
+        ]
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入弹匣",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "STURDY",
+      "NONCONDUCTIVE",
+      "NO_SALVAGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": 36,
+        "coverage": 100,
+        "covers": [
+          "leg_l",
+          "leg_r",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lmil_helm",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str_sp": "轻型作战头盔"
+    },
+    "description": "一个尺寸适合大多数人的轻型全覆防弹头盔。由织物衬里与高级复合板制成，仅能抵挡手枪口径的子弹和弹片。",
+    "weight": "1005 g",
+    "volume": "1 L",
+    "price": "1600 USD",
+    "price_postapoc": "16 USD",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [
+      "c_superalloy_composite",
+      "cotton"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "power_armor_helmet_light",
+    "warmth": 30,
+    "material_thickness": 1,
+    "environmental_protection": 5,
+    "flags": [
+      "STURDY",
+      "NO_SALVAGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": 12,
+        "coverage": 100,
+        "covers": [
+          "head",
+          "eyes",
+          "mouth"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mil_helm",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str_sp": "作战头盔"
+    },
+    "description": "一个尺寸适合大多数人的全覆防弹头盔。由皮革衬里和高级复合板制成，可以提供足够的防护来抵挡中等口径子弹。",
+    "weight": "1300 g",
+    "volume": "1250 ml",
+    "price": "1750 USD",
+    "price_postapoc": "1750 cent",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [
+      "c_superalloy_composite_medium",
+      "leather"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "power_armor_helmet_basic",
+    "warmth": 30,
+    "material_thickness": 1,
+    "environmental_protection": 5,
+    "flags": [
+      "STURDY",
+      "NO_SALVAGE"
+    ],
+    "armor": [
+      {
+        "encumbrance": 24,
+        "coverage": 100,
+        "covers": [
+          "head",
+          "eyes",
+          "mouth"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hmil_helm",
+    "type": "ARMOR",
+    "category": "armor",
+    "name": {
+      "str_sp": "重型作战头盔"
+    },
+    "description": "一个尺寸适合大多数人的重型全覆防弹头盔。由重型衬里和高级复合板制成，可以很好地保护头部免受大多数步枪子弹的攻击。",
+    "weight": "2250 g",
+    "volume": "1500 ml",
+    "price": "2000 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [
+      "c_superalloy_composite_heavy",
+      "steel"
+    ],
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "power_armor_helmet_heavy",
+    "warmth": 30,
+    "material_thickness": 1,
+    "environmental_protection": 5,
+    "flags": [
+      "STURDY",
+      "NONCONDUCTIVE",
+      "NO_SALVAGE",
+      "SLEEP_IGNORE"
+    ],
+    "armor": [
+      {
+        "encumbrance": 36,
+        "coverage": 100,
+        "covers": [
+          "head",
+          "eyes",
+          "mouth"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fancy_house_coat",
+    "copy-from": "house_coat",
+    "repairs_like": "house_coat",
+    "type": "ARMOR",
+    "name": {
+      "str": "名牌浴袍"
+    },
+    "description": "入浴和出浴所穿的服饰，多为毛巾质地的，这样可以更好的吸收身上的水分并包裹住身体。它让你回想到躺在浴缸里泡澡的日子。上面缝着一家现在已经无关紧要的时尚公司的金色标志。",
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "fancy_bra",
+    "copy-from": "bra",
+    "repairs_like": "bra",
+    "type": "ARMOR",
+    "name": {
+      "str": "名牌文胸"
+    },
+    "description": "A luxurious designer bra.  Serves its purpose and feels good on you.",
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "fancy_panties",
+    "copy-from": "panties",
+    "repairs_like": "panties",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "名牌女士内裤"
+    },
+    "description": "A luxurious set of designer panties. Preserves your modesty and feels good on you.",
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "fancy_briefs",
+    "copy-from": "briefs",
+    "repairs_like": "briefs",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "名牌男士内裤"
+    },
+    "description": "A pair of designer briefs.  Comfortable and fashionable underwear worn by men.",
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "fancy_boxer_shorts",
+    "copy-from": "boxer_shorts",
+    "repairs_like": "boxer_shorts",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "名牌平角短裤"
+    },
+    "description": "男式名牌平角短裤。比普通内裤更时尚，也同样舒适。",
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "fancy_boxer_briefs",
+    "copy-from": "boxer_briefs",
+    "repairs_like": "boxer_briefs",
+    "type": "ARMOR",
+    "name": {
+      "str_sp": "名牌四角内裤"
+    },
+    "description": "老问题，四角裤还是三角裤？你的答案是什么？要酷炫的那种。",
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "bikini_bottom_leather",
+    "copy-from": "bikini_bottom",
+    "repairs_like": "bikini_bottom",
+    "type": "ARMOR",
+    "name": {
+      "str": "比基尼内裤（皮革）"
+    },
+    "description": "一件皮比基尼内裤，相比普通比基尼内裤，这款更加耐用但不防水。",
+    "material": [
+      "leather"
+    ],
+    "warmth": 5,
+    "delete": {
+      "flags": [
+        "WATER_FRIENDLY"
+      ]
+    }
+  },
+  {
+    "id": "bikini_bottom_fur",
+    "copy-from": "bikini_bottom",
+    "repairs_like": "bikini_bottom",
+    "type": "ARMOR",
+    "name": {
+      "str": "比基尼内裤（毛皮）"
+    },
+    "description": "一件毛皮比基尼内裤，相比普通比基尼内裤，这款更加保暖但不防水。",
+    "material": [
+      "fur"
+    ],
+    "warmth": 10,
+    "delete": {
+      "flags": [
+        "WATER_FRIENDLY"
+      ]
+    }
+  },
+  {
+    "id": "thong",
+    "copy-from": "panties",
+    "repairs_like": "panties",
+    "type": "ARMOR",
+    "name": {
+      "str": "丁字裤"
+    },
+    "description": "覆盖面积很少的女性内衣，会引来别人的注视。",
+    "warmth": 0,
+    "armor": [
+      {
+        "coverage": 40,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dress_skirt",
+    "copy-from": "skirt",
+    "repairs_like": "jeans",
+    "type": "ARMOR",
+    "name": {
+      "str": "套裙"
+    },
+    "description": "一条有职业范的棉短裙。穿进去很容易，但没有口袋。",
+    "pocket_data": [],
+    "extend": {
+      "flags": [
+        "FANCY"
+      ]
+    }
+  },
+  {
+    "id": "microskirt",
+    "copy-from": "skirt",
+    "repairs_like": "jeans",
+    "type": "ARMOR",
+    "name": {
+      "str": "超短裙"
+    },
+    "description": "一条偏短的裙子。没有口袋但穿起来很舒服。",
+    "pocket_data": [],
+    "armor": [
+      {
+        "coverage": 80,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_hip_l",
+          "leg_hip_r"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "C_MIGO_HEAT_BONUS",
+    "name": {
+      "str": "甲壳装甲降温"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "使改装甲壳装甲提供降温如果过热。",
+    "player_display": false,
+    "bodytemp_modifiers": [
+      -1000,
+      0
+    ]
+  },
+  {
+    "id": "c_mi_go_carapace_salvaged",
+    "looks_like": "rm13_armor",
+    "type": "TOOL_ARMOR",
+    "category": "armor",
+    "symbol": "[",
+    "color": "green",
+    "name": {
+      "str": "改装甲壳装甲"
+    },
+    "description": "一个隐约看得出人形的外壳，由外星肌腱和钢支架构成，外面覆盖着树脂制成的网状装甲板。大灾变前通过对其他活武器的研究并改装而来，它经过了大量的切割以适合人类（或变种人）穿戴，但不知为何它仍然具有功能，实际上它几乎是活的。激活它可以减少装甲的累赘，增强使用者的力量和敏捷，保护穿戴者免受有毒气体的伤害，同时其可以作为一个呼吸器，增强使用者的耐力和负重能力，并提供一定程度的外界温度防护。 它似乎可以从阳光下充电，但会加快使用者疲劳并且影响其健康，而且更容易受到电击。",
+    "flags": [
+      "OVERSIZE",
+      "STURDY",
+      "SKINTIGHT",
+      "PADDED",
+      "SWIM_GOGGLES",
+      "SUN_GLASSES",
+      "ONLY_ONE"
+    ],
+    "price_postapoc": "80 USD",
+    "material": [
+      "alien_resin",
+      "flesh",
+      "steel"
+    ],
+    "weight": "20 kg",
+    "volume": "25 L",
+    "to_hit": -3,
+    "ammo": [
+      "battery"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "甲壳装甲激活了，呼吸孔随着密闭而膨胀。",
+      "target": "c_mi_go_carapace_salvaged_on",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "甲壳装甲没有反应，显然是因为能量不足。"
+    },
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      },
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "STRENGTH",
+              "add": 2
+            },
+            {
+              "value": "DEXTERITY",
+              "add": 1
+            },
+            {
+              "value": "ARMOR_ELEC",
+              "multiply": 0.5
+            },
+            {
+              "value": "CARRY_WEIGHT",
+              "multiply": 1.5
+            },
+            {
+              "value": "CLIMATE_CONTROL_HEAT",
+              "add": 50
+            },
+            {
+              "value": "CLIMATE_CONTROL_CHILL",
+              "add": 50
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "c_mi_go_carapace_stamina",
+              "intensity": 1
+            }
+          ],
+          "mutations": [
+            "C_MIGO_HEAT_BONUS"
+          ]
+        }
+      ]
+    },
+    "warmth": 10,
+    "material_thickness": 4,
+    "environmental_protection": 5,
+    "armor": [
+      {
+        "encumbrance": 30,
+        "coverage": 100,
+        "covers": [
+          "head",
+          "mouth",
+          "eyes",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c_mi_go_carapace_salvaged_on",
+    "copy-from": "c_mi_go_carapace_salvaged",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "改装甲壳装甲（开）",
+      "str_pl": "改装甲壳装甲（开）"
+    },
+    "description": "一个隐约看得出人形的外壳，由外星肌腱和钢支架构成，外面覆盖着树脂制成的网状装甲板。大灾变前通过对其他活体武器的研究并改装而来，它经过了大量的切割以适合人类（或变种人）穿戴。激活它可以减少装甲的累赘，增强使用者的力量和敏捷，保护穿戴者免受有毒气体的伤害，同时其可以作为一个呼吸器，增强使用者的耐力和负重能力，并提供一定程度的外界温度防护。 它似乎可以从阳光下充电，但会加快使用者疲劳并且影响其健康，而且更容易受到电击。",
+    "turns_per_charge": 150,
+    "revert_to": "c_mi_go_carapace_salvaged",
+    "use_action": {
+      "target": "c_mi_go_carapace_salvaged",
+      "msg": "甲壳装甲的肌肉松开了，你摆脱了束缚。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "WATERPROOF",
+        "RAINPROOF",
+        "GAS_PROOF",
+        "REBREATHER",
+        "NO_TAKEOFF"
+      ]
+    },
+    "material": [
+      "alien_resin",
+      "flesh",
+      "steel"
+    ],
+    "warmth": 0,
+    "material_thickness": 4,
+    "environmental_protection": 15,
+    "armor": [
+      {
+        "encumbrance": 30,
+        "coverage": 100,
+        "covers": [
+          "head",
+          "mouth",
+          "eyes",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c_mi_go_wings_salvaged",
+    "type": "TOOL_ARMOR",
+    "symbol": "[",
+    "color": "green",
+    "name": {
+      "str": "改装动力翼",
+      "str_pl": "改装动力翼"
+    },
+    "description": "一对薄薄的绿色彩虹翅膀，钢丝和关节上缠绕着厚厚的外星神经索。大灾变前通过对其他活体武器的研究并改装而来，它经过了大量的改装以适合人类（或变种人）穿戴。激活它会免疫坠落伤害，并大大加快移动速度。它似乎从阳光中充电，激活也会让使用者逐渐感到疲劳。",
+    "flags": [
+      "OVERSIZE",
+      "STURDY",
+      "BELTED",
+      "PADDED",
+      "ONLY_ONE"
+    ],
+    "price_postapoc": "40 USD",
+    "material": [
+      "alien_resin",
+      "flesh",
+      "steel"
+    ],
+    "weight": "2 kg",
+    "volume": "5 L",
+    "to_hit": -3,
+    "ammo": [
+      "battery"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "battery": 100
+        }
+      }
+    ],
+    "use_action": {
+      "type": "transform",
+      "msg": "动力翼呼呼作响，变成了一片模糊飘动的绿灰色。",
+      "target": "c_mi_go_wings_salvaged_on",
+      "active": true,
+      "need_worn": true,
+      "need_charges": 1,
+      "need_charges_msg": "动力翼没有反应，显然是因为能量不足。"
+    },
+    "relic_data": {
+      "charge_info": {
+        "recharge_type": "solar_sunny",
+        "time": "10 m",
+        "regenerate_ammo": true
+      },
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "MOVE_COST",
+              "multiply": -0.5
+            },
+            {
+              "value": "BONUS_DODGE",
+              "add": 5
+            }
+          ],
+          "ench_effects": [
+            {
+              "effect": "c_mi_go_wings_immunity",
+              "intensity": 1
+            }
+          ]
+        }
+      ]
+    },
+    "material_thickness": 2,
+    "armor": [
+      {
+        "encumbrance": 10,
+        "coverage": 40,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c_mi_go_wings_salvaged_on",
+    "copy-from": "c_mi_go_wings_salvaged",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "改装动力翼（开）",
+      "str_pl": "改装动力翼（开）"
+    },
+    "description": "一对薄薄的绿色彩虹翅膀，钢丝和关节上缠绕着厚厚的外星神经索。它们现在充满活力，大大加快了移动速度，提高了闪避能力并免疫坠落伤害，但会更容易感到疲劳。",
+    "turns_per_charge": 75,
+    "revert_to": "c_mi_go_wings_salvaged",
+    "use_action": {
+      "target": "c_mi_go_wings_salvaged",
+      "msg": "动力翼在关闭后变得松软。",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "extend": {
+      "flags": [
+        "NO_TAKEOFF"
+      ]
+    },
+    "armor": [
+      {
+        "encumbrance": 0,
+        "coverage": 40,
+        "covers": [
+          "torso"
+        ],
+        "specifically_covers": [
+          "torso_waist"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cowboy_hat_surv",
+    "copy-from": "cowboy_hat",
+    "type": "ARMOR",
+    "name": {
+      "str": "幸存者牛仔帽"
+    },
+    "description": "一顶用凯夫拉纤维填充的宽边帽，帽圈上缝有子弹带。很适合在不遮挡视野的地方放几颗子弹，它的可调节环适合各种弹药。",
+    "weight": "420 g",
+    "price_postapoc": 500,
+    "material": [
+      "leather",
+      "cotton",
+      "kevlar"
+    ],
+    "warmth": 10,
+    "material_thickness": 4,
+    "valid_mods": [
+      "steel_padded"
+    ],
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "22": 12,
+          "32": 12,
+          "38": 12,
+          "40": 12,
+          "44": 12,
+          "45": 12,
+          "46": 12,
+          "50": 12,
+          "57": 12,
+          "223": 12,
+          "300": 12,
+          "308": 12,
+          "380": 12,
+          "454": 12,
+          "460": 12,
+          "500": 12,
+          "762": 12,
+          "3006": 12,
+          "4570": 12,
+          "762x25": 12,
+          "357mag": 12,
+          "357sig": 12,
+          "38super": 12,
+          "10mm": 12,
+          "45colt": 12,
+          "9x18": 12,
+          "9mm": 12,
+          "270win": 12,
+          "300blk": 12,
+          "5x50": 12,
+          "545x39": 12,
+          "762R": 12,
+          "8x40mm": 12,
+          "700nx": 12,
+          "410shot": 12,
+          "shot": 12,
+          "20x66mm": 12,
+          "signal_flare": 12,
+          "flintlock": 12,
+          "36paper": 12,
+          "44paper": 12,
+          "blunderbuss": 12,
+          "shotpaper": 12
+        },
+        "moves": 30
+      }
+    ],
+    "armor": [
+      {
+        "encumbrance": 20,
+        "coverage": 75,
+        "covers": [
+          "head"
+        ]
+      }
+    ],
+    "extend": {
+      "effects": [
+        "STURDY"
+      ]
+    }
+  },
+  {
+    "type": "ARMOR",
+    "id": "legrig_surv",
+    "name": {
+      "str": "幸存者腿环"
+    },
+    "description": "一套自制的可调节吊带腿环，用于将各种设备固定在腿上。它的皮带可以存放各种各样的短刀、枪支、弹匣和大多数可存放于工具皮带的物品。激活它以储存4件物品。",
+    "weight": "250 g",
+    "volume": "1500 ml",
+    "price": "100 USD",
+    "price_postapoc": "5 USD",
+    "material": [
+      "cotton",
+      "leather"
+    ],
+    "symbol": "[",
+    "looks_like": "legrig",
+    "color": "dark_gray",
+    "material_thickness": 1,
+    "pocket_data": [
+      {
+        "moves": 75,
+        "min_volume": "50 ml",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "762 mm",
+        "skills": [
+          "pistol",
+          "smg",
+          "shotgun",
+          "rifle"
+        ],
+        "holster": true
+      },
+      {
+        "moves": 75,
+        "min_volume": "50 ml",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "762 mm",
+        "skills": [
+          "pistol",
+          "smg",
+          "shotgun",
+          "rifle"
+        ],
+        "holster": true
+      },
+      {
+        "moves": 75,
+        "min_volume": "50 ml",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "762 mm",
+        "holster": true,
+        "flag_restriction": [
+          "SHEATH_KNIFE",
+          "BELT_CLIP",
+          "SHEATH_SWORD",
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "SPEEDLOADER"
+        ]
+      },
+      {
+        "moves": 75,
+        "min_volume": "50 ml",
+        "max_contains_volume": "1500 ml",
+        "max_contains_weight": "5 kg",
+        "max_item_length": "762 mm",
+        "holster": true,
+        "flag_restriction": [
+          "SHEATH_KNIFE",
+          "BELT_CLIP",
+          "SHEATH_SWORD",
+          "MAG_COMPACT",
+          "MAG_BULKY",
+          "SPEEDLOADER"
+        ]
+      }
+    ],
+    "use_action": {
+      "type": "holster",
+      "holster_prompt": "存入物品",
+      "holster_msg": "你收好了%s。"
+    },
+    "flags": [
+      "WATER_FRIENDLY",
+      "BELTED",
+      "OVERSIZE",
+      "NO_QUICKDRAW"
+    ],
+    "armor": [
+      {
+        "encumbrance": [
+          2,
+          6
+        ],
+        "coverage": 20,
+        "covers": [
+          "leg_l",
+          "leg_r"
+        ],
+        "specifically_covers": [
+          "leg_upper_r",
+          "leg_upper_l"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "C_MOVE_NOISE",
+    "name": {
+      "str": "自制动力装甲噪音"
+    },
+    "points": 99,
+    "valid": false,
+    "description": "这会降低你的潜行能力，但会按盔甲防护强度加大肉搏伤害。",
+    "player_display": false,
+    "noise_modifier": 5,
+    "stealth_modifier": -10,
+    "scent_intensity": 1200,
+    "rand_bash_bonus": {
+      "min": 3,
+      "max": 6
+    }
+  },
+  {
+    "id": "c_power_armor_surv",
+    "type": "TOOL_ARMOR",
+    "category": "clothing",
+    "symbol": "[",
+    "color": "dark_gray",
+    "looks_like": "rm13_armor",
+    "name": {
+      "str": "自制动力装甲"
+    },
+    "description": "这是一套由覆盖着液压系统的钢板组成的极其沉重的盔甲，由一台被拆卸下来的柴油发动机驱动来辅助穿着者的行动。当它启动时，会提升你的力量并且减少装甲的累赘，但会让身体变热并且让潜行变得更加困难。",
+    "flags": [
+      "OVERSIZE",
+      "STURDY",
+      "OUTER",
+      "ALLOWS_NATURAL_ATTACKS",
+      "PADDED"
+    ],
+    "price": "500 USD",
+    "price_postapoc": "50 USD",
+    "material": [
+      "steel"
+    ],
+    "weight": "50 kg",
+    "volume": "40 L",
+    "to_hit": -3,
+    "ammo": [
+      "diesel",
+      "lamp_oil",
+      "crude_lamp_oil",
+      "motor_oil",
+      "jp8"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "watertight": true,
+        "ammo_restriction": {
+          "diesel": 2000,
+          "lamp_oil": 2000,
+          "crude_lamp_oil": 2000,
+          "motor_oil": 2000,
+          "jp8": 2000
+        }
+      }
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WORN",
+          "condition": "ACTIVE",
+          "values": [
+            {
+              "value": "STRENGTH",
+              "add": 4
+            },
+            {
+              "value": "CARRY_WEIGHT",
+              "multiply": 2
+            }
+          ],
+          "mutations": [
+            "C_MOVE_NOISE"
+          ]
+        }
+      ]
+    },
+    "use_action": {
+      "type": "transform",
+      "msg": "你的自制动力装甲呼啸而起，伺服装置启动！",
+      "target": "c_power_armor_surv_on",
+      "need_worn": true,
+      "active": true,
+      "need_charges": 1,
+      "need_charges_msg": "自制动力装甲油箱里的燃料耗尽了。"
+    },
+    "warmth": 15,
+    "environmental_protection": 5,
+    "material_thickness": 8,
+    "armor": [
+      {
+        "encumbrance": 45,
+        "coverage": 90,
+        "covers": [
+          "head",
+          "mouth",
+          "eyes",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c_power_armor_surv_on",
+    "copy-from": "c_power_armor_surv",
+    "repairs_like": "c_power_armor_surv",
+    "type": "TOOL_ARMOR",
+    "name": {
+      "str": "自制动力装甲（开）",
+      "str_pl": "自制动力装甲（开）"
+    },
+    "description": "这是一套由覆盖着液压系统的钢板组成的极其沉重的盔甲，由一台被拆卸下来的柴油发动机驱动来辅助穿着者的行动。它目前处于开启状态，会提升你的力量并且减少装甲的累赘，但会让身体变热并且让潜行变得更加困难。 ",
+    "extend": {
+      "effects": [
+        "TRADER_AVOID"
+      ]
+    },
+    "//": "power_draw does not actually work sanely for non-battery items, so value fits for roughly how many turns one unit of the weakest allowed fuel would last at twice the power draw of vanilla power armor, rounded down.",
+    "turns_per_charge": 3,
+    "revert_to": "c_power_armor_surv",
+    "revert_msg": "Your makeshift power armor sputters and dies!",
+    "use_action": {
+      "target": "c_power_armor_surv",
+      "msg": "你关闭了自制动力护甲。",
+      "menu_text": "关闭",
+      "type": "transform",
+      "ammo_scale": 0
+    },
+    "warmth": 45,
+    "armor": [
+      {
+        "encumbrance": 15,
+        "coverage": 90,
+        "covers": [
+          "head",
+          "mouth",
+          "eyes",
+          "torso",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r"
+        ]
+      }
+    ]
+  }
+]

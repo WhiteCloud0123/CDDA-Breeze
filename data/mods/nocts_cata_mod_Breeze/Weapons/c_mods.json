@@ -1,0 +1,415 @@
+[
+  {
+    "id": "aux_flamer_diesel",
+    "type": "GUNMOD",
+    "name": {
+      "str": "幸存者下挂式火焰喷射器"
+    },
+    "description": "一个微型的自制喷火器，可以连接到各种武器上。它可以使用多种燃料，而且相对节油。但没有普通的火焰喷射器那么有效，而且给内置油箱加压需要时间。",
+    "weight": "1820 g",
+    "volume": "1 L",
+    "price": "850 USD",
+    "price_postapoc": "850 cent",
+    "material": [
+      "steel"
+    ],
+    "dispersion_modifier": 10,
+    "symbol": ":",
+    "color": "light_red",
+    "location": "underbarrel",
+    "mod_targets": [
+      "rifle",
+      "shotgun",
+      "smg",
+      "crossbow",
+      "launcher"
+    ],
+    "gun_data": {
+      "ammo": [
+        "diesel",
+        "gasoline",
+        "flammable",
+        "lamp_oil",
+        "crude_lamp_oil",
+        "motor_oil",
+        "jp8",
+        "avgas"
+      ],
+      "skill": "launcher",
+      "ranged_damage": {
+        "damage_type": "heat",
+        "amount": -1
+      },
+      "dispersion": 600,
+      "range": 2,
+      "durability": 7,
+      "reload": 4,
+      "clip_size": 250,
+      "ammo_to_fire": 50
+    },
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "watertight": true,
+        "ammo_restriction": {
+          "diesel": 250,
+          "gasoline": 250,
+          "flammable": 250,
+          "lamp_oil": 250,
+          "crude_lamp_oil": 250,
+          "motor_oil": 250,
+          "jp8": 250,
+          "avgas": 250
+        }
+      }
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ],
+      [
+        "launcher",
+        1
+      ]
+    ],
+    "install_time": "30 m",
+    "flags": [
+      "STR_RELOAD",
+      "PUMP_RAIL_COMPATIBLE",
+      "NON_FOULING"
+    ]
+  },
+  {
+    "type": "GUNMOD",
+    "//": "Stats are overall a hybrid of all the pistols you can use to craft it, with 10% higher dispersion (rounded up) and increased reload time.",
+    "id": "22aux",
+    "name": {
+      "str": "幸存者下挂式 .22 副枪"
+    },
+    "location": "underbarrel",
+    "weight": "1020 g",
+    "volume": "500 ml",
+    "color": "dark_gray",
+    "handling_modifier": -2,
+    "to_hit": -3,
+    "price": "120 USD",
+    "price_postapoc": "12 USD",
+    "description": "一把普通的 .22 LR半自动手枪，它可以安装在多种步枪的枪管下，但会降低操作性。它的弹匣井已经被永久地，几乎是粗略地修改，以允许它使用类似武器的各种弹匣，而牺牲了准确性和装填速度。",
+    "symbol": ":",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun",
+      "smg",
+      "crossbow",
+      "launcher"
+    ],
+    "bashing": 9,
+    "gun_data": {
+      "skill": "pistol",
+      "ammo": "22",
+      "ranged_damage": {
+        "damage_type": "bullet",
+        "amount": -1
+      },
+      "dispersion": 530,
+      "min_cycle_recoil": 39,
+      "durability": 6,
+      "reload": 200
+    },
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ],
+      [
+        "pistol",
+        1
+      ]
+    ],
+    "install_time": "20 m",
+    "pocket_data": [
+      {
+        "magazine_well": "250 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "holster": true,
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "20 kg",
+        "item_restriction": [
+          "mosquitomag",
+          "sw22mag",
+          "wp22mag",
+          "surv_22_mag"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GUNMOD",
+    "id": "9mmaux",
+    "name": {
+      "str": "幸存者下挂式 9mm 副枪"
+    },
+    "location": "underbarrel",
+    "weight": "961 g",
+    "volume": "528 ml",
+    "color": "dark_gray",
+    "handling_modifier": -2,
+    "to_hit": -2,
+    "price": "120 USD",
+    "price_postapoc": "12 USD",
+    "description": "一把普通的 9x19mm 半自动手枪，它可以安装在多种步枪的枪管下，但会降低操作性。它的弹匣井已经被永久地，几乎是粗略地修改，以允许它使用类似武器的各种弹匣，而牺牲了准确性和装填速度，并且无法使用大容量弹匣。",
+    "symbol": ":",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun",
+      "smg",
+      "crossbow",
+      "launcher"
+    ],
+    "bashing": 8,
+    "gun_data": {
+      "skill": "pistol",
+      "ammo": "9mm",
+      "ranged_damage": {
+        "damage_type": "bullet",
+        "amount": -1
+      },
+      "dispersion": 530,
+      "min_cycle_recoil": 450,
+      "durability": 5,
+      "reload": 200
+    },
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ],
+      [
+        "pistol",
+        1
+      ]
+    ],
+    "install_time": "20 m",
+    "pocket_data": [
+      {
+        "magazine_well": "250 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "holster": true,
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "20 kg",
+        "item_restriction": [
+          "glockmag",
+          "glock17_17",
+          "glock17_22",
+          "glockbigmag",
+          "m9mag",
+          "m9bigmag",
+          "usp9mag",
+          "surv_9mm_mag"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GUNMOD",
+    "id": "45aux",
+    "name": {
+      "str": "幸存者下挂式 .45 副枪"
+    },
+    "location": "underbarrel",
+    "weight": "1120 g",
+    "volume": "1607 ml",
+    "color": "dark_gray",
+    "handling_modifier": -2,
+    "to_hit": -2,
+    "price": "120 USD",
+    "price_postapoc": "12 USD",
+    "description": "一把普通的 .45 ACP半自动手枪，它可以安装在多种步枪的枪管下，但会降低操作性。它的弹匣井已经被永久地，几乎是粗略地修改，以允许它使用类似武器的各种弹匣，而牺牲了准确性和装填速度。",
+    "symbol": ":",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "mod_targets": [
+      "rifle",
+      "shotgun",
+      "smg",
+      "crossbow",
+      "launcher"
+    ],
+    "bashing": 8,
+    "gun_data": {
+      "skill": "pistol",
+      "ammo": "45",
+      "ranged_damage": {
+        "damage_type": "bullet",
+        "amount": -1
+      },
+      "dispersion": 530,
+      "min_cycle_recoil": 540,
+      "durability": 6,
+      "reload": 200
+    },
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ],
+      [
+        "pistol",
+        1
+      ]
+    ],
+    "install_time": "20 m",
+    "pocket_data": [
+      {
+        "magazine_well": "250 ml",
+        "pocket_type": "MAGAZINE_WELL",
+        "holster": true,
+        "max_contains_volume": "20 L",
+        "max_contains_weight": "20 kg",
+        "item_restriction": [
+          "m1911mag",
+          "m1911bigmag",
+          "usp45mag",
+          "surv_45_mag"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GUNMOD",
+    "id": "surv_laser_sight",
+    "name": {
+      "str": "幸存者激光瞄具"
+    },
+    "location": "sights",
+    "sight_dispersion": 20,
+    "field_of_view": 900,
+    "aim_speed_modifier": 12,
+    "description": "为快速瞄准目标而制造的瞄具。它由一个小的自制红点瞄准具组成，它可以向目标发射激光束。瞄准镜中的十字线允许正确瞄准，而激光束允许快速瞄准目标。",
+    "weight": "150 g",
+    "to_hit": -1,
+    "color": "dark_gray",
+    "symbol": ":",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "mod_targets": [
+      "smg",
+      "rifle",
+      "pistol",
+      "shotgun",
+      "crossbow",
+      "bow",
+      "launcher"
+    ],
+    "volume": "250 ml",
+    "price": "850 USD",
+    "price_postapoc": "850 cent",
+    "install_time": "30 m",
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ],
+      [
+        "gun",
+        1
+      ]
+    ],
+    "flags": [
+      "DISABLE_SIGHTS"
+    ]
+  },
+  {
+    "type": "GUNMOD",
+    "id": "lmg_handle",
+    "name": {
+      "str": "自制轻机枪提把"
+    },
+    "//": "Unique to my LMGs!",
+    "location": "carry handle",
+    "sight_dispersion": 45,
+    "field_of_view": 900,
+    "aim_speed_modifier": 10,
+    "dispersion_modifier": 60,
+    "handling_modifier": 10,
+    "description": "一种用于改装轻机枪的侧面提把，提高腰射开火的能力。减少瞄准耗时和实际后坐，但增加瞄准散布。并且会阻挡原始瞄具。",
+    "weight": "120 g",
+    "volume": "250 ml",
+    "integral_volume": "0 ml",
+    "to_hit": -1,
+    "color": "dark_gray",
+    "symbol": ":",
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "mod_targets": [
+      "rifle"
+    ],
+    "install_time": "20 m",
+    "min_skills": [
+      [
+        "weapon",
+        2
+      ],
+      [
+        "gun",
+        1
+      ]
+    ],
+    "flags": [
+      "DISABLE_SIGHTS"
+    ]
+  },
+  {
+    "id": "shot_crafted_suppressor",
+    "type": "GUNMOD",
+    "name": {
+      "str": "自制霰弹枪消音器"
+    },
+    "description": "一个由钢管和简易挡板制成的自制消音器。它比手枪或步枪的消音器复杂得多，使用后很快就会损坏。由于自制消音器体型巨大，安装后会遮挡枪械原本瞄具的视线。 ",
+    "weight": "920 g",
+    "volume": "750 ml",
+    "price": "9 USD",
+    "price_postapoc": "350 cent",
+    "install_time": "30 s",
+    "to_hit": 1,
+    "bashing": 3,
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "muzzle",
+    "mod_targets": [
+      "shotgun"
+    ],
+    "consume_chance": 15,
+    "consume_divisor": 80,
+    "damage_modifier": {
+      "damage_type": "bullet",
+      "amount": -5
+    },
+    "dispersion_modifier": 40,
+    "handling_modifier": 2,
+    "loudness_modifier": -20,
+    "flags": [
+      "DISABLE_SIGHTS",
+      "CONSUMABLE"
+    ]
+  }
+]

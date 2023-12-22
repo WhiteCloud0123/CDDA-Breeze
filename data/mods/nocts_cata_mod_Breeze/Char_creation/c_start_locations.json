@@ -1,0 +1,96 @@
+[
+  {
+    "type": "start_location",
+    "id": "surv_camp_l",
+    "name": "幸存者营地",
+    "terrain": [
+      "surv_camp"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "Bio_Weapon_Lab_l",
+    "name": "生物武器实验室",
+    "terrain": [
+      "Bio_Weapon_Lab_b"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "house_fight_s",
+    "name": "军事掩体",
+    "terrain": [
+      "sketchy_cabin_b2"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "lab_surface_brick_blockC0",
+    "name": "科研大楼",
+    "terrain": [
+      "lab_surface_brick_blockC0"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "robofachq_surface_parking",
+    "name": "HUB 01",
+    "terrain": [
+      "robofachq_surface_parking"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "makeshift_command_center_1",
+    "name": "临时指挥中心",
+    "terrain": [
+      "makeshift_command_center_1"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "Bio_Weapon_Lab",
+    "//": "This versions is for the super soldier start, places them in the outdoors section.",
+    "name": "生物武器实验室",
+    "terrain": [
+      "Bio_Weapon_Lab_1"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "haz_sar_1_2",
+    "name": "放射性埋藏地",
+    "terrain": [
+      "haz_sar_1_2"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "sloc_mansion",
+    "name": "别墅",
+    "terrain": [
+      "mansion_+2",
+      "mansion_+1",
+      "mansion_+4",
+      "mansion_+3"
+    ],
+    "flags": [
+      "ALLOW_OUTSIDE"
+    ]
+  }
+]
