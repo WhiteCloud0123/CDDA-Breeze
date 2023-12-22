@@ -1,0 +1,1455 @@
+[
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_STR",
+    "name": {
+      "str": "哨兵体质 I"
+    },
+    "points": 1,
+    "visibility": 1,
+    "bodytemp_modifiers": [
+      100,
+      100
+    ],
+    "description": "靶向诱变治疗改善了你的肌肉发育。你的耐力上限、耐力回复速度和最大负重增加25%，并且你的愈合速度稍微加快。但你的新陈代谢和口渴速度稍微增加，并且少量提升你的体温。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "types": [
+      "METABOLISM",
+      "HEALING"
+    ],
+    "cancels": [
+      "NO_THIRST",
+      "THIRST",
+      "THIRST2",
+      "THIRST3",
+      "GOODCARDIO",
+      "GOODCARDIO2",
+      "BADCARDIO"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_STR_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "//": "Max stamina intrinsically affects stamina regen to the same extent.",
+    "cardio_multiplier": 1.25,
+    "weight_capacity_modifier": 1.25,
+    "healing_awake": 0.1,
+    "healing_resting": 0.25,
+    "vitamin_rates": [
+      [
+        "blood",
+        -1
+      ],
+      [
+        "redcells",
+        -1
+      ]
+    ],
+    "mending_modifier": 1,
+    "metabolism_modifier": 0.25,
+    "thirst_modifier": 0.25
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_STR_2",
+    "name": {
+      "str": "哨兵体质 II"
+    },
+    "points": 2,
+    "visibility": 1,
+    "bodytemp_modifiers": [
+      200,
+      200
+    ],
+    "description": "靶向诱变治疗改善了你的肌肉发育。你的耐力上限、耐力回复速度和最大负重增加50%，并且你的愈合速度加快。但你的新陈代谢和口渴速度增加，并且提升你的体温。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "types": [
+      "METABOLISM",
+      "HEALING"
+    ],
+    "cancels": [
+      "NO_THIRST",
+      "THIRST",
+      "THIRST2",
+      "THIRST3",
+      "GOODCARDIO",
+      "GOODCARDIO2",
+      "BADCARDIO"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_STR_3"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "cardio_multiplier": 1.5,
+    "weight_capacity_modifier": 1.5,
+    "healing_awake": 0.2,
+    "healing_resting": 0.5,
+    "mending_modifier": 2,
+    "vitamin_rates": [
+      [
+        "blood",
+        -2
+      ],
+      [
+        "redcells",
+        -2
+      ]
+    ],
+    "metabolism_modifier": 0.5,
+    "thirst_modifier": 0.5,
+    "flags": [
+      "C_SENTINEL_MARKER_1"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_STR_3",
+    "name": {
+      "str": "哨兵体质 III"
+    },
+    "points": 4,
+    "visibility": 1,
+    "bodytemp_modifiers": [
+      400,
+      400
+    ],
+    "description": "靶向诱变治疗改善了你的肌肉发育。你的耐力上限、耐力回复速度和最大负重是原来的两倍，并且你的愈合速度极快。但你的新陈代谢和口渴速度极大增加，并且大幅提升你的体温。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "types": [
+      "METABOLISM",
+      "HEALING"
+    ],
+    "cancels": [
+      "NO_THIRST",
+      "THIRST",
+      "THIRST2",
+      "THIRST3",
+      "GOODCARDIO",
+      "GOODCARDIO2",
+      "BADCARDIO"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "cardio_multiplier": 2,
+    "weight_capacity_modifier": 2,
+    "healing_awake": 0.4,
+    "healing_resting": 1,
+    "mending_modifier": 4,
+    "vitamin_rates": [
+      [
+        "blood",
+        -4
+      ],
+      [
+        "redcells",
+        -4
+      ]
+    ],
+    "metabolism_modifier": 1,
+    "thirst_modifier": 1
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_STR",
+    "name": {
+      "str": "哨兵力量 I"
+    },
+    "points": 1,
+    "description": "相对于你天生的力量而言，你的身体变化略微地增强了你的力量。力量+2。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "STR_UP",
+      "STR_UP_2",
+      "STR_UP_3",
+      "STR_UP_4",
+      "STR_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR",
+      "SENTINEL_PERK_STR_2",
+      "SENTINEL_PERK_STR_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_STR_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "str_mod": 2
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_1"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_STR_2",
+    "name": {
+      "str": "哨兵力量 II"
+    },
+    "points": 2,
+    "description": "相对于你天生的力量而言，你的身体变化较小地增强了你的力量。力量+4。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "STR_UP",
+      "STR_UP_2",
+      "STR_UP_3",
+      "STR_UP_4",
+      "STR_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR",
+      "SENTINEL_PERK_STR_2",
+      "SENTINEL_PERK_STR_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_STR"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_STR_3"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "str_mod": 4
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_1"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_STR_3",
+    "name": {
+      "str": "哨兵力量 III"
+    },
+    "points": 3,
+    "description": "相对于你天生的力量而言，你的身体变化增强了你的力量。力量+6。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "STR_UP",
+      "STR_UP_2",
+      "STR_UP_3",
+      "STR_UP_4",
+      "STR_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR_2",
+      "SENTINEL_PERK_STR_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_STR_2"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_STR_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "str_mod": 6
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_STR_4",
+    "name": {
+      "str": "哨兵力量 IV"
+    },
+    "points": 4,
+    "description": "相对于你天生的力量而言，你的身体变化较大地增强了你的力量。力量+8。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "STR_UP",
+      "STR_UP_2",
+      "STR_UP_3",
+      "STR_UP_4",
+      "STR_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR_2",
+      "SENTINEL_PERK_STR_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_STR_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_STR_5"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "str_mod": 8
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_STR_5",
+    "name": {
+      "str": "哨兵力量 V"
+    },
+    "points": 5,
+    "description": "相对于你天生的力量而言，你的身体变化极大地增强了你的力量。力量+10。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "STR_UP",
+      "STR_UP_2",
+      "STR_UP_3",
+      "STR_UP_4",
+      "STR_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_STR_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_STR_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "str_mod": 10
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_DEX",
+    "name": {
+      "str": "哨兵反应 I"
+    },
+    "points": 1,
+    "description": "靶向诱变治疗提高了你的反应速度。稍微提升了你的行动速度与闪避能力。但你需要比平时稍微多休息，而且对放电稍微敏感。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "types": [
+      "SLEEP",
+      "RUNNING"
+    ],
+    "cancels": [
+      "BADKNEES"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_DEX_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "movecost_modifier": 0.875,
+    "attackcost_modifier": 0.9375,
+    "dodge_modifier": 1,
+    "fatigue_modifier": 0.25,
+    "armor": [
+      {
+        "parts": "ALL",
+        "electric": -1
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_DEX_2",
+    "name": {
+      "str": "哨兵反应 II"
+    },
+    "points": 2,
+    "description": "靶向诱变治疗提高了你的反应速度。提升了你的行动速度与闪避能力。但你需要比平时更多的休息，而且对放电更敏感。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "types": [
+      "SLEEP",
+      "RUNNING"
+    ],
+    "cancels": [
+      "BADKNEES"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_DEX_3"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "movecost_modifier": 0.75,
+    "attackcost_modifier": 0.875,
+    "dodge_modifier": 2,
+    "fatigue_modifier": 0.5,
+    "armor": [
+      {
+        "parts": "ALL",
+        "electric": -2
+      }
+    ],
+    "flags": [
+      "C_SENTINEL_MARKER_2"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_DEX_3",
+    "name": {
+      "str": "哨兵反应 III"
+    },
+    "points": 4,
+    "description": "靶向诱变治疗提高了你的反应速度。极大提升了你的行动速度与闪避能力。但你需要比平时多得多的休息，而且对放电极为敏感。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "types": [
+      "SLEEP",
+      "RUNNING"
+    ],
+    "cancels": [
+      "BADKNEES"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "movecost_modifier": 0.5,
+    "attackcost_modifier": 0.75,
+    "dodge_modifier": 4,
+    "fatigue_modifier": 1,
+    "armor": [
+      {
+        "parts": "ALL",
+        "electric": -4
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_DEX",
+    "name": {
+      "str": "哨兵敏捷 I"
+    },
+    "points": 1,
+    "description": "相对于你天生的敏捷而言，你的身体变化略微地增强了你的敏捷。敏捷+2。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "DEX_UP",
+      "DEX_UP_2",
+      "DEX_UP_3",
+      "DEX_UP_4",
+      "DEX_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX",
+      "SENTINEL_PERK_DEX_2",
+      "SENTINEL_PERK_DEX_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_DEX_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "dex_mod": 2
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_2"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_DEX_2",
+    "name": {
+      "str": "哨兵敏捷 II"
+    },
+    "points": 2,
+    "description": "相对于你天生的敏捷而言，你的身体变化较小地增强了你的敏捷。敏捷+4。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "DEX_UP",
+      "DEX_UP_2",
+      "DEX_UP_3",
+      "DEX_UP_4",
+      "DEX_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX",
+      "SENTINEL_PERK_DEX_2",
+      "SENTINEL_PERK_DEX_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_DEX"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_DEX_3"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "dex_mod": 4
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_2"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_DEX_3",
+    "name": {
+      "str": "哨兵敏捷 III"
+    },
+    "points": 3,
+    "description": "相对于你天生的敏捷而言，你的身体变化增强了你的敏捷。敏捷+6。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "DEX_UP",
+      "DEX_UP_2",
+      "DEX_UP_3",
+      "DEX_UP_4",
+      "DEX_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX_2",
+      "SENTINEL_PERK_DEX_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_DEX_2"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_DEX_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "dex_mod": 6
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_DEX_4",
+    "name": {
+      "str": "哨兵敏捷 IV"
+    },
+    "points": 4,
+    "description": "相对于你天生的敏捷而言，你的身体变化较大地增强了你的敏捷。敏捷+8。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "DEX_UP",
+      "DEX_UP_2",
+      "DEX_UP_3",
+      "DEX_UP_4",
+      "DEX_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX_2",
+      "SENTINEL_PERK_DEX_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_DEX_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_DEX_5"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "dex_mod": 8
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_DEX_5",
+    "name": {
+      "str": "哨兵敏捷 V"
+    },
+    "points": 5,
+    "description": "相对于你天生的敏捷而言，你的身体变化极大地增强了你的敏捷。敏捷+10。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "DEX_UP",
+      "DEX_UP_2",
+      "DEX_UP_3",
+      "DEX_UP_4",
+      "DEX_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_DEX_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_DEX_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "dex_mod": 10
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_INT",
+    "name": {
+      "str": "哨兵神经 I"
+    },
+    "points": 1,
+    "description": "靶向诱变治疗改变了你的神经系统。你比较容易面对敌人的死亡，战斗和工艺技能提升速度稍微加快。但阅读速度稍微减慢，说服或欺骗别人稍微困难一点。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "LIAR",
+      "FASTREADER",
+      "SLOWREADER",
+      "PSYCHOPATH",
+      "KILLER",
+      "PRED1",
+      "PRED2",
+      "PRED3",
+      "PRED4",
+      "PACIFIST"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_INT_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "social_modifiers": {
+      "lie": -10
+    },
+    "craft_skill_bonus": [
+      [
+        "electronics",
+        1
+      ],
+      [
+        "mechanics",
+        1
+      ],
+      [
+        "firstaid",
+        1
+      ],
+      [
+        "computer",
+        1
+      ],
+      [
+        "fabrication",
+        1
+      ]
+    ],
+    "reading_speed_multiplier": 1.25,
+    "flags": [
+      "PRED2"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_INT_2",
+    "name": {
+      "str": "哨兵神经 II"
+    },
+    "points": 2,
+    "description": "靶向诱变治疗改变了你的神经系统。你容易面对敌人的死亡，战斗和工艺技能提升速度加快。但阅读速度减慢，说服或欺骗别人会变得困难。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "LIAR",
+      "FASTREADER",
+      "SLOWREADER",
+      "PSYCHOPATH",
+      "KILLER",
+      "PRED1",
+      "PRED2",
+      "PRED3",
+      "PRED4",
+      "PACIFIST"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_INT_3"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "social_modifiers": {
+      "lie": -20
+    },
+    "craft_skill_bonus": [
+      [
+        "electronics",
+        2
+      ],
+      [
+        "mechanics",
+        2
+      ],
+      [
+        "firstaid",
+        2
+      ],
+      [
+        "computer",
+        2
+      ],
+      [
+        "fabrication",
+        2
+      ]
+    ],
+    "reading_speed_multiplier": 1.5,
+    "flags": [
+      "PRED3",
+      "C_SENTINEL_MARKER_3"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_INT_3",
+    "name": {
+      "str": "哨兵神经 III"
+    },
+    "points": 4,
+    "description": "靶向诱变治疗改变了你的神经系统。你很容易面对敌人的死亡，战斗和工艺技能提升速度大幅加快。但阅读速度大幅减慢，说服或欺骗别人十分困难。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "LIAR",
+      "FASTREADER",
+      "SLOWREADER",
+      "PSYCHOPATH",
+      "KILLER",
+      "PRED1",
+      "PRED2",
+      "PRED3",
+      "PRED4",
+      "PACIFIST"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "social_modifiers": {
+      "lie": -40
+    },
+    "craft_skill_bonus": [
+      [
+        "electronics",
+        4
+      ],
+      [
+        "mechanics",
+        4
+      ],
+      [
+        "firstaid",
+        4
+      ],
+      [
+        "computer",
+        4
+      ],
+      [
+        "fabrication",
+        4
+      ]
+    ],
+    "reading_speed_multiplier": 2,
+    "flags": [
+      "PRED4"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_INT",
+    "name": {
+      "str": "哨兵智力 I"
+    },
+    "points": 1,
+    "description": "相对于你天生的智力而言，你的身体变化略微地增强了你的智力。智力+2。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "INT_UP",
+      "INT_UP_2",
+      "INT_UP_3",
+      "INT_UP_4",
+      "INT_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT",
+      "SENTINEL_PERK_INT_2",
+      "SENTINEL_PERK_INT_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_INT_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "int_mod": 2
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_3"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_INT_2",
+    "name": {
+      "str": "哨兵智力 II"
+    },
+    "points": 2,
+    "description": "相对于你天生的智力而言，你的身体变化较小地增强了你的智力。智力+4。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "INT_UP",
+      "INT_UP_2",
+      "INT_UP_3",
+      "INT_UP_4",
+      "INT_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT",
+      "SENTINEL_PERK_INT_2",
+      "SENTINEL_PERK_INT_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_INT"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_INT_3"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "int_mod": 4
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_3"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_INT_3",
+    "name": {
+      "str": "哨兵智力 III"
+    },
+    "points": 3,
+    "description": "相对于你天生的智力而言，你的身体变化增强了你的智力。智力+6。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "INT_UP",
+      "INT_UP_2",
+      "INT_UP_3",
+      "INT_UP_4",
+      "INT_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT_2",
+      "SENTINEL_PERK_INT_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_INT_2"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_INT_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "int_mod": 6
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_INT_4",
+    "name": {
+      "str": "哨兵智力 IV"
+    },
+    "points": 4,
+    "description": "相对于你天生的智力而言，你的身体变化较大地增强了你的智力。智力+8。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "INT_UP",
+      "INT_UP_2",
+      "INT_UP_3",
+      "INT_UP_4",
+      "INT_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT_2",
+      "SENTINEL_PERK_INT_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_INT_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_INT_5"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "int_mod": 8
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_INT_5",
+    "name": {
+      "str": "哨兵智力 V"
+    },
+    "points": 5,
+    "description": "相对于你天生的智力而言，你的身体变化极大地增强了你的智力。智力+10。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "INT_UP",
+      "INT_UP_2",
+      "INT_UP_3",
+      "INT_UP_4",
+      "INT_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_INT_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_INT_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "int_mod": 10
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_PER",
+    "name": {
+      "str": "哨兵姿态 I"
+    },
+    "points": 1,
+    "description": "靶向诱变治疗磨练了你的感知意识。你大地图视野半径稍微扩大，听力稍微增强，移动声音稍微降低。但你对潜在威胁的反射性反应会稍微激怒野生动物并且让人不安。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "EAGLEEYED",
+      "UNOBSERVANT",
+      "GOODHEARING",
+      "BADHEARING",
+      "DEAF",
+      "LIGHTSTEP",
+      "CLUMSY"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_PER_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "overmap_sight": 5,
+    "hearing_modifier": 1.25,
+    "noise_modifier": 0.75,
+    "anger_relations": [
+      [
+        "MAMMAL",
+        5
+      ],
+      [
+        "BIRD",
+        5
+      ]
+    ],
+    "social_modifiers": {
+      "persuade": -5
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_PER_2",
+    "name": {
+      "str": "哨兵姿态 II"
+    },
+    "points": 2,
+    "description": "靶向诱变治疗磨练了你的感知意识。你大地图视野半径扩大，听力增强，移动声音降低。但你对潜在威胁的反射性反应会激怒野生动物并且让人不安。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "EAGLEEYED",
+      "UNOBSERVANT",
+      "GOODHEARING",
+      "BADHEARING",
+      "DEAF",
+      "LIGHTSTEP",
+      "CLUMSY"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER"
+    ],
+    "changes_to": [
+      "SENTINEL_PERK_PER_3"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "overmap_sight": 10,
+    "hearing_modifier": 1.5,
+    "noise_modifier": 0.5,
+    "anger_relations": [
+      [
+        "MAMMAL",
+        10
+      ],
+      [
+        "BIRD",
+        10
+      ]
+    ],
+    "social_modifiers": {
+      "persuade": -10
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_4"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PERK_PER_3",
+    "name": {
+      "str": "哨兵姿态 III"
+    },
+    "points": 4,
+    "description": "靶向诱变治疗磨练了你的感知意识。你大地图视野半径大幅扩大，听力大幅增强，移动声音大幅降低。但你对潜在威胁的反射性反应会大幅激怒野生动物并且让人不安。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "EAGLEEYED",
+      "UNOBSERVANT",
+      "GOODHEARING",
+      "BADHEARING",
+      "DEAF",
+      "LIGHTSTEP",
+      "CLUMSY"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "overmap_sight": 15,
+    "hearing_modifier": 2,
+    "noise_modifier": 0,
+    "anger_relations": [
+      [
+        "MAMMAL",
+        20
+      ],
+      [
+        "BIRD",
+        20
+      ]
+    ],
+    "social_modifiers": {
+      "persuade": -20
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_PER",
+    "name": {
+      "str": "哨兵感知 I"
+    },
+    "points": 1,
+    "description": "相对于你天生的感知而言，你的身体变化略微地增强了你的感知。感知+2。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "PER_UP",
+      "PER_UP_2",
+      "PER_UP_3",
+      "PER_UP_4",
+      "PER_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER",
+      "SENTINEL_PERK_PER_2",
+      "SENTINEL_PERK_PER_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_PER_2"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "per_mod": 2
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_4"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_PER_2",
+    "name": {
+      "str": "哨兵感知 II"
+    },
+    "points": 2,
+    "description": "相对于你天生的感知而言，你的身体变化较小地增强了你的感知。感知+4。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "PER_UP",
+      "PER_UP_2",
+      "PER_UP_3",
+      "PER_UP_4",
+      "PER_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER",
+      "SENTINEL_PERK_PER_2",
+      "SENTINEL_PERK_PER_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_PER"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_PER_3"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "per_mod": 4
+    },
+    "flags": [
+      "C_SENTINEL_MARKER_4"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_PER_3",
+    "name": {
+      "str": "哨兵感知 III"
+    },
+    "points": 3,
+    "description": "相对于你天生的感知而言，你的身体变化增强了你的感知。感知+6。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "PER_UP",
+      "PER_UP_2",
+      "PER_UP_3",
+      "PER_UP_4",
+      "PER_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER_2",
+      "SENTINEL_PERK_PER_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_PER_2"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_PER_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "per_mod": 6
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_PER_4",
+    "name": {
+      "str": "哨兵感知 IV"
+    },
+    "points": 4,
+    "description": "相对于你天生的感知而言，你的身体变化较大地增强了你的感知。感知+8。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "PER_UP",
+      "PER_UP_2",
+      "PER_UP_3",
+      "PER_UP_4",
+      "PER_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER_2",
+      "SENTINEL_PERK_PER_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_PER_3"
+    ],
+    "changes_to": [
+      "SENTINEL_STAT_PER_5"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "per_mod": 8
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_STAT_PER_5",
+    "name": {
+      "str": "哨兵感知 V"
+    },
+    "points": 5,
+    "description": "相对于你天生的感知而言，你的身体变化极大地增强了你的感知。感知+10。",
+    "valid": false,
+    "purifiable": false,
+    "cancels": [
+      "PER_UP",
+      "PER_UP_2",
+      "PER_UP_3",
+      "PER_UP_4",
+      "PER_ALPHA"
+    ],
+    "prereqs": [
+      "SENTINEL_PERK_PER_3"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_PER_4"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "passive_mods": {
+      "per_mod": 10
+    }
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PEAK_PHYS",
+    "name": {
+      "str": "哨兵状态：肉体"
+    },
+    "points": 8,
+    "visibility": 2,
+    "description": "你的肉体基因改造已经达到了顶峰，超越人类的极限。你的身体对物理伤害有轻微的抵抗力并且你的体形更有威慑力，而且你也对大多数毒素以及镇静剂和止痛药产生了免疫力。你的新陈代谢会更快地处理放射性污染物，并且能很快从疼痛中恢复。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "THICKSKIN",
+      "THINSKIN"
+    ],
+    "prereqs": [
+      "SENTINEL_STAT_STR_5"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_DEX_5"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "armor": [
+      {
+        "parts": [
+          "torso",
+          "head",
+          "arm_l",
+          "arm_r",
+          "hand_l",
+          "hand_r",
+          "leg_l",
+          "leg_r",
+          "foot_l",
+          "foot_r",
+          "mouth",
+          "eyes"
+        ],
+        "cut": 3,
+        "bash": 3
+      }
+    ],
+    "social_modifiers": {
+      "intimidate": 30
+    },
+    "enchantments": [
+      "C_MEP_SENTINEL_PHYS"
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "SENTINEL_PEAK_MENT",
+    "name": {
+      "str": "哨兵状态：心智"
+    },
+    "points": 8,
+    "description": "你的心智基因改造已经达到了顶峰，超越人类的极限。你不介意下雨并且睡眠需求减少。你也对各种精神控制和影响产生了免疫力。",
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+    "cancels": [
+      "OUTDOORSMAN"
+    ],
+    "prereqs": [
+      "SENTINEL_STAT_PER_5"
+    ],
+    "prereqs2": [
+      "SENTINEL_STAT_INT_5"
+    ],
+    "category": [
+      "SUPER_SOLDIER"
+    ],
+    "threshreq": [
+      "THRESH_SUPER_SOLDIER"
+    ],
+    "wet_protection": [
+      {
+        "part": "head",
+        "neutral": 9
+      },
+      {
+        "part": "leg_l",
+        "neutral": 12
+      },
+      {
+        "part": "leg_r",
+        "neutral": 12
+      },
+      {
+        "part": "foot_l",
+        "neutral": 3
+      },
+      {
+        "part": "foot_r",
+        "neutral": 3
+      },
+      {
+        "part": "arm_l",
+        "neutral": 12
+      },
+      {
+        "part": "arm_r",
+        "neutral": 12
+      },
+      {
+        "part": "hand_l",
+        "neutral": 18
+      },
+      {
+        "part": "hand_r",
+        "neutral": 18
+      },
+      {
+        "part": "torso",
+        "neutral": 15
+      }
+    ],
+    "fatigue_regen_modifier": 0.5,
+    "enchantments": [
+      "C_MEP_SENTINEL_MENT"
+    ]
+  }
+]

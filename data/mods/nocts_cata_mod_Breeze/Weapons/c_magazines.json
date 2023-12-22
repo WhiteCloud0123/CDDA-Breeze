@@ -1,0 +1,582 @@
+[
+  {
+    "id": "surv_223_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 .223 弹匣"
+    },
+    "//": "Allows more storage options.",
+    "description": "一个自制弹匣，可用于幸存者 .223 突击步枪。虽然制作精良，但并不符合STANAG规格。",
+    "weight": "400 g",
+    "volume": "500 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "223"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "223": 20
+        }
+      }
+    ],
+    "capacity": 20,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_762_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 7.62x39 弹匣"
+    },
+    "description": "一个自制弹匣，可用于幸存者 7.62x39 突击步枪。简化的AKM规格弹匣，它的自制设计使它与工厂的AK式步枪不兼容。",
+    "weight": "400 g",
+    "volume": "500 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762": 20
+        }
+      }
+    ],
+    "capacity": 20,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_308_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 .308 弹匣"
+    },
+    "description": "为幸存者. 308步枪设计的弹匣。基于古老的M14弹匣的设计，它的临时设计使其与工厂步枪不兼容。",
+    "weight": "400 g",
+    "volume": "500 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "308"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "308": 20
+        }
+      }
+    ],
+    "capacity": 20,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_762R_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 7.62x54 弹匣"
+    },
+    "description": "一个自制弹匣，可用于幸存者 7.62x54 战斗步枪。根据SVT-40使用的弹匣设计，虽然制作精良，但它的自制设计使它与工厂生产的步枪不兼容。",
+    "weight": "400 g",
+    "volume": "500 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762R"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762R": 20
+        }
+      }
+    ],
+    "capacity": 20,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_12_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 12 号口径霰弹弹匣"
+    },
+    "//": "Requires special pouch.",
+    "description": "一个自制弹匣，可用于幸存者全自动霰弹枪。一种为AK型Saiga-12的精心设计的简化方案，但它仍然不符合工厂规格。",
+    "weight": "450 g",
+    "volume": "750 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 15
+        }
+      }
+    ],
+    "capacity": 15,
+    "reload_time": 100,
+    "flags": [
+      "MAG_BULKY"
+    ]
+  },
+  {
+    "id": "surv_9mm_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 9mm 冲锋枪弹匣"
+    },
+    "description": "一个自制弹匣，可用于幸存者 9mm 冲锋枪。使用与STEN冲锋枪自制弹匣类似的简化方法，尽管缺乏兼容性。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 30
+        }
+      }
+    ],
+    "capacity": 30,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_45_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 .45 冲锋枪弹匣"
+    },
+    "description": "为幸存者. 45 冲锋枪制作的弹匣。设计上大致仿照MAC-10弹匣，制作精良，但不是为任何已知的工厂制造的枪支型号设计的。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "45"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "45": 30
+        }
+      }
+    ],
+    "capacity": 30,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_22_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者.22 冲锋枪弹匣"
+    },
+    "description": "一个自制弹匣，可用于幸存者 .22 冲锋枪。虽然制作精良，但无法装填入工厂生产的枪械中。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "22"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "22": 30
+        }
+      }
+    ],
+    "capacity": 30,
+    "reload_time": 100,
+    "flags": [
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "surv_belt_223",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 .223 弹链"
+    },
+    "description": "一条自制弹链，可用于幸存者 .223 轻机枪，使用使用帆布和钢丝来链接弹药，不像工厂生产的弹药带那样可靠，而且装填起来也更繁琐。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "223"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "223": 80
+        }
+      }
+    ],
+    "capacity": 80,
+    "reload_time": 200,
+    "armor_data": {
+      "armor": [
+        {
+          "encumbrance": 10,
+          "coverage": 5,
+          "covers": [
+            "torso"
+          ],
+          "material": [
+            "steel"
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE"
+    ]
+  },
+  {
+    "id": "surv_belt_762",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 7.62x39 弹链"
+    },
+    "description": "一条自制弹链，可用于幸存者 7.62x39 轻机枪，使用使用帆布和钢丝来链接弹药，不像工厂生产的弹药带那样可靠，而且装填起来也更繁琐。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "762": 80
+        }
+      }
+    ],
+    "capacity": 80,
+    "reload_time": 200,
+    "armor_data": {
+      "armor": [
+        {
+          "encumbrance": 10,
+          "coverage": 5,
+          "covers": [
+            "torso"
+          ],
+          "material": [
+            "steel"
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE"
+    ]
+  },
+  {
+    "id": "surv_belt_308",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 .308 弹链"
+    },
+    "description": "一条自制弹链，可用于幸存者 .308 轻机枪，使用使用帆布和钢丝来链接弹药，不像工厂生产的弹药带那样可靠，而且装填起来也更繁琐。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "308"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "308": 80
+        }
+      }
+    ],
+    "capacity": 80,
+    "reload_time": 200,
+    "armor_data": {
+      "armor": [
+        {
+          "encumbrance": 10,
+          "coverage": 5,
+          "covers": [
+            "torso"
+          ],
+          "material": [
+            "steel"
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE"
+    ]
+  },
+  {
+    "id": "surv_belt_762R",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 7.62x54 弹链"
+    },
+    "description": "一条自制弹链，可用于幸存者 7.62x54 通用机枪，使用使用帆布和钢丝来链接弹药，不像工厂生产的弹药带那样可靠，而且装填起来也更繁琐。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "looks_like": "surv_belt_308",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762R"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "ammo_restriction": {
+          "762R": 80
+        }
+      }
+    ],
+    "capacity": 80,
+    "reload_time": 200,
+    "armor_data": {
+      "armor": [
+        {
+          "encumbrance": 10,
+          "coverage": 5,
+          "covers": [
+            "torso"
+          ],
+          "material": [
+            "steel"
+          ]
+        }
+      ]
+    },
+    "flags": [
+      "BELTED",
+      "OVERSIZE"
+    ]
+  },
+  {
+    "id": "surv_50_mag",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "幸存者 .50 弹匣"
+    },
+    "description": "一个自制弹匣，可用于幸存者 .50 自动反器材步枪。有点像巴雷特M107A1的弹匣，但体积更大，显然不是按照工厂规格设计的。",
+    "weight": "450 g",
+    "volume": "750 ml",
+    "price": "80 USD",
+    "price_postapoc": "4 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "50"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "50": 15
+        }
+      }
+    ],
+    "capacity": 15,
+    "reload_time": 100,
+    "flags": [
+      "MAG_BULKY"
+    ]
+  },
+  {
+    "id": "rifle_crank_battery_cell",
+    "type": "MAGAZINE",
+    "category": "spare_parts",
+    "name": {
+      "str": "曲柄步枪电容器组"
+    },
+    "description": "一个由家用电池和一系列电容器组成的自制动力电池，旨在将普通电压转化为足够高的电压，从而更有效地为幸存者曲柄步枪提供动力。体积更大，不太可靠，奇怪的是，这东西没有触电的危险。",
+    "weight": "500 g",
+    "volume": "600 ml",
+    "price": "50 USD",
+    "price_postapoc": "3 USD",
+    "material": [
+      "iron",
+      "plastic"
+    ],
+    "symbol": "=",
+    "color": "yellow",
+    "ammo_type": [
+      "battery"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "battery": 10
+        }
+      }
+    ],
+    "capacity": 10,
+    "looks_like": "battery",
+    "flags": [
+      "NO_SALVAGE",
+      "NO_UNLOAD",
+      "RECHARGE",
+      "MAG_COMPACT"
+    ]
+  },
+  {
+    "id": "light_atomic_battery_cell_rechargeable",
+    "copy-from": "light_atomic_battery_cell",
+    "type": "MAGAZINE",
+    "category": "spare_parts",
+    "name": {
+      "str": "可再充钚燃料电池（轻型）"
+    },
+    "description": "这种电池使用一根钚-244棒来稳定多种奇特的复合材料。Omnitech为军事合同改良设计的可再充钚燃料电池，但由于它是为军事目的而制造的，因此与之兼容的很少。",
+    "extend": {
+      "flags": [
+        "RECHARGE",
+        "MAG_COMPACT"
+      ]
+    }
+  },
+  {
+    "id": "medium_atomic_battery_cell_rechargeable",
+    "copy-from": "medium_atomic_battery_cell",
+    "type": "MAGAZINE",
+    "category": "spare_parts",
+    "name": {
+      "str": "可再充钚燃料电池（中型）"
+    },
+    "description": "这种电池使用一根钚-244棒来稳定多种奇特的复合材料。Omnitech为军事合同改良设计的可再充钚燃料电池，但由于它是为军事目的而制造的，因此与之兼容的很少。",
+    "extend": {
+      "flags": [
+        "RECHARGE",
+        "MAG_COMPACT"
+      ]
+    }
+  },
+  {
+    "id": "heavy_atomic_battery_cell_rechargeable",
+    "copy-from": "heavy_atomic_battery_cell",
+    "type": "MAGAZINE",
+    "category": "spare_parts",
+    "name": {
+      "str": "可再充钚燃料电池（重型）"
+    },
+    "description": "这种电池使用一根钚-244棒来稳定多种奇特的复合材料。Omnitech为军事合同改良设计的可再充钚燃料电池，但由于它是为军事目的而制造的，因此与之兼容的很少。",
+    "extend": {
+      "flags": [
+        "RECHARGE",
+        "MAG_BULKY"
+      ]
+    }
+  }
+]

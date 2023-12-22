@@ -1,0 +1,544 @@
+[
+  {
+    "type": "martial_art",
+    "id": "style_surv_com",
+    "name": {
+      "str": "幸存者格斗术"
+    },
+    "description": "你学会了如何应对灾难中的危机，你很擅长使用自制武器来进行战斗，偶尔还使用你的拳头。虽然幸存者格斗术并不华丽，但它能让你活下去。",
+    "initiate": [
+      "保持冷静，为即将到来的战斗做好准备。",
+      "%s 为即将到来的战斗做好准备。"
+    ],
+    "learn_difficulty": 7,
+    "primary_skill": "melee",
+    "arm_block": 2,
+    "leg_block": 8,
+    "arm_block_with_bio_armor_arms": true,
+    "leg_block_with_bio_armor_legs": true,
+    "allow_all_weapons": true,
+    "static_buffs": [
+      {
+        "id": "buff_surv_com_static",
+        "name": "流体运动",
+        "description": "你学会了有目性的高效移动。移动速度按智力的 25% 提升。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 7
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "flat_bonuses": [
+          {
+            "stat": "speed",
+            "scaling-stat": "int",
+            "scale": 0.25
+          }
+        ]
+      }
+    ],
+    "onmove_buffs": [
+      {
+        "id": "buff_surv_com_onmove",
+        "name": "难以捉摸",
+        "description": "快速流畅的动作让你更难被抓住，更能从容地应对困难。\n\n闪避次数 +1, 闪避技能按智力的 25% 提升，钝击格挡按智力的 25%减低，免疫击倒。\n持续 3 回合，可叠加 2 次。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 4
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "throw_immune": true,
+        "buff_duration": 3,
+        "max_stacks": 3,
+        "bonus_dodges": 1,
+        "flat_bonuses": [
+          {
+            "stat": "dodge",
+            "scaling-stat": "int",
+            "scale": 0.25
+          },
+          {
+            "stat": "armor",
+            "type": "bash",
+            "scaling-stat": "str",
+            "scale": 0.25
+          }
+        ]
+      }
+    ],
+    "onhit_buffs": [
+      {
+        "id": "buff_surv_com_onhit",
+        "name": "主动防御",
+        "description": "最好的防守是好的进攻。\n\n格挡次数+1，格挡效率按智力的 100% 提升。\n持续 2 回合，可叠加 2 次。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 5
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 2,
+        "max_stacks": 3,
+        "bonus_blocks": 1,
+        "flat_bonuses": [
+          {
+            "stat": "block",
+            "scaling-stat": "int",
+            "scale": 1
+          }
+        ]
+      }
+    ],
+    "onkill_buffs": [
+      {
+        "id": "buff_surv_com_onkill",
+        "name": "势不可挡",
+        "description": "这场战斗令怪物震撼和敬畏，你可以趁机溜走。\n\n格挡次数+2，闪避次数+2，闪避技能按智力的 50% 提升，移动速度按智力的 200% 提升，移动声音减半。\n持续 6 回合。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 6
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "stealthy": true,
+        "buff_duration": 6,
+        "bonus_dodges": 3,
+        "bonus_blocks": 2,
+        "flat_bonuses": [
+          {
+            "stat": "dodge",
+            "scaling-stat": "int",
+            "scale": 0.5
+          },
+          {
+            "stat": "speed",
+            "scaling-stat": "int",
+            "scale": 2
+          }
+        ]
+      }
+    ],
+    "techniques": [
+      "tec_surv_com_break",
+      "tec_surv_com_counter_dodge",
+      "tec_surv_com_counter_block",
+      "tec_surv_com_disarm",
+      "tec_surv_com_feint"
+    ]
+  },
+  {
+    "type": "martial_art",
+    "id": "style_mut_com",
+    "name": {
+      "str": "后人类格斗术"
+    },
+    "description": "你已经学会了一些放弃人性所带来战斗优势的技巧。后人类格斗术注重于使用强大的重型武器或变异肢体，超自然般强大的后人类可以利用他们的能力发挥巨大的作用。",
+    "initiate": [
+      "你放松你的步法，让你的直觉来控制。",
+      "%s 摆出了一个放松的动物姿态。"
+    ],
+    "learn_difficulty": 7,
+    "primary_skill": "melee",
+    "static_buffs": [
+      {
+        "id": "buff_mut_com_static",
+        "name": "稳定站姿",
+        "description": "你的站姿可以更好地利用你的力量来弥补步法的不足。\n命中按力量的 15% 提升，移动耗时-10%。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 6
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "flat_bonuses": [
+          {
+            "stat": "hit",
+            "scaling-stat": "str",
+            "scale": 0.15
+          }
+        ],
+        "mult_bonuses": [
+          {
+            "stat": "movecost",
+            "scale": 0.9
+          }
+        ]
+      }
+    ],
+    "onpause_buffs": [
+      {
+        "id": "buff_mut_com_onpause",
+        "name": "Stored Potential",
+        "description": "Conserving your energy and focusing your mind will permit explosive bursts of action.\n\n-10% move cost.\nLasts 3 turns.",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 5
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 3,
+        "mult_bonuses": [
+          {
+            "stat": "movecost",
+            "scale": 0.9
+          }
+        ]
+      }
+    ],
+    "onattack_buffs": [
+      {
+        "id": "buff_mut_com_onattack",
+        "name": "紧绷姿态",
+        "description": "要想生存，你只需全力进攻。\n\n-10% 移动耗时。\n持续 3 回合，可叠加 2 次。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 5
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 3,
+        "max_stacks": 2,
+        "mult_bonuses": [
+          {
+            "stat": "movecost",
+            "scale": 0.9
+          }
+        ]
+      }
+    ],
+    "onmove_buffs": [
+      {
+        "id": "buff_mut_com_onmove",
+        "name": "猛力冲撞",
+        "description": "他们会感受到你强大的动力。\n\n移动速度按力量的 45% 提升，钝击伤害按力量的 15% 提升。启用“击槌”战技。\n持续 3 回合，可叠加 3 次。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 4
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 3,
+        "max_stacks": 3,
+        "flat_bonuses": [
+          {
+            "stat": "speed",
+            "scaling-stat": "str",
+            "scale": 0.45
+          },
+          {
+            "stat": "damage",
+            "type": "bash",
+            "scaling-stat": "str",
+            "scale": 0.15
+          }
+        ]
+      }
+    ],
+    "onhit_buffs": [
+      {
+        "id": "buff_mut_com_onhit",
+        "name": "有效打击",
+        "description": "一次有力的打击使后续进攻变得更加容易。\n\n命中+2，钝击护甲穿透增加30%。\n持续 2 回合，可叠加 2 次。",
+        "skill_requirements": [
+          {
+            "name": "melee",
+            "level": 7
+          }
+        ],
+        "unarmed_allowed": true,
+        "melee_allowed": true,
+        "buff_duration": 2,
+        "max_stacks": 2,
+        "flat_bonuses": [
+          {
+            "stat": "hit",
+            "scale": 2
+          },
+          {
+            "stat": "arpen",
+            "type": "bash",
+            "scaling-stat": "str",
+            "scale": 0.3
+          }
+        ]
+      }
+    ],
+    "techniques": [
+      "tec_mut_com_battering_ram",
+      "tec_mut_com_overrun",
+      "tec_mut_com_stampeding_strike",
+      "tec_mut_com_feint"
+    ],
+    "weapons": [
+      "2h_flail_steel",
+      "2h_flail_wood",
+      "ax",
+      "battleaxe",
+      "battleaxe_inferior",
+      "bronze_brush_axe",
+      "bronze_pickaxe",
+      "bronze_axe",
+      "brush_axe",
+      "ch_kriegsmesser",
+      "ch_longsword",
+      "ch_zweihander",
+      "chainsaw_off",
+      "chainsaw_on",
+      "club_wooden_large",
+      "combatsaw_off",
+      "combatsaw_on",
+      "copper_ax",
+      "e_combatsaw_off",
+      "e_combatsaw_on",
+      "elec_chainsaw_off",
+      "elec_chainsaw_on",
+      "fire_ax",
+      "glaive",
+      "greatsword_makeshift",
+      "halberd",
+      "halberd_fake",
+      "hammer_sledge",
+      "hammer_sledge_engineer",
+      "hammer_sledge_heavy",
+      "hammer_sledge_short",
+      "hc_kriegsmesser",
+      "hc_longsword",
+      "hc_zweihander",
+      "homewrecker",
+      "ji",
+      "lajatang",
+      "lc_kriegsmesser",
+      "lc_longsword",
+      "lc_zweihander",
+      "lobotomizer",
+      "longsword",
+      "longsword_fake",
+      "longsword_inferior",
+      "lucern_hammer",
+      "lucern_hammerfake",
+      "kriegsmesser",
+      "mace_pipe_large",
+      "makeshift_halberd",
+      "makeshift_scythe_war",
+      "masonrysaw_off",
+      "masonrysaw_on",
+      "mc_kriegsmesser",
+      "mc_longsword",
+      "mc_zweihander",
+      "molded_axe",
+      "naginata",
+      "naginata_fake",
+      "naginata_inferior",
+      "nodachi",
+      "nodachi_fake",
+      "nodachi_inferior",
+      "pickaxe",
+      "pike",
+      "pike_copper",
+      "pike_fake",
+      "pike_inferior",
+      "pike_wood",
+      "poleaxe",
+      "primitive_axe",
+      "qt_kriegsmesser",
+      "qt_longsword",
+      "qt_zweihander",
+      "scythe",
+      "scythe_war",
+      "spear_survivor",
+      "zweihander",
+      "zweihander_fake",
+      "zweihander_inferior"
+    ]
+  },
+  {
+    "id": "style_biojutsu",
+    "copy-from": "style_biojutsu",
+    "type": "martial_art",
+    "name": {
+      "str": "生化格斗术"
+    },
+    "extend": {
+      "weapons": [
+        "unbio_bladed_weapon",
+        "unbio_sword_weapon",
+        "unbio_claws_weapon",
+        "bio_sword_weapon"
+      ]
+    }
+  },
+  {
+    "id": "style_aikido",
+    "copy-from": "style_aikido",
+    "type": "martial_art",
+    "name": {
+      "str": "合气道"
+    },
+    "extend": {
+      "weapons": [
+        "unbio_claws_weapon"
+      ]
+    }
+  },
+  {
+    "id": "style_judo",
+    "copy-from": "style_judo",
+    "type": "martial_art",
+    "name": {
+      "str": "柔道"
+    },
+    "extend": {
+      "weapons": [
+        "unbio_claws_weapon"
+      ]
+    }
+  },
+  {
+    "id": "style_silat",
+    "copy-from": "style_silat",
+    "type": "martial_art",
+    "name": {
+      "str": "班卡苏拉刀术"
+    },
+    "extend": {
+      "weapons": [
+        "elc_bld",
+        "elc_blds",
+        "molded_knife",
+        "unbio_bladed_weapon",
+        "flesh_knife"
+      ]
+    }
+  },
+  {
+    "id": "style_eskrima",
+    "copy-from": "style_eskrima",
+    "type": "martial_art",
+    "name": {
+      "str": "菲律宾剑棍术"
+    },
+    "extend": {
+      "weapons": [
+        "elc_bld",
+        "elc_blds",
+        "molded_knife",
+        "unbio_bladed_weapon",
+        "flesh_knife"
+      ]
+    }
+  },
+  {
+    "id": "style_krav_maga",
+    "copy-from": "style_krav_maga",
+    "type": "martial_art",
+    "name": {
+      "str": "马伽术"
+    },
+    "extend": {
+      "weapons": [
+        "elc_bld",
+        "elc_blds",
+        "molded_knife",
+        "unbio_bladed_weapon",
+        "flesh_knife",
+        "neo_laser_pistol",
+        "neo_laser_pistol_ups",
+        "akro_laser_smg",
+        "akro_laser_smg_ups",
+        "arc_laser_rifle",
+        "arc_laser_rifle_ups"
+      ]
+    }
+  },
+  {
+    "id": "style_fencing",
+    "copy-from": "style_fencing",
+    "type": "martial_art",
+    "name": {
+      "str": "击剑"
+    },
+    "extend": {
+      "weapons": [
+        "unbio_sword_weapon",
+        "flesh_blade"
+      ]
+    }
+  },
+  {
+    "id": "style_barbaran",
+    "copy-from": "style_barbaran",
+    "type": "martial_art",
+    "name": {
+      "str": "巴尔瓦兰剑术"
+    },
+    "extend": {
+      "weapons": [
+        "greatsword_makeshift"
+      ]
+    }
+  },
+  {
+    "id": "style_swordsmanship",
+    "copy-from": "style_swordsmanship",
+    "type": "martial_art",
+    "name": {
+      "str": "中世纪剑术"
+    },
+    "extend": {
+      "weapons": [
+        "unbio_sword_weapon",
+        "flesh_blade",
+        "greatsword_makeshift"
+      ]
+    }
+  },
+  {
+    "id": "style_ninjutsu",
+    "copy-from": "style_ninjutsu",
+    "type": "martial_art",
+    "name": {
+      "str": "忍术"
+    },
+    "extend": {
+      "weapons": [
+        "elc_bld",
+        "elc_blds",
+        "molded_knife",
+        "unbio_bladed_weapon",
+        "unbio_sword_weapon",
+        "flesh_knife",
+        "flesh_blade"
+      ]
+    }
+  },
+  {
+    "id": "style_medievalpole",
+    "copy-from": "style_medievalpole",
+    "type": "martial_art",
+    "name": {
+      "str": "战斗之花"
+    },
+    "extend": {
+      "weapons": [
+        "molded_axe"
+      ]
+    }
+  }
+]

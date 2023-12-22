@@ -1,0 +1,248 @@
+[
+  {
+    "id": [
+      "TALK_FRIEND_CONVERSATION"
+    ],
+    "type": "talk_topic",
+    "responses": [
+      {
+        "text": "<BGSS_intro_question>",
+        "topic": "BGSS_BHUNTER_STORY1",
+        "condition": {
+          "npc_has_trait": "BGSS_BHunter"
+        },
+        "switch": true
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORY1",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_effect": "evy_ousted",
+      "yes": "他们让我做好了准备去跟踪书面记录，检查一些实验室项目。计算机工程学位，在这之前还做过一段时间的军官候选人。",
+      "no": "我那时正努力攻读大学学位。计算机工程专业，这帮我找到了现在的位置。当这一切开始的时候我在家里，实验室的地点是我最后的作品。"
+    },
+    "responses": [
+      {
+        "text": "你怎么知道这么多关于实验室的事？",
+        "topic": "BGSS_BHUNTER_STORY2"
+      },
+      {
+        "text": "发生什么了？",
+        "topic": "BGSS_BHUNTER_STORY3"
+      },
+      {
+        "text": "我知道你是我们中的一员，猎人。我在等一个军官，而不是大学生。",
+        "topic": "BGSS_BHUNTER_STORYOUST",
+        "condition": {
+          "and": [
+            {
+              "u_has_any_trait": [
+                "SUPER_SOLDIER_MARKER"
+              ]
+            },
+            {
+              "not": {
+                "u_has_effect": "evy_ousted"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "u_add_effect": "evy_ousted",
+          "duration": "PERMANENT"
+        }
+      },
+      {
+        "text": "你似乎知道的比你透露的要多得多。",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_intelligence": 9
+                },
+                {
+                  "u_has_perception": 9
+                }
+              ]
+            },
+            {
+              "not": {
+                "or": [
+                  {
+                    "u_has_effect": "evy_ousted"
+                  },
+                  {
+                    "u_has_effect": "evy_asked_info_recently"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 2
+        },
+        "success": {
+          "topic": "BGSS_BHUNTER_STORYADMIT",
+          "opinion": {
+            "trust": 1
+          },
+          "effect": {
+            "u_add_effect": "evy_ousted",
+            "duration": "PERMANENT"
+          }
+        },
+        "failure": {
+          "topic": "BGSS_BHUNTER_STORYDENY",
+          "effect": {
+            "u_add_effect": "evy_asked_info_recently",
+            "duration": 1800
+          }
+        }
+      },
+      {
+        "text": "你似乎知道的比你透露的要多得多。",
+        "condition": {
+          "and": [
+            {
+              "or": [
+                {
+                  "u_has_intelligence": 9
+                },
+                {
+                  "u_has_perception": 9
+                }
+              ]
+            },
+            {
+              "not": {
+                "u_has_effect": "evy_ousted"
+              }
+            },
+            {
+              "u_has_effect": "evy_asked_info_recently"
+            }
+          ]
+        },
+        "topic": "BGSS_BHUNTER_STORYNOPE"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORYADMIT",
+    "type": "talk_topic",
+    "dynamic_line": "似乎比我想象的更难隐藏。你说得对，我想这也证实了我可以信任你。虽然最后一点你说错了，但我没在公司待太久。说来话长，别问了。别把这些信息透露给别人，好吗？",
+    "responses": [
+      {
+        "text": "知道了。",
+        "topic": "BGSS_BHUNTER_STORY1"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORYADMIT",
+    "type": "talk_topic",
+    "dynamic_line": "你说得对。但我不想谈论太多细节，我的任务是找出发生了什么，并与任何还活着的人取得联系。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "BGSS_BHUNTER_STORY1"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORYDENY",
+    "type": "talk_topic",
+    "dynamic_line": "我只知道我在一年多的时间里搜集到的一些细节。真的没什么可说的。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "BGSS_BHUNTER_STORY1"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORYNOPE",
+    "type": "talk_topic",
+    "dynamic_line": "你刚才问过我了。我现在不想谈这个。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "BGSS_BHUNTER_STORY1"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORY2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_effect": "evy_ousted",
+      "yes": "时间，努力，以及政府项目暴露出来的踪迹。最终，我获得了足够的信息，只是几乎没有时间去了解。",
+      "no": "他们没有很好地掩盖自己的行踪。我的意思是他们真的让我努力工作，但外面有那么多实验室，一些信息还是泄露了。"
+    },
+    "responses": [
+      {
+        "text": "那么，发生什么了？",
+        "topic": "BGSS_BHUNTER_STORY3"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORY3",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_has_effect": "evy_ousted",
+      "yes": "我和另外一个人来到这里，只是勉强避开当地热点地区的丧尸群。那家伙来自某个负责计划安保的部门，第九分局什么的。我们出发后不久就与其他军队失去了联系，所以我们决定跟着他们，去那里弄清楚。",
+      "no": "我住在一个相对较小的城镇，但没过多久情况就变得糟糕起来了。我决定尽我所能收拾行李，跟踪我掌握的证据。沿途从一艘沉船上捡到一些装备，与一个擅离职守的家伙会 会 面，追踪着细微的踪迹。最终来到了实验室……"
+    },
+    "responses": [
+      {
+        "text": "一开始就这样吗？",
+        "topic": "BGSS_BHUNTER_STORY4"
+      },
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "BGSS_BHUNTER_STORY4",
+    "type": "talk_topic",
+    "dynamic_line": "不。一开始这个地方相当安静，我们到达时没有这些东西的迹象。我们进去看看有没有人，然后和我一起旅行的人在外面放哨。大概花了一两天就把这地方翻了个底朝天，然后那玩意就蜂拥而至，把那可怜的家伙撕碎了。我想他干掉了一些，但也不是所有人都对丧尸免疫。当我意识到只有我一个人的时候我就躲在地堡里……",
+    "responses": [
+      {
+        "text": "<done_conversation_section>",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "<end_talking>",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

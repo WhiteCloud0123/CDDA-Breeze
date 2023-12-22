@@ -1,0 +1,174 @@
+[
+  {
+    "id": "neo_laser_pistol_monster",
+    "copy-from": "neo_laser_pistol",
+    "type": "GUN",
+    "name": "超级战士丧尸 NEO-33 激光手枪",
+    "description": "一把占位并供怪物使用的 NEO-33 激光手枪。如果被你找到了，那么这是一个bug！",
+    "dispersion": 2000,
+    "sight_dispersion": 500,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 16,
+      "armor_penetration": 5
+    },
+    "delete": {
+      "ammo_effects": [
+        "INCENDIARY"
+      ]
+    },
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "akro_laser_smg_monster",
+    "copy-from": "akro_laser_smg",
+    "type": "GUN",
+    "name": "超级战士丧尸 AMRO-388 激光冲锋枪",
+    "description": "一把占位并供怪物使用的 AKRO-388 激光冲锋枪。如果被你找到了，那么这是一个bug！",
+    "dispersion": 3000,
+    "sight_dispersion": 500,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 16,
+      "armor_penetration": 5
+    },
+    "delete": {
+      "ammo_effects": [
+        "INCENDIARY"
+      ]
+    },
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "arc_laser_rifle_monster",
+    "copy-from": "arc_laser_rifle",
+    "type": "GUN",
+    "name": "超级战士丧尸 ARC-314 激光步枪",
+    "description": "一把占位并供怪物使用的 ARC-314 激光步枪。如果被你找到了，那么这是一个bug！",
+    "dispersion": 4000,
+    "sight_dispersion": 500,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 40,
+      "armor_penetration": 10
+    },
+    "delete": {
+      "ammo_effects": [
+        "INCENDIARY"
+      ]
+    },
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "krx_laser_lmg_monster",
+    "copy-from": "krx_laser_lmg",
+    "type": "GUN",
+    "name": "超级战士丧尸 KRX-108 激光轻机枪",
+    "description": "一把占位并供怪物使用的 KRX-108 激光轻机枪。如果被你找到了，那么这是一个bug！",
+    "dispersion": 5000,
+    "sight_dispersion": 500,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 40,
+      "armor_penetration": 10
+    },
+    "delete": {
+      "ammo_effects": [
+        "INCENDIARY"
+      ]
+    },
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "laser_sniper_monster",
+    "copy-from": "mx_laser_sniper",
+    "type": "GUN",
+    "name": "超级战士丧尸 MX-84 激光狙击枪",
+    "description": "一把占位并供怪物使用的 MX-84 激光狙击枪。如果被你找到了，那么这是一个bug！",
+    "dispersion": 6000,
+    "sight_dispersion": 250,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 80,
+      "armor_penetration": 20
+    },
+    "delete": {
+      "ammo_effects": [
+        "INCENDIARY"
+      ]
+    },
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "xarm_laser_shotgun_monster",
+    "copy-from": "xarm_laser_shotgun",
+    "type": "GUN",
+    "name": "超级战士丧尸 XARM-37 脉冲散射枪",
+    "description": "一把占位并供怪物使用的 XARM-37 脉冲散射枪。如果被你找到了，那么这是一个bug！",
+    "dispersion": 2000,
+    "sight_dispersion": 250,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 80,
+      "armor_penetration": 5
+    },
+    "delete": {
+      "ammo_effects": [
+        "INCENDIARY"
+      ]
+    },
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "mk_ionic_cannon_monster",
+    "copy-from": "mx_laser_sniper",
+    "type": "GUN",
+    "name": "超级战士丧尸 MX-84 激光狙击枪",
+    "description": "一把占位并供怪物使用的 MK-II 实验性等离子炮。如果被你找到了，那么这是一个bug！",
+    "skill": "launcher",
+    "dispersion": 6000,
+    "sight_dispersion": 500,
+    "ammo_effects": [
+      "PLASMA",
+      "EXPLOSIVE_HUGE",
+      "STREAM_BIG",
+      "WIDE",
+      "EMP",
+      "FLASHBANG"
+    ],
+    "ammo_to_fire": 1
+  },
+  {
+    "id": "bio_laser_minigun_monster",
+    "type": "GUN",
+    "copy-from": "fake_item",
+    "name": {
+      "str": "怪物激光加特林"
+    },
+    "description": "Used to give Bio-Weapon Apophis a mockup of the laser gatling, minus setting targets on fire and a shorter burst size.  This is a bug if you find one of these!",
+    "ammo_effects": [
+      "NEVER_MISFIRES",
+      "LASER"
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "skill": "rifle",
+    "durability": 10,
+    "range": 30,
+    "dispersion": 5000,
+    "sight_dispersion": 1000,
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        3
+      ]
+    ],
+    "ranged_damage": {
+      "damage_type": "stab",
+      "amount": 25,
+      "armor_penetration": 15
+    }
+  }
+]

@@ -1,0 +1,407 @@
+[
+  {
+    "type": "TOOL",
+    "id": "unbio_bladed_weapon",
+    "name": {
+      "str": "改装单分子刀"
+    },
+    "category": "weapons",
+    "description": "使用尖端科技打造的约一英尺长的合金短剑，号称只有一个分子宽的纳米晶体组成了它的锋刃。改装自CBM。焊接的金属手柄和护手可以让你握住它而不会切开你的手。",
+    "weight": "250 g",
+    "volume": "1 L",
+    "longest_side": "30 cm",
+    "price": "60 USD",
+    "price_postapoc": "20 USD",
+    "color": "dark_gray",
+    "symbol": "{",
+    "material": [
+      "superalloy",
+      "steel"
+    ],
+    "techniques": [
+      "WBLOCK_2"
+    ],
+    "bashing": 4,
+    "cutting": 32,
+    "to_hit": 2,
+    "flags": [
+      "UNBREAKABLE_MELEE",
+      "SHEATH_KNIFE"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "BUTCHER",
+        22
+      ]
+    ],
+    "gunmod_data": {
+      "location": "underbarrel",
+      "mod_targets": [
+        "shotgun",
+        "rifle",
+        "smg",
+        "crossbow"
+      ],
+      "mode_modifier": [
+        [
+          "REACH",
+          "bayonet",
+          2,
+          [
+            "MELEE",
+            "REACH_ATTACK"
+          ]
+        ]
+      ],
+      "install_time": "20 m"
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "unbio_sword_weapon",
+    "name": {
+      "str": "改装单分子剑"
+    },
+    "category": "weapons",
+    "description": "使用尖端科技打造的约一码长的合金剑，号称只有一个分子宽的纳米晶体组成了它的锋刃。改装自CBM。焊接的金属手柄和护手可以让你握住它而不会切开你的手。",
+    "weight": "450 g",
+    "volume": "2500 ml",
+    "longest_side": "91 cm",
+    "price": "120 USD",
+    "price_postapoc": "20 USD",
+    "color": "dark_gray",
+    "symbol": "{",
+    "material": [
+      "superalloy",
+      "steel"
+    ],
+    "techniques": [
+      "RAPID",
+      "WBLOCK_2"
+    ],
+    "bashing": 4,
+    "cutting": 44,
+    "to_hit": 2,
+    "flags": [
+      "UNBREAKABLE_MELEE",
+      "SHEATH_SWORD"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "BUTCHER",
+        20
+      ]
+    ],
+    "gunmod_data": {
+      "location": "underbarrel",
+      "mod_targets": [
+        "shotgun",
+        "rifle",
+        "smg",
+        "crossbow"
+      ],
+      "mode_modifier": [
+        [
+          "REACH",
+          "bayonet",
+          2,
+          [
+            "MELEE",
+            "REACH_ATTACK"
+          ]
+        ]
+      ],
+      "install_time": "20 m"
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "unbio_claws_weapon",
+    "category": "weapons",
+    "name": {
+      "str_sp": "改装合金爪"
+    },
+    "description": "使用尖端科技打造的短而锋利的合金爪，焊接在金属指虎上。改装自CBM。轻巧而快速，挥舞它们的感觉就像赤手空拳。",
+    "weight": "200 g",
+    "volume": "750 ml",
+    "longest_side": "10 cm",
+    "price": "400 USD",
+    "price_postapoc": "20 USD",
+    "color": "light_gray",
+    "symbol": "{",
+    "material": [
+      "superalloy",
+      "steel"
+    ],
+    "bashing": 12,
+    "cutting": 14,
+    "flags": [
+      "STAB",
+      "UNARMED_WEAPON",
+      "UNBREAKABLE_MELEE"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "BUTCHER",
+        12
+      ]
+    ]
+  },
+  {
+    "type": "TOOL",
+    "id": "flesh_knife",
+    "category": "weapons",
+    "name": {
+      "str": "生物刀刃"
+    },
+    "description": "用金属制成的一英尺长的刀，内有肉和骨头。它的刀片由剃刀般锋利的锯齿状突起组成，骨柄很合手。握着它会在你的脑海里带来奇怪的耳语，仿佛它有自己的意志。",
+    "weight": "220 g",
+    "volume": "500 ml",
+    "longest_side": "30 cm",
+    "price": "5800 USD",
+    "price_postapoc": "60 USD",
+    "color": "red",
+    "symbol": "/",
+    "looks_like": "flesh_blade",
+    "material": [
+      "flesh",
+      "superalloy"
+    ],
+    "techniques": [
+      "WBLOCK_1",
+      "PRECISE",
+      "RAPID"
+    ],
+    "bashing": 2,
+    "cutting": 18,
+    "to_hit": 3,
+    "flags": [
+      "UNBREAKABLE_MELEE",
+      "UNARMED_WEAPON",
+      "MAGIC_FOCUS",
+      "SHEATH_KNIFE"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        10
+      ]
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "mutations": [
+            "SCHIZOPHRENIC",
+            "ROT1",
+            "PRED1"
+          ],
+          "hit_you_effect": [
+            {
+              "id": "c_lifedrain_1",
+              "once_in": 10,
+              "message": "你荡秋千的时候，一团奇怪的雾气遮住了%2$s。",
+              "npc_message": "当%1$s人向%2$s人挥舞时，一团奇怪的薄雾笼罩了他们。"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "TOOL",
+    "id": "flesh_blade",
+    "category": "weapons",
+    "name": {
+      "str": "生物长剑"
+    },
+    "description": "用金属制成的一码长的剑，内有肉和骨头，包括一个用坚韧的筋架起来的保护柄。从一个较小的样本中生长出来，拿着它带来了一种超越过去的奇怪的力量感。它感觉就像一个有着自己思想的生物，一个渴望鲜血的生物。",
+    "weight": "680 g",
+    "volume": "1500 ml",
+    "longest_side": "91 cm",
+    "price": "5800 USD",
+    "price_postapoc": "75 USD",
+    "color": "red",
+    "symbol": "/",
+    "material": [
+      "flesh",
+      "superalloy"
+    ],
+    "techniques": [
+      "WBLOCK_2",
+      "PRECISE",
+      "RAPID"
+    ],
+    "bashing": 2,
+    "cutting": 25,
+    "to_hit": 2,
+    "flags": [
+      "UNBREAKABLE_MELEE",
+      "UNARMED_WEAPON",
+      "MAGIC_FOCUS",
+      "SHEATH_SWORD"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        10
+      ]
+    ],
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "values": [
+            {
+              "value": "STRENGTH",
+              "add": 2
+            },
+            {
+              "value": "DEXTERITY",
+              "add": 2
+            },
+            {
+              "value": "INTELLIGENCE",
+              "add": -2
+            },
+            {
+              "value": "PERCEPTION",
+              "add": -2
+            },
+            {
+              "value": "SPEED",
+              "add": 20
+            }
+          ],
+          "mutations": [
+            "SCHIZOPHRENIC",
+            "ROT3",
+            "KILLER",
+            "PRED2",
+            "HUNGER2",
+            "CHAOTIC"
+          ],
+          "hit_you_effect": [
+            {
+              "id": "c_lifedrain_1",
+              "once_in": 3,
+              "message": "你荡秋千的时候，一团奇怪的雾气遮住了%2$s。",
+              "npc_message": "当%1$s人向%2$s人挥舞时，一团奇怪的薄雾笼罩了他们。"
+            },
+            {
+              "id": "c_flesh_hit_effect",
+              "once_in": 3,
+              "message": "一股能量从你的武器中涌出，进一步赋予你力量！",
+              "npc_message": "一股奇怪的能量包围了%1$s！"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "c_mi_go_claw_salvaged",
+    "looks_like": "unbio_blade_weapon",
+    "symbol": ";",
+    "color": "green",
+    "name": {
+      "str": "改装米·戈爪刃"
+    },
+    "description": "一个握在你手中的由钢铁和异界树脂组成的网状物，从里面伸出一个18英寸长的锋利的刀片。 这种奇异的绿色玻璃状材料的质感从中心逐渐褪去，变成了一些灰白色合成材料的硬化边缘。其挥舞起来类似于虎爪，在每两个手指之间都有锋利的刀刃。 它是利用大灾变前对其他活体武器的研究改造成的，现在它在人类手中的解剖功能（或活体解剖功能）效果和它曾经在米戈的魔掌中的效果一样好。",
+    "category": "other",
+    "material": [
+      "alien_resin",
+      "flesh",
+      "steel"
+    ],
+    "weight": "750 g",
+    "longest_side": "45 cm",
+    "volume": "1 L",
+    "price_postapoc": "15 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 20,
+    "flags": [
+      "UNARMED_WEAPON",
+      "DURABLE_MELEE",
+      "SHEATH_KNIFE"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        2
+      ],
+      [
+        "CUT_FINE",
+        4
+      ],
+      [
+        "BUTCHER",
+        25
+      ]
+    ]
+  },
+  {
+    "id": "greatsword_makeshift",
+    "looks_like": "zweihander",
+    "type": "GENERIC",
+    "category": "weapons",
+    "name": {
+      "str": "自制巨剑"
+    },
+    "description": "一种沉重的刀刃，由车架的一部分锯成一根长钢，然后弯曲成型并磨尖。虽然粗糙又笨重而且无法装进剑鞘，但它能造成大量伤害，而且攻击范围很广。",
+    "weight": "5500 g",
+    "volume": "4 L",
+    "longest_side": "213 cm",
+    "price": "55 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -1,
+    "bashing": 20,
+    "cutting": 45,
+    "material": "steel",
+    "symbol": "/",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_1",
+      "WIDE",
+      "BRUTAL"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        -30
+      ]
+    ],
+    "flags": [
+      "REACH_ATTACK",
+      "ALWAYS_TWOHAND"
+    ]
+  }
+]

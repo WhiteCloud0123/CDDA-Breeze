@@ -1,0 +1,130 @@
+[
+  {
+    "type": "COMESTIBLE",
+    "id": "gas_slime_scrap",
+    "category": "other",
+    "name": {
+      "str": "汽油变形怪糊"
+    },
+    "weight": "276 g",
+    "color": "light_red",
+    "addiction_type": "none",
+    "use_action": "POISON",
+    "comestible_type": "FOOD",
+    "symbol": "%",
+    "nutrition": 20,
+    "description": "一块暴露在阳光下就会产生汽油的变形怪。它产生的汽油会与变形怪混合起来，无法提取但仍然易燃。",
+    "material": [
+      "hydrocarbons"
+    ],
+    "volume": "250 ml",
+    "phase": "solid",
+    "charges": 1,
+    "fun": -10
+  },
+  {
+    "id": "mutagenic_ampoule",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "诱变血清安瓿"
+    },
+    "description": "一种像是由树脂构成的胶囊，里面装着混合着可以造成变异的化合物的血液，现在看起来已经凝固了。其虽然没有诱变血清那么强力，但你还是需要一根针管来注射它。",
+    "price": "1000 USD",
+    "price_postapoc": "50 cent",
+    "comestible_type": "MED",
+    "category": "mutagen",
+    "weight": "250 g",
+    "volume": "100 ml",
+    "symbol": "!",
+    "color": "red",
+    "healthy": -2,
+    "addiction_potential": 6,
+    "addiction_type": "mutagen",
+    "flags": [
+      "NO_INGEST"
+    ],
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你注射了诱变血清安瓿的内容物。",
+      "tools_needed": {
+        "syringe": -1
+      },
+      "vitamins": [
+        [
+          "mutagen",
+          450,
+          550
+        ]
+      ]
+    }
+  },
+  {
+    "id": "purified_ampoule",
+    "type": "COMESTIBLE",
+    "name": {
+      "str": "净化血清安瓿"
+    },
+    "description": "一种像是由树脂构成的胶囊，里面装着混合着可以净化变异的化合物的血液，现在看起来已经凝固了。其的效果类似于普通的净化剂，但你还是需要一根针管来注射它。",
+    "price": "6000 USD",
+    "price_postapoc": "5 USD",
+    "comestible_type": "MED",
+    "category": "mutagen",
+    "weight": "250 g",
+    "volume": "100 ml",
+    "symbol": "!",
+    "color": "red",
+    "healthy": 5,
+    "addiction_potential": 8,
+    "addiction_type": "mutagen",
+    "tool": "syringe",
+    "flags": [
+      "NO_INGEST"
+    ],
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你注射了净化血清安瓿的内容物。",
+      "tools_needed": {
+        "syringe": -1
+      },
+      "vitamins": [
+        [
+          "mutagen_human",
+          450,
+          550
+        ],
+        [
+          "mutagen",
+          125
+        ]
+      ]
+    }
+  },
+  {
+    "id": "iv_mutagen_super_soldier",
+    "copy-from": "iv_mutagen_flavor",
+    "type": "COMESTIBLE",
+    "name": {
+      "str_sp": "纳米诱变血清"
+    },
+    "description": "一种实验性的、超浓缩的诱变剂与纳米机器的混合物。极为罕见而且可能相当有效。你需要一根针管来注射它……如果你真的想用的话。",
+    "price": "20000 USD",
+    "price_postapoc": "30 USD",
+    "color": "red",
+    "charges": 2,
+    "stack_size": 1,
+    "healthy": -2,
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "你注射了纳米诱变血清。",
+      "tools_needed": {
+        "syringe": -1
+      },
+      "effects": [
+        {
+          "id": "c_nano_mutagen_trigger",
+          "duration": 5
+        }
+      ]
+    }
+  }
+]

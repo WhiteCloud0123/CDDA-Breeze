@@ -1,0 +1,110 @@
+[
+  {
+    "id": "TALK_BFF",
+    "type": "talk_topic",
+    "//": "Excludes most professions, at least in vanilla and Cata++, that don't deserve friends.  :3",
+    "dynamic_line": {
+      "u_has_any_trait": [
+        "PROF_CHURL",
+        "BIO_WEAPON_ALPHA",
+        "BIO_WEAPON_BETA",
+        "BIO_WEAPON_GAMMA",
+        "BIO_WEAPON_DELTA",
+        "BIO_WEAPON_FAILED"
+      ],
+      "yes": "该死，我还希望能碰上别人呢……至少我们都还毫发无损，我猜。",
+      "no": {
+        "u_male": true,
+        "yes": "天哪，你还活着？！我很高兴，我以为我要独自处理这一切。这个地方离得比较远，现在暂时是安全的。现在就像过去一样有人作伴了！",
+        "no": "天哪，你还活着？！我很高兴，我以为我要独自处理这一切。我们到了很远的地方，现在安全了。现在是你和我，就像过去一样！"
+      }
+    },
+    "responses": [
+      {
+        "text": "[组队]另一名幸存者！让我们组队行动吧。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHURL",
+            "BIO_WEAPON_ALPHA",
+            "BIO_WEAPON_BETA",
+            "BIO_WEAPON_GAMMA",
+            "BIO_WEAPON_DELTA",
+            "BIO_WEAPON_FAILED"
+          ]
+        },
+        "topic": "TALK_SUGGEST_FOLLOW"
+      },
+      {
+        "text": "[询问]你在做些什么？",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHURL",
+            "BIO_WEAPON_ALPHA",
+            "BIO_WEAPON_BETA",
+            "BIO_WEAPON_GAMMA",
+            "BIO_WEAPON_DELTA",
+            "BIO_WEAPON_FAILED"
+          ]
+        },
+        "topic": "TALK_DESCRIBE_MISSION"
+      },
+      {
+        "text": "[交易]你想要交易吗？",
+        "topic": "TALK_DONE",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHURL",
+            "BIO_WEAPON_ALPHA",
+            "BIO_WEAPON_BETA",
+            "BIO_WEAPON_GAMMA",
+            "BIO_WEAPON_DELTA",
+            "BIO_WEAPON_FAILED"
+          ]
+        },
+        "effect": "start_trade"
+      },
+      {
+        "text": "我也很高兴见到你，伙计，我们走吧！",
+        "trial": {
+          "type": "NONE"
+        },
+        "condition": {
+          "not": {
+            "u_has_any_trait": [
+              "PROF_CHURL",
+              "BIO_WEAPON_ALPHA",
+              "BIO_WEAPON_BETA",
+              "BIO_WEAPON_GAMMA",
+              "BIO_WEAPON_DELTA",
+              "BIO_WEAPON_FAILED"
+            ]
+          }
+        },
+        "success": {
+          "effect": "follow",
+          "opinion": {
+            "trust": 8,
+            "fear": 0,
+            "value": 8,
+            "anger": -2
+          },
+          "topic": "TALK_DONE"
+        }
+      },
+      {
+        "text": "再见。",
+        "condition": {
+          "u_has_any_trait": [
+            "PROF_CHURL",
+            "BIO_WEAPON_ALPHA",
+            "BIO_WEAPON_BETA",
+            "BIO_WEAPON_GAMMA",
+            "BIO_WEAPON_DELTA",
+            "BIO_WEAPON_FAILED"
+          ]
+        },
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

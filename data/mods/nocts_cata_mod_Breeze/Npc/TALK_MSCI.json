@@ -1,0 +1,456 @@
+[
+  {
+    "id": "TALK_MSCI",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "你有徽章，是吗？我在听。",
+      "no": "嘿！欢迎来到指挥中心。"
+    },
+    "responses": [
+      {
+        "text": "这是哪里？",
+        "topic": "TALK_MSCI_CC_EXPLAIN"
+      },
+      {
+        "text": "你是谁？",
+        "topic": "TALK_MSCI_I_AM"
+      },
+      {
+        "text": "你在这里干什么？",
+        "topic": "TALK_MSCI_ASK_DOING"
+      },
+      {
+        "text": "现在你打算怎么办？",
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "apophis_dead",
+              "type": "dialogue",
+              "context": "router",
+              "value": "yes"
+            },
+            {
+              "u_has_var": "apophis_dead",
+              "type": "dialogue",
+              "context": "router",
+              "value": "yes"
+            }
+          ]
+        },
+        "switch": true,
+        "topic": "TALK_MSCI_NOWWHAT"
+      },
+      {
+        "text": "我能帮上什么忙？",
+        "condition": {
+          "npc_has_var": "apophis_dead",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_MSCI_NOWWHAT_NEW"
+      },
+      {
+        "text": "那么，我能帮你什么？",
+        "condition": {
+          "u_has_var": "proven_worthy",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        },
+        "switch": true,
+        "topic": "TALK_MISSION_LIST"
+      },
+      {
+        "text": "关于对付生物武器有什么建议吗？",
+        "condition": {
+          "u_has_mission": "MISSION_LOOT_BIO_LAB"
+        },
+        "switch": true,
+        "topic": "TALK_MSCI_TIPS"
+      },
+      {
+        "text": "我能帮上什么忙？",
+        "switch": true,
+        "default": true,
+        "topic": "TALK_MSCI_PROOF"
+      },
+      {
+        "text": "我能待在这儿吗？",
+        "topic": "TALK_MSCI_ASK_STAY"
+      },
+      {
+        "text": "再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_NOWWHAT",
+    "type": "talk_topic",
+    "//": "This line will now only show up if you've actually turned in the mission, so Router can be fairly certain you haven't somehow beefed it.",
+    "dynamic_line": "生存及最终的研究，我们会安排好时间的。你或许可以与西格玛和兰姆达谈谈？我几乎一直在忙着修理东西，如果他们整天无所事事，就很可能会发疯。也许你能帮助他们自己想出该怎么做。",
+    "responses": [
+      {
+        "text": "我们看看能做些什么。",
+        "topic": "TALK_MSCI",
+        "effect": [
+          {
+            "u_add_effect": "router_suggestion",
+            "duration": "PERMANENT"
+          },
+          {
+            "npc_add_effect": "router_suggestion",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_NOWWHAT_NEW",
+    "type": "talk_topic",
+    "//": "This should reasonably check for new players who stumble upon the location after a previous player killed Apophis.",
+    "dynamic_line": "恐怕我没有工作给你。你或许可以与西格玛和兰姆达谈谈？我几乎一直在忙着修理东西，如果他们整天无所事事，就很可能会发疯。也许你能帮助他们自己想出该怎么做。",
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_MSCI",
+        "effect": [
+          {
+            "u_add_effect": "router_suggestion",
+            "duration": "PERMANENT"
+          },
+          {
+            "npc_add_effect": "router_suggestion",
+            "duration": "PERMANENT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_TIPS",
+    "type": "talk_topic",
+    "//": "This is really just flavor for when the player should be skipping the 'prove yourself' dialogue, but shouldn't yet advance to the NPC's real mission list.",
+    "dynamic_line": [
+      "使用你获得的任何形式的电击防护装备。他们大多数都植入了放电武器，而那些还不知道如何破坏他们的放电增强装置的人只能自制防电装备了。",
+      "即使他们经历了这么多，他们的医疗植入物通常还能正常工作。如果你决定进攻那就保持攻击。如果你停止攻击，他们很可能在你下次遇到时就已经复活了。",
+      "我建议不要在近战中与他们对抗，除非你的能力也相当强。保持安全距离并且向他们猛烈开火。只有少数完成改造的生物武器拥有集成远程武器，所以这会比与他们面对面更安全。",
+      "如果你能用大口径的东西，甚至是爆炸性的东西进行有效的射击，你应该有很大的几率一枪就能干掉一个。但要做好准备，他们可能会一瘸一拐地离开，这些事情比看起来要难。",
+      "这有点像在和一些更难对付的丧尸作战，如果你与多个敌人进行近距离战斗，你无法坚持很久的。也要小心，即使它们有许多故障的生化插件，它们的速度可能也比你快。",
+      "我相信他们能区分生者和死者，但这并不能让他们成为丧尸的朋友。似乎它们对丧尸与人类抱有同样的敌意。"
+    ],
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_PROOF",
+    "type": "talk_topic",
+    "dynamic_line": "有很多事情要处理，首先我想让你去寻找一个小型实验室设施，它与制造这些生物武器的计划有关。最近实验室网络的防御部分出现了安全漏洞，我有理由相信那些失败的生物武器可能与此有关。我想请你调查一下。",
+    "responses": [
+      {
+        "text": "生物武器实验室的安全漏洞……实际上可能是伊芙琳，而不仅仅是那里的生物武器。",
+        "switch": true,
+        "condition": {
+          "u_has_var": "searching_for_msci",
+          "type": "dialogue",
+          "context": "evelynn",
+          "value": "yes"
+        },
+        "topic": "TALK_MSCI_PROOF_EVY"
+      },
+      {
+        "text": "就像我醒来的地方吗?一些超级战士计划的成员曾在那里，然后那个地方就遭到了你提到的叛徒的袭击。",
+        "switch": true,
+        "condition": {
+          "u_has_flag": "BIO_WEAPON_SCEN"
+        },
+        "topic": "TALK_MSCI_PROOF_SCEN"
+      },
+      {
+        "text": "我已经找到一件这样的东西了，你说的是这个吗?",
+        "switch": true,
+        "condition": {
+          "u_has_item": "badge_bio_weapon_evy"
+        },
+        "effect": {
+          "u_sell_item": "badge_bio_weapon_evy"
+        },
+        "topic": "TALK_MSCI_PROOF_ITEM"
+      },
+      {
+        "text": "我会做的。我需要找什么？",
+        "switch": true,
+        "default": true,
+        "effect": {
+          "add_mission": "MISSION_LOOT_BIO_LAB"
+        },
+        "topic": "TALK_MSCI_PROOF_TRY_ACCEPT"
+      },
+      {
+        "text": "呃，也许下次吧。",
+        "topic": "TALK_MSCI"
+      },
+      {
+        "text": "也许下次吧。再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_PROOF_EVY",
+    "type": "talk_topic",
+    "//": "Sadly the wild goose chase will still be needed for players who started Evy's mission in saves predating the addition of this dialogue, but this idiotproofs it as best as I can.",
+    "dynamic_line": "我明白了，这意味着你已经证实了我的怀疑，尝试把她带到这里。希望一切顺利。如果你觉得自己能搞定，我还有其他任务给你。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_MSCI",
+        "effect": {
+          "u_add_var": "proven_worthy",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_PROOF_SCEN",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "这就解释了很多，触发警报可能会导致系统断电并将你困在那里。我很高兴你完好无损地离开了那里。准备好了就来找我。",
+      "no": "我明白了，没想到你没有戴徽章。触发警报可能会导致系统断电并将您困在那里。我很高兴你完好无损地离开了。准备好了就来找我。"
+    },
+    "responses": [
+      {
+        "text": "那么好吧。",
+        "topic": "TALK_MSCI",
+        "effect": {
+          "u_add_var": "proven_worthy",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_PROOF_ITEM",
+    "type": "talk_topic",
+    "dynamic_line": "见鬼……我想这对我们来说是好运。不管发生了什么，至少你都活了下来，让我想想。所以我是对的，超级战士项目至少度过了零日漏洞。我希望那里还有其他幸存者。无论如何，准备好了就来看我，还有很多事情要做。",
+    "responses": [
+      {
+        "text": "我们拭目以待。",
+        "topic": "TALK_MSCI",
+        "effect": {
+          "u_add_var": "proven_worthy",
+          "type": "dialogue",
+          "context": "router",
+          "value": "yes"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_PROOF_TRY_ACCEPT",
+    "type": "talk_topic",
+    "dynamic_line": "有人使用了被安保系统记录的RFID访问徽章。看起来很像它们佩戴的银色生物武器徽章。如果你发现任何幸存者，请与他们交谈，否则请带上通行证。我会在你的地图上标出位置，但要小心。那些东西可能在场，而且它们可不容易对付。如果事情变得过于棘手，逃离地点，尽量别让事情超出你的能力范围。",
+    "responses": [
+      {
+        "text": "没问题，然后呢？",
+        "topic": "TALK_MSCI"
+      },
+      {
+        "text": "能给点建议吗？",
+        "topic": "TALK_MSCI_PROOF_TRY_ADVICE"
+      },
+      {
+        "text": "我很快就回来！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_PROOF_TRY_ADVICE",
+    "type": "talk_topic",
+    "dynamic_line": "如果开启那个地方的人没有敌意，他们可能在找我们，我们可以利用一切可能得到的帮助。但要做好准备，可能会有更多的生物武器或丧尸出现。我很抱歉让你执行这样的任务，但我们需要能够应对更大威胁的人。所以，请不要让自己被杀。",
+    "responses": [
+      {
+        "text": "好的，在我走之前……",
+        "topic": "TALK_MSCI"
+      },
+      {
+        "text": "我很快就会回来。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_CC_EXPLAIN",
+    "type": "talk_topic",
+    "dynamic_line": "这是一个由生物武器计划的前科学家建造的避难所。我们在树林里定居下来，试图谋生。我们允许人们留在这里，只要他们有所贡献。我们甚至设法找到了几个流浪的生物武器！",
+    "responses": [
+      {
+        "text": "看来你在这里做得很好。",
+        "topic": "TALK_MSCI"
+      },
+      {
+        "text": "这些生物武器是谁？",
+        "topic": "TALK_MSCI_BIO_WHO"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_BIO_WHO",
+    "type": "talk_topic",
+    "dynamic_line": "他们是西格玛和兰姆达，他们很困惑。他们醒来时失去了记忆，只知道他们是“不同的”。我找到了他们，他们帮忙清理和建造了这个地方。他们是为了战斗而生的;我看得出他们已经厌倦了这里……",
+    "responses": [
+      {
+        "text": "我会留意他们的。",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_I_AM",
+    "type": "talk_topic",
+    "dynamic_line": "我是这个地方的领导。在大灾难之前我叫露特尔，我是生物武器项目的第二位首席科学家。我设计了西格玛和兰姆达，看着他们被储存起来。我现在致力于升级这个地方，维持基本的生存和寻找更多关于我工作的项目的信息。",
+    "responses": [
+      {
+        "text": "似乎你有很多事要做。",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_ASK_DOING",
+    "type": "talk_topic",
+    "//": "Infinitely more idiotproof than the last way I had it rigged, but still has its flaws.",
+    "dynamic_line": {
+      "npc_has_effect": "router_suggest",
+      "yes": "好吧，我们藏在这里的主要原因是阿波菲斯……它是一种专门用于消灭其他生物武器和生物武器科学家的生物武器。现在我们可以尝试最终解决问题，并致力于那些可能使其他人受益的研究。",
+      "no": "好吧，我们藏在这里的主要原因是阿波菲斯……它是一种专门用于消灭其他生物武器和生物武器科学家的生物武器。目前我们没有任何可以打败它的好办法，所以我们正试图创造我们自己的生物武器来对抗阿波菲斯。西格玛和兰姆达表示有兴趣去追杀它，但他们无法自己击败它。"
+    },
+    "responses": [
+      {
+        "text": "哦，祝你好运，我猜。",
+        "topic": "TALK_MSCI"
+      },
+      {
+        "text": "阿波菲斯到底是什么，真的那么危险吗？",
+        "condition": {
+          "not": {
+            "npc_has_effect": "router_suggestion"
+          }
+        },
+        "topic": "TALK_MSCI_APOPHIS"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_APOPHIS",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "你有那个徽章，你应该知道那些东西有多强大。阿波菲斯可以一次把它们全部击败。你见过浩克丧尸吗？他们甚至无法伤害它。更糟糕的是，一些生物武器项目的拒绝者站在了他一边。这就是为什么我们躲在这里。",
+      "no": "哈！你真的不知道吗？你曾经对抗过生物武器吗？比如那些失败的版本？很艰难，对吧？他们没有阿波菲斯的那些装备，由于它的装甲和重型武器比其他生物武器先进一步，它的耐用程度令人难以置信。阿波菲斯比任何普通敌人都要危险得多。"
+    },
+    "responses": [
+      {
+        "text": "我似乎是原型之一。反正它会来找我，那么为什么不与之抗争呢?",
+        "topic": "TALK_MSCI_APOPHIS_ORIGINAL",
+        "condition": {
+          "u_has_any_trait": [
+            "BIO_WEAPON_ALPHA",
+            "BIO_WEAPON_BETA",
+            "BIO_WEAPON_GAMMA",
+            "BIO_WEAPON_DELTA"
+          ]
+        }
+      },
+      {
+        "text": "我不是那种怪物。我一定能做点什么。",
+        "topic": "TALK_MSCI_APOPHIS_FAILED",
+        "condition": {
+          "u_has_any_trait": [
+            "BIO_WEAPON_FAILED"
+          ]
+        }
+      },
+      {
+        "text": "处理这些烂摊子是我的使命。",
+        "topic": "TALK_MSCI_APOPHIS_SOLDIER",
+        "condition": {
+          "u_has_any_trait": [
+            "SUPER_SOLDIER_MARKER"
+          ]
+        }
+      },
+      {
+        "text": "…",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_APOPHIS_ORIGINAL",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "也许是这样，但是当你的研究陷入停滞时，其他的研究团队一直在仔细研究他们能从你的产品中获得的每一点数据。即使是前进了两步，后退了一步，阿波菲斯也是所有这些研究的顶峰。我知道你可能渴望战斗，但我们需要做好准备。",
+      "no": "也许我不该因为你没有徽章就对你评头论足。如果你是你所宣称的那样，那么你要知道这一点。阿波菲斯是计划的研究的顶点。我知道你可能渴望战斗，但我们需要做好准备。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_APOPHIS_FAILED",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "我知道你渴望证明自己，但这并不意味着你要放弃自己的生命。这东西是为杀死生物武器和任何妨碍它的人量身定做的。你不必因为别人而证明自己。我知道我可以信任你。",
+      "no": "嗯。也许这就是你不戴徽章的原因。我想我可以信任你。我真希望其他人也能有你现在这样的机会，而不是阿波菲斯先找到他们。如果你在毫无准备的情况遇到它，你只会白白失去生命。"
+    },
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_APOPHIS_SOLDIER",
+    "type": "talk_topic",
+    "dynamic_line": "那东西是用来杀死你的，生物武器原型，还有任何碍事的东西。这就是为什么它被命名为阿波菲斯，当我们以Mesektet项目为代号时，我们几乎为它敞开了大门。",
+    "responses": [
+      {
+        "text": "…",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  },
+  {
+    "id": "TALK_MSCI_ASK_STAY",
+    "type": "talk_topic",
+    "dynamic_line": "当然，你可以自己清理一下，尽量不要惹恼任何人。如果你有时间，我很感激你的帮助。",
+    "responses": [
+      {
+        "text": "谢了。",
+        "topic": "TALK_MSCI"
+      }
+    ]
+  }
+]

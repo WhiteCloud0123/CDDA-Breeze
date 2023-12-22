@@ -1,0 +1,405 @@
+[
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "flintlock_pouch_surv_drifter",
+    "entries": [
+      {
+        "item": "36navy_makeshift_magnum",
+        "charges": 14
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "subtype": "collection",
+    "id": "cowboy_hat_surv_surv_drifter",
+    "entries": [
+      {
+        "item": "36navy_makeshift_magnum",
+        "charges": 12
+      }
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "can_sur",
+    "name": "忙碌准备者",
+    "description": "你是一个非常忙碌的人。这就是为什么你买了一大堆生存必备品就收手了。但现在这是你唯一拥有的东西了。",
+    "points": 1,
+    "items": {
+      "both": [
+        "longshirt",
+        "jacket_light",
+        "runner_bag",
+        "wristwatch",
+        "surcan"
+      ],
+      "male": [
+        "boxer_shorts",
+        "socks_wool",
+        "pants",
+        "boots"
+      ],
+      "female": [
+        "bra",
+        "panties",
+        "stockings",
+        "skirt",
+        "knee_high_boots"
+      ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "prepper",
+    "name": "末日准备者",
+    "description": "你相信世界末日并不是杞人忧天，所以早早的就加入了末日准备者的行列。你阅览了一本关于生存的书，买了一把趁手的枪和一些精良的装备。但这场大灾难并不在你的预料之内。",
+    "points": 5,
+    "skills": [
+      {
+        "level": 3,
+        "name": "rifle"
+      },
+      {
+        "level": 2,
+        "name": "gun"
+      },
+      {
+        "level": 1,
+        "name": "survival"
+      }
+    ],
+    "proficiencies": [
+      "prof_fibers",
+      "prof_fibers_rope",
+      "prof_lockpicking"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "socks",
+          "army_top",
+          "hat_boonie",
+          "wearable_light",
+          "balclava",
+          "binoculars",
+          "gloves_tactical",
+          "pants_army",
+          "boots_steel",
+          "jacket_army",
+          "molle_pack",
+          "canteen",
+          "crowbar",
+          "mre_beef_box",
+          "mil_surp_pack_2"
+        ],
+        "entries": [
+          {
+            "item": "knife_rambo",
+            "container-item": "scabbard"
+          },
+          {
+            "item": "light_disposable_cell",
+            "ammo-item": "battery",
+            "charges": 300,
+            "container-item": "wearable_light"
+          },
+          {
+            "group": "charged_ref_lighter"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "sports_bra",
+        "boxer_shorts"
+      ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "surv_drifter",
+    "name": "废土流浪者",
+    "description": "随着世界末日的到来，你发现自己从一个城镇流浪到另一个城镇，一边捡垃圾一边学习。睡在星空下，搜刮食物与子弹，你已经适应了这种新生活，如鱼得水。",
+    "points": 8,
+    "skills": [
+      {
+        "level": 4,
+        "name": "gun"
+      },
+      {
+        "level": 3,
+        "name": "pistol"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      },
+      {
+        "level": 2,
+        "name": "cutting"
+      },
+      {
+        "level": 2,
+        "name": "dodge"
+      },
+      {
+        "level": 4,
+        "name": "tailor"
+      },
+      {
+        "level": 3,
+        "name": "cooking"
+      },
+      {
+        "level": 3,
+        "name": "fabrication"
+      },
+      {
+        "level": 2,
+        "name": "survival"
+      }
+    ],
+    "proficiencies": [
+      "prof_handloading",
+      "prof_leatherworking_basic",
+      "prof_leatherworking",
+      "prof_millinery",
+      "prof_furriery",
+      "prof_closures"
+    ],
+    "items": {
+      "both": {
+        "ammo": 100,
+        "items": [
+          "pants_cargo",
+          "longshirt",
+          "duster",
+          "socks",
+          "boots_hiking",
+          "bandana",
+          "gloves_fingerless",
+          "backpack",
+          "canteen",
+          "survivor_mess_kit",
+          "fur_rollmat",
+          "press",
+          "puller",
+          "pipe_cleaner",
+          "pocketwatch"
+        ],
+        "entries": [
+          {
+            "item": "cowboy_hat_surv",
+            "contents-group": "cowboy_hat_surv_surv_drifter"
+          },
+          {
+            "item": "colt_navy",
+            "ammo-item": "36navy_makeshift_magnum",
+            "charges": 6,
+            "container-item": "XL_holster"
+          },
+          {
+            "item": "flintlock_pouch",
+            "contents-group": "flintlock_pouch_surv_drifter"
+          },
+          {
+            "item": "knife_hunting",
+            "container-item": "sheath"
+          },
+          {
+            "item": "ear_plugs",
+            "custom-flags": [
+              "no_auto_equip"
+            ]
+          },
+          {
+            "item": "vinegar",
+            "container-item": "bottle_plastic_small"
+          },
+          {
+            "item": "lamp_oil",
+            "container-item": "bottle_plastic_small"
+          },
+          {
+            "item": "36navy_makeshift_magnum",
+            "charges": 8
+          },
+          {
+            "group": "charged_ref_lighter"
+          }
+        ]
+      },
+      "male": [
+        "boxer_shorts"
+      ],
+      "female": [
+        "sports_bra",
+        "panties"
+      ]
+    },
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "surv_knight_errant",
+    "name": "荒野游侠",
+    "description": "世界末日时，你决定以剑为生。或是由于好运傍身，或是因为拼尽全力，你活了很久并成为了铁器大师。",
+    "points": 9,
+    "skills": [
+      {
+        "level": 5,
+        "name": "fabrication"
+      },
+      {
+        "level": 4,
+        "name": "tailor"
+      },
+      {
+        "level": 3,
+        "name": "survival"
+      },
+      {
+        "level": 2,
+        "name": "bashing"
+      },
+      {
+        "level": 2,
+        "name": "cutting"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      }
+    ],
+    "proficiencies": [
+      "prof_metalworking",
+      "prof_blacksmithing",
+      "prof_bladesmith",
+      "prof_carving"
+    ],
+    "items": {
+      "both": {
+        "ammo": 100,
+        "items": [
+          "gambeson",
+          "armor_lightplate_surv",
+          "socks",
+          "boots_plate_surv",
+          "helmet_plate_surv",
+          "gloves_plate_surv",
+          "backpack_leather",
+          "waterskin",
+          "flint_steel",
+          "tinderbox",
+          "can_forge",
+          "hammer_multitool"
+        ],
+        "entries": [
+          {
+            "item": "sword_metal",
+            "container-item": "scabbard"
+          }
+        ]
+      },
+      "male": [
+        "boxer_briefs"
+      ],
+      "female": [
+        "bra",
+        "panties"
+      ]
+    },
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  },
+  {
+    "type": "profession",
+    "id": "bionic_silencer",
+    "name": "生化潜刺者",
+    "description": "你受过训练，装备精良，为你的幕后支持者潜入安全设施，保护特定目标的安全，消灭高价值目标。现在他们自己也沉默了，你必须用你的天赋来生存。",
+    "points": 10,
+    "CBMs": [
+      "bio_ads",
+      "bio_atomic_battery",
+      "bio_cable",
+      "bio_cloak",
+      "bio_fingerhack",
+      "bio_lockpick",
+      "bio_surgical_razor",
+      "bio_sword",
+      "bio_time_freeze",
+      "bio_power_storage_mkII"
+    ],
+    "skills": [
+      {
+        "level": 3,
+        "name": "cooking"
+      },
+      {
+        "level": 4,
+        "name": "computer"
+      },
+      {
+        "level": 4,
+        "name": "dodge"
+      },
+      {
+        "level": 3,
+        "name": "mechanics"
+      },
+      {
+        "level": 3,
+        "name": "melee"
+      },
+      {
+        "level": 2,
+        "name": "survival"
+      }
+    ],
+    "proficiencies": [
+      "prof_lockpicking"
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "socks",
+          "dress_shoes",
+          "kevlar",
+          "dress_shirt",
+          "knit_scarf",
+          "mbag",
+          "gold_watch",
+          "multitool",
+          "bottle_metal"
+        ],
+        "entries": [
+          {
+            "group": "charged_smart_phone"
+          },
+          {
+            "group": "charged_matches"
+          }
+        ]
+      },
+      "male": [
+        "fancy_briefs",
+        "pants"
+      ],
+      "female": [
+        "fancy_bra",
+        "fancy_panties",
+        "dress_skirt"
+      ]
+    },
+    "flags": [
+      "SCEN_ONLY"
+    ]
+  }
+]

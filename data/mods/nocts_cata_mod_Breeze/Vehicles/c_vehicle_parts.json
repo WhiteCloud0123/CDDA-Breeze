@@ -1,0 +1,1470 @@
+[
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "ups_rifle_t",
+    "name": "车载 幸存者UPS步枪",
+    "looks_like": "laser_rifle",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "ups_rifle",
+    "folded_volume": 8,
+    "//": "Haven't figured out the breaks_into...",
+    "breaks_into": [
+      {
+        "item": "ups_rifle",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            6
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "sur_pnu_lmg_t",
+    "name": "车载 幸存者气动轻机枪",
+    "looks_like": "mounted_bigun",
+    "color": "dark_gray",
+    "broken_symbol": "#",
+    "broken_color": "dark_gray",
+    "item": "sur_pnu_lmg",
+    "folded_volume": 8,
+    "breaks_into": [
+      {
+        "item": "sur_pnu_lmg",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "GENERIC",
+    "id": "surv_station",
+    "//": "Actual item",
+    "name": "幸存者工作台",
+    "description": "一个集成许多实用工具的自制车载工作台，因为塞满了工具所以没有储存空间。",
+    "weight": "123134 g",
+    "to_hit": -2,
+    "color": "light_red",
+    "symbol": "&",
+    "looks_like": "craftrig",
+    "material": [
+      "steel"
+    ],
+    "volume": "30 L",
+    "category": "veh_parts",
+    "price": "800 USD"
+  },
+  {
+    "type": "vehicle_part",
+    "id": "surv_station_t",
+    "//": "Almost all utilities in one!",
+    "name": "幸存者车载工作台",
+    "description": "一个集成许多实用工具的自制车载工作台，所有工具都压缩精简成一个紧凑部件。集成了车载烹饪、锻造、焊接、化工和伙夫牌厨房机的所有功能。因此没有储存空间。",
+    "looks_like": "craft_rig",
+    "symbol": "&",
+    "color": "light_red",
+    "broken_symbol": "x",
+    "broken_color": "light_red",
+    "damage_modifier": 80,
+    "durability": 100,
+    "item": "surv_station",
+    "location": "center",
+    "flags": [
+      "OBSTACLE"
+    ],
+    "pseudo_tools": [
+      {
+        "id": "vac_sealer"
+      },
+      {
+        "id": "dehydrator"
+      },
+      {
+        "id": "water_purifier",
+        "hotkey": "p"
+      },
+      {
+        "id": "food_processor"
+      },
+      {
+        "id": "press"
+      },
+      {
+        "id": "puller"
+      },
+      {
+        "id": "chemistry_set"
+      },
+      {
+        "id": "electrolysis_kit"
+      },
+      {
+        "id": "water_faucet"
+      },
+      {
+        "id": "forge"
+      },
+      {
+        "id": "hotplate",
+        "hotkey": "h"
+      },
+      {
+        "id": "pot"
+      },
+      {
+        "id": "pan"
+      },
+      {
+        "id": "welder",
+        "hotkey": "w"
+      },
+      {
+        "id": "soldering_iron",
+        "hotkey": "s"
+      }
+    ],
+    "breaks_into": [
+      {
+        "item": "steel_lump",
+        "count": [
+          30,
+          40
+        ]
+      },
+      {
+        "item": "steel_chunk",
+        "count": [
+          30,
+          40
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          30,
+          40
+        ]
+      },
+      {
+        "item": "circuit",
+        "count": [
+          30,
+          40
+        ]
+      },
+      {
+        "item": "e_scrap",
+        "count": [
+          30,
+          40
+        ]
+      },
+      {
+        "item": "amplifier",
+        "count": [
+          30,
+          40
+        ]
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            5
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            7
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "welding_standard",
+            5
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "id": "surv_full_223_t",
+    "copy-from": "turret",
+    "name": "车载 幸存者 .223 突击步枪",
+    "looks_like": "mounted_m1918",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_full_223",
+    "breaks_into": [
+      {
+        "item": "surv_full_223",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "id": "surv_full_308_t",
+    "copy-from": "turret",
+    "name": "车载 幸存者 .308 战斗步枪",
+    "looks_like": "mounted_m1918",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_full_308",
+    "breaks_into": [
+      {
+        "item": "surv_full_308",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_full_762_t",
+    "name": "车载 幸存者 7.62x39 突击步枪",
+    "looks_like": "mounted_m1918",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_full_762",
+    "breaks_into": [
+      {
+        "item": "surv_full_762",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_full_762R_t",
+    "name": "车载 幸存者 7.62x54 战斗步枪",
+    "looks_like": "mounted_m1918",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_full_762R",
+    "breaks_into": [
+      {
+        "item": "surv_full_762R",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_full_12_t",
+    "name": "车载 幸存者全自动霰弹枪",
+    "looks_like": "mounted_bigun",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_full_12",
+    "breaks_into": [
+      {
+        "item": "surv_full_12",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "shotgun",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_lmg_308_t",
+    "name": "车载 幸存者 .308 通用机枪",
+    "looks_like": "mounted_m240",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_lmg_308",
+    "breaks_into": [
+      {
+        "item": "surv_lmg_308",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_lmg_223_t",
+    "name": "车载 幸存者 .223 轻机枪",
+    "looks_like": "m249",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_lmg_223",
+    "breaks_into": [
+      {
+        "item": "surv_lmg_223",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_lmg_762_t",
+    "name": "车载 幸存者 7.62x39 轻机枪",
+    "looks_like": "m249",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_lmg_762",
+    "breaks_into": [
+      {
+        "item": "surv_lmg_762",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "surv_lmg_762R_t",
+    "name": "车载 幸存者 7.62x54 通用机枪",
+    "looks_like": "surv_lmg_308_t",
+    "color": "brown",
+    "broken_symbol": "#",
+    "broken_color": "brown",
+    "item": "surv_lmg_762R",
+    "breaks_into": [
+      {
+        "item": "surv_lmg_762R",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "rifle",
+            2
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "laser_arc_carbine_t",
+    "looks_like": "laser_rifle",
+    "name": "车载 ARC-314 激光步枪",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "arc_laser_rifle",
+    "breaks_into": [
+      {
+        "item": "arc_laser_rifle",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "laser_arc_carbine_t_ups",
+    "looks_like": "laser_rifle",
+    "name": "车载 ARC-314 激光步枪（UPS）",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "arc_laser_rifle_ups",
+    "breaks_into": [
+      {
+        "item": "arc_laser_rifle_ups",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "laser_lmg_t",
+    "looks_like": "laser_cannon",
+    "name": "车载 KRX-108 激光轻机枪",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "krx_laser_lmg",
+    "breaks_into": [
+      {
+        "item": "krx_laser_lmg",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "laser_lmg_t_ups",
+    "looks_like": "laser_lmg_t",
+    "name": "车载 KRX-108 激光轻机枪（UPS）",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "krx_laser_lmg_ups",
+    "breaks_into": [
+      {
+        "item": "krx_laser_lmg_ups",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "laser_mx_sniper_t",
+    "looks_like": "laser_rifle",
+    "name": "车载 MX-84 激光狙击枪",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "mx_laser_sniper",
+    "breaks_into": [
+      {
+        "item": "mx_laser_sniper",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "laser_mx_sniper_t_ups",
+    "looks_like": "laser_rifle",
+    "name": "车载 MX-84 激光狙击枪（UPS）",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "mx_laser_sniper_ups",
+    "breaks_into": [
+      {
+        "item": "mx_laser_sniper_ups",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "br_bolt_rifle_elec_t",
+    "looks_like": "mounted_coilgun",
+    "name": "车载 BR-96 弩矢步枪",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "br_bolt_rifle_elec",
+    "breaks_into": [
+      {
+        "item": "br_bolt_rifle_elec",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            5
+          ],
+          [
+            "electronics",
+            5
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            3
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "type": "vehicle_part",
+    "copy-from": "turret",
+    "id": "mk_ionic_cannon_t",
+    "looks_like": "laser_cannon",
+    "name": "车载 MK-II 实验型等离子炮",
+    "color": "yellow",
+    "broken_symbol": "#",
+    "broken_color": "yellow",
+    "item": "mk_ionic_cannon",
+    "breaks_into": [
+      {
+        "item": "mk_ionic_cannon",
+        "prob": 50
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            7
+          ],
+          [
+            "electronics",
+            5
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            5
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "generator_electric_tiny",
+    "copy-from": "vehicle_alternator",
+    "type": "vehicle_part",
+    "name": "微型发电机",
+    "description": "由电动机临时改装的发电机，安装在引擎上。与正常的发电机相比，效率降低了。",
+    "item": "motor_tiny",
+    "folded_volume": 1,
+    "durability": 80,
+    "power": -800,
+    "epower": 320,
+    "//": "All improvised electric dynamos set to use input matching their motor counterpart's power output, and an output offering half their normal efficiency.",
+    "damage_modifier": 80,
+    "breaks_into": [
+      {
+        "item": "plastic_chunk",
+        "count": [
+          1,
+          2
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          1,
+          2
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          1,
+          3
+        ]
+      }
+    ],
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            1
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_screw",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_screw",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "adhesive",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "generator_electric_small",
+    "copy-from": "vehicle_alternator",
+    "type": "vehicle_part",
+    "name": "小型发电机",
+    "description": "由电动机临时改装的发电机，安装在引擎上。与正常的发电机相比，效率降低了。",
+    "item": "motor_small",
+    "durability": 120,
+    "power": -7040,
+    "epower": 3098,
+    "damage_modifier": 80,
+    "folded_volume": 1,
+    "breaks_into": [
+      {
+        "item": "steel_lump",
+        "count": [
+          1,
+          2
+        ]
+      },
+      {
+        "item": "steel_chunk",
+        "count": [
+          1,
+          2
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          1,
+          2
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          3,
+          6
+        ]
+      }
+    ],
+    "damage_reduction": {
+      "all": 6
+    },
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            1
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_screw",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_screw",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "adhesive",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "generator_electric",
+    "copy-from": "vehicle_alternator",
+    "type": "vehicle_part",
+    "name": "发电机",
+    "description": "由电动机临时改装的发电机，安装在引擎上。与正常的发电机相比，效率降低了。",
+    "item": "motor",
+    "durability": 200,
+    "power": -36000,
+    "epower": 16200,
+    "damage_modifier": 80,
+    "breaks_into": [
+      {
+        "item": "steel_lump",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "steel_chunk",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          10,
+          15
+        ]
+      }
+    ],
+    "damage_reduction": {
+      "all": 32
+    },
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            3
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "welding_standard",
+            5
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "generator_electric_large",
+    "copy-from": "vehicle_alternator",
+    "type": "vehicle_part",
+    "name": "大型发电机",
+    "description": "由电动机临时改装的发电机，安装在引擎上。与正常的发电机相比，效率降低了。你需要一个较强的引擎才能正常发电。",
+    "item": "motor_large",
+    "durability": 400,
+    "power": -150000,
+    "epower": 69018,
+    "damage_modifier": 80,
+    "breaks_into": [
+      {
+        "item": "steel_lump",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "steel_chunk",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          10,
+          15
+        ]
+      }
+    ],
+    "damage_reduction": {
+      "all": 43
+    },
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            3
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "welding_standard",
+            5
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "generator_electric_enhanced",
+    "copy-from": "vehicle_alternator",
+    "type": "vehicle_part",
+    "name": "增强型发电机",
+    "description": "由电动机临时改装的发电机，安装在引擎上。与正常的发电机相比，效率降低了。你需要一个强大的引擎才能正常发电。",
+    "item": "motor_enhanced",
+    "durability": 200,
+    "power": -282000,
+    "epower": 132540,
+    "damage_modifier": 80,
+    "breaks_into": [
+      {
+        "item": "steel_lump",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "steel_chunk",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          3,
+          5
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          10,
+          15
+        ]
+      }
+    ],
+    "damage_reduction": {
+      "all": 50
+    },
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            5
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "welding_standard",
+            5
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "generator_electric_super",
+    "copy-from": "vehicle_alternator",
+    "type": "vehicle_part",
+    "name": "超级发电机",
+    "description": "由电动机临时改装的发电机，安装在引擎上。与正常的发电机相比，效率降低了。你需要一个超级强大的引擎才能正常发电！",
+    "item": "motor_super",
+    "durability": 400,
+    "power": -475000,
+    "epower": 225625,
+    "damage_modifier": 80,
+    "breaks_into": [
+      {
+        "item": "steel_lump",
+        "count": [
+          6,
+          10
+        ]
+      },
+      {
+        "item": "steel_chunk",
+        "count": [
+          6,
+          10
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          6,
+          10
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          20,
+          30
+        ]
+      }
+    ],
+    "damage_reduction": {
+      "all": 60
+    },
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            5
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            3
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            6
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "welding_standard",
+            5
+          ]
+        ]
+      }
+    }
+  }
+]

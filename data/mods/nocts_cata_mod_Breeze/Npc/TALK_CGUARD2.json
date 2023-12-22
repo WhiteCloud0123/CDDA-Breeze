@@ -1,0 +1,77 @@
+[
+  {
+    "id": "TALK_CGUARD2",
+    "type": "talk_topic",
+    "dynamic_line": {
+      "u_is_wearing": "badge_bio_weapon",
+      "yes": "欢迎光临我们的寒舍，请别弄坏东西，好吗？",
+      "no": "欢迎光临。别惹麻烦，你会没事的。"
+    },
+    "responses": [
+      {
+        "text": "这是哪里？",
+        "topic": "TALK_CGUARD2_ASK_PLACE"
+      },
+      {
+        "text": "能告诉我怎么走吗？",
+        "topic": "TALK_CGUARD2_DIR"
+      },
+      {
+        "text": "这里怎么样？",
+        "topic": "TALK_CGUARD2_ASK_HOWRU"
+      },
+      {
+        "text": "我能待在这儿吗？",
+        "topic": "TALK_CGUARD2_ASK_STAY"
+      },
+      {
+        "text": "再见。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD2_ASK_PLACE",
+    "type": "talk_topic",
+    "dynamic_line": "曾经是一个旧的实验室地堡。我们对地下层进行了拆除和改造，使其适合居住。至少聊胜于无。",
+    "responses": [
+      {
+        "text": "我懂了。",
+        "topic": "TALK_CGUARD2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD2_DIR",
+    "type": "talk_topic",
+    "dynamic_line": "想要参观的话，去问问经常在楼下娱乐室闲逛的警卫。我的职责在这里，上面没有什么好看的。只是一些耕地和一个仓库。所有有趣的东西都在楼下。",
+    "responses": [
+      {
+        "text": "哦，好的。",
+        "topic": "TALK_CGUARD2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD2_ASK_HOWRU",
+    "type": "talk_topic",
+    "dynamic_line": "不太好。我站在这里，注意周围是否有东西入侵，对任何爬到围墙上的丧尸进行射击。至少这种情况下不那么无聊。",
+    "responses": [
+      {
+        "text": "好吧。",
+        "topic": "TALK_CGUARD2"
+      }
+    ]
+  },
+  {
+    "id": "TALK_CGUARD2_ASK_STAY",
+    "type": "talk_topic",
+    "dynamic_line": "去问问露特尔。他和其他人一起在下面。",
+    "responses": [
+      {
+        "text": "好的。",
+        "topic": "TALK_CGUARD2"
+      }
+    ]
+  }
+]

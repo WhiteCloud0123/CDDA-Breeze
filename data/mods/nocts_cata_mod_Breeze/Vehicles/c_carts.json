@@ -1,0 +1,108 @@
+[
+  {
+    "id": "chem_cart",
+    "type": "vehicle",
+    "name": "移动式化学工作站",
+    "blueprint": [
+      "&"
+    ],
+    "parts": [
+      {
+        "x": 0,
+        "y": 0,
+        "part": "xlframe_vertical_2"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "part": "wheel_caster"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "part": "small_storage_battery"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "part": "chemlab"
+      }
+    ]
+  },
+  {
+    "id": "surv_cart",
+    "type": "vehicle",
+    "name": "幸存者移动工作站",
+    "blueprint": [
+      "&"
+    ],
+    "parts": [
+      {
+        "x": 0,
+        "y": 0,
+        "part": "xlframe_vertical_2"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "part": "wheel_caster"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "part": "small_storage_battery"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "part": "surv_station_t"
+      }
+    ]
+  },
+  {
+    "id": "autoclave_cart",
+    "type": "vehicle",
+    "name": "移动式高压灭菌釜",
+    "blueprint": [
+      "&O"
+    ],
+    "parts": [
+      {
+        "x": 0,
+        "y": 0,
+        "parts": [
+          "xlframe_horizontal",
+          "wheel_caster",
+          "medium_storage_battery",
+          "autoclave"
+        ]
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "parts": [
+          "xlframe_horizontal",
+          "wheel_caster",
+          "box",
+          "water_faucet"
+        ]
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "part": "tank_little",
+        "fuel": "water"
+      }
+    ],
+    "items": [
+      {
+        "x": 1,
+        "y": 0,
+        "chance": 90,
+        "items": [
+          "pouch_autoclave"
+        ]
+      }
+    ]
+  }
+]
