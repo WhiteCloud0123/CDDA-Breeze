@@ -5199,16 +5199,16 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
         return amount;
     }
     // Breadth-first search! Initialize the queue with a pointer to ourselves and go!
-    std::vector< std::pair<Vehicle *, int> > connected_vehs = std::vector< std::pair<Vehicle *, int> > { std::make_pair( start_veh, 0 ) };
+    std::map<int, Vehicle*> connected_vehs = { {0,start_veh} };
     phmap::flat_hash_set<Vehicle *> visited_vehs;
     phmap::flat_hash_set<tripoint> visited_targets;
     while( amount > 0 && !connected_vehs.empty() ) {
-        auto current_node = connected_vehs.back();
-        Vehicle *current_veh = current_node.first;
-        int current_loss = current_node.second;
+        auto current_node = --connected_vehs.end();
+        Vehicle *current_veh = current_node->second;
+        int current_loss = current_node->first;
         
         visited_vehs.insert( current_veh );
-        connected_vehs.pop_back();
+        connected_vehs.erase(current_loss);
 
         add_msg_debug( debugmode::DF_VEHICLE, "Traversing graph with %d power", amount );
 
@@ -5235,7 +5235,7 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
             // Add this connected vehicle to the queue of vehicles to search next,
             // but only if we haven't seen this one before (checked above)
             int target_loss = current_loss + current_veh->part_info( p ).epower;
-            connected_vehs.push_back( std::make_pair( target_veh, target_loss ) );
+            connected_vehs.insert( std::make_pair( target_loss,target_veh ) );
             // current_veh could be invalid after this point
 
             float loss_amount = ( static_cast<float>( amount ) * static_cast<float>( target_loss ) ) / 100.0f;
