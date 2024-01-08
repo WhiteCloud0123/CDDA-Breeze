@@ -566,9 +566,9 @@ void basecamp::reveal_mission( ui_mission_id id )
     debugmsg( "Trying to reveal revealed mission.  Has no effect." );
 }
 
-bool basecamp::is_hidden( ui_mission_id id )
+bool basecamp::is_hidden(ui_mission_id id)
 {
-    if( hidden_missions.empty() ) {
+    if (hidden_missions.empty() || !id.id.dir.has_value()) {
         return false;
     }
 
