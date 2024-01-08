@@ -4475,15 +4475,6 @@ void cata_tiles::draw_zones_frame()
     map& m = get_map();
     bool has_pass_the_drawn_zone = false;
  
-        for (int iY = zone_start.y; iY <= zone_end.y; ++iY) {
-            for (int iX = zone_start.x; iX <= zone_end.x; ++iX) {
-                draw_from_id_string("highlight_02", TILE_CATEGORY::NONE, empty_string,
-                    zone_offset.xy() + tripoint(iX, iY, player_pos.z),
-                    0, 0, lit_level::LIT, false);
-            }
-        }    
-    
-
         for (zone_data& data : zones) {
             
             const tripoint& zone_start_ref = m.getlocal(data.get_start_point());
@@ -4503,6 +4494,15 @@ void cata_tiles::draw_zones_frame()
                         zone_offset.xy() + tripoint(iX, iY, player_pos.z),
                         0, 0, lit_level::LIT, false);
                 }
+            }
+        }
+
+
+        for (int iY = zone_start.y; iY <= zone_end.y; ++iY) {
+            for (int iX = zone_start.x; iX <= zone_end.x; ++iX) {
+                draw_from_id_string("highlight_02", TILE_CATEGORY::NONE, empty_string,
+                    zone_offset.xy() + tripoint(iX, iY, player_pos.z),
+                    0, 0, lit_level::LIT, false);
             }
         }
 
