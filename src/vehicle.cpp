@@ -5213,12 +5213,11 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
         add_msg_debug( debugmode::DF_VEHICLE, "Traversing graph with %d power", amount );
 
         for( int p : current_veh->loose_parts ) {
-            if( !current_veh->part_info( p ).has_flag( "POWER_TRANSFER" ) ) {
-                continue; // ignore loose parts that aren't power transfer cables
-            }
 
-            if( visited_targets.find(current_veh->parts[p].target.second ) != visited_targets.end() ) {
+            if (visited_targets.find(current_veh->parts[p].target.second) != visited_targets.end() 
+                   || !current_veh->part_info(p).has_flag("POWER_TRANSFER")) {
                 // If we've already looked at the target location, don't bother the expensive vehicle lookup.
+                // ignore loose parts that aren't power transfer cables
                 continue;
             }
 
