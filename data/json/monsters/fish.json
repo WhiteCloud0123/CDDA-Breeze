@@ -1116,7 +1116,7 @@
     "id": "mon_fish_mackerel",
     "type": "MONSTER",
     "copy-from": "mon_fish_medium",
-    "name": { "str_sp": "鲭鱼" },
+    "name": { "str_sp": "大西洋鲭鱼" },
     "description": "一种大西洋鲭鱼，以其独特的条纹图案而闻名。",
     "volume": "3000 ml",
     "weight": "1600 g",
@@ -1127,7 +1127,7 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_mackerel" },
-    "name": { "str_sp": "马鱼鱼苗" }
+    "name": { "str_sp": "大西洋鲭鱼鱼苗" }
   },
   {
     "id": "mon_fish_flounder",
