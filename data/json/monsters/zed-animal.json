@@ -45,8 +45,8 @@
   {
     "id": "mon_ocean_zhark",
     "type": "MONSTER",
-    "name": { "str": "abyssal terror" },
-    "description": "Once a former apex predator of the seas, now an undead nightmare, this zombified Great White shark terrorizes the waters with its relentless hunger and aggression.",
+    "name": { "str": "丧尸大白鲨" },
+    "description": "这条丧尸化的大白鲨曾经是海洋中的顶级捕食者，现在成了不死的噩梦，它以其无情的饥饿和侵略性恐吓着海水。",
     "default_faction": "zombie_aquatic",
     "bodytype": "fish",
     "species": [ "ZOMBIE" ],
