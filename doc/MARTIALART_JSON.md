@@ -72,6 +72,8 @@
 "forbidden_char_flags": [ "" ]    // List of character flags disabling this technique
 "crit_tec" : true,          // This technique only works on a critical hit
 "crit_ok" : true,           // This technique works on both normal and critical hits
+"reach_tec": true,          // This technique only works on a reach attack hit
+"reach_ok": true,           // This technique works on both normal and reach attack hits
 "attack_override": false    // This technique replaces the base attack it triggered on, nulling damage and movecost (instead using the tech's flat_bonuses), and counts as unarmed for the purposes of skill training and special melee effects
 "downed_target": true,      // Technique only works on a downed target
 "stunned_target": true,     // Technique only works on a stunned target

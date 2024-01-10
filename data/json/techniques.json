@@ -886,6 +886,7 @@
     "skill_requirements": [ { "name": "melee", "level": 2 } ],
     "melee_allowed": true,
     "forbidden_buffs_all": [ "buff_medievalpole_onmove" ],
+    "reach_ok": true,
     "mult_bonuses": [
       { "stat": "damage", "type": "bash", "scale": 1.1 },
       { "stat": "damage", "type": "cut", "scale": 1.1 },
@@ -923,6 +924,7 @@
     "melee_allowed": true,
     "required_buffs_all": "buff_medievalpole_onmiss",
     "crit_ok": true,
+    "reach_ok": true,
     "weighting": 2,
     "down_dur": 2,
     "mult_bonuses": [
@@ -941,6 +943,7 @@
     "melee_allowed": true,
     "downed_target": true,
     "crit_tec": true,
+    "reach_ok": true,
     "weighting": 2,
     "mult_bonuses": [
       { "stat": "damage", "type": "bash", "scale": 1.5 },
@@ -1715,11 +1718,28 @@
     "messages": [ "You deftly trip %s", "<npcname> deftly trips %s" ],
     "skill_requirements": [ { "name": "melee", "level": 3 } ],
     "melee_allowed": true,
+    "reach_ok": true,
     "down_dur": 1,
     "mult_bonuses": [
       { "stat": "damage", "type": "bash", "scale": 0.5 },
       { "stat": "damage", "type": "cut", "scale": 0.5 },
       { "stat": "damage", "type": "stab", "scale": 0.5 }
+    ],
+    "attack_vectors": [ "WEAPON" ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_sojutsu_jab",
+    "name": "Jab",
+    "messages": [ "You quickly strike %s", "<npcname> quickly strikes %s" ],
+    "skill_requirements": [ { "name": "melee", "level": 2 } ],
+    "melee_allowed": true,
+    "reach_tec": true,
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 0.5 },
+      { "stat": "damage", "type": "bash", "scale": 0.66 },
+      { "stat": "damage", "type": "cut", "scale": 0.66 },
+      { "stat": "damage", "type": "stab", "scale": 0.66 }
     ],
     "attack_vectors": [ "WEAPON" ]
   },
