@@ -1116,8 +1116,8 @@
     "id": "mon_fish_mackerel",
     "type": "MONSTER",
     "copy-from": "mon_fish_medium",
-    "name": { "str_sp": "atlantic mackerel" },
-    "description": "An Atlantic mackerel, known for its distinctive striped pattern.",
+    "name": { "str_sp": "鲭鱼" },
+    "description": "一种大西洋鲭鱼，以其独特的条纹图案而闻名。",
     "volume": "3000 ml",
     "weight": "1600 g",
     "reproduction": { "baby_egg": "egg_mackerel", "baby_count": 3, "baby_timer": 20 }
@@ -1127,14 +1127,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_mackerel" },
-    "name": { "str_sp": "mackerel fry" }
+    "name": { "str_sp": "马鱼鱼苗" }
   },
   {
     "id": "mon_fish_flounder",
     "type": "MONSTER",
     "copy-from": "mon_fish_medium",
-    "name": { "str_sp": "flounder" },
-    "description": "A flatfish, the flounder, also known as a fluke, likes to stay camouflaged against the ocean floor.",
+    "name": { "str_sp": "比目鱼。" },
+    "description": "比目鱼身体扁平，成长中两眼逐渐移到头部的一侧，平卧在海底。。",
     "volume": "2500 ml",
     "weight": "1400 g",
     "reproduction": { "baby_egg": "egg_flounder", "baby_count": 2, "baby_timer": 22 }
@@ -1144,14 +1144,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_flounder" },
-    "name": { "str_sp": "flounder fry" }
+    "name": { "str_sp": "比目鱼鱼苗" }
   },
   {
     "id": "mon_fish_blackfish",
     "type": "MONSTER",
     "copy-from": "mon_fish_small",
-    "name": { "str_sp": "black sea bass" },
-    "description": "A small, robust fish, the black sea bass is known for its dark, mottled color and meaty texture.",
+    "name": { "str_sp": "黑鲈鱼" },
+    "description": "黑鲈鱼是一种体型小而健壮的鱼类，以其深色、斑驳的颜色和肉质而闻名。",
     "volume": "1500 ml",
     "weight": "600 g",
     "reproduction": { "baby_egg": "egg_blackfish", "baby_count": 2, "baby_timer": 15 }
@@ -1161,14 +1161,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_blackfish" },
-    "name": { "str_sp": "black sea bass fry" }
+    "name": { "str_sp": "黑鲈鱼鱼苗" }
   },
   {
     "id": "mon_fish_porgy",
     "type": "MONSTER",
     "copy-from": "mon_fish_small",
-    "name": { "str_sp": "scup" },
-    "description": "Also known as porgy, the scup is a small fish commonly found in Atlantic coastal waters, recognizable by its silver body with blue and purple tinges.",
+    "name": { "str_sp": "鲷鱼" },
+    "description": "鲷鱼，是一种常见于大西洋沿海水域的小型鱼类，其银色身体带有蓝色和紫色的斑点。",
     "volume": "1300 ml",
     "weight": "550 g",
     "reproduction": { "baby_egg": "egg_porgy", "baby_count": 3, "baby_timer": 16 }
@@ -1178,14 +1178,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_porgy" },
-    "name": { "str_sp": "scup (porgy) fry" }
+    "name": { "str_sp": "鲷鱼鱼苗" }
   },
   {
     "id": "mon_fish_bluefish",
     "type": "MONSTER",
     "copy-from": "mon_fish_small",
-    "name": { "str_sp": "bluefish" },
-    "description": "The bluefish, a moderately proportioned marine fish, is known for its aggressive nature and sharp teeth.  It sports a distinct blue-green coloration.",
+    "name": { "str_sp": "蓝鱼" },
+    "description": "蓝鱼是一种体型适中的海鱼，以其好斗的天性和锋利的牙齿而闻名。它呈现出明显的蓝绿色。",
     "volume": "1600 ml",
     "weight": "700 g",
     "reproduction": { "baby_egg": "egg_bluefish", "baby_count": 2, "baby_timer": 18 }
@@ -1195,14 +1195,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_bluefish" },
-    "name": { "str_sp": "bluefish fry" }
+    "name": { "str_sp": "蓝鱼鱼苗" }
   },
   {
     "id": "mon_fish_cod",
     "type": "MONSTER",
     "copy-from": "mon_fish_large",
-    "name": { "str_sp": "Atlantic cod" },
-    "description": "A large, white-meat fish known for its mild flavor and flaky texture.  Highly prized in both commercial and recreational fishing.",
+    "name": { "str_sp": "鳕鱼" },
+    "description": "一种大型白肉鱼，以其温和的味道和片状的质地而闻名。在商业和休闲捕鱼中都备受推崇。",
     "volume": "35000 ml",
     "weight": "22 kg",
     "reproduction": { "baby_egg": "egg_cod", "baby_count": 3, "baby_timer": 19 }
@@ -1212,14 +1212,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_cod" },
-    "name": { "str_sp": "cod fry" }
+    "name": { "str_sp": "鳕鱼鱼苗" }
   },
   {
     "id": "mon_fish_haddock",
     "type": "MONSTER",
     "copy-from": "mon_fish_large",
-    "name": { "str_sp": "haddock" },
-    "description": "A popular food fish, the haddock is recognized by its dark lateral line and a black blotch above the pectoral fin.",
+    "name": { "str_sp": "黑线鳕" },
+    "description": "黑线鳕是一种受欢迎的食用鱼，它的深色侧线和胸鳍上方的黑色斑点让人认出它来。",
     "volume": "25500 ml",
     "weight": "11 kg",
     "reproduction": { "baby_egg": "egg_haddock", "baby_count": 3, "baby_timer": 18 }
@@ -1229,14 +1229,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_haddock" },
-    "name": { "str_sp": "haddock fry" }
+    "name": { "str_sp": "黑线鳕鱼苗" }
   },
   {
     "id": "mon_fish_bluefin_tuna",
     "type": "MONSTER",
     "copy-from": "mon_fish_huge",
-    "name": { "str_sp": "Atlantic bluefin tuna" },
-    "description": "One of the largest and fastest fish in the waters of New England, the bluefin tuna is a streamlined predator with a dark blue back and silvery sides.",
+    "name": { "str_sp": "蓝鳍金枪鱼" },
+    "description": "蓝鳍金枪鱼是新英格兰水域最大、速度最快的鱼类之一，是一种流线型的捕食者，背部深蓝色，两侧银色。",
     "volume": "125000 ml",
     "weight": "98 kg",
     "reproduction": { "baby_egg": "egg_bluefin_tuna", "baby_count": 1, "baby_timer": 22 }
@@ -1246,14 +1246,14 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_bluefin_tuna" },
-    "name": { "str_sp": "bluefin tuna fry" }
+    "name": { "str_sp": "蓝鳍金枪鱼鱼苗" }
   },
   {
     "id": "mon_fish_halibut",
     "type": "MONSTER",
     "copy-from": "mon_fish_huge",
-    "name": { "str_sp": "Atlantic halibut" },
-    "description": "The largest flatfish in the ocean, known for its dense, firm texture and mild flavor.",
+    "name": { "str_sp": "大西洋大比目鱼" },
+    "description": "海洋中最大的比目鱼，以其致密、结实的质地和温和的味道而闻名。",
     "volume": "75000 ml",
     "weight": "42 kg",
     "reproduction": { "baby_egg": "egg_halibut", "baby_count": 2, "baby_timer": 20 }
@@ -1263,15 +1263,15 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_halibut" },
-    "name": { "str_sp": "halibut fry" }
+    "name": { "str_sp": "大西洋大比目鱼鱼苗" }
   },
   {
     "id": "mon_fish_pollock",
     "type": "MONSTER",
     "copy-from": "mon_fish_large",
-    "name": { "str_sp": "pollock" },
+    "name": { "str_sp": "青鳕" },
     "looks_like": "mon_fish_cod",
-    "description": "A member of the cod family, pollock is a versatile fish known for its white, delicate meat and mild taste.",
+    "description": "青鳕是鳕科的一员，是一种多功能鱼类，以其白色、细腻的肉和温和的味道而闻名。",
     "volume": "28000 ml",
     "weight": "17 kg",
     "reproduction": { "baby_egg": "egg_pollock", "baby_count": 3, "baby_timer": 17 }
@@ -1281,6 +1281,6 @@
     "type": "MONSTER",
     "copy-from": "mon_fry",
     "upgrades": { "half_life": 14, "into": "mon_fish_pollock" },
-    "name": { "str_sp": "pollock fry" }
+    "name": { "str_sp": "青鳕鱼苗" }
   }
 ]
