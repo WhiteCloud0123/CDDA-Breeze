@@ -1864,11 +1864,11 @@ std::string ma_technique::get_description() const
     }
 
     if (reach_ok) {
-        dump += _("* Can activate on a <info>normal</info> or a <info>reach attack</info> hit") +
+        dump += _("* 可以在 <info>普通攻击</info> 和 <info>远距攻击</info> 时 使用") +
             std::string("\n");
     }
     else if (reach_tec) {
-        dump += _("* Will only activate on a <info>reach attack</info>") + std::string("\n");
+        dump += _("* <info>只能</info> 在 <info>远距攻击</info> 时 使用") + std::string("\n");
     }
 
     if( side_switch ) {
