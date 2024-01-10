@@ -235,6 +235,8 @@ void ma_technique::load( const JsonObject &jo, const std::string &src )
     optional( jo, was_loaded, "downed_target", downed_target, false );
     optional( jo, was_loaded, "stunned_target", stunned_target, false );
     optional( jo, was_loaded, "wall_adjacent", wall_adjacent, false );
+    optional(jo, was_loaded, "reach_tec", reach_tec, false);
+    optional(jo, was_loaded, "reach_ok", reach_ok, false);
     optional( jo, was_loaded, "human_target", human_target, false );
 
     optional( jo, was_loaded, "needs_ammo", needs_ammo, false );
@@ -1859,6 +1861,14 @@ std::string ma_technique::get_description() const
                 std::string( "\n" );
     } else if( crit_tec ) {
         dump += _( "* Will only activate on a <info>crit</info>" ) + std::string( "\n" );
+    }
+
+    if (reach_ok) {
+        dump += _("* 可以在 <info>普通攻击</info> 和 <info>远距攻击</info> 时 使用") +
+            std::string("\n");
+    }
+    else if (reach_tec) {
+        dump += _("* <info>只能</info> 在 <info>远距攻击</info> 时 使用") + std::string("\n");
     }
 
     if( side_switch ) {
