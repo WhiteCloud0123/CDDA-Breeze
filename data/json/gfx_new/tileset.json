@@ -1,7 +1,7 @@
 [
   {
     "type": "mod_tileset",
-    "compatibility": [ "UNDEAD_PEOPLE_BASE", "UNDEAD_PEOPLE", "MshockRealXotto", "MSX++DEAD_PEOPLE", "MshockXottoplus" ],
+    "compatibility": [ "UNDEAD_PEOPLE_BASE", "MshockXottoplus" ],
     "tiles-new": [
       {
         "file": "gfx_new/new_01.png",
