@@ -4474,20 +4474,21 @@ void cata_tiles::draw_zones_frame()
     tripoint player_pos = get_player_character().pos();
     map& m = get_map();
     bool has_pass_the_drawn_zone = false;
- 
+    bool enable_new_draw = get_option<bool>("启用新版区域显示");
+    if (enable_new_draw) {
         for (zone_data& data : zones) {
-            
+
             const tripoint& zone_start_ref = m.getlocal(data.get_start_point());
             const tripoint& zone_end_ref = m.getlocal(data.get_end_point());
-          
-            if (  !has_pass_the_drawn_zone &&  zone_start_ref.x == zone_start.x && zone_start_ref.y == zone_start.y
-                 && zone_end_ref.x == zone_end.x && zone_end_ref.y == zone_end.y
+
+            if (!has_pass_the_drawn_zone && zone_start_ref.x == zone_start.x && zone_start_ref.y == zone_start.y
+                && zone_end_ref.x == zone_end.x && zone_end_ref.y == zone_end.y
                 ) {
                 has_pass_the_drawn_zone = true;
                 continue;
             }
-            
-               
+
+
             for (int iY = zone_start_ref.y; iY <= zone_end_ref.y; ++iY) {
                 for (int iX = zone_start_ref.x; iX <= zone_end_ref.x; ++iX) {
                     draw_from_id_string("highlight_03", TILE_CATEGORY::NONE, empty_string,
@@ -4496,11 +4497,14 @@ void cata_tiles::draw_zones_frame()
                 }
             }
         }
-
+    
+    
+    
+    }
 
         for (int iY = zone_start.y; iY <= zone_end.y; ++iY) {
             for (int iX = zone_start.x; iX <= zone_end.x; ++iX) {
-                draw_from_id_string("highlight_02", TILE_CATEGORY::NONE, empty_string,
+                draw_from_id_string(enable_new_draw ? "highlight_02" : "highlight", TILE_CATEGORY::NONE, empty_string,
                     zone_offset.xy() + tripoint(iX, iY, player_pos.z),
                     0, 0, lit_level::LIT, false);
             }

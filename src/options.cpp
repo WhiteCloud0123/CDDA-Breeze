@@ -2053,6 +2053,15 @@ void options_manager::add_options_graphics()
 
     get_option( "ANIMATION_SCT_USE_FONT" ).setPrerequisite( "ANIMATION_SCT" );
 
+    add_empty_line();
+
+    add("启用新版区域显示", "graphics", to_translation("启用新版区域显示"),
+        to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
+        false
+    );
+
+    add_empty_line();
+
     add( "ANIMATION_DELAY", "graphics", to_translation( "Animation delay" ),
          to_translation( "The amount of time to pause between animation frames in ms." ),
          0, 100, 10
