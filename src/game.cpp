@@ -6850,9 +6850,16 @@ void game::zones_manager()
     cata::optional<tripoint> zone_end;
     bool zone_blink = false;
     bool zone_cursor = false;
-    shared_ptr_fast<draw_callback_t> zone_cb_new = create_zone_callback_new(
-                zone_start, zone_end,zones,blink, zone_cursor);
-    
+    shared_ptr_fast<draw_callback_t> zone_cb_new;
+    if (get_option<bool>("启用新版区域显示")) {
+        zone_cb_new = create_zone_callback_new(
+            zone_start, zone_end, zones, blink, zone_cursor);
+    }
+    else {
+        zone_cb_new = create_zone_callback(
+            zone_start, zone_end, zone_blink, zone_cursor);
+    }
+        
     add_draw_callback( zone_cb_new );
 
     // This lambda returns either absolute coordinates or relative-to-player
