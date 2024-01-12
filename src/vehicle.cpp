@@ -131,6 +131,10 @@ static bool is_sm_tile_over_water( const tripoint &real_global_pos );
 // 1 kJ per battery charge
 static const int bat_energy_j = 1000;
 
+ 
+static phmap::flat_hash_set<tripoint> visited_targets;
+
+
 void DefaultRemovePartHandler::removed( vehicle &veh, const int part )
 {
     avatar &player_character = get_avatar();
@@ -5151,7 +5155,7 @@ vehicle *vehicle::find_vehicle( const tripoint &where )
 {
     map &here = get_map();
     // Is it in the reality bubble?
-    tripoint veh_local = here.getlocal( where );
+    const tripoint &veh_local = here.getlocal( where );
     if( const optional_vpart_position vp = here.veh_at( veh_local ) ) {
         return &vp->vehicle();
     }
@@ -5178,9 +5182,9 @@ vehicle *vehicle::find_vehicle( const tripoint &where )
     return nullptr;
 }
 
-std::map<vehicle *, bool> vehicle::enumerate_vehicles( const std::set<vehicle *> &origins )
+phmap::flat_hash_map<vehicle *, bool> vehicle::enumerate_vehicles( const std::set<vehicle *> &origins )
 {
-    std::map<vehicle *, bool> result; // the bool represents if vehicle ptr is in origins set
+    phmap::flat_hash_map<vehicle*, bool> result;
     const auto enumerate_visitor = [&result]( vehicle * veh, int amount, int /* loss_amount */ ) {
         result.emplace( veh, false ); // only add if element is not present already.
         return amount;
@@ -5198,14 +5202,15 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
     if( start_veh->loose_parts.empty() ) {
         return amount;
     }
+    visited_targets.clear();
     // Breadth-first search! Initialize the queue with a pointer to ourselves and go!
     std::vector< std::pair<Vehicle *, int> > connected_vehs = std::vector< std::pair<Vehicle *, int> > { std::make_pair( start_veh, 0 ) };
     phmap::flat_hash_set<Vehicle *> visited_vehs;
-    phmap::flat_hash_set<tripoint> visited_targets;
+
     while( amount > 0 && !connected_vehs.empty() ) {
-        auto current_node = connected_vehs.back();
+        const auto &current_node = connected_vehs.back();
         Vehicle *current_veh = current_node.first;
-        int current_loss = current_node.second;
+        const int &current_loss = current_node.second;
         
         visited_vehs.insert( current_veh );
         connected_vehs.pop_back();
