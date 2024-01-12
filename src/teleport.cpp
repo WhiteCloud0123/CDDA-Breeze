@@ -178,5 +178,6 @@ bool teleport::teleport_to_point( Creature &critter, tripoint target, bool safe,
         g->update_map( *p );
     }
     critter.remove_effect( effect_grabbed );
+    here.creature_on_trap(critter);
     return true;
 }

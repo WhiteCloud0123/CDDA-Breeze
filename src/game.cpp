@@ -4647,12 +4647,14 @@ void game::knockback( std::vector<tripoint> &traj, int stun, int dam_mult )
     // perhaps that is what it should do?
     tripoint tp = traj.front();
     creature_tracker &creatures = get_creature_tracker();
+    map& here = get_map();
     if( !creatures.creature_at( tp ) ) {
         debugmsg( _( "Nothing at (%d,%d,%d) to knockback!" ), tp.x, tp.y, tp.z );
         return;
     }
     std::size_t force_remaining = traj.size();
     if( monster *const targ = creatures.creature_at<monster>( tp, true ) ) {
+        tripoint start_pos = targ->pos();
         if( stun > 0 ) {
             targ->add_effect( effect_stunned, 1_turns * stun );
             add_msg( _( "%s was stunned!" ), targ->name() );
@@ -4710,8 +4712,12 @@ void game::knockback( std::vector<tripoint> &traj, int stun, int dam_mult )
                     add_msg( _( "The %s flops around and dies!" ), targ->name() );
                 }
             }
+            if (start_pos != targ->pos()) {
+                here.creature_on_trap(*targ);
+            }
         }
     } else if( npc *const targ = creatures.creature_at<npc>( tp ) ) {
+        tripoint start_pos = targ->pos();
         if( stun > 0 ) {
             targ->add_effect( effect_stunned, 1_turns * stun );
             add_msg( _( "%s was stunned!" ), targ->get_name() );
@@ -4773,8 +4779,12 @@ void game::knockback( std::vector<tripoint> &traj, int stun, int dam_mult )
                 break;
             }
             targ->setpos( traj[i] );
+            if (start_pos != targ->pos()) {
+                here.creature_on_trap(*targ);
+            }
         }
     } else if( u.pos() == tp ) {
+        tripoint start_pos = u.pos();
         if( stun > 0 ) {
             u.add_effect( effect_stunned, 1_turns * stun );
             add_msg( m_bad, n_gettext( "You were stunned for %d turn!",
@@ -4850,6 +4860,9 @@ void game::knockback( std::vector<tripoint> &traj, int stun, int dam_mult )
                 avatar_action::swim( m, u, u.pos() );
             } else {
                 u.setpos( traj[i] );
+            }
+            if (start_pos != u.pos()) {
+                here.creature_on_trap(u);
             }
         }
     }
