@@ -132,7 +132,7 @@ static bool is_sm_tile_over_water( const tripoint &real_global_pos );
 static const int bat_energy_j = 1000;
 
  
-static phmap::flat_hash_set<tripoint> visited_targets;
+
 
 
 void DefaultRemovePartHandler::removed( vehicle &veh, const int part )
@@ -5202,15 +5202,15 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
     if( start_veh->loose_parts.empty() ) {
         return amount;
     }
-    visited_targets.clear();
+
     // Breadth-first search! Initialize the queue with a pointer to ourselves and go!
     std::vector< std::pair<Vehicle *, int> > connected_vehs = std::vector< std::pair<Vehicle *, int> > { std::make_pair( start_veh, 0 ) };
     phmap::flat_hash_set<Vehicle *> visited_vehs;
-
+    phmap::flat_hash_set<tripoint> visited_targets;
     while( amount > 0 && !connected_vehs.empty() ) {
-        const auto &current_node = connected_vehs.back();
+        auto current_node = connected_vehs.back();
         Vehicle *current_veh = current_node.first;
-        const int &current_loss = current_node.second;
+        int current_loss = current_node.second;
         
         visited_vehs.insert( current_veh );
         connected_vehs.pop_back();
@@ -5255,6 +5255,7 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
             }
         }
     }
+
     return amount;
 }
 
