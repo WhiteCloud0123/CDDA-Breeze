@@ -5178,9 +5178,9 @@ vehicle *vehicle::find_vehicle( const tripoint &where )
     return nullptr;
 }
 
-std::map<vehicle *, bool> vehicle::enumerate_vehicles( const std::set<vehicle *> &origins )
+phmap::flat_hash_map<vehicle *, bool> vehicle::enumerate_vehicles( const std::set<vehicle *> &origins )
 {
-    std::map<vehicle *, bool> result; // the bool represents if vehicle ptr is in origins set
+    phmap::flat_hash_map<vehicle *, bool> result; // the bool represents if vehicle ptr is in origins set
     const auto enumerate_visitor = [&result]( vehicle * veh, int amount, int /* loss_amount */ ) {
         result.emplace( veh, false ); // only add if element is not present already.
         return amount;
