@@ -37,7 +37,6 @@
 #include "type_id.h"
 #include "units.h"
 #include "vpart_range.h"
-#include "parallel_hashmap/phmap.h"
 
 class Character;
 class Creature;
@@ -1563,7 +1562,7 @@ class vehicle
         * @return a map of vehicle pointers to a bool that is true if the
         * vehicle is in the @ref origins set.
         */
-        static phmap::flat_hash_map<vehicle *, bool> enumerate_vehicles( const std::set<vehicle *> &origins );
+        static std::map<vehicle *, bool> enumerate_vehicles( const std::set<vehicle *> &origins );
         // idle fuel consumption
         void idle( bool on_map = true );
         // continuous processing for running vehicle alarms
