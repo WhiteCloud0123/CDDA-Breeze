@@ -2,16 +2,27 @@
 # 下面这行这么长
 ##############################################################################
 <color_white>CDDA-微风 项目管理者：</color>
+
 <color_yellow>WhiteCloud0123</color>
 
 
 <color_white>原作者：</color>           
+
 <color_yellow>Whales</color>（<color_dark_gray>不再参与</color>） 
+
 <color_yellow>KevinGranade</color>（<color_dark_gray>Cataclysm DDA</color>）
 
 
 <color_white>特别感谢：</color>
-<color_yellow>SurFlurer</color> 性能优化
+
+<color_yellow>greg7mdp</color>  开源项目parallel-hashmap的作者。此项目提供了一些非常高效的容器，为优化工作提供了很多助力
+
+<color_yellow>andrei8l</color>  性能优化
+
 <color_yellow>akrieger</color>  与GithHub工作流有关的修复、性能优化
+
+<color_yellow>SurFlurer</color> 性能优化
+
 <color_yellow>BrettDong</color> 与Android构建有关的修复
+
 <color_yellow>I-am-Erk</color>  添加了海洋
