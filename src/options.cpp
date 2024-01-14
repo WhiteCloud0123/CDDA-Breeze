@@ -2057,7 +2057,7 @@ void options_manager::add_options_graphics()
 
     add("启用新版区域显示", "graphics", to_translation("启用新版区域显示"),
         to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
-        false
+        true
     );
 
     add_empty_line();
