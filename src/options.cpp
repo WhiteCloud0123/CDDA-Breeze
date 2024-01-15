@@ -2551,6 +2551,11 @@ void options_manager::add_options_world_default()
          0, 1000, 100
        );
 
+    add("宏观种子生长周期比例系数", "world_default", to_translation("宏观种子生长周期比例系数"),
+        to_translation("数值设置为1.0会使种子的生长周期保持原样。数值越小，种子生长的越快，但农作物的产量越低。"),
+        0.1, 1.0, 0.33, 0.1
+    );
+
     add( "ETERNAL_SEASON", "world_default", to_translation( "Eternal season" ),
          to_translation( "If true, keep the initial season for ever." ),
          false

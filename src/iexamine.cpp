@@ -2704,7 +2704,7 @@ void iexamine::harvest_plant( Character &you, const tripoint &examp, bool from_a
         int skillLevel = you.get_skill_level( skill_survival );
         ///\EFFECT_SURVIVAL increases number of plants harvested from a seed
         int plant_count = rng( skillLevel / 2, skillLevel );
-        plant_count *= here.furn( examp )->plant->harvest_multiplier;
+        plant_count *= here.furn( examp )->plant->harvest_multiplier * get_option<float>("宏观种子生长周期比例系数");
         plant_count = std::min( std::max( plant_count, 1 ), 12 );
         const int seedCount = std::max( 1, rng( plant_count / 4, plant_count / 2 ) );
         for( item &i : get_harvest_items( type, plant_count, seedCount, true ) ) {
