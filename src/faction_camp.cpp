@@ -83,6 +83,7 @@
 #include "vpart_position.h"
 #include "weather.h"
 #include "weighted_list.h"
+#include "options.h"
 
 class character_id;
 
@@ -3109,7 +3110,7 @@ static std::pair<size_t, std::string> farm_action( const tripoint_abs_omt &omt_t
                             int skillLevel = comp->get_skill_level( skill_survival );
                             ///\EFFECT_SURVIVAL increases number of plants harvested from a seed
                             int plant_count = rng( skillLevel / 2, skillLevel );
-                            plant_count *= farm_map.furn( pos )->plant->harvest_multiplier;
+                            plant_count *= farm_map.furn( pos )->plant->harvest_multiplier * get_option<float>("宏观种子生长周期比例系数");
                             plant_count = std::min( std::max( plant_count, 1 ), 12 );
                             int seed_cnt = std::max( 1, rng( plant_count / 4, plant_count / 2 ) );
                             for( item &i : iexamine::get_harvest_items( *seed->type, plant_count,
