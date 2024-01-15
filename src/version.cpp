@@ -3,7 +3,7 @@
 #if (defined(_WIN32) || defined(MINGW)) && !defined(GIT_VERSION) && !defined(CROSS_LINUX) && !defined(_MSC_VER)
 
 #ifndef VERSION
-#define VERSION "CDDA-Breeze 7.0"
+#define VERSION "CDDA-Breeze 7.1"
 #endif
 
 #else
