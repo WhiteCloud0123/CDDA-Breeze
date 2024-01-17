@@ -2181,7 +2181,7 @@ void options_manager::add_options_graphics()
 
     add( "TILES", "graphics", to_translation( "Choose tileset" ),
          to_translation( "Choose the tileset you want to use." ),
-         build_tilesets_list(), "UltimateCataclysm", COPT_CURSES_HIDE
+         build_tilesets_list(), "MshockXottoplus", COPT_CURSES_HIDE
        ); // populate the options dynamically
 
     add( "USE_DISTANT_TILES", "graphics", to_translation( "Use separate tileset for far" ),
@@ -2191,7 +2191,7 @@ void options_manager::add_options_graphics()
 
     add( "DISTANT_TILES", "graphics", to_translation( "Choose distant tileset" ),
          to_translation( "Choose the tileset you want to use for far zoom." ),
-         build_tilesets_list(), "UltimateCataclysm", COPT_CURSES_HIDE
+         build_tilesets_list(), "MshockXottoplus", COPT_CURSES_HIDE
        ); // populate the options dynamically
 
     add( "SWAP_ZOOM", "graphics", to_translation( "Zoom Threshold" ),
