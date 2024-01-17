@@ -9336,6 +9336,18 @@ cata::optional<int> iuse::ebooksave( Character *p, item *it, bool t, const tripo
         return cata::nullopt;
     }
 
+    const item* i = book.get_item();
+    std::string message;
+    for (npc &n :g->all_npcs()) {
+        if (i->is_owned_by(n) && n.sees(get_player_character())) {
+            message = n.get_name() + "非常严肃地告诉你不要做多余的举动。确定要进行扫描吗？";
+            if (query_yn(message)) {
+                n.set_attitude(NPCATT_KILL);
+            }
+            break;
+        }
+    }
+  
     p->assign_activity(
         player_activity( ebooksave_activity_actor( book, item_location( *p, it ) ) ) );
 
