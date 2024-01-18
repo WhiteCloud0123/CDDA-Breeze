@@ -510,7 +510,7 @@
     "name": [ "Unstable Footing" ],
     "desc": [ "Your footing is unstable.  It's more difficult to fight while standing here." ],
     "apply_message": "You try to keep your balance.",
-    "resist_traits": [ "GASTROPOD_BALANCE" ],
+    "resist_traits": [ "GASTROPOD_BALANCE", "BIRD_LEGS" ],
     "rating": "bad"
   },
   {

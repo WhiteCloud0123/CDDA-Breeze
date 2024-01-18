@@ -3730,7 +3730,7 @@
     "visibility": 4,
     "ugliness": 2,
     "mixed_effect": true,
-    "description": "Your legs and feet have become bird-like.  Instead of toes you now have three long talons at the front and one at the back, ending in wicked claws and preventing you from wearing shoes.  Fortunately they don't impede your movement.",
+    "description": "你的腿和脚变得像鸟一样了。现在你的脚趾不再是脚趾，而是三根前趾，一根后趾。它们可能不适合人类的鞋子，但它们非常适合抓住不稳定的栖木。",
     "spells_learned": [ [ "spell_avian_leap", 1 ] ],
     "types": [ "LEGS", "FEET" ],
     "prereqs": [ "WINGS_BIRD" ],
