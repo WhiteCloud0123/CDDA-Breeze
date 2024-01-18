@@ -1711,6 +1711,12 @@ void options_manager::add_options_interface()
     { { "keychar", to_translation( "Symbol" ) }, { "keycode", to_translation( "Key code" ) } },
     "keychar", COPT_CURSES_HIDE );
 
+    
+    add("USE_PINYIN_SEARCH", "interface", to_translation("使用拼音搜索"),
+        to_translation("开启时，可以使用拼音进行搜索与筛选。搜索过多条目时可致严重卡顿。"),
+        false
+    );
+
     add( "FORCE_CAPITAL_YN", "interface",
          to_translation( "Force capital/modified letters in prompts" ),
          to_translation( "If true, prompts such as Y/N queries only accepts capital or modified letters, while "
@@ -3697,6 +3703,7 @@ static void update_options_cache()
     fov_3d = ::get_option<bool>( "FOV_3D" );
     fov_3d_z_range = ::get_option<int>( "FOV_3D_Z_RANGE" );
     keycode_mode = ::get_option<std::string>( "SDL_KEYBOARD_MODE" ) == "keycode";
+    use_pinyin_search = ::get_option<bool>("USE_PINYIN_SEARCH");
 }
 
 bool options_manager::save() const
