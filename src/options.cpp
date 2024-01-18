@@ -1714,7 +1714,7 @@ void options_manager::add_options_interface()
     
     add("USE_PINYIN_SEARCH", "interface", to_translation("使用拼音搜索"),
         to_translation("开启时，可以使用拼音进行搜索与筛选。搜索过多条目时可致严重卡顿。"),
-        false
+        true
     );
 
     add( "FORCE_CAPITAL_YN", "interface",
