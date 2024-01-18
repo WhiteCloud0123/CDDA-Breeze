@@ -9344,9 +9344,6 @@ cata::optional<int> iuse::ebooksave( Character *p, item *it, bool t, const tripo
             if (query_yn(message)) {
                 n.set_attitude(NPCATT_KILL);
             }
-            else {
-                return cata::nullopt;
-            }
             break;
         }
     }
