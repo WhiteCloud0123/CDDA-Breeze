@@ -13,6 +13,7 @@ float tile_retract_dist_max;
 bool use_tiles;
 bool use_far_tiles;
 bool use_tiles_overmap;
+bool use_pinyin_search;
 test_mode_spilling_action_t test_mode_spilling_action = test_mode_spilling_action_t::spill_all;
 bool direct3d_mode;
 bool pixel_minimap_option;
