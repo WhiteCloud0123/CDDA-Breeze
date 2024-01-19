@@ -346,7 +346,8 @@
     "type": "activity_type",
     "activity_level": "MODERATE_EXERCISE",
     "verb": "interacting with the vehicle",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_TRAIN",
