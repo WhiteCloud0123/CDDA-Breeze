@@ -274,6 +274,8 @@ struct vehicle_part {
 
         // each time this vehicle part is racked this will push the data required to unrack to stack
         std::stack<carried_part_data> carried_stack;
+        
+        bool has_POWER_TRANSFER = false;
 
         /** Specific type of fuel, charges or ammunition currently contained by a part */
         itype_id ammo_current() const;

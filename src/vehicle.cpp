@@ -5203,20 +5203,20 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
     phmap::flat_hash_set<Vehicle *> visited_vehs;
     phmap::flat_hash_set<tripoint> visited_targets;
     while( amount > 0 && !connected_vehs.empty() ) {
-        auto current_node = connected_vehs.back();
+        const auto &current_node = connected_vehs.back();
         Vehicle *current_veh = current_node.first;
         int current_loss = current_node.second;
         
         visited_vehs.insert( current_veh );
         connected_vehs.pop_back();
 
-        add_msg_debug( debugmode::DF_VEHICLE, "Traversing graph with %d power", amount );
+        //add_msg_debug( debugmode::DF_VEHICLE, "Traversing graph with %d power", amount );
 
         for( int p : current_veh->loose_parts ) {
             // If we've already looked at the target location, don't bother the expensive vehicle lookup.
             // ignore loose parts that aren't power transfer cables
-            if (visited_targets.find(current_veh->parts[p].target.second) != visited_targets.end() 
-                   || !current_veh->part_info(p).has_flag("POWER_TRANSFER")) {
+            if (visited_targets.find(current_veh->parts[p].target.second) != visited_targets.end()
+                || !current_veh->parts[p].has_POWER_TRANSFER) {
                 continue;
             }
 
@@ -5237,13 +5237,13 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
             // current_veh could be invalid after this point
 
             float loss_amount = ( static_cast<float>( amount ) * static_cast<float>( target_loss ) ) / 100.0f;
-            add_msg_debug( debugmode::DF_VEHICLE,
+            /*add_msg_debug( debugmode::DF_VEHICLE,
                            "Visiting remote %p with %d power (loss %f, which is %d percent)",
-                           static_cast<void *>( target_veh ), amount, loss_amount, target_loss );
+                           static_cast<void *>( target_veh ), amount, loss_amount, target_loss );*/
 
             amount = action( target_veh, amount, static_cast<int>( loss_amount ) );
-            add_msg_debug( debugmode::DF_VEHICLE, "After remote %p, %d power",
-                           static_cast<void *>( target_veh ), amount );
+            /*add_msg_debug( debugmode::DF_VEHICLE, "After remote %p, %d power",
+                           static_cast<void *>( target_veh ), amount );*/
 
             if( amount < 1 ) {
                 break; // No more charge to donate away.
@@ -6103,6 +6103,14 @@ void vehicle::refresh( const bool remove_fakes )
         }
 
     }
+
+    for (const int& num : loose_parts) {
+        vehicle_part& vp = parts[num];
+        if (vp.info().has_flag("POWER_TRANSFER")) {
+            vp.has_POWER_TRANSFER = true;
+        }
+    }
+
 
     rail_wheel_bounding_box.p1 = point( railwheel_xmin, railwheel_ymin );
     rail_wheel_bounding_box.p2 = point( railwheel_xmax, railwheel_ymax );
