@@ -5216,7 +5216,7 @@ int vehicle::traverse_vehicle_graph( Vehicle *start_veh, int amount, Func action
             // If we've already looked at the target location, don't bother the expensive vehicle lookup.
             // ignore loose parts that aren't power transfer cables
             if (visited_targets.find(current_veh->parts[p].target.second) != visited_targets.end()
-                || !current_veh->parts[p].has_POWER_TRANSFER) {
+                || !current_veh->parts[p].has_POWER_TRANSFER_on_vehicle) {
                 continue;
             }
 
@@ -5998,6 +5998,10 @@ void vehicle::refresh( const bool remove_fakes )
             floating.push_back( p );
         }
 
+        if (vpi.has_flag("POWER_TRANSFER")) {
+            vp.part().has_POWER_TRANSFER_on_vehicle = true;
+        }
+
         if( vp.part().is_unavailable() ) {
             continue;
         }
@@ -6102,13 +6106,6 @@ void vehicle::refresh( const bool remove_fakes )
             cable_ports.push_back(p);
         }
 
-    }
-
-    for (const int& num : loose_parts) {
-        vehicle_part& vp = parts[num];
-        if (vp.info().has_flag("POWER_TRANSFER")) {
-            vp.has_POWER_TRANSFER = true;
-        }
     }
 
 
