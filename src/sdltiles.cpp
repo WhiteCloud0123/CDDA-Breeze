@@ -64,7 +64,6 @@
 #include "output.h"
 #include "overmap_ui.h"
 #include "overmapbuffer.h"
-#include "parallel_hashmap/phmap.h"
 #include "path_info.h"
 #include "point.h"
 #include "sdl_geometry.h"
@@ -2041,12 +2040,6 @@ static bool needs_sdl_surface_visibility_refresh = true;
 using quick_shortcuts_t = std::list<input_event>;
 std::map<std::string, quick_shortcuts_t> quick_shortcuts_map;
 
-using quick_shortcuts_t_default = std::list<input_event>;
-phmap::flat_hash_map<std::string, quick_shortcuts_t_default> quick_shortcuts_map_default;
-
-bool init_defalut_qs = false;
-
-
 // A copy of the last known input_context from the input manager. It's important this is a copy, as there are times
 // the input manager has an empty input_context (eg. when player is moving over slow objects) and we don't want our
 // quick shortcuts to disappear momentarily.
@@ -2375,20 +2368,6 @@ void draw_quick_shortcuts()
     std::string &category = touch_input_context.get_category();
     bool is_default_mode = category == "DEFAULTMODE";
     quick_shortcuts_t &qsl = quick_shortcuts_map[get_quick_shortcut_name( category )];
-    quick_shortcuts_t_default& qsld = quick_shortcuts_map_default[get_quick_shortcut_name(category)];
-    if (!init_defalut_qs) {
-        const std::string default_gameplay_shortcuts =
-            get_option<std::string>("ANDROID_SHORTCUT_DEFAULTS");
-        for (const auto& c : default_gameplay_shortcuts) {
-            if (c >0) {
-                input_event event = input_event(key, input_event_t::keyboard_char);
-                qsld.push_back(event);
-            }
-        }
-        init_default_qs = true;
-    }
-    
-    
     if( qsl.empty() || !touch_input_context.get_registered_manual_keys().empty() ) {
         if( category == "DEFAULTMODE" ) {
             const std::string default_gameplay_shortcuts =
@@ -2566,30 +2545,6 @@ void draw_quick_shortcuts()
             break;
         }
     }
-
-
-
-
-
-    for (auto &q : ) {
-    
-    
-    
-    
-    
-    
-    
-    
-    }
-
-
-
-
-
-
-
-
-
 }
 
 void draw_virtual_joystick()
