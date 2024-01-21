@@ -5826,8 +5826,7 @@ void vehicle::gain_moves()
     // turrets which are enabled will try to reload and then automatically fire
     // Turrets which are disabled but have targets set are a special case
     for( vehicle_part *e : turrets() ) {
-        tripoint &turret_pos = bub_part_pos(*e).raw();
-        Creature *c =c_t.creature_at(turret_pos);
+        Creature *c =c_t.creature_at(bub_part_pos(*e));
     if (e->enabled || e->target.second != e->target.first) {
         automatic_fire_turret(*e, nullptr);
     }
