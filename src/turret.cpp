@@ -342,8 +342,7 @@ void vehicle::turrets_aim_and_fire_single()
     // Find all turrets that are ready to fire
     for( vehicle_part *&t : turrets() ) {
         turret_data data = turret_query( *t );
-        tripoint& turret_pos = bub_part_pos(*t).raw();
-        Creature* c = c_t.creature_at(turret_pos);
+        Creature* c = c_t.creature_at(bub_part_pos(*t));
         if ( c && c->is_npc() &&c->as_npc()->rules.has_flag(ally_rule::use_vehicle_mounted_weapon)) {
             continue;
         }
@@ -388,14 +387,17 @@ bool vehicle::turrets_aim_and_fire_all_manual( bool show_msg )
     std::vector<vehicle_part*>turrets_npc_not_control;
     // 筛选没有npc正在控制的车载武器
     for (vehicle_part *t : turrets) {
-        tripoint &turret_pos = bub_part_pos(*t).raw();
-        Creature* c = c_t.creature_at(turret_pos);
+        Creature* c = c_t.creature_at(bub_part_pos(*t));
         if (c && c->is_npc() && c->as_npc()->rules.has_flag(ally_rule::use_vehicle_mounted_weapon)) {
             continue;
         }
         turrets_npc_not_control.push_back(t);
     }
 
+    if (turrets_npc_not_control.size()==0) {
+        add_msg(m_warning,_("目前没有处于空闲状态的炮塔，请注意队友是否正在进行控制。"));
+        return false;
+    }
 
     turrets_aim_and_fire( turrets_npc_not_control );
     return true;
