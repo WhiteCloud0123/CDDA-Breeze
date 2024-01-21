@@ -395,7 +395,7 @@ bool vehicle::turrets_aim_and_fire_all_manual( bool show_msg )
     }
 
     if (turrets_npc_not_control.size()==0) {
-        add_msg(m_warning,_("目前没有处于空闲状态的炮塔，请注意队友是否正在进行控制。"));
+        add_msg(m_warning,_("目前没有空闲状态的炮塔。"));
         return false;
     }
 
