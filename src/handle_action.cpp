@@ -71,7 +71,6 @@
 #include "options.h"
 #include "output.h"
 #include "overmap_ui.h"
-#include "parallel_hashmap/phmap.h"
 #include "panels.h"
 #include "player_activity.h"
 #include "popup.h"
@@ -177,7 +176,7 @@ static const mtype_id mon_devourer("mon_devourer");
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
 
 #if defined(__ANDROID__)
-extern phmap::flat_hash_map<std::string, std::list<input_event>> quick_shortcuts_map;
+extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
 extern bool add_best_key_for_action_to_quick_shortcuts(action_id action,
     const std::string& category, bool back);
 extern bool add_key_to_quick_shortcuts(int key, const std::string& category, bool back);

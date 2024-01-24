@@ -34,7 +34,6 @@
 #include "overmap.h"
 #include "overmapbuffer.h"
 #include "overmap_types.h"
-#include "parallel_hashmap/phmap.h"
 #include "path_info.h"
 #include "regional_settings.h"
 #include "scent_map.h"
@@ -62,7 +61,7 @@ static const string_id<overmap_connection> overmap_connection_local_road( "local
 #if defined(__ANDROID__)
 #include "input.h"
 
-extern phmap::flat_hash_map<std::string, std::list<input_event>> quick_shortcuts_map;
+extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
 #endif
 
 /*
