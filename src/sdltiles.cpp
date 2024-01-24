@@ -64,7 +64,6 @@
 #include "output.h"
 #include "overmap_ui.h"
 #include "overmapbuffer.h"
-#include "parallel_hashmap/phmap.h"
 #include "path_info.h"
 #include "point.h"
 #include "sdl_geometry.h"
@@ -2039,7 +2038,7 @@ static bool needs_sdl_surface_visibility_refresh = true;
 
 // Quick shortcuts container: maps the touch input context category (std::string) to a std::list of input_events.
 using quick_shortcuts_t = std::list<input_event>;
-phmap::flat_hash_map<std::string, quick_shortcuts_t> quick_shortcuts_map;
+std::map<std::string, quick_shortcuts_t> quick_shortcuts_map;
 
 // A copy of the last known input_context from the input manager. It's important this is a copy, as there are times
 // the input manager has an empty input_context (eg. when player is moving over slow objects) and we don't want our
