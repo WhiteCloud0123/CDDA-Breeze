@@ -2293,44 +2293,6 @@ bool remove_expired_actions_from_quick_shortcuts( const std::string &category )
     return ret;
 }
 
-void remove_stale_inventory_quick_shortcuts()
-{
-    if( get_option<bool>( "ANDROID_INVENTORY_AUTOADD" ) ) {
-        quick_shortcuts_t &qsl = quick_shortcuts_map["INVENTORY"];
-        quick_shortcuts_t::iterator it = qsl.begin();
-        bool in_inventory;
-        int key;
-        bool valid;
-        while( it != qsl.end() ) {
-            key = ( *it ).get_first_input();
-            valid = inv_chars.valid( key );
-            in_inventory = false;
-            if( valid ) {
-                Character &player_character = get_player_character();
-                in_inventory = player_character.inv->invlet_to_position( key ) != INT_MIN;
-                if( !in_inventory ) {
-                    // We couldn't find this item in the inventory, let's check worn items
-                    cata::optional<const item *> item = player_character.worn.item_worn_with_inv_let( key );
-                    if( item ) {
-                        in_inventory = true;
-                    }
-                }
-                if( !in_inventory ) {
-                    // We couldn't find it in worn items either, check weapon held
-                    item_location wielded = player_character.get_wielded_item();
-                    if( wielded && wielded->invlet == key ) {
-                        in_inventory = true;
-                    }
-                }
-            }
-            if( valid && !in_inventory ) {
-                it = qsl.erase( it );
-            } else {
-                ++it;
-            }
-        }
-    }
-}
 
 // Draw preview of terminal size when adjusting values
 void draw_terminal_size_preview()
