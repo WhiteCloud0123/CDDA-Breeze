@@ -2819,12 +2819,6 @@ void options_manager::add_options_android()
          true
        );
 
-    add( "ANDROID_INVENTORY_AUTOADD", "android",
-         to_translation( "Add shortcuts for inventory selections" ),
-         to_translation( "If true, automatically add a shortcut for items selected via the inventory." ),
-         true
-       );
-
     add_empty_line();
 
     add( "ANDROID_TAP_KEY", "android", to_translation( "Tap key (in-game)" ),

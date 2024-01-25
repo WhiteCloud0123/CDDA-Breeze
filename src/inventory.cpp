@@ -331,10 +331,6 @@ void inventory::push_back( const item &newit )
     add_item( newit );
 }
 
-#if defined(__ANDROID__)
-extern void remove_stale_inventory_quick_shortcuts();
-#endif
-
 item *inventory::provide_pseudo_item( const itype_id &id, int battery )
 {
     if( id.is_empty() || !provisioned_pseudo_tools.insert( id ).second ) {
@@ -427,9 +423,7 @@ void inventory::restack( Character &p )
     }
     items.sort( stack_compare );
 
-#if defined(__ANDROID__)
-    remove_stale_inventory_quick_shortcuts();
-#endif
+
 }
 
 static int count_charges_in_list( const itype *type, const map_stack &items )

@@ -2036,11 +2036,6 @@ int game::inventory_item_menu( item_location locThisItem,
 
     item &oThisItem = *locThisItem;
     if( u.has_item( oThisItem ) ) {
-#if defined(__ANDROID__)
-        if( get_option<bool>( "ANDROID_INVENTORY_AUTOADD" ) ) {
-            add_key_to_quick_shortcuts( oThisItem.invlet, "INVENTORY", false );
-        }
-#endif
 
         std::vector<iteminfo> vThisItem;
         std::vector<iteminfo> vDummy;
