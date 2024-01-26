@@ -1494,40 +1494,89 @@ static activity_reason_info can_do_activity_there( const activity_id &act, Chara
         // TODO: fix point types
         const inventory& inv = you.crafting_inventory(src_loc.raw(), PICKUP_RANGE - 1, false);
         requirement_data req;
-        for( item &i : here.i_at( src_loc ) ) {
-            // Skip items marked by other ppl.
-            if( i.has_var( "activity_var" ) && i.get_var( "activity_var" ) != you.name ) {
-                continue;
-            }
-            //unmark the item before check
-            i.erase_var( "activity_var" );
-            if( i.is_disassemblable() ) {
-                // Are the requirements fulfilled?
-                const recipe &r = recipe_dictionary::get_uncraft( ( i.typeId() == itype_disassembly ) ?
-                                  i.components.front().typeId() : i.typeId() );
-                req = r.disassembly_requirements();
-                if( !std::all_of( req.get_qualities().begin(),
-                req.get_qualities().end(), [&inv]( const std::vector<quality_requirement> &cur ) {
-                return cur.empty() ||
-                    std::any_of( cur.begin(), cur.end(), [&inv]( const quality_requirement & curr ) {
-                        return curr.has( inv, return_true<item> );
-                    } );
-                } ) ) {
+
+        bool ms_has_item = !here.i_at(src_loc).empty();
+        if (ms_has_item) {
+            for (item& i : here.i_at(src_loc)) {
+                // Skip items marked by other ppl.
+                if (i.has_var("activity_var") && i.get_var("activity_var") != you.name) {
                     continue;
                 }
-                if( !std::all_of( req.get_tools().begin(),
-                req.get_tools().end(), [&inv]( const std::vector<tool_comp> &cur ) {
-                return cur.empty() || std::any_of( cur.begin(), cur.end(), [&inv]( const tool_comp & curr ) {
-                        return  curr.has( inv, return_true<item> );
-                    } );
-                } ) ) {
-                    continue;
+                //unmark the item before check
+                i.erase_var("activity_var");
+                if (i.is_disassemblable()) {
+                    // Are the requirements fulfilled?
+                    const recipe& r = recipe_dictionary::get_uncraft((i.typeId() == itype_disassembly) ?
+                        i.components.front().typeId() : i.typeId());
+                    req = r.disassembly_requirements();
+                    if (!std::all_of(req.get_qualities().begin(),
+                        req.get_qualities().end(), [&inv](const std::vector<quality_requirement>& cur) {
+                            return cur.empty() ||
+                                std::any_of(cur.begin(), cur.end(), [&inv](const quality_requirement& curr) {
+                                return curr.has(inv, return_true<item>);
+                                    });
+                        })) {
+                        continue;
+                    }
+                    if (!std::all_of(req.get_tools().begin(),
+                        req.get_tools().end(), [&inv](const std::vector<tool_comp>& cur) {
+                            return cur.empty() || std::any_of(cur.begin(), cur.end(), [&inv](const tool_comp& curr) {
+                                return  curr.has(inv, return_true<item>);
+                                });
+                        })) {
+                        continue;
+                    }
+                    // check passed, mark the item
+                    i.set_var("activity_var", you.name);
+                    return activity_reason_info::ok(do_activity_reason::NEEDS_DISASSEMBLE);
                 }
-                // check passed, mark the item
-                i.set_var( "activity_var", you.name );
-                return activity_reason_info::ok( do_activity_reason::NEEDS_DISASSEMBLE );
             }
         }
+        else {
+ 
+            const optional_vpart_position vp = here.veh_at(src_loc);
+            if (vp) {
+                int cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
+                bool vp_has_items = cargo_part >= 0 && !vp->vehicle().get_items(cargo_part).empty();
+                if (vp_has_items) {
+                    for (item& i : vp->vehicle().get_items(cargo_part)) {
+                        // Skip items marked by other ppl.
+                        if (i.has_var("activity_var") && i.get_var("activity_var") != you.name) {
+                            continue;
+                        }
+                        //unmark the item before check
+                        i.erase_var("activity_var");
+                        if (i.is_disassemblable()) {
+                            // Are the requirements fulfilled?
+                            const recipe& r = recipe_dictionary::get_uncraft((i.typeId() == itype_disassembly) ?
+                                i.components.front().typeId() : i.typeId());
+                            req = r.disassembly_requirements();
+                            if (!std::all_of(req.get_qualities().begin(),
+                                req.get_qualities().end(), [&inv](const std::vector<quality_requirement>& cur) {
+                                    return cur.empty() ||
+                                        std::any_of(cur.begin(), cur.end(), [&inv](const quality_requirement& curr) {
+                                        return curr.has(inv, return_true<item>);
+                                            });
+                                })) {
+                                continue;
+                            }
+                            if (!std::all_of(req.get_tools().begin(),
+                                req.get_tools().end(), [&inv](const std::vector<tool_comp>& cur) {
+                                    return cur.empty() || std::any_of(cur.begin(), cur.end(), [&inv](const tool_comp& curr) {
+                                        return  curr.has(inv, return_true<item>);
+                                        });
+                                })) {
+                                continue;
+                            }
+                            // check passed, mark the item
+                            i.set_var("activity_var", you.name);
+                            return activity_reason_info::ok(do_activity_reason::NEEDS_DISASSEMBLE);
+                        }
+                    }
+                }
+            }
+        }
+
         if( !req.is_null() || !req.is_empty() ) {
             // need tools
             return activity_reason_info( do_activity_reason::NEEDS_DISASSEMBLE, false, req );
@@ -3148,28 +3197,64 @@ static bool generic_multi_activity_do(
             }
         }
     } else if( reason == do_activity_reason::NEEDS_DISASSEMBLE ) {
-        map_stack items = here.i_at( src_loc );
-        for( item &elem : items ) {
-            if( elem.is_disassemblable() ) {
-                // Disassemble the checked one.
-                if( elem.get_var( "activity_var" ) == you.name ) {
-                    const recipe &r = ( elem.typeId() == itype_disassembly ) ? elem.get_making() :
-                                      recipe_dictionary::get_uncraft( elem.typeId() );
-                    int const qty = std::max( 1, elem.typeId() == itype_disassembly ? elem.get_making_batch_size() :
-                                              elem.charges );
-                    player_activity act = player_activity( disassemble_activity_actor( r.time_to_craft_moves( you,
-                                                           recipe_time_flag::ignore_proficiencies ) * qty ) );
-                    // TODO: fix point types
-                    act.targets.emplace_back( map_cursor( src_loc.raw() ), &elem );
-                    act.placement = here.getglobal( src_loc );
-                    act.position = qty;
-                    act.index = false;
-                    you.assign_activity( act );
-                    // Keep doing
-                    // After assignment of disassemble activity (not multitype anymore)
-                    // the backlog will not be nuked in do_player_activity()
-                    you.backlog.emplace_back( player_activity( ACT_MULTIPLE_DIS ) );
-                    break;
+        
+        bool ms_has_item = !here.i_at(src_loc).empty();
+        if (ms_has_item) {
+            for (item& elem : here.i_at(src_loc)) {
+                if (elem.is_disassemblable()) {
+                    // Disassemble the checked one.
+                    if (elem.get_var("activity_var") == you.name) {
+                        const recipe& r = (elem.typeId() == itype_disassembly) ? elem.get_making() :
+                            recipe_dictionary::get_uncraft(elem.typeId());
+                        int const qty = std::max(1, elem.typeId() == itype_disassembly ? elem.get_making_batch_size() :
+                            elem.charges);
+                        player_activity act = player_activity(disassemble_activity_actor(r.time_to_craft_moves(you,
+                            recipe_time_flag::ignore_proficiencies) * qty));
+                        // TODO: fix point types
+                        act.targets.emplace_back(map_cursor(src_loc.raw()), &elem);
+                        act.placement = here.getglobal(src_loc);
+                        act.position = qty;
+                        act.index = false;
+                        you.assign_activity(act);
+                        // Keep doing
+                        // After assignment of disassemble activity (not multitype anymore)
+                        // the backlog will not be nuked in do_player_activity()
+                        you.backlog.emplace_back(player_activity(ACT_MULTIPLE_DIS));
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            const optional_vpart_position vp = here.veh_at(src_loc);
+            if (vp) {
+                int cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
+                bool vp_has_items = cargo_part >= 0 && !vp->vehicle().get_items(cargo_part).empty();
+
+                for (item& elem : vp->vehicle().get_items(cargo_part)) {
+                    if (elem.is_disassemblable()) {
+                        // Disassemble the checked one.
+                        if (elem.get_var("activity_var") == you.name) {
+                            const recipe& r = (elem.typeId() == itype_disassembly) ? elem.get_making() :
+                                recipe_dictionary::get_uncraft(elem.typeId());
+                            int const qty = std::max(1, elem.typeId() == itype_disassembly ? elem.get_making_batch_size() :
+                                elem.charges);
+                            player_activity act = player_activity(disassemble_activity_actor(r.time_to_craft_moves(you,
+                                recipe_time_flag::ignore_proficiencies) * qty));
+                            // TODO: fix point types
+                            act.targets.emplace_back(vehicle_cursor(vp->vehicle(),cargo_part), &elem);
+                            act.placement = here.getglobal(src_loc);
+                            act.position = qty;
+                            act.index = false;
+                            you.assign_activity(act);
+                            // Keep doing
+                            // After assignment of disassemble activity (not multitype anymore)
+                            // the backlog will not be nuked in do_player_activity()
+                            you.backlog.emplace_back(player_activity(ACT_MULTIPLE_DIS));
+
+                            break;
+                        }
+                    }
                 }
             }
         }
