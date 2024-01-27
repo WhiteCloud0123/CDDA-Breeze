@@ -27,4 +27,4 @@ Special thanks to the contributors, including but not limited to, people below:
   <img src="https://contrib.rocks/image?repo=cleverraven/cataclysm-dda" />
 </a>
 
-The complete list of contributors can be viewed https://github.com/CleverRaven/Cataclysm-DDA/graphs/contributors
+The complete list of contributors can be viewed in the https://github.com/CleverRaven/Cataclysm-DDA/graphs/contributors
