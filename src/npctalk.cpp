@@ -327,7 +327,22 @@ enum npc_chat_menu {
     NPC_CHAT_ANIMAL_VEHICLE_FOLLOW,
     NPC_CHAT_ANIMAL_VEHICLE_STOP_FOLLOW,
     NPC_CHAT_COMMAND_MAGIC_VEHICLE_FOLLOW,
-    NPC_CHAT_COMMAND_MAGIC_VEHICLE_STOP_FOLLOW
+    NPC_CHAT_COMMAND_MAGIC_VEHICLE_STOP_FOLLOW,
+    NPC_CHAT_ACTIVITIES,
+    NPC_CHAT_ACTIVITIES_MOVE_LOOT,
+    NPC_CHAT_ACTIVITIES_BUTCHERY,
+    NPC_CHAT_ACTIVITIES_CHOP_PLANKS,
+    NPC_CHAT_ACTIVITIES_CHOP_TREES,
+    NPC_CHAT_ACTIVITIES_CONSTRUCTION,
+    NPC_CHAT_ACTIVITIES_DISASSEMBLY,
+    NPC_CHAT_ACTIVITIES_FARMING,
+    NPC_CHAT_ACTIVITIES_FISHING,
+    NPC_CHAT_ACTIVITIES_MINING,
+    NPC_CHAT_ACTIVITIES_MOPPING,
+    NPC_CHAT_ACTIVITIES_VEHICLE_DECONSTRUCTION,
+    NPC_CHAT_ACTIVITIES_VEHICLE_REPAIR,
+    NPC_CHAT_ACTIVITIES_UNASSIGN
+
 };
 
 // given a vector of NPCs, presents a menu to allow a player to pick one.
@@ -526,6 +541,32 @@ static void npc_temp_orders_menu( const std::vector<npc *> &npc_list )
 
 }
 
+static int npc_activities_menu()
+{
+    uilist nmenu;
+    nmenu.text = _("需要进行什么工作？");
+
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_MOVE_LOOT, true, 'l', _("整理物资"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_BUTCHERY, true, 'b', _("屠宰尸体"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_CHOP_TREES, true, 't', _("伐木"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_CHOP_PLANKS, true, 'p', _("劈木头"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_CONSTRUCTION, true, 'c', _("按蓝图建造"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_DISASSEMBLY, true, 'd', _("拆解物品"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_FARMING, true, 'f', _("耕作"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_FISHING, true, 'F', _("钓鱼"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_MINING, true, 'M', _("挖掘"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_MOPPING, true, 'm', _("拖地"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_VEHICLE_DECONSTRUCTION, true, 'v',
+        _("拆卸载具"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_VEHICLE_REPAIR, true, 'V', _("修理载具"));
+    nmenu.addentry(NPC_CHAT_ACTIVITIES_UNASSIGN, true, '-',
+        _("休息一下吧（停下手头工作）)"));
+
+    nmenu.query();
+
+    return nmenu.ret;
+}
+
 static void tell_veh_stop_following()
 {
     Character &player_character = get_player_character();
@@ -605,6 +646,12 @@ void game::chat()
     } );
     const int guard_count = guards.size();
 
+    const std::vector<npc*> available_for_activities = get_npcs_if([&](const npc& guy) {
+        return guy.is_player_ally() && guy.can_hear(u.pos(), volume) &&
+            guy.companion_mission_role_id != "FACTION CAMP";
+        });
+    const int available_for_activities_count = available_for_activities.size();
+
     if( player_character.has_trait( trait_PROF_FOODP ) &&
         !( player_character.is_wearing( itype_foodperson_mask ) ||
            player_character.is_wearing( itype_foodperson_mask_on ) ) ) {
@@ -648,6 +695,22 @@ void game::chat()
                         _( "Talk to…" )
                       );
     }
+
+    if (!available_for_activities.empty()) {
+        const Creature* guy = available_for_activities.front();
+        std::string title;
+        if (guy->is_npc()) {
+            title = guy->as_npc()->name_and_activity();
+        }
+        else if (guy->is_monster()) {
+            title = guy->as_monster()->disp_name();
+        }
+        nmenu.addentry(NPC_CHAT_ACTIVITIES, true, 'A', available_for_activities_count == 1 ?
+            string_format(_("让%s继续他的工作…"), title) :
+            _("让某人继续他的工作…")
+        );
+    }
+
     nmenu.addentry( NPC_CHAT_YELL, true, 'a', _( "Yell" ) );
     nmenu.addentry( NPC_CHAT_SENTENCE, true, 'b', _( "Yell a sentence" ) );
     if( !animal_vehicles.empty() ) {
@@ -869,6 +932,82 @@ void game::chat()
         case NPC_CHAT_COMMAND_MAGIC_VEHICLE_STOP_FOLLOW:
             tell_magic_veh_stop_following();
             break;
+        case NPC_CHAT_ACTIVITIES: {
+            const int activity = npc_activities_menu();
+
+            std::vector<int> npcs_selected;
+
+            if (available_for_activities_count == 1) {
+                npcs_selected.push_back(0);
+            }
+            else {
+                std::vector<Character*> clist(available_for_activities.begin(), available_for_activities.end());
+                npcs_selected = npcs_select_menu(clist, _("指派哪位同伴？"), nullptr);
+            }
+
+            for (int i : npcs_selected) {
+
+                npc* selected_npc = available_for_activities[i];
+
+                switch (activity) {
+                case NPC_CHAT_ACTIVITIES_MOVE_LOOT: {
+                    talk_function::sort_loot(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_BUTCHERY: {
+                    talk_function::do_butcher(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_CHOP_PLANKS: {
+                    talk_function::do_chop_plank(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_CHOP_TREES: {
+                    talk_function::do_chop_trees(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_CONSTRUCTION: {
+                    talk_function::do_construction(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_DISASSEMBLY: {
+                    talk_function::do_disassembly(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_FARMING: {
+                    talk_function::do_farming(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_FISHING: {
+                    talk_function::do_fishing(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_MINING: {
+                    talk_function::do_mining(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_MOPPING: {
+                    talk_function::do_mopping(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_VEHICLE_DECONSTRUCTION: {
+                    talk_function::do_vehicle_deconstruct(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_VEHICLE_REPAIR: {
+                    talk_function::do_vehicle_repair(*selected_npc);
+                    break;
+                }
+                case NPC_CHAT_ACTIVITIES_UNASSIGN: {
+                    talk_function::revert_activity(*selected_npc);
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
+            break;
+        }
         default:
             return;
     }
