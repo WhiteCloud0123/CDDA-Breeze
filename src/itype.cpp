@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "ammo.h"
+#include "cata_utility.h"
 #include "character.h"
 #include "debug.h"
 #include "item.h"
@@ -96,6 +97,18 @@ std::string itype::nname( unsigned int quantity ) const
     }
     return name.translated( quantity );
 }
+
+bool itype::has_any_quality(const std::string& quality) const
+{
+    return std::any_of(qualities.begin(),
+        qualities.end(), [&quality](const std::pair<quality_id, int>& e) {
+            return lcmatch(e.first->name, quality);
+        }) || std::any_of(charged_qualities.begin(),
+            charged_qualities.end(), [&quality](const std::pair<quality_id, int>& e) {
+                return lcmatch(e.first->name, quality);
+            });
+}
+
 
 int itype::charges_default() const
 {
