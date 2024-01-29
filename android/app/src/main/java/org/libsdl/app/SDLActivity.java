@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
@@ -90,6 +91,31 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     // This is what SDL runs in. It invokes SDL_main(), eventually
     protected static Thread mSDLThread;
+
+    Button tabButton;
+
+    public void setExtraButtonVisibility(boolean visible) {
+
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                if(visible) {
+                    tabButton.setVisibility(View.VISIBLE);
+                } else {
+                    tabButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+    }
+
+    public void showToastMessage(String string) {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast toast = Toast.makeText(SDLActivity.this,string,Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+    }
 
     protected static SDLGenericMotionListener_API12 getMotionListener() {
         if (mMotionListener == null) {
@@ -289,6 +315,23 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 SDLActivity.onNativeDropFile(filename);
             }
         }
+
+        tabButton = new Button(this);
+        tabButton.setBackgroundColor(android.R.color.transparent);
+        tabButton.setText("Tab");
+        tabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyEvent keyEvent = new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_TAB);
+                dispatchKeyEvent(keyEvent);
+            }
+        });
+        tabButton.setAlpha((float)0.5);
+        tabButton.setVisibility(View.INVISIBLE);
+        
+        mLayout.addView(tabButton);
+
+
     }
 
     protected void pauseNativeThread() {

@@ -2732,6 +2732,17 @@ void options_manager::add_options_android()
          android_get_default_setting( "Native Android UI", false )
        );
 
+    add("启用扩展按键", "android", to_translation("启用扩展按键"),
+        to_translation("开启后，屏幕上会显示扩展按键。修改后需要重新启动。"),
+        false
+    );
+
+    add("启用消息推送", "android", to_translation("启用消息推送"),
+        to_translation("开启后，会将指定的npc说的话进行推送。关闭此选项可以略微提升npc说话时的游戏性能。"),
+        false
+    );
+
+
     add( "ANDROID_AUTO_KEYBOARD", "android", to_translation( "Auto-manage virtual keyboard" ),
          to_translation( "If true, automatically show/hide the virtual keyboard when necessary based on context.  If false, virtual keyboard must be toggled manually." ),
          true

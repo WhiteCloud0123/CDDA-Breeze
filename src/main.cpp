@@ -60,6 +60,10 @@
 #   include "prefix.h"
 #endif
 
+#if defined(__ANDROID__)
+#include <jni.h>
+#endif
+
 class ui_adaptor;
 
 #if defined(TILES)
@@ -805,6 +809,27 @@ int main( int argc, const char *argv[] )
     main_menu::queued_world_to_load = std::move( cli.world );
 
     get_help().load();
+
+#if defined(__ANDROID__)
+
+    if (get_option<bool>("启用扩展按键")) {
+
+        JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+        jobject activity = (jobject)SDL_AndroidGetActivity();
+        jclass clazz(env->GetObjectClass(activity));
+        jmethodID method_id = env->GetMethodID(clazz, "setExtraButtonVisibility", "(Z)V");
+
+        if (method_id) {
+            env->CallVoidMethod(activity, method_id, true);
+        }
+
+        env->DeleteLocalRef(activity);
+        env->DeleteLocalRef(clazz);
+
+    }
+
+#endif
+
 
     while( true ) {
         main_menu menu;

@@ -85,6 +85,15 @@
 #include "vpart_range.h"
 #include "name.h"
 
+
+#if defined(__ANDROID__)
+
+#include<jni.h>
+#include<SDL.h>
+
+#endif
+
+
 static const efftype_id effect_bouldering( "bouldering" );
 static const efftype_id effect_contacts( "contacts" );
 static const efftype_id effect_controlled( "controlled" );
@@ -98,6 +107,7 @@ static const efftype_id effect_pkill1( "pkill1" );
 static const efftype_id effect_pkill2( "pkill2" );
 static const efftype_id effect_pkill3( "pkill3" );
 static const efftype_id effect_pkill_l( "pkill_l" );
+static const efftype_id effect_push_words_spoken_by_the_npc("push_words_spoken_by_the_npc");
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_riding( "riding" );
 
@@ -1963,6 +1973,28 @@ void npc::say( const std::string &line, const sounds::sound_t spriority ) const
     }
 
     std::string sound = string_format( _( "%1$s saying \"%2$s\"" ), get_name(), formatted_line );
+
+#if defined(__ANDROID__)
+
+    if (get_option<bool>("启用消息推送") && has_effect(effect_push_words_spoken_by_the_npc)) {
+        JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+        jobject activity = (jobject)SDL_AndroidGetActivity();
+        jclass clazz(env->GetObjectClass(activity));
+        jmethodID method_id = env->GetMethodID(clazz, "showToastMessage", "(Ljava/lang/String;)V");
+        jstring toast_message = env->NewStringUTF(sound.c_str());
+        if (method_id) {
+            env->CallVoidMethod(activity, method_id, toast_message);
+        }
+        env->DeleteLocalRef(activity);
+        env->DeleteLocalRef(clazz);
+        env->DeleteLocalRef(toast_message);
+    }
+
+#endif
+
+
+
+
 
     // Sound happens even if we can't hear it
     if( spriority == sounds::sound_t::order || spriority == sounds::sound_t::alert ) {
