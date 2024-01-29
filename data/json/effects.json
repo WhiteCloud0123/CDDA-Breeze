@@ -3747,5 +3747,11 @@
     "type": "effect_type",
     "name": [ "待在这里" ],
     "desc": [ "待在这里。" ]
+  },
+  {
+    "id": "push_words_spoken_by_the_npc",
+    "type": "effect_type",
+    "name": [ "推送此npc说的话" ],
+    "desc": [ "推送此npc说的话。" ]
   }
 ]

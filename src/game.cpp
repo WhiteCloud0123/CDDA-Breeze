@@ -226,6 +226,7 @@ static const efftype_id effect_laserlocked( "laserlocked" );
 static const efftype_id effect_no_sight( "no_sight" );
 static const efftype_id effect_onfire( "onfire" );
 static const efftype_id effect_pet( "pet" );
+static const efftype_id effect_push_words_spoken_by_the_npc("push_words_spoken_by_the_npc");
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_riding( "riding" );
 static const efftype_id effect_stunned( "stunned" );
@@ -5646,7 +5647,9 @@ bool game::npc_menu( npc &who )
         attack,
         disarm,
         steal,
-        trade
+        trade,
+        push_words_spoken_by_the_npc,
+        not_push_words_spoken_by_the_npc
     };
 
     const bool obeys = debug_mode || ( who.is_friendly( u ) && !who.in_sleep_state() );
@@ -5669,6 +5672,17 @@ bool game::npc_menu( npc &who )
     } else {
         amenu.addentry( trade, true, 'b', _( "Trade" ) );
     }
+
+#if defined(__ANDROID__)
+
+    if (!who.has_effect(effect_push_words_spoken_by_the_npc)) {
+        amenu.addentry(push_words_spoken_by_the_npc, true, 'P', _("推送 %s 说的话"),who.disp_name());
+    }
+    else {
+        amenu.addentry(not_push_words_spoken_by_the_npc, true, 'P', _("不要推送 %s 说的话"), who.disp_name());
+    }
+
+#endif
 
     amenu.query();
 
@@ -5777,6 +5791,12 @@ bool game::npc_menu( npc &who )
         } else {
             npc_trading::trade( who, 0, _( "Trade" ) );
         }
+    }
+    else if (choice == push_words_spoken_by_the_npc) {
+        who.add_effect(effect_push_words_spoken_by_the_npc,1_minutes,true);
+    }
+    else if (choice == not_push_words_spoken_by_the_npc) {
+        who.remove_effect(effect_push_words_spoken_by_the_npc);
     }
 
     return true;
