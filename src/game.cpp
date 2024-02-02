@@ -7397,7 +7397,7 @@ cata::optional<std::vector<tripoint_bub_ms>> game::safe_route_to( Character &who
     };
     route_t shortest_route;
     std::set<tripoint> path_avoid;
-    for( const tripoint_bub_ms &p : points_in_radius( who.pos_bub(), MAX_VIEW_DISTANCE ) ) {
+    for( const tripoint_bub_ms &p : points_in_radius( who.pos_bub(), 60 ) ) {
         if( is_dangerous_tile( p.raw() ) ) {
             path_avoid.insert( p.raw() );
         }
