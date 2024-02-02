@@ -851,7 +851,7 @@ void castLight( cata::mdarray<Out, point_bub_ms> &output_cache,
 {
     constexpr quadrant quad = quadrant_from_x_y( -xx - xy, -yx - yy );
     float newStart = 0.0f;
-    float radius = static_cast<float>(MAX_VIEW_DISTANCE) - offsetDistance;
+    float radius = 60.0f - offsetDistance;
     if( start < end ) {
         return;
     }
@@ -1098,7 +1098,7 @@ void map::build_seen_cache( const tripoint &origin, const int target_z, int exte
         if( !is_camera ) {
             offsetDistance = penalty + rl_dist( origin, mirror_pos );
         } else {
-            offsetDistance = MAX_VIEW_DISTANCE - veh->part_info( mirror ).bonus *
+            offsetDistance = 60 - veh->part_info( mirror ).bonus *
                              veh->part( mirror ).hp() / veh->part_info( mirror ).durability;
             mocache = &camera_cache;
             ( *mocache )[mirror_pos.x][mirror_pos.y] = LIGHT_TRANSPARENCY_OPEN_AIR;
