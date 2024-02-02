@@ -33,7 +33,7 @@ static constexpr float LIGHT_TRANSPARENCY_SOLID = 0.0f;
 // Calculated to run out at 60 squares.
 // Cumulative transparency should drop to 0.1 or lower over 60 squares,
 // Bright sunlight should drop to LIGHT_AMBIENT_LOW over 60 squares.
-static constexpr float LIGHT_TRANSPARENCY_OPEN_AIR = 0.0319f;
+static constexpr float LIGHT_TRANSPARENCY_OPEN_AIR = 0.0273f;
 
 // indicates starting (full) visibility (for seen_cache)
 static constexpr float VISIBILITY_FULL = 1.0f;
