@@ -71,7 +71,7 @@
 #include "options.h"
 #include "output.h"
 #include "overmap_ui.h"
-#include "parallel_hashmap/phmap.h"
+#include "parallel_hashmap/btree.h"
 #include "panels.h"
 #include "player_activity.h"
 #include "popup.h"

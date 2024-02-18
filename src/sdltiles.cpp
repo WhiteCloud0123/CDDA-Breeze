@@ -2,7 +2,7 @@
 #include "sdltiles.h" // IWYU pragma: associated
 
 #include "cuboid_rectangle.h"
-#include "parallel_hashmap/phmap.h"
+#include "parallel_hashmap/btree.h"
 #include "point.h"
 
 #if defined(TILES)
