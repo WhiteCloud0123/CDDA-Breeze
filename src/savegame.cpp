@@ -34,7 +34,7 @@
 #include "overmap.h"
 #include "overmapbuffer.h"
 #include "overmap_types.h"
-#include "parallel_hashmap/phmap.h"
+#include "parallel_hashmap/btree.h"
 #include "path_info.h"
 #include "regional_settings.h"
 #include "scent_map.h"

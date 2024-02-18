@@ -25,7 +25,7 @@
 #include "options.h"
 #include "output.h"
 #include "overmapbuffer.h"
-#include "parallel_hashmap/phmap.h"
+#include "parallel_hashmap/btree.h"
 #include "popup.h"
 #include "scent_map.h"
 #include "sdlsound.h"
