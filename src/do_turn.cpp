@@ -25,6 +25,7 @@
 #include "options.h"
 #include "output.h"
 #include "overmapbuffer.h"
+#include "parallel_hashmap/phmap.h"
 #include "popup.h"
 #include "scent_map.h"
 #include "sdlsound.h"
@@ -70,7 +71,7 @@ static const efftype_id effect_npc_flee_player("npc_flee_player");
 static const zone_type_id zone_type_trade_area("trade_area");
 
 #if defined(__ANDROID__)
-extern std::map<std::string, std::list<input_event>> quick_shortcuts_map;
+extern phmap::btree_map<std::string, std::list<input_event>> quick_shortcuts_map;
 extern bool add_best_key_for_action_to_quick_shortcuts( action_id action,
         const std::string &category, bool back );
 #endif
