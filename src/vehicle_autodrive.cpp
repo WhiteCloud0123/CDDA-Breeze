@@ -35,7 +35,7 @@
 #include "type_id.h"
 #include "veh_type.h"
 #include "vpart_position.h"
-
+#include "parallel_hashmap/phmap.h"
 /*
  * This file contains code that allows a vehicle to be driven by an in-game character (most
  * likely the player character) to some remote destination, following a path of adjacent overmap
@@ -261,7 +261,7 @@ struct coord_transformation {
  */
 struct point_queue {
     std::queue<tripoint_bub_ms> to_check;
-    std::unordered_set<tripoint_bub_ms> visited;
+    phmap::flat_hash_set<tripoint_bub_ms> visited;
     void enqueue(const tripoint_bub_ms& p) {
         if (visited.find(p) == visited.end()) {
             to_check.push(p);
