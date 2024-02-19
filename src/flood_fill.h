@@ -9,6 +9,9 @@
 #include "enums.h"
 #include "point.h"
 
+
+#include "parallel_hashmap/phmap.h"
+
 namespace ff
 {
 /**
@@ -24,7 +27,7 @@ namespace ff
 */
 template<typename Point, typename UnaryPredicate>
 std::vector<Point> point_flood_fill_4_connected( const Point &starting_point,
-        std::unordered_set<Point> &visited, UnaryPredicate predicate )
+        phmap::flat_hash_set<Point> &visited, UnaryPredicate predicate )
 {
     std::vector<Point> filled_points;
     std::queue<Point> to_check;

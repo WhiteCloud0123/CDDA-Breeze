@@ -65,6 +65,8 @@
 #include "text_snippets.h"
 #include "translations.h"
 
+#include "parallel_hashmap/phmap.h"
+
 static const mongroup_id GROUP_OCEAN_DEEP("GROUP_OCEAN_DEEP");
 static const mongroup_id GROUP_OCEAN_SHORE("GROUP_OCEAN_SHORE");
 static const mongroup_id GROUP_NEMESIS( "GROUP_NEMESIS" );
@@ -4309,8 +4311,8 @@ void overmap::populate_connections_out_from_neighbors( const overmap *north, con
 
 void overmap::place_forest_trails()
 {
-    std::unordered_set<point_om_omt> visited;
-
+    phmap::flat_hash_set<point_om_omt> visited;
+    
     const auto is_forest = [&]( const point_om_omt & p ) {
         if( !inbounds( p, 1 ) ) {
             return false;
@@ -4530,7 +4532,7 @@ void overmap::place_lakes()
     const oter_id lake_bed( "lake_bed" );
 
     // We'll keep track of our visited lake points so we don't repeat the work.
-    std::unordered_set<point_om_omt> visited;
+    phmap::flat_hash_set<point_om_omt> visited;
 
     for( int i = 0; i < OMAPX; i++ ) {
         for( int j = 0; j < OMAPY; j++ ) {
@@ -4719,7 +4721,7 @@ void overmap::place_oceans()
     const oter_id ocean_bed("ocean_bed");
 
     // This code is repeated from is_lake(), see comments there for explanation.
-    std::unordered_set<point_om_omt> visited;
+    phmap::flat_hash_set<point_om_omt> visited;
 
     for (int i = 0; i < OMAPX; i++) {
         for (int j = 0; j < OMAPY; j++) {

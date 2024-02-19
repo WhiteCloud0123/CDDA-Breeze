@@ -37,6 +37,8 @@
 #include "weighted_list.h"
 #include "creature_tracker.h"
 
+#include "parallel_hashmap/phmap.h"
+
 static const item_group_id Item_spawn_data_field( "field" );
 static const item_group_id Item_spawn_data_forest_trail( "forest_trail" );
 static const item_group_id Item_spawn_data_hive( "hive" );
@@ -3098,7 +3100,7 @@ void mapgen_lake_shore( mapgendata &dat )
     // Now that we've done our ground mapgen and laid down a contiguous shoreline of shallow water,
     // we'll floodfill the sections adjacent to the lake with deep water. As before, we also clear
     // out any furniture that we placed by the extended mapgen.
-    std::unordered_set<point> visited;
+    phmap::flat_hash_set<point> visited;
 
     const auto should_fill = [&]( const point & p ) {
         if( !map_boundaries.contains( p ) ) {
@@ -3453,7 +3455,7 @@ void mapgen_ocean_shore(mapgendata& dat)
     // Now that we've done our ground mapgen and laid down a contiguous shoreline of shallow water,
     // we'll floodfill the sections adjacent to the ocean with deep water. As before, we also clear
     // out any furniture that we placed by the extended mapgen.
-    std::unordered_set<point> visited;
+    phmap::flat_hash_set<point> visited;
 
     const auto should_fill = [&](const point& p) {
         if (!map_boundaries.contains(p)) {
