@@ -123,6 +123,7 @@
 #include "weather.h"
 #include "weather_gen.h"
 #include "weather_type.h"
+#include "veque/veque.hpp"
 
 struct dealt_projectile_attack;
 
@@ -11362,7 +11363,7 @@ void Character::on_worn_item_transform( const item &old_it, const item &new_it )
 
 void Character::leak_items()
 {
-    std::vector<item_location> removed_items;
+    veque::veque<item_location> removed_items;
     if( weapon.is_container() ) {
         if( weapon.leak( get_map(), this, pos() ) ) {
             weapon.spill_contents( pos() );
@@ -11370,7 +11371,7 @@ void Character::leak_items()
     } else if( weapon.made_of( phase_id::LIQUID ) ) {
         if( weapon.leak( get_map(), this, pos() ) ) {
             get_map().add_item_or_charges( pos(), weapon );
-            removed_items.emplace_back( *this, &weapon );
+            removed_items.emplace_front( *this, &weapon );
             add_msg_if_player( m_warning, _( "%s spilled from your hand." ), weapon.tname() );
         }
     }
@@ -11381,7 +11382,7 @@ void Character::leak_items()
         }
         if( it->leak( get_map(), this, pos() ) ) {
             it->spill_contents( pos() );
-            removed_items.push_back( it );
+            removed_items.push_front( it );
         }
     }
     for( item_location removed : removed_items ) {
