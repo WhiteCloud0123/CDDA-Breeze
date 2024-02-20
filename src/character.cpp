@@ -11397,14 +11397,14 @@ void Character::process_items()
         remove_weapon();
     }
 
-    std::vector<item_location> removed_items;
+    veque::veque<item_location> removed_items;
     for( item_location it : top_items_loc() ) {
         if( !it ) {
             continue;
         }
         if (it->process(get_map(), this, pos())) {
             it->spill_contents(pos());
-            removed_items.push_back(it);
+            removed_items.push_front(it);
         }
     }
     for( item_location removed : removed_items ) {
