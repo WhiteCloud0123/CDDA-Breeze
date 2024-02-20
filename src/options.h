@@ -17,6 +17,10 @@
 #include "translations.h"
 #include "type_id.h"
 
+#include "parallel_hashmap/phmap.h"
+#include "parallel_hashmap/btree.h"
+#include "veque/veque.hpp"
+
 class cata_path;
 class JsonArray;
 class JsonOut;
@@ -194,7 +198,7 @@ class options_manager
                 float fStep = 0.0f;
         };
 
-        using options_container = std::unordered_map<std::string, cOpt>;
+        using options_container = phmap::flat_hash_map<std::string, cOpt>;
 
         void init();
         void add_options_general();
