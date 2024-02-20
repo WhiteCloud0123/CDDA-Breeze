@@ -71,6 +71,7 @@
 #include "vpart_position.h"
 #include "weather.h"
 #include "weighted_list.h"
+#include "parallel_hashmap/btree.h"
 
 #define dbg(x) DebugLog((x),D_SDL) << __FILE__ << ":" << __LINE__ << ": "
 
@@ -1359,7 +1360,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     }
 
     creature_tracker &creatures = get_creature_tracker();
-    std::map<int, std::vector<tile_render_info>> draw_points;
+    phmap::btree_map<int, std::vector<tile_render_info>> draw_points;
     // Limit draw depth to vertical vision setting
     // Disable multi z-level display on isometric tilesets until height_3d issues resolved
     const int max_draw_depth = is_isometric() ? 0 : fov_3d_z_range;
