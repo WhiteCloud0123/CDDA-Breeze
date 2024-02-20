@@ -3747,7 +3747,7 @@ bool options_manager::has_option( const std::string &name ) const
 
 options_manager::cOpt &options_manager::get_option( const std::string &name )
 {
-    std::unordered_map<std::string, cOpt>::iterator opt = options.find( name );
+    phmap::flat_hash_map<std::string, cOpt>::iterator opt = options.find( name );
     if( opt == options.end() ) {
         debugmsg( "requested non-existing option %s", name );
     }
@@ -3755,7 +3755,7 @@ options_manager::cOpt &options_manager::get_option( const std::string &name )
         // Global options contains the default for new worlds, which is good enough here.
         return opt->second;
     }
-    std::unordered_map<std::string, cOpt>::iterator wopt = ( *world_options )->find( name );
+    phmap::flat_hash_map<std::string, cOpt>::iterator wopt = ( *world_options )->find( name );
     if( wopt == ( *world_options )->end() ) {
         if( opt->second.getPage() != "world_default" ) {
             // Requested a non-world option, deliver it.
@@ -3771,7 +3771,7 @@ options_manager::cOpt &options_manager::get_option( const std::string &name )
 
 options_manager::options_container options_manager::get_world_defaults() const
 {
-    std::unordered_map<std::string, cOpt> result;
+    phmap::flat_hash_map<std::string, cOpt> result;
     for( const auto &elem : options ) {
         if( elem.second.getPage() == "world_default" ) {
             result.insert( elem );
