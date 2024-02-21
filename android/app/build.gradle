@@ -407,4 +407,7 @@ sourceSets {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
+    def dialogx_version = "0.0.49"
+    implementation "com.kongzue.dialogx:DialogX:${dialogx_version}"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }
