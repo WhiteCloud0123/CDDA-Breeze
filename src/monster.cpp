@@ -63,6 +63,7 @@
 #include "translations.h"
 #include "trap.h"
 #include "units.h"
+#include "vehicle.h"
 #include "viewer.h"
 #include "weakpoint.h"
 #include "weather.h"
@@ -546,7 +547,29 @@ void monster::try_reproduce()
                 here.add_spawn(type->baby_monster, spawn_cnt, pos());
             }
             else {
-                here.add_item_or_charges(pos(), item(type->baby_egg, *baby_timer, spawn_cnt), true);
+
+                // 如果怪物在载具上，那么产下的蛋优先放置在载具上
+                const optional_vpart_position vp = here.veh_at(pos());
+                bool need_put_on_the_map = false;
+                if (vp) {
+                    int cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
+                    if (cargo_part>=0) {
+                        if (!vp->vehicle().add_item(cargo_part, item(type->baby_egg, *baby_timer, spawn_cnt))) {
+                            need_put_on_the_map = true;
+                        }
+                    }
+                    else {
+                        need_put_on_the_map = true;
+                    }
+                }
+                else {
+                    need_put_on_the_map = true;
+                }
+                
+                if (need_put_on_the_map) {
+                    here.add_item_or_charges(pos(), item(type->baby_egg, *baby_timer, spawn_cnt), true);
+                }
+            
             }
         }
 
@@ -610,7 +633,29 @@ void monster::try_biosignature()
         if (*biosig_timer > calendar::turn || counter > 50) {
             return;
         }
-        here.add_item_or_charges(pos(), item(type->biosig_item, *biosig_timer, 1), true);
+
+        // 如果怪物在载具上，那么它的粪便优先放置在载具上
+        const optional_vpart_position vp = here.veh_at(pos());
+        bool need_put_on_the_map = false;
+        if (vp) {
+            int cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
+            if (cargo_part >= 0) {
+                if (!vp->vehicle().add_item(cargo_part, item(type->biosig_item, *biosig_timer, 1))) {
+                    need_put_on_the_map = true;
+                }
+            }
+            else {
+                need_put_on_the_map = true;
+            }
+        }
+        else {
+            need_put_on_the_map = true;
+        }
+
+        if (need_put_on_the_map) {
+            here.add_item_or_charges(pos(), item(type->biosig_item, *biosig_timer, 1), true);
+        }
+
         *biosig_timer += *type->biosig_timer;
         counter += 1;
     }
