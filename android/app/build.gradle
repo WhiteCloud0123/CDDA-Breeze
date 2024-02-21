@@ -407,5 +407,4 @@ sourceSets {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.github.getActivity:Toaster:12.6'
 }
