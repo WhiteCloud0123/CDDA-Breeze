@@ -407,5 +407,4 @@ sourceSets {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    def dialogx_version = "0.0.49"
 }
