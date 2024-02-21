@@ -33,7 +33,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
 
-import com.kongzue.dialogx.*;
 
 /**
     SDL Activity
