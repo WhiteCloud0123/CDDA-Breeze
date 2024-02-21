@@ -32,7 +32,6 @@ import android.hardware.*;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
-import com.hjq.toast.Toaster;
 
 /**
     SDL Activity
@@ -112,7 +111,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public void showToastMessage(String string) {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                Toaster.show(string);
+                Toast toast = Toast.makeText(SDLActivity.this,string,Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }
@@ -316,7 +316,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             }
         }
 
-        Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         tabButton = new Button(this);
         tabButton.setBackgroundColor(android.R.color.transparent);
         tabButton.setText("Tab");
