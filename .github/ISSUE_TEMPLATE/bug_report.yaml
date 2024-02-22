@@ -1,7 +1,6 @@
 name: Bug反馈  
 description: 创建报告以帮助我们改进  
-labels: ["Bug"]
-
+  
 body:  
   - type: markdown  
     attributes:  
