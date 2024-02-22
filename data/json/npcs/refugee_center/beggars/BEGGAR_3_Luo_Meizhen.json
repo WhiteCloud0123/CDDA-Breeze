@@ -270,11 +270,11 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_BEGGAR_3_RACISM",
-    "dynamic_line": "Sure.  My grandparents were from China.  That means I'm obviously personally responsible for all this.  Do you think there's some other reason they let hundreds of other educated people in and I'm sitting out here?",
+    "dynamic_line": "我可以跟你一起旅行吗？",
     "responses": [
       {
         "condition": { "not": { "u_has_var": "luo_recruited", "type": "general", "context": "recruit", "value": "yes" } },
-        "text": "I don't care if you're Chinese.  You can travel with me if you want.",
+        "text": "如果你愿意，你可以和我一起旅行。",
         "topic": "TALK_REFUGEE_BEGGAR_3_JOIN"
       },
       {

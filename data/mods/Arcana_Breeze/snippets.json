@@ -3,22 +3,13 @@
     "type": "snippet",
     "category": "note",
     "text": [
-      {
-        "id": "note_arcana_1",
-        "text": "\"The fucking time dogs don't like the crystal machine this'll show em\""
-      },
+      { "id": "note_arcana_1", "text": "\"The fucking time dogs don't like the crystal machine this'll show em\"" },
       {
         "id": "note_arcana_2",
         "text": "“看见一个长着角的小妞，在他妈的真菌里到处走。像那该死的吹笛手一样吹笛子。”"
       },
-      {
-        "id": "note_arcana_3",
-        "text": "“所有这些来自地狱的恶魔，都有一个目标，我确信”"
-      },
-      {
-        "id": "note_arcana_4",
-        "text": "“谢谢你的魔法长矛，蠢货”"
-      },
+      { "id": "note_arcana_3", "text": "“所有这些来自地狱的恶魔，都有一个目标，我确信”" },
+      { "id": "note_arcana_4", "text": "“谢谢你的魔法长矛，蠢货”" },
       {
         "id": "note_arcana_5",
         "text": "“嘿，这不公平！我信仰的只是免费的长袍和仪式后的甜甜圈！我可不想干这种事！”"
@@ -27,10 +18,7 @@
         "id": "note_arcana_6",
         "text": "“我从不认为自己是一个宗教信仰者——然而，从我手中发出的闪电和我那满是卷须的奴仆们迫使我相信。”"
       },
-      {
-        "id": "note_arcana_7",
-        "text": "“传送门是可以封闭的，我敢肯定！一定有办法……”"
-      },
+      { "id": "note_arcana_7", "text": "“传送门是可以封闭的，我敢肯定！一定有办法……”" },
       {
         "id": "note_arcana_8",
         "text": "“这一定是个玩笑，外星怪物？确实存在。带魔力的源质？嘘。可能只是个恶作剧。”"
@@ -47,22 +35,13 @@
         "id": "note_arcana_11",
         "text": "“从我的身体里流出的血......是他的血。他能通过我的修行而重生吗？我能报答他的牺牲吗？”"
       },
-      {
-        "id": "note_arcana_12",
-        "text": "“这不是真正的教堂”"
-      },
+      { "id": "note_arcana_12", "text": "“这不是真正的教堂”" },
       {
         "id": "note_arcana_13",
         "text": "“老实说，如果你不去测试你的药水，炼金术是无聊的”"
       },
-      {
-        "id": "note_arcana_14",
-        "text": "“啊，是的……我要把这烟烧得更小、更暗！”"
-      },
-      {
-        "id": "note_arcana_15",
-        "text": "“不要夸大讲义”"
-      },
+      { "id": "note_arcana_14", "text": "“啊，是的……我要把这烟烧得更小、更暗！”" },
+      { "id": "note_arcana_15", "text": "“不要夸大讲义”" },
       {
         "id": "note_arcana_16",
         "text": "“地图干了件正事！飞行状态良好，但这儿到处都是树。”"
@@ -107,18 +86,12 @@
         "id": "note_grove_arcana_1",
         "text": "“我们已经看到了另一面。我们必须掌握它为我们提供的潜力。”"
       },
-      {
-        "id": "note_grove_arcana_2",
-        "text": "“他们还没有准备好。但他们的时代会到来的。”"
-      },
+      { "id": "note_grove_arcana_2", "text": "“他们还没有准备好。但他们的时代会到来的。”" },
       {
         "id": "note_grove_arcana_3",
         "text": "“鲜血、誓言和圣火。直到为时已晚之前，他们才看见真相。”"
       },
-      {
-        "id": "note_grove_arcana_4",
-        "text": "\"The ritual went awry.  It won't be safe to stay here.\""
-      },
+      { "id": "note_grove_arcana_4", "text": "\"The ritual went awry.  It won't be safe to stay here.\"" },
       {
         "id": "note_grove_arcana_5",
         "text": "“没有他们的迹象。一定他们是抛弃了这个地方，让它废弃了。但这是为什么？”"
@@ -127,10 +100,7 @@
         "id": "note_grove_arcana_6",
         "text": "\"Some sort of upheaval where the old ritual grounds used to be.  Can't tell if this happened during Zero Day or before.\""
       },
-      {
-        "id": "note_grove_arcana_7",
-        "text": "\"Did they predict this?  Is that why they left?\""
-      }
+      { "id": "note_grove_arcana_7", "text": "\"Did they predict this?  Is that why they left?\"" }
     ]
   },
   {
@@ -145,10 +115,7 @@
         "id": "note_sanguine_arcana_2",
         "text": "“我们已经预见到了这场可怕的灾难。但是我们终将战胜它，适应它。我们将统治这个新世界，凌驾于弱者和无名小卒之上。”"
       },
-      {
-        "id": "note_sanguine_arcana_3",
-        "text": "”召唤即将完成了。我们将看到真正的力量！”"
-      },
+      { "id": "note_sanguine_arcana_3", "text": "”召唤即将完成了。我们将看到真正的力量！”" },
       {
         "id": "note_sanguine_arcana_4",
         "text": "“上下诸神，那些疯子带来了什么？他们到底做了什么？”"
@@ -544,10 +511,6 @@
       {
         "id": "arcane_lab_note_sector_three_7",
         "text": "“Kairos项目更新:只要项目继续运行，维镜阵列就应该每24小时放电一次。每天的试射应该持续到局部空间波动正常化。如果一切按计划进行，我们只需要坚持一个月，就可以安全地继续进行第二阶段。我们的假设是，微区域的波纹能量一旦被抑制，就可以通过我们一直在研究的其他异常原理来操纵。这可能会将能量引向遭受空间疲劳事件的某个地方，也可能会将阻力增加到门户无法自我维持的水平。”"
-      },
-      {
-        "id": "arcane_lab_note_sector_three_8",
-        "text": "“入侵者的个人物品中有许多显然是从其他研究设施偷来的异常技术，但也有一些是未知制造的。我们正设法与其他设施取得联系，通知他们可能发生泄漏。或者其他人在我们不知道的情况下探索类似的领域。也许是中国？根据我们的记录，入侵者似乎是个平民，但我们很难得到任何关于他的最新信息。骚乱和紧急状态并没有让这变得更容易。”"
       },
       {
         "id": "arcane_lab_note_sector_three_9",

@@ -37,7 +37,7 @@
   {
     "id": "CWH_NO_PAST_4_IDEAS1",
     "type": "talk_topic",
-    "dynamic_line": "You're asking me what I think caused all this?  It was all over the news.  Some kind of Chinese bio-weapon.  It's no different from the pandemic a few years back, but this time they got the formula right.  Maybe too right.  Doesn't matter anyway, I hear it got out on them and wiped them out too.  Serves em right.",
+    "dynamic_line": "你在问我是什么导致了这一切？外星人？美国的生化武器？",
     "responses": [
       { "text": "Can you tell me more about what actually went down, though?", "topic": "CWH_NO_PAST_4_IDEAS2" },
       {
