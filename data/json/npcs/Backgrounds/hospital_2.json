@@ -7,8 +7,8 @@
       "yes": "I just can't talk about that right now.  I can't.",
       "no": {
         "npc_has_effect": "player_BGSS_SAIDYES",
-        "yes": "I was at work at the hospital, when it all went down.  It's a bit of a blur.  For a while there were weird reports, stuff that sounded unbelievable about patients getting back up after dying, but mostly things were business as usual.  Then, towards the end, stuff just skyrocketed.  We thought it was a Chinese attack, and that's what we were being told.  People coming in crazed, covered in wounds from bullets and bites.  About halfway through my shift I… well, I broke.",
-        "no": "I was at work at the hospital, when it all went down.  It's a bit of a blur.  For a while there were weird reports, stuff that sounded unbelievable about patients getting back up after dying, but mostly things were business as usual.  Then, towards the end, stuff just skyrocketed.  We thought it was a Chinese attack, and that's what we were being told.  People coming in crazed, covered in wounds from bullets and bites.  About halfway through my shift I… well, I broke.  I'd seen such horrible injuries, and then I… <swear!>, I can't even talk about it."
+        "yes": "我那时候在医院工作，然后事情就这么糟了。整个事都有点模模糊糊的。一段时间以来一直都有一些奇怪的报道，那些听起来令人难以置信的关于病人死后复活的事情，但大多数人还是照常工作。然后，到了末日来临前，一切都突然出现了。送来急救的人都发疯了，身上满是子弹和咬伤的伤口。在我班快上到一半的时候我……我崩溃了。",
+        "no": "我那时候在医院工作，然后事情就这么糟了。整个事都有点模模糊糊的。一段时间以来一直都有一些奇怪的报道，那些听起来令人难以置信的关于病人死后复活的事情，但大多数人还是照常工作。然后，到了末日来临前，一切都突然出现了。送来急救的人都发疯了，身上满是子弹和咬伤的伤口。在我班快上到一半的时候我……我崩溃了。我曾经见过比这更可怕的伤，但我……<swear!>，我甚至没法谈起它。"
       }
     },
     "responses": [

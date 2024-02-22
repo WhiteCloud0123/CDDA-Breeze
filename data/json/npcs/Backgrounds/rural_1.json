@@ -5,8 +5,8 @@
     "dynamic_line": [
       {
         "npc_female": true,
-        "yes": "I lived alone, on the old family property way out of town.  My husband passed away a bit over a month before this started… cancer.  If anything good has come out of all this, it's that I finally see a positive to losing him so young.  I'd been shut in for a while anyway.  When the news started talking about Chinese bio weapons and sleeper agents, and showing the rioting in Boston and such, I curled up with my canned soup and changed the channel.",
-        "no": "I lived alone, on the old family property way out of town.  My wife passed away a bit over a month before this started… cancer.  If anything good has come out of all this, it's that I finally see a positive to losing her so young.  I'd been shut in for a while anyway.  When the news started talking about Chinese bio weapons and sleeper agents, and showing the rioting in Boston and such, I curled up with my canned soup and changed the channel."
+        "yes": "我一个人住，住在城外很远的一间老房子里。我丈夫在这一切开始前一个多月就去世了……癌症。如果说现在发生的这一切都有什么好处的话，那就是我终于看到了这么年轻的时候失去他是件好事。反正我那时已经与世隔绝一段时间了。当新闻开始谈论外星人，并报道在波士顿的骚乱等，我带着我的罐头蜷缩起来，然后换台。",
+        "no": "我一个人住，住在城外很远的一间老房子里。我妻子在这一切开始前一个多月就去世了……癌症。如果说现在发生的这一切都有什么好处的话，那就是我终于看到了这么年轻的时候失去她是件好事。反正我那时已经与世隔绝一段时间了。当新闻开始谈论外星人，并报道在波士顿的骚乱等，我带着我的罐头蜷缩起来，然后换台。"
       }
     ],
     "responses": [

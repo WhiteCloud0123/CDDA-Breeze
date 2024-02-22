@@ -2,7 +2,7 @@
   {
     "id": "BGSS_COP_1_STORY1",
     "type": "talk_topic",
-    "dynamic_line": "I was a cop.  Small town sheriff.  We got orders without even really knowing what they meant.  At some point one of the g-men on the phone told me it was a Chinese attack, something in the water supply… I don't know if I believe it now, but at the time it was the best explanation.  At first it was weird, a few people - <zombies> - fighting like rabid animals.  Then it got worse.  I tried to control things, but it was just me and my deputies against a town in riot.  Then things really got fucked up.",
+    "dynamic_line": "我那会是个警察。一座小镇里的治安官。我们刚接到命令还不完全明白它们的意思。直到电话里的一个男的告诉我，这是一次来自外星人的袭击，是供水系统里的什么东西……我不知道我现在还是否相信，但当时这是最好的解释。一开始很奇怪，有几个人像发疯的动物一样打架。然后情况就变得更糟了。我试图控制一切，但只有我和我的副官对抗整座暴乱的城镇。然后一切都不可收拾了。",
     "responses": [
       { "text": "What happened?", "topic": "BGSS_COP_1_STORY2" },
       { "text": "<done_conversation_section>", "topic": "TALK_FRIEND" },

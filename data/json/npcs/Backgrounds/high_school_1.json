@@ -2,7 +2,7 @@
   {
     "id": "BGSS_HIGH_SCHOOL_1_STORY1",
     "type": "talk_topic",
-    "dynamic_line": "I was at school.  I'm a senior.  We'd heard about riots… it started with a kid showing videos of one of the big riots in Providence.  You've probably seen it, the one where the woman turns to the camera and you can see her whole lower lip has been ripped off, and is just flapping there?  It got so bad, they went over the PA system to tell us about Chinese drugs in the water supply.  Right… does anyone buy that explanation?",
+    "dynamic_line": "我当时在学校里。我是大四学生。我们听说了暴乱的事……一开始是一个孩子播放了普罗维登斯一场大暴乱的视频。你可能已经看过了，就是那个女人转过身对着镜头，整个下巴都被撕开，在那不断四处拍打那个视频？情况非常糟糕，他们通过公众广播系统告诉我们是因为供水系统被生化武器污染了。好吧……有人相信这个解释吗？",
     "responses": [
       { "text": "Where did things go from there?", "topic": "BGSS_HIGH_SCHOOL_1_STORY2" },
       { "text": "<done_conversation_section>", "topic": "TALK_FRIEND" },
