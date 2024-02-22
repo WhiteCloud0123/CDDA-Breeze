@@ -19,7 +19,7 @@
 /data/*.template
 /data/cache/
 /data/mods/user-default-mods.json
-/data/mods/OtherMods
+/data/mods/TestMods
 /dep/
 /doxygen_doc/html/*
 /doxygen_doc/latex/*
