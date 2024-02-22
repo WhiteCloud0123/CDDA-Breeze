@@ -2593,6 +2593,7 @@ void handle_finger_input( uint32_t ticks )
 
     float delta_x = finger_curr_x - finger_down_x;
     float delta_y = finger_curr_y - finger_down_y;
+    float abs_delta_y = std::abs(delta_y);
     float dist = std::sqrt( delta_x * delta_x + delta_y * delta_y ); // in pixel space
     bool handle_diagonals = touch_input_context.is_action_registered( "LEFTUP" );
     bool is_default_mode = touch_input_context.get_category() == "DEFAULTMODE";
@@ -2610,10 +2611,10 @@ void handle_finger_input( uint32_t ticks )
             }
         } else {
             if( delta_x > 0 ) {
-                if( std::abs( delta_y ) < delta_x * 0.5f ) {
+                if( abs_delta_y < delta_x * 0.5f ) {
                     // swipe right
                     last_input = input_event( KEY_RIGHT, input_event_t::keyboard_char );
-                } else if( std::abs( delta_y ) < delta_x * 2.0f ) {
+                } else if( abs_delta_y < delta_x * 2.0f ) {
                     if( delta_y < 0 ) {
                         // swipe up-right
                         last_input = input_event( JOY_RIGHTUP, input_event_t::gamepad );
@@ -2631,10 +2632,10 @@ void handle_finger_input( uint32_t ticks )
                     }
                 }
             } else {
-                if( std::abs( delta_y ) < -delta_x * 0.5f ) {
+                if( abs_delta_y  < -delta_x * 0.5f ) {
                     // swipe left
                     last_input = input_event( KEY_LEFT, input_event_t::keyboard_char );
-                } else if( std::abs( delta_y ) < -delta_x * 2.0f ) {
+                } else if( abs_delta_y < -delta_x * 2.0f ) {
                     if( delta_y < 0 ) {
                         // swipe up-left
                         last_input = input_event( JOY_LEFTUP, input_event_t::gamepad );

@@ -2,7 +2,7 @@
   {
     "id": "BGSS_PREPPER_1_STORY1",
     "type": "talk_topic",
-    "dynamic_line": "Ooooh, boy.  I was ready for this.  The winds were blowing this way for years.  I had a full last man on earth shelter set up just out of town.  So, of course, just my luck: I was miles out of town for a work conference when China attacked and the world ended.",
+    "dynamic_line": "哦，兄弟。我早就想说了。风早就吹了这么多年。我在城外建了一座LMOE避难所。而且，当然，还有我的好运：世界末日来临时，我刚好在镇子几里外去参加一个工作会议。",
     "responses": [
       { "text": "What happened to you?", "topic": "BGSS_PREPPER_1_STORY2" },
       { "text": "What about your shelter?", "topic": "BGSS_PREPPER_1_LMOE" },
@@ -48,7 +48,7 @@
   {
     "id": "BGSS_PREPPER_1_STORY3",
     "type": "talk_topic",
-    "dynamic_line": "No, I barely got two miles.  I crashed into some kind of hell-spawn chink bio-weapon, a crazy screeching <monster> made of arms and legs and heads from all sorts of creatures, humans too.  I think I killed it, but I know for sure I killed the truck.  Grabbed my duffel bag and ran, after putting a couple bullets into it for good measure.  I hope I never see something like that again.",
+    "dynamic_line": "不，我只跑出了两英里。我撞上了一种来自地狱的生物武器，一头疯狂尖叫的怪物，它是由各种生物包括人类的手臂、腿和头部组成的怪物。我想我也许杀了它，但可以肯定的是皮卡被我撞坏了。我拿起行李袋就跑了，当然离开前给那家伙额外补了几颗子弹。我希望我再也不要见到那样的东西了。",
     "responses": [
       { "text": "What about your shelter?", "topic": "BGSS_PREPPER_1_LMOE" },
       { "text": "<done_conversation_section>", "topic": "TALK_FRIEND" },
@@ -441,7 +441,7 @@
         "failure": { "topic": "BGSS_PREPPER_1_FOUND_LMOE6_FAILLIE", "opinion": { "trust": -1 } }
       },
       {
-        "text": "There was a bunch of notes about Chinese bio-weapons and this guy who worked at an airport…  If you want to talk about it, we can.",
+        "text": "有一堆关于美国生化武器和这个在机场工作家伙的笔记……如果你愿意，我们可以谈谈。",
         "topic": "BGSS_PREPPER_1_FOUND_LMOE6_FAILLIE"
       },
       {
@@ -498,7 +498,7 @@
     "dynamic_line": [
       {
         "days_since_cataclysm": 21,
-        "no": "You know, the elites.  The ones who have always had control will continue having control, no matter what it costs.  If it means destroying everything to be king of the ashes, they'll do it.  I used to think it was China, for sure, but I'm not so sure anymore.  I figured they would probably be here by now, putting on their crown.  Maybe they're still waiting to make their move…",
+        "no": "你知道的，那些精英。那些已经掌权的人们想要继续掌控权力，不管花费什么代价。如果继续做人上人意味着先把一切毁灭殆尽而成为灰土上的王，他们也会去做的。我想他们也许现在就要在这片焦土上戴上他们的王冠，亦或者他们还没决定采取行动……",
         "yes": "The government.  Whoever was left, really.  I don't know…  I'm starting to think that maybe some of those folks were right…  Maybe this is some kind of punishment for humanity.  Maybe some god decided they'd had enough of us.  Or maybe there's no answer.  I can't explain some of the things I've seen."
       }
     ],
@@ -518,7 +518,7 @@
         "topic": "BGSS_PREPPER_1_FOUND_LMOE9_SKEPTIC"
       },
       {
-        "text": "[US Marshal] I actually used to be a US Marshal, and there were crazy rumors coming from all over back in the day.  A buddy of mine heard that China built a portal to another dimension.  Or a time machine.  Someone else claimed it was America who made it, and it was actually some kind of doomsday device.  There was a lot of money getting sunk into the Department of Energy, DARPA, military contractors…  We all knew something was up, but it was impossible to say what.",
+        "text": "【联邦执法官】其实我曾经是联邦执法官，当年到处都是疯狂的谣言。我有个朋友听说美国建立起了一个通向另一空间的门户或者时光机。而那玩意儿是某种末日装置。能源部、DARPA、军事承包商投入了大量资金……我们都知道出了某些事，但又说不出个所以然来。",
         "condition": { "u_has_any_trait": [ "PROF_FED" ] },
         "topic": "BGSS_PREPPER_1_FOUND_LMOE9_FED"
       },
@@ -546,7 +546,7 @@
   {
     "id": "BGSS_PREPPER_1_FOUND_LMOE9_GOVERNMENT",
     "type": "talk_topic",
-    "dynamic_line": "That's what I'm saying!  Everything that's going on wouldn't be possible without massive fuck-ups by people in power.  China has fusion reactors?  Well, I've never seen it!  America sinks trillions and trillions of dollars into secret military budgets with no explanation.  If you gave me a trillion dollars and the brain of a bureaucrat, I bet I could completely fuck up reality, too.",
+    "dynamic_line": "这就是我要说的！若非当权者出了大纰漏，绝不可能有正在发生的这一切。美国在没有任何解释的情况下将数万亿美元投入秘密军事预算。如果你给我一万亿美元和一颗官僚的脑子，我赌我也能彻底把现实搞砸。",
     "responses": [
       {
         "text": "Well, let's get going.  I'm trying to stick it to 'The Man' while we've still got a chance.",
@@ -652,7 +652,7 @@
   {
     "id": "BGSS_PREPPER_1_FOUND_LMOE10_IGNORE_BAIT",
     "type": "talk_topic",
-    "dynamic_line": "That's always how it goes: someone knows someone else, they get drunk at some Virginia wine party for rich elites, and suddenly state secrets are leaking out.  'Oh, my Russian contacts got this covert intelligence'…  'My secret Chinese spies think this crazy thing is happening'…  Sometimes they know and sometimes they don't.  It's up to us to put the truth together.",
+    "dynamic_line": "每次都是这样：一个人认识另一个人，他们在弗吉尼亚的富豪精英酒会上喝醉了，突然间国家机密就泄露了。“哦，我的俄罗斯联系人得到了这个秘密情报”。有时他们知道，有时他们不知道。把真相拼接到一起是我们自己的责任。",
     "responses": [
       { "text": "I'm tired of talking.  Let's get moving and put that truth together for ourselves…", "topic": "TALK_DONE" }
     ]
