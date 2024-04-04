@@ -118,13 +118,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         });
     }
 
-    public String getGamePath() {
-
-        return Environment.getExternalStorageDirectory().getPath()+"/CDDA-Breeze/";
-
-    }
-
-
     protected static SDLGenericMotionListener_API12 getMotionListener() {
         if (mMotionListener == null) {
             if (Build.VERSION.SDK_INT >= 26) {

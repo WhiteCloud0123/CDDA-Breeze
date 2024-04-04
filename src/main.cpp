@@ -632,20 +632,9 @@ int main( int argc, const char *argv[] )
 
     // On Android first launch, we copy all data files from the APK into the app's writeable folder so std::io stuff works.
     // Use the external storage so it's publicly modifiable data (so users can mess with installed data, save games etc.)
-
-    JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
-    jobject activity = (jobject)SDL_AndroidGetActivity();
-    jclass clazz(env->GetObjectClass(activity));
-    jmethodID method_id = env->GetMethodID( clazz, "getGamePath", "()Ljava/lang/String;" );
-    jstring ans = ( jstring )env->CallObjectMethod( activity, method_id, 0 );
-    const char *ans_c_str = env->GetStringUTFChars( ans, 0 );
-    std::string external_storage_path( ans_c_str );
-    env->DeleteLocalRef(activity);
-    env->DeleteLocalRef(clazz);
-    env->DeleteLocalRef(ans);
-
-    if(external_storage_path.back()!='/') {
-        external_storage_path +='/';
+    std::string external_storage_path( SDL_AndroidGetExternalStoragePath() );
+    if( external_storage_path.back() != '/' ) {
+        external_storage_path += '/';
     }
 
     PATH_INFO::init_base_path( external_storage_path );
