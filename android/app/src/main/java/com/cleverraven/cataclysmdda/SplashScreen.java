@@ -28,7 +28,9 @@ import android.os.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.cleverraven.cataclysmdda.CataclysmDDA_Helpers;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
+import com.hjq.toast.Toaster;
 
 public class SplashScreen extends Activity {
     private static final String TAG = "Splash";
@@ -125,6 +127,16 @@ public class SplashScreen extends Activity {
     protected void installOrRun() {
         Log.e(TAG, "onCreate()");
         accessibilityServicesAlert.dismiss();
+
+        // 如果目前没有获取到外部设备需要的权限，先去获取权限
+        if(!XXPermissions.isGranted(getApplicationContext(), Permission.MANAGE_EXTERNAL_STORAGE)){
+            XXPermissions.startPermissionActivity(getApplicationContext(),Permission.MANAGE_EXTERNAL_STORAGE);
+        }
+
+
+
+
+
         // Start the game if already installed, otherwise start installing...
         if (getVersionName().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("installed", ""))) {
             // Show an alert box if the game crashed last time
@@ -297,26 +309,32 @@ public class SplashScreen extends Activity {
             publishProgress(installedFiles);
 
             AssetManager assetManager = getAssets();
-            String externalFilesDir = getExternalFilesDir(null).getPath();
+            //String externalFilesDir = getExternalFilesDir(null).getPath();
+
+            File esd =  Environment.getExternalStorageDirectory();
+            File target = new File(esd,"CDDA-Breeze");
+            target.mkdir();
+            String abs_path = target.getAbsolutePath();
+
 
             try {
                 // Clear out the old data if it exists (but preserve custom folders + files)
-                deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/data"));
-                deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/gfx"));
-                deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/lang"));
+                deleteRecursive(assetManager, abs_path, new File(abs_path + "/data"));
+                deleteRecursive(assetManager, abs_path, new File(abs_path + "/gfx"));
+                deleteRecursive(assetManager, abs_path, new File(abs_path + "/lang"));
 
                 if(assetExists(assetManager,"config")==true) {
 
-                    deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/config"));
-                    copyAssetFolder(assetManager, "config", externalFilesDir + "/config");
+                    deleteRecursive(assetManager, abs_path, new File(abs_path + "/config"));
+                    copyAssetFolder(assetManager, "config", abs_path + "/config");
 
                 }
 
                 // Install the new data over the top
-                copyAssetFolder(assetManager, "data", externalFilesDir + "/data");
-                copyAssetFolder(assetManager, "gfx", externalFilesDir + "/gfx");
-                copyAssetFolder(assetManager, "lang", externalFilesDir + "/lang");
-                copyAssetFolder(assetManager, "config", externalFilesDir + "/config");
+                copyAssetFolder(assetManager, "data", abs_path + "/data");
+                copyAssetFolder(assetManager, "gfx", abs_path + "/gfx");
+                copyAssetFolder(assetManager, "lang", abs_path + "/lang");
+                copyAssetFolder(assetManager, "config", abs_path + "/config");
 
 
 

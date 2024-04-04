@@ -408,4 +408,6 @@ sourceSets {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.github.getActivity:Toaster:12.6'
+    implementation 'com.github.getActivity:XXPermissions:18.62'
+    implementation 'androidx.fragment:fragment:1.4.1'
 }
