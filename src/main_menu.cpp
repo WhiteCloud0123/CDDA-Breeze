@@ -50,7 +50,7 @@
 #include "worldfactory.h"
 
 enum class main_menu_opts : int {
-    MOTD = 0,
+    OTHER = 0,
     NEWCHAR = 1,
     LOADCHAR = 2,
     WORLD = 3,
@@ -167,10 +167,6 @@ void main_menu::display_sub_menu( int sel, const point &bottom_left, int sel_lin
     switch( sel_o ) {
         case main_menu_opts::CREDITS:
             display_text( mmenu_credits, _( "Credits" ), sel_line );
-            return;
-        case main_menu_opts::MOTD:
-            //~ Message Of The Day
-            display_text( mmenu_motd, _( "MOTD" ), sel_line );
             return;
         case main_menu_opts::SPECIAL:
             for( int i = 1; i < static_cast<int>( special_game_type::NUM_SPECIAL_GAME_TYPES ); i++ ) {
@@ -303,10 +299,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
 
     if( iSel == getopt( main_menu_opts::NEWCHAR ) ) {
         center_print( w_open, window_height - 2, c_yellow, vNewGameHints[sel2] );
-    } else {
-        center_print( w_open, window_height - 2, c_red,
-                      _( "Bugs?  Suggestions?  Use links in MOTD to report them." ) );
-    }
+    } 
 
     center_print( w_open, window_height - 1, c_light_cyan, string_format( _( "Tip of the day: %s" ),
                   vdaytip ) );
@@ -425,15 +418,6 @@ void main_menu::init_strings()
 {
     // ASCII Art
     mmenu_title = load_file( PATH_INFO::title( current_holiday ), _( "Cataclysm: Dark Days Ahead" ) );
-    // MOTD
-    auto motd = load_file( PATH_INFO::motd(), _( "No message today." ) );
-
-    mmenu_motd.clear();
-    for( const std::string &line : motd ) {
-        mmenu_motd += ( line.empty() ? " " : line ) + "\n";
-    }
-    mmenu_motd = colorize( mmenu_motd, c_light_red );
-    mmenu_motd_len = foldstring( mmenu_motd, FULL_SCREEN_WIDTH - 2 ).size();
 
     // Credits
     mmenu_credits.clear();
@@ -453,7 +437,7 @@ void main_menu::init_strings()
 
     // fill menu with translated menu items
     vMenuItems.clear();
-    vMenuItems.emplace_back( pgettext( "Main Menu", "<M|m>OTD" ) );
+    vMenuItems.emplace_back(pgettext("Main Menu", "其他"));
     vMenuItems.emplace_back( pgettext( "Main Menu", "<N|n>ew Game" ) );
     vMenuItems.emplace_back( pgettext( "Main Menu", "Lo<a|A>d" ) );
     vMenuItems.emplace_back( pgettext( "Main Menu", "<W|w>orld" ) );
@@ -754,7 +738,6 @@ bool main_menu::opening_screen()
             int min_item_val = 0;
             main_menu_opts opt = static_cast<main_menu_opts>( sel1 );
             switch( opt ) {
-                case main_menu_opts::MOTD:
                 case main_menu_opts::CREDITS:
                     if( action == "UP" || action == "PAGE_UP" || action == "SCROLL_UP" ) {
                         if( sel_line > 0 ) {
@@ -762,8 +745,7 @@ bool main_menu::opening_screen()
                         }
                     } else if( action == "DOWN" || action == "PAGE_DOWN" || action == "SCROLL_DOWN" ) {
                         int effective_height = sel_line + FULL_SCREEN_HEIGHT - 2;
-                        if( ( opt == main_menu_opts::CREDITS && effective_height < mmenu_credits_len ) ||
-                            ( opt == main_menu_opts::MOTD && effective_height < mmenu_motd_len ) ) {
+                        if( ( opt == main_menu_opts::CREDITS && effective_height < mmenu_credits_len )){
                             sel_line++;
                         }
                     }
@@ -876,7 +858,6 @@ bool main_menu::opening_screen()
                 case main_menu_opts::NEWCHAR:
                     start = new_character_tab();
                     break;
-                case main_menu_opts::MOTD:
                 case main_menu_opts::CREDITS:
                 default:
                     break;

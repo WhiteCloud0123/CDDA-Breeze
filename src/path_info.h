@@ -51,7 +51,6 @@ std::string lang_file();
 std::string soundpack_conf();
 
 std::string credits();
-std::string motd();
 std::string title( holiday current_holiday );
 
 cata_path autopickup();
@@ -101,7 +100,6 @@ void set_memorialdir( const std::string &memorialdir );
 void set_options( const std::string &options );
 void set_keymap( const std::string &keymap );
 void set_autopickup( const std::string &autopickup );
-void set_motd( const std::string &motd );
 
 } // namespace PATH_INFO
 
