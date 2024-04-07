@@ -647,29 +647,7 @@ static void draw_ascii(
     std::unordered_map<point_abs_omt, int> player_path_route;
     std::unordered_map<tripoint_abs_omt, npc_coloring> npc_color;
     auto npcs_near_player = overmap_buffer.get_npcs_near_player( sight_points );
-    
-    
-    std::vector<tripoint_abs_omt> pet_loc_vec;
-    std::vector<std::string> pet_sym_vec;
-    std::vector<nc_color> pet_basic_symbol_color_vec;
-    int draw_pet_count = 0;
-    for (Creature* c : get_player_character().get_visible_creatures(MAPSIZE_X)) {
-        monster* m = dynamic_cast<monster*>(c);
-        if (m != nullptr) {
-
-            if (m->has_effect(effect_pet)) {
-
-                pet_loc_vec.push_back(m->global_omt_location());
-                pet_sym_vec.push_back(m->symbol());
-                pet_basic_symbol_color_vec.push_back(m->basic_symbol_color());
-            
-            }
-            
-        }
-    }
-
-    
-    
+     
     if( blink ) {
         // get seen NPCs
         for( const auto &np : npcs_near_player ) {
@@ -891,26 +869,6 @@ static void draw_ascii(
                     ter_color = red_background( ter_color );
                 }
             }
-
-            // 如果已经绘制完了宠物，就不用再继续绘制了。同时，如果同一地图格有玩家，那么也不要绘制
-            if ( blink && draw_pet_count != pet_loc_vec.size() && omp!=orig) {
-                int i = 0;
-                for (const auto &iter : pet_loc_vec) {
-                    
-                    if (omp.xy() == iter.xy()) {
-
-                        ter_sym = pet_sym_vec[i];
-                        ter_color = pet_basic_symbol_color_vec[i];
-                        draw_pet_count = draw_pet_count + 1;
-                  
-                    }
-                    i++;
-                }
-
-            }
-
-
-
 
             if( omp.xy() == center.xy() && !uistate.place_special ) {
                 ccur_ter = cur_ter;
