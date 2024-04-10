@@ -331,7 +331,7 @@ android {
             }
             externalNativeBuild {
                 ndkBuild {
-                    cFlags "-DNDEBUG", "-DRELEASE", "-Os", "-g"
+                    cFlags "-DNDEBUG", "-DRELEASE", "-Ofast", "-g"
                 }
             }
             ndk {
