@@ -32,6 +32,9 @@ import android.hardware.*;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
+
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.hjq.toast.*;
 
 
@@ -116,6 +119,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 Toaster.show(string);
             }
         });
+    }
+
+    public void get_permission_manage_external_storge() {
+
+        XXPermissions.startPermissionActivity(getApplicationContext(), Permission.MANAGE_EXTERNAL_STORAGE);
+
     }
 
     protected static SDLGenericMotionListener_API12 getMotionListener() {

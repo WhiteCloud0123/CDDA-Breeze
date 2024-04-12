@@ -12,7 +12,7 @@
 #include "input.h"
 #include "point.h"
 #include "worldfactory.h"
-
+#include "breeze.h"
 class main_menu
 {
     public:
