@@ -356,9 +356,15 @@ std::unique_ptr<game> g;
 //The one and only uistate instance
 uistatedata uistate;
 
-// 升级所需的经验标准，所属于另一套升级体系
-static const int exp_array[] = { 100, 300, 900, 2700, 8100 };
+namespace thread_pool {
 
+    cxxpool::thread_pool pool{ 4 };
+
+}
+
+int dominator_of_zombies_exp_array[] = { 100, 300, 900, 2700, 8100 };
+
+int monster_exp_array[] = { 100, 300, 900, 2700, 8100 , 24300 , 72900 , 218700 , 656100 , 1968300 };
 
 bool is_valid_in_w_terrain( const point &p )
 {
@@ -4388,13 +4394,13 @@ void game::mon_info_update( )
             //Safemode monster check
             monster &critter = *m;
 
-            // 标记 我们在这里利用 is_set_breeze 来判断是否做一些事情
-            if( critter.is_set_breeze == false ) {
+            // 标记 我们在这里利用 was_set 来判断是否做一些事情
+            if( critter.was_set == false ) {
 
                 Character &player_character_breeze = get_player_character();
                 avatar &avatar_breeze = get_avatar();
 
-                if( critter.in_species( species_ZOMBIE ) && critter.is_set_breeze == false &&
+                if( critter.in_species( species_ZOMBIE ) && critter.was_set == false &&
 
                     player_character_breeze.has_trait( trait_Dominator_Of_Zombies ) ) {
 
@@ -4419,7 +4425,7 @@ void game::mon_info_update( )
                         avatar_breeze.dominator_of_zombies_lv = 0;
                         for( int i = 0; i < 5; i++ ) {
 
-                            if( avatar_breeze.dominator_of_zombies_exp > exp_array[i] ) {
+                            if( avatar_breeze.dominator_of_zombies_exp > dominator_of_zombies_exp_array[i] ) {
 
                                 avatar_breeze.dominator_of_zombies_lv++;
 
@@ -4434,15 +4440,14 @@ void game::mon_info_update( )
                 }
 
 
-                // 最后将 is_set_breeze 设置为true
-                critter.is_set_breeze = true;
+                critter.was_set = true;
 
 
 
             }
 
 
-            if (get_option<bool>("精英怪物警告") == true && critter.lv_breeze>=6) {
+            if (get_option<bool>("精英怪物警告") == true && critter.lv>=6) {
 
                 add_msg(m_bad,_("精英怪物警告！"));
             

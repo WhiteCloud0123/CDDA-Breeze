@@ -2767,10 +2767,9 @@ void monster::load( const JsonObject &data )
     data.read( "mounted_player_id", mounted_player_id );
     data.read( "path", path );
 
-    // 在末端添加新增的读取步骤
-    data.read( "is_set_breeze", is_set_breeze );
-    data.read("lv_breeze", lv_breeze);
-    data.read("exp_breeze", exp_breeze);
+    data.read( "was_set_breeze", was_set );
+    data.read("lv", lv);
+    data.read("exp", exp);
 
 
 
@@ -2856,13 +2855,10 @@ void monster::store( JsonOut &json ) const
     // storing the rider
     json.member( "mounted_player_id", mounted_player_id );
 
-    //在末端添加新增的成员
-    json.member( "is_set_breeze", is_set_breeze );
-    
 
-        
-   json.member("lv_breeze", lv_breeze);
-   json.member("exp_breeze", exp_breeze);
+    json.member( "was_set", was_set );        
+   json.member("lv", lv);
+   json.member("exp", exp);
     
     
 
