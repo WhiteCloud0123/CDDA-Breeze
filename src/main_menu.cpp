@@ -50,7 +50,7 @@
 #include "worldfactory.h"
 
 enum class main_menu_opts : int {
-    FILE = 0,
+    OTHER = 0,
     NEWCHAR = 1,
     LOADCHAR = 2,
     WORLD = 3,
@@ -222,7 +222,6 @@ void main_menu::display_sub_menu( int sel, const point &bottom_left, int sel_lin
             }
         }
         break;
-        case main_menu_opts::FILE:
         case main_menu_opts::HELP:
         case main_menu_opts::QUIT:
         default:
@@ -438,7 +437,7 @@ void main_menu::init_strings()
 
     // fill menu with translated menu items
     vMenuItems.clear();
-    vMenuItems.emplace_back(pgettext("Main Menu", "文件"));
+    vMenuItems.emplace_back(pgettext("Main Menu", "其他"));
     vMenuItems.emplace_back( pgettext( "Main Menu", "<N|n>ew Game" ) );
     vMenuItems.emplace_back( pgettext( "Main Menu", "Lo<a|A>d" ) );
     vMenuItems.emplace_back( pgettext( "Main Menu", "<W|w>orld" ) );
@@ -767,7 +766,6 @@ bool main_menu::opening_screen()
                 case main_menu_opts::SPECIAL:
                     max_item_count = static_cast<int>( special_game_type::NUM_SPECIAL_GAME_TYPES ) - 1;
                     break;
-                case main_menu_opts::FILE:
                 case main_menu_opts::HELP:
                 case main_menu_opts::QUIT:
                 default:
@@ -789,41 +787,6 @@ bool main_menu::opening_screen()
             }
         } else if( action == "CONFIRM" ) {
             switch( static_cast<main_menu_opts>( sel1 ) ) {
-                case main_menu_opts::FILE: {
-            
-                    uilist menu;
-                    menu.addentry(1, true, 'P', _("获取相关权限"));
-                    menu.addentry(2, true, 'O', _("导出"));
-                    menu.addentry(3, true, 'I', _("导入"));
-                    menu.query();
-                    
-                    int ret = menu.ret;
-
-                    std::filesystem::path p_1("E://Test//1");
-
-
-
-                    if (ret ==1) {
-                    
-                        // 获取权限
-
-
-
-                    
-                    }  else if (ret == 2) {
-                        
-
-                        auto task_1 = breeze::thread_pool::pool.push(breeze::filesystem::copy_,p_1);
-
-                        
-
-                        if (task_1.get()) {}
-                    
-                    }
-            
-                break;
-            
-                }                   
                 case main_menu_opts::HELP:
                     get_help().display_help();
                     break;
