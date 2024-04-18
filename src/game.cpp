@@ -356,12 +356,6 @@ std::unique_ptr<game> g;
 //The one and only uistate instance
 uistatedata uistate;
 
-namespace thread_pool {
-
-    cxxpool::thread_pool pool{ 4 };
-
-}
-
 int dominator_of_zombies_exp_array[] = { 100, 300, 900, 2700, 8100 };
 
 int monster_exp_array[] = { 100, 300, 900, 2700, 8100 , 24300 , 72900 , 218700 , 656100 , 1968300 };
