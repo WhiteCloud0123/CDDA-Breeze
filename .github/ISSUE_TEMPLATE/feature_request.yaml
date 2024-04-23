@@ -4,7 +4,8 @@ labels: ["<Suggestion / Discussion>"]
 
 body:
   - type: markdown
-  
+    attributes:
+      value: ""
   - type: textarea
     id: description
     attributes:
