@@ -1,4 +1,4 @@
-name: 功能请求 ✨
+name: 特性请求 ✨
 description: 为这个项目提出一个想法
 labels: ["<Suggestion / Discussion>"]
 
@@ -9,11 +9,9 @@ body:
         Please take the time to fill out all the fields below.
 
   - type: textarea
-    id: description-of-bug
+    id: description
     attributes:
       label: 描述你的请求.
-      description: A clear and concise description of what the problem is that made you submit this report.
-      placeholder: I am always frustrated, when...
     validations:
       required: true
 
@@ -21,8 +19,6 @@ body:
     id: description-of-solution
     attributes:
       label: 你设想中的解决方案.
-      description: A clear and concise description of what you want to happen.
-      placeholder: Instead of behaving like this, there should be...
     validations:
       required: true
     
