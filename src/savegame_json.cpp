@@ -2767,7 +2767,7 @@ void monster::load( const JsonObject &data )
     data.read( "mounted_player_id", mounted_player_id );
     data.read( "path", path );
 
-    data.read( "was_set_breeze", was_set );
+    data.read( "was_set", was_set );
     data.read("lv", lv);
     data.read("exp", exp);
 
