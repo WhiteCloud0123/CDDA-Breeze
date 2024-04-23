@@ -71,9 +71,6 @@ static const skill_id skill_survival( "survival" );
 static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
 static const species_id species_ZOMBIE( "ZOMBIE" );
 
-// 升级所需的经验标准，所属于另一套升级体系
-static const int exp_array[] = { 100, 300, 900, 2700, 8100 };
-
 namespace
 {
 
@@ -411,9 +408,9 @@ void view_status(monster& z) {
 
     monster_status_ui.text = string_format(_("%s 的状态"),z.get_name());
 
-    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv_breeze);
+    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv);
     
-    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
+    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp);
 
     monster_status_ui.addentry(生命值, true, '2', _("当前生命值: %1s   |   最大生命值: %2s"), z.get_hp(),z.get_hp_max());
 
@@ -476,9 +473,9 @@ void view_status_02(monster &z) {
 
     uilist monster_status_ui;
 
-    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv_breeze);
+    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv);
 
-    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp_breeze);
+    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp);
 
     if (z.weapon_item != NULL) {
 
@@ -915,7 +912,7 @@ bool monexamine::pet_menu( monster &z )
                     for (int i = 0; i < 5; i++) {
                         
 
-                        if (get_avatar().dominator_of_zombies_exp > exp_array[i]) {
+                        if (get_avatar().dominator_of_zombies_exp > dominator_of_zombies_exp_array[i]) {
 
                             get_avatar().dominator_of_zombies_lv++;
 

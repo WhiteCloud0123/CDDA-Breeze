@@ -340,7 +340,7 @@ void talk_function::exert_coercion(npc &p) {
     for (const monster & m: g->all_monsters()) {
 
         if (m.has_effect(effect_pet)) {
-            player_force = player_force + m.get_hp_max() * 0.1 * (m.lv_breeze > 0 ? m.lv_breeze : 1) * m.type->melee_skill ;
+            player_force = player_force + m.get_hp_max() * 0.1 * (m.lv > 0 ? m.lv : 1) * m.type->melee_skill ;
             player_pet_vec.push_back(&m);
             
         
@@ -564,7 +564,7 @@ void talk_function::exert_coercion(npc &p) {
 
             for (const monster *m : player_pet_vec) {
 
-                pets_power = pets_power + m->get_hp_max() * 0.1 * (m->lv_breeze > 0 ? m->lv_breeze : 1) * m->type->melee_skill;
+                pets_power = pets_power + m->get_hp_max() * 0.1 * (m->lv > 0 ? m->lv : 1) * m->type->melee_skill;
             
             }
 
