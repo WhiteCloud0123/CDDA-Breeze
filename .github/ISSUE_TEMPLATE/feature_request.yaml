@@ -5,9 +5,7 @@ labels: ["<Suggestion / Discussion>"]
 body:
   - type: markdown
     attributes:
-      value: |
-        Please take the time to fill out all the fields below.
-
+      value: "⭐️"
   - type: textarea
     id: description
     attributes:
