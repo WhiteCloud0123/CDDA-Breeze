@@ -19,7 +19,8 @@ body:
     attributes:
       label: 上传你的存档
       description: "调试菜单 -> 信息 -> 生成最小化存档"
-      required: true
+    validations:
+      required: false
 
   - type: textarea
     id: steps-to-reproduce
