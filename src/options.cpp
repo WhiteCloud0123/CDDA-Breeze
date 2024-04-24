@@ -627,11 +627,9 @@ bool options_manager::cOpt::is_hidden() const
 #endif
 
         case COPT_CURSES_HIDE: // NOLINT(bugprone-branch-clone)
-#if !defined(TILES) // If not defined, it's the curses interface.
-            return true;
-#else
+
             return false;
-#endif
+
 
         case COPT_POSIX_CURSES_HIDE:
             // Check if we on windows and using wincurses.
@@ -2390,12 +2388,6 @@ void options_manager::add_options_graphics()
 #endif
 
 #if !defined(__ANDROID__)
-#   if !defined(TILES)
-    // No renderer selection in non-TILES mode
-    add( "RENDERER", "graphics", to_translation( "Renderer" ),
-    to_translation( "Set which renderer to use.  Requires restart." ), { { "software", to_translation( "software" ) } },
-    "software", COPT_CURSES_HIDE );
-#   else
     std::vector<options_manager::id_and_option> renderer_list = cata_tiles::build_renderer_list();
     std::string default_renderer = renderer_list.front().first;
 #   if defined(_WIN32)
@@ -2409,7 +2401,6 @@ void options_manager::add_options_graphics()
     add( "RENDERER", "graphics", to_translation( "Renderer" ),
          to_translation( "Set which renderer to use.  Requires restart." ), renderer_list,
          default_renderer, COPT_CURSES_HIDE );
-#   endif
 
 #else
     add( "SOFTWARE_RENDERING", "graphics", to_translation( "Software rendering" ),

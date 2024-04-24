@@ -627,12 +627,9 @@ void game_ui::init_ui()
 
 void game::toggle_fullscreen()
 {
-#if !defined(TILES)
-    fullscreen = !fullscreen;
-    mark_main_ui_adaptor_resize();
-#else
+
     toggle_fullscreen_window();
-#endif
+
 }
 
 void game::toggle_pixel_minimap() const
