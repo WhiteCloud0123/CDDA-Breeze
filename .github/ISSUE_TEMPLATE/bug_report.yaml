@@ -1,5 +1,4 @@
-name: 错误报告
-description: 创建报告以帮助我们改进
+name: Bug反馈
 labels: ["(S1 - Need confirmation)"]
 
 body:
