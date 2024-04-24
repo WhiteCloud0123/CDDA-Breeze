@@ -246,6 +246,6 @@ jobs:
         with:
           upload_url: ${{ needs.release.outputs.upload_url }} 
           asset_path: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
-          asset_name: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}_60_view_distance.${{ matrix.ext }}
+          asset_name: 60_view_distance-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.content }}
     
