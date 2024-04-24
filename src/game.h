@@ -15,7 +15,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-
 #include "calendar.h"
 #include "character.h"
 #include "character_id.h"
@@ -36,6 +35,12 @@
 #include "uistate.h"
 #include "units_fwd.h"
 #include "weather.h"
+
+// 丧尸主宰职业升级所需的经验标准
+extern int dominator_of_zombies_exp_array[];
+
+// 怪物升级所需的经验标准
+extern int monster_exp_array[];
 
 class Character;
 class creature_tracker;

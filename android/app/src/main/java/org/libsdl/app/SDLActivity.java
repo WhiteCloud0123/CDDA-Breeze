@@ -317,6 +317,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             }
         }
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
+        Toaster.setGravity(Gravity.TOP);
         tabButton = new Button(this);
         tabButton.setBackgroundColor(android.R.color.transparent);
         tabButton.setText("Tab");

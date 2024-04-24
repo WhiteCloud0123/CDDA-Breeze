@@ -169,8 +169,6 @@ static const trait_id trait_THRESH_MYCUS("THRESH_MYCUS");
 
 static const trait_id trait_Dominator_Of_Zombies("Dominator_Of_Zombies");
 
-static const int monster_exp_array[] = { 100, 300, 900, 2700, 8100 , 24300 , 72900 , 218700 , 656100 , 1968300 };
-
 struct pathfinding_settings;
 
 // Limit the number of iterations for next upgrade_time calculations.
@@ -262,21 +260,21 @@ monster::monster(const mtype_id& id) : monster()
 
             if (chance_ == 1) {
 
-                lv_breeze = rng(6, 10);
+                lv = rng(6, 10);
 
-                set_speed_base(type->speed + 5 * lv_breeze);
+                set_speed_base(type->speed + 5 * lv);
 
-                exp_breeze = monster_exp_array[lv_breeze - 1];
+                exp = monster_exp_array[lv - 1];
 
 
             }
             else {
 
-                lv_breeze = rng(1, 5);
+                lv = rng(1, 5);
 
-                set_speed_base(type->speed + 5 * lv_breeze);
+                set_speed_base(type->speed + 5 * lv);
 
-                exp_breeze = monster_exp_array[lv_breeze - 1];
+                exp = monster_exp_array[lv - 1];
 
 
             }
@@ -324,7 +322,7 @@ void monster::poly(const mtype_id& id)
     }
     type = &id.obj();
     moves = 0;
-    Creature::set_speed_base(type->speed + 5 * lv_breeze);
+    Creature::set_speed_base(type->speed + 5 * lv);
     anger = type->agro;
     morale = type->morale;
     hp = static_cast<int>(hp_percentage * type->hp);
@@ -860,7 +858,7 @@ int monster::print_info(const catacurses::window& w, int vStart, int vLines, int
     oss << "<color_h_white>" << get_effect_status() << "</color>";
     if (get_option<bool>("显示怪物的等级") == true) {
         oss << "\n";
-        oss << "<color_white>" << "等级 : " << lv_breeze << "</color>";
+        oss << "<color_white>" << "等级 : " << lv << "</color>";
     }
     /*oss << "\n";
     oss << "\n";
@@ -2078,13 +2076,13 @@ bool monster::melee_attack(Creature& target, float accuracy)
         if (weapon_item !=NULL) {
             
 
-            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + weapon_item->damage_melee(damage_type::BASH) + 5 * lv_breeze );
+            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + weapon_item->damage_melee(damage_type::BASH) + 5 * lv );
             
         
         }
         else {
         
-            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + 5 * lv_breeze );
+            damage.add_damage(damage_type::BASH, dice(type->melee_dice, type->melee_sides) + 5 * lv);
 
         }
 
@@ -2218,14 +2216,14 @@ bool monster::melee_attack(Creature& target, float accuracy)
 
         if (target.is_monster()) {
 
-            exp_breeze = exp_breeze + target.as_monster()->type->difficulty;
-            lv_breeze = 0;
+            exp = exp + target.as_monster()->type->difficulty;
+            lv = 0;
             for (int i = 0; i < 10; i++) {
 
-                if (exp_breeze > monster_exp_array[i]) {
+                if (exp > monster_exp_array[i]) {
 
-                    lv_breeze++;
-                    set_speed_base(type->speed + 5 * lv_breeze);
+                    lv++;
+                    set_speed_base(type->speed + 5 * lv);
                 }
                 else {
 
@@ -2241,21 +2239,21 @@ bool monster::melee_attack(Creature& target, float accuracy)
         else {
 
             // 对于击杀npc获得的经验计算: 10 + 力量 + 智力 + 敏捷 + 感知 
-            exp_breeze = exp_breeze +
+            exp = exp +
                 10 +
                 target.as_character()->get_str_base() +
                 target.as_character()->get_int_base() +
                 target.as_character()->get_dex_base() +
                 target.as_character()->get_per_base();
 
-            lv_breeze = 0;
+            lv = 0;
             for (int i = 0; i < 10; i++) {
 
-                if (exp_breeze > monster_exp_array[i]) {
+                if (exp > monster_exp_array[i]) {
 
-                    lv_breeze++;
+                    lv++;
                     //   = Json定义的速度 + 5 * 怪物当前的等级
-                    set_speed_base(type->speed + 5 * lv_breeze);
+                    set_speed_base(type->speed + 5 * lv);
 
                 }
                 else {

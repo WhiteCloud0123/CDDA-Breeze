@@ -29,7 +29,6 @@ static std::string find_translated_file( const std::string &path, const std::str
 static cata_path find_translated_file( const cata_path &base_path, const std::string &extension,
                                        const cata_path &fallback );
 
-static std::string motd_value;
 static std::string gfxdir_value;
 static std::string config_dir_value;
 static std::string user_dir_value;
@@ -52,7 +51,6 @@ static cata_path gfxdir_path_value;
 static cata_path keymap_path_value;
 static cata_path langdir_path_value;
 static cata_path memorialdir_path_value;
-static cata_path motd_path_value;
 static cata_path options_path_value;
 static cata_path savedir_path_value;
 static cata_path user_dir_path_value;
@@ -130,8 +128,6 @@ void PATH_INFO::set_standard_filenames()
 
     // Shared dirs
 
-    // Shared files
-    motd_value = datadir_value + "motd/" + "en.motd";
 
     savedir_value = user_dir_value + "save/";
     // Special: savedir is always relative to itself even if in the user dir location.
@@ -450,11 +446,6 @@ std::string PATH_INFO::credits()
                                  datadir_value + "credits/" + "en.credits" );
 }
 
-std::string PATH_INFO::motd()
-{
-    return find_translated_file( datadir_value + "motd/", ".motd", motd_value );
-}
-
 std::string PATH_INFO::title( const holiday current_holiday )
 {
     std::string theme_basepath = datadir_value + "title/";
@@ -521,9 +512,6 @@ void PATH_INFO::set_datadir( const std::string &datadir )
     gfxdir_value = datadir_value + "gfx/";
     gfxdir_path_value = datadir_path_value / "gfx";
 
-    // Shared files
-    motd_value = datadir_value + "motd/" + "en.motd";
-    motd_path_value = datadir_path_value / "motd" / "en.motd";
 }
 
 void PATH_INFO::set_config_dir( const std::string &config_dir )
@@ -567,10 +555,6 @@ void PATH_INFO::set_autopickup( const std::string &autopickup )
     autopickup_path_value = cata_path{ cata_path::root_path::unknown, autopickup_value };
 }
 
-void PATH_INFO::set_motd( const std::string &motd )
-{
-    motd_value = motd;
-}
 
 fs::path cata_path::get_logical_root_path() const
 {

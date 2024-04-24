@@ -541,16 +541,6 @@ cli_opts parse_commandline( int argc, const char **argv )
                     return 1;
                 }
             },
-            {
-                "--motdfile", "<filename>",
-                "Name of the message of the day file within the motd directory",
-                nullptr,
-                1,
-                []( int, const char **params ) -> int {
-                    PATH_INFO::set_motd( params[0] );
-                    return 1;
-                }
-            },
         }
     };
 

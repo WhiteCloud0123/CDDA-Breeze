@@ -635,7 +635,7 @@ bool melee_actor::call( monster &z ) const
         if (rng(1,20)==1) {
             
             // 精英怪物触发联连招
-            if (z.lv_breeze>=6) {
+            if (z.lv>=6) {
 
                 
                 g->fling_creature_up(target, coord_to_angle(z.pos(), target->pos()),
