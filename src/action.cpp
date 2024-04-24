@@ -939,9 +939,6 @@ action_id handle_action_menu()
                 // debug _is_a menu.
                 entry->txt += "…";
             }
-#if !defined(TILES)
-            REGISTER_ACTION( ACTION_TOGGLE_FULLSCREEN );
-#endif
 #if defined(TILES)
             REGISTER_ACTION( ACTION_TOGGLE_PIXEL_MINIMAP );
             REGISTER_ACTION( ACTION_RELOAD_TILESET );
