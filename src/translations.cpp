@@ -61,13 +61,6 @@ std::string locale_dir()
 #define BSD
 #endif
 
-#if !defined(__ANDROID__) && ((defined(__linux__) || defined(BSD) || (defined(MACOSX) && !defined(TILES))))
-    if( !PATH_INFO::base_path().empty() ) {
-        loc_dir = PATH_INFO::base_path() + "share/locale";
-    } else {
-        loc_dir = PATH_INFO::langdir();
-    }
-#endif
 #endif // LOCALIZE
     return loc_dir;
 }
