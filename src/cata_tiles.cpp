@@ -1,4 +1,3 @@
-#if defined(TILES)
 #include "cata_tiles.h"
 
 #include <algorithm>
@@ -5132,4 +5131,4 @@ std::vector<options_manager::id_and_option> cata_tiles::build_display_list()
     return display_names.empty() ? default_display_names : display_names;
 }
 
-#endif // SDL_TILES
+

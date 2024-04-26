@@ -1,8 +1,7 @@
 #include "string_editor_window.h"
 
-#if defined(TILES)
 #include "sdl_wrappers.h"
-#endif
+
 
 #if defined(__ANDROID__)
 #include <SDL_keyboard.h>
@@ -293,9 +292,9 @@ void string_editor_window::create_context()
     ctxt->register_action( "TEXT.PAGE_UP" );
     ctxt->register_action( "TEXT.PAGE_DOWN" );
     ctxt->register_action( "TEXT.DELETE" );
-#if defined(TILES)
+
     ctxt->register_action( "TEXT.PASTE" );
-#endif
+
     ctxt->register_action( "TEXT.INPUT_FROM_FILE" );
     ctxt->register_action( "HELP_KEYBINDINGS" );
     ctxt->register_action( "ANY_INPUT" );
@@ -493,7 +492,7 @@ std::pair<bool, std::string> string_editor_window::query_string()
             // paste, input from file, or text input
             std::string entered;
             if( action == "TEXT.PASTE" ) {
-#if defined(TILES)
+
                 if( edit.empty() ) {
                     char *const clip = SDL_GetClipboardText();
                     if( clip ) {
@@ -501,7 +500,7 @@ std::pair<bool, std::string> string_editor_window::query_string()
                         SDL_free( clip );
                     }
                 }
-#endif
+
             } else if( action == "TEXT.INPUT_FROM_FILE" ) {
                 if( edit.empty() ) {
                     entered = get_input_string_from_file();

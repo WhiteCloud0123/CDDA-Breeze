@@ -74,9 +74,9 @@
 #   include <backtrace.h>
 #endif
 
-#if defined(TILES)
+
 #include "sdl_wrappers.h"
-#endif // TILES
+
 
 #if defined(__ANDROID__)
 // used by android_version() function for __system_property_get().
@@ -342,9 +342,9 @@ static void debug_error_prompt(
 #endif
                                     " %s\n" // translated user string: space to continue
                                     " %s\n" // translated user string: ignore key
-#if defined(TILES)
+
                                     " %s\n" // translated user string: copy
-#endif // TILES
+
                                     , _( "An error has occurred!  Written below is the error report:" ),
                                     formatted_report,
 #if defined(BACKTRACE)
@@ -352,9 +352,9 @@ static void debug_error_prompt(
 #endif
                                     _( "Press <color_white>space bar</color> to continue the game." ),
                                     _( "Press <color_white>I</color> (or <color_white>i</color>) to also ignore this particular message in the future." )
-#if defined(TILES)
+
                                     , _( "Press <color_white>C</color> (or <color_white>c</color>) to copy this message to the clipboard." )
-#endif // TILES
+
                                 );
     ui.on_redraw( [&]( const ui_adaptor & ) {
         catacurses::erase();
@@ -372,12 +372,12 @@ static void debug_error_prompt(
     for( bool stop = false; !stop; ) {
         ui_manager::redraw();
         switch( inp_mngr.get_input_event().get_first_input() ) {
-#if defined(TILES)
+
             case 'c':
             case 'C':
                 SDL_SetClipboardText( formatted_report.c_str() );
                 break;
-#endif // TILES
+
             case 'i':
             case 'I':
                 ignored_messages.insert( msg_key );
@@ -1783,11 +1783,9 @@ std::string game_info::game_version()
 
 std::string game_info::graphics_version()
 {
-#if defined(TILES)
+
     return "Tiles";
-#else
-    return "Curses";
-#endif
+
 }
 
 std::string game_info::mods_loaded()

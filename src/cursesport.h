@@ -3,7 +3,6 @@
 #define CATA_SRC_CURSESPORT_H
 
 #include <utility>
-#if defined(TILES) || defined(_WIN32)
 
 #include <array>
 #include <string>
@@ -87,6 +86,6 @@ bool handle_resize( int w, int h );
 void resize_term( int cell_w, int cell_h );
 int get_scaling_factor();
 
-#endif
+
 #endif // CATA_SRC_CURSESPORT_H
 

@@ -39,9 +39,9 @@
 #include "ui_manager.h"
 #include "worldfactory.h"
 
-#if defined(TILES)
+
 #include "cata_tiles.h"
-#endif // TILES
+
 
 #if defined(__ANDROID__)
 #include <jni.h>
@@ -620,11 +620,9 @@ bool options_manager::cOpt::is_hidden() const
             return false;
 
         case COPT_SDL_HIDE:
-#if defined(TILES)
+
             return true;
-#else
-            return false;
-#endif
+
 
         case COPT_CURSES_HIDE: // NOLINT(bugprone-branch-clone)
 
@@ -633,11 +631,7 @@ bool options_manager::cOpt::is_hidden() const
 
         case COPT_POSIX_CURSES_HIDE:
             // Check if we on windows and using wincurses.
-#if defined(TILES) || defined(_WIN32)
             return false;
-#else
-            return true;
-#endif
 
         case COPT_NO_SOUND_HIDE:
 #if !defined(SDL_SOUND) // If not defined, we have no sound support.
@@ -2366,13 +2360,12 @@ void options_manager::add_options_graphics()
 
     add_empty_line();
 
-#if defined(TILES)
     std::vector<options_manager::id_and_option> display_list = cata_tiles::build_display_list();
     add( "DISPLAY", "graphics", to_translation( "Display" ),
          to_translation( "Sets which video display will be used to show the game.  Requires restart." ),
          display_list,
          display_list.front().first, COPT_CURSES_HIDE );
-#endif
+
 
 #if !defined(__ANDROID__) // Android is always fullscreen
     add( "FULLSCREEN", "graphics", to_translation( "Fullscreen" ),
@@ -2963,7 +2956,7 @@ void options_manager::add_options_android()
 #endif
 }
 
-#if defined(TILES)
+
 // Helper method to isolate #ifdeffed tiles code.
 static void refresh_tiles( bool used_tiles_changed, bool pixel_minimap_height_changed, bool ingame )
 {
@@ -3021,11 +3014,7 @@ static void refresh_tiles( bool used_tiles_changed, bool pixel_minimap_height_ch
         g->mark_main_ui_adaptor_resize();
     }
 }
-#else
-static void refresh_tiles( bool, bool, bool )
-{
-}
-#endif // TILES
+
 
 static void draw_borders_external(
     const catacurses::window &w, int horizontal_level, const std::map<int, bool> &mapLines,
@@ -3288,7 +3277,6 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
         const std::string &opt_name = *page_items[iCurrentLine];
         cOpt &current_opt = cOPTIONS[opt_name];
 
-#if defined(TILES) || defined(_WIN32)
         if( opt_name == "TERMINAL_X" ) {
             int new_terminal_x = 0;
             int new_window_width = 0;
@@ -3320,7 +3308,7 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
                             current_opt.getDefaultText(),
                             new_window_height );
         } else
-#endif
+
         {
             fold_and_print( w_options_tooltip, point_zero, iMinScreenWidth - 2, c_white, "%s #%s",
                             current_opt.getTooltip(),

@@ -472,12 +472,8 @@ void DynamicDataLoader::initialize()
     add( "conduct", &achievement::load_achievement );
     add( "widget", &widget::load_widget );
     add( "weakpoint_set", &weakpoints::load_weakpoint_sets );
-#if defined(TILES)
+
     add( "mod_tileset", &load_mod_tileset );
-#else
-    // Dummy function
-    add( "mod_tileset", load_ignored_type );
-#endif
 }
 
 void DynamicDataLoader::load_data_from_path( const cata_path &path, const std::string &src,
@@ -728,9 +724,9 @@ void DynamicDataLoader::finalize_loaded_data( loading_ui &ui )
             { _( "Mutations" ), &mutation_branch::finalize },
             { _( "Achievements" ), &achievement::finalize },
             { _( "Widgets" ), &widget::finalize },
-#if defined(TILES)
+
             { _( "Tileset" ), &load_tileset },
-#endif
+
         }
     };
 
