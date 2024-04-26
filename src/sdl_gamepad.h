@@ -1,7 +1,7 @@
 #pragma once
 #ifndef CATA_SRC_SDL_GAMEPAD_H
 #define CATA_SRC_SDL_GAMEPAD_H
-#if defined(TILES)
+
 
 #include "input.h"
 #include "sdl_wrappers.h"
@@ -22,6 +22,5 @@ SDL_GameController *get_controller();
 
 } // namespace gamepad
 
-#endif // TILES
 #endif // CATA_SRC_SDL_GAMEPAD_H
 

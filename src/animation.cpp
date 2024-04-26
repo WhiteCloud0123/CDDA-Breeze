@@ -25,12 +25,12 @@
 #include "viewer.h"
 #include "weather.h"
 
-#if defined(TILES)
+
 #include <memory>
 
 #include "cata_tiles.h" // all animation functions will be pushed out to a cata_tiles function in some manner
 #include "sdltiles.h"
-#endif
+
 
 #include <algorithm>
 #include <chrono>
@@ -267,7 +267,7 @@ void draw_custom_explosion_curses( game &g,
 }
 } // namespace
 
-#if defined(TILES)
+
 void explosion_handler::draw_explosion( const tripoint &p, const int r, const nc_color &col )
 {
     if( test_mode ) {
@@ -305,12 +305,6 @@ void explosion_handler::draw_explosion( const tripoint &p, const int r, const nc
         tilecontext->void_explosion();
     }
 }
-#else
-void explosion_handler::draw_explosion( const tripoint &p, const int r, const nc_color &col )
-{
-    draw_explosion_curses( *g, p, r, col );
-}
-#endif
 
 void explosion_handler::draw_custom_explosion( const tripoint &,
         const std::map<tripoint, nc_color> &all_area, const cata::optional<std::string> &tile_id )
@@ -329,7 +323,7 @@ void explosion_handler::draw_custom_explosion( const tripoint &,
     // Start by getting rid of everything except current z-level
     std::map<tripoint, explosion_tile> neighbors;
     avatar &player_character = get_avatar();
-#if defined(TILES)
+
     if( !use_tiles ) {
         for( const auto &pr : all_area ) {
             const tripoint relative_point = relative_view_pos( player_character, pr.first );
@@ -348,14 +342,6 @@ void explosion_handler::draw_custom_explosion( const tripoint &,
             }
         }
     }
-#else
-    for( const auto &pr : all_area ) {
-        const tripoint relative_point = relative_view_pos( player_character, pr.first );
-        if( relative_point.z == 0 ) {
-            neighbors[pr.first] = explosion_tile{ N_NO_NEIGHBORS, pr.second, tile_id };
-        }
-    }
-#endif
 
     // Searches for a neighbor, sets the neighborhood flag on current point and on the neighbor
     const auto set_neighbors = [&]( const tripoint & pos,
@@ -427,7 +413,7 @@ void explosion_handler::draw_custom_explosion( const tripoint &,
         layers.push_front( std::move( layer ) );
     }
 
-#if defined(TILES)
+
     if( !use_tiles ) {
         draw_custom_explosion_curses( *g, layers );
         return;
@@ -451,9 +437,7 @@ void explosion_handler::draw_custom_explosion( const tripoint &,
     }
 
     tilecontext->void_custom_explosion();
-#else
-    draw_custom_explosion_curses( *g, layers );
-#endif
+
 }
 
 namespace
@@ -484,7 +468,7 @@ void draw_bullet_curses( map &m, const tripoint &t, const char bullet, const tri
 
 } // namespace
 
-#if defined(TILES)
+
 /* Bullet Animation -- Maybe change this to animate the ammo itself flying through the air?*/
 // need to have a version where there is no player defined, possibly. That way shrapnel works as intended
 void game::draw_bullet( const tripoint &t, const int /*i*/,
@@ -522,13 +506,7 @@ void game::draw_bullet( const tripoint &t, const int /*i*/,
     bullet_animation().progress();
     tilecontext->void_bullet();
 }
-#else
-void game::draw_bullet( const tripoint &t, const int i, const std::vector<tripoint> &trajectory,
-                        const char bullet )
-{
-    draw_bullet_curses( m, t, bullet, &trajectory[i] );
-}
-#endif
+
 
 namespace
 {
@@ -565,7 +543,6 @@ void draw_hit_mon_curses( const tripoint &center, const monster &m, const avatar
 
 } // namespace
 
-#if defined(TILES)
 void game::draw_hit_mon( const tripoint &p, const monster &m, const bool dead )
 {
     if( test_mode ) {
@@ -585,12 +562,6 @@ void game::draw_hit_mon( const tripoint &p, const monster &m, const bool dead )
 
     bullet_animation().progress();
 }
-#else
-void game::draw_hit_mon( const tripoint &p, const monster &m, const bool dead )
-{
-    draw_hit_mon_curses( p, m, u, dead );
-}
-#endif
 
 namespace
 {
@@ -602,7 +573,6 @@ void draw_hit_player_curses( const game &/* g */, const Character &p, const int 
 }
 } //namespace
 
-#if defined(TILES)
 void game::draw_hit_player( const Character &p, const int dam )
 {
     if( test_mode ) {
@@ -630,12 +600,6 @@ void game::draw_hit_player( const Character &p, const int dam )
 
     bullet_animation().progress();
 }
-#else
-void game::draw_hit_player( const Character &p, const int dam )
-{
-    draw_hit_player_curses( *this, p, dam );
-}
-#endif
 
 /* Line drawing code, not really an animation but should be separated anyway */
 namespace
@@ -670,7 +634,6 @@ void draw_line_curses( game &g, const tripoint &center, const std::vector<tripoi
 }
 } //namespace
 
-#if defined(TILES)
 void game::draw_line( const tripoint &p, const tripoint &center,
                       const std::vector<tripoint> &points, bool noreveal )
 {
@@ -685,17 +648,6 @@ void game::draw_line( const tripoint &p, const tripoint &center,
 
     tilecontext->init_draw_line( p, points, "line_target", true );
 }
-#else
-void game::draw_line( const tripoint &p, const tripoint &center,
-                      const std::vector<tripoint> &points, bool noreveal )
-{
-    if( !u.sees( p ) ) {
-        return;
-    }
-
-    draw_line_curses( *this, center, points, noreveal );
-}
-#endif
 
 void game::draw_line( const tripoint_bub_ms &p, const tripoint_bub_ms &center,
                       const std::vector<tripoint_bub_ms> &points, bool noreveal )
@@ -724,45 +676,24 @@ void draw_line_curses( game &g, const std::vector<tripoint> &points )
 }
 } //namespace
 
-#if defined(TILES)
 void game::draw_line( const tripoint &p, const std::vector<tripoint> &points )
 {
     draw_line_curses( *this, points );
     tilecontext->init_draw_line( p, points, "line_trail", false );
 }
-#else
-void game::draw_line( const tripoint &/*p*/, const std::vector<tripoint> &points )
-{
-    draw_line_curses( *this, points );
-}
-#endif
 
-#if defined(TILES)
+
 void game::draw_cursor( const tripoint &p ) const
 {
     const tripoint rp = relative_view_pos( *this, p );
     mvwputch_inv( w_terrain, rp.xy(), c_light_green, 'X' );
     tilecontext->init_draw_cursor( p );
 }
-#else
-void game::draw_cursor( const tripoint &p ) const
-{
-    const tripoint rp = relative_view_pos( *this, p );
-    mvwputch_inv( w_terrain, rp.xy(), c_light_green, 'X' );
-}
-#endif
 
-#if defined(TILES)
 void game::draw_highlight( const tripoint &p )
 {
     tilecontext->init_draw_highlight( p );
 }
-#else
-void game::draw_highlight( const tripoint & )
-{
-    // Do nothing
-}
-#endif
 
 namespace
 {
@@ -774,7 +705,6 @@ void draw_weather_curses( const catacurses::window &win, const weather_printable
 }
 } //namespace
 
-#if defined(TILES)
 void game::draw_weather( const weather_printable &w ) const
 {
     if( !use_tiles ) {
@@ -795,12 +725,6 @@ void game::draw_weather( const weather_printable &w ) const
 
     tilecontext->init_draw_weather( w, w.wtype->tiles_animation );
 }
-#else
-void game::draw_weather( const weather_printable &w ) const
-{
-    draw_weather_curses( w_terrain, w );
-}
-#endif
 
 namespace
 {
@@ -828,7 +752,6 @@ void draw_sct_curses( const game &g )
 }
 } //namespace
 
-#if defined(TILES)
 void game::draw_sct() const
 {
     if( use_tiles ) {
@@ -837,12 +760,6 @@ void game::draw_sct() const
         draw_sct_curses( *this );
     }
 }
-#else
-void game::draw_sct() const
-{
-    draw_sct_curses( *this );
-}
-#endif
 
 namespace
 {
@@ -863,7 +780,6 @@ void draw_zones_curses( const catacurses::window &w, const tripoint &start, cons
 }
 } //namespace
 
-#if defined(TILES)
 void game::draw_zones( const tripoint &start, const tripoint &end, const tripoint &offset ) const
 {
     if( use_tiles ) {
@@ -881,92 +797,49 @@ void game::draw_all_zones(const tripoint& start, const tripoint& end, const trip
         draw_zones_curses(w_terrain, start, end, offset);
     }
 }
-#else
-void game::draw_zones( const tripoint &start, const tripoint &end, const tripoint &offset ) const
-{
-    draw_zones_curses( w_terrain, start, end, offset );
-}
-#endif
 
-#if defined(TILES)
 void game::draw_radiation_override( const tripoint &p, const int rad )
 {
     if( use_tiles ) {
         tilecontext->init_draw_radiation_override( p, rad );
     }
 }
-#else
-void game::draw_radiation_override( const tripoint &, const int )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_terrain_override( const tripoint &p, const ter_id &id )
 {
     if( use_tiles ) {
         tilecontext->init_draw_terrain_override( p, id );
     }
 }
-#else
-void game::draw_terrain_override( const tripoint &, const ter_id & )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_furniture_override( const tripoint &p, const furn_id &id )
 {
     if( use_tiles ) {
         tilecontext->init_draw_furniture_override( p, id );
     }
 }
-#else
-void game::draw_furniture_override( const tripoint &, const furn_id & )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_graffiti_override( const tripoint &p, const bool has )
 {
     if( use_tiles ) {
         tilecontext->init_draw_graffiti_override( p, has );
     }
 }
-#else
-void game::draw_graffiti_override( const tripoint &, const bool )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_trap_override( const tripoint &p, const trap_id &id )
 {
     if( use_tiles ) {
         tilecontext->init_draw_trap_override( p, id );
     }
 }
-#else
-void game::draw_trap_override( const tripoint &, const trap_id & )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_field_override( const tripoint &p, const field_type_id &id )
 {
     if( use_tiles ) {
         tilecontext->init_draw_field_override( p, id );
     }
 }
-#else
-void game::draw_field_override( const tripoint &, const field_type_id & )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_item_override( const tripoint &p, const itype_id &id, const mtype_id &mid,
                                const bool hilite )
 {
@@ -974,14 +847,7 @@ void game::draw_item_override( const tripoint &p, const itype_id &id, const mtyp
         tilecontext->init_draw_item_override( p, id, mid, hilite );
     }
 }
-#else
-void game::draw_item_override( const tripoint &, const itype_id &, const mtype_id &,
-                               const bool )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_vpart_override(
     const tripoint &p, const vpart_id &id, const int part_mod, const units::angle &veh_dir,
     const bool hilite, const point &mount )
@@ -990,27 +856,14 @@ void game::draw_vpart_override(
         tilecontext->init_draw_vpart_override( p, id, part_mod, veh_dir, hilite, mount );
     }
 }
-#else
-void game::draw_vpart_override( const tripoint &, const vpart_id &, const int,
-                                const units::angle &, const bool, const point & )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_below_override( const tripoint &p, const bool draw )
 {
     if( use_tiles ) {
         tilecontext->init_draw_below_override( p, draw );
     }
 }
-#else
-void game::draw_below_override( const tripoint &, const bool )
-{
-}
-#endif
 
-#if defined(TILES)
 void game::draw_monster_override( const tripoint &p, const mtype_id &id, const int count,
                                   const bool more, const Creature::Attitude att )
 {
@@ -1018,9 +871,3 @@ void game::draw_monster_override( const tripoint &p, const mtype_id &id, const i
         tilecontext->init_draw_monster_override( p, id, count, more, att );
     }
 }
-#else
-void game::draw_monster_override( const tripoint &, const mtype_id &, const int,
-                                  const bool, const Creature::Attitude )
-{
-}
-#endif

@@ -1,5 +1,3 @@
-#if defined(TILES)
-
 #include "sdl_utils.h"
 
 #include <array>
@@ -206,4 +204,4 @@ SDL_Rect fit_rect_inside( const SDL_Rect &inner, const SDL_Rect &outer )
     return SDL_Rect{ p.x, p.y, w, h };
 }
 
-#endif // SDL_TILES
+

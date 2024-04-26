@@ -14,9 +14,9 @@
 #include "uistate.h"
 #include "wcwidth.h"
 
-#if defined(TILES)
+
 #include "sdl_wrappers.h"
-#endif
+
 
 #if defined(__ANDROID__)
 #include <SDL_keyboard.h>
@@ -118,9 +118,9 @@ void string_input_popup::create_context()
     ctxt->register_action( "TEXT.HOME" );
     ctxt->register_action( "TEXT.END" );
     ctxt->register_action( "TEXT.DELETE" );
-#if defined(TILES)
+
     ctxt->register_action( "TEXT.PASTE" );
-#endif
+
     ctxt->register_action( "TEXT.INPUT_FROM_FILE" );
     ctxt->register_action( "HELP_KEYBINDINGS" );
     ctxt->register_action( "ANY_INPUT" );
@@ -549,7 +549,6 @@ const std::string &string_input_popup::query_string( const bool loop, const bool
             if( _max_length <= 0 || ret.display_width() < static_cast<size_t>( _max_length ) ) {
                 std::string entered;
                 if( action == "TEXT.PASTE" ) {
-#if defined(TILES)
                     if( edit.empty() ) {
                         char *const clip = SDL_GetClipboardText();
                         if( clip ) {
@@ -557,7 +556,7 @@ const std::string &string_input_popup::query_string( const bool loop, const bool
                             SDL_free( clip );
                         }
                     }
-#endif
+
                 } else if( action == "TEXT.INPUT_FROM_FILE" ) {
                     if( edit.empty() ) {
                         entered = get_input_string_from_file();

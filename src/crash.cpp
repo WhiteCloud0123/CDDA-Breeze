@@ -14,9 +14,9 @@
 #include <string>
 #include <typeinfo>
 
-#if defined(TILES)
+
 #include "sdl_wrappers.h"
-#endif
+
 
 #if defined(_WIN32)
 #if 1 // HACK: Hack to prevent reordering of #include "platform_win.h" by IWYU
@@ -73,12 +73,12 @@ extern "C" {
                  << "\nVERSION: " << getVersionString()
                  << "\nTYPE: " << type
                  << "\nMESSAGE: " << msg;
-#if defined(TILES)
+
         if( SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Error",
                                       log_text.str().c_str(), nullptr ) != 0 ) {
             log_text << "Error creating SDL message box: " << SDL_GetError() << '\n';
         }
-#endif
+
 #endif
         log_text << "\nSTACK TRACE:\n";
         debug_write_backtrace( log_text );

@@ -686,7 +686,7 @@ void monmove()
             if( turns == 9 ) {
                 debugmsg( "NPC %s entered infinite loop.  Turning on debug mode",
                           guy.get_name() );
-                // 目前及时是进入无限循环也不要开启debug_mode
+                // 目前即使是进入无限循环也不要开启debug_mode
                 //debug_mode = true;
                 // make sure the filter is active
                 if( std::find(

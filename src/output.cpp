@@ -948,9 +948,9 @@ input_event draw_item_info( const int iLeft, const int iWidth, const int iTop, c
         catacurses::newwin( iHeight, iWidth,
                             point( iLeft, iTop ) );
 
-#if defined(TILES)
+
     clear_window_area( win );
-#endif // TILES
+
     wclear( win );
     wnoutrefresh( win );
 
@@ -2865,9 +2865,9 @@ void scrollingcombattext::add( const point &pos, direction p_oDir,
         bool tiled = false;
         bool iso_mode = g->is_tileset_isometric();
 
-#if defined(TILES)
+
         tiled = use_tiles;
-#endif
+
 
         if( p_sType == "hp" ) {
             //Remove old HP bar

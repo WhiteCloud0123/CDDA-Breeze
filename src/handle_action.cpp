@@ -525,7 +525,6 @@ input_context game::get_player_input(std::string& action)
         point offset(u.view_offset.xy() + point(-getmaxx(w_terrain) / 2 + u.posx(),
             -getmaxy(w_terrain) / 2 + u.posy()));
 
-#if defined(TILES)
         if (g->is_tileset_isometric()) {
             iStart.x = 0;
             iStart.y = 0;
@@ -534,7 +533,7 @@ input_context game::get_player_input(std::string& action)
             offset.x = 0;
             offset.y = 0;
         }
-#endif //TILES
+
 
         // TODO: Move the weather calculations out of here.
         const bool bWeatherEffect = weather_info.symbol != NULL_UNICODE;

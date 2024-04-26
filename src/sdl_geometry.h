@@ -2,7 +2,7 @@
 #ifndef CATA_SRC_SDL_GEOMETRY_H
 #define CATA_SRC_SDL_GEOMETRY_H
 
-#if defined(TILES)
+
 #include <memory>
 
 #include "sdl_wrappers.h"
@@ -53,6 +53,6 @@ class ColorModulatedGeometryRenderer: public DefaultGeometryRenderer
         SDL_Texture_Ptr tex;
 };
 
-#endif // TILES
+
 
 #endif // CATA_SRC_SDL_GEOMETRY_H

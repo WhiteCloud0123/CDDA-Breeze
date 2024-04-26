@@ -5,8 +5,6 @@
 #include "parallel_hashmap/btree.h"
 #include "point.h"
 
-#if defined(TILES)
-
 #include <algorithm>
 #include <array>
 #include <climits>
@@ -4130,7 +4128,7 @@ const SDL_Renderer_Ptr &get_sdl_renderer()
     return renderer;
 }
 
-#endif // TILES
+
 
 bool window_contains_point_relative( const catacurses::window &win, const point &p )
 {
