@@ -9,14 +9,14 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: 描述你的请求.
+      label: 描述你的请求
     validations:
       required: true
 
   - type: textarea
     id: description-of-solution
     attributes:
-      label: 你设想中的解决方案.
+      label: 你设想中的解决方案
     validations:
       required: true
     
