@@ -21,6 +21,7 @@ int pixel_minimap_r;
 int pixel_minimap_g;
 int pixel_minimap_b;
 int pixel_minimap_a;
+bool use_particle_system;
 
 #ifndef CATA_IN_TOOL
 error_log_format_t error_log_format = error_log_format_t::human_readable;

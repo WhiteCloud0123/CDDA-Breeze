@@ -712,7 +712,7 @@ void game::draw_weather( const weather_printable &w ) const
         return;
     }
 
-    if (get_option<bool>("启用粒子特效")) {
+    if (use_particle_system) {
         weather_type_id& id = get_weather().weather_id;
         if (id == weather_snowing || id == weather_rain || id == weather_drizzle) {
             return;
