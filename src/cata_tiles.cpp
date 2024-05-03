@@ -1465,33 +1465,42 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             // Add temperature value to the overlay_strings list for every visible tile when
             // displaying temperature
             if( g->display_overlay_state( ACTION_DISPLAY_TEMPERATURE ) && !invisible[0] ) {
-                units::temperature temp_value = get_weather().get_temperature( pos );
+                const units::temperature temp_value = get_weather().get_temperature(pos);
+                const float celsius_temp_value = units::to_celsius(temp_value);
                 short color;
                 const short bold = 8;
-                if( temp_value > units::from_celsius( 40 ) ) {
+                if (celsius_temp_value > 40) {
                     color = catacurses::red;
-                } else if( temp_value > units::from_celsius( 25 ) ) {
+                }
+                else if (celsius_temp_value > 25) {
                     color = catacurses::yellow + bold;
-                } else if( temp_value > units::from_celsius( 10 ) ) {
+                }
+                else if (celsius_temp_value > 10) {
                     color = catacurses::green + bold;
-                } else if( temp_value > units::from_celsius( 0 ) ) {
+                }
+                else if (celsius_temp_value > 0) {
                     color = catacurses::white + bold;
-                } else if( temp_value > units::from_celsius( -10 ) ) {
+                }
+                else if (celsius_temp_value > -10) {
                     color = catacurses::cyan + bold;
-                } else {
+                }
+                else {
                     color = catacurses::blue + bold;
                 }
 
                 std::string temp_str;
-                if( get_option<std::string>( "USE_CELSIUS" ) == "celsius" ) {
-                    temp_str = std::to_string( units::to_celsius( temp_value ) );
-                } else if( get_option<std::string>( "USE_CELSIUS" ) == "kelvin" ) {
-                    temp_str = std::to_string( units::to_kelvin( temp_value ) );
-
+                if (get_option<std::string>("USE_CELSIUS") == "celsius") {
+                    temp_str = string_format("%.0f", celsius_temp_value);
                 }
-                overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
-                                         formatted_text( temp_str, color,
-                                                 direction::NORTH ) );
+                else if (get_option<std::string>("USE_CELSIUS") == "kelvin") {
+                    temp_str = string_format("%.0f", units::to_kelvin(temp_value));
+                }
+                else {
+                    temp_str = string_format("%.0f", units::to_fahrenheit(temp_value));
+                }
+                overlay_strings.emplace(player_to_screen(point(x, y)),
+                    formatted_text(temp_str, color,
+                        text_alignment::left));
             }
 
             if( g->display_overlay_state( ACTION_DISPLAY_VISIBILITY ) &&
