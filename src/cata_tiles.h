@@ -791,6 +791,10 @@ class cata_tiles
             }
         };
 
+        point half_tile_width_point;
+        point half_tile_height_point;
+        point quarter_tile_point;
+
     public:
         std::string memory_map_mode = "color_pixel_sepia";        
 };

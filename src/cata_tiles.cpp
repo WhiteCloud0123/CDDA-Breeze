@@ -602,6 +602,11 @@ void cata_tiles::set_draw_scale( int scale )
 
     tile_ratiox = ( static_cast<float>( tile_width ) / static_cast<float>( fontwidth ) );
     tile_ratioy = ( static_cast<float>( tile_height ) / static_cast<float>( fontheight ) );
+
+    half_tile_width_point = point(tile_width/2,0);
+    half_tile_height_point = point(0,tile_height/2);
+    quarter_tile_point = point(tile_width/4,tile_height/4);
+
 }
 
 void tileset_cache::loader::load( const std::string &tileset_id, const bool precheck,
@@ -1327,8 +1332,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             g->displaying_visibility_creature = nullptr;
         }
     }
-    const point half_tile( tile_width / 2, 0 );
-    const point quarter_tile( tile_width / 4, tile_height / 4 );
+    
     if( g->display_overlay_state( ACTION_DISPLAY_VEHICLE_AI ) ) {
         for( const wrapped_vehicle &elem : here.get_vehicles() ) {
             const vehicle &veh = *elem.v;
@@ -1410,7 +1414,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             if( g->display_overlay_state( ACTION_DISPLAY_SCENT ) && !invisible[0] ) {
                 const int scent_value = get_scent().get( pos );
                 if( scent_value > 0 ) {
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( std::to_string( scent_value ),
                                                      8 + catacurses::yellow, direction::NORTH ) );
                 }
@@ -1421,7 +1425,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             if( g->display_overlay_state( ACTION_DISPLAY_SCENT_TYPE ) && !invisible[0] ) {
                 const scenttype_id scent_type = get_scent().get_type( pos );
                 if( !scent_type.is_empty() ) {
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( scent_type.c_str(),
                                                      8 + catacurses::yellow, direction::NORTH ) );
                 }
@@ -1439,7 +1443,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     } else {
                         col = catacurses::cyan;
                     }
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( std::to_string( rad_value ),
                                                      8 + col, direction::NORTH ) );
                 }
@@ -1456,9 +1460,41 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     } else {
                         color = catacurses::white;
                     }
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( std::to_string( val ), color,
                                                      direction::NORTH ) );
+                }
+            }
+
+
+            if (use_show_creature_hp_bar &&!invisible[0]) {
+                Creature* c = creatures.creature_at(pos);
+                if (c && !c->is_avatar() && get_avatar().sees(*c)) {
+                    std::pair<std::string, nc_color> h_bar = get_hp_bar(c->get_hp(), c->get_hp_max(), c->is_monster());
+                    short color;
+                    
+                    if (c->get_hp()>=c->get_hp_max()) {
+                        color = catacurses::green;
+                    }
+                    else if (c->get_hp() >= c->get_hp_max() * 0.8) {
+                        color = catacurses::green;
+                    }
+                    else if (c->get_hp() >= c->get_hp_max() * 0.6) {
+                        color = catacurses::yellow;
+                    }
+                    else if (c->get_hp() >= c->get_hp_max() * 0.3) {
+                        color = catacurses::yellow;
+                    }
+                    else if (c->get_hp() >= c->get_hp_max() * 0.1) {
+                        color = catacurses::red;
+                    }
+                    else {
+                        color = catacurses::red;
+                    }
+                    overlay_strings.emplace(player_to_screen(point(x, y)) - half_tile_height_point,
+                        formatted_text(h_bar.first, color + 8, direction::EAST)
+                    );
+
                 }
             }
 
@@ -1516,7 +1552,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
                 // overlay string
                 std::string visibility_str = visibility ? "+" : "-";
-                overlay_strings.emplace( player_to_screen( point( x, y ) ) + quarter_tile,
+                overlay_strings.emplace( player_to_screen( point( x, y ) ) + quarter_tile_point,
                                          formatted_text( visibility_str, catacurses::black,
                                                  direction::NORTH ) );
             }
@@ -1539,7 +1575,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
                 // string overlay
                 overlay_strings.emplace(
-                    tile_pos + quarter_tile,
+                    tile_pos + quarter_tile_point,
                     formatted_text( text, catacurses::black, direction::NORTH ) );
             };
 
@@ -1657,7 +1693,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                         if (more) {
                             text += "+";
                         }
-                        overlay_strings.emplace(player_to_screen(p.pos.xy()) + half_tile,
+                        overlay_strings.emplace(player_to_screen(p.pos.xy()) + half_tile_width_point,
                             formatted_text(text, catacurses::red,
                                 direction::NORTH));
                     }
