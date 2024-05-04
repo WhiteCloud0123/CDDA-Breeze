@@ -1467,6 +1467,18 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             }
 
 
+            if (use_show_player_move_point) {
+                Creature* c = creatures.creature_at(pos);
+                if (c && c->is_avatar()) {
+                    std::string temp_str;
+                    temp_str = string_format("%s",get_avatar().get_moves());
+                    overlay_strings.emplace(player_to_screen(point(x, y)) - 2 * half_tile_height_point,
+                        formatted_text(temp_str, catacurses::white + 8, direction::NORTHEAST)
+                    );
+                }
+            }
+
+
             if (use_show_creature_hp_bar &&!invisible[0]) {
                 Creature* c = creatures.creature_at(pos);
                 if (c && !c->is_avatar() && get_avatar().sees(*c)) {
