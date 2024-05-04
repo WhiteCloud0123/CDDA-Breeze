@@ -604,7 +604,7 @@ void refresh_display()
 #endif
     
     
-    if (get_option<bool>("启用粒子特效") && g->is_core_data_loaded()) {
+    if (use_particle_system && g->is_core_data_loaded()) {
         
             particle_system.set_style(get_weather().weather_id.str(),display_buffer.get(),renderer.get());
             
@@ -2797,7 +2797,7 @@ static void CheckMessages()
                                  touch_input_context.get_category() )];
 
     // Don't do this logic if we already need an update, otherwise we're likely to overload the game with too much input on hold repeat events
-    if( !needupdate || get_option<bool>("启用粒子特效")) {
+    if( !needupdate || use_particle_system) {
 
         // Check action weightings and auto-add any immediate-surrounding actions as quick shortcuts
         // This code is based heavily off action.cpp handle_action_menu() which puts common shortcuts at the top

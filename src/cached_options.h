@@ -24,6 +24,7 @@ extern int pixel_minimap_r;
 extern int pixel_minimap_g;
 extern int pixel_minimap_b;
 extern int pixel_minimap_a;
+extern bool use_particle_system;
 
 // test_mode is not a regular game option; it's true when we are running unit
 // tests.
