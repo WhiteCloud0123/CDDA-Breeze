@@ -856,10 +856,9 @@ int monster::print_info(const catacurses::window& w, int vStart, int vLines, int
     oss << "<color_white>" << std::string(5 - utf8_width(bar_str), '.') << "</color> ";
     oss << get_tag_from_color(basic_symbol_color()) << name() << "</color> ";
     oss << "<color_h_white>" << get_effect_status() << "</color>";
-    if (get_option<bool>("显示怪物的等级") == true) {
-        oss << "\n";
-        oss << "<color_white>" << "等级 : " << lv << "</color>";
-    }
+
+    oss << "\n";
+    oss << "<color_white>" << "等级 : " << lv << "</color>";
     /*oss << "\n";
     oss << "\n";
     oss << "<color_white>" << "友好度:" << friendly << "</color>";
