@@ -1633,7 +1633,7 @@ void options_manager::add_options_interface()
     add("显示怪物的等级", "interface", to_translation("显示怪物的等级"), to_translation("当此选项的值为 是 时，观察怪物会显示怪物的等级。"), true);
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
     add("显示玩家剩余的行动点", "interface", to_translation("显示玩家剩余的行动点"), to_translation("当此选项的值为 是 时，观察玩家会显示玩家剩余的行动点。"), false);
-    add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。"), false);
+    add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。关闭此选项可以提升游戏性能。"), false);
 
     add_empty_line();
 
