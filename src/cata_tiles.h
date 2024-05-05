@@ -405,6 +405,7 @@ class cata_tiles
         /** Minimap functionality */
         void draw_minimap( const point &dest, const tripoint &center, int width, int height );
 
+        void draw_hp_bar(const tripoint& p);
 
 
     protected:
