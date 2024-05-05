@@ -1478,38 +1478,6 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                 }
             }
 
-
-            if (use_show_creature_hp_bar &&!invisible[0]) {
-                Creature* c = creatures.creature_at(pos);
-                if (c && !c->is_avatar() && get_avatar().sees(*c)) {
-                    std::pair<std::string, nc_color> h_bar = get_hp_bar(c->get_hp(), c->get_hp_max(), c->is_monster());
-                    short color;
-                    
-                    if (c->get_hp()>=c->get_hp_max()) {
-                        color = catacurses::green;
-                    }
-                    else if (c->get_hp() >= c->get_hp_max() * 0.8) {
-                        color = catacurses::green;
-                    }
-                    else if (c->get_hp() >= c->get_hp_max() * 0.6) {
-                        color = catacurses::yellow;
-                    }
-                    else if (c->get_hp() >= c->get_hp_max() * 0.3) {
-                        color = catacurses::yellow;
-                    }
-                    else if (c->get_hp() >= c->get_hp_max() * 0.1) {
-                        color = catacurses::red;
-                    }
-                    else {
-                        color = catacurses::red;
-                    }
-                    overlay_strings.emplace(player_to_screen(point(x, y)) - half_tile_height_point,
-                        formatted_text(h_bar.first, color + 8, direction::EAST)
-                    );
-
-                }
-            }
-
             // Add temperature value to the overlay_strings list for every visible tile when
             // displaying temperature
             if( g->display_overlay_state( ACTION_DISPLAY_TEMPERATURE ) && !invisible[0] ) {
@@ -1854,6 +1822,28 @@ void cata_tiles::draw_minimap( const point &dest, const tripoint &center, int wi
 {
     minimap->set_type( is_isometric() ? pixel_minimap_type::iso : pixel_minimap_type::ortho );
     minimap->draw( SDL_Rect{ dest.x, dest.y, width, height }, center );
+}
+
+void cata_tiles::draw_hp_bar( const tripoint& p ) {
+
+        const point screen = player_to_screen(p.xy()) - half_tile_height_point;
+        SDL_Rect draw_rect;
+        draw_rect.x = screen.x;
+        draw_rect.y = screen.y;        
+        draw_rect.h = tile_height/3;
+        creature_tracker& ct = get_creature_tracker();
+        Creature* c = ct.creature_at(p);
+        float factor =(float)c->get_hp() / c->get_hp_max();
+
+        draw_rect.w = tile_width *  factor;
+
+        SDL_Color  fog_color = curses_color_to_SDL(c_red);
+        fog_color.a = 100;
+
+        SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        geometry->rect(renderer, draw_rect, fog_color);
+        SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
 }
 
 void cata_tiles::get_window_tile_counts( const int width, const int height, int &columns,
@@ -3799,7 +3789,7 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
             if( you.sees_with_infrared( critter ) ||
                 you.sees_with_specials( critter ) ) {
                 return draw_from_id_string( "infrared_creature", TILE_CATEGORY::NONE, empty_string,
-                                            p, 0, 0, lit_level::LIT, false, height_3d );
+                                            p, 0, 0, lit_level::LIT, false, height_3d ) ;
             }
             return false;
         }
@@ -3846,7 +3836,9 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
                     draw_from_id_string(m->weapon_item.get()->type->get_id().str(), TILE_CATEGORY::NONE, empty_string, p,
                         0, rot_facing, ll, false, height_3d);
                 }
-                               
+                if (use_show_creature_hp_bar) {
+                    draw_hp_bar(p);
+                }
                 sees_player = m->sees( you );
                 attitude = m->attitude_to( you );
             }
@@ -3860,6 +3852,9 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
             } else {
                 sees_player = pl->sees( you );
                 attitude = pl->attitude_to( you );
+                if (use_show_creature_hp_bar) {
+                    draw_hp_bar(p);
+                }
             }
         }
     } else {
