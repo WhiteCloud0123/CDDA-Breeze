@@ -6,6 +6,7 @@ Use the `Home` key to return to the top.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [JSON INFO](#json-info)
 - [Introduction](#introduction)
   - [Overall structure](#overall-structure)
   - [Common properties](#common-properties)
@@ -24,11 +25,11 @@ Use the `Home` key to return to the top.
   - [`data/json/vehicles/`](#datajsonvehicles)
 - [Description and content of each JSON file](#description-and-content-of-each-json-file)
   - [`data/json/` JSONs](#datajson-jsons)
-    - [Ascii_arts](#ascii_arts)
+    - [Ascii\_arts](#ascii_arts)
     - [Addiction types](#addiction-types)
     - [Body Graphs](#body-graphs)
       - [Graph Parts](#graph-parts)
-    - [Body_parts](#body_parts)
+    - [Body\_parts](#body_parts)
     - [Limb scores](#limb-scores)
     - [Character Modifiers](#character-modifiers)
       - [Character Modifiers - Value](#character-modifiers---value)
@@ -74,14 +75,14 @@ Use the `Home` key to return to the top.
       - [Defining common requirements](#defining-common-requirements)
       - [Overlapping recipe component requirements](#overlapping-recipe-component-requirements)
     - [Constructions](#constructions)
-    - [Scent_types](#scent_types)
+    - [Scent\_types](#scent_types)
     - [Scores, Achievements, and Conducts](#scores-achievements-and-conducts)
       - [`event_transformation`](#event_transformation)
       - [`event_statistic`](#event_statistic)
       - [`score`](#score)
       - [`achievement`](#achievement)
       - [`conduct`](#conduct)
-    - [Skills](#skills)
+    - [Skills](#skills-1)
     - [Speed Description](#speed-description)
     - [Mood Face](#mood-face)
     - [Tool Qualities](#tool-qualities)
@@ -111,7 +112,7 @@ Use the `Home` key to return to the top.
     - [Armor](#armor)
       - [Armor Portion Data](#armor-portion-data)
         - [Encumbrance](#encumbrance)
-        - [Encumbrance_modifiers](#encumbrance_modifiers)
+        - [Encumbrance\_modifiers](#encumbrance_modifiers)
         - [Coverage](#coverage)
         - [Covers](#covers)
         - [Specifically Covers](#specifically-covers)
@@ -122,7 +123,7 @@ Use the `Home` key to return to the top.
     - [Books](#books)
       - [Conditional Naming](#conditional-naming)
       - [Color Key](#color-key)
-      - [CBMs](#cbms)
+      - [CBMs](#cbms-1)
     - [Comestibles](#comestibles)
     - [Containers](#containers)
     - [Melee](#melee)
@@ -218,18 +219,18 @@ Use the `Home` key to return to the top.
       - [`base`](#base)
       - [`growth_multiplier`](#growth_multiplier)
       - [`harvest_multiplier`](#harvest_multiplier)
-    - [clothing_mod](#clothing_mod)
+    - [clothing\_mod](#clothing_mod)
 - [Scenarios](#scenarios)
   - [`description`](#description-1)
   - [`name`](#name-2)
   - [`points`](#points-1)
   - [`items`](#items-3)
   - [`flags`](#flags-2)
-  - [`cbms`](#cbms-1)
+  - [`cbms`](#cbms-2)
   - [`traits", "forced_traits", "forbidden_traits`](#traits-forced_traits-forbidden_traits)
   - [`allowed_locs`](#allowed_locs)
   - [`start_name`](#start_name)
-  - [`professions`](#professions)
+  - [`professions`](#professions-1)
   - [`map_special`](#map_special)
       - [`requirement`](#requirement-1)
   - [`eocs`](#eocs)
@@ -237,7 +238,7 @@ Use the `Home` key to return to the top.
   - [`custom_initial_date`](#custom_initial_date)
 - [Starting locations](#starting-locations)
   - [`name`](#name-3)
-  - [`terrain`](#terrain)
+  - [`terrain`](#terrain-1)
   - [`city_sizes`](#city_sizes)
   - [`city_distance`](#city_distance)
   - [`allowed_z_levels`](#allowed_z_levels)
@@ -2942,7 +2943,7 @@ Weakpoints only match if they share the same id, so it's important to define the
 "explode_in_fire": true,                     // Should the item explode if set on fire
 "explosion": {                               // Physical explosion data
     "power": 10,                             // Measure of explosion power in grams of TNT equivalent explosive, affects damage and range.
-    "distance_factor": 0.9,                  // How much power is retained per traveled tile of explosion. Must be lower than 1 and higher than 0.
+    "distance_factor": 0.9,                  // How much power is retained per traveled tile of explosion. 
     "max_noise": 25,                         // Maximum amount of (auditory) noise the explosion might produce.
     "fire": true,                            // Should the explosion leave fire
     "shrapnel": 200,                         // Total mass of casing, rest of fragmentation variables set to reasonable defaults.
