@@ -1,5 +1,3 @@
-#if defined(TILES)
-
 #include "pixel_minimap_projectors.h"
 
 #include <algorithm>
@@ -95,4 +93,4 @@ point pixel_minimap_iso_projector::get_tile_pos( const point &p, const point &ti
     };
 }
 
-#endif // TILES
+

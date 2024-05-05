@@ -9,7 +9,6 @@ namespace catacurses
 class window;
 } // namespace catacurses
 
-#if defined(TILES)
 
 #include <memory>
 #include <string>
@@ -73,7 +72,7 @@ window_dimensions get_window_dimensions( const point &pos, const point &size );
 
 const SDL_Renderer_Ptr &get_sdl_renderer();
 
-#endif // TILES
+
 
 // Text level, valid only for a point relative to the window, not a point in overall space.
 bool window_contains_point_relative( const catacurses::window &win, const point &p );

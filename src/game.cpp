@@ -188,9 +188,9 @@
 #include "network.h"
 #include "posix_time.h"
 
-#if defined(TILES)
+
 #include "sdl_utils.h"
-#endif // TILES
+
 
 class computer;
 
@@ -330,9 +330,9 @@ static const efftype_id effect_just_trade("just_trade");
 
 
 
-#if defined(TILES)
+
 #include "cata_tiles.h"
-#endif // TILES
+
 
 #if defined(_WIN32)
 #if 1 // HACK: Hack to prevent reordering of #include "platform_win.h" by IWYU
@@ -583,7 +583,7 @@ void game_ui::init_ui()
 
         first_init = false;
 
-#if defined(TILES)
+
         //class variable to track the option being active
         //only set once, toggle action is used to change during game
         pixel_minimap_option = get_option<bool>( "PIXEL_MINIMAP" );
@@ -599,65 +599,41 @@ void game_ui::init_ui()
             pixel_minimap_b = 0x00;
             pixel_minimap_a = 0xFF;
         }
-#endif // TILES
+
     }
 
     // First get TERMX, TERMY
-#if defined(TILES) || defined(_WIN32)
     TERMX = get_terminal_width();
     TERMY = get_terminal_height();
 
     get_options().get_option( "TERMINAL_X" ).setValue( TERMX * get_scaling_factor() );
     get_options().get_option( "TERMINAL_Y" ).setValue( TERMY * get_scaling_factor() );
     get_options().save();
-#else
-    ensure_term_size();
-
-    TERMY = getmaxy( catacurses::stdscr );
-    TERMX = getmaxx( catacurses::stdscr );
-
-    // try to make FULL_SCREEN_HEIGHT symmetric according to TERMY
-    if( TERMY % 2 ) {
-        FULL_SCREEN_HEIGHT = EVEN_MINIMUM_TERM_HEIGHT + 1;
-    } else {
-        FULL_SCREEN_HEIGHT = EVEN_MINIMUM_TERM_HEIGHT;
-    }
-#endif
 }
 
 void game::toggle_fullscreen()
 {
-#if !defined(TILES)
-    fullscreen = !fullscreen;
-    mark_main_ui_adaptor_resize();
-#else
+
     toggle_fullscreen_window();
-#endif
+
 }
 
 void game::toggle_pixel_minimap() const
 {
-#if defined(TILES)
     if( pixel_minimap_option ) {
         clear_window_area( w_pixel_minimap );
     }
     pixel_minimap_option = !pixel_minimap_option;
     mark_main_ui_adaptor_resize();
-#endif // TILES
 }
 
 bool game::is_tileset_isometric() const
 {
-#if defined(TILES)
     return use_tiles && tilecontext && tilecontext->is_isometric();
-#else
-    return false;
-#endif
 }
 
 void game::reload_tileset()
 {
-#if defined(TILES)
     // Disable UIs below to avoid accessing the tile context during loading.
     ui_adaptor ui( ui_adaptor::disable_uis_below {} );
     try {
@@ -695,7 +671,6 @@ void game::reload_tileset()
     }
     g->reset_zoom();
     g->mark_main_ui_adaptor_resize();
-#endif // TILES
 }
 
 // temporarily switch out of fullscreen for functions that rely
@@ -3580,16 +3555,16 @@ static shared_ptr_fast<game::draw_callback_t> create_zone_callback(
                         player_character.posy() - getmaxy(g->w_terrain) / 2));
 
                 tripoint offset;
-#if defined(TILES)
+
                 if (use_tiles) {
                     offset = tripoint_zero; //TILES
                 }
                 else {
-#endif
+
                     offset = tripoint(offset2, 0); //CURSES
-#if defined(TILES)
+
                 }
-#endif
+
 
                 const tripoint start(std::min(zone_start->x, zone_end->x),
                     std::min(zone_start->y, zone_end->y),
@@ -3633,16 +3608,16 @@ static shared_ptr_fast<game::draw_callback_t> create_zone_callback_new(
                         player_character.posy() - getmaxy(g->w_terrain) / 2));
 
                 tripoint offset;
-#if defined(TILES)
+
                 if (use_tiles) {
                     offset = tripoint_zero; //TILES
                 }
                 else {
-#endif
+
                     offset = tripoint(offset2, 0); //CURSES
-#if defined(TILES)
+
                 }
-#endif
+
 
                 const tripoint start(std::min(zone_start->x, zone_end->x),
                     std::min(zone_start->y, zone_end->y),
@@ -7584,14 +7559,14 @@ look_around_result game::look_around(
 
     is_looking = true;
     const tripoint prev_offset = u.view_offset;
-#if defined(TILES)
+
     const int prev_tileset_zoom = tileset_zoom;
     while( is_moving_zone && square_dist( start_point, end_point ) > 256 / get_zoom() &&
            get_zoom() != 4 ) {
         zoom_out();
     }
     mark_main_ui_adaptor_resize();
-#endif
+
     do {
         u.view_offset = center - u.pos();
         if( select_zone ) {
@@ -7785,13 +7760,13 @@ look_around_result game::look_around(
         result.position = is_moving_zone ? zone_start : lp.raw();
     }
 
-#if defined(TILES)
+
     if( is_moving_zone && get_zoom() != prev_tileset_zoom ) {
         // Reset the tileset zoom to the previous value
         set_zoom( prev_tileset_zoom );
         mark_main_ui_adaptor_resize();
     }
-#endif
+
 
     return result;
 }
@@ -7929,84 +7904,80 @@ static void centerlistview( const tripoint &active_item_position, int ui_width )
 
 }
 
-#if defined(TILES)
+
 static constexpr int MAXIMUM_ZOOM_LEVEL = 4;
-#endif
+
 void game::zoom_out()
 {
-#if defined(TILES)
+
     if( tileset_zoom > MAXIMUM_ZOOM_LEVEL ) {
         tileset_zoom = tileset_zoom / 2;
     } else {
         tileset_zoom = 64;
     }
     rescale_tileset( tileset_zoom );
-#endif
+
 }
 
 void game::zoom_out_overmap()
 {
-#if defined(TILES)
+
     if( overmap_tileset_zoom > MAXIMUM_ZOOM_LEVEL ) {
         overmap_tileset_zoom /= 2;
     } else {
         overmap_tileset_zoom = 64;
     }
     overmap_tilecontext->set_draw_scale( overmap_tileset_zoom );
-#endif
+
 }
 
 void game::zoom_in()
 {
-#if defined(TILES)
+
     if( tileset_zoom == 64 ) {
         tileset_zoom = MAXIMUM_ZOOM_LEVEL;
     } else {
         tileset_zoom = tileset_zoom * 2;
     }
     rescale_tileset( tileset_zoom );
-#endif
+
 }
 
 void game::zoom_in_overmap()
 {
-#if defined(TILES)
+
     if( overmap_tileset_zoom == 64 ) {
         overmap_tileset_zoom = MAXIMUM_ZOOM_LEVEL;
     } else {
         overmap_tileset_zoom *= 2;
     }
     overmap_tilecontext->set_draw_scale( overmap_tileset_zoom );
-#endif
+
 }
 
 void game::reset_zoom()
 {
-#if defined(TILES)
+
     tileset_zoom = DEFAULT_TILESET_ZOOM;
     rescale_tileset( tileset_zoom );
-#endif // TILES
+
 }
 
 void game::set_zoom( const int level )
 {
-#if defined(TILES)
+
     if( tileset_zoom != level ) {
         tileset_zoom = level;
         rescale_tileset( tileset_zoom );
     }
-#else
-    static_cast<void>( level );
-#endif // TILES
+
 }
 
 int game::get_zoom() const
 {
-#if defined(TILES)
+
     return tileset_zoom;
-#else
-    return DEFAULT_TILESET_ZOOM;
-#endif
+
 }
 
 int game::get_moves_since_last_save() const
@@ -8019,7 +7990,6 @@ int game::get_user_action_counter() const
     return user_action_counter;
 }
 
-#if defined(TILES)
 bool game::take_screenshot( const std::string &path ) const
 {
     return save_screenshot( path );
@@ -8048,18 +8018,7 @@ bool game::take_screenshot() const
         return false;
     }
 }
-#else
-bool game::take_screenshot( const std::string &/*path*/ ) const
-{
-    return false;
-}
 
-bool game::take_screenshot() const
-{
-    popup( _( "This binary was not compiled with tiles support." ) );
-    return false;
-}
-#endif
 
 //helper method so we can keep list_items shorter
 void game::reset_item_list_state( const catacurses::window &window, int height, bool bRadiusSort )
@@ -11328,9 +11287,9 @@ void game::on_move_effects()
 
 void game::on_options_changed()
 {
-#if defined(TILES)
+
     tilecontext->on_options_changed();
-#endif
+
 }
 
 void game::water_affect_items( Character &ch ) const

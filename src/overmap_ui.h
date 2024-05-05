@@ -102,13 +102,13 @@ struct draw_data_t {
     int iZoneIndex = -1;
 };
 
-#if defined(TILES)
+
 struct tiles_redraw_info {
     tripoint_abs_omt center;
     bool blink = false;
 };
 extern tiles_redraw_info redraw_info;
-#endif
+
 
 weather_type_id get_weather_at_point( const tripoint_abs_omt &pos );
 std::tuple<char, nc_color, size_t> get_note_display_info( const std::string &note );

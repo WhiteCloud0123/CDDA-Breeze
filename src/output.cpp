@@ -948,9 +948,9 @@ input_event draw_item_info( const int iLeft, const int iWidth, const int iTop, c
         catacurses::newwin( iHeight, iWidth,
                             point( iLeft, iTop ) );
 
-#if defined(TILES)
+
     clear_window_area( win );
-#endif // TILES
+
     wclear( win );
     wnoutrefresh( win );
 
@@ -1817,10 +1817,6 @@ bool scrollbar::handle_dragging( const std::string &action, const cata::optional
         viewport_pos_v = clamped_cursor_pos * ( content_size_v - viewport_size_v ) /
                          ( scrollbar_area.p_max.y - scrollbar_area.p_min.y - 1 );
         position = viewport_pos_v;
-#if !defined(TILES)
-        // Tiles builds seem to trigger "SELECT" on mouse button-up (clearing "dragging") but curses does not
-        dragging = false;
-#endif //TILES
         return true;
     } else {
         // Not doing anything related to the scrollbar
@@ -2869,9 +2865,9 @@ void scrollingcombattext::add( const point &pos, direction p_oDir,
         bool tiled = false;
         bool iso_mode = g->is_tileset_isometric();
 
-#if defined(TILES)
+
         tiled = use_tiles;
-#endif
+
 
         if( p_sType == "hp" ) {
             //Remove old HP bar
@@ -3216,28 +3212,6 @@ std::string format_volume( const units::volume &volume, int width, bool *out_tru
         return string_format( "%.*f", scale, value );
     }
 }
-
-// In non-SDL mode, width/height is just what's specified in the menu
-#if !defined(TILES)
-// We need to override these for Windows console resizing
-#   if !defined(_WIN32)
-int get_terminal_width()
-{
-    int width = get_option<int>( "TERMINAL_X" );
-    return width < EVEN_MINIMUM_TERM_WIDTH ? EVEN_MINIMUM_TERM_WIDTH : width;
-}
-
-int get_terminal_height()
-{
-    return get_option<int>( "TERMINAL_Y" );
-}
-#   endif
-
-bool is_draw_tiles_mode()
-{
-    return false;
-}
-#endif
 
 void mvwprintz( const catacurses::window &w, const point &p, const nc_color &FG,
                 const std::string &text )

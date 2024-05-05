@@ -33,9 +33,6 @@ body:
     id: screenshots
     attributes:
       label: 截图
-      description: |
-        **If applicable**, add screenshots to help explain your problem.
-        Do not take a screenshot of the crashing window. Please provide the crash logs in the "Additional context"
     validations:
       required: false
 

@@ -1075,7 +1075,7 @@ explosion_data load_explosion_data( const JsonObject &jo )
     // Power is mandatory
     jo.read( "power", ret.power );
     // Rest isn't
-    ret.distance_factor = jo.get_float( "distance_factor", 0.75f );
+    ret.distance_factor = jo.get_float( "distance_factor", 3.0f );
     ret.max_noise = jo.get_int( "max_noise", 90000000 );
     ret.fire = jo.get_bool( "fire", false );
     if( jo.has_int( "shrapnel" ) ) {
@@ -1768,9 +1768,9 @@ void _make_explosion( const Creature *source, const tripoint &p, const explosion
         sounds::sound( p, 3, sounds::sound_t::combat, _( "a loud pop!" ), false, "explosion", "small" );
     }
 
-    if( ex.distance_factor >= 1.0f ) {
-        debugmsg( "called game::explosion with factor >= 1.0 (infinite size)" );
-    } 
+    //if( ex.distance_factor >= 1.0f ) {
+    //    debugmsg( "called game::explosion with factor >= 1.0 (infinite size)" );
+    //} 
 
     map &here = get_map();
     const shrapnel_data &shr = ex.shrapnel;
@@ -1811,7 +1811,7 @@ void _make_explosion( const Creature *source, const tripoint &p, const explosion
     //}
 
  
-     ExplosionProcess process( p, ex.power, ex.distance_factor*7, std::nullopt, ex.fire);
+     ExplosionProcess process( p, ex.power, ex.distance_factor, std::nullopt, ex.fire);
      process.run();
  
 

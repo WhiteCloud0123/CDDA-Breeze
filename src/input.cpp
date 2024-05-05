@@ -79,16 +79,12 @@ static std::string int_to_str( int number )
 
 bool is_mouse_enabled()
 {
-#if defined(_WIN32) && !defined(TILES)
-    return false;
-#else
     return true;
-#endif
 }
 
 bool is_keycode_mode_supported()
 {
-#if defined(TILES) && !defined(__ANDROID__) && !(defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE == 1)
+#if !defined(__ANDROID__) && !(defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE == 1)
     return keycode_mode;
 #else
     return false;

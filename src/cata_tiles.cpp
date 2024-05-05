@@ -1,4 +1,3 @@
-#if defined(TILES)
 #include "cata_tiles.h"
 
 #include <algorithm>
@@ -603,6 +602,11 @@ void cata_tiles::set_draw_scale( int scale )
 
     tile_ratiox = ( static_cast<float>( tile_width ) / static_cast<float>( fontwidth ) );
     tile_ratioy = ( static_cast<float>( tile_height ) / static_cast<float>( fontheight ) );
+
+    half_tile_width_point = point(tile_width/2,0);
+    half_tile_height_point = point(0,tile_height/2);
+    quarter_tile_point = point(tile_width/4,tile_height/4);
+
 }
 
 void tileset_cache::loader::load( const std::string &tileset_id, const bool precheck,
@@ -1328,8 +1332,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             g->displaying_visibility_creature = nullptr;
         }
     }
-    const point half_tile( tile_width / 2, 0 );
-    const point quarter_tile( tile_width / 4, tile_height / 4 );
+    
     if( g->display_overlay_state( ACTION_DISPLAY_VEHICLE_AI ) ) {
         for( const wrapped_vehicle &elem : here.get_vehicles() ) {
             const vehicle &veh = *elem.v;
@@ -1411,7 +1414,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             if( g->display_overlay_state( ACTION_DISPLAY_SCENT ) && !invisible[0] ) {
                 const int scent_value = get_scent().get( pos );
                 if( scent_value > 0 ) {
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( std::to_string( scent_value ),
                                                      8 + catacurses::yellow, direction::NORTH ) );
                 }
@@ -1422,7 +1425,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             if( g->display_overlay_state( ACTION_DISPLAY_SCENT_TYPE ) && !invisible[0] ) {
                 const scenttype_id scent_type = get_scent().get_type( pos );
                 if( !scent_type.is_empty() ) {
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( scent_type.c_str(),
                                                      8 + catacurses::yellow, direction::NORTH ) );
                 }
@@ -1440,7 +1443,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     } else {
                         col = catacurses::cyan;
                     }
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( std::to_string( rad_value ),
                                                      8 + col, direction::NORTH ) );
                 }
@@ -1457,42 +1460,63 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     } else {
                         color = catacurses::white;
                     }
-                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
+                    overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile_width_point,
                                              formatted_text( std::to_string( val ), color,
                                                      direction::NORTH ) );
+                }
+            }
+
+
+            if (use_show_player_move_point) {
+                Creature* c = creatures.creature_at(pos);
+                if (c && c->is_avatar()) {
+                    std::string temp_str;
+                    temp_str = string_format("%s",get_avatar().get_moves());
+                    overlay_strings.emplace(player_to_screen(point(x, y)) - 2 * half_tile_height_point,
+                        formatted_text(temp_str, catacurses::white + 8, direction::NORTHEAST)
+                    );
                 }
             }
 
             // Add temperature value to the overlay_strings list for every visible tile when
             // displaying temperature
             if( g->display_overlay_state( ACTION_DISPLAY_TEMPERATURE ) && !invisible[0] ) {
-                units::temperature temp_value = get_weather().get_temperature( pos );
+                const units::temperature temp_value = get_weather().get_temperature(pos);
+                const float celsius_temp_value = units::to_celsius(temp_value);
                 short color;
                 const short bold = 8;
-                if( temp_value > units::from_celsius( 40 ) ) {
+                if (celsius_temp_value > 40) {
                     color = catacurses::red;
-                } else if( temp_value > units::from_celsius( 25 ) ) {
+                }
+                else if (celsius_temp_value > 25) {
                     color = catacurses::yellow + bold;
-                } else if( temp_value > units::from_celsius( 10 ) ) {
+                }
+                else if (celsius_temp_value > 10) {
                     color = catacurses::green + bold;
-                } else if( temp_value > units::from_celsius( 0 ) ) {
+                }
+                else if (celsius_temp_value > 0) {
                     color = catacurses::white + bold;
-                } else if( temp_value > units::from_celsius( -10 ) ) {
+                }
+                else if (celsius_temp_value > -10) {
                     color = catacurses::cyan + bold;
-                } else {
+                }
+                else {
                     color = catacurses::blue + bold;
                 }
 
                 std::string temp_str;
-                if( get_option<std::string>( "USE_CELSIUS" ) == "celsius" ) {
-                    temp_str = std::to_string( units::to_celsius( temp_value ) );
-                } else if( get_option<std::string>( "USE_CELSIUS" ) == "kelvin" ) {
-                    temp_str = std::to_string( units::to_kelvin( temp_value ) );
-
+                if (get_option<std::string>("USE_CELSIUS") == "celsius") {
+                    temp_str = string_format("%.0f", celsius_temp_value);
                 }
-                overlay_strings.emplace( player_to_screen( point( x, y ) ) + half_tile,
-                                         formatted_text( temp_str, color,
-                                                 direction::NORTH ) );
+                else if (get_option<std::string>("USE_CELSIUS") == "kelvin") {
+                    temp_str = string_format("%.0f", units::to_kelvin(temp_value));
+                }
+                else {
+                    temp_str = string_format("%.0f", units::to_fahrenheit(temp_value));
+                }
+                overlay_strings.emplace(player_to_screen(point(x, y)),
+                    formatted_text(temp_str, color,
+                        text_alignment::left));
             }
 
             if( g->display_overlay_state( ACTION_DISPLAY_VISIBILITY ) &&
@@ -1508,7 +1532,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
                 // overlay string
                 std::string visibility_str = visibility ? "+" : "-";
-                overlay_strings.emplace( player_to_screen( point( x, y ) ) + quarter_tile,
+                overlay_strings.emplace( player_to_screen( point( x, y ) ) + quarter_tile_point,
                                          formatted_text( visibility_str, catacurses::black,
                                                  direction::NORTH ) );
             }
@@ -1531,7 +1555,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
                 // string overlay
                 overlay_strings.emplace(
-                    tile_pos + quarter_tile,
+                    tile_pos + quarter_tile_point,
                     formatted_text( text, catacurses::black, direction::NORTH ) );
             };
 
@@ -1594,27 +1618,6 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         }
         }
 
-        // List all layers for a single z-level
-        const std::array<decltype(&cata_tiles::draw_furniture), 11> drawing_layers = { {
-                &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,
-                & cata_tiles::draw_field_or_item,
-                & cata_tiles::draw_vpart_no_roof,& cata_tiles::draw_vpart_roof,
-                &cata_tiles::draw_critter_at, &cata_tiles::draw_zone_mark,
-                &cata_tiles::draw_zombie_revival_indicators
-            }
-        };
-      
-        // Legacy code to use when vertical vision range is 0
-        const std::array<decltype(&cata_tiles::draw_furniture), 14> drawing_layers_legacy = { {
-                &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,
-                &cata_tiles::draw_field_or_item,&cata_tiles::draw_vpart_below,
-                &cata_tiles::draw_critter_at_below, &cata_tiles::draw_terrain_below,
-                &cata_tiles::draw_vpart_no_roof, &cata_tiles::draw_vpart_roof,
-                &cata_tiles::draw_critter_at, &cata_tiles::draw_zone_mark,
-                &cata_tiles::draw_zombie_revival_indicators
-            }
-        };
-
         //const int height_3d_mult = is_isometric() ? 10 : 0;
         if (max_draw_depth <= 0) {
             // Legacy draw mode
@@ -1670,7 +1673,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                         if (more) {
                             text += "+";
                         }
-                        overlay_strings.emplace(player_to_screen(p.pos.xy()) + half_tile,
+                        overlay_strings.emplace(player_to_screen(p.pos.xy()) + half_tile_width_point,
                             formatted_text(text, catacurses::red,
                                 direction::NORTH));
                     }
@@ -1819,6 +1822,28 @@ void cata_tiles::draw_minimap( const point &dest, const tripoint &center, int wi
 {
     minimap->set_type( is_isometric() ? pixel_minimap_type::iso : pixel_minimap_type::ortho );
     minimap->draw( SDL_Rect{ dest.x, dest.y, width, height }, center );
+}
+
+void cata_tiles::draw_hp_bar( const tripoint& p ) {
+
+        const point screen = player_to_screen(p.xy()) - half_tile_height_point;
+        SDL_Rect draw_rect;
+        draw_rect.x = screen.x;
+        draw_rect.y = screen.y;        
+        draw_rect.h = tile_height/3;
+        creature_tracker& ct = get_creature_tracker();
+        Creature* c = ct.creature_at(p);
+        float factor =(float)c->get_hp() / c->get_hp_max();
+
+        draw_rect.w = tile_width *  factor;
+
+        SDL_Color  fog_color = curses_color_to_SDL(c_red);
+        fog_color.a = 100;
+
+        SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        geometry->rect(renderer, draw_rect, fog_color);
+        SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
 }
 
 void cata_tiles::get_window_tile_counts( const int width, const int height, int &columns,
@@ -3764,7 +3789,7 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
             if( you.sees_with_infrared( critter ) ||
                 you.sees_with_specials( critter ) ) {
                 return draw_from_id_string( "infrared_creature", TILE_CATEGORY::NONE, empty_string,
-                                            p, 0, 0, lit_level::LIT, false, height_3d );
+                                            p, 0, 0, lit_level::LIT, false, height_3d ) ;
             }
             return false;
         }
@@ -3811,7 +3836,9 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
                     draw_from_id_string(m->weapon_item.get()->type->get_id().str(), TILE_CATEGORY::NONE, empty_string, p,
                         0, rot_facing, ll, false, height_3d);
                 }
-                               
+                if (use_show_creature_hp_bar) {
+                    draw_hp_bar(p);
+                }
                 sees_player = m->sees( you );
                 attitude = m->attitude_to( you );
             }
@@ -3825,6 +3852,9 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
             } else {
                 sees_player = pl->sees( you );
                 attitude = pl->attitude_to( you );
+                if (use_show_creature_hp_bar) {
+                    draw_hp_bar(p);
+                }
             }
         }
     } else {
@@ -5132,4 +5162,4 @@ std::vector<options_manager::id_and_option> cata_tiles::build_display_list()
     return display_names.empty() ? default_display_names : display_names;
 }
 
-#endif // SDL_TILES
+

@@ -11,9 +11,9 @@
 #include "ui.h"
 #include "ui_manager.h"
 
-#if defined(TILES)
+
 #include "sdl_wrappers.h"
-#endif // TILES
+
 
 loading_ui::loading_ui( bool display )
 {

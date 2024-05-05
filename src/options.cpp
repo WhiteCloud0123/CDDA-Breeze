@@ -39,9 +39,9 @@
 #include "ui_manager.h"
 #include "worldfactory.h"
 
-#if defined(TILES)
+
 #include "cata_tiles.h"
-#endif // TILES
+
 
 #if defined(__ANDROID__)
 #include <jni.h>
@@ -620,26 +620,18 @@ bool options_manager::cOpt::is_hidden() const
             return false;
 
         case COPT_SDL_HIDE:
-#if defined(TILES)
+
             return true;
-#else
-            return false;
-#endif
+
 
         case COPT_CURSES_HIDE: // NOLINT(bugprone-branch-clone)
-#if !defined(TILES) // If not defined, it's the curses interface.
-            return true;
-#else
+
             return false;
-#endif
+
 
         case COPT_POSIX_CURSES_HIDE:
             // Check if we on windows and using wincurses.
-#if defined(TILES) || defined(_WIN32)
             return false;
-#else
-            return true;
-#endif
 
         case COPT_NO_SOUND_HIDE:
 #if !defined(SDL_SOUND) // If not defined, we have no sound support.
@@ -1638,9 +1630,9 @@ void options_manager::add_options_interface()
 
     add_empty_line();
 
-    add("显示怪物的等级", "interface", to_translation("显示怪物的等级"), to_translation("当此选项的值为 是 时，显示怪物的等级。"), true);
-    add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值"), false);
-    add("显示玩家剩余的行动点", "interface", to_translation("显示玩家剩余的行动点"), to_translation("当此选项的值为 是 时，显示玩家剩余的行动点数"), false);
+    add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
+    add("显示玩家的剩余行动点", "interface", to_translation("显示玩家的剩余行动点"), to_translation("当此选项的值为 是 时，会在游戏画面上显示玩家的剩余行动点。关闭此选项可以提升游戏性能。"), false);
+    add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。关闭此选项可以提升游戏性能。"), false);
 
     add_empty_line();
 
@@ -2368,13 +2360,12 @@ void options_manager::add_options_graphics()
 
     add_empty_line();
 
-#if defined(TILES)
     std::vector<options_manager::id_and_option> display_list = cata_tiles::build_display_list();
     add( "DISPLAY", "graphics", to_translation( "Display" ),
          to_translation( "Sets which video display will be used to show the game.  Requires restart." ),
          display_list,
          display_list.front().first, COPT_CURSES_HIDE );
-#endif
+
 
 #if !defined(__ANDROID__) // Android is always fullscreen
     add( "FULLSCREEN", "graphics", to_translation( "Fullscreen" ),
@@ -2390,12 +2381,6 @@ void options_manager::add_options_graphics()
 #endif
 
 #if !defined(__ANDROID__)
-#   if !defined(TILES)
-    // No renderer selection in non-TILES mode
-    add( "RENDERER", "graphics", to_translation( "Renderer" ),
-    to_translation( "Set which renderer to use.  Requires restart." ), { { "software", to_translation( "software" ) } },
-    "software", COPT_CURSES_HIDE );
-#   else
     std::vector<options_manager::id_and_option> renderer_list = cata_tiles::build_renderer_list();
     std::string default_renderer = renderer_list.front().first;
 #   if defined(_WIN32)
@@ -2409,7 +2394,6 @@ void options_manager::add_options_graphics()
     add( "RENDERER", "graphics", to_translation( "Renderer" ),
          to_translation( "Set which renderer to use.  Requires restart." ), renderer_list,
          default_renderer, COPT_CURSES_HIDE );
-#   endif
 
 #else
     add( "SOFTWARE_RENDERING", "graphics", to_translation( "Software rendering" ),
@@ -2972,7 +2956,7 @@ void options_manager::add_options_android()
 #endif
 }
 
-#if defined(TILES)
+
 // Helper method to isolate #ifdeffed tiles code.
 static void refresh_tiles( bool used_tiles_changed, bool pixel_minimap_height_changed, bool ingame )
 {
@@ -3030,11 +3014,7 @@ static void refresh_tiles( bool used_tiles_changed, bool pixel_minimap_height_ch
         g->mark_main_ui_adaptor_resize();
     }
 }
-#else
-static void refresh_tiles( bool, bool, bool )
-{
-}
-#endif // TILES
+
 
 static void draw_borders_external(
     const catacurses::window &w, int horizontal_level, const std::map<int, bool> &mapLines,
@@ -3297,7 +3277,6 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
         const std::string &opt_name = *page_items[iCurrentLine];
         cOpt &current_opt = cOPTIONS[opt_name];
 
-#if defined(TILES) || defined(_WIN32)
         if( opt_name == "TERMINAL_X" ) {
             int new_terminal_x = 0;
             int new_window_width = 0;
@@ -3329,7 +3308,7 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
                             current_opt.getDefaultText(),
                             new_window_height );
         } else
-#endif
+
         {
             fold_and_print( w_options_tooltip, point_zero, iMinScreenWidth - 2, c_white, "%s #%s",
                             current_opt.getTooltip(),
@@ -3709,6 +3688,9 @@ static void update_options_cache()
     fov_3d_z_range = ::get_option<int>( "FOV_3D_Z_RANGE" );
     keycode_mode = ::get_option<std::string>( "SDL_KEYBOARD_MODE" ) == "keycode";
     use_pinyin_search = ::get_option<bool>("USE_PINYIN_SEARCH");
+    use_particle_system = ::get_option<bool>("启用粒子特效");
+    use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
+    use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
 }
 
 bool options_manager::save() const

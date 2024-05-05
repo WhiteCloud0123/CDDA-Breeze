@@ -1,5 +1,3 @@
-#if defined(TILES)
-
 #include "sdl_wrappers.h"
 
 #include <ostream>
@@ -192,4 +190,3 @@ SDL_Surface_Ptr CreateRGBSurface( const Uint32 flags, const int width, const int
     return surface;
 }
 
-#endif

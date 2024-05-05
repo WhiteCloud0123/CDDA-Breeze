@@ -24,6 +24,9 @@ extern int pixel_minimap_r;
 extern int pixel_minimap_g;
 extern int pixel_minimap_b;
 extern int pixel_minimap_a;
+extern bool use_particle_system;
+extern bool use_show_creature_hp_bar;
+extern bool use_show_player_move_point;
 
 // test_mode is not a regular game option; it's true when we are running unit
 // tests.

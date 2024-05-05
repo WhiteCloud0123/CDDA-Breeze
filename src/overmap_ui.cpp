@@ -1216,9 +1216,9 @@ static void draw_om_sidebar(
     wnoutrefresh( wbar );
 }
 
-#if defined(TILES)
+
 tiles_redraw_info redraw_info;
-#endif
+
 
 static void draw(
     ui_adaptor &ui, const tripoint_abs_omt &center, const tripoint_abs_omt &orig,

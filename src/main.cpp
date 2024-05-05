@@ -66,13 +66,13 @@
 
 class ui_adaptor;
 
-#if defined(TILES)
-#   if defined(_MSC_VER) && defined(USE_VCPKG)
-#      include <SDL2/SDL_version.h>
-#   else
-#      include <SDL_version.h>
-#   endif
+
+#if defined(_MSC_VER) && defined(USE_VCPKG)
+#include <SDL2/SDL_version.h>
+#else
+#include <SDL_version.h>
 #endif
+
 
 #if defined(__ANDROID__)
 #include <SDL_filesystem.h>
@@ -220,11 +220,7 @@ void printHelpMessage( const FirstPassArgs &first_pass_arguments,
  */
 void printVersionMessage()
 {
-#if defined(TILES)
     const bool hasTiles = true;
-#else
-    const bool hasTiles = false;
-#endif
 
 #if defined(SDL_SOUND)
     const bool hasSound = true;
@@ -694,7 +690,7 @@ int main( int argc, const char *argv[] )
     DebugLog( D_INFO, DC_ALL ) << "[main] C locale set to " << setlocale( LC_ALL, nullptr );
     DebugLog( D_INFO, DC_ALL ) << "[main] C++ locale set to " << std::locale().name();
 
-#if defined(TILES)
+
     SDL_version compiled;
     SDL_VERSION( &compiled );
     DebugLog( D_INFO, DC_ALL ) << "SDL version used during compile is "
@@ -708,12 +704,7 @@ int main( int argc, const char *argv[] )
                                << static_cast<int>( linked.major ) << "."
                                << static_cast<int>( linked.minor ) << "."
                                << static_cast<int>( linked.patch );
-#endif
 
-#if !defined(TILES)
-    get_options().init();
-    get_options().load();
-#endif
 
     // in test mode don't initialize curses to avoid escape sequences being inserted into output stream
     if( !test_mode ) {

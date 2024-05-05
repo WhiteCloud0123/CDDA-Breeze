@@ -1,4 +1,3 @@
-#if defined(TILES)
 #include "sdl_gamepad.h"
 #include "debug.h"
 
@@ -336,4 +335,4 @@ void handle_scheduler_event( SDL_Event &event )
 
 } // namespace gamepad
 
-#endif // TILES
+

@@ -135,9 +135,8 @@ static const trait_id trait_NONE( "NONE" );
 
 static const vproto_id vehicle_prototype_custom( "custom" );
 
-#if defined(TILES)
 #include "sdl_wrappers.h"
-#endif
+
 #include "timed_event.h"
 
 #define dbg(x) DebugLog((x),D_GAME) << __FILE__ << ":" << __LINE__ << ": "
@@ -2994,7 +2993,7 @@ void debug()
         break;
 
         case debug_menu_index::SHOW_SOUND: {
-#if defined(TILES)
+
             const auto &sounds_to_draw = sounds::get_monster_sounds();
 
             shared_ptr_fast<game::draw_callback_t> sound_cb = make_shared_fast<game::draw_callback_t>( [&]() {
@@ -3012,9 +3011,7 @@ void debug()
 
             ui_manager::redraw();
             inp_mngr.wait_for_any_key();
-#else
-            popup( _( "This binary was not compiled with tiles support." ) );
-#endif
+
         }
         break;
 
@@ -3288,14 +3285,14 @@ void debug()
             // write to log
             DebugLog( DL_ALL, DC_ALL ) << " GAME REPORT:\n" << report;
             std::string popup_msg = _( "Report written to debug.log" );
-#if defined(TILES)
+
             // copy to clipboard
             int clipboard_result = SDL_SetClipboardText( report.c_str() );
             printErrorIf( clipboard_result != 0, "Error while copying the game report to the clipboard." );
             if( clipboard_result == 0 ) {
                 popup_msg += _( " and to the clipboard." );
             }
-#endif
+
             popup( popup_msg );
         }
         break;

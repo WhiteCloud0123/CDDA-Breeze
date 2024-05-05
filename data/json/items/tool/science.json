@@ -586,7 +586,7 @@
     "flags": [  ],
     "explosion": {
       "power": 90100,
-      "distance_factor": 0.5,
+      "distance_factor": 3.5,
       "fire": true,
       "shrapnel": { "casing_mass": 200, "fragment_mass": 0.5, "recovery": 0 }
     },
