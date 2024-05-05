@@ -62,7 +62,7 @@
     "flags": [ "NO_RELOAD", "GAS_TANK" ],
     "explosion": {
       "power": 4503,
-      "distance_factor": 0.1,
+      "distance_factor": 1.4,
       "fire": true,
       "shrapnel": { "casing_mass": 50, "fragment_mass": 0.025, "recovery": 0 }
     },
