@@ -1630,9 +1630,13 @@ void options_manager::add_options_interface()
 
     add_empty_line();
 
+    add("显示独立角色的图片", "interface", to_translation("显示独立角色的图片"),
+        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的图片。"),
+        true
+    );
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
-    add("显示玩家的剩余行动点", "interface", to_translation("显示玩家的剩余行动点"), to_translation("当此选项的值为 是 时，会在游戏画面上显示玩家的剩余行动点。关闭此选项可以提升游戏性能。"), false);
-    add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。关闭此选项可以提升游戏性能。"), false);
+    add("显示玩家的剩余行动点", "interface", to_translation("显示玩家的剩余行动点"), to_translation("当此选项的值为 是 时，会在游戏画面上显示玩家的剩余行动点。"), false);
+    add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。"), false);
 
     add_empty_line();
 
@@ -2008,10 +2012,6 @@ void options_manager::add_options_graphics()
         graphics_page_.items_.emplace_back();
     };
 
-    add("显示独立角色的图片", "graphics", to_translation("显示独立角色的图片"),
-        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的图片。"),
-        true
-    );
 
     add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
         to_translation("目前是测试阶段。开启后，将在游戏的一些地方应用粒子特效,同时提高游戏画面的刷新频率。目前已在 细雨、雨、雪 这三种天气上应用。"),
