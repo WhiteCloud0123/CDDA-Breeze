@@ -24,6 +24,7 @@ int pixel_minimap_a;
 bool use_particle_system;
 bool use_show_creature_hp_bar;
 bool use_show_player_move_point;
+bool use_animation;
 
 #ifndef CATA_IN_TOOL
 error_log_format_t error_log_format = error_log_format_t::human_readable;

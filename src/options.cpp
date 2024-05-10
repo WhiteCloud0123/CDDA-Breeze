@@ -3691,6 +3691,7 @@ static void update_options_cache()
     use_particle_system = ::get_option<bool>("启用粒子特效");
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
+    use_animation =::get_option<bool>("ANIMATIONS");
 }
 
 bool options_manager::save() const

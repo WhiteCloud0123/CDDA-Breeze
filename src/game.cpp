@@ -11362,7 +11362,7 @@ void game::fling_creature_up(Creature* c, const units::angle& dir,float flvel, b
     bool thru = true;
     const bool is_u = c == &u;
     // Don't animate critters getting bashed if animations are off
-    const bool animate = is_u || get_option<bool>("ANIMATIONS");
+    const bool animate = is_u || use_animation;
 
     Character* you = dynamic_cast<Character*>(c);
 
