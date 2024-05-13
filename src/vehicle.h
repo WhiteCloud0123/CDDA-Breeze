@@ -1201,8 +1201,12 @@ class vehicle
 
         // Seek a vehicle part which obstructs tile with given coordinates relative to vehicle position
         int part_at( const point &dp ) const;
+        int part_at(const tripoint& dp) const;
         int part_displayed_at( const point &dp, bool include_fake = false,
                                bool below_roof = true, bool roof = true ) const;
+        int part_displayed_at(const tripoint&dp,bool include_fake = false,
+            bool below_roof = true, bool roof = true) const;
+
         int roof_at_part( int p ) const;
 
         // Given a part, finds its index in the vehicle

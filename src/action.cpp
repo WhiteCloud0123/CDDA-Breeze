@@ -423,6 +423,10 @@ std::string action_ident( action_id act )
             return "结束视野中的我方全部丧尸的等待状态";
         case ACTION_fuse_corpses_that_can_revive:
             return "融合可以复活的尸体";
+        case ACTION_RAISE_INTERACT_Z_LEVEL:
+            return "raise_interact_z_level";
+        case ACTION_LOWER_INTERACT_Z_LEVEL:
+            return "lower_interact_z_level";
         default:
             return "unknown";
     }

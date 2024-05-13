@@ -60,6 +60,10 @@ class veh_interact
 
         static void complete_vehicle( Character &you );
 
+        int get_now_interact_z_level();
+
+        int get_vehicle_lowest_z_level();
+
     private:
         explicit veh_interact( vehicle &veh, const point &p = point_zero );
         ~veh_interact();
@@ -133,6 +137,7 @@ class veh_interact
                           const std::map<skill_id, int> &skills, int moves ) const;
 
         int part_at( const point &d );
+        int part_at(const tripoint& d);
         void move_cursor( const point &d, int dstart_at = 0 );
         task_reason cant_do( char mode );
         bool can_potentially_install( const vpart_info &vpart );
@@ -290,6 +295,11 @@ class veh_interact
 
         /** Returns true if the vehicle has a jack powerful enough to lift itself installed */
         bool can_self_jack();
+
+        int now_interact_z_level;
+
+        int vehicle_lowest_z_level;
+
 };
 
 void act_vehicle_siphon( vehicle *veh );

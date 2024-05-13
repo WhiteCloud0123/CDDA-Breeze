@@ -1801,6 +1801,18 @@
   },
   {
     "type": "keybinding",
+    "id": "raise_interact_z_level",
+    "name": "提升交互层级",
+    "category": "VEH_INTERACT"
+  },
+  {
+    "type": "keybinding",
+    "id": "lower_interact_z_level",
+    "name": "降低交互层级",
+    "category": "VEH_INTERACT"
+  },
+  {
+    "type": "keybinding",
     "id": "TOGGLE_UNAVAILABLE_CONSTRUCTIONS",
     "category": "CONSTRUCTION",
     "name": "Toggle unavailable constructions",
