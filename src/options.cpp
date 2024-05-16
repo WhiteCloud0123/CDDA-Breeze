@@ -1637,10 +1637,6 @@ void options_manager::add_options_interface()
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
     add("显示玩家的剩余行动点", "interface", to_translation("显示玩家的剩余行动点"), to_translation("当此选项的值为 是 时，会在游戏画面上显示玩家的剩余行动点。"), false);
     add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。"), false);
-    add("启用新版区域显示", "interface", to_translation("启用新版区域显示"),
-        to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
-        true
-    );
 
     add_empty_line();
 
@@ -2054,6 +2050,13 @@ void options_manager::add_options_graphics()
        );
 
     get_option( "ANIMATION_SCT_USE_FONT" ).setPrerequisite( "ANIMATION_SCT" );
+
+    add_empty_line();
+
+    add("启用新版区域显示", "graphics", to_translation("启用新版区域显示"),
+        to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
+        true
+    );
 
     add_empty_line();
 

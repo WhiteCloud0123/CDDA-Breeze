@@ -356,8 +356,6 @@ enum action_id : int {
     ACTION_命令视野中的我方丧尸全部等待,
     ACTION_结束视野中的我方全部丧尸的等待状态,
     ACTION_fuse_corpses_that_can_revive,
-    ACTION_RAISE_INTERACT_Z_LEVEL,
-    ACTION_LOWER_INTERACT_Z_LEVEL,
     NUM_ACTIONS
     /**@}*/
 };

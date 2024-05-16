@@ -260,8 +260,6 @@ veh_interact::veh_interact( vehicle &veh, const point &p )
     main_context.register_action( "HELP_KEYBINDINGS" );
     main_context.register_action( "FILTER" );
     main_context.register_action( "ANY_INPUT" );
-    main_context.register_action("raise_interact_z_level");
-    main_context.register_action("lower_interact_z_level");
 
     count_durability();
     cache_tool_availability();
@@ -468,9 +466,6 @@ void veh_interact::do_main_loop()
 
     shared_ptr_fast<ui_adaptor> current_ui = create_or_get_ui_adaptor();
 
-    vehicle_lowest_z_level = veh->global_pos3().z;
-    now_interact_z_level = vehicle_lowest_z_level;
-
     while( !finish ) {
         calc_overview();
         ui_manager::redraw();
@@ -560,18 +555,6 @@ void veh_interact::do_main_loop()
             move_cursor( point_zero, description_scroll_lines );
         } else if( action == "PAGE_UP" ) {
             move_cursor( point_zero, -description_scroll_lines );
-        }
-        else if (action == "raise_interact_z_level") {
-            if (now_interact_z_level+1<=OVERMAP_HEIGHT) {
-                now_interact_z_level++;
-                add_msg(m_good, _("交互层级提升"));
-            }
-        }
-        else if (action == "lower_interact_z_level") {
-            if (now_interact_z_level-1>=vehicle_lowest_z_level) {
-                now_interact_z_level--;
-                add_msg(m_good, _("交互层级降低"));
-            }
         }
         if( sel_cmd != ' ' ) {
             finish = true;
@@ -2502,8 +2485,6 @@ void veh_interact::display_veh()
         mvwputch( w_disp, point( x, h_size.y ), c_dark_gray, LINE_OXOX );
     }
 
-    bool cpart_need_reset = true;
-
     //Iterate over structural parts so we only hit each square once
     std::vector<int> structural_parts = veh->all_parts_at_location( "structure" );
     for( int &structural_part : structural_parts ) {
@@ -2511,14 +2492,6 @@ void veh_interact::display_veh()
         char sym = veh->part_sym( p, false, false );
         nc_color col = veh->part_color( p, false, false );
 
-        
-        if (veh->global_part_pos3(p).z != now_interact_z_level) {
-            cpart_need_reset = true;
-            continue;
-        }
-        
-        cpart_need_reset = false;
-       
         const point q = ( veh->part( p ).mount + dd ).rotate( 3 );
 
         if( q == point_zero ) {
@@ -2526,10 +2499,6 @@ void veh_interact::display_veh()
             cpart = p;
         }
         mvwputch( w_disp, h_size + q, col, special_symbol( sym ) );
-    }
-
-    if (cpart_need_reset) {
-        cpart = -1;
     }
 
     const int hw = getmaxx( w_disp ) / 2;
@@ -3550,16 +3519,4 @@ void veh_interact::complete_vehicle( Character &you )
     }
     you.invalidate_crafting_inventory();
     you.invalidate_weight_carried_cache();
-}
-
-int veh_interact::get_now_interact_z_level() {
-
-    return now_interact_z_level;
-
-}
-
-int veh_interact::get_vehicle_lowest_z_level() {
-
-    return vehicle_lowest_z_level;
-
 }
