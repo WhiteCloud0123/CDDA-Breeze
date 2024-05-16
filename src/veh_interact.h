@@ -63,6 +63,8 @@ class veh_interact
         int get_now_interact_z_level();
 
         int get_vehicle_lowest_z_level();
+        // 检测交互的层级是否最低的层级相等
+        bool is_same_z_level();
 
     private:
         explicit veh_interact( vehicle &veh, const point &p = point_zero );

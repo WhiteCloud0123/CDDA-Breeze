@@ -3143,6 +3143,14 @@ int vehicle::part_displayed_at( const point &dp, bool include_fake, bool below_r
     return parts_in_square[top_part];
 }
 
+
+int vehicle::part_displayed_at(const tripoint& dp, bool include_fake, bool below_roof,
+    bool roof) const {
+
+    return -1;
+
+}
+
 int vehicle::roof_at_part( const int part ) const
 {
     std::vector<int> parts_in_square = parts_at_relative( parts[part].mount, true );

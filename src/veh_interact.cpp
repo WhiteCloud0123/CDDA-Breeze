@@ -224,6 +224,12 @@ vehicle_part &veh_interact::select_part( const vehicle &veh, const part_selector
 veh_interact::veh_interact( vehicle &veh, const point &p )
     : dd( p ), veh( &veh ), main_context( "VEH_INTERACT", keyboard_mode::keycode )
 {
+
+
+    vehicle_lowest_z_level = veh.global_pos3().z;
+    now_interact_z_level = vehicle_lowest_z_level;
+
+
     // Only build the shapes map and the wheel list once
     for( const auto &e : vpart_info::all() ) {
         const vpart_info &vp = e.second;
@@ -468,9 +474,6 @@ void veh_interact::do_main_loop()
 
     shared_ptr_fast<ui_adaptor> current_ui = create_or_get_ui_adaptor();
 
-    vehicle_lowest_z_level = veh->global_pos3().z;
-    now_interact_z_level = vehicle_lowest_z_level;
-
     while( !finish ) {
         calc_overview();
         ui_manager::redraw();
@@ -626,13 +629,13 @@ task_reason veh_interact::cant_do( char mode )
     const vehicle_part_range vpr = veh->get_all_parts();
     avatar &player_character = get_avatar();
     switch( mode ) {
-        case 'i':
-            // install mode
-            enough_morale = player_character.has_morale_to_craft();
-            valid_target = !can_mount.empty();
-            //tool checks processed later
-            enough_light = player_character.fine_detail_vision_mod() <= 4;
-            has_tools = true;
+    case 'i':
+        // install mode
+        enough_morale = player_character.has_morale_to_craft();
+        valid_target = !can_mount.empty();
+        //tool checks processed later
+        enough_light = player_character.fine_detail_vision_mod() <= 4;
+        has_tools = true;
             break;
 
         case 'r':
@@ -2300,6 +2303,12 @@ int veh_interact::part_at( const point &d )
     return veh->part_displayed_at( vd );
 }
 
+int veh_interact::part_at(const tripoint& d)
+{
+    return -1;
+
+}
+
 /**
  * Checks to see if you can potentially install this part at current position.
  * Affects coloring in display_list() and is also used to
@@ -2351,9 +2360,12 @@ void veh_interact::move_cursor( const point &d, int dstart_at )
     if( ovp && &ovp->vehicle() != veh ) {
         obstruct = true;
     }
+    // 建设载具的第二层时，需要使用的标志
+    bool has_supproting_part = cpart == -1 ? false : true;
 
     can_mount.clear();
-    if( !obstruct ) {
+    // 先争取验证两层载具，之后再重写、扩展
+    if( !obstruct && is_same_z_level()) {
         std::vector<const vpart_info *> req_missing;
         for( const auto &e : vpart_info::all() ) {
             const vpart_info &vp = e.second;
@@ -2386,7 +2398,7 @@ void veh_interact::move_cursor( const point &d, int dstart_at )
 
     need_repair.clear();
     parts_here.clear();
-    if( cpart >= 0 ) {
+    if( cpart >= 0 && is_same_z_level()) {
         parts_here = veh->parts_at_relative( veh->part( cpart ).mount, true );
         for( size_t i = 0; i < parts_here.size(); i++ ) {
             vehicle_part &pt = veh->part( parts_here[i] );
@@ -2511,21 +2523,27 @@ void veh_interact::display_veh()
         char sym = veh->part_sym( p, false, false );
         nc_color col = veh->part_color( p, false, false );
 
-        
         if (veh->global_part_pos3(p).z != now_interact_z_level) {
-            cpart_need_reset = true;
+            const point q = (veh->part(p).mount + dd).rotate(3);
+            if (q == point_zero) {
+                col = hilite(col);
+            }
+            mvwputch(w_disp, h_size + q, col, '#');
             continue;
-        }
         
-        cpart_need_reset = false;
-       
-        const point q = ( veh->part( p ).mount + dd ).rotate( 3 );
-
-        if( q == point_zero ) {
-            col = hilite( col );
-            cpart = p;
         }
-        mvwputch( w_disp, h_size + q, col, special_symbol( sym ) );
+        else {
+
+            cpart_need_reset = false;
+
+            const point q = (veh->part(p).mount + dd).rotate(3);
+
+            if (q == point_zero) {
+                col = hilite(col);
+                cpart = p;
+            }
+            mvwputch(w_disp, h_size + q, col, special_symbol(sym));
+        }
     }
 
     if (cpart_need_reset) {
@@ -3561,5 +3579,11 @@ int veh_interact::get_now_interact_z_level() {
 int veh_interact::get_vehicle_lowest_z_level() {
 
     return vehicle_lowest_z_level;
+
+}
+
+bool veh_interact::is_same_z_level() {
+
+    return now_interact_z_level == vehicle_lowest_z_level;
 
 }
