@@ -3634,8 +3634,8 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
                     const vehicle_stack& v_s_ref = veh.get_items(cargopart->part_index());
 
 
-                    // 如果这个载具的部分（电器）是不是传送带，如果是那么就直接用亮色突出物品，
-                    // 其他时候，我们要看看此传送带上的物品数量是不是大于1，大于一高亮显示，并显示物品
+                    // 检查这个cargopart是不是传送带，如果不是,那么就直接高亮标记，
+                    // 其他时候，我们要看看此传送带上的物品数量是不是大于1，大于一高亮标记，并显示物品
                     // ，不大于一，仅仅显示物品。
                     if (cargopart->info().has_flag("CONVEYOR_BELT") == false) {
                         
