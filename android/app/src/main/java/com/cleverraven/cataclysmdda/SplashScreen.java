@@ -237,7 +237,9 @@ public class SplashScreen extends Activity {
                 totalFiles = countTotalAssets(assetManager, "data") +
                     countTotalAssets(assetManager, "gfx") +
                     countTotalAssets(assetManager, "lang") +
-                    countTotalAssets(assetManager, "config");
+                    countTotalAssets(assetManager, "config") + 
+                    countTotalAssets(assetManager, "save")
+                    ;
                 showDialog(INSTALL_DIALOG_ID);
             } catch(Exception e) {
                 installationAlert.setMessage(e.getMessage());
@@ -317,7 +319,7 @@ public class SplashScreen extends Activity {
                 copyAssetFolder(assetManager, "gfx", externalFilesDir + "/gfx");
                 copyAssetFolder(assetManager, "lang", externalFilesDir + "/lang");
                 copyAssetFolder(assetManager, "config", externalFilesDir + "/config");
-
+                copyAssetFolder(assetManager, "save", externalFilesDir + "/save");
 
 
             } catch(Exception e) {
