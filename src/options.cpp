@@ -3704,7 +3704,7 @@ static void update_options_cache()
     android_hide_holds = ::get_option<bool>("ANDROID_HIDE_HOLDS");
     android_show_virtual_joystick = ::get_option<bool>("ANDROID_SHOW_VIRTUAL_JOYSTICK");
     android_deadzone_range = ::get_option<float>("ANDROID_DEADZONE_RANGE");
-    android_shortcut_move_front = get::get_option<bool>("ANDROID_SHORTCUT_MOVE_FRONT");
+    android_shortcut_move_front = ::get_option<bool>("ANDROID_SHORTCUT_MOVE_FRONT");
     android_virtual_joystick_follow = ::get_option<bool>("ANDROID_VIRTUAL_JOYSTICK_FOLLOW");
     android_repeat_delay_range = ::get_option<float>("ANDROID_REPEAT_DELAY_RANGE");
     android_shortcut_remove_turns = ::get_option<int>("ANDROID_SHORTCUT_REMOVE_TURNS");
