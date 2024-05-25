@@ -41,6 +41,7 @@ extern int android_repeat_delay_min;
 extern int android_repeat_delay_max;
 extern int android_shortcut_screen_percentage;
 extern int android_shortcut_opacity_bg;
+extern int android_shortcut_opacity_shadow;
 
 extern float android_deadzone_range;
 extern float android_repeat_delay_range;

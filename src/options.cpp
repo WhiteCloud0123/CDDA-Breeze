@@ -3713,6 +3713,7 @@ static void update_options_cache()
     android_sensitivity_power = ::get_option<float>("ANDROID_SENSITIVITY_POWER");
     android_shortcut_screen_percentage = ::get_option<int>("ANDROID_SHORTCUT_SCREEN_PERCENTAGE");
     android_shortcut_opacity_bg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_BG");
+    android_shortcut_opacity_shadow = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_SHADOW");
 
 #endif
 
