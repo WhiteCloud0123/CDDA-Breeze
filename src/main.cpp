@@ -614,7 +614,12 @@ int main( int argc, const char *argv[] )
 #endif
 #if defined(__ANDROID__)
 
-    jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+    
+
+
+    // Start the standard output logging redirector
+    start_logger( "cdda" );
+jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
     j_activity = (jobject)SDL_AndroidGetActivity();
     jclass clazz(jni_env->GetObjectClass(j_activity));
     j_class = clazz;
@@ -623,7 +628,7 @@ int main( int argc, const char *argv[] )
     method_id_isHardwareKeyboardAvailable = jni_env->GetMethodID(j_class, "isHardwareKeyboardAvailable", "()Z");
     method_id_vibrate = jni_env->GetMethodID(j_class, "vibrate", "(I)V");
     method_id_show_sdl_surface = jni_env->GetMethodID(j_class, "show_sdl_surface", "()V");
-    method_id_toast = jni_env->GetMethodID(j_class,"toast","(Ljava / lang / String;)V");
+    method_id_toast = jni_env->GetMethodID(j_class,"toast","(Ljava/lang/String;)V");
     method_id_showToastMessage = jni_env->GetMethodID(j_class, "showToastMessage", "(Ljava/lang/String;)V");
     method_id_getDefaultSetting = jni_env->GetMethodID(j_class, "getDefaultSetting", "(Ljava/lang/String;Z)Z");
     method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
@@ -636,11 +641,6 @@ int main( int argc, const char *argv[] )
 
 
     jni_env->DeleteLocalRef(clazz);
-
-
-
-    // Start the standard output logging redirector
-    start_logger( "cdda" );
 
     // On Android first launch, we copy all data files from the APK into the app's writeable folder so std::io stuff works.
     // Use the external storage so it's publicly modifiable data (so users can mess with installed data, save games etc.)
