@@ -1980,7 +1980,7 @@ void npc::say( const std::string &line, const sounds::sound_t spriority ) const
         
         jstring toast_message = jni_env->NewStringUTF(sound.c_str());
         jni_env->CallVoidMethod(j_activity, method_id_showToastMessage, toast_message);
-        env->DeleteLocalRef(toast_message);
+        jni_env->DeleteLocalRef(toast_message);
     
     }
 
