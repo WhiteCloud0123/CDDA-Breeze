@@ -18,6 +18,7 @@
 #include "cata_utility.h"
 #include "options.h"
 #include "system_locale.h"
+#include "game.h"
 
 #ifndef _WIN32
 namespace
@@ -133,7 +134,7 @@ cata::optional<std::string> Language()
         return cata::nullopt;
     }
     const std::string lang( ans_c_str );
-    env->ReleaseStringUTFChars( ans, ans_c_str );
+    jni_env->ReleaseStringUTFChars( ans, ans_c_str );
     DebugLog( D_INFO, D_MAIN ) << "Read Android system language: '" << lang << '\'';
     if( string_starts_with( lang, "zh_Hans" ) ) {
         return "zh_CN";
