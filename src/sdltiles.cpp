@@ -2077,7 +2077,7 @@ void get_quick_shortcut_dimensions( quick_shortcuts_t &qsl, float &border, float
     float min_width = std::floor( screen_density_scale * std::min(
                                       get_option<int>( "ANDROID_SHORTCUT_WIDTH_MIN" ),
                                       get_option<int>( "ANDROID_SHORTCUT_WIDTH_MAX" ) ) );
-    float usable_window_width = WindowWidth * get_option<int>( "ANDROID_SHORTCUT_SCREEN_PERCENTAGE" ) *
+    float usable_window_width = WindowWidth * android_shortcut_screen_percentage *
                                 0.01f;
     if( width * qsl.size() > usable_window_width ) {
         width *= usable_window_width / ( width * qsl.size() );
@@ -2112,7 +2112,7 @@ input_event *get_quick_shortcut_under_finger( bool down = false )
     bool shortcut_right = android_shortcut_position == "right";
     float finger_x = down ? finger_down_x : finger_curr_x;
     for( std::list<input_event>::iterator it = qsl.begin(); it != qsl.end(); ++it ) {
-        if( ( i + 1 ) * width > WindowWidth * get_option<int>( "ANDROID_SHORTCUT_SCREEN_PERCENTAGE" ) *
+        if( ( i + 1 ) * width > WindowWidth * android_shortcut_screen_percentage *
             0.01f ) {
             continue;
         }
@@ -2378,7 +2378,7 @@ void draw_quick_shortcuts()
     bool hovered, show_hint;
     int i = 0;
     for( std::list<input_event>::iterator it = qsl.begin(); it != qsl.end(); ++it ) {
-        if( ( i + 1 ) * width > WindowWidth * get_option<int>( "ANDROID_SHORTCUT_SCREEN_PERCENTAGE" ) *
+        if( ( i + 1 ) * width > WindowWidth * android_shortcut_screen_percentage *
             0.01f ) {
             continue;
         }
