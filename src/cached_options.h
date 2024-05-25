@@ -36,14 +36,17 @@ extern int terminal_y;
 
 extern int android_virtual_joystick_opacity;
 extern int android_initial_delay;
-extern std::string android_shortcut_position;
-extern std::string android_shortcut_defaults;
+
+extern float android_deadzone_range;
+extern float android_repeat_delay_range;
+
 extern bool android_hide_holds;
 extern bool android_show_virtual_joystick;
-extern float android_deadzone_range;
 extern bool android_shortcut_move_front;
 extern bool android_virtual_joystick_follow;
-extern float android_repeat_delay_range;
+
+extern std::string android_shortcut_position;
+extern std::string android_shortcut_defaults;
 
 #endif
 

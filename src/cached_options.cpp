@@ -32,14 +32,17 @@ int terminal_y;
 
 int android_virtual_joystick_opacity;
 int android_initial_delay;
-std::string android_shortcut_position;
-std::string android_shortcut_defaults;
+
+float android_deadzone_range;
+float android_repeat_delay_range;
+
 bool android_hide_holds;
 bool android_show_virtual_joystick;
-float android_deadzone_range;
 bool android_shortcut_move_front;
 bool android_virtual_joystick_follow;
-float android_repeat_delay_range;
+
+std::string android_shortcut_position;
+std::string android_shortcut_defaults;
 
 #endif
 
