@@ -3709,6 +3709,7 @@ static void update_options_cache()
     android_repeat_delay_range = ::get_option<float>("ANDROID_REPEAT_DELAY_RANGE");
     android_shortcut_remove_turns = ::get_option<int>("ANDROID_SHORTCUT_REMOVE_TURNS");
     android_repeat_delay_min = ::get_option<int>("ANDROID_REPEAT_DELAY_MIN");
+    android_repeat_delay_max = ::get_option<int>("ANDROID_REPEAT_DELAY_MAX");
 
 #endif
 

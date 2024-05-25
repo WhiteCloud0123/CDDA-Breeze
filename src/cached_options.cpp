@@ -34,6 +34,7 @@ int android_virtual_joystick_opacity;
 int android_initial_delay;
 int android_shortcut_remove_turns;
 int android_repeat_delay_min;
+int android_repeat_delay_max;
 
 float android_deadzone_range;
 float android_repeat_delay_range;
