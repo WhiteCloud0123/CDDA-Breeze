@@ -3372,7 +3372,7 @@ static void CheckMessages()
                         input_event *quick_shortcut = get_quick_shortcut_under_finger();
                         if( quick_shortcut ) {
                             last_input = *quick_shortcut;
-                            if( get_option<bool>( "ANDROID_SHORTCUT_MOVE_FRONT" ) ) {
+                            if(android_shortcut_move_front) {
                                 quick_shortcuts_t &qsl = quick_shortcuts_map[get_quick_shortcut_name(
                                                              touch_input_context.get_category() )];
                                 reorder_quick_shortcut( qsl, quick_shortcut->get_first_input(), false );
