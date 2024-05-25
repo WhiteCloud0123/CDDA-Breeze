@@ -797,7 +797,7 @@ int main( int argc, const char *argv[] )
 
     jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
     j_activity = (jobject)SDL_AndroidGetActivity();
-    jclass clazz(env->GetObjectClass(activity));
+    jclass clazz(jni_env->GetObjectClass(j_activity));
     j_class = clazz;
     method_id_setExtraButtonVisibility = jni_env->GetMethodID(j_class, "setExtraButtonVisibility", "(Z)V");
     method_id_getDisplayDensity = jni_env->GetMethodID(j_class, "getDisplayDensity", "()F");
@@ -816,7 +816,7 @@ int main( int argc, const char *argv[] )
     }
 
 
-    env->DeleteLocalRef(clazz);
+    jni_env->DeleteLocalRef(clazz);
 
 #endif
 
