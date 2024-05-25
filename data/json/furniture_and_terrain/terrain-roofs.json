@@ -333,7 +333,7 @@
   {
     "type": "terrain",
     "id": "t_treetop",
-    "name": "树梢",
+    "name": "树冠",
     "description": "一棵树的上部树枝。这里刚好有足够的空间来停留。",
     "symbol": "#",
     "color": [ "light_green", "green", "yellow_yellow", "brown" ],
@@ -343,7 +343,7 @@
   {
     "type": "terrain",
     "id": "t_treetop_evergreen",
-    "name": "树梢",
+    "name": "树冠",
     "description": "一棵树的上部树枝。这里刚好有足够的空间来停留。",
     "symbol": "#",
     "color": [ "green" ],
@@ -353,7 +353,7 @@
   {
     "type": "terrain",
     "id": "t_treetop_dead",
-    "name": "枯树的树梢",
+    "name": "枯树的树冠",
     "description": "枯树裸露的上部树枝。这里刚好有足够的空间来停留。",
     "symbol": "#",
     "color": "brown",
