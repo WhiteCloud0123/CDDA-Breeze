@@ -2268,7 +2268,7 @@ void remove_action_from_quick_shortcuts( action_id action, const std::string &ca
 // Returns true if an expired action was removed
 bool remove_expired_actions_from_quick_shortcuts( const std::string &category )
 {
-    int remove_turns = get_option<int>( "ANDROID_SHORTCUT_REMOVE_TURNS" );
+    int remove_turns = android_shortcut_remove_turns;
     if( remove_turns <= 0 ) {
         return false;
     }

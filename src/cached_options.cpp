@@ -32,6 +32,7 @@ int terminal_y;
 
 int android_virtual_joystick_opacity;
 int android_initial_delay;
+int android_shortcut_remove_turns;
 
 float android_deadzone_range;
 float android_repeat_delay_range;

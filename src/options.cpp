@@ -3707,6 +3707,7 @@ static void update_options_cache()
     android_shortcut_move_front = get::get_option<bool>("ANDROID_SHORTCUT_MOVE_FRONT");
     android_virtual_joystick_follow = ::get_option<bool>("ANDROID_VIRTUAL_JOYSTICK_FOLLOW");
     android_repeat_delay_range = ::get_option<float>("ANDROID_REPEAT_DELAY_RANGE");
+    android_shortcut_remove_turns = ::get_option<int>("ANDROID_SHORTCUT_REMOVE_TURNS");
 
 #endif
 
