@@ -36,6 +36,35 @@
 #include "units_fwd.h"
 #include "weather.h"
 
+#if defined(__ANDROID__)
+#include <jni.h>
+#include <SDL_filesystem.h>
+#include <SDL_keyboard.h>
+#include <SDL_system.h>
+#include <android/log.h>
+#include <unistd.h>
+
+
+
+extern JNIEnv* jni_env;
+extern jobject j_activity;
+extern jclass j_class;
+
+extern jmethodID method_id_setExtraButtonVisibility;
+extern jmethodID method_id_getDisplayDensity;
+extern jmethodID method_id_isHardwareKeyboardAvailable;
+extern jmethodID method_id_vibrate;
+extern jmethodID method_id_show_sdl_surface;
+extern jmethodID method_id_toast;
+extern jmethodID method_id_showToastMessage;
+extern jmethodID method_id_getDefaultSetting;
+extern jmethodID method_id_getSystemLang;
+
+
+#endif
+
+
+
 // 丧尸主宰职业升级所需的经验标准
 extern int dominator_of_zombies_exp_array[];
 

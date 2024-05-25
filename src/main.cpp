@@ -793,21 +793,30 @@ int main( int argc, const char *argv[] )
 
 #if defined(__ANDROID__)
 
+
+
+    jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+    j_activity = (jobject)SDL_AndroidGetActivity();
+    jclass clazz(env->GetObjectClass(activity));
+    j_class = clazz;
+    method_id_setExtraButtonVisibility = jni_env->GetMethodID(j_class, "setExtraButtonVisibility", "(Z)V");
+    method_id_getDisplayDensity = jni_env->GetMethodID(j_class, "getDisplayDensity", "()F");
+    method_id_isHardwareKeyboardAvailable = jni_env->GetMethodID(j_class, "isHardwareKeyboardAvailable", "()Z");
+    method_id_vibrate = jni_env->GetMethodID(j_class, "vibrate", "(I)V");
+    method_id_show_sdl_surface = jni_env->GetMethodID(j_class, "show_sdl_surface", "()V");
+    method_id_toast = jni_env->GetMethodID(j_class,"toast","(Ljava / lang / String;)V");
+    method_id_showToastMessage = jni_env->GetMethodID(j_class, "showToastMessage", "(Ljava/lang/String;)V");
+    method_id_getDefaultSetting = jni_env->GetMethodID(j_class, "getDefaultSetting", "(Ljava/lang/String;Z)Z");
+    method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
+
     if (get_option<bool>("启用扩展按键")) {
 
-        JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
-        jobject activity = (jobject)SDL_AndroidGetActivity();
-        jclass clazz(env->GetObjectClass(activity));
-        jmethodID method_id = env->GetMethodID(clazz, "setExtraButtonVisibility", "(Z)V");
-
-        if (method_id) {
-            env->CallVoidMethod(activity, method_id, true);
-        }
-
-        env->DeleteLocalRef(activity);
-        env->DeleteLocalRef(clazz);
+            jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, true);
 
     }
+
+
+    env->DeleteLocalRef(clazz);
 
 #endif
 
