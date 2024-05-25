@@ -2472,13 +2472,13 @@ void draw_quick_shortcuts()
         font->OutputChar( renderer, geometry, text, point( text_x + 1, text_y + 1 ), 0,
             android_shortcut_opacity_shadow * 0.01f );
         font->OutputChar( renderer, geometry, text, point( text_x, text_y ),
-                          get_option<int>( "ANDROID_SHORTCUT_COLOR" ),
+            android_shortcut_color,
                           get_option<int>( "ANDROID_SHORTCUT_OPACITY_FG" ) * 0.01f );
         if( hovered ) {
             // draw a second button hovering above the first one
             font->OutputChar( renderer, geometry, text,
                               point( text_x, text_y - ( height * 1.2f / text_scale ) ),
-                              get_option<int>( "ANDROID_SHORTCUT_COLOR" ) );
+                android_shortcut_color);
             if( show_hint ) {
                 // draw hint text
                 text_scale = default_text_scale;
@@ -2496,7 +2496,7 @@ void draw_quick_shortcuts()
                 font->OutputChar( renderer, geometry, hint_text, point( text_x + 1, text_y + 1 ), 0,
                     android_shortcut_opacity_shadow * 0.01f );
                 font->OutputChar( renderer, geometry, hint_text, point( text_x, text_y ),
-                                  get_option<int>( "ANDROID_SHORTCUT_COLOR" ),
+                    android_shortcut_color,
                                   get_option<int>( "ANDROID_SHORTCUT_OPACITY_FG" ) * 0.01f );
             }
         }

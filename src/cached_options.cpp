@@ -38,6 +38,7 @@ int android_repeat_delay_max;
 int android_shortcut_screen_percentage;
 int android_shortcut_opacity_bg;
 int android_shortcut_opacity_shadow;
+int android_shortcut_color;
 
 float android_deadzone_range;
 float android_repeat_delay_range;
