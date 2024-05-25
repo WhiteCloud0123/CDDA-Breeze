@@ -2109,7 +2109,7 @@ input_event *get_quick_shortcut_under_finger( bool down = false )
     }
 
     int i = 0;
-    bool shortcut_right = get_option<std::string>( "ANDROID_SHORTCUT_POSITION" ) == "right";
+    bool shortcut_right = android_shortcut_position == "right";
     float finger_x = down ? finger_down_x : finger_curr_x;
     for( std::list<input_event>::iterator it = qsl.begin(); it != qsl.end(); ++it ) {
         if( ( i + 1 ) * width > WindowWidth * get_option<int>( "ANDROID_SHORTCUT_SCREEN_PERCENTAGE" ) *
@@ -2184,7 +2184,7 @@ void reorder_quick_shortcuts( quick_shortcuts_t &qsl )
 {
     // Do some manual reordering to make transitions between input contexts more consistent
     // Desired order of keys: < > BACKTAB TAB PPAGE NPAGE . . . . ?
-    bool shortcut_right = get_option<std::string>( "ANDROID_SHORTCUT_POSITION" ) == "right";
+    bool shortcut_right = android_shortcut_position == "right";
     if( shortcut_right ) {
         reorder_quick_shortcut( qsl, KEY_PPAGE, false ); // paging control
         reorder_quick_shortcut( qsl, KEY_NPAGE, false );
@@ -2296,14 +2296,14 @@ bool remove_expired_actions_from_quick_shortcuts( const std::string &category )
 // Draw preview of terminal size when adjusting values
 void draw_terminal_size_preview()
 {
-    bool preview_terminal_dirty = preview_terminal_width != get_option<int>( "TERMINAL_X" ) * fontwidth
+    bool preview_terminal_dirty = preview_terminal_width != terminal_x * fontwidth
                                   ||
-                                  preview_terminal_height != get_option<int>( "TERMINAL_Y" ) * fontheight;
+                                  preview_terminal_height != terminal_y * fontheight;
     if( preview_terminal_dirty ||
         ( preview_terminal_change_time > 0 && SDL_GetTicks() - preview_terminal_change_time < 1000 ) ) {
         if( preview_terminal_dirty ) {
-            preview_terminal_width = get_option<int>( "TERMINAL_X" ) * fontwidth;
-            preview_terminal_height = get_option<int>( "TERMINAL_Y" ) * fontheight;
+            preview_terminal_width = terminal_x * fontwidth;
+            preview_terminal_height = terminal_y * fontheight;
             preview_terminal_change_time = SDL_GetTicks();
         }
         SetRenderDrawColor( renderer, 255, 255, 255, 255 );
@@ -2319,20 +2319,20 @@ void draw_quick_shortcuts()
 
     if( !quick_shortcuts_enabled ||
         SDL_IsTextInputActive() ||
-        ( get_option<bool>( "ANDROID_HIDE_HOLDS" ) && !is_quick_shortcut_touch && finger_down_time > 0 &&
+        (android_hide_holds && !is_quick_shortcut_touch && finger_down_time > 0 &&
           SDL_GetTicks() - finger_down_time >= static_cast<uint32_t>(
-              get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) ) { // player is swipe + holding in a direction
+              android_initial_delay) ) ) { // player is swipe + holding in a direction
         return;
     }
 
-    bool shortcut_right = get_option<std::string>( "ANDROID_SHORTCUT_POSITION" ) == "right";
+    bool shortcut_right = android_shortcut_position == "right";
     std::string &category = touch_input_context.get_category();
     bool is_default_mode = category == "DEFAULTMODE";
     quick_shortcuts_t &qsl = quick_shortcuts_map[get_quick_shortcut_name( category )];
     if( qsl.empty() || !touch_input_context.get_registered_manual_keys().empty() ) {
         if( category == "DEFAULTMODE" ) {
             const std::string default_gameplay_shortcuts =
-                get_option<std::string>( "ANDROID_SHORTCUT_DEFAULTS" );
+                android_shortcut_defaults;
             for( const auto &c : default_gameplay_shortcuts ) {
                 add_key_to_quick_shortcuts( c, category, true );
             }
@@ -2395,7 +2395,7 @@ void draw_quick_shortcuts()
         hovered = is_quick_shortcut_touch && hovered_quick_shortcut == &event;
         show_hint = hovered &&
                     SDL_GetTicks() - finger_down_time > static_cast<uint32_t>
-                    ( get_option<int>( "ANDROID_INITIAL_DELAY" ) );
+                    (android_initial_delay);
         std::string hint_text;
         if( show_hint ) {
             if( touch_input_context.get_category() == "INVENTORY" && inv_chars.valid( key ) ) {
@@ -2512,17 +2512,17 @@ void draw_virtual_joystick()
 {
 
     // Bail out if we don't need to draw the joystick
-    if( !get_option<bool>( "ANDROID_SHOW_VIRTUAL_JOYSTICK" ) ||
+    if( !android_show_virtual_joystick ||
         finger_down_time <= 0 ||
         SDL_GetTicks() - finger_down_time <= static_cast<uint32_t>
-        ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ||
+        (android_initial_delay) ||
         is_quick_shortcut_touch ||
         is_two_finger_touch ) {
         return;
     }
 
     SDL_SetTextureAlphaMod( touch_joystick.get(),
-                            get_option<int>( "ANDROID_VIRTUAL_JOYSTICK_OPACITY" ) * 0.01f * 255.0f );
+        android_virtual_joystick_opacity * 0.01f * 255.0f );
 
     float longest_window_edge = std::max( WindowWidth, WindowHeight );
 
@@ -2655,7 +2655,7 @@ void handle_finger_input( uint32_t ticks )
         }
     } else {
         if( ticks - finger_down_time >= static_cast<uint32_t>
-            ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+            (android_initial_delay) ) {
             // Single tap (repeat) - held, so always treat this as a tap
             // We only allow repeats for waiting, not confirming in menus as that's a bit silly
             if( is_default_mode ) {
@@ -2664,7 +2664,7 @@ void handle_finger_input( uint32_t ticks )
             }
         } else {
             if( last_tap_time > 0 &&
-                ticks - last_tap_time < static_cast<uint32_t>( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+                ticks - last_tap_time < static_cast<uint32_t>(android_initial_delay) ) {
                 // Double tap
                 last_input = input_event( is_default_mode ? KEY_ESCAPE : KEY_ESCAPE, input_event_t::keyboard_char );
                 last_tap_time = 0;
@@ -2979,7 +2979,7 @@ static void CheckMessages()
         // Toggle quick shortcuts on/off
         if( ac_back_down_time > 0 &&
             ticks - ac_back_down_time > static_cast<uint32_t>
-            ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+            (android_initial_delay) ) {
             if( !quick_shortcuts_toggle_handled ) {
                 quick_shortcuts_enabled = !quick_shortcuts_enabled;
                 quick_shortcuts_toggle_handled = true;
@@ -3003,7 +3003,7 @@ static void CheckMessages()
         // Handle repeating inputs from touch + holds
         if( !is_quick_shortcut_touch && !is_two_finger_touch && finger_down_time > 0 &&
             ticks - finger_down_time > static_cast<uint32_t>
-            ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+            (android_initial_delay) ) {
             if( ticks - finger_repeat_time > finger_repeat_delay ) {
                 handle_finger_input( ticks );
                 finger_repeat_time = ticks;
@@ -3026,7 +3026,7 @@ static void CheckMessages()
         // If we received a first tap and not another one within a certain period, this was a single tap, so trigger the input event
         if( !is_quick_shortcut_touch && !is_two_finger_touch && last_tap_time > 0 &&
             ticks - last_tap_time >= static_cast<uint32_t>
-            ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+            (android_initial_delay) ) {
             // Single tap
             last_tap_time = ticks;
             last_input = input_event( is_default_mode ? get_key_event_from_string(
@@ -3038,7 +3038,7 @@ static void CheckMessages()
         // ensure hint text pops up even if player doesn't move finger to trigger a FINGERMOTION event
         if( is_quick_shortcut_touch && finger_down_time > 0 &&
             ticks - finger_down_time > static_cast<uint32_t>
-            ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+            (android_initial_delay) ) {
             needupdate = true;
         }
     }
@@ -3187,7 +3187,7 @@ static void CheckMessages()
                 // Toggle virtual keyboard with Android back button
                 if( ev.key.keysym.sym == SDLK_AC_BACK ) {
                     if( ticks - ac_back_down_time <= static_cast<uint32_t>
-                        ( get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+                        (android_initial_delay) ) {
                         if( SDL_IsTextInputActive() ) {
                             StopTextInput();
                         } else {
@@ -3382,7 +3382,7 @@ static void CheckMessages()
                             // Get the quick shortcut that was originally touched
                             quick_shortcut = get_quick_shortcut_under_finger( true );
                             if( quick_shortcut &&
-                                ticks - finger_down_time <= static_cast<uint32_t>( get_option<int>( "ANDROID_INITIAL_DELAY" ) )
+                                ticks - finger_down_time <= static_cast<uint32_t>(android_initial_delay)
                                 &&
                                 finger_curr_y < finger_down_y &&
                                 finger_down_y - finger_curr_y > std::abs( finger_down_x - finger_curr_x ) ) {
@@ -3455,7 +3455,7 @@ static void CheckMessages()
                                 }
                             }
                         } else if( ticks - finger_down_time <= static_cast<uint32_t>(
-                                       get_option<int>( "ANDROID_INITIAL_DELAY" ) ) ) {
+                            android_initial_delay) ) {
                             handle_finger_input( ticks );
                         }
                     }

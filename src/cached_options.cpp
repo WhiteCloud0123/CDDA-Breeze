@@ -25,6 +25,21 @@ bool use_particle_system;
 bool use_show_creature_hp_bar;
 bool use_show_player_move_point;
 bool use_animation;
+int terminal_x;
+int terminal_y;
+// 安卓
+#if defined(__ANDROID__)
+
+int android_virtual_joystick_opacity;
+int android_initial_delay;
+std::string android_shortcut_position;
+std::string android_shortcut_defaults;
+bool android_hide_holds;
+bool android_show_virtual_joystick;
+
+#endif
+
+
 
 #ifndef CATA_IN_TOOL
 error_log_format_t error_log_format = error_log_format_t::human_readable;

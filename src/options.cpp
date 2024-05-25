@@ -3692,6 +3692,20 @@ static void update_options_cache()
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_animation =::get_option<bool>("ANIMATIONS");
+    terminal_x = ::get_option<int>("TERMINAL_X");
+    terminal_y = ::get_option<int>("TERMINAL_Y");
+    //安卓
+#if defined(__ANDROID__)
+
+    android_virtual_joystick_opacity = ::get_option<int>("ANDROID_VIRTUAL_JOYSTICK_OPACITY");
+    android_initial_delay = ::get_option<int>("ANDROID_INITIAL_DELAY");
+    android_shortcut_position = ::get_option<std::string>("ANDROID_SHORTCUT_POSITION");
+    android_shortcut_defaults =::get_option<std::string>("ANDROID_SHORTCUT_DEFAULTS");
+    android_hide_holds = ::get_option<bool>("ANDROID_HIDE_HOLDS");
+    android_show_virtual_joystick = ::get_option<bool>("ANDROID_SHOW_VIRTUAL_JOYSTICK");
+
+#endif
+
 }
 
 bool options_manager::save() const
