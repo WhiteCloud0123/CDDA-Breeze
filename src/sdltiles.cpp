@@ -2563,7 +2563,7 @@ void update_finger_repeat_delay()
     float repeat_delay_max = static_cast<float>(android_repeat_delay_max);
     finger_repeat_delay = lerp<float>( std::max( repeat_delay_min, repeat_delay_max ),
                                        std::min( repeat_delay_min, repeat_delay_max ),
-                                       std::pow( t, get_option<float>( "ANDROID_SENSITIVITY_POWER" ) ) );
+                                       std::pow( t, android_sensitivity_power) );
 }
 
 // TODO: Is there a better way to detect when string entry is allowed?

@@ -42,6 +42,7 @@ extern int android_repeat_delay_max;
 
 extern float android_deadzone_range;
 extern float android_repeat_delay_range;
+extern float android_sensitivity_power;
 
 extern bool android_hide_holds;
 extern bool android_show_virtual_joystick;

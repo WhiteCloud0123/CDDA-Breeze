@@ -38,6 +38,7 @@ int android_repeat_delay_max;
 
 float android_deadzone_range;
 float android_repeat_delay_range;
+float android_sensitivity_power;
 
 bool android_hide_holds;
 bool android_show_virtual_joystick;
