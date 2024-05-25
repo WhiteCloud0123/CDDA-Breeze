@@ -28,6 +28,36 @@ extern bool use_particle_system;
 extern bool use_show_creature_hp_bar;
 extern bool use_show_player_move_point;
 extern bool use_animation;
+extern int terminal_x;
+extern int terminal_y;
+
+// 安卓
+#if defined(__ANDROID__)
+
+extern int android_virtual_joystick_opacity;
+extern int android_initial_delay;
+extern int android_shortcut_remove_turns;
+extern int android_repeat_delay_min;
+extern int android_repeat_delay_max;
+extern int android_shortcut_screen_percentage;
+extern int android_shortcut_opacity_bg;
+extern int android_shortcut_opacity_shadow;
+extern int android_shortcut_color;
+extern int android_shortcut_opacity_fg;
+
+extern float android_deadzone_range;
+extern float android_repeat_delay_range;
+extern float android_sensitivity_power;
+
+extern bool android_hide_holds;
+extern bool android_show_virtual_joystick;
+extern bool android_shortcut_move_front;
+extern bool android_virtual_joystick_follow;
+
+extern std::string android_shortcut_position;
+extern std::string android_shortcut_defaults;
+
+#endif
 
 // test_mode is not a regular game option; it's true when we are running unit
 // tests.

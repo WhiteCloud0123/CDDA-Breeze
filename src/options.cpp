@@ -3692,6 +3692,33 @@ static void update_options_cache()
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_animation =::get_option<bool>("ANIMATIONS");
+    terminal_x = ::get_option<int>("TERMINAL_X");
+    terminal_y = ::get_option<int>("TERMINAL_Y");
+    //安卓
+#if defined(__ANDROID__)
+
+    android_virtual_joystick_opacity = ::get_option<int>("ANDROID_VIRTUAL_JOYSTICK_OPACITY");
+    android_initial_delay = ::get_option<int>("ANDROID_INITIAL_DELAY");
+    android_shortcut_position = ::get_option<std::string>("ANDROID_SHORTCUT_POSITION");
+    android_shortcut_defaults =::get_option<std::string>("ANDROID_SHORTCUT_DEFAULTS");
+    android_hide_holds = ::get_option<bool>("ANDROID_HIDE_HOLDS");
+    android_show_virtual_joystick = ::get_option<bool>("ANDROID_SHOW_VIRTUAL_JOYSTICK");
+    android_deadzone_range = ::get_option<float>("ANDROID_DEADZONE_RANGE");
+    android_shortcut_move_front = get::get_option<bool>("ANDROID_SHORTCUT_MOVE_FRONT");
+    android_virtual_joystick_follow = ::get_option<bool>("ANDROID_VIRTUAL_JOYSTICK_FOLLOW");
+    android_repeat_delay_range = ::get_option<float>("ANDROID_REPEAT_DELAY_RANGE");
+    android_shortcut_remove_turns = ::get_option<int>("ANDROID_SHORTCUT_REMOVE_TURNS");
+    android_repeat_delay_min = ::get_option<int>("ANDROID_REPEAT_DELAY_MIN");
+    android_repeat_delay_max = ::get_option<int>("ANDROID_REPEAT_DELAY_MAX");
+    android_sensitivity_power = ::get_option<float>("ANDROID_SENSITIVITY_POWER");
+    android_shortcut_screen_percentage = ::get_option<int>("ANDROID_SHORTCUT_SCREEN_PERCENTAGE");
+    android_shortcut_opacity_bg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_BG");
+    android_shortcut_opacity_shadow = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_SHADOW");
+    android_shortcut_color = ::get_option<int>("ANDROID_SHORTCUT_COLOR");
+    android_shortcut_opacity_fg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_FG");
+
+#endif
+
 }
 
 bool options_manager::save() const
