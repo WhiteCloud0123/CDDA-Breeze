@@ -2473,7 +2473,7 @@ void draw_quick_shortcuts()
             android_shortcut_opacity_shadow * 0.01f );
         font->OutputChar( renderer, geometry, text, point( text_x, text_y ),
             android_shortcut_color,
-                          get_option<int>( "ANDROID_SHORTCUT_OPACITY_FG" ) * 0.01f );
+            android_shortcut_opacity_fg * 0.01f );
         if( hovered ) {
             // draw a second button hovering above the first one
             font->OutputChar( renderer, geometry, text,
@@ -2497,7 +2497,7 @@ void draw_quick_shortcuts()
                     android_shortcut_opacity_shadow * 0.01f );
                 font->OutputChar( renderer, geometry, hint_text, point( text_x, text_y ),
                     android_shortcut_color,
-                                  get_option<int>( "ANDROID_SHORTCUT_OPACITY_FG" ) * 0.01f );
+                    android_shortcut_opacity_fg * 0.01f );
             }
         }
         SDL_RenderSetScale( renderer.get(), 1.0f, 1.0f );

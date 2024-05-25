@@ -3715,6 +3715,7 @@ static void update_options_cache()
     android_shortcut_opacity_bg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_BG");
     android_shortcut_opacity_shadow = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_SHADOW");
     android_shortcut_color = ::get_option<int>("ANDROID_SHORTCUT_COLOR");
+    android_shortcut_opacity_fg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_FG");
 
 #endif
 
