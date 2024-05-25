@@ -2559,7 +2559,7 @@ void update_finger_repeat_delay()
                                        longest_window_edge ) ) /
                             std::max( 0.01f, (android_repeat_delay_range) * longest_window_edge ),
                             0.0f, 1.0f );
-    float repeat_delay_min = static_cast<float>( get_option<int>( "ANDROID_REPEAT_DELAY_MIN" ) );
+    float repeat_delay_min = static_cast<float>(android_repeat_delay_min);
     float repeat_delay_max = static_cast<float>( get_option<int>( "ANDROID_REPEAT_DELAY_MAX" ) );
     finger_repeat_delay = lerp<float>( std::max( repeat_delay_min, repeat_delay_max ),
                                        std::min( repeat_delay_min, repeat_delay_max ),

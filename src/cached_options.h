@@ -37,6 +37,7 @@ extern int terminal_y;
 extern int android_virtual_joystick_opacity;
 extern int android_initial_delay;
 extern int android_shortcut_remove_turns;
+extern int android_repeat_delay_min;
 
 extern float android_deadzone_range;
 extern float android_repeat_delay_range;
