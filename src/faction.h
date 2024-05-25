@@ -115,15 +115,7 @@ class faction_template
         int food_supply;  //Total nutritional value held
         int wealth;  //Total trade currency
         bool lone_wolf_faction; // is this a faction for just one person?
-        
-        int conquer_degree; // 征服度
-        int days_required_to_submit_resources; // 被玩家征服的派系，上交资源所需天数
-        bool player_has_joined; // 玩家是否已经加入了这个派系
-        bool if_player_get_food_toady_NO_JOINED; 
-        bool if_player_get_food_today_JOINED;  // 玩家加入了这个派系，是否已经领取了今天的食物。
-        bool if_player_reported_work_today; // 玩家今天是否汇报了工作 
-        int today_contribution;
-        int total_contribution;
+       
         
         itype_id currency; // id of the faction currency
         std::vector<faction_price_rule> price_rules; // additional pricing rules
@@ -153,6 +145,14 @@ class faction : public faction_template
         bool has_relationship( const faction_id &guy_id, npc_factions::relationship flag ) const;
         void add_to_membership( const character_id &guy_id, const std::string &guy_name, bool known );
         void remove_member( const character_id &guy_id );
+        int conquer_degree = 0; // 征服度
+        int days_required_to_submit_resources = 0; // 被玩家征服的派系，上交资源所需天数
+        bool player_has_joined = false; // 玩家是否已经加入了这个派系
+        bool if_player_get_food_toady_NO_JOINED = false;
+        bool if_player_get_food_today_JOINED = false;  // 玩家加入了这个派系，是否已经领取了今天的食物。
+        bool if_player_reported_work_today = false; // 玩家今天是否汇报了工作
+        int today_contribution;
+        int total_contribution;
         std::vector<int> opinion_of;
         bool validated = false; // NOLINT(cata-serialize)
         std::map<character_id, std::pair<std::string, bool>> members; // NOLINT(cata-serialize)
