@@ -2436,7 +2436,7 @@ void draw_quick_shortcuts()
             SetRenderDrawColor( renderer, 0, 0, 0, 255 );
         } else {
             SetRenderDrawColor( renderer, 0, 0, 0,
-                                get_option<int>( "ANDROID_SHORTCUT_OPACITY_BG" ) * 0.01f * 255.0f );
+                android_shortcut_opacity_bg * 0.01f * 255.0f );
         }
         SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
         RenderFillRect( renderer, &rect );
@@ -2453,7 +2453,7 @@ void draw_quick_shortcuts()
                 // draw a backdrop for the hint text
                 rect = { 0, static_cast<int>( ( WindowHeight - height ) * 0.5f ), static_cast<int>( WindowWidth ), static_cast<int>( height ) };
                 SetRenderDrawColor( renderer, 0, 0, 0,
-                                    get_option<int>( "ANDROID_SHORTCUT_OPACITY_BG" ) * 0.01f * 255.0f );
+                    android_shortcut_opacity_bg * 0.01f * 255.0f );
                 RenderFillRect( renderer, &rect );
             }
         }

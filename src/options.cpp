@@ -3712,6 +3712,7 @@ static void update_options_cache()
     android_repeat_delay_max = ::get_option<int>("ANDROID_REPEAT_DELAY_MAX");
     android_sensitivity_power = ::get_option<float>("ANDROID_SENSITIVITY_POWER");
     android_shortcut_screen_percentage = ::get_option<int>("ANDROID_SHORTCUT_SCREEN_PERCENTAGE");
+    android_shortcut_opacity_bg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_BG");
 
 #endif
 
