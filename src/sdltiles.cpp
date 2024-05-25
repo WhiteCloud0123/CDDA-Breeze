@@ -2529,13 +2529,13 @@ void draw_virtual_joystick()
     SDL_Rect dstrect;
 
     // Draw deadzone range
-    dstrect.w = dstrect.h = ( get_option<float>( "ANDROID_DEADZONE_RANGE" ) ) * longest_window_edge * 2;
+    dstrect.w = dstrect.h = (android_deadzone_range) * longest_window_edge * 2;
     dstrect.x = finger_down_x - dstrect.w / 2;
     dstrect.y = finger_down_y - dstrect.h / 2;
     RenderCopy( renderer, touch_joystick, NULL, &dstrect );
 
     // Draw repeat delay range
-    dstrect.w = dstrect.h = ( get_option<float>( "ANDROID_DEADZONE_RANGE" ) +
+    dstrect.w = dstrect.h = (android_deadzone_range +
                               get_option<float>( "ANDROID_REPEAT_DELAY_RANGE" ) ) * longest_window_edge * 2;
     dstrect.x = finger_down_x - dstrect.w / 2;
     dstrect.y = finger_down_y - dstrect.h / 2;
@@ -2555,7 +2555,7 @@ void update_finger_repeat_delay()
     float delta_y = finger_curr_y - finger_down_y;
     float dist = std::sqrt( delta_x * delta_x + delta_y * delta_y );
     float longest_window_edge = std::max( WindowWidth, WindowHeight );
-    float t = clamp<float>( ( dist - ( get_option<float>( "ANDROID_DEADZONE_RANGE" ) *
+    float t = clamp<float>( ( dist - (android_deadzone_range *
                                        longest_window_edge ) ) /
                             std::max( 0.01f, ( get_option<float>( "ANDROID_REPEAT_DELAY_RANGE" ) ) * longest_window_edge ),
                             0.0f, 1.0f );
@@ -2595,7 +2595,7 @@ void handle_finger_input( uint32_t ticks )
     float dist = std::sqrt( delta_x * delta_x + delta_y * delta_y ); // in pixel space
     bool handle_diagonals = touch_input_context.is_action_registered( "LEFTUP" );
     bool is_default_mode = touch_input_context.get_category() == "DEFAULTMODE";
-    if( dist > ( get_option<float>( "ANDROID_DEADZONE_RANGE" )*std::max( WindowWidth,
+    if( dist > (android_deadzone_range *std::max( WindowWidth,
                  WindowHeight ) ) ) {
         if( !handle_diagonals ) {
             if( delta_x >= 0 && delta_y >= 0 ) {
@@ -3331,7 +3331,7 @@ static void CheckMessages()
                         float delta_x = finger_curr_x - finger_down_x;
                         float delta_y = finger_curr_y - finger_down_y;
                         float dist = std::sqrt( delta_x * delta_x + delta_y * delta_y );
-                        float max_dist = ( get_option<float>( "ANDROID_DEADZONE_RANGE" ) +
+                        float max_dist = (android_deadzone_range +
                                            get_option<float>( "ANDROID_REPEAT_DELAY_RANGE" ) ) * std::max( WindowWidth, WindowHeight );
                         if( dist > max_dist ) {
                             float delta_ratio = ( dist / max_dist ) - 1.0f;
@@ -3406,7 +3406,7 @@ static void CheckMessages()
 
                                 float longest_window_edge = std::max( WindowWidth, WindowHeight );
 
-                                if( std::max( d1, d2 ) < get_option<float>( "ANDROID_DEADZONE_RANGE" ) * longest_window_edge ) {
+                                if( std::max( d1, d2 ) < android_deadzone_range * longest_window_edge ) {
                                     last_input = input_event( get_key_event_from_string(
                                                                   get_option<std::string>( "ANDROID_2_TAP_KEY" ) ), input_event_t::keyboard_char );
                                 } else {

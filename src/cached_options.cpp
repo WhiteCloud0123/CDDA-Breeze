@@ -36,6 +36,7 @@ std::string android_shortcut_position;
 std::string android_shortcut_defaults;
 bool android_hide_holds;
 bool android_show_virtual_joystick;
+float android_deadzone_range;
 
 #endif
 

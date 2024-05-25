@@ -40,6 +40,7 @@ extern std::string android_shortcut_position;
 extern std::string android_shortcut_defaults;
 extern bool android_hide_holds;
 extern bool android_show_virtual_joystick;
+extern float android_deadzone_range;
 
 #endif
 
