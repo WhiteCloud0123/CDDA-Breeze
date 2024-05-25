@@ -70,16 +70,6 @@ faction_template::faction_template()
     power = 0;
     lone_wolf_faction = false;
 
-    conquer_degree = 0;
-    days_required_to_submit_resources = 0;
-    player_has_joined = false; 
-    if_player_get_food_toady_NO_JOINED = false;
-    if_player_get_food_today_JOINED = false;
-    if_player_reported_work_today = false;
-
-    today_contribution = 0;
-    total_contribution = 0;
-
 
     currency = itype_id::NULL_ID();
 }
@@ -567,12 +557,9 @@ void faction::faction_display( const catacurses::window &fac_w, const int width 
 
     if (player_has_joined) {
         mvwprintz(fac_w, point(width, ++y), c_green, _("你是此派系的一员"));
-        mvwprintz(fac_w, point(width, ++y), c_white, _("今日的贡献度 %s"));
-        mvwprintz(fac_w, point(width, ++y), c_white, _("总贡献度 % s"));
+        mvwprintz(fac_w, point(width, ++y), c_white, _("今日的贡献度 %s"),today_contribution);
+        mvwprintz(fac_w, point(width, ++y), c_white, _("总贡献度 %s"),total_contribution);
     }
-
-    
-
     
     mvwprintz(fac_w, point(width, ++y), c_white, _("征服度:           %s"),
         conquer_degree);
