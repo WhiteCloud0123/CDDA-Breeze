@@ -43,6 +43,7 @@ extern bool android_show_virtual_joystick;
 extern float android_deadzone_range;
 extern bool android_shortcut_move_front;
 extern bool android_virtual_joystick_follow;
+extern float android_repeat_delay_range;
 
 #endif
 

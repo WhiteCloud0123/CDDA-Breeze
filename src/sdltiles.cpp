@@ -2536,7 +2536,7 @@ void draw_virtual_joystick()
 
     // Draw repeat delay range
     dstrect.w = dstrect.h = (android_deadzone_range +
-                              get_option<float>( "ANDROID_REPEAT_DELAY_RANGE" ) ) * longest_window_edge * 2;
+        android_repeat_delay_range) * longest_window_edge * 2;
     dstrect.x = finger_down_x - dstrect.w / 2;
     dstrect.y = finger_down_y - dstrect.h / 2;
     RenderCopy( renderer, touch_joystick, NULL, &dstrect );
@@ -2557,7 +2557,7 @@ void update_finger_repeat_delay()
     float longest_window_edge = std::max( WindowWidth, WindowHeight );
     float t = clamp<float>( ( dist - (android_deadzone_range *
                                        longest_window_edge ) ) /
-                            std::max( 0.01f, ( get_option<float>( "ANDROID_REPEAT_DELAY_RANGE" ) ) * longest_window_edge ),
+                            std::max( 0.01f, (android_repeat_delay_range) * longest_window_edge ),
                             0.0f, 1.0f );
     float repeat_delay_min = static_cast<float>( get_option<int>( "ANDROID_REPEAT_DELAY_MIN" ) );
     float repeat_delay_max = static_cast<float>( get_option<int>( "ANDROID_REPEAT_DELAY_MAX" ) );
@@ -3332,7 +3332,7 @@ static void CheckMessages()
                         float delta_y = finger_curr_y - finger_down_y;
                         float dist = std::sqrt( delta_x * delta_x + delta_y * delta_y );
                         float max_dist = (android_deadzone_range +
-                                           get_option<float>( "ANDROID_REPEAT_DELAY_RANGE" ) ) * std::max( WindowWidth, WindowHeight );
+                            android_repeat_delay_range) * std::max( WindowWidth, WindowHeight );
                         if( dist > max_dist ) {
                             float delta_ratio = ( dist / max_dist ) - 1.0f;
                             finger_down_x += delta_x * delta_ratio;

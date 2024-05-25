@@ -39,6 +39,7 @@ bool android_show_virtual_joystick;
 float android_deadzone_range;
 bool android_shortcut_move_front;
 bool android_virtual_joystick_follow;
+float android_repeat_delay_range;
 
 #endif
 
