@@ -2056,13 +2056,9 @@ std::string get_quick_shortcut_name( const std::string &category )
 
 float android_get_display_density()
 {
-    JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-    jobject activity = ( jobject )SDL_AndroidGetActivity();
-    jclass clazz( env->GetObjectClass( activity ) );
-    jmethodID method_id = env->GetMethodID( clazz, "getDisplayDensity", "()F" );
-    jfloat ans = env->CallFloatMethod( activity, method_id );
-    env->DeleteLocalRef( activity );
-    env->DeleteLocalRef( clazz );
+    
+    jfloat ans = jni_env->CallFloatMethod( j_activity, method_id_getDisplayDensity);
+    
     return ans;
 }
 
@@ -2678,13 +2674,7 @@ void handle_finger_input( uint32_t ticks )
 
 bool android_is_hardware_keyboard_available()
 {
-    JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-    jobject activity = ( jobject )SDL_AndroidGetActivity();
-    jclass clazz( env->GetObjectClass( activity ) );
-    jmethodID method_id = env->GetMethodID( clazz, "isHardwareKeyboardAvailable", "()Z" );
-    jboolean ans = env->CallBooleanMethod( activity, method_id );
-    env->DeleteLocalRef( activity );
-    env->DeleteLocalRef( clazz );
+    jboolean ans = jni_env->CallBooleanMethod( j_activity, method_id_isHardwareKeyboardAvailable);
     return ans;
 }
 
@@ -2692,13 +2682,7 @@ void android_vibrate()
 {
     int vibration_ms = get_option<int>( "ANDROID_VIBRATION" );
     if( vibration_ms > 0 && !android_is_hardware_keyboard_available() ) {
-        JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-        jobject activity = ( jobject )SDL_AndroidGetActivity();
-        jclass clazz( env->GetObjectClass( activity ) );
-        jmethodID method_id = env->GetMethodID( clazz, "vibrate", "(I)V" );
-        env->CallVoidMethod( activity, method_id, vibration_ms );
-        env->DeleteLocalRef( activity );
-        env->DeleteLocalRef( clazz );
+        jni_env->CallVoidMethod( j_activity, method_id_vibrate, vibration_ms );
     }
 }
 #endif
@@ -2764,13 +2748,8 @@ static void CheckMessages()
         needs_sdl_surface_visibility_refresh = false;
 
         // Call Java show_sdl_surface()
-        JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-        jobject activity = ( jobject )SDL_AndroidGetActivity();
-        jclass clazz( env->GetObjectClass( activity ) );
-        jmethodID method_id = env->GetMethodID( clazz, "show_sdl_surface", "()V" );
-        env->CallVoidMethod( activity, method_id );
-        env->DeleteLocalRef( activity );
-        env->DeleteLocalRef( clazz );
+        jni_env->CallVoidMethod( j_activity, method_id_show_sdl_surface);
+
     }
 
     // Copy the current input context
@@ -2987,15 +2966,11 @@ static void CheckMessages()
 
                 // Display an Android toast message
                 {
-                    JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-                    jobject activity = ( jobject )SDL_AndroidGetActivity();
-                    jclass clazz( env->GetObjectClass( activity ) );
-                    jstring toast_message = env->NewStringUTF( quick_shortcuts_enabled ? "Shortcuts visible" :
+                    
+                    jstring toast_message = jni_env->NewStringUTF( quick_shortcuts_enabled ? "Shortcuts visible" :
                                             "Shortcuts hidden" );
-                    jmethodID method_id = env->GetMethodID( clazz, "toast", "(Ljava/lang/String;)V" );
-                    env->CallVoidMethod( activity, method_id, toast_message );
-                    env->DeleteLocalRef( activity );
-                    env->DeleteLocalRef( clazz );
+                    jni_env->CallVoidMethod( j_activity, method_id_toast, toast_message );
+
                 }
             }
         }

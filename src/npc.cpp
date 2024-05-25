@@ -1977,17 +1977,11 @@ void npc::say( const std::string &line, const sounds::sound_t spriority ) const
 #if defined(__ANDROID__)
 
     if (get_option<bool>("启用消息推送") && has_effect(effect_push_words_spoken_by_the_npc)) {
-        JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
-        jobject activity = (jobject)SDL_AndroidGetActivity();
-        jclass clazz(env->GetObjectClass(activity));
-        jmethodID method_id = env->GetMethodID(clazz, "showToastMessage", "(Ljava/lang/String;)V");
-        jstring toast_message = env->NewStringUTF(sound.c_str());
-        if (method_id) {
-            env->CallVoidMethod(activity, method_id, toast_message);
-        }
-        env->DeleteLocalRef(activity);
-        env->DeleteLocalRef(clazz);
+        
+        jstring toast_message = jni_env->NewStringUTF(sound.c_str());
+        jni_env->CallVoidMethod(j_activity, method_id_showToastMessage, toast_message);
         env->DeleteLocalRef(toast_message);
+    
     }
 
 #endif
