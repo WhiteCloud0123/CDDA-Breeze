@@ -18,6 +18,7 @@
 #include "cata_utility.h"
 #include "options.h"
 #include "system_locale.h"
+#include "game.h"
 
 #ifndef _WIN32
 namespace
@@ -124,20 +125,16 @@ cata::optional<std::string> Language()
 
     return matchGameLanguage( lang_code );
 #elif defined(__ANDROID__)
-    JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-    jobject activity = ( jobject )SDL_AndroidGetActivity();
-    jclass clazz( env->GetObjectClass( activity ) );
-    jmethodID method_id = env->GetMethodID( clazz, "getSystemLang", "()Ljava/lang/String;" );
-    jstring ans = ( jstring )env->CallObjectMethod( activity, method_id, 0 );
-    const char *ans_c_str = env->GetStringUTFChars( ans, 0 );
+
+
+    jstring ans = ( jstring )jni_env->CallObjectMethod( j_activity, method_id_getSystemLang, 0 );
+    const char *ans_c_str = jni_env->GetStringUTFChars( ans, 0 );
     if( ans_c_str == nullptr ) {
         // fail-safe if retrieving Java string failed
         return cata::nullopt;
     }
     const std::string lang( ans_c_str );
-    env->ReleaseStringUTFChars( ans, ans_c_str );
-    env->DeleteLocalRef( activity );
-    env->DeleteLocalRef( clazz );
+    jni_env->ReleaseStringUTFChars( ans, ans_c_str );
     DebugLog( D_INFO, D_MAIN ) << "Read Android system language: '" << lang << '\'';
     if( string_starts_with( lang, "zh_Hans" ) ) {
         return "zh_CN";

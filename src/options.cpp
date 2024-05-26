@@ -1295,14 +1295,9 @@ std::vector<options_manager::id_and_option> options_manager::get_lang_options()
 #if defined(__ANDROID__)
 bool android_get_default_setting( const char *settings_name, bool default_value )
 {
-    JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-    jobject activity = ( jobject )SDL_AndroidGetActivity();
-    jclass clazz( env->GetObjectClass( activity ) );
-    jmethodID method_id = env->GetMethodID( clazz, "getDefaultSetting", "(Ljava/lang/String;Z)Z" );
-    jboolean ans = env->CallBooleanMethod( activity, method_id, env->NewStringUTF( settings_name ),
+    jboolean ans = jni_env->CallBooleanMethod( j_activity, method_id_getDefaultSetting, jni_env->NewStringUTF( settings_name ),
                                            default_value );
-    env->DeleteLocalRef( activity );
-    env->DeleteLocalRef( clazz );
+
     return ans;
 }
 #endif
@@ -1637,6 +1632,10 @@ void options_manager::add_options_interface()
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
     add("显示玩家的剩余行动点", "interface", to_translation("显示玩家的剩余行动点"), to_translation("当此选项的值为 是 时，会在游戏画面上显示玩家的剩余行动点。"), false);
     add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。"), false);
+    add("启用新版区域显示", "interface", to_translation("启用新版区域显示"),
+        to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
+        true
+    );
 
     add_empty_line();
 
@@ -2053,11 +2052,7 @@ void options_manager::add_options_graphics()
 
     add_empty_line();
 
-    add("启用新版区域显示", "graphics", to_translation("启用新版区域显示"),
-        to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
-        true
-    );
-
+ 
     add_empty_line();
 
     add( "ANIMATION_DELAY", "graphics", to_translation( "Animation delay" ),
@@ -3692,6 +3687,33 @@ static void update_options_cache()
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_animation =::get_option<bool>("ANIMATIONS");
+    terminal_x = ::get_option<int>("TERMINAL_X");
+    terminal_y = ::get_option<int>("TERMINAL_Y");
+    //安卓
+#if defined(__ANDROID__)
+
+    android_virtual_joystick_opacity = ::get_option<int>("ANDROID_VIRTUAL_JOYSTICK_OPACITY");
+    android_initial_delay = ::get_option<int>("ANDROID_INITIAL_DELAY");
+    android_shortcut_position = ::get_option<std::string>("ANDROID_SHORTCUT_POSITION");
+    android_shortcut_defaults =::get_option<std::string>("ANDROID_SHORTCUT_DEFAULTS");
+    android_hide_holds = ::get_option<bool>("ANDROID_HIDE_HOLDS");
+    android_show_virtual_joystick = ::get_option<bool>("ANDROID_SHOW_VIRTUAL_JOYSTICK");
+    android_deadzone_range = ::get_option<float>("ANDROID_DEADZONE_RANGE");
+    android_shortcut_move_front = ::get_option<bool>("ANDROID_SHORTCUT_MOVE_FRONT");
+    android_virtual_joystick_follow = ::get_option<bool>("ANDROID_VIRTUAL_JOYSTICK_FOLLOW");
+    android_repeat_delay_range = ::get_option<float>("ANDROID_REPEAT_DELAY_RANGE");
+    android_shortcut_remove_turns = ::get_option<int>("ANDROID_SHORTCUT_REMOVE_TURNS");
+    android_repeat_delay_min = ::get_option<int>("ANDROID_REPEAT_DELAY_MIN");
+    android_repeat_delay_max = ::get_option<int>("ANDROID_REPEAT_DELAY_MAX");
+    android_sensitivity_power = ::get_option<float>("ANDROID_SENSITIVITY_POWER");
+    android_shortcut_screen_percentage = ::get_option<int>("ANDROID_SHORTCUT_SCREEN_PERCENTAGE");
+    android_shortcut_opacity_bg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_BG");
+    android_shortcut_opacity_shadow = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_SHADOW");
+    android_shortcut_color = ::get_option<int>("ANDROID_SHORTCUT_COLOR");
+    android_shortcut_opacity_fg = ::get_option<int>("ANDROID_SHORTCUT_OPACITY_FG");
+
+#endif
+
 }
 
 bool options_manager::save() const

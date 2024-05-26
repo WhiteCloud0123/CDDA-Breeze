@@ -356,6 +356,26 @@ std::unique_ptr<game> g;
 //The one and only uistate instance
 uistatedata uistate;
 
+
+
+#if defined(__ANDROID__)
+
+JNIEnv* jni_env;
+jobject j_activity;
+jclass j_class;
+
+jmethodID method_id_setExtraButtonVisibility;
+jmethodID method_id_getDisplayDensity;
+jmethodID method_id_isHardwareKeyboardAvailable;
+jmethodID method_id_vibrate;
+jmethodID method_id_show_sdl_surface;
+jmethodID method_id_toast;
+jmethodID method_id_showToastMessage;
+jmethodID method_id_getDefaultSetting;
+jmethodID method_id_getSystemLang;
+
+#endif
+
 int dominator_of_zombies_exp_array[] = { 100, 300, 900, 2700, 8100 };
 
 int monster_exp_array[] = { 100, 300, 900, 2700, 8100 , 24300 , 72900 , 218700 , 656100 , 1968300 };
