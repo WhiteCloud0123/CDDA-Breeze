@@ -619,28 +619,6 @@ int main( int argc, const char *argv[] )
 
     // Start the standard output logging redirector
     start_logger( "cdda" );
-jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
-    j_activity = (jobject)SDL_AndroidGetActivity();
-    jclass clazz(jni_env->GetObjectClass(j_activity));
-    j_class = clazz;
-    method_id_setExtraButtonVisibility = jni_env->GetMethodID(j_class, "setExtraButtonVisibility", "(Z)V");
-    method_id_getDisplayDensity = jni_env->GetMethodID(j_class, "getDisplayDensity", "()F");
-    method_id_isHardwareKeyboardAvailable = jni_env->GetMethodID(j_class, "isHardwareKeyboardAvailable", "()Z");
-    method_id_vibrate = jni_env->GetMethodID(j_class, "vibrate", "(I)V");
-    method_id_show_sdl_surface = jni_env->GetMethodID(j_class, "show_sdl_surface", "()V");
-    method_id_toast = jni_env->GetMethodID(j_class,"toast","(Ljava/lang/String;)V");
-    method_id_showToastMessage = jni_env->GetMethodID(j_class, "showToastMessage", "(Ljava/lang/String;)V");
-    method_id_getDefaultSetting = jni_env->GetMethodID(j_class, "getDefaultSetting", "(Ljava/lang/String;Z)Z");
-    method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
-
-    if (get_option<bool>("启用扩展按键")) {
-
-            jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, true);
-
-    }
-
-
-    jni_env->DeleteLocalRef(clazz);
 
     // On Android first launch, we copy all data files from the APK into the app's writeable folder so std::io stuff works.
     // Use the external storage so it's publicly modifiable data (so users can mess with installed data, save games etc.)
@@ -732,6 +710,37 @@ jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
                                << static_cast<int>( linked.patch );
 
 
+#if defined(__ANDROID__)
+
+    jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+
+    jobject temp_activity = (jobject)SDL_AndroidGetActivity();
+    j_activity = jni_env->NewGlobalRef(temp_activity);
+
+    jclass temp_class(jni_env->GetObjectClass(j_activity));
+    j_class = (jclass)jni_env->NewGlobalRef(temp_class);
+
+    method_id_setExtraButtonVisibility = jni_env->GetMethodID(j_class, "setExtraButtonVisibility", "(Z)V");
+    method_id_getDisplayDensity = jni_env->GetMethodID(j_class, "getDisplayDensity", "()F");
+    method_id_isHardwareKeyboardAvailable = jni_env->GetMethodID(j_class, "isHardwareKeyboardAvailable", "()Z");
+    method_id_vibrate = jni_env->GetMethodID(j_class, "vibrate", "(I)V");
+    method_id_show_sdl_surface = jni_env->GetMethodID(j_class, "show_sdl_surface", "()V");
+    method_id_toast = jni_env->GetMethodID(j_class,"toast","(Ljava/lang/String;)V");
+    method_id_showToastMessage = jni_env->GetMethodID(j_class, "showToastMessage", "(Ljava/lang/String;)V");
+    method_id_getDefaultSetting = jni_env->GetMethodID(j_class, "getDefaultSetting", "(Ljava/lang/String;Z)Z");
+    method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
+
+    jni_env->DeleteLocalRef(temp_activity);
+    jni_env->DeleteLocalRef(temp_class);
+
+
+#endif
+
+
+
+
+
+
     // in test mode don't initialize curses to avoid escape sequences being inserted into output stream
     if( !test_mode ) {
         try {
@@ -817,6 +826,15 @@ jni_env = (JNIEnv*)SDL_AndroidGetJNIEnv();
 
     get_help().load();
 
+
+#if defined(__ANDROID__)
+
+    if (get_option<bool>("启用扩展按键")) {
+
+        jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, true);
+
+    }
+#endif
 
     while( true ) {
         main_menu menu;
