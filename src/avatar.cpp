@@ -898,14 +898,12 @@ nc_color avatar::basic_symbol_color() const
 
 int avatar::print_info( const catacurses::window &w, int vStart, int, int column ) const
 {   
-   
-    fold_and_print(w, point(column, vStart + 1), getmaxx(w) - column - 1, c_white,
-            _("剩余行动点:   %s"),
-            get_avatar().moves);
     
     return vStart + fold_and_print( w, point( column, vStart ), getmaxx( w ) - column - 1, c_white,
                                     _( "You (%s)" ),
-                                    get_name() ) - 1;
+                                    get_name() ) + fold_and_print(w, point(column, vStart + 1), getmaxx(w) - column - 1, c_white,
+                                        _("剩余行动点:   %s"),
+                                        get_avatar().moves) - 1;
 }
 
 mfaction_id avatar::get_monster_faction() const
