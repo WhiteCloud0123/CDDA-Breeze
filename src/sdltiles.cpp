@@ -620,7 +620,7 @@ void refresh_display()
     }
 
     if ( character_name_breeze != "") {
-        if (get_option<bool>("显示独立角色的图片") && is_in_trading ==false) {
+        if (get_option<bool>("显示特殊NPC的图片") && is_in_trading ==false) {
             
             draw_character_picture();
 

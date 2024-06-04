@@ -1625,8 +1625,8 @@ void options_manager::add_options_interface()
 
     add_empty_line();
 
-    add("显示独立角色的图片", "interface", to_translation("显示独立角色的图片"),
-        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的图片。"),
+    add("显示特殊NPC的图片", "interface", to_translation("显示特殊NPC的图片"),
+        to_translation("开启后，在与特殊NPC进行交谈时，将显示该角色的图片。"),
         true
     );
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
