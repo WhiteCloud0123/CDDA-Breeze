@@ -2706,7 +2706,7 @@ void options_manager::add_options_android()
        );
 
     add("强制全屏", "android", to_translation("强制全屏"),
-        to_translation("强制全屏。"),
+        to_translation("强制全屏。修改后需要重新启动。"),
         true
     );
 
