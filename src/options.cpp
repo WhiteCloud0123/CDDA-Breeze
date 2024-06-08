@@ -2013,7 +2013,7 @@ void options_manager::add_options_graphics()
 
 
     add("启用粒子系统", "graphics", to_translation("启用粒子系统"),
-        to_translation("目前是测试阶段。开启后，将在游戏的一些地方应用粒子系统,同时提高游戏画面的刷新频率。"),
+        to_translation("目前是测试阶段。开启后，将在游戏的一些地方使用粒子系统。"),
         false
     );
 
