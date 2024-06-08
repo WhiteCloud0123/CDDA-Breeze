@@ -373,7 +373,7 @@ jmethodID method_id_toast;
 jmethodID method_id_showToastMessage;
 jmethodID method_id_getDefaultSetting;
 jmethodID method_id_getSystemLang;
-jmethodID method_id_set_force_screen;
+jmethodID method_id_set_force_full_screen;
 
 #endif
 

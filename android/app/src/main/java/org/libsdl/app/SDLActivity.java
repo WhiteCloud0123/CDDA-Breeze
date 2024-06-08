@@ -120,7 +120,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         });
     }
 
-    public void set_force_screen(boolean value) {
+    public void set_force_full_screen(boolean value) {
         forceFullScreen = value;
     }
 

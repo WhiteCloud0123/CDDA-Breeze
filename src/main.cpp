@@ -730,7 +730,7 @@ int main( int argc, const char *argv[] )
     method_id_showToastMessage = jni_env->GetMethodID(j_class, "showToastMessage", "(Ljava/lang/String;)V");
     method_id_getDefaultSetting = jni_env->GetMethodID(j_class, "getDefaultSetting", "(Ljava/lang/String;Z)Z");
     method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
-    method_id_set_force_screen = jni_env->GetMethodID(j_class, "set_force_screen", "(Z)V");
+    method_id_set_force_full_screen = jni_env->GetMethodID(j_class, "set_force_full_screen", "(Z)V");
     jni_env->DeleteLocalRef(temp_activity);
     jni_env->DeleteLocalRef(temp_class);
 

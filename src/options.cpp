@@ -3730,7 +3730,7 @@ bool options_manager::save() const
     update_music_volume();
 
 #if defined(__ANDROID__)
-    jni_env->CallVoidMethod(j_activity, method_id_set_force_screen, ::get_option<bool>("强制全屏"));
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
 #endif
 
 
@@ -3751,7 +3751,7 @@ void options_manager::load()
     update_options_cache();
 
 #if defined(__ANDROID__)
-    jni_env->CallVoidMethod(j_activity, method_id_set_force_screen, ::get_option<bool>("强制全屏"));
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
 #endif
 
 #if defined(SDL_SOUND)
