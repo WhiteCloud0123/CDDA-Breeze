@@ -38,7 +38,7 @@ public class SplashScreen extends Activity {
     private AlertDialog accessibilityServicesAlert;
 
     public CharSequence[] mSettingsNames;
-    public boolean[] mSettingsValues = { false, true, true, false };
+    public boolean[] mSettingsValues = { false, true, false };
 
     private String getVersionName() {
         try {
@@ -259,7 +259,6 @@ public class SplashScreen extends Activity {
 
             mSettingsNames = new CharSequence[] {
                 getString(R.string.softwareRendering),
-                getString(R.string.forceFullscreen),
                 getString(R.string.trapBackButton),
                 getString(R.string.nativeAndroidUI)
             };
@@ -275,9 +274,8 @@ public class SplashScreen extends Activity {
                 .setPositiveButton(getString(R.string.startGame), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("Software rendering", SplashScreen.this.mSettingsValues[0]).commit();
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("Force fullscreen", SplashScreen.this.mSettingsValues[1]).commit();
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("Trap Back button", SplashScreen.this.mSettingsValues[2]).commit();
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("Native Android UI", SplashScreen.this.mSettingsValues[3]).commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("Trap Back button", SplashScreen.this.mSettingsValues[1]).commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("Native Android UI", SplashScreen.this.mSettingsValues[2]).commit();
                         SplashScreen.this.startGameActivity(false);
                         return;
                     }

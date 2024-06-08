@@ -96,6 +96,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     Button tabButton;
 
+    private static boolean forceFullScreen = true;
+
     public void setExtraButtonVisibility(boolean visible) {
 
         this.runOnUiThread(new Runnable() {
@@ -116,6 +118,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 Toaster.show(string);
             }
         });
+    }
+
+    public void set_force_full_screen(boolean value) {
+        forceFullScreen = value;
     }
 
     protected static SDLGenericMotionListener_API12 getMotionListener() {
@@ -679,7 +685,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                             int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_VISIBLE;
                             window.getDecorView().setSystemUiVisibility(flags);
                             Context appContext = context.getApplicationContext();
-                            boolean forceFullScreen = PreferenceManager.getDefaultSharedPreferences(appContext).getBoolean("Force fullscreen", false);
                             window.addFlags(forceFullScreen ? WindowManager.LayoutParams.FLAG_FULLSCREEN : WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                             window.clearFlags(forceFullScreen ? WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN : WindowManager.LayoutParams.FLAG_FULLSCREEN);
                             SDLActivity.mFullscreenModeActive = forceFullScreen;

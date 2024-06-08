@@ -1,4 +1,4 @@
-#include "ParticleSystem.h"
+#include "particle_system.h"
 #include <algorithm>
 #include <assert.h>
 #include <string>
@@ -89,6 +89,16 @@ void ParticleSystem::resetTotalParticles(int numberOfParticles)
     }
 }
 
+void ParticleSystem::init_weather_content() {
+    w_t_i_str = "null";
+    support_weather_id = { "light_drizzle","drizzle" ,"rain","snowing" };
+}
+
+bool ParticleSystem::is_support_weather(const std::string& id) {
+    
+    return support_weather_id.find(id) != support_weather_id.end();
+
+}
 
 void ParticleSystem::addParticles(int count)
 {
@@ -659,7 +669,7 @@ void ParticleSystem::resumeEmissions()
     _paused = false;
 }
 
-void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture, SDL_Renderer *renderer) {
+void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Renderer *renderer) {
 
     
     if (w_t_i_str == id_str) {
@@ -684,11 +694,9 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setEndSpin(90);
         setStartSpinVar(90);
 
-
-
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
-        SDL_Texture *texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
+        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
         setTexture(texture);
 
         initWithTotalParticles(700);
@@ -765,10 +773,7 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setStartSpinVar(90);
         setEndSpin(90);
         setStartSpinVar(90);
-
-
-
-
+        
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
         SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
@@ -848,8 +853,6 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setEndSpin(90);
         setStartSpinVar(90);
 
-
-
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
         SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
@@ -917,6 +920,87 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
     
     
     }
+    else if (w_t_i_str == "light_drizzle") {
+
+        setRenderer(renderer);                   // set the renderer
+        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
+#if defined(__ANDROID__)
+
+        setPosition(WindowWidth * 0.38, 0);
+
+#endif
+        setStartSpin(0);
+        setStartSpinVar(90);
+        setEndSpin(90);
+        setStartSpinVar(90);
+
+        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+        std::string gfx_p_t = gfx_string + "/particle/01.png";
+        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
+        setTexture(texture);
+
+        initWithTotalParticles(800);
+
+        // duration
+        _duration = DURATION_INFINITY;
+
+        setEmitterMode(Mode::GRAVITY);
+
+        // Gravity Mode: gravity
+        setGravity(Vec2(10, 10));
+
+        // Gravity Mode: radial
+        setRadialAccel(0);
+        setRadialAccelVar(1);
+
+        // Gravity Mode: tangential
+        setTangentialAccel(0);
+        setTangentialAccelVar(1);
+
+        // Gravity Mode: speed of particles
+        setSpeed(-130);
+        setSpeedVar(30);
+
+        // angle
+        _angle = -90;
+        _angleVar = 5;
+
+        // life of particles
+        _life = 4.5f;
+        _lifeVar = 0;
+
+        // size, in pixels
+        _startSize = 4.0f;
+        _startSizeVar = 2.0f;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
+
+        // emits per second
+        _emissionRate = 20;
+
+        // color of particles
+        _startColor.r = 0.7f;
+        _startColor.g = 0.8f;
+        _startColor.b = 1.0f;
+        _startColor.a = 1.0f;
+        _startColorVar.r = 0.0f;
+        _startColorVar.g = 0.0f;
+        _startColorVar.b = 0.0f;
+        _startColorVar.a = 0.0f;
+        _endColor.r = 0.7f;
+        _endColor.g = 0.8f;
+        _endColor.b = 1.0f;
+        _endColor.a = 0.5f;
+        _endColorVar.r = 0.0f;
+        _endColorVar.g = 0.0f;
+        _endColorVar.b = 0.0f;
+        _endColorVar.a = 0.0f;
+
+        _posVar = { 1.0f * x_, 0.0f };
+
+
+
+
+        }
 
 
     else {
@@ -924,6 +1008,17 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setTexture(nullptr);
         
     }
+
+
+
+
+}
+
+
+void ParticleSystem::set_style(const std::string& id_str, SDL_Texture* texture, SDL_Renderer* renderer) {
+
+
+
 
 
 

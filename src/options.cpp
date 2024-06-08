@@ -1625,8 +1625,8 @@ void options_manager::add_options_interface()
 
     add_empty_line();
 
-    add("显示独立角色的图片", "interface", to_translation("显示独立角色的图片"),
-        to_translation("开启后，在与独立角色进行交谈时，将显示该角色的图片。"),
+    add("显示特殊NPC的图片", "interface", to_translation("显示特殊NPC的图片"),
+        to_translation("开启后，在与特殊NPC进行交谈时，将显示该角色的图片。"),
         true
     );
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
@@ -2012,8 +2012,8 @@ void options_manager::add_options_graphics()
     };
 
 
-    add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
-        to_translation("目前是测试阶段。开启后，将在游戏的一些地方应用粒子特效,同时提高游戏画面的刷新频率。目前已在 细雨、雨、雪 这三种天气上应用。"),
+    add("启用粒子系统", "graphics", to_translation("启用粒子系统"),
+        to_translation("目前是测试阶段。开启后，将在游戏的一些地方使用粒子系统。"),
         false
     );
 
@@ -2704,6 +2704,11 @@ void options_manager::add_options_android()
          // take default setting from pre-game settings screen - important as there are issues with Back button on Android 9 with specific devices
          android_get_default_setting( "Trap Back button", true )
        );
+
+    add("强制全屏", "android", to_translation("强制全屏"),
+        to_translation("强制全屏。修改后需要重新启动。"),
+        true
+    );
 
     add( "ANDROID_NATIVE_UI", "android", to_translation( "Use native Android UI menus" ),
          to_translation( "If true, native Android dialogs are used for some in-game menus, "
@@ -3683,7 +3688,7 @@ static void update_options_cache()
     fov_3d_z_range = ::get_option<int>( "FOV_3D_Z_RANGE" );
     keycode_mode = ::get_option<std::string>( "SDL_KEYBOARD_MODE" ) == "keycode";
     use_pinyin_search = ::get_option<bool>("USE_PINYIN_SEARCH");
-    use_particle_system = ::get_option<bool>("启用粒子特效");
+    use_particle_system = ::get_option<bool>("启用粒子系统");
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_animation =::get_option<bool>("ANIMATIONS");
@@ -3724,6 +3729,11 @@ bool options_manager::save() const
 
     update_music_volume();
 
+#if defined(__ANDROID__)
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
+#endif
+
+
     return write_to_file( savefile, [&]( std::ostream & fout ) {
         JsonOut jout( fout, true );
         serialize( jout );
@@ -3739,6 +3749,10 @@ void options_manager::load()
 
     update_global_locale();
     update_options_cache();
+
+#if defined(__ANDROID__)
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
+#endif
 
 #if defined(SDL_SOUND)
     sounds::sound_enabled = ::get_option<bool>( "SOUND_ENABLED" );

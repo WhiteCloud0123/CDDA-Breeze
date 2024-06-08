@@ -73,7 +73,7 @@
 #include "string_formatter.h"
 #include "ui_manager.h"
 #include "wcwidth.h"
-#include "ParticleSystem.h"
+#include "particle_system.h"
 #include "path_info.h"
 #include "messages.h"
 
@@ -125,7 +125,7 @@ static Font_Ptr font;
 static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
-ParticleSystem particle_system;
+ParticleSystem particle_system_weather;
 SDL_Texture* character_texture  =  nullptr;
 
 
@@ -186,7 +186,7 @@ static void InitSDL()
 {
     int init_flags = SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER;
     int ret;
-
+    
 #if defined(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING)
     SDL_SetHint( SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1" );
 #endif
@@ -572,7 +572,9 @@ void draw_character_picture() {
 
 void refresh_display()
 {   
-    
+
+    needupdate = false;
+
     lastupdate = SDL_GetTicks();
 
     if( test_mode ) {
@@ -603,24 +605,9 @@ void refresh_display()
     draw_virtual_joystick();
 #endif
     
-    
-    if (use_particle_system && g->is_core_data_loaded()) {
-        
-            particle_system.set_style(get_weather().weather_id.str(),display_buffer.get(),renderer.get());
-            
-            particle_system.draw();
-
-            
-           
-    }
-    else {
-    
-        needupdate = false;
-    
-    }
 
     if ( character_name_breeze != "") {
-        if (get_option<bool>("显示独立角色的图片") && is_in_trading ==false) {
+        if (get_option<bool>("显示特殊NPC的图片") && is_in_trading ==false) {
             
             draw_character_picture();
 
@@ -2776,7 +2763,7 @@ static void CheckMessages()
                                  touch_input_context.get_category() )];
 
     // Don't do this logic if we already need an update, otherwise we're likely to overload the game with too much input on hold repeat events
-    if( !needupdate || use_particle_system) {
+    if( !needupdate ) {
 
         // Check action weightings and auto-add any immediate-surrounding actions as quick shortcuts
         // This code is based heavily off action.cpp handle_action_menu() which puts common shortcuts at the top

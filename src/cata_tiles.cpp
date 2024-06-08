@@ -1779,7 +1779,14 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             void_line();
         }
         if( do_draw_weather ) {
-            draw_weather_frame();
+            const std::string& id = get_weather().weather_id.str();
+            if (use_particle_system && particle_system_weather.is_support_weather(id)) {
+                particle_system_weather.set_style_for_weather(id, renderer.get());
+                particle_system_weather.draw();
+            }
+            else {
+                draw_weather_frame();
+            }
             void_weather();
         }
         if( do_draw_sct ) {
