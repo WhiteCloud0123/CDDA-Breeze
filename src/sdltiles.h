@@ -17,6 +17,7 @@ class window;
 #include "coordinates.h"
 #include "sdl_wrappers.h"
 #include "string_id.h"
+#include "particle_system.h"
 
 #if defined(__APPLE__)
 // For TARGET_OS_IPHONE macro to test if is on iOS
@@ -44,6 +45,7 @@ extern int WindowHeight;
 extern int fontheight;
 extern int fontwidth;
 
+extern ParticleSystem particle_system_weather;
 extern std::string character_name_breeze;
 extern SDL_Texture* character_texture;
 extern bool is_in_trading;

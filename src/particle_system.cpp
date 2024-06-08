@@ -1,4 +1,4 @@
-#include "ParticleSystem.h"
+#include "particle_system.h"
 #include <algorithm>
 #include <assert.h>
 #include <string>
@@ -89,6 +89,16 @@ void ParticleSystem::resetTotalParticles(int numberOfParticles)
     }
 }
 
+void ParticleSystem::init_weather_content() {
+    w_t_i_str = "null";
+    support_weather_id = { "drizzle" ,"rain","snowing" };
+}
+
+bool ParticleSystem::is_support_weather(const std::string& id) {
+    
+    return support_weather_id.find(id) != support_weather_id.end();
+
+}
 
 void ParticleSystem::addParticles(int count)
 {
@@ -659,7 +669,7 @@ void ParticleSystem::resumeEmissions()
     _paused = false;
 }
 
-void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture, SDL_Renderer *renderer) {
+void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Renderer *renderer) {
 
     
     if (w_t_i_str == id_str) {
@@ -684,11 +694,9 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setEndSpin(90);
         setStartSpinVar(90);
 
-
-
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
-        SDL_Texture *texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
+        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
         setTexture(texture);
 
         initWithTotalParticles(700);
@@ -765,10 +773,7 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setStartSpinVar(90);
         setEndSpin(90);
         setStartSpinVar(90);
-
-
-
-
+        
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
         SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
@@ -848,8 +853,6 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setEndSpin(90);
         setStartSpinVar(90);
 
-
-
         std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
         std::string gfx_p_t = gfx_string + "/particle/01.png";
         SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
@@ -924,6 +927,17 @@ void ParticleSystem::set_style(const std::string &id_str , SDL_Texture * texture
         setTexture(nullptr);
         
     }
+
+
+
+
+}
+
+
+void ParticleSystem::set_style(const std::string& id_str, SDL_Texture* texture, SDL_Renderer* renderer) {
+
+
+
 
 
 
