@@ -2705,6 +2705,11 @@ void options_manager::add_options_android()
          android_get_default_setting( "Trap Back button", true )
        );
 
+    add("强制全屏", "android", to_translation("强制全屏"),
+        to_translation("强制全屏。修改后需要重新启动。"),
+        true
+    );
+
     add( "ANDROID_NATIVE_UI", "android", to_translation( "Use native Android UI menus" ),
          to_translation( "If true, native Android dialogs are used for some in-game menus, "
                          "such as popup messages and yes/no dialogs." ),
@@ -3724,6 +3729,11 @@ bool options_manager::save() const
 
     update_music_volume();
 
+#if defined(__ANDROID__)
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_screen, ::get_option<bool>("强制全屏"));
+#endif
+
+
     return write_to_file( savefile, [&]( std::ostream & fout ) {
         JsonOut jout( fout, true );
         serialize( jout );
@@ -3739,6 +3749,10 @@ void options_manager::load()
 
     update_global_locale();
     update_options_cache();
+
+#if defined(__ANDROID__)
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_screen, ::get_option<bool>("强制全屏"));
+#endif
 
 #if defined(SDL_SOUND)
     sounds::sound_enabled = ::get_option<bool>( "SOUND_ENABLED" );
