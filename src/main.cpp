@@ -50,6 +50,7 @@
 #include "ordered_static_globals.h"
 #include "path_info.h"
 #include "rng.h"
+#include "sdltiles.h"
 #include "system_locale.h"
 #include "translations.h"
 #include "type_id.h"
@@ -736,7 +737,7 @@ int main( int argc, const char *argv[] )
 
 #endif
 
-
+    particle_system_weather.init_weather_content();
 
 
 

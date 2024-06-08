@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include"sdl_wrappers.h"
+#include<set>
 
 struct Pointf
 {
@@ -124,6 +125,14 @@ emitter.startSpin = 0;
 
 class ParticleSystem
 {
+
+
+private :
+
+    std::string w_t_i_str;
+    // 粒子系统支持的天气的id
+    std::unordered_set<std::string>support_weather_id;
+
 public:
     enum class Mode
     {
@@ -145,9 +154,9 @@ public:
 
 public:
 
-    std::string w_t_i_str = "null";
+    void init_weather_content();
 
-
+    bool is_support_weather(const std::string& id);
 
     void addParticles(int count);
 
@@ -607,7 +616,10 @@ public:
      void pauseEmissions();
      void resumeEmissions();
 
-     void set_style(const std::string &id_str,SDL_Texture * texture,SDL_Renderer *renderer );
+     void set_style_for_weather(const std::string &id_str,SDL_Renderer *renderer );
+
+     void set_style(const std::string& id_str, SDL_Texture* texture,SDL_Renderer* renderer);
+
 
 protected:
     //virtual void updateBlendFunc();

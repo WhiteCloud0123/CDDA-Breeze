@@ -2012,8 +2012,8 @@ void options_manager::add_options_graphics()
     };
 
 
-    add("启用粒子特效", "graphics", to_translation("启用粒子特效"),
-        to_translation("目前是测试阶段。开启后，将在游戏的一些地方应用粒子特效,同时提高游戏画面的刷新频率。目前已在 细雨、雨、雪 这三种天气上应用。"),
+    add("启用粒子系统", "graphics", to_translation("启用粒子系统"),
+        to_translation("目前是测试阶段。开启后，将在游戏的一些地方使用粒子系统。"),
         false
     );
 
@@ -3683,7 +3683,7 @@ static void update_options_cache()
     fov_3d_z_range = ::get_option<int>( "FOV_3D_Z_RANGE" );
     keycode_mode = ::get_option<std::string>( "SDL_KEYBOARD_MODE" ) == "keycode";
     use_pinyin_search = ::get_option<bool>("USE_PINYIN_SEARCH");
-    use_particle_system = ::get_option<bool>("启用粒子特效");
+    use_particle_system = ::get_option<bool>("启用粒子系统");
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_animation =::get_option<bool>("ANIMATIONS");
