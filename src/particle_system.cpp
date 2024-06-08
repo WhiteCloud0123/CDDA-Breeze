@@ -91,7 +91,7 @@ void ParticleSystem::resetTotalParticles(int numberOfParticles)
 
 void ParticleSystem::init_weather_content() {
     w_t_i_str = "null";
-    support_weather_id = { "drizzle" ,"rain","snowing" };
+    support_weather_id = { "light_drizzle","drizzle" ,"rain","snowing" };
 }
 
 bool ParticleSystem::is_support_weather(const std::string& id) {
