@@ -11,7 +11,7 @@
 #include <vector>
 #include <string>
 #include"sdl_wrappers.h"
-#include<set>
+#include<unordered_set>
 
 struct Pointf
 {

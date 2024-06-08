@@ -59,6 +59,7 @@ extern jmethodID method_id_toast;
 extern jmethodID method_id_showToastMessage;
 extern jmethodID method_id_getDefaultSetting;
 extern jmethodID method_id_getSystemLang;
+extern jmethodID method_id_set_force_screen;
 
 
 #endif
