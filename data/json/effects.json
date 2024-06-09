@@ -3753,5 +3753,13 @@
     "type": "effect_type",
     "name": [ "推送此npc说的话" ],
     "desc": [ "推送此npc说的话。" ]
+  },
+  {
+    "id": "npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui",
+    "type": "effect_type",
+    "name": [ "npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui" ],
+    "desc": [
+      "对于怪物交互菜单中的“交换物品”，此机制通过创建临时npc通过交易界面来模拟与宠物进行交换物品，宠物的临时副本成为此npc的坐骑。交易时，将使用npc的坐骑的最大承重。"
+    ]
   }
 ]

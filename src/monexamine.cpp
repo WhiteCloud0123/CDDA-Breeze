@@ -28,6 +28,7 @@
 #include "monster.h"
 #include "mtype.h"
 #include "npc.h"
+#include "npctrade.h"
 #include "output.h"
 #include "player_activity.h"
 #include "point.h"
@@ -189,20 +190,13 @@ void attach_bag_to( monster &z )
     }
 
     item &it = *loc;
-    if( !it.is_container_empty() ) {
-        for ( item *i : it.all_items_top() ) {
-            item &m = *i;
-            z.add_item( m );
-            it.remove_item( m );
-        }
-    }
     z.storage_item = cata::make_value<item>(it);
     add_msg( _( "You mount the %1$s on your %2$s." ), it.display_name(), pet_name );
     player_character.i_rem( &it );
     z.add_effect( effect_has_bag, 1_turns, true );
     // Update encumbrance in case we were wearing it
     player_character.flag_encumbrance();
-    player_character.moves -= 200;
+    player_character.moves -= 100;
 }
 
 void dump_items( monster &z )
@@ -223,6 +217,10 @@ void dump_items( monster &z )
 
 void remove_bag_from( monster &z )
 {
+    if(!query_yn("确定要移除 %1s 的 %2s 吗?",z.get_name(),z.storage_item->tname())) {
+        return;
+    }
+
     std::string pet_name = z.get_name();
     if( z.storage_item ) {
         if( !z.inv.empty() ) {
@@ -999,6 +997,7 @@ bool monexamine::pet_menu( monster &z )
         命令其在这里等待,
         命令其不要在这里继续等待,
         从背包里取出物品,
+        交换物品,
         治疗,
         查看状态,
         查看状态_02,
@@ -1057,21 +1056,18 @@ bool monexamine::pet_menu( monster &z )
     
     }
 
-
-
-
-
-
-    if( z.has_effect( effect_has_bag ) ) {
-        amenu.addentry( give_items, true, 'g', _( "Place items into bag" ) );
-        if( !z.inv.empty() ) {
-            amenu.addentry( 从背包里取出物品, true, '2', _("从背包里取出物品"));
-            amenu.addentry( drop_all, true, 'd', _( "Remove all items from bag" ) );
-        }
-        amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
-    } else if( !z.has_flag( MF_RIDEABLE_MECH ) ) {
-        amenu.addentry( attach_bag, true, 'b', _( "Attach bag to %s" ), pet_name );
+    if (!z.has_flag(MF_RIDEABLE_MECH) && !z.has_effect(effect_has_bag)) {
+        amenu.addentry(attach_bag, true, 'b', _("Attach bag to %s"), pet_name);
     }
+
+    if (z.has_effect(effect_has_bag)) {
+        amenu.addentry(交换物品, true, 'E', _("交换物品"));
+        amenu.addentry(remove_bag, true, 'b', _("Remove bag from %s"), pet_name);
+    }
+    else {
+        amenu.addentry(交换物品, false, 'E', _("交换物品"));
+    }
+
     if( z.has_effect( effect_harnessed ) ) {
         amenu.addentry( mon_harness_remove, true, 'H', _( "Remove vehicle harness from %s" ), pet_name );
     }
@@ -1356,6 +1352,32 @@ bool monexamine::pet_menu( monster &z )
 
             dispatch_pet_menu(z);
 
+            break;
+        case 交换物品: {
+        
+            npc fake_npc;
+            fake_npc.set_fake(true);
+            fake_npc.set_body();
+            fake_npc.set_fac(faction_id("your_followers"));
+            fake_npc.name = z.get_name();
+            fake_npc.add_effect(efftype_id("npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui"), 0_turns, true);
+            monster temp_m = z;
+            fake_npc.mounted_creature = make_shared_fast<monster>(temp_m);
+
+            fake_npc.wear_item(*z.storage_item.get());
+            npc_trading::trade(fake_npc,0,"交换");
+            
+            z.storage_item.reset();
+            const std::list<item>& list_item_ref = fake_npc.get_visible_worn_items();
+            if (list_item_ref.empty()) {
+                z.remove_effect(effect_has_bag);
+            }
+            else {
+                item i = list_item_ref.front();
+                z.storage_item = cata::make_value<item>(i);
+            }
+       
+        }
             break;
         default:
             break;
