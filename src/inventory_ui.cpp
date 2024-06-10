@@ -3634,7 +3634,7 @@ inventory_selector::stats inventory_drop_selector::get_raw_stats() const
 {
     return get_weight_and_volume_stats(
                u.weight_carried_with_tweaks( to_use ),
-               u.weight_capacity(),
+               u.has_effect(efftype_id("npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui")) ? u.mounted_creature->weight_capacity() : u.weight_capacity(),
                u.volume_carried_with_tweaks( to_use ),
                u.volume_capacity_with_tweaks( to_use ),
                u.max_single_item_length(), u.max_single_item_volume(),

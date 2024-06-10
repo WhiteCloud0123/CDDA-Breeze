@@ -35,6 +35,7 @@ static const trait_id trait_ANTLERS( "ANTLERS" );
 static const trait_id trait_HORNS_POINTED( "HORNS_POINTED" );
 static const trait_id trait_SQUEAMISH( "SQUEAMISH" );
 static const trait_id trait_WOOLALLERGY( "WOOLALLERGY" );
+static const efftype_id effect_npc_wear_item_success_no_message("npc_wear_item_success_no_message");
 
 nc_color item_penalties::color_for_stacking_badness() const
 {
@@ -281,10 +282,15 @@ cata::optional<std::list<item>::iterator> outfit::wear_item( Character &guy, con
 
     if( interactive ) {
         if( !quiet ) {
+            std::string temp_npc_message = "";
+            if (!guy.has_effect(effect_npc_wear_item_success_no_message)) {
+                temp_npc_message = _("<npcname> puts on their %s.");
+            }
             guy.add_msg_player_or_npc(
-                _( "You put on your %s." ),
-                _( "<npcname> puts on their %s." ),
-                to_wear.tname() );
+                _("You put on your %s."),
+               temp_npc_message,
+                to_wear.tname());
+            
         }
         guy.moves -= guy.item_wear_cost( to_wear );
 
@@ -308,7 +314,7 @@ cata::optional<std::list<item>::iterator> outfit::wear_item( Character &guy, con
                                    _( "This %s is too small to wear comfortably!  Maybe it could be refitted." ),
                                    to_wear.tname() );
         }
-    } else if( guy.is_npc() && get_player_view().sees( guy ) && !quiet ) {
+    } else if( guy.is_npc() && get_player_view().sees( guy ) && !quiet  && !guy.has_effect(effect_npc_wear_item_success_no_message)) {
         guy.add_msg_if_npc( _( "<npcname> puts on their %s." ), to_wear.tname() );
     }
 

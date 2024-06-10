@@ -28,6 +28,7 @@
 #include "monster.h"
 #include "mtype.h"
 #include "npc.h"
+#include "npctrade.h"
 #include "output.h"
 #include "player_activity.h"
 #include "point.h"
@@ -39,6 +40,7 @@
 #include "ui.h"
 #include "units.h"
 #include "value_ptr.h"
+#include "overmapbuffer.h"
 
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_harnessed( "harnessed" );
@@ -70,6 +72,9 @@ static const skill_id skill_survival( "survival" );
 
 static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
 static const species_id species_ZOMBIE( "ZOMBIE" );
+static const efftype_id effect_npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui("npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui");
+static const efftype_id effect_hallucination_npc_die_no_message("hallucination_npc_die_no_message");
+static const efftype_id effect_npc_wear_item_success_no_message("npc_wear_item_success_no_message");
 
 namespace
 {
@@ -189,20 +194,13 @@ void attach_bag_to( monster &z )
     }
 
     item &it = *loc;
-    if( !it.is_container_empty() ) {
-        for ( item *i : it.all_items_top() ) {
-            item &m = *i;
-            z.add_item( m );
-            it.remove_item( m );
-        }
-    }
     z.storage_item = cata::make_value<item>(it);
     add_msg( _( "You mount the %1$s on your %2$s." ), it.display_name(), pet_name );
     player_character.i_rem( &it );
     z.add_effect( effect_has_bag, 1_turns, true );
     // Update encumbrance in case we were wearing it
     player_character.flag_encumbrance();
-    player_character.moves -= 200;
+    player_character.moves -= 100;
 }
 
 void dump_items( monster &z )
@@ -220,125 +218,6 @@ void dump_items( monster &z )
     add_msg( _( "You dump the contents of the %s's bag on the ground." ), pet_name );
     player_character.moves -= 200;
 }
-
-void remove_bag_from( monster &z )
-{
-    std::string pet_name = z.get_name();
-    if( z.storage_item ) {
-        if( !z.inv.empty() ) {
-            dump_items( z );
-        }
-        Character &player_character = get_player_character();
-        get_map().add_item_or_charges( player_character.pos(), *z.storage_item );
-        add_msg( _( "You remove the %1$s from %2$s." ), z.storage_item->display_name(), pet_name );
-        z.storage_item.reset();
-        player_character.moves -= 200;
-    } else {
-        add_msg( m_bad, _( "Your %1$s doesn't have a bag!" ), pet_name );
-    }
-    z.remove_effect( effect_has_bag );
-}
-
-bool give_items_to( monster &z )
-{
-    std::string pet_name = z.get_name();
-    if( !z.storage_item ) {
-        add_msg( _( "There is no container on your %s to put things in!" ), pet_name );
-        return true;
-    }
-
-    item &storage = *z.storage_item;
-    units::mass max_weight = z.weight_capacity() - z.get_carried_weight();
-    units::volume max_volume = storage.get_total_capacity() - z.get_carried_volume();
-    units::length max_length = storage.max_containable_length();
-
-    avatar &player_character = get_avatar();
-    drop_locations items = game_menus::inv::multidrop( player_character );
-    drop_locations to_move;
-    for( const drop_location &itq : items ) {
-        const item &it = *itq.first;
-        units::volume item_volume = it.volume() * itq.second;
-        units::mass item_weight = it.weight() * itq.second;
-        units::length item_length = it.length();
-        if( max_weight < item_weight ) {
-            add_msg( _( "The %1$s is too heavy for the %2$s to carry." ), it.tname(), pet_name );
-            continue;
-        } else if( max_volume < item_volume ) {
-            add_msg( _( "The %1$s is too big to fit in the %2$s." ), it.tname(), storage.tname() );
-            continue;
-        }
-        else if (max_length<item_length) {
-            add_msg(_("%1$s 太长了，无法放入 %2$s。"), it.tname(), storage.tname());
-            continue;
-        }
-        else {
-            max_weight -= item_weight;
-            max_volume -= item_volume;
-            to_move.insert( to_move.end(), itq );
-        }
-    }
-    // Quit if there is nothing to add
-    if( to_move.empty() ) {
-        add_msg( _( "Never mind." ) );
-        return true;
-    }
-    z.add_effect( effect_controlled, 5_turns );
-    player_character.drop( to_move, z.pos(), true );
-    // Print an appropriate message for the inserted item or items
-    if( to_move.size() > 1 ) {
-        add_msg( _( "You put %1$s items in the %2$s on your %3$s." ), to_move.size(), storage.tname(),
-                 pet_name );
-    } else {
-        item_location loc = to_move.front().first;
-        item &it = *loc;
-        //~ %1$s - item name, %2$s - storage item name, %3$s - pet name
-        add_msg( _( "You put the %1$s in the %2$s on your %3$s." ), it.tname(), storage.tname(), pet_name );
-    }
-    // Return success if all items were inserted
-    return to_move.size() == items.size();
-}
-
-void take_item_from_bag( monster &z )
-{
-
-    avatar& player_avatar = get_avatar();
-    const std::string pet_name = z.get_name();
-    std::vector<item> &monster_inv = z.inv;
-    uilist selection_menu;
-    
-    while (true) {
-        selection_menu.text = string_format(_("选择要从 %s 的背包里取出的物品"), pet_name);
-        int i = 0;
-        selection_menu.addentry(i++, true, MENU_AUTOASSIGN, _("取消"));
-        for (const item& iter : monster_inv) {
-                selection_menu.addentry(i++, true, MENU_AUTOASSIGN, _("取出 %s"), iter.tname());
-        }
-        selection_menu.selected = 1;
-        
-        selection_menu.query();
-
-        const int index = selection_menu.ret;
-        
-        if (index <= 0 || index > static_cast<int>(monster_inv.size())) {
-
-            return;
-        
-        }
-        else {       
-            const int selection = index - 1;
-            item retrieved_item = monster_inv[selection];
-            monster_inv.erase(monster_inv.begin() + selection);
-            add_msg(_("你从 %1s 的背包里取出了 %2s"), pet_name, retrieved_item.tname());
-            player_avatar.i_add(retrieved_item);
-            player_avatar.moves -= 25;
-        }
-        selection_menu.reset();
-    }
-
-    
-
-}
-
 
 void treat_zombie(monster& z) {
 
@@ -974,9 +853,6 @@ bool monexamine::pet_menu( monster &z )
         stop_lead,
         rename,
         attach_bag,
-        remove_bag,
-        drop_all,
-        give_items,
         mon_armor_add,
         mon_harness_remove,
         mon_armor_remove,
@@ -998,7 +874,7 @@ bool monexamine::pet_menu( monster &z )
         talk_to,
         命令其在这里等待,
         命令其不要在这里继续等待,
-        从背包里取出物品,
+        交换物品,
         治疗,
         查看状态,
         查看状态_02,
@@ -1057,21 +933,17 @@ bool monexamine::pet_menu( monster &z )
     
     }
 
-
-
-
-
-
-    if( z.has_effect( effect_has_bag ) ) {
-        amenu.addentry( give_items, true, 'g', _( "Place items into bag" ) );
-        if( !z.inv.empty() ) {
-            amenu.addentry( 从背包里取出物品, true, '2', _("从背包里取出物品"));
-            amenu.addentry( drop_all, true, 'd', _( "Remove all items from bag" ) );
-        }
-        amenu.addentry( remove_bag, true, 'b', _( "Remove bag from %s" ), pet_name );
-    } else if( !z.has_flag( MF_RIDEABLE_MECH ) ) {
-        amenu.addentry( attach_bag, true, 'b', _( "Attach bag to %s" ), pet_name );
+    if (!z.has_flag(MF_RIDEABLE_MECH) && !z.has_effect(effect_has_bag)) {
+        amenu.addentry(attach_bag, true, 'b', _("Attach bag to %s"), pet_name);
     }
+
+    if (z.has_effect(effect_has_bag)) {
+        amenu.addentry(交换物品, true, 'E', _("交换物品"));
+    }
+    else {
+        amenu.addentry(交换物品, false, 'E', _("交换物品"));
+    }
+
     if( z.has_effect( effect_harnessed ) ) {
         amenu.addentry( mon_harness_remove, true, 'H', _( "Remove vehicle harness from %s" ), pet_name );
     }
@@ -1248,14 +1120,6 @@ bool monexamine::pet_menu( monster &z )
         case attach_bag:
             attach_bag_to( z );
             break;
-        case remove_bag:
-            remove_bag_from( z );
-            break;
-        case drop_all:
-            dump_items( z );
-            break;
-        case give_items:
-            return give_items_to( z );
         case mon_armor_add:
             return add_armor( z );
         case mon_harness_remove:
@@ -1322,11 +1186,6 @@ bool monexamine::pet_menu( monster &z )
         case 命令其不要在这里继续等待:
             z.remove_effect( effect_wait_here );
             break;
-        case 从背包里取出物品:
-
-            take_item_from_bag( z );
-
-            break;
         case 治疗:
 
             treat_zombie(z);
@@ -1356,6 +1215,39 @@ bool monexamine::pet_menu( monster &z )
 
             dispatch_pet_menu(z);
 
+            break;
+        case 交换物品: {
+            // 利用临时npc和交易界面来模拟与宠物进行交换物品，宠物成为此npc的坐骑。交易时，将使用npc的坐骑的最大承重。
+            shared_ptr_fast<npc> temp_npc = make_shared_fast<npc>();
+            temp_npc->normalize();
+            temp_npc->set_fac(faction_id("your_followers"));
+            temp_npc->name = z.get_name();
+            temp_npc->add_effect(effect_npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui, 0_turns, true);
+            temp_npc->add_effect(effect_hallucination_npc_die_no_message, 0_turns, true);
+            temp_npc->add_effect(effect_npc_wear_item_success_no_message, 0_turns, true);
+
+            temp_npc->spawn_at_precise(z.get_location());
+            overmap_buffer.insert_npc(temp_npc);
+            g->load_npcs();
+            temp_npc->mount_creature(z);
+            temp_npc->wear_item(*z.storage_item.get());
+            temp_npc->spawn_at_precise(z.get_location());
+            npc_trading::trade(*temp_npc,0,"交换");
+            
+            z.storage_item.reset();
+            const std::list<item>& list_item_ref = temp_npc->get_visible_worn_items();
+            if (list_item_ref.empty()) {
+                z.remove_effect(effect_has_bag);
+            }
+            else {
+                item i = list_item_ref.front();
+                z.storage_item = cata::make_value<item>(i);
+            }
+       
+            temp_npc->npc_dismount();
+            temp_npc->hallucination = true;
+            temp_npc->die(nullptr);
+        }
             break;
         default:
             break;
