@@ -3733,25 +3733,25 @@
   {
     "id": "just_guard",
     "type": "effect_type",
-    "name": [ "仅仅护卫" ],
+    "name": [ "just_guard" ],
     "desc": [ "仅仅执行护卫工作。" ]
   },
   {
     "id": "want_trade",
     "type": "effect_type",
-    "name": [ "想要交易" ],
+    "name": [ "want_trade" ],
     "desc": [ "想要交易。" ]
   },
   {
     "id": "stay_here",
     "type": "effect_type",
-    "name": [ "待在这里" ],
+    "name": [ "stay_here" ],
     "desc": [ "待在这里。" ]
   },
   {
     "id": "push_words_spoken_by_the_npc",
     "type": "effect_type",
-    "name": [ "推送此npc说的话" ],
+    "name": [ "push_words_spoken_by_the_npc" ],
     "desc": [ "推送此npc说的话。" ]
   },
   {
@@ -3761,5 +3761,17 @@
     "desc": [
       "对于怪物交互菜单中的“交换物品”，此机制通过创建临时npc通过交易界面来模拟与宠物进行交换物品，宠物的临时副本成为此npc的坐骑。交易时，将使用npc的坐骑的最大承重。"
     ]
+  },
+  {
+    "id": "hallucination_npc_die_no_message",
+    "type": "effect_type",
+    "name": [ "hallucination_npc_die_no_message" ],
+    "desc": [ "幻觉npc死亡时，不会在日志显示相应的消息。" ]
+  },
+  {
+    "id": "npc_wear_item_success_no_message",
+    "type": "effect_type",
+    "name": [ "npc_wear_item_success_no_message" ],
+    "desc": [ "npc成功穿戴物品时，不会在日志显示相应的消息。" ]
   }
 ]

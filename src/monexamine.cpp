@@ -40,6 +40,7 @@
 #include "ui.h"
 #include "units.h"
 #include "value_ptr.h"
+#include "overmapbuffer.h"
 
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_harnessed( "harnessed" );
@@ -71,6 +72,9 @@ static const skill_id skill_survival( "survival" );
 
 static const trait_id trait_Dominator_Of_Zombies( "Dominator_Of_Zombies" );
 static const species_id species_ZOMBIE( "ZOMBIE" );
+static const efftype_id effect_npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui("npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui");
+static const efftype_id effect_hallucination_npc_die_no_message("hallucination_npc_die_no_message");
+static const efftype_id effect_npc_wear_item_success_no_message("npc_wear_item_success_no_message");
 
 namespace
 {
@@ -280,7 +284,6 @@ bool give_items_to( monster &z )
         add_msg( _( "Never mind." ) );
         return true;
     }
-    z.add_effect( effect_controlled, 5_turns );
     player_character.drop( to_move, z.pos(), true );
     // Print an appropriate message for the inserted item or items
     if( to_move.size() > 1 ) {
@@ -1355,20 +1358,25 @@ bool monexamine::pet_menu( monster &z )
             break;
         case 交换物品: {
         
-            npc fake_npc;
-            fake_npc.set_fake(true);
-            fake_npc.set_body();
-            fake_npc.set_fac(faction_id("your_followers"));
-            fake_npc.name = z.get_name();
-            fake_npc.add_effect(efftype_id("npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui"), 0_turns, true);
-            monster temp_m = z;
-            fake_npc.mounted_creature = make_shared_fast<monster>(temp_m);
+            shared_ptr_fast<npc> temp_npc = make_shared_fast<npc>();
+            temp_npc->normalize();
+            temp_npc->set_fac(faction_id("your_followers"));
+            temp_npc->name = z.get_name();
+            temp_npc->add_effect(effect_npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui, 0_turns, true);
+            temp_npc->add_effect(effect_hallucination_npc_die_no_message, 0_turns, true);
+            temp_npc->add_effect(effect_npc_wear_item_success_no_message, 0_turns, true);
 
-            fake_npc.wear_item(*z.storage_item.get());
-            npc_trading::trade(fake_npc,0,"交换");
+            temp_npc->spawn_at_precise(z.get_location());
+            overmap_buffer.insert_npc(temp_npc);
+            g->load_npcs();
+
+            temp_npc->mount_creature(z);
+            temp_npc->wear_item(*z.storage_item.get());
+            temp_npc->spawn_at_precise(z.get_location());
+            npc_trading::trade(*temp_npc,0,"交换");
             
             z.storage_item.reset();
-            const std::list<item>& list_item_ref = fake_npc.get_visible_worn_items();
+            const std::list<item>& list_item_ref = temp_npc->get_visible_worn_items();
             if (list_item_ref.empty()) {
                 z.remove_effect(effect_has_bag);
             }
@@ -1377,6 +1385,9 @@ bool monexamine::pet_menu( monster &z )
                 z.storage_item = cata::make_value<item>(i);
             }
        
+            temp_npc->npc_dismount();
+            temp_npc->hallucination = true;
+            temp_npc->die(nullptr);
         }
             break;
         default:

@@ -67,7 +67,7 @@ static const efftype_id effect_just_guard("just_guard");
 static const efftype_id effect_want_trade("want_trade");
 static const efftype_id effect_npc_run_away("npc_run_away");
 static const efftype_id effect_npc_flee_player("npc_flee_player");
-
+static const efftype_id effect_hallucination_npc_die_no_message("hallucination_npc_die_no_message");
 static const zone_type_id zone_type_trade_area("trade_area");
 
 #if defined(__ANDROID__)
@@ -173,7 +173,8 @@ void generate_trade_caravan() {
     // 添加 want_trade 效果，正常10分钟
     temp->add_effect(effect_want_trade, 10_minutes);
     
-    
+    temp->add_effect(effect_hallucination_npc_die_no_message, 1_turns, true);
+
     temp->set_attitude(NPCATT_NULL);
  
 
