@@ -3729,11 +3729,6 @@ bool options_manager::save() const
 
     update_music_volume();
 
-#if defined(__ANDROID__)
-    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
-#endif
-
-
     return write_to_file( savefile, [&]( std::ostream & fout ) {
         JsonOut jout( fout, true );
         serialize( jout );
