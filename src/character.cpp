@@ -1558,7 +1558,6 @@ void Character::forced_dismount()
         }
         mon->mounted_player_id = character_id();
         mon->remove_effect( effect_ridden );
-        mon->add_effect( effect_controlled, 5_turns );
         mounted_creature = nullptr;
         mon->mounted_player = nullptr;
     }
@@ -1673,7 +1672,6 @@ void Character::dismount()
             player_character.grab( object_type::NONE );
         }
         critter->remove_effect( effect_ridden );
-        critter->add_effect( effect_controlled, 5_turns );
         mounted_creature = nullptr;
         critter->mounted_player = nullptr;
         setpos( *pnt );

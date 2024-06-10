@@ -277,7 +277,11 @@ bool trade_ui::_confirm_trade() const
                    format_money( np.max_willing_to_owe() ) );
 
     } else {
+        if (np.has_effect(efftype_id("npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui"))) {
+            return query_yn("确定要进行交换吗？");
+        }
         return query_yn( _( "Looks like a deal!  Accept this trade?" ) );
+    
     }
 
     return false;

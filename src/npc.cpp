@@ -168,6 +168,8 @@ static const trait_id trait_SQUEAMISH( "SQUEAMISH" );
 static const trait_id trait_TERRIFYING( "TERRIFYING" );
 
 static const efftype_id effect_just_trade("just_trade");
+static const efftype_id effect_hallucination_npc_die_no_message("hallucination_npc_die_no_message");
+static const efftype_id effect_npc_wear_item_success_no_message("npc_wear_item_success_no_message");
 
 class monfaction;
 
@@ -1479,7 +1481,7 @@ void npc::stow_item( item &it )
     bool avatar_sees = get_player_view().sees( pos() );
     if( wear_item( it, false ) ) {
         // Wearing the item was successful, remove weapon and post message.
-        if( avatar_sees ) {
+        if( avatar_sees && !has_effect(effect_npc_wear_item_success_no_message) ) {
             add_msg_if_npc( m_info, _( "<npcname> wears the %s." ), it.tname() );
         }
         remove_item( it );
@@ -2667,7 +2669,6 @@ void npc::npc_dismount()
         get_wielded_item().remove_item();
     }
     mounted_creature->remove_effect( effect_ridden );
-    mounted_creature->add_effect( effect_controlled, 5_turns );
     mounted_creature = nullptr;
     setpos( *pnt );
     mod_moves( -100 );
@@ -3030,8 +3031,7 @@ void npc::die( Creature *nkiller )
     Character::die( nkiller );
     
     if( is_hallucination() ) {
-        // 如果是幻觉，同时没有“effect_just_trade”这个effect才显示这行信息
-        if( !has_effect(effect_just_trade) ){
+        if( !has_effect(effect_hallucination_npc_die_no_message) ){
             add_msg_if_player_sees(*this, _("%s disappears."), get_name().c_str());
         }
         return;
