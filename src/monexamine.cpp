@@ -1217,7 +1217,7 @@ bool monexamine::pet_menu( monster &z )
 
             break;
         case 交换物品: {
-        
+            // 利用临时npc和交易界面来模拟与宠物进行交换物品，宠物成为此npc的坐骑。交易时，将使用npc的坐骑的最大承重。
             shared_ptr_fast<npc> temp_npc = make_shared_fast<npc>();
             temp_npc->normalize();
             temp_npc->set_fac(faction_id("your_followers"));
@@ -1229,7 +1229,6 @@ bool monexamine::pet_menu( monster &z )
             temp_npc->spawn_at_precise(z.get_location());
             overmap_buffer.insert_npc(temp_npc);
             g->load_npcs();
-
             temp_npc->mount_creature(z);
             temp_npc->wear_item(*z.storage_item.get());
             temp_npc->spawn_at_precise(z.get_location());
