@@ -76,6 +76,7 @@ static const efftype_id effect_npc_use_mounted_creature_weight_capacity_for_exch
 static const efftype_id effect_hallucination_npc_die_no_message("hallucination_npc_die_no_message");
 static const efftype_id effect_npc_wear_item_success_no_message("npc_wear_item_success_no_message");
 static const efftype_id effect_not_add_rope_on_mount_creature("not_add_rope_on_mount_creature");
+static const trait_id trait_DEBUG_CLOAK("DEBUG_CLOAK");
 namespace
 {
 
@@ -1226,6 +1227,7 @@ bool monexamine::pet_menu( monster &z )
             temp_npc->add_effect(effect_hallucination_npc_die_no_message, 1_turns, true);
             temp_npc->add_effect(effect_npc_wear_item_success_no_message, 1_turns, true);
             temp_npc->add_effect(effect_not_add_rope_on_mount_creature,1_turns,true);
+            temp_npc->set_mutation(trait_DEBUG_CLOAK);
             bool pet_has_effect_tied_before = z.has_effect(effect_tied);
             item tied_item_copy;
             if (z.tied_item) {
