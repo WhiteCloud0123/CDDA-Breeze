@@ -3773,5 +3773,11 @@
     "type": "effect_type",
     "name": [ "npc_wear_item_success_no_message" ],
     "desc": [ "npc成功穿戴物品时，不会在日志显示相应的消息。" ]
+  },
+  {
+    "id": "not_add_rope_on_mount_creature",
+    "type": "effect_type",
+    "name": [ "not_add_rope_on_mount_creature" ],
+    "desc": [ "骑上生物的时候，不要将绳子添加到角色的物品里。" ]
   }
 ]

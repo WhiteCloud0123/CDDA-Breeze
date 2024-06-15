@@ -82,6 +82,7 @@ static const trap_str_id tr_unfinished_construction( "tr_unfinished_construction
 
 static const std::string ITEM_HIGHLIGHT( "highlight_item" );
 static const std::string ZOMBIE_REVIVAL_INDICATOR( "zombie_revival_indicator" );
+static const trait_id trait_DEBUG_CLOAK("DEBUG_CLOAK");
 
 static const std::array<std::string, 8> multitile_keys = {{
         "center",
@@ -3824,7 +3825,7 @@ bool cata_tiles::draw_critter_at( const tripoint &p, lit_level ll, int &height_3
                 std::string chosen_id = ent_name.str();
                 if( m->has_effect( effect_ridden ) ) {
                     int pl_under_height = 6;
-                    if( m->mounted_player ) {
+                    if( m->mounted_player && !m->mounted_player->is_invisible() ) {
                         draw_entity_with_overlays( *m->mounted_player, p, ll, pl_under_height );
                     }
                     const std::string prefix = "rid_";

@@ -261,6 +261,7 @@ static const efftype_id effect_tapeworm( "tapeworm" );
 static const efftype_id effect_tied( "tied" );
 static const efftype_id effect_weed_high( "weed_high" );
 static const efftype_id effect_winded( "winded" );
+static const efftype_id effect_not_add_rope_on_mount_creature("not_add_rope_on_mount_creature");
 
 static const faction_id faction_no_faction( "no_faction" );
 
@@ -1430,7 +1431,9 @@ void Character::mount_creature( monster &z )
     if( z.has_effect( effect_tied ) ) {
         z.remove_effect( effect_tied );
         if( z.tied_item ) {
-            i_add( *z.tied_item );
+            if (!has_effect(effect_not_add_rope_on_mount_creature)) {
+                i_add(*z.tied_item);
+            }
             z.tied_item.reset();
         }
     }
