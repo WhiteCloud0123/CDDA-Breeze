@@ -1225,6 +1225,11 @@ bool monexamine::pet_menu( monster &z )
             temp_npc->add_effect(effect_npc_use_mounted_creature_weight_capacity_for_exchanging_items_with_pet_in_trade_ui, 0_turns, true);
             temp_npc->add_effect(effect_hallucination_npc_die_no_message, 0_turns, true);
             temp_npc->add_effect(effect_npc_wear_item_success_no_message, 0_turns, true);
+            bool pet_has_effect_tied_before = z.has_effect(effect_tied);
+            item tied_item_copy;
+            if (z.tied_item) {
+                tied_item_copy = *z.tied_item;
+            }
 
             temp_npc->spawn_at_precise(z.get_location());
             overmap_buffer.insert_npc(temp_npc);
@@ -1247,6 +1252,13 @@ bool monexamine::pet_menu( monster &z )
             temp_npc->npc_dismount();
             temp_npc->hallucination = true;
             temp_npc->die(nullptr);
+
+            if (pet_has_effect_tied_before) {
+                z.add_effect(effect_tied,1_turns,true);
+                if (&tied_item_copy) {
+                    z.tied_item = cata::make_value<item>(tied_item_copy);
+                }
+            }
         }
             break;
         default:
