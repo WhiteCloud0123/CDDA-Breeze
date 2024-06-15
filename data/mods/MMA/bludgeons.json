@@ -1,8 +1,8 @@
 [
   {
     "id": "cudgel",
+    "type": "GENERIC",
     "copy-from": "cudgel",
-    "type": "TOOL",
     "name": { "str": "cudgel" },
     "extend": { "weapon_category": [ "HYLIAN_IMPROV_WEAPONS" ] }
   },
