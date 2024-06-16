@@ -5910,10 +5910,12 @@ void game::examine( const tripoint &examp, bool with_pickup )
             if( ( mon->has_effect( effect_pet ) && !u.is_mounted() ) ||
                 ( get_player_character().has_trait( trait_Dominator_Of_Zombies ) &&
                   mon->in_species( species_ZOMBIE ) ) ) {
+                
                 if (mon->mounted_player) {
                     if (mon->battery_item) {
                         add_msg(m_info, "%1s 正在驾驶着 %2s 。", mon->mounted_player->get_name(), mon->get_name());
-                    }else {
+                    }
+                    else {
                         add_msg(m_info, "%1s 正在骑着 %2s 。", mon->mounted_player->get_name(), mon->get_name());
                     }
                     return;

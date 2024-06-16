@@ -1229,11 +1229,13 @@ bool monexamine::pet_menu( monster &z )
             temp_npc->add_effect(effect_not_add_rope_on_mount_creature,1_turns,true);
             temp_npc->set_mutation(trait_DEBUG_CLOAK);
             bool pet_has_effect_tied_before = z.has_effect(effect_tied);
+            bool pet_has_tied_item = false;
             item tied_item_copy;
             if (z.tied_item) {
+                pet_has_tied_item = true;
                 tied_item_copy = *z.tied_item;
             }
-
+            
             temp_npc->spawn_at_precise(z.get_location());
             overmap_buffer.insert_npc(temp_npc);
             g->load_npcs();
@@ -1255,12 +1257,13 @@ bool monexamine::pet_menu( monster &z )
             temp_npc->npc_dismount();
             temp_npc->hallucination = true;
             temp_npc->die(nullptr);
+            z.mounted_player = nullptr;
 
             if (pet_has_effect_tied_before) {
                 z.add_effect(effect_tied,1_turns,true);
-                if (&tied_item_copy) {
-                    z.tied_item = cata::make_value<item>(tied_item_copy);
-                }
+            }
+            if (pet_has_tied_item) {
+                z.tied_item = cata::make_value<item>(tied_item_copy);
             }
         }
             break;
