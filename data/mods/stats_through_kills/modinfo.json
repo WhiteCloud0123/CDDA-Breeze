@@ -5,7 +5,7 @@
     "name": "Stats Through Kills",
     "authors": [ "KorGgenT" ],
     "maintainers": [ "KorGgenT" ],
-    "description": "You gain XP from kills that you can spend on increasing your stats.",
+    "description": "玩家和npc可以从杀怪中获得经验。你可以用它来增加你和你的npc的属性值。",
     "category": "rebalance",
     "dependencies": [ "dda" ]
   },
