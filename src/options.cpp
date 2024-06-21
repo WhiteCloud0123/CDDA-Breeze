@@ -2650,7 +2650,7 @@ void options_manager::add_options_debug()
 
     add( "FOV_3D_Z_RANGE", "debug", to_translation( "3D视野垂直可见范围" ),
          to_translation( "实验性3D视野中上方和下方的最大视野层数及对下方多少层进行绘制。过高的3D视野会严重拖慢游戏速度。能看到的层数越少速度越快。" ),
-         0, OVERMAP_LAYERS, 1
+         0, OVERMAP_LAYERS, 2
        );
 
     add_empty_line();
