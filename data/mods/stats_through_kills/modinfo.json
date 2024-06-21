@@ -5,7 +5,7 @@
     "name": "Stats Through Kills",
     "authors": [ "KorGgenT" ],
     "maintainers": [ "KorGgenT" ],
-    "description": "玩家和npc可以从杀怪中获得经验。你可以用它来增加你和你的npc的属性值。非玩家追随者的npc即使经验达到升级标准，也不会提升属性。",
+    "description": "玩家和npc可以从杀怪中获得经验。你可以用它来增加你和你的npc的属性值。非玩家追随者的npc即使经验达到标准，也不会提升属性。",
     "category": "rebalance",
     "dependencies": [ "dda" ]
   },
