@@ -492,6 +492,16 @@ static const vitamin_id vitamin_iron( "iron" );
 
 static const std::set<material_id> ferric = { material_iron, material_steel, material_budget_steel, material_ch_steel, material_hc_steel, material_lc_steel, material_mc_steel, material_qt_steel };
 
+// 敏捷速度加成mod
+static int get_speedydex_bonus(const int dex)
+{
+    static const std::string speedydex_min_dex("SPEEDYDEX_MIN_DEX");
+    static const std::string speedydex_dex_speed("SPEEDYDEX_DEX_SPEED");
+    // this is the number to be multiplied by the increment
+    const int modified_dex = std::max(dex - get_option<int>(speedydex_min_dex), 0);
+    return modified_dex * get_option<int>(speedydex_dex_speed);
+}
+
 namespace io
 {
 
@@ -3455,7 +3465,8 @@ void Character::reset_stats()
     mod_dex_bonus( get_mod_stat_from_bionic( character_stat::DEXTERITY ) );
     mod_per_bonus( get_mod_stat_from_bionic( character_stat::PERCEPTION ) );
     mod_int_bonus( get_mod_stat_from_bionic( character_stat::INTELLIGENCE ) );
-
+    // 为npc应用上敏捷速度加成mod的效果
+    mod_speed_bonus(get_speedydex_bonus(get_dex()));
     // Trait / mutation buffs
     mod_str_bonus( std::floor( mutation_value( "str_modifier" ) ) );
     mod_dodge_bonus( std::floor( mutation_value( "dodge_modifier" ) ) );
@@ -3830,15 +3841,6 @@ int Character::get_per_bonus() const
 int Character::get_int_bonus() const
 {
     return int_bonus;
-}
-
-static int get_speedydex_bonus( const int dex )
-{
-    static const std::string speedydex_min_dex( "SPEEDYDEX_MIN_DEX" );
-    static const std::string speedydex_dex_speed( "SPEEDYDEX_DEX_SPEED" );
-    // this is the number to be multiplied by the increment
-    const int modified_dex = std::max( dex - get_option<int>( speedydex_min_dex ), 0 );
-    return modified_dex * get_option<int>( speedydex_dex_speed );
 }
 
 int Character::get_enchantment_speed_bonus() const
