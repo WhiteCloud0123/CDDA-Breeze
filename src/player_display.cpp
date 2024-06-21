@@ -1214,8 +1214,8 @@ static bool handle_player_display_action( Character &you, unsigned int &line,
             default:
                 break;
             case player_display_tab::stats:
-                if( line < 4 && get_option<bool>( "STATS_THROUGH_KILLS" ) && you.is_avatar() ) {
-                    you.as_avatar()->upgrade_stat_prompt( static_cast<character_stat>( line ) );
+                if( line < 4 && get_option<bool>( "STATS_THROUGH_KILLS" ) ) {
+                    you.upgrade_stat_prompt( static_cast<character_stat>( line ) );
                 }
                 invalidate_tab( curtab );
                 break;

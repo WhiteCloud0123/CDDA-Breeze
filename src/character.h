@@ -565,6 +565,10 @@ class Character : public Creature, public visitable
         void set_fatigue( fatigue_levels nfatigue );
         void set_sleep_deprivation( int nsleep_deprivation );
 
+        void upgrade_stat_prompt(const character_stat& stat_name);
+        // how many points are available to upgrade via STK
+        int free_upgrade_points() const;
+
     protected:
 
         // These accept values in calories, 1/1000s of kcals (or Calories)
