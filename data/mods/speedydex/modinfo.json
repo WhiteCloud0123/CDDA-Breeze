@@ -5,7 +5,7 @@
     "name": "SpeedyDex",
     "authors": [ "KorGgenT" ],
     "maintainers": [ "KorGgenT" ],
-    "description": "Higher dex increases your speed.",
+    "description": "使敏捷属性提供速度加成。对玩家和npc都生效。",
     "category": "rebalance",
     "dependencies": [ "dda" ]
   },
