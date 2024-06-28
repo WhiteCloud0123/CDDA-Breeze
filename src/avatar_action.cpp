@@ -83,7 +83,6 @@ static const trait_id trait_RUMINANT( "RUMINANT" );
 static const trait_id trait_SHELL2( "SHELL2" );
 static const trait_id trait_SHELL3( "SHELL3" );
 
-static const std::string flag_LADDER("LADDER");
 
 #define dbg(x) DebugLog((x),D_SDL) << __FILE__ << ":" << __LINE__ << ": "
 
@@ -196,7 +195,7 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
     if( m.has_flag( ter_furn_flag::TFLAG_RAMP_UP, dest_loc ) ) {
         dest_loc.z += 1;
         via_ramp = true;
-    } else if( m.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, dest_loc ) || (  ( !is_riding || get_option<bool>("骑乘状态可以上下楼") ) ) && m.has_flag(flag_LADDER,dest_loc+tripoint_below) )  {
+    } else if( m.has_flag( ter_furn_flag::TFLAG_RAMP_DOWN, dest_loc ) ){
         dest_loc.z -= 1;
         via_ramp = true;
     }
@@ -523,13 +522,6 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
         }
         return true;
     }
-
-    if (((!is_riding || get_option<bool>("骑乘状态可以上下楼"))) && m.has_flag(flag_LADDER, you.pos()) &&
-        g->walk_move(dest_loc + tripoint_above)) {
-        return true;
-    }
-
-
 
     // Invalid move
     const bool waste_moves = you.is_blind() || you.has_effect( effect_stunned );
