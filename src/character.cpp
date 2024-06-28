@@ -3474,8 +3474,6 @@ void Character::reset_stats()
     mod_dex_bonus( get_mod_stat_from_bionic( character_stat::DEXTERITY ) );
     mod_per_bonus( get_mod_stat_from_bionic( character_stat::PERCEPTION ) );
     mod_int_bonus( get_mod_stat_from_bionic( character_stat::INTELLIGENCE ) );
-    // 为npc应用上敏捷速度加成mod的效果
-    mod_speed_bonus(get_speedydex_bonus(get_dex()));
     // Trait / mutation buffs
     mod_str_bonus( std::floor( mutation_value( "str_modifier" ) ) );
     mod_dodge_bonus( std::floor( mutation_value( "dodge_modifier" ) ) );
@@ -3490,6 +3488,10 @@ void Character::reset_stats()
     }
 
     apply_skill_boost();
+    if (is_npc) {
+        // 为npc应用上敏捷速度加成mod的效果
+        mod_speed_bonus(get_speedydex_bonus(get_dex()));
+    }
 
     nv_cached = false;
 
@@ -10902,8 +10904,6 @@ void Character::recalc_speed_bonus()
     }
     mod_speed_bonus( -carry_penalty );
 
-    mod_speed_bonus( +get_speedydex_bonus( get_dex() ) );
-
     mod_speed_bonus( -get_pain_penalty().speed );
 
     if( get_thirst() > 40 ) {
@@ -10937,6 +10937,8 @@ void Character::recalc_speed_bonus()
             }
         }
     }
+    // 敏捷速度加成mod
+    mod_speed_bonus(+get_speedydex_bonus(get_dex()));
     const int prev_speed_bonus = get_speed_bonus();
     set_speed_bonus( std::round( enchantment_cache->modify_value( enchant_vals::mod::SPEED,
                                  get_speed() ) - get_speed_base() ) );
