@@ -10939,7 +10939,7 @@ void Character::recalc_speed_bonus()
         }
     }
     // 敏捷速度加成mod
-    mod_speed_bonus(+get_speedydex_bonus(get_dex()));
+    mod_speed_bonus(get_speedydex_bonus(get_dex()));
     const int prev_speed_bonus = get_speed_bonus();
     set_speed_bonus( std::round( enchantment_cache->modify_value( enchant_vals::mod::SPEED,
                                  get_speed() ) - get_speed_base() ) );
