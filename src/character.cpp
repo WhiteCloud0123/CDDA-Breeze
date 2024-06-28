@@ -3488,7 +3488,8 @@ void Character::reset_stats()
     }
 
     apply_skill_boost();
-    if (is_npc) {
+    
+    if (is_npc()) {
         // 为npc应用上敏捷速度加成mod的效果
         mod_speed_bonus(get_speedydex_bonus(get_dex()));
     }
