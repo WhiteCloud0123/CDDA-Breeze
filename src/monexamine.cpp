@@ -41,6 +41,7 @@
 #include "units.h"
 #include "value_ptr.h"
 #include "overmapbuffer.h"
+#include "units_utility.h"
 
 static const efftype_id effect_controlled( "controlled" );
 static const efftype_id effect_harnessed( "harnessed" );
@@ -270,129 +271,6 @@ void treat_zombie(monster& z) {
 }
 
 
-void view_status(monster& z) {
-
-    enum choice {
-
-        等级 = 0,
-        经验值, 
-        生命值,
-        速度,
-        武器,
-        防具
-
-
-    };
-
-    uilist monster_status_ui;
-
-    monster_status_ui.text = string_format(_("%s 的状态"),z.get_name());
-
-    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv);
-    
-    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp);
-
-    monster_status_ui.addentry(生命值, true, '2', _("当前生命值: %1s   |   最大生命值: %2s"), z.get_hp(),z.get_hp_max());
-
-    monster_status_ui.addentry(速度, true, '3', _("当前速度: %1s   |   基础速度: %2s"), z.get_speed(), z.get_speed_base());
-
-    
-    if (z.weapon_item!=NULL) {
-
-        monster_status_ui.addentry(武器, true, '4', _("武器: %1s   |   伤害加成: %2s"), z.weapon_item->tname(), z.weapon_item->damage_melee(damage_type::BASH));
-    
-    }
-    else {
-    
-        monster_status_ui.addentry(武器, true, '4', _("武器: 无"));
-    
-    }
-    
-    if (z.armor_item!=NULL) {
-    
-        monster_status_ui.addentry(防具, true, '5', _("防具: %s"), z.armor_item->tname());
-    
-    }
-    else {
-    
-        monster_status_ui.addentry(防具, true, '5', _("防具: 无"));
-    
-    }
-
-
-    
-
-    
-    
-    
-    monster_status_ui.query();
-
-
-
-
-
-
-}
-
-
-
-void view_status_02(monster &z) {
-
-    enum choice {
-
-        等级 = 0,
-        经验值,
-        生命值,
-        速度,
-        武器,
-        防具
-
-
-    };
-
-
-    uilist monster_status_ui;
-
-    monster_status_ui.addentry(等级, true, '0', _("等级: %s"), z.lv);
-
-    monster_status_ui.addentry(经验值, true, '1', _("经验值: %s"), z.exp);
-
-    if (z.weapon_item != NULL) {
-
-        monster_status_ui.addentry(武器, true, '4', _("武器: %1s   |   伤害加成: %2s"), z.weapon_item->tname(),z.weapon_item->damage_melee(damage_type::BASH));
-
-    }
-    else {
-
-        monster_status_ui.addentry(武器, true, '4', _("武器: 无"));
-
-    }
-
-    if (z.armor_item != NULL) {
-
-        monster_status_ui.addentry(防具, true, '5', _("防具: %s"), z.armor_item->tname());
-
-    }
-    else {
-
-        monster_status_ui.addentry(防具, true, '5', _("防具: 无"));
-
-    }
-
-
-
-
-
-
-
-    monster_status_ui.query();
-
-
-
-
-
-}
-
 void equip_weapon_pet_menu(monster&z) {
 
 
@@ -437,40 +315,6 @@ void remove_weapon_pet_menu(monster &z) {
     
     // 消耗100行动点
     get_avatar().moves = get_avatar().moves - 100;
-
-}
-
-void dispatch_pet_menu(monster &z) {
-
-
-    enum choice {
-
-        去附近寻找食物 = 0,
-        去附近打猎
-    
-    };
-
-    uilist ui;
-
-    if (z.storage_item!=NULL) {
-
-        ui.addentry(去附近寻找食物, true, '0', _("去附近寻找食物"));
-    
-    }
-    else {
-
-        ui.addentry(去附近寻找食物, false, '0', _("去附近寻找食物"));
-    
-    
-    }
-    
-
-    ui.query();
-
-
-
-
-
 
 }
 
@@ -877,8 +721,6 @@ bool monexamine::pet_menu( monster &z )
         命令其不要在这里继续等待,
         交换物品,
         治疗,
-        查看状态,
-        查看状态_02,
         装备武器,
         移除武器,
         派遣
@@ -888,7 +730,27 @@ bool monexamine::pet_menu( monster &z )
     uilist amenu;
     std::string pet_name = z.get_name();
 
-    amenu.text = string_format( _( "What to do with your %s?" ), pet_name );
+    std::stringstream text;
+    text<<pet_name<< std::endl;
+    nc_color bar_color = c_white;
+    std::string bar_str;
+    z.get_HP_Bar(bar_color, bar_str);
+    text << get_tag_from_color(bar_color) << bar_str<<"</color>"<< std::endl;
+    text << "等级: " << z.lv << std::endl;
+    text << "经验值: " << z.exp << std::endl;
+    std::string cwt = string_format("%.1f", round_up(units::to_kilogram(z.get_carried_weight()), 1));
+    std::string wct = string_format("%.1f", round_up(units::to_kilogram(z.weight_capacity()), 1));
+    text <<"承重: " << cwt << "/" <<wct<<" 千克"<< std::endl;
+    text << "" << std::endl;
+
+    std::string guard_armor = "无";
+    if (z.armor_item) {
+        guard_armor = z.armor_item->tname();
+    }
+    text << "护甲: " << guard_armor << std::endl;
+
+
+    amenu.text = text.str();
 
     amenu.addentry( swap_pos, true, 's', _( "Swap positions" ) );
     amenu.addentry( push_monster, true, 'p', _( "Push %s" ), pet_name );
@@ -935,7 +797,7 @@ bool monexamine::pet_menu( monster &z )
     }
 
     if (!z.has_flag(MF_RIDEABLE_MECH) && !z.has_effect(effect_has_bag)) {
-        amenu.addentry(attach_bag, true, 'b', _("Attach bag to %s"), pet_name);
+        amenu.addentry(attach_bag, true, 'b', "给 % s 安装容器", pet_name);
     }
 
     if (z.has_effect(effect_has_bag)) {
@@ -1064,39 +926,8 @@ bool monexamine::pet_menu( monster &z )
             amenu.addentry(治疗, true, '3', _("治疗"), z.get_name());
         
         }
-        
-    
-    
     
     }
-
-    if (player_character.has_trait(trait_Dominator_Of_Zombies) && z.in_species(species_ZOMBIE)) {
-    
-    
-        amenu.addentry(查看状态, true, '4', _("查看状态"));
-        
-        
-
-        amenu.addentry(派遣, true, '6', _("派遣"));
-
-        
-        
-        
-    
-    
-    }
-    else {
-    
-        
-        amenu.addentry(查看状态_02, true, '4', _("查看状态"));
-    
-    
-    }
-
-    
-
-
-
 
 
     amenu.query();
@@ -1192,16 +1023,6 @@ bool monexamine::pet_menu( monster &z )
             treat_zombie(z);
 
             break;
-        case 查看状态:
-
-            view_status(z);
-
-            break;
-        case 查看状态_02:
-
-            view_status_02(z);
-
-            break;
         case 装备武器:
 
             equip_weapon_pet_menu(z);
@@ -1210,11 +1031,6 @@ bool monexamine::pet_menu( monster &z )
         case 移除武器:
 
             remove_weapon_pet_menu(z);
-
-            break;
-        case 派遣:
-
-            dispatch_pet_menu(z);
 
             break;
         case 交换物品: {
