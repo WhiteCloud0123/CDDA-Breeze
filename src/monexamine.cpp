@@ -736,18 +736,18 @@ bool monexamine::pet_menu( monster &z )
     std::string bar_str;
     z.get_HP_Bar(bar_color, bar_str);
     text << get_tag_from_color(bar_color) << bar_str<<"</color>"<< std::endl;
-    text << "等级: " << z.lv << std::endl;
-    text << "经验值: " << z.exp << std::endl;
+    text << "等级:：" << z.lv << std::endl;
+    text << "经验值：" << z.exp << std::endl;
     std::string cwt = string_format("%.1f", round_up(units::to_kilogram(z.get_carried_weight()), 1));
     std::string wct = string_format("%.1f", round_up(units::to_kilogram(z.weight_capacity()), 1));
-    text <<"承重: " << cwt << "/" <<wct<<" 千克"<< std::endl;
+    text <<"承重：" << cwt << "/" <<wct<<" 千克"<< std::endl;
     text << "" << std::endl;
 
     std::string guard_armor = "无";
     if (z.armor_item) {
         guard_armor = z.armor_item->tname();
     }
-    text << "护甲: " << guard_armor << std::endl;
+    text << "护甲：" << guard_armor << std::endl;
 
 
     amenu.text = text.str();
