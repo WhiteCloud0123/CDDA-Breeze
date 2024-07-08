@@ -2572,23 +2572,87 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
             if (armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
                 || armor_bullet != 0.0 || armor_elec != 0.0 || armor_acid != 0.0
-                || armor_heat != 0.0) {
+                || armor_heat != 0.0
+                || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
+                || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
+                || armor_heat_mult != 1.0
+                ) {
                 info.emplace_back("DESCRIPTION", "* 防护：");
+                
+                base_str = "* 钝击：";
+                need_space = false;
                 if (armor_bash != 0.0) {
-                    info.emplace_back("DESCRIPTION",
-                        string_format("    钝击： % .2f", armor_bash));
+                    base_str += string_format("%d", static_cast<int>(armor_bash));
+                    need_space = true;
                 }
+                if (armor_bash_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", armor_bash_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", armor_bash_mult);
+                    }
+                }
+                if (base_str != "* 钝击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "* 斩击：";
+                need_space = false;
                 if (armor_cut != 0.0) {
-                    info.emplace_back("DESCRIPTION",
-                        string_format("    斩击：%.2f", armor_cut));
+                    base_str += string_format("%d", static_cast<int>(armor_cut));
+                    need_space = true;
                 }
+                if (armor_cut_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", armor_cut_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", armor_cut_mult);
+                    }
+                }
+                if (base_str != "* 斩击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "* 刺击：";
+                need_space = false;
                 if (armor_stab != 0.0) {
-                    info.emplace_back("DESCRIPTION",
-                        string_format("    刺击：%.2f", armor_stab));
+                    base_str += string_format("%d", static_cast<int>(armor_stab));
+                    need_space = true;
                 }
-                if (armor_bullet != 0.0) {
+                if (armor_stab_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", armor_stab_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", armor_stab_mult);
+                    }
+                }
+                if (base_str != "* 刺击：") {
                     info.emplace_back("DESCRIPTION",
-                        string_format("    射击：%.2f", armor_bullet));
+                        string_format("%s", base_str));
+                }
+
+                base_str = "* 射击：";
+                need_space = false;
+                if (armor_bullet != 0.0) {
+                    base_str += string_format("%d", static_cast<int>(armor_bullet));
+                    need_space = true;
+                }
+                if (armor_bullet_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", armor_bullet_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", armor_bullet_mult);
+                    }
+                }
+                if (base_str != "* 射击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
                 }
                 if (armor_elec != 0.0) {
                     info.emplace_back("DESCRIPTION",
