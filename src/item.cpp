@@ -2327,6 +2327,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double inte = 0.0;
         double per = 0.0;
         double speed = 0.0;
+        double armor_heat = 0.0;
 
         double resonance_mult = 1.0;
         double base_move_cost_mult = 1.0;
@@ -2335,6 +2336,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_stab_mult = 1.0;
         double armor_bullet_mult = 1.0;
         double armor_acid_mult = 1.0;
+        double armor_heat_mult = 1.0;
         double str_mult = 1.0;
         double dex_mult = 1.0;
         double inte_mult = 1.0;
@@ -2349,12 +2351,13 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
             armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
+            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
             str += e.get_value_add(enchant_vals::mod::STRENGTH);
             dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
             inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
             per += e.get_value_add(enchant_vals::mod::PERCEPTION);
             speed += e.get_value_add(enchant_vals::mod::SPEED);
-
+            
             
 
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
@@ -2364,6 +2367,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
             armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET);
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
+            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
             dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
             inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
@@ -2373,11 +2377,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         resonance = std::round(resonance * resonance_mult);
         base_move_cost = std::round(base_move_cost * base_move_cost_mult);
-        armor_bash = std::round(-armor_bash * armor_bash_mult);
-        armor_cut = std::round(-armor_cut * armor_cut_mult);
-        armor_stab = std::round(-armor_stab * armor_stab_mult);
-        armor_bullet = std::round(-armor_bullet * armor_bullet_mult);
-        armor_acid = std::round(-armor_acid * armor_acid_mult);
+        armor_bash = std::round(-(armor_bash * armor_bash_mult));
+        armor_cut = std::round(-(armor_cut * armor_cut_mult));
+        armor_stab = std::round(-(armor_stab * armor_stab_mult));
+        armor_bullet = std::round(-(armor_bullet * armor_bullet_mult));
+        armor_acid = std::round(-(armor_acid * armor_acid_mult));
+        armor_heat = std::round(-(armor_heat * armor_heat_mult));
         str = std::round(str * str_mult);
         dex = std::round(dex * dex_mult);
         inte = std::round(inte * inte_mult);
@@ -2415,6 +2420,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         if (armor_acid != 0.0) {
             info.emplace_back("DESCRIPTION",
                 string_format("* 防酸：%d", static_cast<int>(armor_acid)));
+        }
+        if (armor_heat != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 防火：%d", static_cast<int>(armor_heat)));
         }
         if (str != 0.0) {
             info.emplace_back("DESCRIPTION",
