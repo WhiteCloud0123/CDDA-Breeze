@@ -2450,11 +2450,8 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             // NONE, PERIODIC, LUNAR, FULL_MOON, NEW_MOON, SOLAR_SUNNY, SOLAR_CLOUDY, NUM
             relic_recharge_type rt = charge_info.type;
 
-            std::string rt_str = "";
-            if (rt == relic_recharge_type::NONE) {
-                rt_str = "无";
-            }
-            else if (rt == relic_recharge_type::PERIODIC) {
+            std::string rt_str = "无";
+            if (rt == relic_recharge_type::PERIODIC) {
                 rt_str = "时间";
             }
             else if (rt == relic_recharge_type::LUNAR) {
@@ -2471,9 +2468,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             else if (rt == relic_recharge_type::SOLAR_CLOUDY) {
                 rt_str = "时间，在户外，白天，天气为多云，手持或穿戴";
-            }
-            else {
-                rt_str = "无";
             }
 
             info.emplace_back("DESCRIPTION", string_format("* 充能方式：%s", rt_str));
