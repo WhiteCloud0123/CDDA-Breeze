@@ -2326,6 +2326,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double dex = 0.0;
         double inte = 0.0;
         double per = 0.0;
+        double speed = 0.0;
 
         double resonance_mult = 1.0;
         double base_move_cost_mult = 1.0;
@@ -2338,6 +2339,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double dex_mult = 1.0;
         double inte_mult = 1.0;
         double per_mult = 1.0;
+        double speed_mult = 1.0;
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
@@ -2351,6 +2353,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
             inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
             per += e.get_value_add(enchant_vals::mod::PERCEPTION);
+            speed += e.get_value_add(enchant_vals::mod::SPEED);
 
             
 
@@ -2365,6 +2368,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
             inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
             per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);
+            speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
         }
 
         resonance = std::round(resonance * resonance_mult);
@@ -2378,11 +2382,15 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         dex = std::round(dex * dex_mult);
         inte = std::round(inte * inte_mult);
         per = std::round(per * per_mult);
-
+        speed = std::round(speed * speed_mult);
 
         if (resonance != 0.0) {
             info.emplace_back("DESCRIPTION",
                 string_format("* 共鸣值：%d", static_cast<int>(resonance)));
+        }
+        if (speed != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 速度：%d", static_cast<int>(speed)));
         }
         if (base_move_cost != 0.0) {
             info.emplace_back("DESCRIPTION",
