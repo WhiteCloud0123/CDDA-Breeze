@@ -571,6 +571,11 @@ std::vector<enchantment> relic::get_defined_enchantments() const
     return defined_passive_effects;
 }
 
+std::vector<fake_spell> relic::get_active_effects() const
+{
+    return active_effects;
+}
+
 int relic::power_level( const relic_procgen_id &ruleset ) const
 {
     int total_power_level = 0;

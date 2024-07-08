@@ -2307,6 +2307,173 @@ void item::debug_info( std::vector<iteminfo> &info, const iteminfo_query *parts,
         }
     }
 }
+void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* parts, int batch) const {
+
+    insert_separation_line(info);
+    if (relic_data) {
+        info.emplace_back("DESCRIPTION", "<color_c_pink>附魔</color>：");
+        info.emplace_back("DESCRIPTION", " ");
+        info.emplace_back("DESCRIPTION", "被动效果：");
+   
+        double resonance = 0.0;
+        double base_move_cost = 0.0;
+        double armor_bash = 0.0;
+        double armor_cut = 0.0;
+        double armor_stab = 0.0;
+        double armor_bullet = 0.0;
+        double armor_acid = 0.0;
+        double str = 0.0;
+        double dex = 0.0;
+        double inte = 0.0;
+        double per = 0.0;
+
+        double resonance_mult = 1.0;
+        double base_move_cost_mult = 1.0;
+        double armor_bash_mult = 1.0;
+        double armor_cut_mult = 1.0;
+        double armor_stab_mult = 1.0;
+        double armor_bullet_mult = 1.0;
+        double armor_acid_mult = 1.0;
+        double str_mult = 1.0;
+        double dex_mult = 1.0;
+        double inte_mult = 1.0;
+        double per_mult = 1.0;
+
+        for (enchant_cache& e : relic_data->get_proc_enchantments()) {
+            resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
+            base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
+            armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH);
+            armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
+            armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
+            armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET);
+            armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
+            str += e.get_value_add(enchant_vals::mod::STRENGTH);
+            dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
+            inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
+            per += e.get_value_add(enchant_vals::mod::PERCEPTION);
+
+            
+
+            resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
+            base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
+            armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH);
+            armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
+            armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
+            armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET);
+            armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
+            str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
+            dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
+            inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
+            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);
+        }
+
+        resonance = std::round(resonance * resonance_mult);
+        base_move_cost = std::round(base_move_cost * base_move_cost_mult);
+        armor_bash = std::round(-armor_bash * armor_bash_mult);
+        armor_cut = std::round(-armor_cut * armor_cut_mult);
+        armor_stab = std::round(-armor_stab * armor_stab_mult);
+        armor_bullet = std::round(-armor_bullet * armor_bullet_mult);
+        armor_acid = std::round(-armor_acid * armor_acid_mult);
+        str = std::round(str * str_mult);
+        dex = std::round(dex * dex_mult);
+        inte = std::round(inte * inte_mult);
+        per = std::round(per * per_mult);
+
+
+        if (resonance != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 共鸣值：%d", static_cast<int>(resonance)));
+        }
+        if (base_move_cost != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 基础移动耗时：%d", static_cast<int>(base_move_cost)));
+        }
+        if (armor_bash != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 钝击：%d", static_cast<int>(armor_bash)));
+        }
+        if (armor_cut != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 斩击：%d", static_cast<int>(armor_cut)));
+        }
+        if (armor_stab != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 刺击：%d", static_cast<int>(armor_stab)));
+        }
+        if (armor_bullet != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 射击：%d", static_cast<int>(armor_bullet)));
+        }
+        if (armor_acid != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 防酸：%d", static_cast<int>(armor_acid)));
+        }
+        if (str != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 力量：%d", static_cast<int>(str)));
+        }
+        if (dex != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 敏捷：%d", static_cast<int>(dex)));
+        }
+        if (inte != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 智力：%d", static_cast<int>(inte)));
+        }
+        if (per != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 感知：%d", static_cast<int>(per)));
+        }
+
+        info.emplace_back("DESCRIPTION", " ");
+        std::string spell_str = "无";
+        info.emplace_back("DESCRIPTION", "激活效果：");
+        if (relic_data->get_active_effects().size() != 0) {
+            
+
+            spell_str = "";
+            for (fake_spell& fs : relic_data->get_active_effects()) {
+                spell casting = fs.get_spell(fs.level);
+                spell_str += "<bold>" + casting.name()+"</bold> ";
+            }
+
+            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
+            relic_charge_info& charge_info = relic_data->get_charge_info();
+            // NONE, PERIODIC, LUNAR, FULL_MOON, NEW_MOON, SOLAR_SUNNY, SOLAR_CLOUDY, NUM
+            relic_recharge_type rt = charge_info.type;
+
+            std::string rt_str = "";
+            if (rt == relic_recharge_type::NONE) {
+                rt_str = "无";
+            }
+            else if (rt == relic_recharge_type::PERIODIC) {
+                rt_str = "时间";
+            }
+            else if (rt == relic_recharge_type::LUNAR) {
+                rt_str = "时间，在户外，夜间，从新月到残月期间，手持或穿戴";
+            }
+            else if (rt == relic_recharge_type::FULL_MOON) {
+                rt_str = "时间，在户外，夜间，满月，手持或穿戴";
+            }
+            else if (rt == relic_recharge_type::NEW_MOON) {
+                rt_str = "时间，在户外，夜间，新月,手持或穿戴";
+            }
+            else if (rt == relic_recharge_type::SOLAR_SUNNY) {
+                rt_str = "时间，在户外，白天，天气为晴，手持或穿戴";
+            }
+            else if (rt == relic_recharge_type::SOLAR_CLOUDY) {
+                rt_str = "时间，在户外，白天，天气为多云，手持或穿戴";
+            }
+            else {
+                rt_str = "无";
+            }
+
+            info.emplace_back("DESCRIPTION", string_format("* 充能方式：%s", rt_str));
+        } else {
+            info.emplace_back("DESCRIPTION", "<bold>无</bold>");
+        }
+    }
+}
 
 void item::med_info( const item *med_item, std::vector<iteminfo> &info, const iteminfo_query *parts,
                      int batch, bool debug ) const
@@ -5724,6 +5891,7 @@ std::string item::info( std::vector<iteminfo> &info, const iteminfo_query *parts
 
     if( !is_null() ) {
         basic_info( info, parts, batch, debug );
+        enchantment_info(info, parts, batch);
         debug_info( info, parts, batch, debug );
     }
 
