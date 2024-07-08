@@ -2316,6 +2316,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         info.emplace_back("DESCRIPTION", "被动效果：");
    
         double resonance = 0.0;
+        double pain = 0.0;
         double speed = 0.0;
         double base_move_cost = 0.0;
         double attack_cost = 0.0;
@@ -2332,6 +2333,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_heat = 0.0;
 
         double resonance_mult = 1.0;
+        double pain_mult = 1.0;
         double speed_mult = 1.0;
         double base_move_cost_mult = 1.0;
         double attack_cost_mult = 1.0;
@@ -2349,6 +2351,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
+            pain += e.get_value_add(enchant_vals::mod::PAIN);
             speed += e.get_value_add(enchant_vals::mod::SPEED);
             base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
             attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
@@ -2365,6 +2368,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);         
                        
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
+            pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN);
             speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
             base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
             attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
@@ -2382,12 +2386,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         }
 
 
-        if (resonance != 0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 
+        if (resonance != 0.0||pain !=0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 
             ||  str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0 
             ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0
-            || resonance_mult != 1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0
+            || resonance_mult != 1.0 ||pain_mult !=0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0
             || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
@@ -2413,21 +2417,83 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 info.emplace_back("DESCRIPTION",
                     string_format("%s", base_str));
             }
+
+            base_str = "* 疼痛：";
             need_space = false;
+            if (pain != 0.0) {
+                base_str += string_format("%d", static_cast<int>(pain));
+                need_space = true;
+            }
+            if (pain_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", pain_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", pain_mult);
+                }
+            }
+            if (base_str != "* 疼痛：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
 
-
+            base_str = "* 速度：";
+            need_space = false;
             if (speed != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 速度：%d", static_cast<int>(speed)));
+                base_str += string_format("%d", static_cast<int>(speed));
+                need_space = true;
             }
+            if (speed_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", speed_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", speed_mult);
+                }
+            }
+            if (base_str != "* 速度：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 基础移动耗时：";
+            need_space = false;
             if (base_move_cost != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 基础移动耗时：%d", static_cast<int>(base_move_cost)));
+                base_str += string_format("%d", static_cast<int>(base_move_cost));
+                need_space = true;
             }
+            if (base_move_cost_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", base_move_cost_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", base_move_cost_mult);
+                }
+            }
+            if (base_str != "* 基础移动耗时：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 攻击耗时：";
+            need_space = false;
             if (attack_cost != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 攻击耗时：%d", static_cast<int>(attack_cost)));
+                base_str += string_format("%d", static_cast<int>(attack_cost));
+                need_space = true;
             }
+            if (attack_cost_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", attack_cost_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", attack_cost_mult);
+                }
+            }
+            if (base_str != "* 攻击耗时：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
             if (str != 0.0) {
                 info.emplace_back("DESCRIPTION",
                     string_format("* 力量：%d", static_cast<int>(str)));
