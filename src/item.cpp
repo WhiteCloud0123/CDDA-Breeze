@@ -2321,6 +2321,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_cut = 0.0;
         double armor_stab = 0.0;
         double armor_bullet = 0.0;
+        double armor_elec = 0.0;
         double armor_acid = 0.0;
         double str = 0.0;
         double dex = 0.0;
@@ -2335,6 +2336,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_cut_mult = 1.0;
         double armor_stab_mult = 1.0;
         double armor_bullet_mult = 1.0;
+        double armor_elec_mult = 1.0;
         double armor_acid_mult = 1.0;
         double armor_heat_mult = 1.0;
         double str_mult = 1.0;
@@ -2350,6 +2352,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
             armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
             armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET);
+            armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
             armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
             str += e.get_value_add(enchant_vals::mod::STRENGTH);
@@ -2366,6 +2369,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
             armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
             armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET);
+            armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC);
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
             armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
@@ -2381,6 +2385,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         armor_cut = std::round(-(armor_cut * armor_cut_mult));
         armor_stab = std::round(-(armor_stab * armor_stab_mult));
         armor_bullet = std::round(-(armor_bullet * armor_bullet_mult));
+        armor_elec = std::round(-(armor_elec * armor_elec_mult));
         armor_acid = std::round(-(armor_acid * armor_acid_mult));
         armor_heat = std::round(-(armor_heat * armor_heat_mult));
         str = std::round(str * str_mult);
@@ -2416,6 +2421,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         if (armor_bullet != 0.0) {
             info.emplace_back("DESCRIPTION",
                 string_format("* 射击：%d", static_cast<int>(armor_bullet)));
+        }
+        if (armor_elec != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 电击：%d", static_cast<int>(armor_elec)));
         }
         if (armor_acid != 0.0) {
             info.emplace_back("DESCRIPTION",
