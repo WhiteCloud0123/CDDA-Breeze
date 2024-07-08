@@ -2383,83 +2383,100 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
         }
 
-        resonance = std::round(resonance * resonance_mult);
-        base_move_cost = std::round(base_move_cost * base_move_cost_mult);
-        attack_cost = std::round(attack_cost * attack_cost_mult);
-        armor_bash = std::round(-(armor_bash * armor_bash_mult));
-        armor_cut = std::round(-(armor_cut * armor_cut_mult));
-        armor_stab = std::round(-(armor_stab * armor_stab_mult));
-        armor_bullet = std::round(-(armor_bullet * armor_bullet_mult));
-        armor_elec = std::round(-(armor_elec * armor_elec_mult));
-        armor_acid = std::round(-(armor_acid * armor_acid_mult));
-        armor_heat = std::round(-(armor_heat * armor_heat_mult));
-        str = std::round(str * str_mult);
-        dex = std::round(dex * dex_mult);
-        inte = std::round(inte * inte_mult);
-        per = std::round(per * per_mult);
-        speed = std::round(speed * speed_mult);
+        resonance = resonance * resonance_mult;
+        speed = speed * speed_mult;
+        base_move_cost = base_move_cost * base_move_cost_mult;
+        attack_cost = attack_cost * attack_cost_mult;
+        armor_bash = -(armor_bash * armor_bash_mult);
+        armor_cut = -(armor_cut * armor_cut_mult);
+        armor_stab = -(armor_stab * armor_stab_mult);
+        armor_bullet = -(armor_bullet * armor_bullet_mult);
+        armor_elec = -(armor_elec * armor_elec_mult);
+        armor_acid = -(armor_acid * armor_acid_mult);
+        armor_heat = -(armor_heat * armor_heat_mult);
+        str = str * str_mult;
+        dex = dex * dex_mult;
+        inte = inte * inte_mult;
+        per = per * per_mult;
+        
 
-        if (resonance != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 共鸣值：%d", static_cast<int>(resonance)));
-        }
-        if (speed != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 速度：%d", static_cast<int>(speed)));
-        }
-        if (base_move_cost != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 基础移动耗时：%d", static_cast<int>(base_move_cost)));
-        }
-        if (attack_cost != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 攻击耗时：%d", static_cast<int>(attack_cost)));
-        }
-        if (armor_bash != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 钝击：%d", static_cast<int>(armor_bash)));
-        }
-        if (armor_cut != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 斩击：%d", static_cast<int>(armor_cut)));
-        }
-        if (armor_stab != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 刺击：%d", static_cast<int>(armor_stab)));
-        }
-        if (armor_bullet != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 射击：%d", static_cast<int>(armor_bullet)));
-        }
-        if (armor_elec != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 电击：%d", static_cast<int>(armor_elec)));
-        }
-        if (armor_acid != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 防酸：%d", static_cast<int>(armor_acid)));
-        }
-        if (armor_heat != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 防火：%d", static_cast<int>(armor_heat)));
-        }
-        if (str != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 力量：%d", static_cast<int>(str)));
-        }
-        if (dex != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 敏捷：%d", static_cast<int>(dex)));
-        }
-        if (inte != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 智力：%d", static_cast<int>(inte)));
-        }
-        if (per != 0.0) {
-            info.emplace_back("DESCRIPTION",
-                string_format("* 感知：%d", static_cast<int>(per)));
-        }
+        if (resonance != 0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 
+            ||  str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0 
+            ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
+            ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
+            || armor_heat != 0.0
+            ) {
+            if (resonance != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 共鸣值：%d", static_cast<int>(resonance)));
+            }
+            if (speed != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 速度：%d", static_cast<int>(speed)));
+            }
+            if (base_move_cost != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 基础移动耗时：%d", static_cast<int>(base_move_cost)));
+            }
+            if (attack_cost != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 攻击耗时：%d", static_cast<int>(attack_cost)));
+            }
+            if (str != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 力量：%d", static_cast<int>(str)));
+            }
+            if (dex != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 敏捷：%d", static_cast<int>(dex)));
+            }
+            if (inte != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 智力：%d", static_cast<int>(inte)));
+            }
+            if (per != 0.0) {
+                info.emplace_back("DESCRIPTION",
+                    string_format("* 感知：%d", static_cast<int>(per)));
+            }
 
+            if (armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
+                || armor_bullet != 0.0 || armor_elec != 0.0 || armor_acid != 0.0
+                || armor_heat != 0.0) {
+                info.emplace_back("DESCRIPTION", "* 防护：");
+                if (armor_bash != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    钝击： % .2f", armor_bash));
+                }
+                if (armor_cut != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    斩击：%.2f", armor_cut));
+                }
+                if (armor_stab != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    刺击：%.2f", armor_stab));
+                }
+                if (armor_bullet != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    射击：%.2f", armor_bullet));
+                }
+                if (armor_elec != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    电击：%.2f", armor_elec));
+                }
+                if (armor_acid != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    防酸：%.2f", armor_acid));
+                }
+                if (armor_heat != 0.0) {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("    防火：%.2f", armor_heat));
+                }
+            
+            }            
+
+        }  else {
+            info.emplace_back("DESCRIPTION", "<bold>无</bold>");
+        }
         info.emplace_back("DESCRIPTION", " ");
         std::string spell_str = "无";
         info.emplace_back("DESCRIPTION", "激活效果：");
