@@ -2494,14 +2494,44 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     string_format("%s", base_str));
             }
 
+            base_str = "* 力量：";
+            need_space = false;
             if (str != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 力量：%d", static_cast<int>(str)));
+                base_str += string_format("%d", static_cast<int>(str));
+                need_space = true;
             }
+            if (str_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", str_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", str_mult);
+                }
+            }
+            if (base_str != "* 力量：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+            
+            base_str = "* 敏捷：";
+            need_space = false;
             if (dex != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 敏捷：%d", static_cast<int>(dex)));
+                base_str += string_format("%d", static_cast<int>(dex));
+                need_space = true;
             }
+            if (dex_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", dex_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", dex_mult);
+                }
+            }
+            if (base_str != "* 敏捷：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
             if (inte != 0.0) {
                 info.emplace_back("DESCRIPTION",
                     string_format("* 智力：%d", static_cast<int>(inte)));
