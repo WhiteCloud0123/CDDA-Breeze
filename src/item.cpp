@@ -2319,6 +2319,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double speed = 0.0;
         double base_move_cost = 0.0;
         double attack_cost = 0.0;
+        double str = 0.0;
+        double dex = 0.0;
+        double inte = 0.0;
+        double per = 0.0;
         double armor_bash = 0.0;
         double armor_cut = 0.0;
         double armor_stab = 0.0;
@@ -2326,15 +2330,15 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_elec = 0.0;
         double armor_acid = 0.0;
         double armor_heat = 0.0;
-        double str = 0.0;
-        double dex = 0.0;
-        double inte = 0.0;
-        double per = 0.0;
 
         double resonance_mult = 1.0;
         double speed_mult = 1.0;
         double base_move_cost_mult = 1.0;
         double attack_cost_mult = 1.0;
+        double str_mult = 1.0;
+        double dex_mult = 1.0;
+        double inte_mult = 1.0;
+        double per_mult = 1.0;
         double armor_bash_mult = 1.0;
         double armor_cut_mult = 1.0;
         double armor_stab_mult = 1.0;
@@ -2342,45 +2346,39 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_elec_mult = 1.0;
         double armor_acid_mult = 1.0;
         double armor_heat_mult = 1.0;
-        double str_mult = 1.0;
-        double dex_mult = 1.0;
-        double inte_mult = 1.0;
-        double per_mult = 1.0;
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
+            speed += e.get_value_add(enchant_vals::mod::SPEED);
             base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
             attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
+            str += e.get_value_add(enchant_vals::mod::STRENGTH);
+            dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
+            inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
+            per += e.get_value_add(enchant_vals::mod::PERCEPTION);     
             armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH);
             armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
             armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
             armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET);
             armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
-            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
-            str += e.get_value_add(enchant_vals::mod::STRENGTH);
-            dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
-            inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
-            per += e.get_value_add(enchant_vals::mod::PERCEPTION);
-            speed += e.get_value_add(enchant_vals::mod::SPEED);
-            
-            
-
+            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);         
+                       
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
+            speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
             base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
             attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
+            str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
+            dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
+            inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
+            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);           
             armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH);
             armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
             armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
             armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET);
             armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC);
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
-            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
-            str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
-            dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
-            inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
-            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);
-            speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
+            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);           
         }
 
         resonance = resonance * resonance_mult;
