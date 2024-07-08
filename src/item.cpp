@@ -2313,13 +2313,14 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
     if (relic_data) {
         info.emplace_back("DESCRIPTION", "<color_c_pink>附魔</color>：");
         info.emplace_back("DESCRIPTION", " ");
-        info.emplace_back("DESCRIPTION", "被动效果：");
-   
+        bool passive_effect_is_empty = false;
+        
         double resonance = 0.0;
         double pain = 0.0;
         double speed = 0.0;
         double base_move_cost = 0.0;
         double attack_cost = 0.0;
+        double regen_mana = 0.0;
         double str = 0.0;
         double dex = 0.0;
         double inte = 0.0;
@@ -2337,6 +2338,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double speed_mult = 1.0;
         double base_move_cost_mult = 1.0;
         double attack_cost_mult = 1.0;
+        double regen_mana_mult = 1.0;
         double str_mult = 1.0;
         double dex_mult = 1.0;
         double inte_mult = 1.0;
@@ -2349,12 +2351,16 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_acid_mult = 1.0;
         double armor_heat_mult = 1.0;
 
+        std::vector<fake_spell> all_hit_you_effect;
+      
+
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
             pain += e.get_value_add(enchant_vals::mod::PAIN);
             speed += e.get_value_add(enchant_vals::mod::SPEED);
             base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
             attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
+            regen_mana += e.get_value_add(enchant_vals::mod::REGEN_MANA);
             str += e.get_value_add(enchant_vals::mod::STRENGTH);
             dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
             inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
@@ -2366,12 +2372,13 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
             armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);         
-                       
+                      
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
             pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN);
             speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
             base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
             attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
+            regen_mana_mult += e.get_value_multiply(enchant_vals::mod::REGEN_MANA);
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
             dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
             inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
@@ -2382,23 +2389,31 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET);
             armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC);
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
-            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);           
+            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
+
+            if ( ! e.hit_you_effect.empty() ) {
+                for (fake_spell &sp : e.hit_you_effect) {
+                    all_hit_you_effect.push_back(sp);
+                }
+            }
+
         }
 
 
-        if (resonance != 0.0||pain !=0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 
+        if (resonance != 0.0||pain !=0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 ||regen_mana !=0.0
             ||  str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0 
             ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0
-            || resonance_mult != 1.0 ||pain_mult !=0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0
+            || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0 
+            || regen_mana_mult !=1.0
             || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
             ) {
 
-
+            info.emplace_back("DESCRIPTION", "被动效果：");
             std::string base_str = "* 共鸣值：";
             bool need_space = false;
             if (resonance != 0.0) {
@@ -2494,6 +2509,25 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     string_format("%s", base_str));
             }
 
+            base_str = "* 魔力恢复：";
+            need_space = false;
+            if (regen_mana != 0.0) {
+                base_str += string_format("%d", static_cast<int>(regen_mana));
+                need_space = true;
+            }
+            if (regen_mana_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", regen_mana_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", regen_mana_mult);
+                }
+            }
+            if (base_str != "* 魔力恢复：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
             base_str = "* 力量：";
             need_space = false;
             if (str != 0.0) {
@@ -2579,7 +2613,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 ) {
                 info.emplace_back("DESCRIPTION", "* 防护：");
                 
-                base_str = "* 钝击：";
+                base_str = "    钝击：";
                 need_space = false;
                 if (armor_bash != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_bash));
@@ -2593,12 +2627,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_bash_mult);
                     }
                 }
-                if (base_str != "* 钝击：") {
+                if (base_str != "    钝击：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
 
-                base_str = "* 斩击：";
+                base_str = "    斩击：";
                 need_space = false;
                 if (armor_cut != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_cut));
@@ -2612,12 +2646,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_cut_mult);
                     }
                 }
-                if (base_str != "* 斩击：") {
+                if (base_str != "    斩击：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
 
-                base_str = "* 刺击：";
+                base_str = "    刺击：";
                 need_space = false;
                 if (armor_stab != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_stab));
@@ -2631,12 +2665,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_stab_mult);
                     }
                 }
-                if (base_str != "* 刺击：") {
+                if (base_str != "    刺击：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
 
-                base_str = "* 射击：";
+                base_str = "    射击：";
                 need_space = false;
                 if (armor_bullet != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_bullet));
@@ -2650,13 +2684,13 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_bullet_mult);
                     }
                 }
-                if (base_str != "* 射击：") {
+                if (base_str != "    射击：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
 
 
-                base_str = "* 电击：";
+                base_str = "    电击：";
                 need_space = false;
                 if (armor_elec != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_elec));
@@ -2670,13 +2704,13 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_elec_mult);
                     }
                 }
-                if (base_str != "* 电击：") {
+                if (base_str != "    电击：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
 
 
-                base_str = "* 防酸：";
+                base_str = "    防酸：";
                 need_space = false;
                 if (armor_acid != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_acid));
@@ -2690,12 +2724,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_acid_mult);
                     }
                 }
-                if (base_str != "* 防酸：") {
+                if (base_str != "    防酸：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
 
-                base_str = "* 防火：";
+                base_str = "    防火：";
                 need_space = false;
                 if (armor_heat != 0.0) {
                     base_str += string_format("%d", static_cast<int>(-armor_heat));
@@ -2709,7 +2743,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         base_str += string_format("x %.2f", 1-armor_heat_mult);
                     }
                 }
-                if (base_str != "* 防火：") {
+                if (base_str != "    防火：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
@@ -2717,15 +2751,13 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }            
 
         }  else {
-            info.emplace_back("DESCRIPTION", "<bold>无</bold>");
+            passive_effect_is_empty = true;
         }
-        info.emplace_back("DESCRIPTION", " ");
-        std::string spell_str = "无";
-        info.emplace_back("DESCRIPTION", "激活效果：");
-        if (relic_data->get_active_effects().size() != 0) {
-            
-
-            spell_str = "";
+        
+        if (!relic_data->get_active_effects().empty()) {
+            info.emplace_back("DESCRIPTION", " ");
+            std::string spell_str = "";
+            info.emplace_back("DESCRIPTION", "激活效果：");
             for (fake_spell& fs : relic_data->get_active_effects()) {
                 spell casting = fs.get_spell(fs.level);
                 spell_str += "<bold>" + casting.name()+"</bold> ";
@@ -2757,9 +2789,21 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
 
             info.emplace_back("DESCRIPTION", string_format("* 充能方式：%s", rt_str));
-        } else {
-            info.emplace_back("DESCRIPTION", "<bold>无</bold>");
+        } 
+
+        if (!all_hit_you_effect.empty()) {
+        
+            info.emplace_back("DESCRIPTION", " ");
+            info.emplace_back("DESCRIPTION", "击中目标时触发的效果：");
+            std::string spell_str = "";
+            for (fake_spell& fs : all_hit_you_effect) {
+                spell casting = fs.get_spell(fs.level);
+                spell_str += "<bold>" + casting.name() + "</bold> ";
+            }
+            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
+        
         }
+
     }
 }
 
