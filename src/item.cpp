@@ -2582,15 +2582,15 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 base_str = "* 钝击：";
                 need_space = false;
                 if (armor_bash != 0.0) {
-                    base_str += string_format("%d", static_cast<int>(armor_bash));
+                    base_str += string_format("%d", static_cast<int>(-armor_bash));
                     need_space = true;
                 }
                 if (armor_bash_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   x %.2f", armor_bash_mult);
+                        base_str += string_format("   x %.2f", 1-armor_bash_mult);
                     }
                     else {
-                        base_str += string_format("x %.2f", armor_bash_mult);
+                        base_str += string_format("x %.2f", 1-armor_bash_mult);
                     }
                 }
                 if (base_str != "* 钝击：") {
@@ -2601,15 +2601,15 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 base_str = "* 斩击：";
                 need_space = false;
                 if (armor_cut != 0.0) {
-                    base_str += string_format("%d", static_cast<int>(armor_cut));
+                    base_str += string_format("%d", static_cast<int>(-armor_cut));
                     need_space = true;
                 }
                 if (armor_cut_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   x %.2f", armor_cut_mult);
+                        base_str += string_format("   x %.2f", 1-armor_cut_mult);
                     }
                     else {
-                        base_str += string_format("x %.2f", armor_cut_mult);
+                        base_str += string_format("x %.2f", 1-armor_cut_mult);
                     }
                 }
                 if (base_str != "* 斩击：") {
@@ -2620,15 +2620,15 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 base_str = "* 刺击：";
                 need_space = false;
                 if (armor_stab != 0.0) {
-                    base_str += string_format("%d", static_cast<int>(armor_stab));
+                    base_str += string_format("%d", static_cast<int>(-armor_stab));
                     need_space = true;
                 }
                 if (armor_stab_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   x %.2f", armor_stab_mult);
+                        base_str += string_format("   x %.2f", 1-armor_stab_mult);
                     }
                     else {
-                        base_str += string_format("x %.2f", armor_stab_mult);
+                        base_str += string_format("x %.2f", 1-armor_stab_mult);
                     }
                 }
                 if (base_str != "* 刺击：") {
@@ -2639,32 +2639,79 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 base_str = "* 射击：";
                 need_space = false;
                 if (armor_bullet != 0.0) {
-                    base_str += string_format("%d", static_cast<int>(armor_bullet));
+                    base_str += string_format("%d", static_cast<int>(-armor_bullet));
                     need_space = true;
                 }
                 if (armor_bullet_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   x %.2f", armor_bullet_mult);
+                        base_str += string_format("   x %.2f", 1-armor_bullet_mult);
                     }
                     else {
-                        base_str += string_format("x %.2f", armor_bullet_mult);
+                        base_str += string_format("x %.2f", 1-armor_bullet_mult);
                     }
                 }
                 if (base_str != "* 射击：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
+
+
+                base_str = "* 电击：";
+                need_space = false;
                 if (armor_elec != 0.0) {
-                    info.emplace_back("DESCRIPTION",
-                        string_format("    电击：%.2f", armor_elec));
+                    base_str += string_format("%d", static_cast<int>(-armor_elec));
+                    need_space = true;
                 }
+                if (armor_elec_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", 1-armor_elec_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", 1-armor_elec_mult);
+                    }
+                }
+                if (base_str != "* 电击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+
+                base_str = "* 防酸：";
+                need_space = false;
                 if (armor_acid != 0.0) {
-                    info.emplace_back("DESCRIPTION",
-                        string_format("    防酸：%.2f", armor_acid));
+                    base_str += string_format("%d", static_cast<int>(-armor_acid));
+                    need_space = true;
                 }
-                if (armor_heat != 0.0) {
+                if (armor_acid_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", 1-armor_acid_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", 1-armor_acid_mult);
+                    }
+                }
+                if (base_str != "* 防酸：") {
                     info.emplace_back("DESCRIPTION",
-                        string_format("    防火：%.2f", armor_heat));
+                        string_format("%s", base_str));
+                }
+
+                base_str = "* 防火：";
+                need_space = false;
+                if (armor_heat != 0.0) {
+                    base_str += string_format("%d", static_cast<int>(-armor_heat));
+                    need_space = true;
+                }
+                if (armor_heat_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   x %.2f", 1-armor_heat_mult);
+                    }
+                    else {
+                        base_str += string_format("x %.2f", 1-armor_heat_mult);
+                    }
+                }
+                if (base_str != "* 防火：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
                 }
             
             }            
