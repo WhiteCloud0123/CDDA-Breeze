@@ -2532,13 +2532,42 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     string_format("%s", base_str));
             }
 
+            base_str = "* 智力：";
+            need_space = false;
             if (inte != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 智力：%d", static_cast<int>(inte)));
+                base_str += string_format("%d", static_cast<int>(inte));
+                need_space = true;
             }
-            if (per != 0.0) {
+            if (inte_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", inte_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", inte_mult);
+                }
+            }
+            if (base_str != "* 智力：") {
                 info.emplace_back("DESCRIPTION",
-                    string_format("* 感知：%d", static_cast<int>(per)));
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 感知：";
+            need_space = false;
+            if (per != 0.0) {
+                base_str += string_format("%d", static_cast<int>(per));
+                need_space = true;
+            }
+            if (per_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", per_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", per_mult);
+                }
+            }
+            if (base_str != "* 感知：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
             }
 
             if (armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
