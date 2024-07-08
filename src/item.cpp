@@ -2316,6 +2316,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         info.emplace_back("DESCRIPTION", "被动效果：");
    
         double resonance = 0.0;
+        double speed = 0.0;
         double base_move_cost = 0.0;
         double armor_bash = 0.0;
         double armor_cut = 0.0;
@@ -2323,14 +2324,14 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_bullet = 0.0;
         double armor_elec = 0.0;
         double armor_acid = 0.0;
+        double armor_heat = 0.0;
         double str = 0.0;
         double dex = 0.0;
         double inte = 0.0;
         double per = 0.0;
-        double speed = 0.0;
-        double armor_heat = 0.0;
 
         double resonance_mult = 1.0;
+        double speed_mult = 1.0;
         double base_move_cost_mult = 1.0;
         double armor_bash_mult = 1.0;
         double armor_cut_mult = 1.0;
@@ -2343,7 +2344,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double dex_mult = 1.0;
         double inte_mult = 1.0;
         double per_mult = 1.0;
-        double speed_mult = 1.0;
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
