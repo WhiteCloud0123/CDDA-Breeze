@@ -2381,33 +2381,41 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);           
         }
 
-        resonance = resonance * resonance_mult;
-        speed = speed * speed_mult;
-        base_move_cost = base_move_cost * base_move_cost_mult;
-        attack_cost = attack_cost * attack_cost_mult;
-        armor_bash = -(armor_bash * armor_bash_mult);
-        armor_cut = -(armor_cut * armor_cut_mult);
-        armor_stab = -(armor_stab * armor_stab_mult);
-        armor_bullet = -(armor_bullet * armor_bullet_mult);
-        armor_elec = -(armor_elec * armor_elec_mult);
-        armor_acid = -(armor_acid * armor_acid_mult);
-        armor_heat = -(armor_heat * armor_heat_mult);
-        str = str * str_mult;
-        dex = dex * dex_mult;
-        inte = inte * inte_mult;
-        per = per * per_mult;
-        
 
         if (resonance != 0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 
             ||  str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0 
             ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0
+            || resonance_mult != 1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0
+            || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
+            || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
+            || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
+            || armor_heat_mult != 1.0
             ) {
+
+
+            std::string base_str = "* 共鸣值：";
+            bool need_space = false;
             if (resonance != 0.0) {
-                info.emplace_back("DESCRIPTION",
-                    string_format("* 共鸣值：%d", static_cast<int>(resonance)));
+                base_str += string_format("%d", static_cast<int>(resonance));
+                need_space = true;
             }
+            if (resonance_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   x %.2f", resonance_mult);
+                }
+                else {
+                    base_str += string_format("x %.2f", resonance_mult);
+                }
+            }
+            if (base_str != "* 共鸣值：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+            need_space = false;
+
+
             if (speed != 0.0) {
                 info.emplace_back("DESCRIPTION",
                     string_format("* 速度：%d", static_cast<int>(speed)));
