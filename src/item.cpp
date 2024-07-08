@@ -2318,6 +2318,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double resonance = 0.0;
         double speed = 0.0;
         double base_move_cost = 0.0;
+        double attack_cost = 0.0;
         double armor_bash = 0.0;
         double armor_cut = 0.0;
         double armor_stab = 0.0;
@@ -2333,6 +2334,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double resonance_mult = 1.0;
         double speed_mult = 1.0;
         double base_move_cost_mult = 1.0;
+        double attack_cost_mult = 1.0;
         double armor_bash_mult = 1.0;
         double armor_cut_mult = 1.0;
         double armor_stab_mult = 1.0;
@@ -2348,6 +2350,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
             base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
+            attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
             armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH);
             armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
             armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
@@ -2365,6 +2368,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
             base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
+            attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
             armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH);
             armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
             armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
@@ -2381,6 +2385,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         resonance = std::round(resonance * resonance_mult);
         base_move_cost = std::round(base_move_cost * base_move_cost_mult);
+        attack_cost = std::round(attack_cost * attack_cost_mult);
         armor_bash = std::round(-(armor_bash * armor_bash_mult));
         armor_cut = std::round(-(armor_cut * armor_cut_mult));
         armor_stab = std::round(-(armor_stab * armor_stab_mult));
@@ -2405,6 +2410,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         if (base_move_cost != 0.0) {
             info.emplace_back("DESCRIPTION",
                 string_format("* 基础移动耗时：%d", static_cast<int>(base_move_cost)));
+        }
+        if (attack_cost != 0.0) {
+            info.emplace_back("DESCRIPTION",
+                string_format("* 攻击耗时：%d", static_cast<int>(attack_cost)));
         }
         if (armor_bash != 0.0) {
             info.emplace_back("DESCRIPTION",
