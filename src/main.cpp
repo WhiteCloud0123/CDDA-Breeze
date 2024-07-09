@@ -830,11 +830,9 @@ int main( int argc, const char *argv[] )
 
 #if defined(__ANDROID__)
 
-    if (get_option<bool>("启用扩展按键")) {
+    jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, ::get_option<bool>("启用扩展按键"));
+    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
 
-        jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, true);
-
-    }
 #endif
 
     while( true ) {

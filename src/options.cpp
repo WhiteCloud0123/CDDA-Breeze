@@ -3745,10 +3745,6 @@ void options_manager::load()
     update_global_locale();
     update_options_cache();
 
-#if defined(__ANDROID__)
-    jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
-#endif
-
 #if defined(SDL_SOUND)
     sounds::sound_enabled = ::get_option<bool>( "SOUND_ENABLED" );
 #endif

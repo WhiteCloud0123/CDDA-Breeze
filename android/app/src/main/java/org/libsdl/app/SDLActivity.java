@@ -94,9 +94,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     // This is what SDL runs in. It invokes SDL_main(), eventually
     protected static Thread mSDLThread;
 
-    Button tabButton;
-
     private static boolean forceFullScreen = true;
+    Button tabButton;
 
     public void setExtraButtonVisibility(boolean visible) {
 
@@ -122,6 +121,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     public void set_force_full_screen(boolean value) {
         forceFullScreen = value;
+        setWindowStyle(value);
     }
 
     protected static SDLGenericMotionListener_API12 getMotionListener() {
@@ -298,7 +298,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         setContentView(mLayout);
 
-        setWindowStyle(false);
+        set_force_full_screen(false);
 
         mLayout.getViewTreeObserver().addOnGlobalLayoutListener(
             new ViewTreeObserver.OnGlobalLayoutListener() {
