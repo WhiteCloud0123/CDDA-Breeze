@@ -2309,8 +2309,8 @@ void item::debug_info( std::vector<iteminfo> &info, const iteminfo_query *parts,
 }
 void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* parts, int batch) const {
 
-    insert_separation_line(info);
     if (relic_data) {
+        insert_separation_line(info);
         info.emplace_back("DESCRIPTION", "<color_c_pink>附魔</color>：");
         bool passive_effect_is_empty = false;
 
