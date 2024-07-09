@@ -551,6 +551,12 @@ bool relic::can_recharge( item &parent, Character *carrier ) const
 
 }
 
+relic_charge_info& relic::get_charge_info() {
+
+    return charge;
+
+}
+
 void relic::overwrite_charge( const relic_charge_info &info )
 {
     charge = info;

@@ -228,9 +228,7 @@ class relic
 
         bool can_recharge( item &parent, Character *carrier ) const;
 
-        relic_charge_info& get_charge_info() {
-            return charge;
-        }
+        relic_charge_info& get_charge_info();
 
         void load( const JsonObject &jo );
 
