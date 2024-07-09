@@ -228,6 +228,8 @@ class relic
 
         bool can_recharge( item &parent, Character *carrier ) const;
 
+        relic_charge_info& get_charge_info();
+
         void load( const JsonObject &jo );
 
         void serialize( JsonOut &jsout ) const;
@@ -239,6 +241,7 @@ class relic
 
         std::vector<enchant_cache> get_proc_enchantments() const;
         std::vector<enchantment> get_defined_enchantments() const;
+        std::vector<fake_spell> get_active_effects() const;
 
         void overwrite_charge( const relic_charge_info &info );
 

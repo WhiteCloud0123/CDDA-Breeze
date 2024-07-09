@@ -2307,6 +2307,581 @@ void item::debug_info( std::vector<iteminfo> &info, const iteminfo_query *parts,
         }
     }
 }
+void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* parts, int batch) const {
+
+    insert_separation_line(info);
+    if (relic_data) {
+        info.emplace_back("DESCRIPTION", "<color_c_pink>附魔</color>：");
+        bool passive_effect_is_empty = false;
+
+        double resonance = 0.0;
+        double pain = 0.0;
+        double speed = 0.0;
+        double base_move_cost = 0.0;
+        double attack_cost = 0.0;
+        double regen_mana = 0.0;
+        double str = 0.0;
+        double dex = 0.0;
+        double inte = 0.0;
+        double per = 0.0;
+        double item_damage_heat = 0.0;
+        double armor_bash = 0.0;
+        double armor_cut = 0.0;
+        double armor_stab = 0.0;
+        double armor_bullet = 0.0;
+        double armor_elec = 0.0;
+        double armor_acid = 0.0;
+        double armor_heat = 0.0;
+
+        double resonance_mult = 1.0;
+        double pain_mult = 1.0;
+        double speed_mult = 1.0;
+        double base_move_cost_mult = 1.0;
+        double attack_cost_mult = 1.0;
+        double regen_mana_mult = 1.0;
+        double str_mult = 1.0;
+        double dex_mult = 1.0;
+        double inte_mult = 1.0;
+        double per_mult = 1.0;
+        double item_damage_heat_mult = 1.0;
+        double armor_bash_mult = 1.0;
+        double armor_cut_mult = 1.0;
+        double armor_stab_mult = 1.0;
+        double armor_bullet_mult = 1.0;
+        double armor_elec_mult = 1.0;
+        double armor_acid_mult = 1.0;
+        double armor_heat_mult = 1.0;
+
+        std::vector<fake_spell> all_hit_you_effect;
+        relic_charge_info charge_info = relic_data->get_charge_info();
+        relic_recharge_type recharge_type = charge_info.type;
+
+        for (enchant_cache& e : relic_data->get_proc_enchantments()) {
+            resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
+            pain += e.get_value_add(enchant_vals::mod::PAIN);
+            speed += e.get_value_add(enchant_vals::mod::SPEED);
+            base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
+            attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
+            regen_mana += e.get_value_add(enchant_vals::mod::REGEN_MANA);
+            str += e.get_value_add(enchant_vals::mod::STRENGTH);
+            dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
+            inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
+            per += e.get_value_add(enchant_vals::mod::PERCEPTION);
+            item_damage_heat += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_HEAT);
+            armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH);
+            armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
+            armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
+            armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET);
+            armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC);
+            armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
+            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
+
+            resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
+            pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN);
+            speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
+            base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
+            attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
+            regen_mana_mult += e.get_value_multiply(enchant_vals::mod::REGEN_MANA);
+            str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
+            dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
+            inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
+            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);
+            item_damage_heat_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_HEAT);
+            armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH);
+            armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
+            armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
+            armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET);
+            armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC);
+            armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
+            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
+
+            if (!e.hit_you_effect.empty()) {
+                for (fake_spell& sp : e.hit_you_effect) {
+                    all_hit_you_effect.push_back(sp);
+                }
+            }
+
+        }
+
+
+        if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || regen_mana != 0.0
+            || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
+            || item_damage_heat !=0.0
+            ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
+            ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
+            || armor_heat != 0.0
+            || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0 
+            || regen_mana_mult !=1.0
+            || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
+            || item_damage_heat_mult != 1.0
+            || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
+            || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
+            || armor_heat_mult != 1.0
+            || charge_info.regenerate_ammo
+            ) {
+            info.emplace_back("DESCRIPTION", " ");
+            info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
+            std::string base_str = "* 共鸣值：";
+            bool need_space = false;
+            if (resonance != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(resonance));
+                need_space = true;
+            }
+            if (resonance_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", resonance_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", resonance_mult);
+                }
+            }
+            if (base_str != "* 共鸣值：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 疼痛：";
+            need_space = false;
+            if (pain != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(pain));
+                need_space = true;
+            }
+            if (pain_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", pain_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", pain_mult);
+                }
+            }
+            if (base_str != "* 疼痛：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 速度：";
+            need_space = false;
+            if (speed != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(speed));
+                need_space = true;
+            }
+            if (speed_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", speed_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", speed_mult);
+                }
+            }
+            if (base_str != "* 速度：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 基础移动耗时：";
+            need_space = false;
+            if (base_move_cost != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(base_move_cost));
+                need_space = true;
+            }
+            if (base_move_cost_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", base_move_cost_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", base_move_cost_mult);
+                }
+            }
+            if (base_str != "* 基础移动耗时：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 攻击耗时：";
+            need_space = false;
+            if (attack_cost != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(attack_cost));
+                need_space = true;
+            }
+            if (attack_cost_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", attack_cost_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", attack_cost_mult);
+                }
+            }
+            if (base_str != "* 攻击耗时：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 魔力恢复：";
+            need_space = false;
+            if (regen_mana != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(regen_mana));
+                need_space = true;
+            }
+            if (regen_mana_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", regen_mana_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", regen_mana_mult);
+                }
+            }
+            if (base_str != "* 魔力恢复：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 力量：";
+            need_space = false;
+            if (str != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(str));
+                need_space = true;
+            }
+            if (str_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", str_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", str_mult);
+                }
+            }
+            if (base_str != "* 力量：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+            
+            base_str = "* 敏捷：";
+            need_space = false;
+            if (dex != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(dex));
+                need_space = true;
+            }
+            if (dex_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", dex_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", dex_mult);
+                }
+            }
+            if (base_str != "* 敏捷：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 智力：";
+            need_space = false;
+            if (inte != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(inte));
+                need_space = true;
+            }
+            if (inte_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", inte_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", inte_mult);
+                }
+            }
+            if (base_str != "* 智力：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 感知：";
+            need_space = false;
+            if (per != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(per));
+                need_space = true;
+            }
+            if (per_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", per_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f<>/color", per_mult);
+                }
+            }
+            if (base_str != "* 感知：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+            
+            
+            if (
+                item_damage_heat != 0.0
+                || item_damage_heat_mult != 1.0
+                ) {
+
+                info.emplace_back("DESCRIPTION", "* 近战伤害：");
+                base_str = "    火焰：";
+                need_space = false;
+                if (item_damage_heat != 0.0) {
+                    base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(item_damage_heat));
+                    need_space = true;
+                }
+                if (item_damage_heat_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%d</color>", item_damage_heat_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%d</color>", item_damage_heat_mult);
+                    }
+                }
+                if (base_str != "    火焰：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+            }
+
+
+            if (armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
+                || armor_bullet != 0.0 || armor_elec != 0.0 || armor_acid != 0.0
+                || armor_heat != 0.0
+                || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
+                || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
+                || armor_heat_mult != 1.0
+                
+                ) {
+                info.emplace_back("DESCRIPTION", "* 防护：");
+                
+                base_str = "    钝击：";
+                need_space = false;
+                if (armor_bash != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_bash);
+                    need_space = true;
+                }
+                if (armor_bash_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_bash_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_bash_mult);
+                    }
+                }
+                if (base_str != "    钝击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "    斩击：";
+                need_space = false;
+                if (armor_cut != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_cut);
+                    need_space = true;
+                }
+                if (armor_cut_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_cut_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_cut_mult);
+                    }
+                }
+                if (base_str != "    斩击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "    刺击：";
+                need_space = false;
+                if (armor_stab != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_stab);
+                    need_space = true;
+                }
+                if (armor_stab_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_stab_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_stab_mult);
+                    }
+                }
+                if (base_str != "    刺击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "    射击：";
+                need_space = false;
+                if (armor_bullet != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_bullet);
+                    need_space = true;
+                }
+                if (armor_bullet_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_bullet_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_bullet_mult);
+                    }
+                }
+                if (base_str != "    射击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+
+                base_str = "    电击：";
+                need_space = false;
+                if (armor_elec != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_elec);
+                    need_space = true;
+                }
+                if (armor_elec_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_elec_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_elec_mult);
+                    }
+                }
+                if (base_str != "    电击：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+
+                base_str = "    防酸：";
+                need_space = false;
+                if (armor_acid != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_acid);
+                    need_space = true;
+                }
+                if (armor_acid_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_acid_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_acid_mult);
+                    }
+                }
+                if (base_str != "    防酸：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "    防火：";
+                need_space = false;
+                if (armor_heat != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", -armor_heat);
+                    need_space = true;
+                }
+                if (armor_heat_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_heat_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_heat_mult);
+                    }
+                }
+                if (base_str != "    防火：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+               
+            }
+
+            if (charge_info.regenerate_ammo) {
+
+                std::string ammo_name;
+                if (ammo_data()) {
+                    itype_id id = ammo_current();
+                    item i(id);
+                    ammo_name = i.tname();
+                
+                }
+                else {
+                    itype_id id = ammo_default();
+                    item i(id);
+                    ammo_name = i.tname();                    
+                }
+                
+                std::string rt_str = "无";
+                if (recharge_type == relic_recharge_type::PERIODIC) {
+                    rt_str = "<color_c_yellow>时间</color>";
+                }
+                else if (recharge_type == relic_recharge_type::LUNAR) {
+                    rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间，手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::FULL_MOON) {
+                    rt_str = "<color_c_yellow>时间，在户外，夜间，满月，手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::NEW_MOON) {
+                    rt_str = "<color_c_yellow>时间，在户外，夜间，新月,手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
+                    rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴，手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
+                    rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
+                }
+                info.emplace_back("DESCRIPTION", string_format("* %1s补充方式：%2s",ammo_name, rt_str));
+            }
+
+
+
+        }  else {
+            passive_effect_is_empty = true;
+        }
+        
+        if (!relic_data->get_active_effects().empty()) {
+            info.emplace_back("DESCRIPTION", " ");
+            std::string spell_str = "";
+            info.emplace_back("DESCRIPTION", "<bold>激活效果</bold>：");
+            for (fake_spell& fs : relic_data->get_active_effects()) {
+                spell casting = fs.get_spell(fs.level);
+                spell_str +="<color_c_yellow>"+casting.name() + "</color> ";
+            }
+
+            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
+
+            std::string rt_str = "无";
+            if (recharge_type == relic_recharge_type::PERIODIC) {
+                rt_str = "<color_c_yellow>时间</color>";
+            }
+            else if (recharge_type == relic_recharge_type::LUNAR) {
+                rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间，手持或穿戴</color>";
+            }
+            else if (recharge_type == relic_recharge_type::FULL_MOON) {
+                rt_str = "<color_c_yellow>时间，在户外，夜间，满月，手持或穿戴</color>";
+            }
+            else if (recharge_type == relic_recharge_type::NEW_MOON) {
+                rt_str = "<color_c_yellow>时间，在户外，夜间，新月,手持或穿戴</color>";
+            }
+            else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
+                rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴，手持或穿戴</color>";
+            }
+            else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
+                rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
+            }
+
+            info.emplace_back("DESCRIPTION", string_format("* 充能方式：%s", rt_str));
+        } 
+
+        if (!all_hit_you_effect.empty()) {   
+            info.emplace_back("DESCRIPTION", " ");
+            info.emplace_back("DESCRIPTION", "<bold>击中目标时触发的效果</bold>：");
+            std::string spell_str = "";
+            for (fake_spell& fs : all_hit_you_effect) {
+                spell casting = fs.get_spell(fs.level);
+                spell_str += "<color_c_yellow>"+casting.name() + "</color> ";
+            }
+            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
+        
+        }
+
+
+        if (passive_effect_is_empty && relic_data->get_active_effects().empty() && all_hit_you_effect.empty()) {
+            info.emplace_back("DESCRIPTION", "无");
+        }
+    }
+}
 
 void item::med_info( const item *med_item, std::vector<iteminfo> &info, const iteminfo_query *parts,
                      int batch, bool debug ) const
@@ -5724,6 +6299,7 @@ std::string item::info( std::vector<iteminfo> &info, const iteminfo_query *parts
 
     if( !is_null() ) {
         basic_info( info, parts, batch, debug );
+        enchantment_info(info, parts, batch);
         debug_info( info, parts, batch, debug );
     }
 

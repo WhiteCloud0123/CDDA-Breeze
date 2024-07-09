@@ -551,6 +551,12 @@ bool relic::can_recharge( item &parent, Character *carrier ) const
 
 }
 
+relic_charge_info& relic::get_charge_info() {
+
+    return charge;
+
+}
+
 void relic::overwrite_charge( const relic_charge_info &info )
 {
     charge = info;
@@ -569,6 +575,11 @@ std::vector<enchant_cache> relic::get_proc_enchantments() const
 std::vector<enchantment> relic::get_defined_enchantments() const
 {
     return defined_passive_effects;
+}
+
+std::vector<fake_spell> relic::get_active_effects() const
+{
+    return active_effects;
 }
 
 int relic::power_level( const relic_procgen_id &ruleset ) const
