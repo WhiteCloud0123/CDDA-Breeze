@@ -2351,7 +2351,8 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_heat_mult = 1.0;
 
         std::vector<fake_spell> all_hit_you_effect;
-      
+        relic_charge_info charge_info = relic_data->get_charge_info();
+        relic_recharge_type recharge_type = charge_info.type;
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE);
@@ -2410,6 +2411,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
+            || charge_info.regenerate_ammo
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
@@ -2609,6 +2611,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
                 || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
                 || armor_heat_mult != 1.0
+                
                 ) {
                 info.emplace_back("DESCRIPTION", "* 防护：");
                 
@@ -2746,8 +2749,47 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
-            
-            }     
+               
+            }
+
+            if (charge_info.regenerate_ammo) {
+
+                std::string ammo_name;
+                if (ammo_data()) {
+                    itype_id id = ammo_current();
+                    item i(id);
+                    ammo_name = i.tname();
+                
+                }
+                else {
+                    itype_id id = ammo_default();
+                    item i(id);
+                    ammo_name = i.tname();                    
+                }
+                
+                std::string rt_str = "无";
+                if (recharge_type == relic_recharge_type::PERIODIC) {
+                    rt_str = "<color_c_yellow>时间</color>";
+                }
+                else if (recharge_type == relic_recharge_type::LUNAR) {
+                    rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间，手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::FULL_MOON) {
+                    rt_str = "<color_c_yellow>时间，在户外，夜间，满月，手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::NEW_MOON) {
+                    rt_str = "<color_c_yellow>时间，在户外，夜间，新月,手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
+                    rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴，手持或穿戴</color>";
+                }
+                else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
+                    rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
+                }
+                info.emplace_back("DESCRIPTION", string_format("* %1s补充方式：%2s",ammo_name, rt_str));
+            }
+
+
 
         }  else {
             passive_effect_is_empty = true;
@@ -2763,27 +2805,24 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
 
             info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
-            relic_charge_info& charge_info = relic_data->get_charge_info();
-            // NONE, PERIODIC, LUNAR, FULL_MOON, NEW_MOON, SOLAR_SUNNY, SOLAR_CLOUDY, NUM
-            relic_recharge_type rt = charge_info.type;
 
             std::string rt_str = "无";
-            if (rt == relic_recharge_type::PERIODIC) {
+            if (recharge_type == relic_recharge_type::PERIODIC) {
                 rt_str = "<color_c_yellow>时间</color>";
             }
-            else if (rt == relic_recharge_type::LUNAR) {
+            else if (recharge_type == relic_recharge_type::LUNAR) {
                 rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间，手持或穿戴</color>";
             }
-            else if (rt == relic_recharge_type::FULL_MOON) {
+            else if (recharge_type == relic_recharge_type::FULL_MOON) {
                 rt_str = "<color_c_yellow>时间，在户外，夜间，满月，手持或穿戴</color>";
             }
-            else if (rt == relic_recharge_type::NEW_MOON) {
+            else if (recharge_type == relic_recharge_type::NEW_MOON) {
                 rt_str = "<color_c_yellow>时间，在户外，夜间，新月,手持或穿戴</color>";
             }
-            else if (rt == relic_recharge_type::SOLAR_SUNNY) {
+            else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
                 rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴，手持或穿戴</color>";
             }
-            else if (rt == relic_recharge_type::SOLAR_CLOUDY) {
+            else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
                 rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
             }
 
