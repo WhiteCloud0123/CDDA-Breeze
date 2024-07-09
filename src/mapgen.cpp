@@ -6352,6 +6352,12 @@ void map::add_spawn( const MonsterGroupResult &spawn_details, const tripoint &p 
                spawn_details.data );
 }
 
+void map::add_spawn(const MonsterGroupResult& spawn_details, const tripoint& p,bool friendly)
+{
+    add_spawn(spawn_details.name, spawn_details.pack_size, p, friendly, -1, -1, "NONE",
+        spawn_details.data);
+}
+
 void map::add_spawn( const mtype_id &type, int count, const tripoint &p, bool friendly,
                      int faction_id, int mission_id, const std::string &name )
 {
