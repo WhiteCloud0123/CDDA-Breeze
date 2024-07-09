@@ -549,10 +549,13 @@ void monster::try_reproduce()
                 // 如果怪物在载具上，那么产下的蛋优先放置在载具上
                 const optional_vpart_position vp = here.veh_at(pos());
                 bool need_put_on_the_map = false;
+                item egg(type->baby_egg, *baby_timer, spawn_cnt);
+                egg.set_var("friendly", friendly);
                 if (vp) {
                     int cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
                     if (cargo_part>=0) {
-                        if (!vp->vehicle().add_item(cargo_part, item(type->baby_egg, *baby_timer, spawn_cnt))) {
+                        
+                        if (!vp->vehicle().add_item(cargo_part, egg)) {
                             need_put_on_the_map = true;
                         }
                     }
@@ -565,7 +568,7 @@ void monster::try_reproduce()
                 }
                 
                 if (need_put_on_the_map) {
-                    here.add_item_or_charges(pos(), item(type->baby_egg, *baby_timer, spawn_cnt), true);
+                    here.add_item_or_charges(pos(), egg, true);
                 }
             
             }
