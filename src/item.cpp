@@ -2328,6 +2328,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double item_damage_cut = 0.0;
         double item_damage_acid = 0.0;
         double item_damage_heat = 0.0;
+        double item_damage_cold = 0.0;
         double armor_bash = 0.0;
         double armor_cut = 0.0;
         double armor_stab = 0.0;
@@ -2350,6 +2351,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double item_damage_cut_mult = 1.0;
         double item_damage_acid_mult = 1.0;
         double item_damage_heat_mult = 1.0;
+        double item_damage_cold_mult = 1.0;
         double armor_bash_mult = 1.0;
         double armor_cut_mult = 1.0;
         double armor_stab_mult = 1.0;
@@ -2378,6 +2380,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             item_damage_cut += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_CUT);
             item_damage_acid += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_ACID);
             item_damage_heat += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_HEAT);
+            item_damage_cold += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_COLD);
             armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH);
             armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
             armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
@@ -2400,6 +2403,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             item_damage_cut_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_CUT);
             item_damage_acid_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_ACID);
             item_damage_heat_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_HEAT);
+            item_damage_cold_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_COLD);
             armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH);
             armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
             armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
@@ -2425,17 +2429,21 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || regen_mana != 0.0
             || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
-            || item_damage_heat !=0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid !=0.0
+            || item_damage_heat !=0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid !=0.0 
+            || item_damage_cold != 0.0
             ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0 
+            
             || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0 
             || regen_mana_mult !=1.0
-            || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
-            || item_damage_heat_mult != 1.0 || item_damage_bash_mult !=1.0 || item_damage_cut_mult != 1.0 || item_damage_acid_mult !=1.0
+            || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0            
+            || item_damage_heat_mult != 1.0 || item_damage_bash_mult !=1.0 || item_damage_cut_mult != 1.0 || item_damage_acid_mult !=1.0 
+            || item_damage_cold_mult != 1.0           
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
+            
             || charge_info.regenerate_ammo
             ) {
             info.emplace_back("DESCRIPTION", " ");
@@ -2633,7 +2641,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             
             if (
                 item_damage_heat != 0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid !=0.0
-                || item_damage_heat_mult != 1.0 || item_damage_bash_mult !=1.0 || item_damage_cut_mult !=1.0 || item_damage_acid_mult !=1.0
+                || item_damage_cold != 0.0
+
+                || item_damage_heat_mult != 1.0 || item_damage_bash_mult !=1.0 || item_damage_cut_mult !=1.0 
+                || item_damage_acid_mult !=1.0|| item_damage_cold_mult != 1.0
                 ) {
 
                 info.emplace_back("DESCRIPTION", "* 近战伤害：");
@@ -2714,12 +2725,32 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         string_format("%s", base_str));
                 }
 
+                base_str = "    寒冷：";
+                need_space = false;
+                if (item_damage_cold != 0.0) {
+                    base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(item_damage_cold));
+                    need_space = true;
+                }
+                if (item_damage_cold_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%.2f</color>", item_damage_cold_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%.2f</color>", item_damage_cold_mult);
+                    }
+                }
+                if (base_str != "    寒冷：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
             }
 
 
             if (armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
                 || armor_bullet != 0.0 || armor_elec != 0.0 || armor_acid != 0.0
                 || armor_heat != 0.0
+
                 || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
                 || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
                 || armor_heat_mult != 1.0
