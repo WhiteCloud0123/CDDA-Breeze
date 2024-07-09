@@ -598,7 +598,7 @@ void refresh_display()
 
 #endif
 #if defined(__ANDROID__)
-    draw_terminal_size_preview();
+    //draw_terminal_size_preview();
     if( g ) {
         draw_quick_shortcuts();
     }
