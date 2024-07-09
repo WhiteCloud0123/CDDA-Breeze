@@ -2353,6 +2353,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_heat_mult = 1.0;
 
         std::vector<fake_spell> all_hit_you_effect;
+        std::vector<fake_spell> all_hit_me_effect;
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
 
@@ -2398,6 +2399,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             if (!e.hit_you_effect.empty()) {
                 for (fake_spell& sp : e.hit_you_effect) {
                     all_hit_you_effect.push_back(sp);
+                }
+            }
+
+            if (! e.hit_me_effect.empty()) {
+                for (fake_spell& sp : e.hit_me_effect) {
+                    all_hit_me_effect.push_back(sp);
                 }
             }
 
@@ -2876,8 +2883,20 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         
         }
 
+        if (!all_hit_me_effect.empty()) {
+            info.emplace_back("DESCRIPTION", " ");
+            info.emplace_back("DESCRIPTION", "<bold>被击中时触发的效果</bold>：");
+            std::string spell_str = "";
+            for (fake_spell& fs : all_hit_me_effect) {
+                spell casting = fs.get_spell(fs.level);
+                spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
+            }
+            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
 
-        if (passive_effect_is_empty && relic_data->get_active_effects().empty() && all_hit_you_effect.empty()) {
+        }
+
+
+        if (passive_effect_is_empty && relic_data->get_active_effects().empty() && all_hit_you_effect.empty() && all_hit_me_effect.empty()) {
             info.emplace_back("DESCRIPTION", "无");
         }
     }
