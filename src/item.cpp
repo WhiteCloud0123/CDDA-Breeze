@@ -2313,7 +2313,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
     if (relic_data) {
         info.emplace_back("DESCRIPTION", "<color_c_pink>附魔</color>：");
         bool passive_effect_is_empty = false;
-        
+
         double resonance = 0.0;
         double pain = 0.0;
         double speed = 0.0;
@@ -2324,6 +2324,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double dex = 0.0;
         double inte = 0.0;
         double per = 0.0;
+        double item_damage_heat = 0.0;
         double armor_bash = 0.0;
         double armor_cut = 0.0;
         double armor_stab = 0.0;
@@ -2342,6 +2343,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double dex_mult = 1.0;
         double inte_mult = 1.0;
         double per_mult = 1.0;
+        double item_damage_heat_mult = 1.0;
         double armor_bash_mult = 1.0;
         double armor_cut_mult = 1.0;
         double armor_stab_mult = 1.0;
@@ -2364,15 +2366,16 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             str += e.get_value_add(enchant_vals::mod::STRENGTH);
             dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
             inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE);
-            per += e.get_value_add(enchant_vals::mod::PERCEPTION);     
+            per += e.get_value_add(enchant_vals::mod::PERCEPTION);
+            item_damage_heat += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_HEAT);
             armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH);
             armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT);
             armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB);
             armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET);
             armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
-            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);         
-                      
+            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
+
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
             pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN);
             speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
@@ -2382,7 +2385,8 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
             dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
             inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE);
-            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);           
+            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION);
+            item_damage_heat_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_HEAT);
             armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH);
             armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT);
             armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB);
@@ -2391,8 +2395,8 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
             armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
 
-            if ( ! e.hit_you_effect.empty() ) {
-                for (fake_spell &sp : e.hit_you_effect) {
+            if (!e.hit_you_effect.empty()) {
+                for (fake_spell& sp : e.hit_you_effect) {
                     all_hit_you_effect.push_back(sp);
                 }
             }
@@ -2400,14 +2404,16 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         }
 
 
-        if (resonance != 0.0||pain !=0.0 || speed !=0.0|| base_move_cost != 0.0 || attack_cost != 0.0 ||regen_mana !=0.0
-            ||  str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0 
+        if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || regen_mana != 0.0
+            || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
+            || item_damage_heat !=0.0
             ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0
             || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0 
             || regen_mana_mult !=1.0
             || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
+            || item_damage_heat_mult != 1.0
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
@@ -2604,6 +2610,35 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 info.emplace_back("DESCRIPTION",
                     string_format("%s", base_str));
             }
+            
+            
+            if (
+                item_damage_heat != 0.0
+                || item_damage_heat_mult != 1.0
+                ) {
+
+                info.emplace_back("DESCRIPTION", "* 近战伤害：");
+                base_str = "    火焰：";
+                need_space = false;
+                if (item_damage_heat != 0.0) {
+                    base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(item_damage_heat));
+                    need_space = true;
+                }
+                if (item_damage_heat_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>%d</color>", item_damage_heat_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>%d</color>", item_damage_heat_mult);
+                    }
+                }
+                if (base_str != "    火焰：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+            }
+
 
             if (armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
                 || armor_bullet != 0.0 || armor_elec != 0.0 || armor_acid != 0.0
