@@ -76,6 +76,7 @@
 #include "mod_manager.h"
 #include "monster.h"
 #include "mtype.h"
+#include "mutation.h"
 #include "npc.h"
 #include "optional.h"
 #include "options.h"
@@ -2465,7 +2466,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
             
-            || charge_info.regenerate_ammo
+            || charge_info.regenerate_ammo || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty()
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
@@ -3021,7 +3022,38 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 info.emplace_back("DESCRIPTION", string_format("* %1s补充方式：%2s",ammo_name, rt_str));
             }
 
+            if (!all_hit_you_effect.empty()) {
+                std::string spell_str = "";
+                for (fake_spell& fs : all_hit_you_effect) {
+                    spell casting = fs.get_spell(fs.level);
+                    spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
+                }
+                info.emplace_back("DESCRIPTION", string_format("* 击中目标时释放的法术：%s", spell_str));
 
+            }
+
+            if (!all_hit_me_effect.empty()) {
+                std::string spell_str = "";
+                for (fake_spell& fs : all_hit_me_effect) {
+                    spell casting = fs.get_spell(fs.level);
+                    spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
+                }
+                info.emplace_back("DESCRIPTION", string_format("* 被击中时释放的法术：%s", spell_str));
+
+            }
+
+            if (!all_mutations.empty()) {
+                std::string trait_str = "";
+                for (const trait_id& ti : all_mutations) {
+                    for (const mutation_branch& mb : mutation_branch::get_all()) {
+                        if (ti == mb.id) {
+                            trait_str += "<color_c_yellow>" + mb.name() + "</color> ";
+                            break;
+                        }
+                    }                   
+                }
+                info.emplace_back("DESCRIPTION", string_format("* 变异：%s", trait_str));
+            }
 
         }  else {
             passive_effect_is_empty = true;
@@ -3061,32 +3093,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             info.emplace_back("DESCRIPTION", string_format("* 充能方式：%s", rt_str));
         } 
 
-        if (!all_hit_you_effect.empty()) {   
-            info.emplace_back("DESCRIPTION", " ");
-            info.emplace_back("DESCRIPTION", "<bold>击中目标时触发的效果</bold>：");
-            std::string spell_str = "";
-            for (fake_spell& fs : all_hit_you_effect) {
-                spell casting = fs.get_spell(fs.level);
-                spell_str += "<color_c_yellow>"+casting.name() + "</color> ";
-            }
-            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
-        
-        }
-
-        if (!all_hit_me_effect.empty()) {
-            info.emplace_back("DESCRIPTION", " ");
-            info.emplace_back("DESCRIPTION", "<bold>被击中时触发的效果</bold>：");
-            std::string spell_str = "";
-            for (fake_spell& fs : all_hit_me_effect) {
-                spell casting = fs.get_spell(fs.level);
-                spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
-            }
-            info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
-
-        }
-
-
-        if (passive_effect_is_empty && relic_data->get_active_effects().empty() && all_hit_you_effect.empty() && all_hit_me_effect.empty()) {
+        if (passive_effect_is_empty && relic_data->get_active_effects().empty()) {
             info.emplace_back("DESCRIPTION", "无");
         }
     }
