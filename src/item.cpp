@@ -2474,23 +2474,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         }
 
-        if (!relic_data->get_proc_enchantments().empty()) {
-            info.emplace_back("DESCRIPTION", " ");
-            
-            if (condition_str != "") {
-                info.emplace_back("DESCRIPTION", 
-                    string_format("<bold>生效条件</bold>：<color_c_yellow>%1s</color> <color_c_yellow>%2s</color>"
-                    , has_str,condition_str));
-            
-            }
-            else {
-                info.emplace_back("DESCRIPTION", string_format("<bold>生效条件</bold>：<color_c_yellow>%1s</color>", has_str));
-            }
-            
-        }
-        
-
-        
+               
         if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || max_mana !=0.0 
             || regen_mana != 0.0|| carry_weight !=0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0 
             || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
@@ -2516,6 +2500,20 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
+
+            if (!relic_data->get_proc_enchantments().empty()) {
+                if (condition_str != "") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("* 生效条件：<color_c_yellow>%1s</color> <color_c_yellow>%2s</color>"
+                            , has_str, condition_str));
+                }
+                else {
+                    info.emplace_back("DESCRIPTION", string_format("* 生效条件：<color_c_yellow>%1s</color>", has_str));
+                }
+
+            }
+
+
             std::string base_str = "* 共鸣值：";
             bool need_space = false;
             if (resonance != 0.0) {
