@@ -3087,28 +3087,17 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         if (charge_info.regenerate_ammo) {
 
             std::string ammo_name;
-            if (ammo_data()) {
-                itype_id id = ammo_current();
-                item i(id);
-                ammo_name = i.tname();
-
+            if (ammo_types().size() == 1) {
+                    if (ammo_types().begin()->obj().name() == "kJ") {
+                        ammo_name = "能量";
+                    }
+                    else {
+                        ammo_name = ammo_types().begin()->obj().name();
+                    }                
             }
             else {
-                if (ammo_types().size() == 1) {
-                    for (const ammotype& it : ammo_types()) {
-                        if (it->name() == "kJ") {
-                            ammo_name += "能量";
-                        }
-                        else {
-                            ammo_name += it->name();
-                        }
-                    }
-                }
-                else {
-                    ammo_name = "消耗物";
-                }
-
-            }
+                ammo_name = "消耗物";
+            }           
 
             std::string rt_str = "无";
             if (recharge_type == relic_recharge_type::PERIODIC) {
