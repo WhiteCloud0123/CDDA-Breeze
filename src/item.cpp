@@ -2461,10 +2461,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (resonance_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", resonance_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", resonance_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", resonance_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", resonance_mult);
                 }
             }
             if (base_str != "* 共鸣值：") {
@@ -2480,10 +2480,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (pain_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", pain_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", pain_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", pain_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", pain_mult);
                 }
             }
             if (base_str != "* 疼痛：") {
@@ -2499,10 +2499,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (speed_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", speed_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", speed_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", speed_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", speed_mult);
                 }
             }
             if (base_str != "* 速度：") {
@@ -2518,10 +2518,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (base_move_cost_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", base_move_cost_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", base_move_cost_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", base_move_cost_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", base_move_cost_mult);
                 }
             }
             if (base_str != "* 基础移动耗时：") {
@@ -2537,10 +2537,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (attack_cost_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", attack_cost_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", attack_cost_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", attack_cost_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", attack_cost_mult);
                 }
             }
             if (base_str != "* 攻击耗时：") {
@@ -2556,10 +2556,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (max_mana_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", max_mana_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", max_mana_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", max_mana_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", max_mana_mult);
                 }
             }
             if (base_str != "* 最大魔力：") {
@@ -2575,10 +2575,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (regen_mana_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", regen_mana_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", regen_mana_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", regen_mana_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", regen_mana_mult);
                 }
             }
             if (base_str != "* 魔力恢复：") {
@@ -2594,10 +2594,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (str_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", str_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", str_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", str_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", str_mult);
                 }
             }
             if (base_str != "* 力量：") {
@@ -2613,10 +2613,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (dex_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", dex_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", dex_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", dex_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", dex_mult);
                 }
             }
             if (base_str != "* 敏捷：") {
@@ -2632,10 +2632,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (inte_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", inte_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", inte_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f</color>", inte_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f</color>", inte_mult);
                 }
             }
             if (base_str != "* 智力：") {
@@ -2651,10 +2651,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
             if (per_mult != 1.0) {
                 if (need_space) {
-                    base_str += string_format("   <color_c_yellow>x %.2f</color>", per_mult);
+                    base_str += string_format("   x <color_c_yellow>x %.2f</color>", per_mult);
                 }
                 else {
-                    base_str += string_format("<color_c_yellow>x %.2f<>/color", per_mult);
+                    base_str += string_format("x <color_c_yellow>x %.2f<>/color", per_mult);
                 }
             }
             if (base_str != "* 感知：") {
@@ -2681,10 +2681,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (item_damage_bash_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", item_damage_bash_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", item_damage_bash_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", item_damage_bash_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", item_damage_bash_mult);
                     }
                 }
                 if (base_str != "    钝击：") {
@@ -2700,10 +2700,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (item_damage_cut_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", item_damage_cut_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", item_damage_cut_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", item_damage_cut_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", item_damage_cut_mult);
                     }
                 }
                 if (base_str != "    斩击：") {
@@ -2719,10 +2719,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (item_damage_acid_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", item_damage_acid_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", item_damage_acid_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", item_damage_acid_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", item_damage_acid_mult);
                     }
                 }
                 if (base_str != "    酸液：") {
@@ -2738,10 +2738,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (item_damage_heat_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", item_damage_heat_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", item_damage_heat_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", item_damage_heat_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", item_damage_heat_mult);
                     }
                 }
                 if (base_str != "    火焰：") {
@@ -2757,10 +2757,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (item_damage_cold_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", item_damage_cold_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", item_damage_cold_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", item_damage_cold_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", item_damage_cold_mult);
                     }
                 }
                 if (base_str != "    寒冷：") {
@@ -2790,10 +2790,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_bash_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_bash_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_bash_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_bash_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_bash_mult);
                     }
                 }
                 if (base_str != "    钝击：") {
@@ -2809,10 +2809,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_cut_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_cut_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_cut_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_cut_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_cut_mult);
                     }
                 }
                 if (base_str != "    斩击：") {
@@ -2828,10 +2828,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_stab_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_stab_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_stab_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_stab_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_stab_mult);
                     }
                 }
                 if (base_str != "    刺击：") {
@@ -2847,10 +2847,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_bullet_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_bullet_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_bullet_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_bullet_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_bullet_mult);
                     }
                 }
                 if (base_str != "    射击：") {
@@ -2867,10 +2867,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_elec_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_elec_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_elec_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_elec_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_elec_mult);
                     }
                 }
                 if (base_str != "    电击：") {
@@ -2887,10 +2887,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_acid_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_acid_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_acid_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_acid_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_acid_mult);
                     }
                 }
                 if (base_str != "    防酸：") {
@@ -2906,10 +2906,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
                 if (armor_heat_mult != 1.0) {
                     if (need_space) {
-                        base_str += string_format("   <color_c_yellow>%.2f</color>", 1-armor_heat_mult);
+                        base_str += string_format("   x <color_c_yellow>%.2f</color>", 1-armor_heat_mult);
                     }
                     else {
-                        base_str += string_format("<color_c_yellow>%.2f</color>", 1-armor_heat_mult);
+                        base_str += string_format("x <color_c_yellow>%.2f</color>", 1-armor_heat_mult);
                     }
                 }
                 if (base_str != "    防火：") {
