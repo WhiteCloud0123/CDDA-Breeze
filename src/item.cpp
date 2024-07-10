@@ -2952,9 +2952,20 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 
                 }
                 else {
-                    itype_id id = ammo_default();
-                    item i(id);
-                    ammo_name = i.tname();                    
+                    if (ammo_types().size() == 1) {
+                        for (const ammotype& it : ammo_types()) {
+                            if (it->name() == "kJ") {
+                                ammo_name += "能量";
+                            }
+                            else {
+                                ammo_name += it->name();
+                            }
+                        }
+                    }
+                    else {
+                        ammo_name = "消耗物";
+                    }
+                              
                 }
                 
                 std::string rt_str = "无";
