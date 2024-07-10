@@ -740,7 +740,7 @@ bool monexamine::pet_menu( monster &z )
     text << "经验值：" << z.exp << std::endl;
     std::string cwt = string_format("%.1f", round_up(units::to_kilogram(z.get_carried_weight()), 1));
     std::string wct = string_format("%.1f", round_up(units::to_kilogram(z.weight_capacity()), 1));
-    text <<"承重：" << cwt << "/" <<wct<<" 千克"<< std::endl;
+    text <<"负重：" << cwt << "/" <<wct<<" 千克"<< std::endl;
     text << "" << std::endl;
 
     std::string guard_armor = "无";
