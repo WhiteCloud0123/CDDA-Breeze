@@ -2323,6 +2323,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double attack_cost = 0.0;
         double max_mana = 0.0;
         double regen_mana = 0.0;
+        double carry_weight = 0.0;
         double climate_control_heat = 0.0;
         double climate_control_chill = 0.0;
         double str = 0.0;
@@ -2349,6 +2350,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double attack_cost_mult = 1.0;
         double max_mana_mult = 1.0;
         double regen_mana_mult = 1.0;
+        double carry_weight_mult = 1.0;
         double climate_control_heat_mult = 1.0;
         double climate_control_chill_mult = 1.0;
         double str_mult = 1.0;
@@ -2373,6 +2375,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         std::vector<trait_id> all_mutations;
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
+        relic_recharge_has recharge_con = charge_info.has;
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
           
@@ -2403,6 +2406,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
             max_mana += e.get_value_add(enchant_vals::mod::MAX_MANA);
             regen_mana += e.get_value_add(enchant_vals::mod::REGEN_MANA);
+            carry_weight += e.get_value_add(enchant_vals::mod::CARRY_WEIGHT);
             climate_control_heat += e.get_value_add(enchant_vals::mod::CLIMATE_CONTROL_HEAT);
             climate_control_chill += e.get_value_add(enchant_vals::mod::CLIMATE_CONTROL_CHILL);
             str += e.get_value_add(enchant_vals::mod::STRENGTH);
@@ -2429,6 +2433,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
             max_mana_mult += e.get_value_multiply(enchant_vals::mod::MAX_MANA);
             regen_mana_mult += e.get_value_multiply(enchant_vals::mod::REGEN_MANA);
+            carry_weight_mult += e.get_value_multiply(enchant_vals::mod::CARRY_WEIGHT);
             climate_control_heat_mult += e.get_value_multiply(enchant_vals::mod::CLIMATE_CONTROL_HEAT);
             climate_control_chill_mult += e.get_value_multiply(enchant_vals::mod::CLIMATE_CONTROL_CHILL);
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
@@ -2487,7 +2492,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         
         if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || max_mana !=0.0 
-            || regen_mana != 0.0 ||climate_control_heat != 0.0 || climate_control_chill != 0.0
+            || regen_mana != 0.0|| carry_weight !=0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0 
             || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
             || item_damage_heat !=0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid !=0.0 
             || item_damage_cold != 0.0
@@ -2495,8 +2500,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0 
             
+
             || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0 
-            || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || climate_control_heat_mult != 1.0 || climate_control_chill_mult != 1.0
+            || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || carry_weight_mult !=1.0
+            || climate_control_heat_mult != 1.0 || climate_control_chill_mult != 1.0
             || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0            
             || item_damage_heat_mult != 1.0 || item_damage_bash_mult !=1.0 || item_damage_cut_mult != 1.0 || item_damage_acid_mult !=1.0 
             || item_damage_cold_mult != 1.0           
@@ -2504,7 +2511,8 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
             
-            || charge_info.regenerate_ammo || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty()
+            
+            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty()
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
@@ -2637,6 +2645,25 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
             }
             if (base_str != "* 魔力恢复：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 负重能力：";
+            need_space = false;
+            if (carry_weight != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(carry_weight));
+                need_space = true;
+            }
+            if (carry_weight_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", carry_weight_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", carry_weight_mult);
+                }
+            }
+            if (base_str != "* 负重能力：") {
                 info.emplace_back("DESCRIPTION",
                     string_format("%s", base_str));
             }
@@ -3012,54 +3039,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                
             }
 
-            if (charge_info.regenerate_ammo) {
-
-                std::string ammo_name;
-                if (ammo_data()) {
-                    itype_id id = ammo_current();
-                    item i(id);
-                    ammo_name = i.tname();
-                
-                }
-                else {
-                    if (ammo_types().size() == 1) {
-                        for (const ammotype& it : ammo_types()) {
-                            if (it->name() == "kJ") {
-                                ammo_name += "能量";
-                            }
-                            else {
-                                ammo_name += it->name();
-                            }
-                        }
-                    }
-                    else {
-                        ammo_name = "消耗物";
-                    }
-                              
-                }
-                
-                std::string rt_str = "无";
-                if (recharge_type == relic_recharge_type::PERIODIC) {
-                    rt_str = "<color_c_yellow>时间</color>";
-                }
-                else if (recharge_type == relic_recharge_type::LUNAR) {
-                    rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间，手持或穿戴</color>";
-                }
-                else if (recharge_type == relic_recharge_type::FULL_MOON) {
-                    rt_str = "<color_c_yellow>时间，在户外，夜间，满月，手持或穿戴</color>";
-                }
-                else if (recharge_type == relic_recharge_type::NEW_MOON) {
-                    rt_str = "<color_c_yellow>时间，在户外，夜间，新月,手持或穿戴</color>";
-                }
-                else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
-                    rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴，手持或穿戴</color>";
-                }
-                else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
-                    rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
-                }
-                info.emplace_back("DESCRIPTION", string_format("* %1s补充方式：%2s",ammo_name, rt_str));
-            }
-
             if (!all_hit_you_effect.empty()) {
                 std::string spell_str = "";
                 for (fake_spell& fs : all_hit_you_effect) {
@@ -3101,12 +3080,73 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             info.emplace_back("DESCRIPTION", "<bold>激活效果</bold>：");
             for (fake_spell& fs : relic_data->get_active_effects()) {
                 spell casting = fs.get_spell(fs.level);
-                spell_str +="<color_c_yellow>"+casting.name() + "</color> ";
+                spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
             }
 
             info.emplace_back("DESCRIPTION", string_format("* 释放的法术：%s", spell_str));
+        }
+
+        if (charge_info.regenerate_ammo) {
+
+            std::string ammo_name;
+            if (ammo_data()) {
+                itype_id id = ammo_current();
+                item i(id);
+                ammo_name = i.tname();
+
+            }
+            else {
+                if (ammo_types().size() == 1) {
+                    for (const ammotype& it : ammo_types()) {
+                        if (it->name() == "kJ") {
+                            ammo_name += "能量";
+                        }
+                        else {
+                            ammo_name += it->name();
+                        }
+                    }
+                }
+                else {
+                    ammo_name = "消耗物";
+                }
+
+            }
 
             std::string rt_str = "无";
+            if (recharge_type == relic_recharge_type::PERIODIC) {
+                rt_str = "<color_c_yellow>时间</color>";
+            }
+            else if (recharge_type == relic_recharge_type::LUNAR) {
+                rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间</color>";
+            }
+            else if (recharge_type == relic_recharge_type::FULL_MOON) {
+                rt_str = "<color_c_yellow>时间，在户外，夜间，满月</color>";
+            }
+            else if (recharge_type == relic_recharge_type::NEW_MOON) {
+                rt_str = "<color_c_yellow>时间，在户外，夜间，新月</color>";
+            }
+            else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
+                rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴</color>";
+            }
+            else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
+                rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云</color>";
+            }
+
+            if (recharge_con == relic_recharge_has::HELD) {
+                rt_str = rt_str + " <color_c_yellow>持有</color>";
+            }else if (recharge_con == relic_recharge_has::WIELD) {
+                rt_str = rt_str + " <color_c_yellow>手持</color>";
+            }if (recharge_con == relic_recharge_has::WORN) {
+                rt_str = rt_str + " <color_c_yellow>穿戴</color>";
+            }
+
+            info.emplace_back("DESCRIPTION"," ");
+            info.emplace_back("DESCRIPTION", string_format("<bold>%1s补充方式</bold>：%2s", ammo_name, rt_str));
+        }
+        else if (!relic_data->get_active_effects().empty()) {
+            info.emplace_back("DESCRIPTION", " ");
+            std::string rt_str = "无";
+
             if (recharge_type == relic_recharge_type::PERIODIC) {
                 rt_str = "<color_c_yellow>时间</color>";
             }
@@ -3126,8 +3166,17 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
             }
 
-            info.emplace_back("DESCRIPTION", string_format("* 充能方式：%s", rt_str));
-        } 
+            if (recharge_con == relic_recharge_has::HELD) {
+                rt_str = rt_str + " <color_c_yellow>持有</color>";
+            }
+            else if (recharge_con == relic_recharge_has::WIELD) {
+                rt_str = rt_str + " <color_c_yellow>手持</color>";
+            }else if (recharge_con == relic_recharge_has::WORN) {
+                rt_str = rt_str + " <color_c_yellow>穿戴</color>";
+            }
+            
+            info.emplace_back("DESCRIPTION", string_format("<bold>充能方式</bold>：%s", rt_str));
+        }
 
     }
 }
