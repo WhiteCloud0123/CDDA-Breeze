@@ -3115,19 +3115,19 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 rt_str = "<color_c_yellow>时间</color>";
             }
             else if (recharge_type == relic_recharge_type::LUNAR) {
-                rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间</color>";
+                rt_str = "<color_c_yellow>时间 在户外 夜间 从新月到残月期间</color>";
             }
             else if (recharge_type == relic_recharge_type::FULL_MOON) {
-                rt_str = "<color_c_yellow>时间，在户外，夜间，满月</color>";
+                rt_str = "<color_c_yellow>时间 在户外 夜间 满月</color>";
             }
             else if (recharge_type == relic_recharge_type::NEW_MOON) {
-                rt_str = "<color_c_yellow>时间，在户外，夜间，新月</color>";
+                rt_str = "<color_c_yellow>时间 在户外 夜间 新月</color>";
             }
             else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
-                rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴</color>";
+                rt_str = "<color_c_yellow>时间 在户外 白天 天气为晴</color>";
             }
             else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
-                rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云</color>";
+                rt_str = "<color_c_yellow>时间 在户外 白天 天气为多云</color>";
             }
 
             if (recharge_con == relic_recharge_has::HELD) {
@@ -3149,19 +3149,19 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 rt_str = "<color_c_yellow>时间</color>";
             }
             else if (recharge_type == relic_recharge_type::LUNAR) {
-                rt_str = "<color_c_yellow>时间，在户外，夜间，从新月到残月期间，手持或穿戴</color>";
+                rt_str = "<color_c_yellow>时间 在户外 夜间 从新月到残月期间</color>";
             }
             else if (recharge_type == relic_recharge_type::FULL_MOON) {
-                rt_str = "<color_c_yellow>时间，在户外，夜间，满月，手持或穿戴</color>";
+                rt_str = "<color_c_yellow>时间 在户外 夜间 满月</color>";
             }
             else if (recharge_type == relic_recharge_type::NEW_MOON) {
-                rt_str = "<color_c_yellow>时间，在户外，夜间，新月,手持或穿戴</color>";
+                rt_str = "<color_c_yellow>时间 在户外 夜间 新月</color>";
             }
             else if (recharge_type == relic_recharge_type::SOLAR_SUNNY) {
-                rt_str = "<color_c_yellow>时间，在户外，白天，天气为晴，手持或穿戴</color>";
+                rt_str = "<color_c_yellow>时间 在户外 白天 天气为晴</color>";
             }
             else if (recharge_type == relic_recharge_type::SOLAR_CLOUDY) {
-                rt_str = "<color_c_yellow>时间，在户外，白天，天气为多云，手持或穿戴</color>";
+                rt_str = "<color_c_yellow>时间 在户外 白天 天气为多云</color>";
             }
 
             if (recharge_con == relic_recharge_has::HELD) {
