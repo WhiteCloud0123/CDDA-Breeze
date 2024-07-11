@@ -2101,7 +2101,6 @@ void Character::perform_technique( const ma_technique &technique, Creature &t, d
 
         valid_aoe_technique( t, technique, targets );
 
-        //hit the targets in the lists (all candidates if wide or burst, or just the unlucky sod if deep)
         int count_hit = 0;
         bool allow_not_adajecent = false;
         if (technique.aoe == "impale") {
