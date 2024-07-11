@@ -1086,7 +1086,7 @@ class npc : public Character
         // among the different attack methods the npc has available, what's the best one in the current situation?
         // picks among melee, guns, spells, etc.
         // updates the ai_cache
-        void evaluate_best_weapon( const Creature *target );
+        void evaluate_best_attack(const Creature* target);
 
         static std::array<std::pair<std::string, overmap_location_str_id>, npc_need::num_needs> need_data;
 
@@ -1100,6 +1100,10 @@ class npc : public Character
         npc_action long_term_goal_action();
         // Returns true if did something and we should end turn
         bool scan_new_items();
+        // Returns score for how well this weapon might kill things
+        double evaluate_weapon(item& maybe_weapon, bool can_use_gun, bool use_silent) const;
+        // Returns best weapon. Can return null (fists)
+        item* evaluate_best_weapon() const;
         // Returns true if did wield it
         bool wield_better_weapon();
 
