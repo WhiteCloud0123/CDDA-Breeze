@@ -125,6 +125,7 @@ static const matec_id WBLOCK_2( "WBLOCK_2" );
 static const matec_id WBLOCK_3( "WBLOCK_3" );
 static const matec_id WHIP_DISARM( "WHIP_DISARM" );
 static const matec_id tec_none( "tec_none" );
+static const matec_id no_technique_id("");
 
 static const material_id material_glass( "glass" );
 static const material_id material_steel( "steel" );
@@ -464,7 +465,6 @@ static void melee_train( Character &you, int lo, int hi, const item &weap,
 
 bool Character::melee_attack( Creature &t, bool allow_special )
 {
-    static const matec_id no_technique_id( "" );
     return melee_attack( t, allow_special, no_technique_id );
 }
 
@@ -540,13 +540,14 @@ damage_instance Character::modify_damage_dealt_with_enchantments( const damage_i
 // Melee calculation is in parts. This sets up the attack, then in deal_melee_attack,
 // we calculate if we would hit. In Creature::deal_melee_hit, we calculate if the target dodges.
 bool Character::melee_attack( Creature &t, bool allow_special, const matec_id &force_technique,
-                              bool allow_unarmed )
+                              bool allow_unarmed, bool allow_not_adjacent)
 {
     if( has_effect( effect_incorporeal ) ) {
         add_msg_if_player( m_info, _( "You lack the substance to affect anything." ) );
         return false;
     }
-    if( !is_adjacent( &t, fov_3d ) ) {
+
+    if (!allow_not_adjacent && !is_adjacent(&t, fov_3d)) {
         return false;
     }
 
@@ -937,7 +938,7 @@ int Character::get_total_melee_stamina_cost( const item *weap ) const
 
 void Character::reach_attack( const tripoint &p )
 {
-    static const matec_id no_technique_id("");
+
     matec_id force_technique = no_technique_id;
     /** @EFFECT_MELEE >5 allows WHIP_DISARM technique */
     if( weapon.has_flag( flag_WHIP ) && ( get_skill_level( skill_melee ) > 5 ) && one_in( 3 ) ) {
@@ -1830,37 +1831,21 @@ bool Character::valid_aoe_technique( Creature &t, const ma_technique &technique,
 
     if( technique.aoe == "impale" ) {
         // Impale hits the target and a single target behind them
-        // Check if the square cardinally behind our target, or to the left / right,
-        // contains a possible target.
-        tripoint left = t.pos() + tripoint( offset_a[lookup], offset_b[lookup], 0 );
-        tripoint target_pos = t.pos() + ( t.pos() - pos() );
-        tripoint right = t.pos() + tripoint( offset_b[lookup], -offset_b[lookup], 0 );
 
-        monster *const mon_l = creatures.creature_at<monster>( left );
+        tripoint target_pos = t.pos() + ( t.pos() - pos() );
+
         monster *const mon_t = creatures.creature_at<monster>( target_pos );
-        monster *const mon_r = creatures.creature_at<monster>( right );
-        if( mon_l && mon_l->friendly == 0 ) {
-            targets.push_back( mon_l );
-        }
+
         if( mon_t && mon_t->friendly == 0 ) {
             targets.push_back( mon_t );
         }
-        if( mon_r && mon_r->friendly == 0 ) {
-            targets.push_back( mon_r );
-        }
-
-        npc *const npc_l = creatures.creature_at<npc>( left );
+        
         npc *const npc_t = creatures.creature_at<npc>( target_pos );
-        npc *const npc_r = creatures.creature_at<npc>( right );
-        if( npc_l && npc_l->is_enemy() ) {
-            targets.push_back( npc_l );
-        }
+
         if( npc_t && npc_t->is_enemy() ) {
             targets.push_back( npc_t );
         }
-        if( npc_r && npc_r->is_enemy() ) {
-            targets.push_back( npc_r );
-        }
+
         if( !targets.empty() ) {
             return true;
         }
@@ -2116,18 +2101,15 @@ void Character::perform_technique( const ma_technique &technique, Creature &t, d
 
         valid_aoe_technique( t, technique, targets );
 
-        //hit only one valid target (pierce through doesn't spread out)
-        if( technique.aoe == "impale" ) {
-            // TODO: what if targets is empty
-            Creature *const v = random_entry( targets );
-            targets.clear();
-            targets.push_back( v );
-        }
-
         //hit the targets in the lists (all candidates if wide or burst, or just the unlucky sod if deep)
         int count_hit = 0;
-        for( Creature *const c : targets ) {
-            melee_attack( *c, false );
+        bool allow_not_adajecent = false;
+        if (technique.aoe == "impale") {
+            allow_not_adajecent = true;
+        }
+
+        for(Creature* const c : targets) {
+            melee_attack(*c, false, no_technique_id,true,allow_not_adajecent);
         }
 
         t.add_msg_if_player( m_good, n_gettext( "%d enemy hit!", "%d enemies hit!", count_hit ),
