@@ -540,16 +540,7 @@ std::string talker_npc::give_item_to( const bool to_use )
 
     bool taken = false;
     std::string reason = _( me_npc->chatbin.snip_give_nope );
-    const item_location weapon = me_npc->get_wielded_item();
-    int our_ammo = me_npc->ammo_count_for( weapon );
-    int new_ammo = me_npc->ammo_count_for( loc );
-    const double new_weapon_value = me_npc->weapon_value( given, new_ammo );
-    const item &weap = weapon ? *weapon : null_item_reference();
-    const double cur_weapon_value = me_npc->weapon_value( weap, our_ammo );
-    add_msg_debug( debugmode::DF_TALKER, "NPC evaluates own %s (%d ammo): %0.1f",
-                   weap.typeId().str(), our_ammo, cur_weapon_value );
-    add_msg_debug( debugmode::DF_TALKER, "NPC evaluates your %s (%d ammo): %0.1f",
-                   given.typeId().str(), new_ammo, new_weapon_value );
+
     if( to_use ) {
         // Eating first, to avoid evaluating bread as a weapon
         const consumption_result consume_res = try_consume( *me_npc, given, reason );
@@ -560,32 +551,35 @@ std::string talker_npc::give_item_to( const bool to_use )
             } else if( given.is_container() ) {
                 given.on_contents_changed();
             }
-        }// wield it if its a weapon
-        else if( new_weapon_value > cur_weapon_value ) {
-            me_npc->wield( given );
-            reason = _( me_npc->chatbin.snip_give_wield );
-            taken = true;
-        }// HACK: is_gun here is a hack to prevent NPCs wearing guns if they don't want to use them
-        else if( !given.is_gun() && given.is_armor() ) {
-            //if it is impossible to wear return why
-            ret_val<void> can_wear = me_npc->can_wear( given, true );
-            if( !can_wear.success() ) {
-                reason = can_wear.str();
-            } else {
-                //if we can wear it with equip changes prompt first
-                can_wear = me_npc->can_wear( given );
-                if( ( can_wear.success() ||
-                      query_yn( can_wear.str() + _( " Should I take something off?" ) ) )
-                    && me_npc->wear_if_wanted( given, reason ) ) {
-                    taken = true;
-                } else {
+        }  
+        else{
+
+            if (given.is_armor()) {
+                ret_val<void> can_wear = me_npc->can_wear(given, true);
+                if (!can_wear.success()) {
                     reason = can_wear.str();
                 }
+                else {
+                    //if we can wear it with equip changes prompt first
+                    can_wear = me_npc->can_wear(given);
+                    if ((can_wear.success() ||
+                        query_yn(can_wear.str() + _(" Should I take something off?")))
+                        && me_npc->wear_if_wanted(given, reason)) {
+                        taken = true;
+                    }
+                    else {
+                        reason = can_wear.str();
+                    }
+                }           
             }
-        } else {
-            reason += " " + string_format( _( me_npc->chatbin.snip_give_weapon_weak +
-                                              "(new weapon value: %.1f vs %.1f)." ), new_weapon_value, cur_weapon_value );
+            else {
+                me_npc->wield(given);
+                reason = _(me_npc->chatbin.snip_give_wield);
+                taken = true;
+            }
+
         }
+        
     } else {//allow_use is false so try to carry instead
         if( me_npc->can_pickVolume( given ) && me_npc->can_pickWeight( given ) ) {
             reason = _( me_npc->chatbin.snip_give_carry );
