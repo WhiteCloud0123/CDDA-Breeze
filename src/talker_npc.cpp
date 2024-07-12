@@ -554,7 +554,12 @@ std::string talker_npc::give_item_to( const bool to_use )
         }  
         else{
 
-            if (given.is_armor()) {
+            if(given.is_gun() || !given.is_armor()) {
+                me_npc->wield(given);
+                reason = _(me_npc->chatbin.snip_give_wield);
+                taken = true;
+            }
+            else  {
                 ret_val<void> can_wear = me_npc->can_wear(given, true);
                 if (!can_wear.success()) {
                     reason = can_wear.str();
@@ -572,12 +577,7 @@ std::string talker_npc::give_item_to( const bool to_use )
                     }
                 }           
             }
-            else {
-                me_npc->wield(given);
-                reason = _(me_npc->chatbin.snip_give_wield);
-                taken = true;
-            }
-
+            
         }
         
     } else {//allow_use is false so try to carry instead
