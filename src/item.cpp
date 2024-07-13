@@ -2321,6 +2321,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double speed = 0.0;
         double base_move_cost = 0.0;
         double attack_cost = 0.0;
+        double attack_noise = 0.0;
         double max_mana = 0.0;
         double regen_mana = 0.0;
         double carry_weight = 0.0;
@@ -2349,6 +2350,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double speed_mult = 1.0;
         double base_move_cost_mult = 1.0;
         double attack_cost_mult = 1.0;
+        double attack_noise_mult = 1.0;
         double max_mana_mult = 1.0;
         double regen_mana_mult = 1.0;
         double carry_weight_mult = 1.0;
@@ -2406,6 +2408,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             speed += e.get_value_add(enchant_vals::mod::SPEED);
             base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST);
             attack_cost += e.get_value_add(enchant_vals::mod::ATTACK_COST);
+            attack_noise += e.get_value_add(enchant_vals::mod::ATTACK_NOISE);
             max_mana += e.get_value_add(enchant_vals::mod::MAX_MANA);
             regen_mana += e.get_value_add(enchant_vals::mod::REGEN_MANA);
             carry_weight += e.get_value_add(enchant_vals::mod::CARRY_WEIGHT);
@@ -2434,6 +2437,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED);
             base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST);
             attack_cost_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_COST);
+            attack_noise_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_NOISE);
             max_mana_mult += e.get_value_multiply(enchant_vals::mod::MAX_MANA);
             regen_mana_mult += e.get_value_multiply(enchant_vals::mod::REGEN_MANA);
             carry_weight_mult += e.get_value_multiply(enchant_vals::mod::CARRY_WEIGHT);
@@ -2479,8 +2483,8 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         }
 
                
-        if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || max_mana !=0.0 
-            || regen_mana != 0.0|| carry_weight !=0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0 
+        if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_cost != 0.0 || attack_noise !=0.0
+            || max_mana !=0.0 || regen_mana != 0.0|| carry_weight !=0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0 
             || footstep_noise !=0.0
             || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
             || item_damage_heat !=0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid !=0.0 
@@ -2491,7 +2495,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             
 
             || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_cost_mult != 1.0 
-            || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || carry_weight_mult !=1.0
+            || attack_noise_mult != 1.0  || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || carry_weight_mult !=1.0
             || climate_control_heat_mult != 1.0 || climate_control_chill_mult != 1.0
             || footstep_noise_mult !=1.0
             || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0            
@@ -2611,6 +2615,25 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
             }
             if (base_str != "* 攻击耗时：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 攻击产生的噪声：";
+            need_space = false;
+            if (attack_noise != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(attack_noise));
+                need_space = true;
+            }
+            if (attack_noise_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", attack_noise_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", attack_noise_mult);
+                }
+            }
+            if (base_str != "* 攻击产生的噪声：") {
                 info.emplace_back("DESCRIPTION",
                     string_format("%s", base_str));
             }
