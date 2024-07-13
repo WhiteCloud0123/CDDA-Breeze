@@ -1,30 +1,31 @@
 # How to add magic to a mod
 
-- [Spells](#spells)
-- [The template spell](#the-template-spell)
-- [Mandatory fields](#mandatory-fields)
-  - [Spell effects](#spell-effects)
-  - [Spell shape](#spell-shape)
-- [Common fields](#common-fields)
-  - [Spell Flags](#spell-flags)
-  - [Damage Types](#damage-types)
-  - [Spell level](#spell-level)
-  - [Learning Spells](#learning-spells)
-  - [Extra spell effects](#extra-spell-effects)
-- [Adding spells to professions and NPCs](#adding-spells-to-professions-and-npcs)
-- [Examples](#examples)
-  - [Summon spell](#summon-spell)
-  - [Typical attack](#typical-attack)
-  - [Consecutive spell casting](#consecutive-spell-casting)
-  - [Random spell casting](#random-spell-casting)
-  - [Repeatedly cast the same spell](#repeatedly-cast-the-same-spell)
-  - [A spell that casts a note on the target and an effect on the caster](#a-spell-that-casts-a-note-on-the-target-and-an-effect-on-the-caster)
-  - [Monster spells](#monster-spells)
-- [Enchantments](#enchantments)
-  - [The `relic_data` field](#the-relic_data-field)
-  - [Variables](#variables)
-  - [ID values](#id-values)
-  - [Enchantment value examples](#enchantment-value-examples)
+- [How to add magic to a mod](#how-to-add-magic-to-a-mod)
+  - [Spells](#spells)
+  - [The template spell](#the-template-spell)
+  - [Mandatory fields](#mandatory-fields)
+    - [Spell effects](#spell-effects)
+    - [Spell shape](#spell-shape)
+  - [Common fields](#common-fields)
+    - [Spell Flags](#spell-flags)
+    - [Damage Types](#damage-types)
+    - [Spell level](#spell-level)
+    - [Learning Spells](#learning-spells)
+    - [Extra spell effects](#extra-spell-effects)
+  - [Adding spells to professions and NPCs](#adding-spells-to-professions-and-npcs)
+  - [Examples](#examples)
+    - [Summon spell](#summon-spell)
+    - [Typical attack](#typical-attack)
+    - [Consecutive spell casting](#consecutive-spell-casting)
+    - [Random spell casting](#random-spell-casting)
+    - [Repeatedly cast the same spell](#repeatedly-cast-the-same-spell)
+    - [A spell that casts a note on the target and an effect on the caster](#a-spell-that-casts-a-note-on-the-target-and-an-effect-on-the-caster)
+    - [Monster spells](#monster-spells)
+  - [Enchantments](#enchantments)
+    - [The `relic_data` field](#the-relic_data-field)
+    - [Variables](#variables)
+    - [ID values](#id-values)
+    - [Enchantment value examples](#enchantment-value-examples)
 
 
 ## Spells
@@ -777,8 +778,8 @@ The following is a list of possible enchantment `values`:
 | `ARMOR_ELEC` | 
 | `ARMOR_HEAT` | 
 | `ARMOR_STAB` | 
-| `ATTACK_COST` | 
-| `ATTACK_NOISE` | 
+| `ATTACK_COST` | 没有实现
+| `ATTACK_NOISE` | 没有实现
 | `ATTACK_SPEED` | Affects attack speed of item even if it's not the one you're wielding.
 | `BIONIC_POWER` |
 | `BONUS_BLOCK` | 
