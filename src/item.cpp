@@ -2387,10 +2387,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         std::vector<fake_spell> all_hit_you_effect;
         std::vector<fake_spell> all_hit_me_effect;
         std::vector<trait_id> all_mutations;
+        std::map<time_duration, std::vector<fake_spell>> inter;
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
         relic_recharge_has recharge_con = charge_info.has;
         Character& player = get_player_character();
+        dialogue dia(get_talker_for(player), nullptr);
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
 
@@ -2529,6 +2531,9 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC, player);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID, player);
             armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT, player);
+            stabbing_skill += e.skill_values_add[skill_stabbing].evaluate(dia);
+            cutting_skill += e.skill_values_add[skill_cutting].evaluate(dia);
+            throw_skill += e.skill_values_add[skill_throw].evaluate(dia);
 
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE, player);
             pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN, player);
@@ -2558,6 +2563,34 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC, player);
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID, player);
             armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT, player);
+            stabbing_skill_mult += e.skill_values_multiply[skill_stabbing].evaluate(dia);
+            cutting_skill_mult += e.skill_values_multiply[skill_cutting].evaluate(dia);
+            throw_skill_mult += e.skill_values_multiply[skill_throw].evaluate(dia);
+
+            if (!e.hit_you_effect.empty()) {
+                for (fake_spell& sp : e.hit_you_effect) {
+                    all_hit_you_effect.push_back(sp);
+                }
+            }
+
+            if (!e.hit_me_effect.empty()) {
+                for (fake_spell& sp : e.hit_me_effect) {
+                    all_hit_me_effect.push_back(sp);
+                }
+            }
+
+            if (!e.mutations.empty()) {
+                for (const trait_id& ti : e.mutations) {
+                    all_mutations.push_back(ti);
+                }
+
+            }
+
+            if (!e.intermittent_activation.empty()) {
+                
+                inter = e.intermittent_activation;
+
+            }
 
         }
 
@@ -2587,7 +2620,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || stabbing_skill_mult !=1.0 || cutting_skill_mult !=1.0
             || throw_skill_mult != 1.0
             
-            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty()
+            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty() || !inter.empty()
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
@@ -3267,6 +3300,27 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     }                   
                 }
                 info.emplace_back("DESCRIPTION", string_format("* 变异：%s", trait_str));
+            }
+
+            if (!inter.empty()) {
+                std::string time = "";
+                std::string spell_str = "";
+
+                info.emplace_back("DESCRIPTION", string_format("* 周期性激活的效果："));
+
+                for (const std::pair<time_duration, std::vector<fake_spell>> &p : inter) {
+                    time += string_format(time + "%s", to_turns<int>(p.first));
+                   add_msg(m_good,_("数值 %s"), to_turns<int>(p.first));
+                   time = "<color_c_yellow>" + time + "</color>";
+                   for (const fake_spell &fs : p.second) {
+                      spell casting =  fs.get_spell(fs.level);
+                      spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
+                   }
+                }
+                time += " 回合";
+                info.emplace_back("DESCRIPTION", string_format("    周期：%s", time));
+                info.emplace_back("DESCRIPTION", string_format("    释放的法术：%s", spell_str));
+
             }
 
         }  
