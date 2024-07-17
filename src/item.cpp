@@ -2380,6 +2380,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
         relic_recharge_has recharge_con = charge_info.has;
+        Character &player = get_player_character();
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
           
@@ -2482,7 +2483,69 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         }
 
-               
+        for (enchantment& e : relic_data->get_defined_enchantments()) {
+                    
+            resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE,player);
+            pain += e.get_value_add(enchant_vals::mod::PAIN, player);
+            speed += e.get_value_add(enchant_vals::mod::SPEED, player);
+            base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST, player);
+            attack_speed += e.get_value_add(enchant_vals::mod::ATTACK_SPEED, player);
+            max_mana += e.get_value_add(enchant_vals::mod::MAX_MANA, player);
+            regen_mana += e.get_value_add(enchant_vals::mod::REGEN_MANA, player);
+            carry_weight += e.get_value_add(enchant_vals::mod::CARRY_WEIGHT, player);
+            climate_control_heat += e.get_value_add(enchant_vals::mod::CLIMATE_CONTROL_HEAT, player);
+            climate_control_chill += e.get_value_add(enchant_vals::mod::CLIMATE_CONTROL_CHILL, player);
+            footstep_noise += e.get_value_add(enchant_vals::mod::FOOTSTEP_NOISE, player);
+            shout_noise += e.get_value_add(enchant_vals::mod::SHOUT_NOISE, player);
+            str += e.get_value_add(enchant_vals::mod::STRENGTH, player);
+            dex += e.get_value_add(enchant_vals::mod::DEXTERITY, player);
+            inte += e.get_value_add(enchant_vals::mod::INTELLIGENCE, player);
+            per += e.get_value_add(enchant_vals::mod::PERCEPTION, player);
+            item_damage_bash += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_BASH, player);
+            item_damage_cut += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_CUT, player);
+            item_damage_acid += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_ACID, player);
+            item_damage_heat += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_HEAT, player);
+            item_damage_cold += e.get_value_add(enchant_vals::mod::ITEM_DAMAGE_COLD, player);
+            armor_bash += e.get_value_add(enchant_vals::mod::ARMOR_BASH, player);
+            armor_cut += e.get_value_add(enchant_vals::mod::ARMOR_CUT, player);
+            armor_stab += e.get_value_add(enchant_vals::mod::ARMOR_STAB, player);
+            armor_bullet += e.get_value_add(enchant_vals::mod::ARMOR_BULLET, player);
+            armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC, player);
+            armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID, player);
+            armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT, player);
+
+            resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE, player);
+            pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN, player);
+            speed_mult += e.get_value_multiply(enchant_vals::mod::SPEED, player);
+            base_move_cost_mult += e.get_value_multiply(enchant_vals::mod::MOVE_COST, player);
+            attack_speed_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_SPEED, player);
+            max_mana_mult += e.get_value_multiply(enchant_vals::mod::MAX_MANA, player);
+            regen_mana_mult += e.get_value_multiply(enchant_vals::mod::REGEN_MANA, player);
+            carry_weight_mult += e.get_value_multiply(enchant_vals::mod::CARRY_WEIGHT, player);
+            climate_control_heat_mult += e.get_value_multiply(enchant_vals::mod::CLIMATE_CONTROL_HEAT, player);
+            climate_control_chill_mult += e.get_value_multiply(enchant_vals::mod::CLIMATE_CONTROL_CHILL, player);
+            footstep_noise_mult += e.get_value_multiply(enchant_vals::mod::FOOTSTEP_NOISE, player);
+            shout_noise_mult += e.get_value_multiply(enchant_vals::mod::SHOUT_NOISE, player);
+            str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH, player);
+            dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY, player);
+            inte_mult += e.get_value_multiply(enchant_vals::mod::INTELLIGENCE, player);
+            per_mult += e.get_value_multiply(enchant_vals::mod::PERCEPTION, player);
+            item_damage_bash_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_BASH, player);
+            item_damage_cut_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_CUT, player);
+            item_damage_acid_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_ACID, player);
+            item_damage_heat_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_HEAT, player);
+            item_damage_cold_mult += e.get_value_multiply(enchant_vals::mod::ITEM_DAMAGE_COLD, player);
+            armor_bash_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BASH, player);
+            armor_cut_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_CUT, player);
+            armor_stab_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_STAB, player);
+            armor_bullet_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_BULLET, player);
+            armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC, player);
+            armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID, player);
+            armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT, player);
+
+        }
+
+              
         if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_speed != 0.0
             || max_mana !=0.0 || regen_mana != 0.0|| carry_weight !=0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0 
             || footstep_noise !=0.0 || shout_noise != 0.0
