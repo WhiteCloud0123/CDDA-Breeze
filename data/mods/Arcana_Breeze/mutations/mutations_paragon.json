@@ -2,1326 +2,588 @@
   {
     "type": "mutation",
     "id": "THRESH_VEIL",
-    "name": {
-      "str": "帷幕的典范"
-    },
+    "name": { "str": "帷幕的典范" },
     "points": 1,
     "description": "你比任何一个依然还活着的人都眺望着更远的彼方。它回首凝视于你，于你的身上发现了更大的目标。它们称你为使者，而你是它宣誓的骑士。你无法用普通的手段变异成位面的存在，因为这会将你与那些必须被驱赶出去的事物捆绑一体。",
     "valid": false,
     "purifiable": false,
     "threshold": true,
     "//": "The good news, you regen mana faster and vortices are friendly.  The bad news, HFBTV doesn't want you getting any more dependent on the blob (or worse, the Mycus) than you already are.",
-    "ignored_by": [
-      "UNKNOWN"
-    ],
+    "ignored_by": [ "UNKNOWN" ],
     "anger_relations": [
-      [
-        "ARCANA_SUMMONED",
-        -95
-      ],
-      [
-        "NETHER",
-        20
-      ],
-      [
-        "SLIME",
-        20
-      ],
-      [
-        "HORROR",
-        15
-      ],
-      [
-        "ABERRATION",
-        15
-      ],
-      [
-        "FUNGUS",
-        10
-      ],
-      [
-        "LEECH_PLANT",
-        10
-      ],
-      [
-        "MUTANT",
-        5
-      ]
+      [ "ARCANA_SUMMONED", -95 ],
+      [ "NETHER", 20 ],
+      [ "SLIME", 20 ],
+      [ "HORROR", 15 ],
+      [ "ABERRATION", 15 ],
+      [ "FUNGUS", 10 ],
+      [ "LEECH_PLANT", 10 ],
+      [ "MUTANT", 5 ]
     ],
-    "allowed_category": [
-      "VEIL"
-    ]
+    "allowed_category": [ "VEIL" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_SMOKE",
     "//": "IDs for Arcane Blessings are reused to reduce the amount of obsolete JSON.",
-    "name": {
-      "str": "改变标志I"
-    },
+    "name": { "str": "改变标志I" },
     "points": 1,
     "description": "“予以形以应汝许。觅汝所望期或时。”\n不可知的力量赠予你一份礼物，它可以召唤一层黑暗的帷幕来遮掩你。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "changes_to": [
-      "SPELL_LIGHT2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "changes_to": [ "SPELL_LIGHT2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 100,
-    "spells_learned": [
-      [
-        "arcana_blessing_conjure_shadow_field",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_ALTERATION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_conjure_shadow_field", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_ALTERATION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_LIGHT2",
-    "name": {
-      "str": "改变标志II"
-    },
+    "name": { "str": "改变标志II" },
     "points": 2,
     "description": "“尔将持吾之火，传吾所唤，侍吾所望。”\n不可知的力量赠予你第二份礼物，让你可以召唤出一个照明光环。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_SMOKE"
-    ],
-    "changes_to": [
-      "SPELL_LOCKPICK2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_SMOKE" ],
+    "changes_to": [ "SPELL_LOCKPICK2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 200,
-    "spells_learned": [
-      [
-        "arcana_blessing_conjure_shadow_field",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_lightburst",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_ALTERATION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_conjure_shadow_field", 1 ], [ "arcana_blessing_conjure_lightburst", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_ALTERATION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_LOCKPICK2",
-    "name": {
-      "str": "改变标志III"
-    },
+    "name": { "str": "改变标志III" },
     "points": 3,
     "description": "“汝所行锐不可当，吾之言无可违抗。”\n不可知的力量赠予你第三份礼物，可以打开上锁的门。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_LIGHT2"
-    ],
-    "changes_to": [
-      "SPELL_TELEPORT"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_LIGHT2" ],
+    "changes_to": [ "SPELL_TELEPORT" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 300,
     "spells_learned": [
-      [
-        "arcana_blessing_conjure_shadow_field",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_lightburst",
-        1
-      ],
-      [
-        "arcana_blessing_open_lock",
-        1
-      ]
+      [ "arcana_blessing_conjure_shadow_field", 1 ],
+      [ "arcana_blessing_conjure_lightburst", 1 ],
+      [ "arcana_blessing_open_lock", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "//": "ID retained, effect changed as teleport is of more limited use.",
     "id": "SPELL_TELEPORT",
-    "name": {
-      "str": "改变标志IV"
-    },
+    "name": { "str": "改变标志IV" },
     "points": 4,
     "description": "“如果你的敌人想要逃跑或避难，你将学会阻止他们。”\n不可知的力量给了你第四个礼物，它可以让你召唤光障。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_LOCKPICK2"
-    ],
-    "changes_to": [
-      "SPELL_PACIFY"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_LOCKPICK2" ],
+    "changes_to": [ "SPELL_PACIFY" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 400,
     "spells_learned": [
-      [
-        "arcana_blessing_conjure_shadow_field",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_lightburst",
-        1
-      ],
-      [
-        "arcana_blessing_open_lock",
-        1
-      ],
-      [
-        "arcana_blessing_wall_force",
-        1
-      ]
+      [ "arcana_blessing_conjure_shadow_field", 1 ],
+      [ "arcana_blessing_conjure_lightburst", 1 ],
+      [ "arcana_blessing_open_lock", 1 ],
+      [ "arcana_blessing_wall_force", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_PACIFY",
-    "name": {
-      "str": "改变标志V"
-    },
+    "name": { "str": "改变标志V" },
     "points": 5,
     "description": "“如果敌人挡住了你的路，我的意志可以安抚那些无法被你摧毁的东西。”\n不可知力量给了你第五个礼物，可以让你安抚怪物。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_TELEPORT"
-    ],
-    "changes_to": [
-      "SPELL_CONSECRATE"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_TELEPORT" ],
+    "changes_to": [ "SPELL_CONSECRATE" ],
+    "threshreq": [ "THRESH_VEIL" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 500,
     "spells_learned": [
-      [
-        "arcana_blessing_conjure_shadow_field",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_lightburst",
-        1
-      ],
-      [
-        "arcana_blessing_open_lock",
-        1
-      ],
-      [
-        "arcana_blessing_wall_force",
-        1
-      ],
-      [
-        "arcana_blessing_pacify_monsters",
-        1
-      ]
+      [ "arcana_blessing_conjure_shadow_field", 1 ],
+      [ "arcana_blessing_conjure_lightburst", 1 ],
+      [ "arcana_blessing_open_lock", 1 ],
+      [ "arcana_blessing_wall_force", 1 ],
+      [ "arcana_blessing_pacify_monsters", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_CONSECRATE",
-    "name": {
-      "str": "改变标志VI"
-    },
+    "name": { "str": "改变标志VI" },
     "points": 6,
     "description": "“随着时间的推移，你保护这个世界只有一条策略，那就是赶走这些入侵者。这是我的意愿。”\n不可知的力量给了你第六个礼物，它可以让你恢复因超自然的影响而改变的环境。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_PACIFY"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_PACIFY" ],
+    "threshreq": [ "THRESH_VEIL" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 600,
     "spells_learned": [
-      [
-        "arcana_blessing_conjure_shadow_field",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_lightburst",
-        1
-      ],
-      [
-        "arcana_blessing_open_lock",
-        1
-      ],
-      [
-        "arcana_blessing_wall_force",
-        1
-      ],
-      [
-        "arcana_blessing_pacify_monsters",
-        1
-      ],
-      [
-        "arcana_blessing_consecrate",
-        1
-      ]
+      [ "arcana_blessing_conjure_shadow_field", 1 ],
+      [ "arcana_blessing_conjure_lightburst", 1 ],
+      [ "arcana_blessing_open_lock", 1 ],
+      [ "arcana_blessing_wall_force", 1 ],
+      [ "arcana_blessing_pacify_monsters", 1 ],
+      [ "arcana_blessing_consecrate", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_STRENGTH2",
-    "name": {
-      "str": "增强标志I"
-    },
+    "name": { "str": "增强标志I" },
     "points": 1,
     "description": "“你要变得更强大，不仅是身体，还有精神。总有一天，你会强大到足以面对一切的终结。”\n不可知的力量给了你一个礼物，可以赋予你力量提升的效果。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "changes_to": [
-      "SPELL_CLAIRVOYANCE2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "changes_to": [ "SPELL_CLAIRVOYANCE2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 100,
-    "spells_learned": [
-      [
-        "arcana_blessing_might",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_AUGMENTATION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_might", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_AUGMENTATION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_CLAIRVOYANCE2",
-    "name": {
-      "str": "增强标志II"
-    },
+    "name": { "str": "增强标志II" },
     "points": 2,
     "description": "“注目凝视，你将直面凡人惧于窥逾的真实。”\n不可知的力量赠予你第二个礼物，可以使你所视凡人能及之外。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_STRENGTH2"
-    ],
-    "changes_to": [
-      "SPELL_AGILE2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_STRENGTH2" ],
+    "changes_to": [ "SPELL_AGILE2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 200,
-    "spells_learned": [
-      [
-        "arcana_blessing_might",
-        1
-      ],
-      [
-        "arcana_blessing_clairvoyance",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_AUGMENTATION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_might", 1 ], [ "arcana_blessing_clairvoyance", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_AUGMENTATION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_AGILE2",
-    "name": {
-      "str": "增强标志III"
-    },
+    "name": { "str": "增强标志III" },
     "points": 3,
     "description": "“毫不犹豫，这个世界不需要你的迟疑。”\n不可知的力量赠予你第三份礼物，可以带来速度和敏捷增强效果。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_CLAIRVOYANCE2"
-    ],
-    "changes_to": [
-      "SPELL_DAYLIGHT2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_CLAIRVOYANCE2" ],
+    "changes_to": [ "SPELL_DAYLIGHT2" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 300,
-    "spells_learned": [
-      [
-        "arcana_blessing_might",
-        1
-      ],
-      [
-        "arcana_blessing_clairvoyance",
-        1
-      ],
-      [
-        "arcana_blessing_agility",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "spells_learned": [ [ "arcana_blessing_might", 1 ], [ "arcana_blessing_clairvoyance", 1 ], [ "arcana_blessing_agility", 1 ] ],
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_DAYLIGHT2",
-    "name": {
-      "str": "增强标志IV"
-    },
+    "name": { "str": "增强标志IV" },
     "points": 4,
     "description": "“持之以恒，你将把我的印记带到你升华之路的最高峰，即使经历最艰难的磨难。”\n不可知的力量给了你第四个礼物，它可以触发一个令你振奋的加速咒文。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_AGILE2"
-    ],
-    "changes_to": [
-      "SPELL_DRAINLIFE"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_AGILE2" ],
+    "changes_to": [ "SPELL_DRAINLIFE" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 400,
     "spells_learned": [
-      [
-        "arcana_blessing_might",
-        1
-      ],
-      [
-        "arcana_blessing_clairvoyance",
-        1
-      ],
-      [
-        "arcana_blessing_agility",
-        1
-      ],
-      [
-        "arcana_blessing_surge_adrenaline",
-        1
-      ]
+      [ "arcana_blessing_might", 1 ],
+      [ "arcana_blessing_clairvoyance", 1 ],
+      [ "arcana_blessing_agility", 1 ],
+      [ "arcana_blessing_surge_adrenaline", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_DRAINLIFE",
-    "name": {
-      "str": "增强标志V"
-    },
+    "name": { "str": "增强标志V" },
     "points": 5,
     "description": "“不要为你必须做的事情感到高兴，但要在每一个行动中找到目标。”\n不可知力量给了你第五个礼物，它可以给予你暂时的生命消耗效果。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_DAYLIGHT2"
-    ],
-    "changes_to": [
-      "SPELL_INVIS"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_DAYLIGHT2" ],
+    "changes_to": [ "SPELL_INVIS" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 500,
     "spells_learned": [
-      [
-        "arcana_blessing_might",
-        1
-      ],
-      [
-        "arcana_blessing_clairvoyance",
-        1
-      ],
-      [
-        "arcana_blessing_agility",
-        1
-      ],
-      [
-        "arcana_blessing_surge_adrenaline",
-        1
-      ],
-      [
-        "arcana_blessing_drain_life",
-        1
-      ]
+      [ "arcana_blessing_might", 1 ],
+      [ "arcana_blessing_clairvoyance", 1 ],
+      [ "arcana_blessing_agility", 1 ],
+      [ "arcana_blessing_surge_adrenaline", 1 ],
+      [ "arcana_blessing_drain_life", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_INVIS",
-    "name": {
-      "str": "增强标志VI"
-    },
+    "name": { "str": "增强标志VI" },
     "points": 6,
     "description": "“总有一天，你的精神会强大起来，而不必逃避凡人所惧怕的。这是我的意愿。”\n不可知的力量给了你第六个礼物，可以让你暂时隐身。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_DRAINLIFE"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_DRAINLIFE" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 600,
     "spells_learned": [
-      [
-        "arcana_blessing_might",
-        1
-      ],
-      [
-        "arcana_blessing_clairvoyance",
-        1
-      ],
-      [
-        "arcana_blessing_agility",
-        1
-      ],
-      [
-        "arcana_blessing_surge_adrenaline",
-        1
-      ],
-      [
-        "arcana_blessing_drain_life",
-        1
-      ],
-      [
-        "arcana_blessing_illusion_cloak",
-        1
-      ]
+      [ "arcana_blessing_might", 1 ],
+      [ "arcana_blessing_clairvoyance", 1 ],
+      [ "arcana_blessing_agility", 1 ],
+      [ "arcana_blessing_surge_adrenaline", 1 ],
+      [ "arcana_blessing_drain_life", 1 ],
+      [ "arcana_blessing_illusion_cloak", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_CONFUSE2",
-    "name": {
-      "str": "破坏标志I"
-    },
+    "name": { "str": "破坏标志I" },
     "points": 1,
     "description": "“直视敌寇，向你屈膝！”\n不可知的力量赠予的礼物，击晕你周围的怪物。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "changes_to": [
-      "SPELL_CLOUD"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "changes_to": [ "SPELL_CLOUD" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 100,
-    "spells_learned": [
-      [
-        "arcana_blessing_confuse_monster",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_DESTRUCTION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_confuse_monster", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_DESTRUCTION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_CLOUD",
-    "name": {
-      "str": "破坏标志II"
-    },
+    "name": { "str": "破坏标志II" },
     "points": 2,
     "description": "“施与同罚，判以同刑！”\n不可知的力量赠予了你第二个礼物，可以在所需的位置产生有毒气体。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_CONFUSE2"
-    ],
-    "changes_to": [
-      "SPELL_LIGHTNING2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_CONFUSE2" ],
+    "changes_to": [ "SPELL_LIGHTNING2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 200,
-    "spells_learned": [
-      [
-        "arcana_blessing_confuse_monster",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_miasma",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_DESTRUCTION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_confuse_monster", 1 ], [ "arcana_blessing_conjure_miasma", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_DESTRUCTION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_LIGHTNING2",
-    "name": {
-      "str": "破坏标志III"
-    },
+    "name": { "str": "破坏标志III" },
     "points": 3,
     "description": "“慎用所赋，器以正轨！。”\n不可知的力量赠予你第三次礼物，可以唤起神圣的闪电风暴。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_CLOUD"
-    ],
-    "changes_to": [
-      "SPELL_FIRE2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_CLOUD" ],
+    "changes_to": [ "SPELL_FIRE2" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 300,
     "spells_learned": [
-      [
-        "arcana_blessing_confuse_monster",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_miasma",
-        1
-      ],
-      [
-        "arcana_blessing_divine_storm",
-        1
-      ]
+      [ "arcana_blessing_confuse_monster", 1 ],
+      [ "arcana_blessing_conjure_miasma", 1 ],
+      [ "arcana_blessing_divine_storm", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_FIRE2",
-    "name": {
-      "str": "破坏标志IV"
-    },
+    "name": { "str": "破坏标志IV" },
     "points": 4,
     "description": "“审判我们的敌人，因为他们只会带来痛苦。”\n不可知的力量给了你第四份礼物，以倾泻净化的烈焰（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_LIGHTNING2"
-    ],
-    "changes_to": [
-      "SPELL_LIGHTNINGFIELD"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_LIGHTNING2" ],
+    "changes_to": [ "SPELL_LIGHTNINGFIELD" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 400,
     "spells_learned": [
-      [
-        "arcana_blessing_confuse_monster",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_miasma",
-        1
-      ],
-      [
-        "arcana_blessing_divine_storm",
-        1
-      ],
-      [
-        "arcana_blessing_holy_flare",
-        1
-      ]
+      [ "arcana_blessing_confuse_monster", 1 ],
+      [ "arcana_blessing_conjure_miasma", 1 ],
+      [ "arcana_blessing_divine_storm", 1 ],
+      [ "arcana_blessing_holy_flare", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_LIGHTNINGFIELD",
-    "name": {
-      "str": "破坏标志V"
-    },
+    "name": { "str": "破坏标志V" },
     "points": 5,
     "description": "“稳定地进行，你会成功的。”\n不可知力量给了你第五个礼物，它可以让你的敌人沐浴在闪电中。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_FIRE2"
-    ],
-    "changes_to": [
-      "SPELL_PULSE"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_FIRE2" ],
+    "changes_to": [ "SPELL_PULSE" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 500,
     "spells_learned": [
-      [
-        "arcana_blessing_confuse_monster",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_miasma",
-        1
-      ],
-      [
-        "arcana_blessing_divine_storm",
-        1
-      ],
-      [
-        "arcana_blessing_holy_flare",
-        1
-      ],
-      [
-        "arcana_blessing_radiant_burst",
-        1
-      ]
+      [ "arcana_blessing_confuse_monster", 1 ],
+      [ "arcana_blessing_conjure_miasma", 1 ],
+      [ "arcana_blessing_divine_storm", 1 ],
+      [ "arcana_blessing_holy_flare", 1 ],
+      [ "arcana_blessing_radiant_burst", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_PULSE",
-    "name": {
-      "str": "破坏标志VI"
-    },
+    "name": { "str": "破坏标志VI" },
     "points": 6,
     "description": "“总有一天，你会为这些罪恶复仇的。这是我的意志。”\n不可知的力量给了你第六个礼物，可以释放出一股毁灭性的能量。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "category": [
-      "VEIL"
-    ],
-    "prereqs": [
-      "SPELL_LIGHTNINGFIELD"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "category": [ "VEIL" ],
+    "prereqs": [ "SPELL_LIGHTNINGFIELD" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 600,
     "spells_learned": [
-      [
-        "arcana_blessing_confuse_monster",
-        1
-      ],
-      [
-        "arcana_blessing_conjure_miasma",
-        1
-      ],
-      [
-        "arcana_blessing_divine_storm",
-        1
-      ],
-      [
-        "arcana_blessing_holy_flare",
-        1
-      ],
-      [
-        "arcana_blessing_radiant_burst",
-        1
-      ],
-      [
-        "arcana_blessing_wave_destruction",
-        1
-      ]
+      [ "arcana_blessing_confuse_monster", 1 ],
+      [ "arcana_blessing_conjure_miasma", 1 ],
+      [ "arcana_blessing_divine_storm", 1 ],
+      [ "arcana_blessing_holy_flare", 1 ],
+      [ "arcana_blessing_radiant_burst", 1 ],
+      [ "arcana_blessing_wave_destruction", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_ACIDARMOR",
-    "name": {
-      "str": "保护标志I"
-    },
+    "name": { "str": "保护标志I" },
     "points": 1,
     "description": "“为我服务，你必须学会防范许多威胁。\n不可知的力量给了你一份礼物，可以让你暂时抵抗腐蚀性的影响。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "changes_to": [
-      "SPELL_POISONARMOR2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "changes_to": [ "SPELL_POISONARMOR2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 100,
-    "spells_learned": [
-      [
-        "arcana_blessing_ward_acid",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_PROTECTION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_ward_acid", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_PROTECTION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_POISONARMOR2",
-    "name": {
-      "str": "保护标志II"
-    },
+    "name": { "str": "保护标志II" },
     "points": 2,
     "description": "“您会得到我的庇佑，因为您的身体不可及永恒，无以媲磐石。”\n不可知的力量赠予你第二个礼物，可以暂时保护你免受有毒气体和其他有毒物质的伤害。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_ACIDARMOR"
-    ],
-    "changes_to": [
-      "SPELL_ELECRESIST2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_ACIDARMOR" ],
+    "changes_to": [ "SPELL_ELECRESIST2" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 200,
-    "spells_learned": [
-      [
-        "arcana_blessing_ward_acid",
-        1
-      ],
-      [
-        "arcana_blessing_ward_poison",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_PROTECTION"
-    ]
+    "spells_learned": [ [ "arcana_blessing_ward_acid", 1 ], [ "arcana_blessing_ward_poison", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_PROTECTION" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_ELECRESIST2",
-    "name": {
-      "str": "保护标志III"
-    },
+    "name": { "str": "保护标志III" },
     "points": 3,
     "description": "“您将面临的风暴会卷走你所珍视的一切。”\n不可知的力量赠予你第三个礼物，可授予对电力临时保护。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_POISONARMOR2"
-    ],
-    "changes_to": [
-      "SPELL_FLAMEARMOR2"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_POISONARMOR2" ],
+    "changes_to": [ "SPELL_FLAMEARMOR2" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 300,
-    "spells_learned": [
-      [
-        "arcana_blessing_ward_acid",
-        1
-      ],
-      [
-        "arcana_blessing_ward_poison",
-        1
-      ],
-      [
-        "arcana_blessing_ward_lightning",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "spells_learned": [ [ "arcana_blessing_ward_acid", 1 ], [ "arcana_blessing_ward_poison", 1 ], [ "arcana_blessing_ward_lightning", 1 ] ],
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_FLAMEARMOR2",
-    "name": {
-      "str": "保护标志IV"
-    },
+    "name": { "str": "保护标志IV" },
     "points": 4,
     "description": "“你的灵魂面临考验，如同石头面对烈火，不要屈服于地狱。”\n不可知的力量给了你第四个礼物，帮助你抵御烈火和浓烟。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_ELECRESIST2"
-    ],
-    "changes_to": [
-      "SPELL_FROSTARMOR"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_ELECRESIST2" ],
+    "changes_to": [ "SPELL_FROSTARMOR" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 400,
     "spells_learned": [
-      [
-        "arcana_blessing_ward_acid",
-        1
-      ],
-      [
-        "arcana_blessing_ward_poison",
-        1
-      ],
-      [
-        "arcana_blessing_ward_lightning",
-        1
-      ],
-      [
-        "arcana_blessing_ward_flame",
-        1
-      ]
+      [ "arcana_blessing_ward_acid", 1 ],
+      [ "arcana_blessing_ward_poison", 1 ],
+      [ "arcana_blessing_ward_lightning", 1 ],
+      [ "arcana_blessing_ward_flame", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_FROSTARMOR",
-    "name": {
-      "str": "保护标志V"
-    },
+    "name": { "str": "保护标志V" },
     "points": 5,
     "description": "“不管是暴风雨还是暴风雪，无论什么都不能阻止你听从我的召唤。”\n不可知力量给了你第五个礼物，可以抵御寒冷。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_FLAMEARMOR2"
-    ],
-    "changes_to": [
-      "SPELL_PSYSHIELD"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_FLAMEARMOR2" ],
+    "changes_to": [ "SPELL_PSYSHIELD" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 500,
     "spells_learned": [
-      [
-        "arcana_blessing_ward_acid",
-        1
-      ],
-      [
-        "arcana_blessing_ward_poison",
-        1
-      ],
-      [
-        "arcana_blessing_ward_lightning",
-        1
-      ],
-      [
-        "arcana_blessing_ward_flame",
-        1
-      ],
-      [
-        "arcana_blessing_ward_cold",
-        1
-      ]
+      [ "arcana_blessing_ward_acid", 1 ],
+      [ "arcana_blessing_ward_poison", 1 ],
+      [ "arcana_blessing_ward_lightning", 1 ],
+      [ "arcana_blessing_ward_flame", 1 ],
+      [ "arcana_blessing_ward_cold", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_PSYSHIELD",
-    "name": {
-      "str": "保护标志VI"
-    },
+    "name": { "str": "保护标志VI" },
     "points": 6,
     "description": "“总有一天，你对我的服侍会让你安然度过死亡。“这是我的意愿。”\n不可知的力量给了你第六个礼物，它可以投射出强大的保护力量。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_FROSTARMOR"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_FROSTARMOR" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 600,
     "spells_learned": [
-      [
-        "arcana_blessing_ward_acid",
-        1
-      ],
-      [
-        "arcana_blessing_ward_poison",
-        1
-      ],
-      [
-        "arcana_blessing_ward_lightning",
-        1
-      ],
-      [
-        "arcana_blessing_ward_flame",
-        1
-      ],
-      [
-        "arcana_blessing_ward_cold",
-        1
-      ],
-      [
-        "arcana_blessing_holy_ward",
-        1
-      ]
+      [ "arcana_blessing_ward_acid", 1 ],
+      [ "arcana_blessing_ward_poison", 1 ],
+      [ "arcana_blessing_ward_lightning", 1 ],
+      [ "arcana_blessing_ward_flame", 1 ],
+      [ "arcana_blessing_ward_cold", 1 ],
+      [ "arcana_blessing_holy_ward", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_SUMMONDOG2",
-    "name": {
-      "str": "召唤标志I"
-    },
+    "name": { "str": "召唤标志I" },
     "points": 1,
     "description": "“这是等待你们世界的命运的征兆。“\n不可知的力量给了你一个礼物，可以召唤骷髅狗。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "changes_to": [
-      "SPELL_SUMMONSKEL"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "changes_to": [ "SPELL_SUMMONSKEL" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 100,
-    "spells_learned": [
-      [
-        "arcana_blessing_summon_skeletal_dog",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_SUMMONING"
-    ]
+    "spells_learned": [ [ "arcana_blessing_summon_skeletal_dog", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_SUMMONING" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_SUMMONSKEL",
-    "name": {
-      "str": "召唤标志II"
-    },
+    "name": { "str": "召唤标志II" },
     "points": 2,
     "description": "“汝将所视更多噩兆，水晶球中沉浮着你的命运。但无需恐惧。”\n不可知的力量赠予你第二个礼物，可以召唤骷髅。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_SUMMONDOG2"
-    ],
-    "changes_to": [
-      "SPELL_SUMMONCULUS"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_SUMMONDOG2" ],
+    "changes_to": [ "SPELL_SUMMONCULUS" ],
+    "category": [ "VEIL" ],
     "mana_modifier": 200,
-    "spells_learned": [
-      [
-        "arcana_blessing_summon_skeletal_dog",
-        1
-      ],
-      [
-        "arcana_blessing_summon_skeleton",
-        1
-      ]
-    ],
-    "flags": [
-      "explorer_of_the_veil",
-      "ARCANA_VEIL_MARKER_SUMMONING"
-    ]
+    "spells_learned": [ [ "arcana_blessing_summon_skeletal_dog", 1 ], [ "arcana_blessing_summon_skeleton", 1 ] ],
+    "flags": [ "explorer_of_the_veil", "ARCANA_VEIL_MARKER_SUMMONING" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_SUMMONCULUS",
-    "name": {
-      "str": "召唤标志III"
-    },
+    "name": { "str": "召唤标志III" },
     "points": 3,
     "description": "“还有巫婆携苹果邀汝食之，但且铭记，只有我为汝带来真正启示。”\n不可知的力量赠予你第三份礼物，召唤何蒙库鲁兹。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_SUMMONSKEL"
-    ],
-    "changes_to": [
-      "SPELL_SUMMONTHING"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_SUMMONSKEL" ],
+    "changes_to": [ "SPELL_SUMMONTHING" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 300,
     "spells_learned": [
-      [
-        "arcana_blessing_summon_skeletal_dog",
-        1
-      ],
-      [
-        "arcana_blessing_summon_skeleton",
-        1
-      ],
-      [
-        "arcana_blessing_summon_homunculus",
-        1
-      ]
+      [ "arcana_blessing_summon_skeletal_dog", 1 ],
+      [ "arcana_blessing_summon_skeleton", 1 ],
+      [ "arcana_blessing_summon_homunculus", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_SUMMONTHING",
-    "name": {
-      "str": "召唤标志IV"
-    },
+    "name": { "str": "召唤标志IV" },
     "points": 4,
     "description": "“小心地研究，你将学会阅读这些迹象，并召唤众生去回应他们的虚假承诺。”\n不可知力量给了你第四个礼物，它可以召唤出一个可怕的东西。（记住绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_SUMMONCULUS"
-    ],
-    "changes_to": [
-      "SPELL_BUGS"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_SUMMONCULUS" ],
+    "changes_to": [ "SPELL_BUGS" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 400,
     "spells_learned": [
-      [
-        "arcana_blessing_summon_skeletal_dog",
-        1
-      ],
-      [
-        "arcana_blessing_summon_skeleton",
-        1
-      ],
-      [
-        "arcana_blessing_summon_homunculus",
-        1
-      ],
-      [
-        "arcana_blessing_summon_thing",
-        1
-      ]
+      [ "arcana_blessing_summon_skeletal_dog", 1 ],
+      [ "arcana_blessing_summon_skeleton", 1 ],
+      [ "arcana_blessing_summon_homunculus", 1 ],
+      [ "arcana_blessing_summon_thing", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_BUGS",
-    "name": {
-      "str": "召唤标志V"
-    },
+    "name": { "str": "召唤标志V" },
     "points": 5,
     "description": "“谨慎绕过魔镜的预示，汝之预兆将揭露我们敌人的面目。”\n不可知的力量赠予你第五个礼物，可以召唤巨型蜈蚣。（（记住绑定“施法”键！））",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_SUMMONTHING"
-    ],
-    "changes_to": [
-      "SPELL_SUMMONVORTEX"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_SUMMONTHING" ],
+    "changes_to": [ "SPELL_SUMMONVORTEX" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 500,
     "spells_learned": [
-      [
-        "arcana_blessing_summon_skeletal_dog",
-        1
-      ],
-      [
-        "arcana_blessing_summon_skeleton",
-        1
-      ],
-      [
-        "arcana_blessing_summon_homunculus",
-        1
-      ],
-      [
-        "arcana_blessing_summon_thing",
-        1
-      ],
-      [
-        "arcana_blessing_summon_giant_centipedes",
-        1
-      ]
+      [ "arcana_blessing_summon_skeletal_dog", 1 ],
+      [ "arcana_blessing_summon_skeleton", 1 ],
+      [ "arcana_blessing_summon_homunculus", 1 ],
+      [ "arcana_blessing_summon_thing", 1 ],
+      [ "arcana_blessing_summon_giant_centipedes", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   },
   {
     "type": "mutation",
     "id": "SPELL_SUMMONVORTEX",
-    "name": {
-      "str": "召唤标志VI"
-    },
+    "name": { "str": "召唤标志VI" },
     "points": 6,
     "description": "“到时候，你会接受我的信息，召唤传令来指导别人。这是我的意愿。“\n不可知的力量给了你第六个礼物，可以召唤漩涡。（记得绑定“施法”键！）",
     "valid": false,
     "purifiable": false,
-    "prereqs": [
-      "SPELL_BUGS"
-    ],
-    "category": [
-      "VEIL"
-    ],
-    "threshreq": [
-      "THRESH_VEIL"
-    ],
-    "bionic_mana_penalty": 0,
+    "prereqs": [ "SPELL_BUGS" ],
+    "category": [ "VEIL" ],
+    "threshreq": [ "THRESH_VEIL" ],
     "mana_modifier": 600,
     "spells_learned": [
-      [
-        "arcana_blessing_summon_skeletal_dog",
-        1
-      ],
-      [
-        "arcana_blessing_summon_skeleton",
-        1
-      ],
-      [
-        "arcana_blessing_summon_homunculus",
-        1
-      ],
-      [
-        "arcana_blessing_summon_thing",
-        1
-      ],
-      [
-        "arcana_blessing_summon_giant_centipedes",
-        1
-      ],
-      [
-        "arcana_blessing_summon_vortices",
-        1
-      ]
+      [ "arcana_blessing_summon_skeletal_dog", 1 ],
+      [ "arcana_blessing_summon_skeleton", 1 ],
+      [ "arcana_blessing_summon_homunculus", 1 ],
+      [ "arcana_blessing_summon_thing", 1 ],
+      [ "arcana_blessing_summon_giant_centipedes", 1 ],
+      [ "arcana_blessing_summon_vortices", 1 ]
     ],
-    "flags": [
-      "explorer_of_the_veil"
-    ]
+    "flags": [ "explorer_of_the_veil" ]
   }
 ]
