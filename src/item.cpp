@@ -3316,7 +3316,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                       spell_str += "<color_c_yellow>" + casting.name() + "</color> ";
                    }
                 }
-                time += " 回合";
+                time += " 秒";
                 info.emplace_back("DESCRIPTION", string_format("    周期：%s", time));
                 info.emplace_back("DESCRIPTION", string_format("    释放的法术：%s", spell_str));
 
