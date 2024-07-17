@@ -3306,7 +3306,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 std::string time = "";
                 std::string spell_str = "";
 
-                info.emplace_back("DESCRIPTION", string_format("* 周期性激活的效果："));
+                info.emplace_back("DESCRIPTION", string_format("* 周期性效果："));
 
                 for (const std::pair<time_duration, std::vector<fake_spell>> &p : inter) {
                     time += string_format(time + "%s", to_turns<int>(p.first));
