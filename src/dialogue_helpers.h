@@ -221,7 +221,6 @@ struct int_or_var_part {
                 return 0;
             }
         } else {
-            debugmsg( "No valid value for int_or_var_part." );
             return 0;
         }
     }
