@@ -3310,7 +3310,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
                 for (const std::pair<time_duration, std::vector<fake_spell>> &p : inter) {
                     time += string_format(time + "%s", to_turns<int>(p.first));
-                   add_msg(m_good,_("数值 %s"), to_turns<int>(p.first));
                    time = "<color_c_yellow>" + time + "</color>";
                    for (const fake_spell &fs : p.second) {
                       spell casting =  fs.get_spell(fs.level);
