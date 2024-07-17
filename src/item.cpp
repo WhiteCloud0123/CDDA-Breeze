@@ -2349,7 +2349,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         // skill
         double stabbing_skill = 0.0;
         double cutting_skill = 0.0;
-
+        double throw_skill = 0.0;
 
         double resonance_mult = 1.0;
         double pain_mult = 1.0;
@@ -2382,6 +2382,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         // skill mult
         double stabbing_skill_mult = 1.0;
         double cutting_skill_mult = 1.0;
+        double throw_skill_mult = 1.0;
 
         std::vector<fake_spell> all_hit_you_effect;
         std::vector<fake_spell> all_hit_me_effect;
@@ -2389,17 +2390,17 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
         relic_recharge_has recharge_con = charge_info.has;
-        Character &player = get_player_character();
+        Character& player = get_player_character();
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
-          
+
             if (e.active_conditions.first == enchantment::has::HELD) {
                 has_str = "持有";
             }
             else if (e.active_conditions.first == enchantment::has::WIELD) {
                 has_str = "手持";
             }
-            else  {
+            else {
                 has_str = "穿戴";
             }
 
@@ -2443,6 +2444,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
             stabbing_skill += e.get_skill_value_add(skill_stabbing);
             cutting_skill += e.get_skill_value_add(skill_cutting);
+            throw_skill += e.get_skill_value_add(skill_throw);
 
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
             pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN);
@@ -2474,6 +2476,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
             stabbing_skill_mult += e.get_skill_value_multiply(skill_stabbing);
             cutting_skill_mult += e.get_skill_value_multiply(skill_cutting);
+            throw_skill_mult += e.get_skill_value_multiply(skill_throw);
 
             if (!e.hit_you_effect.empty()) {
                 for (fake_spell& sp : e.hit_you_effect) {
@@ -2481,24 +2484,24 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
             }
 
-            if (! e.hit_me_effect.empty()) {
+            if (!e.hit_me_effect.empty()) {
                 for (fake_spell& sp : e.hit_me_effect) {
                     all_hit_me_effect.push_back(sp);
                 }
             }
 
             if (!e.mutations.empty()) {
-                for (const trait_id & ti : e.mutations) {
+                for (const trait_id& ti : e.mutations) {
                     all_mutations.push_back(ti);
                 }
-            
+
             }
 
         }
 
         for (enchantment& e : relic_data->get_defined_enchantments()) {
-                    
-            resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE,player);
+
+            resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE, player);
             pain += e.get_value_add(enchant_vals::mod::PAIN, player);
             speed += e.get_value_add(enchant_vals::mod::SPEED, player);
             base_move_cost += e.get_value_add(enchant_vals::mod::MOVE_COST, player);
@@ -2558,17 +2561,18 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
         }
 
-              
+
         if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_speed != 0.0
-            || max_mana !=0.0 || regen_mana != 0.0|| carry_weight !=0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0 
-            || footstep_noise !=0.0 || shout_noise != 0.0
+            || max_mana != 0.0 || regen_mana != 0.0 || carry_weight != 0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0
+            || footstep_noise != 0.0 || shout_noise != 0.0
             || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
-            || item_damage_heat !=0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid !=0.0 
+            || item_damage_heat != 0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid != 0.0
             || item_damage_cold != 0.0
-            ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
-            ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
-            || armor_heat != 0.0 
-            || stabbing_skill !=0.0 || cutting_skill !=0.0
+            || armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
+            || armor_bullet != 0.0 || armor_elec != 0.0 || armor_acid != 0.0
+            || armor_heat != 0.0
+            || stabbing_skill != 0.0 || cutting_skill != 0.0
+            || throw_skill != 0.0
 
             || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_speed_mult != 1.0 
             || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || carry_weight_mult !=1.0
@@ -2581,6 +2585,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
             || stabbing_skill_mult !=1.0 || cutting_skill_mult !=1.0
+            || throw_skill_mult != 1.0
             
             || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty()
             ) {
@@ -3162,8 +3167,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             }
 
             if (stabbing_skill != 0.0 || cutting_skill !=0.0
+                || throw_skill != 0.0
                 
                 || stabbing_skill_mult != 1.0 || cutting_skill_mult !=1.0
+                || throw_skill_mult != 1.0
                 
                 ) {
             
@@ -3203,6 +3210,25 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     }
                 }
                 if (base_str != "    斩击武器：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+
+                base_str = "    投掷：";
+                need_space = false;
+                if (throw_skill != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", throw_skill);
+                    need_space = true;
+                }
+                if (throw_skill_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>x %.2f</color>", throw_skill_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>x %.2f</color>", throw_skill_mult);
+                    }
+                }
+                if (base_str != "    投掷：") {
                     info.emplace_back("DESCRIPTION",
                         string_format("%s", base_str));
                 }
