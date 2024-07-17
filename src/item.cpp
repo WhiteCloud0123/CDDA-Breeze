@@ -195,6 +195,7 @@ static const skill_id skill_cooking( "cooking" );
 static const skill_id skill_melee( "melee" );
 static const skill_id skill_survival( "survival" );
 static const skill_id skill_weapon( "weapon" );
+static const skill_id skill_stabbing("stabbing");
 
 static const species_id species_ROBOT( "ROBOT" );
 
@@ -2344,6 +2345,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_elec = 0.0;
         double armor_acid = 0.0;
         double armor_heat = 0.0;
+        // skill
+        double stabbing_skill = 0.0;
+
+
 
         double resonance_mult = 1.0;
         double pain_mult = 1.0;
@@ -2373,6 +2378,9 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double armor_elec_mult = 1.0;
         double armor_acid_mult = 1.0;
         double armor_heat_mult = 1.0;
+        // skill mult
+        double stabbing_skill_mult = 1.0;
+
 
         std::vector<fake_spell> all_hit_you_effect;
         std::vector<fake_spell> all_hit_me_effect;
@@ -2432,6 +2440,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_elec += e.get_value_add(enchant_vals::mod::ARMOR_ELEC);
             armor_acid += e.get_value_add(enchant_vals::mod::ARMOR_ACID);
             armor_heat += e.get_value_add(enchant_vals::mod::ARMOR_HEAT);
+            stabbing_skill += e.get_skill_value_add(skill_stabbing);
 
             resonance_mult += e.get_value_multiply(enchant_vals::mod::ARTIFACT_RESONANCE);
             pain_mult += e.get_value_multiply(enchant_vals::mod::PAIN);
@@ -2461,6 +2470,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             armor_elec_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ELEC);
             armor_acid_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_ACID);
             armor_heat_mult += e.get_value_multiply(enchant_vals::mod::ARMOR_HEAT);
+            stabbing_skill_mult += e.get_skill_value_multiply(skill_stabbing);
 
             if (!e.hit_you_effect.empty()) {
                 for (fake_spell& sp : e.hit_you_effect) {
@@ -2555,7 +2565,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             ||armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
             ||armor_bullet !=0.0|| armor_elec != 0.0 || armor_acid != 0.0 
             || armor_heat != 0.0 
-            
+            || stabbing_skill !=0.0
 
             || resonance_mult != 1.0 ||pain_mult !=1.0 || speed_mult != 1.0 || base_move_cost_mult != 1.0 || attack_speed_mult != 1.0 
             || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || carry_weight_mult !=1.0
@@ -2567,7 +2577,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
             || armor_bullet_mult != 1.0 || armor_elec_mult != 1.0 || armor_acid_mult != 1.0
             || armor_heat_mult != 1.0
-            
+            || stabbing_skill_mult !=1.0
             
             || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty()
             ) {
@@ -3146,6 +3156,36 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                         string_format("%s", base_str));
                 }
                
+            }
+
+            if (stabbing_skill != 0.0
+                
+                || stabbing_skill_mult != 1.0
+                
+                ) {
+            
+                info.emplace_back("DESCRIPTION", "* 技能：");
+
+                base_str = "    刺击武器：";
+                need_space = false;
+                if (stabbing_skill != 0.0) {
+                    base_str += string_format("<color_c_yellow>%.2f</color>", stabbing_skill);
+                    need_space = true;
+                }
+                if (stabbing_skill_mult != 1.0) {
+                    if (need_space) {
+                        base_str += string_format("   <color_c_yellow>x %.2f</color>", stabbing_skill_mult);
+                    }
+                    else {
+                        base_str += string_format("<color_c_yellow>x %.2f</color>", stabbing_skill_mult);
+                    }
+                }
+                if (base_str != "    刺击武器：") {
+                    info.emplace_back("DESCRIPTION",
+                        string_format("%s", base_str));
+                }
+            
+            
             }
 
             if (!all_hit_you_effect.empty()) {
