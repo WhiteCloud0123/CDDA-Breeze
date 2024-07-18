@@ -2388,6 +2388,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         std::vector<fake_spell> all_hit_me_effect;
         std::vector<trait_id> all_mutations;
         std::map<time_duration, std::vector<fake_spell>> inter;
+        std::map<efftype_id, int> eff_map;
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
         relic_recharge_has recharge_con = charge_info.has;
@@ -2496,6 +2497,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                     all_mutations.push_back(ti);
                 }
 
+            }
+
+            if (!e.ench_effects.empty()) {
+                eff_map = e.ench_effects;
             }
 
         }
@@ -2611,6 +2616,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
             }
 
+            if (!e.ench_effects.empty()) {
+                eff_map = e.ench_effects;
+            }
+
         }
 
 
@@ -2639,7 +2648,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || stabbing_skill_mult !=1.0 || cutting_skill_mult !=1.0
             || throw_skill_mult != 1.0
             
-            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty() || !inter.empty()
+            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty() || !inter.empty() || !eff_map.empty()
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
@@ -3339,6 +3348,16 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 info.emplace_back("DESCRIPTION", string_format("    周期：%s", time));
                 info.emplace_back("DESCRIPTION", string_format("    释放的法术：%s", spell_str));
 
+            }
+
+            if (!eff_map.empty()) {
+                std::string str = "* 效果：";
+                for (const std::pair<efftype_id,int> &p : eff_map) {                  
+                    effect et(effect_source::empty(), &p.first.obj(), 1_turns, bodypart_str_id::NULL_ID(), false, p.second,
+                        time_point());                  
+                    str += "<color_c_yellow>"+ et.disp_name()+"</color>";
+                }
+                info.emplace_back("DESCRIPTION",str);          
             }
 
         }  
