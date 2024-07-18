@@ -2388,6 +2388,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         std::vector<fake_spell> all_hit_me_effect;
         std::vector<trait_id> all_mutations;
         std::map<time_duration, std::vector<fake_spell>> inter;
+        std::map<efftype_id, int> eff_map;
         relic_charge_info charge_info = relic_data->get_charge_info();
         relic_recharge_type recharge_type = charge_info.type;
         relic_recharge_has recharge_con = charge_info.has;
@@ -2395,7 +2396,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         dialogue dia(get_talker_for(player), nullptr);
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
-
             if (e.active_conditions.first == enchantment::has::HELD) {
                 has_str = "持有";
             }
@@ -2405,7 +2405,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             else {
                 has_str = "穿戴";
             }
-
+            
             if (e.active_conditions.second == enchantment::condition::ACTIVE) {
                 condition_str = "激活状态";
             }
@@ -2499,9 +2499,33 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
             }
 
+            if (!e.ench_effects.empty()) {
+                eff_map = e.ench_effects;
+            }
+
         }
 
         for (enchantment& e : relic_data->get_defined_enchantments()) {
+
+            if (e.active_conditions.first == enchantment::has::HELD) {
+                has_str = "持有";
+            }
+            else if (e.active_conditions.first == enchantment::has::WIELD) {
+                has_str = "手持";
+            }
+            else {
+                has_str = "穿戴";
+            }
+
+            if (e.active_conditions.second == enchantment::condition::ACTIVE) {
+                condition_str = "激活状态";
+            }
+            else if (e.active_conditions.second == enchantment::condition::INACTIVE) {
+                condition_str = "非激活状态";
+            }
+            else if (e.active_conditions.second == enchantment::condition::DIALOG_CONDITION) {
+                condition_str = "对话框";
+            }
 
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE, player);
             pain += e.get_value_add(enchant_vals::mod::PAIN, player);
@@ -2592,6 +2616,10 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
             }
 
+            if (!e.ench_effects.empty()) {
+                eff_map = e.ench_effects;
+            }
+
         }
 
 
@@ -2620,12 +2648,12 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || stabbing_skill_mult !=1.0 || cutting_skill_mult !=1.0
             || throw_skill_mult != 1.0
             
-            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty() || !inter.empty()
+            || !all_hit_you_effect.empty() || !all_hit_me_effect.empty() || !all_mutations.empty() || !inter.empty() || !eff_map.empty()
             ) {
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
 
-            if (!relic_data->get_proc_enchantments().empty()) {
+            if (!relic_data->get_proc_enchantments().empty() || !relic_data->get_defined_enchantments().empty()) {
                 if (condition_str != "") {
                     info.emplace_back("DESCRIPTION",
                         string_format("* 生效条件：<color_c_yellow>%1s</color> <color_c_yellow>%2s</color>"
@@ -3306,7 +3334,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 std::string time = "";
                 std::string spell_str = "";
 
-                info.emplace_back("DESCRIPTION", string_format("* 周期性激活的效果："));
+                info.emplace_back("DESCRIPTION", string_format("* 周期性效果："));
 
                 for (const std::pair<time_duration, std::vector<fake_spell>> &p : inter) {
                     time += string_format(time + "%s", to_turns<int>(p.first));
@@ -3320,6 +3348,16 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 info.emplace_back("DESCRIPTION", string_format("    周期：%s", time));
                 info.emplace_back("DESCRIPTION", string_format("    释放的法术：%s", spell_str));
 
+            }
+
+            if (!eff_map.empty()) {
+                std::string str = "* 效果：";
+                for (const std::pair<efftype_id,int> &p : eff_map) {                  
+                    effect et(effect_source::empty(), &p.first.obj(), 1_turns, bodypart_str_id::NULL_ID(), false, p.second,
+                        time_point());                  
+                    str += "<color_c_yellow>"+ et.disp_name()+"</color>";
+                }
+                info.emplace_back("DESCRIPTION",str);          
             }
 
         }  
