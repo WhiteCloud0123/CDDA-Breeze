@@ -2395,7 +2395,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         dialogue dia(get_talker_for(player), nullptr);
 
         for (enchant_cache& e : relic_data->get_proc_enchantments()) {
-
             if (e.active_conditions.first == enchantment::has::HELD) {
                 has_str = "持有";
             }
@@ -2405,7 +2404,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             else {
                 has_str = "穿戴";
             }
-
+            
             if (e.active_conditions.second == enchantment::condition::ACTIVE) {
                 condition_str = "激活状态";
             }
@@ -2502,6 +2501,26 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         }
 
         for (enchantment& e : relic_data->get_defined_enchantments()) {
+
+            if (e.active_conditions.first == enchantment::has::HELD) {
+                has_str = "持有";
+            }
+            else if (e.active_conditions.first == enchantment::has::WIELD) {
+                has_str = "手持";
+            }
+            else {
+                has_str = "穿戴";
+            }
+
+            if (e.active_conditions.second == enchantment::condition::ACTIVE) {
+                condition_str = "激活状态";
+            }
+            else if (e.active_conditions.second == enchantment::condition::INACTIVE) {
+                condition_str = "非激活状态";
+            }
+            else if (e.active_conditions.second == enchantment::condition::DIALOG_CONDITION) {
+                condition_str = "对话框";
+            }
 
             resonance += e.get_value_add(enchant_vals::mod::ARTIFACT_RESONANCE, player);
             pain += e.get_value_add(enchant_vals::mod::PAIN, player);
@@ -2625,7 +2644,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             info.emplace_back("DESCRIPTION", " ");
             info.emplace_back("DESCRIPTION", "<bold>被动效果</bold>：");
 
-            if (!relic_data->get_proc_enchantments().empty()) {
+            if (!relic_data->get_proc_enchantments().empty() || !relic_data->get_defined_enchantments().empty()) {
                 if (condition_str != "") {
                     info.emplace_back("DESCRIPTION",
                         string_format("* 生效条件：<color_c_yellow>%1s</color> <color_c_yellow>%2s</color>"
