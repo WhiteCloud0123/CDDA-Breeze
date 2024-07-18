@@ -2315,7 +2315,6 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
     if (relic_data) {
         insert_separation_line(info);
         info.emplace_back("DESCRIPTION", "<color_c_pink>科技/附魔</color>：");
-        bool passive_effect_is_empty = false;
         std::string has_str = "";
         std::string condition_str = "";
         double resonance = 0.0;
