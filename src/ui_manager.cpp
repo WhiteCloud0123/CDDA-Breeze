@@ -323,7 +323,7 @@ void ui_adaptor::redraw()
 
 void ui_adaptor::redraw_invalidated()
 {
-    if( test_mode || ui_stack.empty() ) {
+    if( ui_stack.empty() ) {
         return;
     }
 
