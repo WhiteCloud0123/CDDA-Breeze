@@ -346,6 +346,9 @@ static void musicFinished();
 
 static void play_music_file( const std::string &filename, int volume )
 {
+    if( test_mode ) {
+        return;
+    }
 
     if( !check_sound( volume ) ) {
         return;
@@ -368,6 +371,9 @@ static void play_music_file( const std::string &filename, int volume )
 /** Callback called when we finish playing music. */
 void musicFinished()
 {
+    if( test_mode ) {
+        return;
+    }
 
     Mix_HaltMusic();
     Mix_FreeMusic( current_music );
@@ -443,6 +449,9 @@ void play_music( const std::string &playlist )
 
 void stop_music()
 {
+    if( test_mode ) {
+        return;
+    }
 
     Mix_FreeMusic( current_music );
     Mix_HaltMusic();
@@ -456,6 +465,9 @@ void stop_music()
 
 void update_music_volume()
 {
+    if( test_mode ) {
+        return;
+    }
 
     Mix_VolumeMusic( current_music_track_volume * get_option<int>( "MUSIC_VOLUME" ) / 100 );
 
@@ -685,6 +697,9 @@ void sfx::play_variant_sound( const std::string &id, const std::string &variant,
                               const std::string &season, const cata::optional<bool> &is_indoors,
                               const cata::optional<bool> &is_night, int volume )
 {
+    if( test_mode ) {
+        return;
+    }
 
     add_msg_debug( debugmode::DF_SOUND, "sound id: %s, variant: %s, volume: %d ", id, variant, volume );
 
@@ -715,6 +730,9 @@ void sfx::play_variant_sound( const std::string &id, const std::string &variant,
                               const cata::optional<bool> &is_night, int volume, units::angle angle,
                               double pitch_min, double pitch_max )
 {
+    if( test_mode ) {
+        return;
+    }
 
     add_msg_debug( debugmode::DF_SOUND, "sound id: %s, variant: %s, volume: %d ", id, variant, volume );
 
@@ -766,6 +784,9 @@ void sfx::play_ambient_variant_sound( const std::string &id, const std::string &
                                       const cata::optional<bool> &is_night, int volume,
                                       channel channel, int fade_in_duration, double pitch, int loops )
 {
+    if( test_mode ) {
+        return;
+    }
     if( !check_sound( volume ) ) {
         return;
     }

@@ -8046,6 +8046,11 @@ void map::load( const tripoint_abs_sm &w, const bool update_vehicle,
     map &main_map = get_map();
     // It used to be unsafe to load a map that overlaps with the primary map;
     // Show an info line in tests to help track new errors
+    if( test_mode && this != &main_map && main_map.inbounds( project_to<coords::ms>( w ) ) ) {
+        DebugLog( D_INFO, DC_ALL )
+                << "loading non-main map at " << w.to_string()
+                << " which overlaps with main map (abs_sub = " << main_map.abs_sub.to_string() << ")";
+    }
     for( auto &traps : traplocs ) {
         traps.clear();
     }

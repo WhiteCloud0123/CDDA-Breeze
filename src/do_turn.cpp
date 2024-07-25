@@ -494,6 +494,9 @@ bool cleanup_at_end()
 
 void handle_key_blocking_activity()
 {
+    if( test_mode ) {
+        return;
+    }
     avatar &u = get_avatar();
     const bool has_unfinished_activity = u.activity && (
             u.activity.id()->based_on() == based_on_type::NEITHER

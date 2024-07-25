@@ -393,7 +393,7 @@ static void achievement_attained( const achievement *a, bool achievements_enable
                  a->name() );
         std::string popup_option = get_option<std::string>( "ACHIEVEMENT_COMPLETED_POPUP" );
         bool show_popup;
-        if( popup_option == "never" ) {
+        if( test_mode || popup_option == "never" ) {
             show_popup = false;
         } else if( popup_option == "always" ) {
             show_popup = true;
@@ -3670,6 +3670,9 @@ static shared_ptr_fast<game::draw_callback_t> create_trail_callback(
 
 void game::draw( ui_adaptor &ui )
 {
+    if( test_mode ) {
+        return;
+    }
 
     //temporary fix for updating visibility for minimap
     ter_view_p.z = ( u.pos() + u.view_offset ).z;

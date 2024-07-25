@@ -200,6 +200,9 @@ shared_ptr_fast<mm_submap> map_memory::find_submap( const tripoint &sm_pos )
 
 shared_ptr_fast<mm_submap> map_memory::load_submap( const tripoint &sm_pos )
 {
+    if( test_mode ) {
+        return nullptr;
+    }
 
     const cata_path dirname = find_mm_dir();
     reg_coord_pair p( sm_pos );
