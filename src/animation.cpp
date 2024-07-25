@@ -270,10 +270,6 @@ void draw_custom_explosion_curses( game &g,
 
 void explosion_handler::draw_explosion( const tripoint &p, const int r, const nc_color &col )
 {
-    if( test_mode ) {
-        // avoid segfault from null tilecontext in tests
-        return;
-    }
 
     if( !use_tiles ) {
         draw_explosion_curses( *g, p, r, col );
@@ -309,10 +305,6 @@ void explosion_handler::draw_explosion( const tripoint &p, const int r, const nc
 void explosion_handler::draw_custom_explosion( const tripoint &,
         const std::map<tripoint, nc_color> &all_area, const cata::optional<std::string> &tile_id )
 {
-    if( test_mode ) {
-        // avoid segfault from null tilecontext in tests
-        return;
-    }
 
     constexpr explosion_neighbors all_neighbors = N_NORTH | N_SOUTH | N_WEST | N_EAST;
     // We will "shell" the explosion area
@@ -474,10 +466,6 @@ void draw_bullet_curses( map &m, const tripoint &t, const char bullet, const tri
 void game::draw_bullet( const tripoint &t, const int /*i*/,
                         const std::vector<tripoint> &/*trajectory*/, const char bullet )
 {
-    if( test_mode ) {
-        // avoid segfault from null tilecontext in tests
-        return;
-    }
     if( !use_tiles ) {
         draw_bullet_curses( m, t, bullet, nullptr );
         return;
@@ -545,10 +533,6 @@ void draw_hit_mon_curses( const tripoint &center, const monster &m, const avatar
 
 void game::draw_hit_mon( const tripoint &p, const monster &m, const bool dead )
 {
-    if( test_mode ) {
-        // avoid segfault from null tilecontext in tests
-        return;
-    }
 
     if( !use_tiles ) {
         draw_hit_mon_curses( p, m, u, dead );
@@ -575,10 +559,6 @@ void draw_hit_player_curses( const game &/* g */, const Character &p, const int 
 
 void game::draw_hit_player( const Character &p, const int dam )
 {
-    if( test_mode ) {
-        // avoid segfault from null tilecontext in tests
-        return;
-    }
 
     if( !use_tiles ) {
         draw_hit_player_curses( *this, p, dam );

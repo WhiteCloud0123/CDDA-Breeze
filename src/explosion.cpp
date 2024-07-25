@@ -512,12 +512,9 @@ bool ExplosionProcess::process_next()
     }
     const int time = event_queue.top().first;
 
-    // We don't need to wait in testing mode
-    if (!test_mode) {
-        const long int anim_delay = (time - cur_time) * 1000000L;
-        const timespec delay = timespec{ 0, anim_delay };
-        nanosleep(&delay, nullptr);
-    }
+     const long int anim_delay = (time - cur_time) * 1000000L;
+     const timespec delay = timespec{ 0, anim_delay };
+     nanosleep(&delay, nullptr);    
 
     // You can change this to adjust the step size
     //   to make the animation have fewer rerenders
@@ -624,12 +621,11 @@ void ExplosionProcess::project_shrapnel(const tripoint position)
         }
     }
 
-    if (!test_mode) {
-        std::vector<tripoint> buf = line_to(position, center);
-        buf.resize(2);
-        g->draw_line(position, buf);
-    }
-    request_redraw |= true;
+     std::vector<tripoint> buf = line_to(position, center);
+     buf.resize(2);
+     g->draw_line(position, buf);
+    
+     request_redraw |= true;
 }
 
 void ExplosionProcess::blast_tile(const tripoint position, const int rl_distance)
@@ -1007,7 +1003,7 @@ void ExplosionProcess::run()
     // We need to temporary disable it because
     //   larger explosions may end up filling
     //   the texture pool, causing a crash
-    bool disable_minimap = !test_mode && pixel_minimap_option;
+    bool disable_minimap = pixel_minimap_option;
     if (disable_minimap) {
         g->toggle_pixel_minimap();
     }
@@ -1015,7 +1011,7 @@ void ExplosionProcess::run()
     map& here = get_map();
     while (process_next()) {
         // No need to redraw in testing mode
-        if (!test_mode && request_redraw) {
+        if (request_redraw) {
             ui_manager::redraw();
             refresh_display();
             request_redraw = false;
