@@ -126,13 +126,10 @@ void TranslationManager::Impl::LoadDocuments( const std::vector<std::string> &fi
 {
     Reset();
     for( const std::string &file : files ) {
-        try {
-            // Skip loading MO files from TEST_DATA mods if not in test mode
-            if( !test_mode ) {
-                if( file.find( "TEST_DATA" ) != std::string::npos ) {
+        try {           
+            if( file.find( "TEST_DATA" ) != std::string::npos ) {
                     continue;
                 }
-            }
             if( file_exist( file ) ) {
                 documents.emplace_back( file );
             }

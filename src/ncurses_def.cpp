@@ -267,9 +267,6 @@ void catacurses::init_interface()
 
 void input_manager::pump_events()
 {
-    if( test_mode ) {
-        return;
-    }
 
     // Handle all events, but ignore any keypress
     int key = ERR;
@@ -294,10 +291,6 @@ void input_manager::pump_events()
 // ignoring preferred keyboard mode
 input_event input_manager::get_input_event( const keyboard_mode /*preferred_keyboard_mode*/ )
 {
-    if( test_mode ) {
-        // input should be skipped in caller's code
-        throw std::runtime_error( "input_manager::get_input_event called in test mode" );
-    }
 
     int key = ERR;
     input_event rval;
