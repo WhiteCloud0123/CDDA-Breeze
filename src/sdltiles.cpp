@@ -577,9 +577,6 @@ void refresh_display()
 
     lastupdate = SDL_GetTicks();
 
-    if( test_mode ) {
-        return;
-    }
 
     // Select default target (the window), copy rendered buffer
     // there, present it, select the buffer as target again.
@@ -3749,9 +3746,6 @@ void input_manager::set_timeout( const int delay )
 
 void input_manager::pump_events()
 {
-    if( test_mode ) {
-        return;
-    }
 
     // Handle all events, but ignore any keypress
     CheckMessages();
@@ -3764,10 +3758,6 @@ void input_manager::pump_events()
 // is simply a wrapper around this.
 input_event input_manager::get_input_event( const keyboard_mode preferred_keyboard_mode )
 {
-    if( test_mode ) {
-        // input should be skipped in caller's code
-        throw std::runtime_error( "input_manager::get_input_event called in test mode" );
-    }
 
 #if !defined(__ANDROID__) && !(defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE == 1)
     if( actual_keyboard_mode( preferred_keyboard_mode ) == keyboard_mode::keychar ) {

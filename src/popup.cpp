@@ -267,9 +267,6 @@ query_popup::result query_popup::query_once()
         return { false, "ERROR", {} };
     }
 
-    if( test_mode ) {
-        return { false, "ERROR", {} };
-    }
 
     std::shared_ptr<ui_adaptor> ui = create_or_get_adaptor();
 
