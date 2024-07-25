@@ -1218,6 +1218,9 @@ void MonsterGenerator::add_attack( std::unique_ptr<mattack_actor> ptr )
 void MonsterGenerator::add_attack( const mtype_special_attack &wrapper )
 {
     if( attack_map.count( wrapper->id ) > 0 ) {
+        if( test_mode ) {
+            debugmsg( "Overwriting monster attack with id %s", wrapper->id.c_str() );
+        }
 
         attack_map.erase( wrapper->id );
     }
@@ -1300,6 +1303,10 @@ void mtype::add_special_attack( const JsonObject &obj, const std::string &src )
         if( iter != special_attacks_names.end() ) {
             special_attacks_names.erase( iter );
         }
+        if( test_mode ) {
+            debugmsg( "%s specifies more than one attack of (sub)type %s, ignoring all but the last",
+                      id.c_str(), new_attack->id.c_str() );
+        }
     }
 
     special_attacks.emplace( new_attack->id, new_attack );
@@ -1320,6 +1327,10 @@ void mtype::add_special_attack( const JsonArray &inner, const std::string & )
         const auto iter = std::find( special_attacks_names.begin(), special_attacks_names.end(), name );
         if( iter != special_attacks_names.end() ) {
             special_attacks_names.erase( iter );
+        }
+        if( test_mode ) {
+            debugmsg( "%s specifies more than one attack of (sub)type %s, ignoring all but the last",
+                      id.c_str(), name );
         }
     }
     mtype_special_attack new_attack = mtype_special_attack( iter->second );
@@ -1368,6 +1379,10 @@ void mtype::add_regeneration_modifier( const JsonArray &inner, const std::string
 
     if( regeneration_modifiers.count( effect ) > 0 ) {
         regeneration_modifiers.erase( effect );
+        if( test_mode ) {
+            debugmsg( "%s specifies more than one regeneration modifier for effect %s, ignoring all but the last",
+                      id.c_str(), effect_name );
+        }
     }
     int amount = inner.get_int( 1 );
     regeneration_modifiers.emplace( effect, amount );

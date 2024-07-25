@@ -1088,6 +1088,10 @@ void overmap_terrains::check_consistency()
         const bool exists_hardcoded = elem.is_hardcoded();
 
         if( has_mapgen_for( mid ) ) {
+            if( test_mode && exists_hardcoded ) {
+                debugmsg( "Mapgen terrain \"%s\" exists in both JSON and a hardcoded function.  Consider removing the latter.",
+                          mid.c_str() );
+            }
             check_mapgen_consistent_with( mid, elem );
         } else if( !exists_hardcoded ) {
             debugmsg( "No mapgen terrain exists for \"%s\".", mid.c_str() );

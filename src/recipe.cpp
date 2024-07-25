@@ -441,6 +441,8 @@ void recipe::finalize()
         blueprint_reqs =
             cata::make_value<build_reqs>( get_build_reqs_for_furn_ter_ids(
                                               get_changed_ids_from_update( blueprint ) ) );
+    } else if( test_mode && check_blueprint_needs ) {
+        check_blueprint_requirements();
     }
 
     incorporate_build_reqs();

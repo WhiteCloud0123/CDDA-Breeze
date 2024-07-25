@@ -17,7 +17,7 @@
 
 loading_ui::loading_ui( bool display )
 {
-    if( display ) {
+    if( display && !test_mode ) {
         menu = std::make_unique<uilist>();
         menu->settext( _( "Loading" ) );
     }
