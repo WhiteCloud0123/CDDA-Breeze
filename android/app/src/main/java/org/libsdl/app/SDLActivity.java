@@ -102,20 +102,19 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public void setExtraButtonVisibility(boolean visible) {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                int space = 0;
                 if (!extraButtonListNotFull.isEmpty()) {
                     String s = "";
+                    int space = 0;
                     for (Button button : extraButtonListNotFull) {
-                        space+= button.getWidth();
-                        button.setX(space);
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Toaster.show("横坐标:"+button.getX()+" 宽度:"+button.getWidth());
-
                             }
                         });
                         mLayout.addView(button);
+                        space += 264;
+                        button.setX(space);
                         s = s + button.getText();
                     }
                     Toaster.show("按键列表：" + s);
