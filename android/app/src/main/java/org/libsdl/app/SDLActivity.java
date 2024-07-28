@@ -95,20 +95,18 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     protected static Thread mSDLThread;
 
     private static boolean forceFullScreen = true;
-    Button tabButton;
+    Button extraButton;
 
     public void setExtraButtonVisibility(boolean visible) {
-
         this.runOnUiThread(new Runnable() {
             public void run() {
                 if(visible) {
-                    tabButton.setVisibility(View.VISIBLE);
+                    extraButton.setVisibility(View.VISIBLE);
                 } else {
-                    tabButton.setVisibility(View.INVISIBLE);
+                    extraButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
-
     }
 
     public void showToastMessage(String string) {
@@ -322,23 +320,23 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 SDLActivity.onNativeDropFile(filename);
             }
         }
+
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         Toaster.setGravity(Gravity.TOP);
-        tabButton = new Button(this);
-        tabButton.setBackgroundColor(android.R.color.transparent);
-        tabButton.setText("Tab");
-        tabButton.setOnClickListener(new View.OnClickListener() {
+        extraButton = new Button(this);
+        extraButton.setBackgroundColor(android.R.color.transparent);
+        extraButton.setText("键盘");
+        extraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyEvent keyEvent = new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_TAB);
-                dispatchKeyEvent(keyEvent);
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
             }
         });
-        tabButton.setAlpha((float)0.5);
-        tabButton.setVisibility(View.INVISIBLE);
+        extraButton.setAlpha(0.5f);
+        extraButton.setVisibility(View.INVISIBLE);
         
-        mLayout.addView(tabButton);
-
+        mLayout.addView(extraButton);
 
     }
 
