@@ -2,6 +2,7 @@ package org.libsdl.app;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.lang.reflect.Method;
@@ -96,17 +97,56 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     private static boolean forceFullScreen = true;
     Button extraButton;
+    ArrayList<Button> extraButtonListNotFull = new ArrayList<Button>();
 
     public void setExtraButtonVisibility(boolean visible) {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                if(visible) {
-                    extraButton.setVisibility(View.VISIBLE);
+                int space = 0;
+                if (!extraButtonListNotFull.isEmpty()) {
+                    String s = "";
+                    for (Button button : extraButtonListNotFull) {
+                        space+= button.getWidth();
+                        button.setX(space);
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toaster.show("横坐标:"+button.getX()+" 宽度:"+button.getWidth());
+
+                            }
+                        });
+                        mLayout.addView(button);
+                        s = s + button.getText();
+                    }
+                    Toaster.show("按键列表：" + s);
                 } else {
-                    extraButton.setVisibility(View.INVISIBLE);
+                    Toaster.show("空的列表");
                 }
+                int flag = visible? 0 :4;
+                extraButton.setVisibility(flag);
+                if(!extraButtonListNotFull.isEmpty()) {
+                    for(Button button : extraButtonListNotFull) {
+                        button.setVisibility(flag);
+                    }
+                }
+
             }
         });
+    }
+
+    public void addExtraButton(String string) {
+        if(string != null && string!="") {
+            for(char c : string.toCharArray()) {
+                String s = String.valueOf(c);
+                Button button = new Button(this);
+                button.setText(s);
+                button.setBackgroundColor(android.R.color.transparent);
+                button.setAlpha(0.5f);
+                button.setAllCaps(false);
+                button.setVisibility(View.INVISIBLE);
+                extraButtonListNotFull.add(button);
+            }
+        }
     }
 
     public void showToastMessage(String string) {
