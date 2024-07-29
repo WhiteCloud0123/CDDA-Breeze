@@ -2,6 +2,7 @@ package org.libsdl.app;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.lang.reflect.Method;
@@ -95,18 +96,66 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     protected static Thread mSDLThread;
 
     private static boolean forceFullScreen = true;
-    Button extraButton;
+    Button extraButtonSP;
+    ArrayList<Button> extraButtonListNotFull = new ArrayList<Button>();
 
     public void setExtraButtonVisibility(boolean visible) {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                if(visible) {
-                    extraButton.setVisibility(View.VISIBLE);
-                } else {
-                    extraButton.setVisibility(View.INVISIBLE);
+                mLayout.addView(extraButtonSP);
+                if (!extraButtonListNotFull.isEmpty()) {
+                    int space = 0;
+                    for (Button button : extraButtonListNotFull) {
+                        mLayout.addView(button);
+                        space += 200;
+                        button.setX(space);
+                    }
                 }
+                int flag = visible? 0 :4;
+                extraButtonSP.setVisibility(flag);
+                if(!extraButtonListNotFull.isEmpty()) {
+                    for(Button button : extraButtonListNotFull) {
+                        button.setVisibility(flag);
+                    }
+                }
+
             }
         });
+    }
+
+    public void addExtraButton(String string) {
+
+        extraButtonSP = new Button(this);
+        extraButtonSP.setBackgroundColor(android.R.color.transparent);
+        extraButtonSP.setText("键盘");
+        extraButtonSP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+            }
+        });
+        extraButtonSP.setAlpha(0.5f);
+        extraButtonSP.setVisibility(View.INVISIBLE);
+
+        if(string != null && string!="") {
+            for(char c : string.toCharArray()) {
+                String s = String.valueOf(c);
+                Button button = new Button(this);
+                button.setText(s);
+                button.setBackgroundColor(android.R.color.transparent);
+                button.setAlpha(0.5f);
+                button.setAllCaps(false);
+                button.setVisibility(View.INVISIBLE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        nativeButtonClick(button.getText().toString());
+                    }
+                });
+                extraButtonListNotFull.add(button);
+            }
+        }
     }
 
     public void showToastMessage(String string) {
@@ -323,20 +372,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         Toaster.setGravity(Gravity.TOP);
-        extraButton = new Button(this);
-        extraButton.setBackgroundColor(android.R.color.transparent);
-        extraButton.setText("键盘");
-        extraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-            }
-        });
-        extraButton.setAlpha(0.5f);
-        extraButton.setVisibility(View.INVISIBLE);
-        
-        mLayout.addView(extraButton);
 
     }
 
@@ -851,6 +886,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public static native void onNativeOrientationChanged(int orientation);
     public static native void nativeAddTouch(int touchId, String name);
     public static native void nativePermissionResult(int requestCode, boolean result);
+    public native void nativeButtonClick(String text);
 
     /**
      * This method is called by SDL using JNI.
