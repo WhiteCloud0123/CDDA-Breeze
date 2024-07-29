@@ -485,7 +485,7 @@ extern "C" {
 
 JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
         JNIEnv *env, jclass jcls, jstring text) {
-
+    ( void )jcls;
     const char *c_str = env->GetStringUTFChars( text, 0 );
     const std::string text_s(c_str);
     cache_extra_button_input = input_event( text_s[0], input_event_t::keyboard_char );
