@@ -462,7 +462,8 @@ static bool quick_shortcuts_enabled = true;
 static int preview_terminal_width = -1;
 static int preview_terminal_height = -1;
 static uint32_t preview_terminal_change_time = 0;
-
+input_event cache_extra_button_input;
+bool is_extra_button_touch = false;
 extern "C" {
 
     static bool visible_display_frame_dirty = false;
@@ -481,6 +482,18 @@ extern "C" {
         visible_display_frame.w = right - left;
         visible_display_frame.h = bottom - top;
     }
+
+JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
+        JNIEnv *env, jclass jcls, jstring text) {
+
+    const char *c_str = env->GetStringUTFChars( text, 0 );
+    const std::string text_s(c_str);
+    add_msg(m_good,text_s);
+
+    cache_extra_button_input = input_event( text_s[0], input_event_t::keyboard_char );
+    is_extra_button_touch = true;
+    env->ReleaseStringUTFChars(text,c_str);
+}
 
 } // "C"
 
@@ -3432,6 +3445,15 @@ static void CheckMessages()
                         second_finger_curr_x = ev.tfinger.x * WindowWidth;
                         second_finger_curr_y = ev.tfinger.y * WindowHeight;
                     }
+                }
+
+                if(is_extra_button_touch) {
+                    last_input = cache_extra_button_input;
+                    is_extra_button_touch = false;
+                    needupdate = true;
+                    refresh_display();
+                }else {
+                    add_msg(m_bad,"扩展按键未点击");
                 }
 
                 break;

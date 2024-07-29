@@ -109,11 +109,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toaster.show("横坐标:"+button.getX()+" 宽度:"+button.getWidth());
+                                nativeButtonClick(button.getText().toString());
                             }
                         });
                         mLayout.addView(button);
-                        space += 264;
+                        space += 200;
                         button.setX(space);
                         s = s + button.getText();
                     }
@@ -890,6 +890,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public static native void onNativeOrientationChanged(int orientation);
     public static native void nativeAddTouch(int touchId, String name);
     public static native void nativePermissionResult(int requestCode, boolean result);
+    public native void nativeButtonClick(String text);
 
     /**
      * This method is called by SDL using JNI.
