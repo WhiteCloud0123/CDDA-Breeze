@@ -3447,15 +3447,6 @@ static void CheckMessages()
                     }
                 }
 
-                if(is_extra_button_touch) {
-                    last_input = cache_extra_button_input;
-                    is_extra_button_touch = false;
-                    needupdate = true;
-                    refresh_display();
-                }else {
-                    add_msg(m_bad,"扩展按键未点击");
-                }
-
                 break;
 #endif
 
