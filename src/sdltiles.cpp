@@ -489,7 +489,6 @@ JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
     const char *c_str = env->GetStringUTFChars( text, 0 );
     const std::string text_s(c_str);
     add_msg(m_good,text_s);
-
     cache_extra_button_input = input_event( text_s[0], input_event_t::keyboard_char );
     is_extra_button_touch = true;
     env->ReleaseStringUTFChars(text,c_str);
@@ -2973,7 +2972,7 @@ static void CheckMessages()
         }
 
         // Handle repeating inputs from touch + holds
-        if( !is_quick_shortcut_touch && !is_two_finger_touch && finger_down_time > 0 &&
+        if( !is_quick_shortcut_touch && !is_extra_button_touch && !is_two_finger_touch && finger_down_time > 0 &&
             ticks - finger_down_time > static_cast<uint32_t>
             (android_initial_delay) ) {
             if( ticks - finger_repeat_time > finger_repeat_delay ) {
@@ -2996,7 +2995,7 @@ static void CheckMessages()
         }
 
         // If we received a first tap and not another one within a certain period, this was a single tap, so trigger the input event
-        if( !is_quick_shortcut_touch && !is_two_finger_touch && last_tap_time > 0 &&
+        if( !is_quick_shortcut_touch && !is_extra_button_touch && !is_two_finger_touch && last_tap_time > 0 &&
             ticks - last_tap_time >= static_cast<uint32_t>
             (android_initial_delay) ) {
             // Single tap
@@ -3008,16 +3007,14 @@ static void CheckMessages()
         }
 
         // ensure hint text pops up even if player doesn't move finger to trigger a FINGERMOTION event
-        if( is_quick_shortcut_touch && finger_down_time > 0 &&
+        if( (is_quick_shortcut_touch || is_extra_button_touch) && finger_down_time > 0 &&
             ticks - finger_down_time > static_cast<uint32_t>
             (android_initial_delay) ) {
             needupdate = true;
         }
     }
 #endif
-
     last_input = input_event();
-
     cata::optional<point> resize_dims;
     bool render_target_reset = false;
 
@@ -3291,7 +3288,7 @@ static void CheckMessages()
 #if defined(__ANDROID__)
             case SDL_FINGERMOTION:
                 if( ev.tfinger.fingerId == 0 ) {
-                    if( !is_quick_shortcut_touch ) {
+                    if( !is_quick_shortcut_touch && !is_extra_button_touch) {
                         update_finger_repeat_delay();
                     }
                     needupdate = true; // ensure virtual joystick and quick shortcuts redraw as we interact
@@ -3323,8 +3320,8 @@ static void CheckMessages()
                     finger_down_y = finger_curr_y = ev.tfinger.y * WindowHeight;
                     finger_down_time = ticks;
                     finger_repeat_time = 0;
-                    is_quick_shortcut_touch = get_quick_shortcut_under_finger() != NULL;
-                    if( !is_quick_shortcut_touch ) {
+                    is_quick_shortcut_touch = get_quick_shortcut_under_finger() != nullptr;
+                    if( !is_quick_shortcut_touch && !is_extra_button_touch) {
                         update_finger_repeat_delay();
                     }
                     needupdate = true; // ensure virtual joystick and quick shortcuts redraw as we interact
@@ -3426,7 +3423,10 @@ static void CheckMessages()
                                     }
                                 }
                             }
-                        } else if( ticks - finger_down_time <= static_cast<uint32_t>(
+                        }else if(is_extra_button_touch) {
+                            last_input = cache_extra_button_input;
+                        }
+                        else if( ticks - finger_down_time <= static_cast<uint32_t>(
                             android_initial_delay) ) {
                             handle_finger_input( ticks );
                         }
@@ -3434,6 +3434,7 @@ static void CheckMessages()
                     second_finger_down_x = second_finger_curr_x = finger_down_x = finger_curr_x = -1.0f;
                     second_finger_down_y = second_finger_curr_y = finger_down_y = finger_curr_y = -1.0f;
                     is_two_finger_touch = false;
+                    is_extra_button_touch = false;
                     finger_down_time = 0;
                     finger_repeat_time = 0;
                     needupdate = true; // ensure virtual joystick and quick shortcuts are updated properly
