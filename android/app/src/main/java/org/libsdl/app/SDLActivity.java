@@ -104,13 +104,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             public void run() {
                 mLayout.addView(extraButtonSP);
                 if (!extraButtonListNotFull.isEmpty()) {
-                    String s = "";
                     int space = 0;
                     for (Button button : extraButtonListNotFull) {
                         mLayout.addView(button);
                         space += 200;
                         button.setX(space);
-                        s = s + button.getText();
                     }
                 }
                 int flag = visible? 0 :4;
