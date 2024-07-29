@@ -96,33 +96,25 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     protected static Thread mSDLThread;
 
     private static boolean forceFullScreen = true;
-    Button extraButton;
+    Button extraButtonSP;
     ArrayList<Button> extraButtonListNotFull = new ArrayList<Button>();
 
     public void setExtraButtonVisibility(boolean visible) {
         this.runOnUiThread(new Runnable() {
             public void run() {
+                mLayout.addView(extraButtonSP);
                 if (!extraButtonListNotFull.isEmpty()) {
                     String s = "";
                     int space = 0;
                     for (Button button : extraButtonListNotFull) {
-                        button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                nativeButtonClick(button.getText().toString());
-                            }
-                        });
                         mLayout.addView(button);
                         space += 200;
                         button.setX(space);
                         s = s + button.getText();
                     }
-                    Toaster.show("按键列表：" + s);
-                } else {
-                    Toaster.show("空的列表");
                 }
                 int flag = visible? 0 :4;
-                extraButton.setVisibility(flag);
+                extraButtonSP.setVisibility(flag);
                 if(!extraButtonListNotFull.isEmpty()) {
                     for(Button button : extraButtonListNotFull) {
                         button.setVisibility(flag);
@@ -134,6 +126,20 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     }
 
     public void addExtraButton(String string) {
+
+        extraButtonSP = new Button(this);
+        extraButtonSP.setBackgroundColor(android.R.color.transparent);
+        extraButtonSP.setText("键盘");
+        extraButtonSP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+            }
+        });
+        extraButtonSP.setAlpha(0.5f);
+        extraButtonSP.setVisibility(View.INVISIBLE);
+
         if(string != null && string!="") {
             for(char c : string.toCharArray()) {
                 String s = String.valueOf(c);
@@ -143,6 +149,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 button.setAlpha(0.5f);
                 button.setAllCaps(false);
                 button.setVisibility(View.INVISIBLE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        nativeButtonClick(button.getText().toString());
+                    }
+                });
                 extraButtonListNotFull.add(button);
             }
         }
@@ -362,20 +374,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         Toaster.setGravity(Gravity.TOP);
-        extraButton = new Button(this);
-        extraButton.setBackgroundColor(android.R.color.transparent);
-        extraButton.setText("键盘");
-        extraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-            }
-        });
-        extraButton.setAlpha(0.5f);
-        extraButton.setVisibility(View.INVISIBLE);
-        
-        mLayout.addView(extraButton);
 
     }
 
