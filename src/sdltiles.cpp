@@ -463,7 +463,7 @@ static int preview_terminal_width = -1;
 static int preview_terminal_height = -1;
 static uint32_t preview_terminal_change_time = 0;
 input_event cache_extra_button_input;
-bool is_extra_button_touch = false;
+bool is_extra_button_click = false;
 extern "C" {
 
     static bool visible_display_frame_dirty = false;
@@ -491,7 +491,7 @@ JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
     add_msg(m_good,text_s);
 
     cache_extra_button_input = input_event( text_s[0], input_event_t::keyboard_char );
-    is_extra_button_touch = true;
+    is_extra_button_click = true;
     env->ReleaseStringUTFChars(text,c_str);
 }
 
@@ -2773,12 +2773,6 @@ static void CheckMessages()
                                  touch_input_context.get_category() )];
 
 
-    if(is_extra_button_touch) {
-        last_input = cache_extra_button_input;
-        is_extra_button_touch = false;
-        return;
-    }
-
     // Don't do this logic if we already need an update, otherwise we're likely to overload the game with too much input on hold repeat events
     if( !needupdate ) {
 
@@ -3000,6 +2994,12 @@ static void CheckMessages()
                 }
                 return;
             }
+        }
+
+        if(is_extra_button_click) {
+            last_input = cache_extra_button_input;
+            is_extra_button_click = false;
+            return;
         }
 
         // If we received a first tap and not another one within a certain period, this was a single tap, so trigger the input event
