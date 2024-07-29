@@ -2772,6 +2772,13 @@ static void CheckMessages()
     quick_shortcuts_t &qsl = quick_shortcuts_map[get_quick_shortcut_name(
                                  touch_input_context.get_category() )];
 
+
+    if(is_extra_button_touch) {
+        last_input = cache_extra_button_input;
+        is_extra_button_touch = false;
+        return;
+    }
+
     // Don't do this logic if we already need an update, otherwise we're likely to overload the game with too much input on hold repeat events
     if( !needupdate ) {
 
@@ -3445,15 +3452,6 @@ static void CheckMessages()
                         second_finger_curr_x = ev.tfinger.x * WindowWidth;
                         second_finger_curr_y = ev.tfinger.y * WindowHeight;
                     }
-                }
-
-                if(is_extra_button_touch) {
-                    last_input = cache_extra_button_input;
-                    is_extra_button_touch = false;
-                    needupdate = true;
-                    refresh_display();
-                }else {
-                    add_msg(m_bad,"扩展按键未点击");
                 }
 
                 break;
