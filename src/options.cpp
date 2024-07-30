@@ -2722,7 +2722,7 @@ void options_manager::add_options_android()
     );
 
     add("默认扩展按键", "android", to_translation("默认扩展按键"),
-        to_translation("“键盘”按键是不可修改的。你可以在此添加扩展按键。"),
+        to_translation("“键盘”按键是不可修改的。你可以在此添加扩展按键。修改后需要重新启动。"),
         "0mi", 10
     );
     add("启用消息推送", "android", to_translation("启用消息推送"),
