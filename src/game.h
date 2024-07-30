@@ -93,7 +93,8 @@ extern int savegame_loading_version;
 
 class input_context;
 
-input_context get_default_mode_input_context();
+input_context create_default_mode_input_context();
+input_context &get_default_mode_input_context();
 
 enum class dump_mode : int {
     TSV,

@@ -2464,7 +2464,7 @@ tripoint game::mouse_edge_scrolling_overmap( input_context &ctxt )
     return ret.first;
 }
 
-input_context get_default_mode_input_context()
+input_context create_default_mode_input_context()
 {
     input_context ctxt( "DEFAULTMODE", keyboard_mode::keycode );
     // Because those keys move the character, they don't pan, as their original name says
@@ -2615,6 +2615,13 @@ input_context get_default_mode_input_context()
     ctxt.register_action( "CLICK_AND_DRAG" );
     ctxt.register_action( "SEC_SELECT" );
     return ctxt;
+}
+std::list<input_context *> input_context::input_context_stack;
+input_context default_mode_input_context = create_default_mode_input_context();
+
+input_context &get_default_mode_input_context()
+{
+    return default_mode_input_context;
 }
 
 vehicle *game::remoteveh()

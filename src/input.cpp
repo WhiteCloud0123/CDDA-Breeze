@@ -946,7 +946,6 @@ const std::string &input_context::input_to_action( const input_event &inp ) cons
 }
 
 #if defined(__ANDROID__)
-std::list<input_context *> input_context::input_context_stack;
 
 void input_context::register_manual_key( manual_key mk )
 {
