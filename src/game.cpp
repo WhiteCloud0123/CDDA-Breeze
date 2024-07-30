@@ -2464,6 +2464,14 @@ tripoint game::mouse_edge_scrolling_overmap( input_context &ctxt )
     return ret.first;
 }
 
+#if defined (__ANDROID__)
+
+std::list<input_context *> input_context::input_context_stack;
+
+#endif
+
+input_context default_mode_input_context = create_default_mode_input_context();
+
 input_context create_default_mode_input_context()
 {
     input_context ctxt( "DEFAULTMODE", keyboard_mode::keycode );
@@ -2616,8 +2624,6 @@ input_context create_default_mode_input_context()
     ctxt.register_action( "SEC_SELECT" );
     return ctxt;
 }
-std::list<input_context *> input_context::input_context_stack;
-input_context default_mode_input_context = create_default_mode_input_context();
 
 input_context &get_default_mode_input_context()
 {
