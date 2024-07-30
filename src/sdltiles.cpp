@@ -190,11 +190,13 @@ static void InitSDL()
 #if defined(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING)
     SDL_SetHint( SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1" );
 #endif
+
 #if defined(_WIN32) && defined(SDL_HINT_IME_SHOW_UI)
     // Requires SDL 2.0.20. Shows the native IME UI instead of using SDL's
     // broken implementation on Windows which does not show.
     SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
 #endif
+
 #if defined(SDL_HINT_IME_SUPPORT_EXTENDED_TEXT)
     SDL_SetHint( SDL_HINT_IME_SUPPORT_EXTENDED_TEXT, "1" );
 #endif
