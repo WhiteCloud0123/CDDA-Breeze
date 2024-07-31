@@ -139,6 +139,7 @@ class uistatedata
         bool distraction_attack = true;
         bool distraction_hostile_close = true;
         bool distraction_hostile_spotted = true;
+        bool distraction_neutral_monsters_in_the_direction_of_movement = true;
         bool distraction_conversation = true;
         bool distraction_asthma = true;
         bool distraction_dangerous_field = true;
