@@ -37,10 +37,23 @@ body:
       required: false
 
   - type: textarea
+    id: if_use_third_mod
+    attributes:
+      label: 是否使用了第三方mod
+    validations:
+      required: true
+
+  - type: textarea
     id: version
     attributes:
       label: 游戏版本
     validations:
       required: true
 
+  - type: textarea
+    id: os
+    attributes:
+      label: 系统
+    validations:
+      required: true
     
