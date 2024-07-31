@@ -975,7 +975,7 @@ void Character::reach_attack( const tripoint &p )
                      ( inter->get_size() * inter->get_size() + 1 ) * 10 ) ) {
             // Even if we miss here, low roll means weapon is pushed away or something like that
             if ( inter->has_effect( effect_pet ) || ( inter->is_npc() && inter->as_npc()->is_friendly( get_player_character() ) ) ) {
-                if ( query_yn(_( "你的攻击会造成误伤，要继续吗?" ) ) ) {
+                if ( query_yn(_( "你的攻击可能会造成误伤，要继续吗?" ) ) ) {
                     critter = inter;
                     break;
                 } else {
