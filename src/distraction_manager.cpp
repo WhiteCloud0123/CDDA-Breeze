@@ -18,9 +18,10 @@ namespace distraction_manager
 static const std::vector<std::pair<std::string, std::string>> configurable_distractions = {
     {translate_marker( "Noise" ),                        translate_marker( "This distraction will interrupt your activity when you hear a noise." )},
     {translate_marker( "Pain" ),                         translate_marker( "This distraction will interrupt your activity when you feel pain." )},
-    {translate_marker( "Attack" ),                       translate_marker( "This distraction will interrupt your activity when you're attacked." )},
+    {"受到攻击",                       translate_marker("This distraction will interrupt your activity when you're attacked.")},
     {translate_marker( "Hostile is dangerously close" ), translate_marker( "This distraction will interrupt your activity when a hostile comes within 5 tiles from you." )},
     {translate_marker( "Hostile spotted" ),              translate_marker( "This distraction will interrupt your activity when you spot a hostile." )},
+    {"移动方向存在中立怪物",                       "这项干扰会在你的移动方向存在中立怪物时中断你当前的行动。"},
     {translate_marker( "Conversation" ),                 translate_marker( "This distraction will interrupt your activity when someone starts a conversation with you." )},
     {translate_marker( "Asthma" ),                       translate_marker( "This distraction will interrupt your activity when you suffer an asthma attack." )},
     {translate_marker( "Dangerous field" ),              translate_marker( "This distraction will interrupt your activity when you're standing in a dangerous field." )},
@@ -69,6 +70,7 @@ void distraction_manager_gui::show()
         uistate.distraction_attack,
         uistate.distraction_hostile_close,
         uistate.distraction_hostile_spotted,
+        uistate.distraction_neutral_monsters_in_the_direction_of_movement,
         uistate.distraction_conversation,
         uistate.distraction_asthma,
         uistate.distraction_dangerous_field,
@@ -187,27 +189,30 @@ void distraction_manager_gui::show()
                     uistate.distraction_hostile_spotted = !uistate.distraction_hostile_spotted;
                     break;
                 case 5:
-                    uistate.distraction_conversation = !uistate.distraction_conversation;
+                    uistate.distraction_neutral_monsters_in_the_direction_of_movement = !uistate.distraction_neutral_monsters_in_the_direction_of_movement;
                     break;
                 case 6:
-                    uistate.distraction_asthma = !uistate.distraction_asthma;
+                    uistate.distraction_conversation = !uistate.distraction_conversation;
                     break;
                 case 7:
-                    uistate.distraction_dangerous_field = !uistate.distraction_dangerous_field;
+                    uistate.distraction_asthma = !uistate.distraction_asthma;
                     break;
                 case 8:
-                    uistate.distraction_weather_change = !uistate.distraction_weather_change;
+                    uistate.distraction_dangerous_field = !uistate.distraction_dangerous_field;
                     break;
                 case 9:
-                    uistate.distraction_hunger = !uistate.distraction_hunger;
+                    uistate.distraction_weather_change = !uistate.distraction_weather_change;
                     break;
                 case 10:
-                    uistate.distraction_thirst = !uistate.distraction_thirst;
+                    uistate.distraction_hunger = !uistate.distraction_hunger;
                     break;
                 case 11:
-                    uistate.distraction_temperature = !uistate.distraction_temperature;
+                    uistate.distraction_thirst = !uistate.distraction_thirst;
                     break;
                 case 12:
+                    uistate.distraction_temperature = !uistate.distraction_temperature;
+                    break;
+                case 13:
                     uistate.distraction_mutation = !uistate.distraction_mutation;
                     break;
                 default:

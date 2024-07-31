@@ -343,6 +343,10 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
                 you.clear_destination();
                 return false;
             }
+            if (critter.attitude(&you) != MATT_ATTACK && uistate.distraction_neutral_monsters_in_the_direction_of_movement 
+                && !query_yn("移动方向存在中立怪物，这将变成对怪物的攻击行为，确定要继续吗？")) {
+                return false;
+            }
             if( you.has_effect( effect_relax_gas ) ) {
                 if( one_in( 8 ) ) {
                     add_msg( m_good, _( "Your willpower asserts itself, and so do you!" ) );
