@@ -164,6 +164,7 @@ static const efftype_id effect_bouldering( "bouldering" );
 static const efftype_id effect_brainworms( "brainworms" );
 static const efftype_id effect_cig( "cig" );
 static const efftype_id effect_contacts( "contacts" );
+static const efftype_id effect_controlled("controlled");
 static const efftype_id effect_corroding( "corroding" );
 static const efftype_id effect_crushed( "crushed" );
 static const efftype_id effect_datura( "datura" );
@@ -8645,6 +8646,114 @@ cata::optional<int> iuse::capture_monster_veh( Character *p, item *it, bool, con
     }
     capture_monster_act( p, it, false, pos );
     return 0;
+}
+
+cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool t, const tripoint& pos) {
+
+    if (t) {
+        if (!it->ammo_sufficient(p)) {
+            it->active = false;
+            if (g->get_now_controlled_monster()) {
+                g->reset_now_controlled_monster();
+            }
+            add_msg(m_bad,"%s 的电量耗尽。",it->tname());
+        }
+        return 1;
+    }
+
+    std::vector<monster *> friendly_monsters;
+    uilist main_menu;
+    main_menu.settext("操作菜单");
+    main_menu.addentry(0,true,MENU_AUTOASSIGN,"显示可控制的怪物列表");
+    main_menu.addentry(1, true, MENU_AUTOASSIGN, "重置状态");
+    if (it->active) {
+        main_menu.addentry(2, true, MENU_AUTOASSIGN, "关机");
+    }
+    
+    main_menu.query();
+
+    if (main_menu.ret ==0) {
+        uilist fm_menu;
+        fm_menu.settext("请选择要控制的怪物");
+        map& local_map = get_map();
+        tripoint center = get_player_character().pos();
+        int number = 0;
+        for (monster& m : g->all_monsters()) {
+            if (&m && m.has_effect(effect_pet)) {
+                friendly_monsters.push_back(&m);
+                std::string extra = m.has_value("was_controlled_by_friendly_monster_controller") ? "  【正在控制】" : "";
+                fm_menu.addentry(number, true, MENU_AUTOASSIGN, m.get_name() + extra);
+                number++;
+            }
+        }
+
+        if (friendly_monsters.empty()) {
+            add_msg(m_bad, "没有可以控制的怪物。");
+            return cata::nullopt;
+        }
+        else {
+            
+            std::vector<monster*>local_controlled_monster;
+            for (monster* m : friendly_monsters) {
+                if (m->has_value("was_controlled_by_friendly_monster_controller")) {
+                    local_controlled_monster.push_back(m);
+                }
+            }
+            if (local_controlled_monster.size() > 1) {
+                for (monster* m : local_controlled_monster) {
+                    m->remove_effect(effect_controlled);
+                    m->remove_value("was_controlled_by_friendly_monster_controller");
+                    m->remove_value("command_dirty");
+                }
+                g->set_now_controlled_monster(nullptr);
+                get_player_character().remove_value("monster_controlled_pos_string");
+                add_msg(m_bad,"出现错误，已重置。");
+                return cata::nullopt;
+            }
+            else {
+                fm_menu.query();
+            }
+        }
+
+
+        int choice = fm_menu.ret;
+
+        if (choice >= 0) {
+            monster* m = friendly_monsters[choice]->as_monster();
+            if (m->has_value("was_controlled_by_friendly_monster_controller")) {
+                g->reset_now_controlled_monster();
+                add_msg(m_good, "解除了对 %s 的控制。", m->get_name());
+            }
+            else {
+                // 只能控制一个，停止控制之前的目标。
+                if (g->get_now_controlled_monster() && m != g->get_now_controlled_monster()) {
+                    g->reset_now_controlled_monster();
+                }
+                m->add_effect(effect_controlled, 1_turns, true);
+                m->set_value("was_controlled_by_friendly_monster_controller", "");
+                g->set_now_controlled_monster(m);
+                it->active = true;
+                add_msg(m_good, "已成功控制了 %s 。", m->get_name());
+            }
+        }
+    
+    }
+    else if(main_menu.ret==1) {
+        if (g->get_now_controlled_monster()) {
+            g->reset_now_controlled_monster();
+        }
+        add_msg(m_info, "已重置。");
+    }
+    else if (main_menu.ret ==2) {
+
+        if (g->get_now_controlled_monster()) {
+            g->reset_now_controlled_monster();
+        }
+        it->active = false;
+        add_msg(m_info, "已关机。");
+    }
+
+    return 1;
 }
 
 bool item::release_monster( const tripoint &target, const int radius )

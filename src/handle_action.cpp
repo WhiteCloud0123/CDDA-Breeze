@@ -132,6 +132,7 @@ static const gun_mode_id gun_mode_AUTO("AUTO");
 
 static const itype_id fuel_type_animal("animal");
 static const itype_id itype_radiocontrol("radiocontrol");
+static const itype_id itype_monster_controller_d("怪物遥控器-D");
 
 static const json_character_flag json_flag_ALARMCLOCK("ALARMCLOCK");
 
@@ -2499,7 +2500,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
     case ACTION_MOVE_BACK_LEFT:
     case ACTION_MOVE_LEFT:
     case ACTION_MOVE_FORTH_LEFT:
-        if (!player_character.get_value("remote_controlling").empty() &&
+        if (!player_character.get_value("remote_controlling").empty() && 
             (player_character.has_active_item(itype_radiocontrol) ||
                 player_character.has_active_bionic(bio_remote))) {
             rcdrive(get_delta_from_movement_action(act, iso_rotate::yes));
@@ -2508,6 +2509,14 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             // vehicle control uses x for steering and y for ac/deceleration,
             // so no rotation needed
             pldrive(get_delta_from_movement_action(act, iso_rotate::no));
+        }
+        else if(g->get_now_controlled_monster() && player_character.has_active_item(itype_monster_controller_d)) {
+            monster* m = g->get_now_controlled_monster();
+            point dest_delta = get_delta_from_movement_action(act, iso_rotate::yes);
+            tripoint_abs_ms goal = m->get_location() + dest_delta;
+            m->set_dest(goal);
+            m->remove_value("command_dirty");        
+            player_character.moves = 0;
         }
         else {
             point dest_delta = get_delta_from_movement_action(act, iso_rotate::yes);

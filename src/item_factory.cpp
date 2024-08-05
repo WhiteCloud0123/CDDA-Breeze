@@ -1729,6 +1729,7 @@ void Item_factory::init()
     add_iuse( "DBG_LUX_METER", &iuse::dbg_lux_meter );
     add_iuse( "CALORIES_INTAKE_TRACKER", &iuse::calories_intake_tracker );
     add_iuse( "VOLTMETER", &iuse::voltmeter );
+    add_iuse("FRIENDLY_MONSTER_CONTROL", &iuse::friendly_monster_control);
 
     add_actor( std::make_unique<ammobelt_actor>() );
     add_actor( std::make_unique<consume_drug_iuse>() );

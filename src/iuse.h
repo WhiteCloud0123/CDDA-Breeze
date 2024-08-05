@@ -209,7 +209,7 @@ cata::optional<int> sextant( Character *, item *, bool, const tripoint & );
 cata::optional<int> lux_meter( Character *, item *, bool, const tripoint & );
 cata::optional<int> dbg_lux_meter( Character *, item *, bool, const tripoint & );
 cata::optional<int> calories_intake_tracker( Character *p, item *, bool, const tripoint & );
-
+cata::optional<int> friendly_monster_control(Character* p, item*, bool, const tripoint&);
 // MACGUFFINS
 
 cata::optional<int> radiocar( Character *, item *, bool, const tripoint & );

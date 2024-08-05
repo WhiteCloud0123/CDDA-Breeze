@@ -77,6 +77,7 @@ static const efftype_id effect_beartrap("beartrap");
 static const efftype_id effect_bleed("bleed");
 static const efftype_id effect_blind("blind");
 static const efftype_id effect_bouldering("bouldering");
+static const efftype_id effect_controlled("controlled");
 static const efftype_id effect_crushed("crushed");
 static const efftype_id effect_deaf("deaf");
 static const efftype_id effect_docile("docile");
@@ -3089,6 +3090,11 @@ void monster::die(Creature* nkiller)
         }
     }
     mission::on_creature_death(*this);
+
+    if (has_value("was_controlled_by_friendly_monster_controller")) {
+        g->reset_now_controlled_monster();
+        add_msg(m_bad, "控制的怪物已死亡，断开了连接。");
+    }
 
     // Also, perform our death function
     if (is_hallucination() || lifespan_end) {

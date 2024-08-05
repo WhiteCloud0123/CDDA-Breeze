@@ -219,6 +219,7 @@ static const efftype_id effect_asked_to_train( "asked_to_train" );
 static const efftype_id effect_blind( "blind" );
 static const efftype_id effect_bouldering( "bouldering" );
 static const efftype_id effect_contacts( "contacts" );
+static const efftype_id effect_controlled("controlled");
 static const efftype_id effect_docile( "docile" );
 static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_grabbed( "grabbed" );
@@ -2672,6 +2673,42 @@ void game::setremoteveh( vehicle *veh )
     const tripoint vehpos = veh->global_pos3();
     remote_veh_string << vehpos.x << ' ' << vehpos.y << ' ' << vehpos.z;
     u.set_value( "remote_controlling_vehicle", remote_veh_string.str() );
+}
+
+void game::set_now_controlled_monster(monster* m) {
+    monster_now_controlled = m;
+    std::stringstream monster_controlled_pos_string;
+    tripoint pos = m->pos();
+    monster_controlled_pos_string << pos.x << ' ' << pos.y << ' ' << pos.z;
+    u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
+}
+
+monster* game::get_now_controlled_monster() {
+
+    if (!monster_now_controlled && u.has_value("monster_controlled_pos_string")) {
+        std::stringstream monster_controlled_pos_string(u.get_value("monster_controlled_pos_string"));
+        tripoint pos;
+        monster_controlled_pos_string >> pos.x >> pos.y >> pos.z;
+        creature_tracker& tracker = get_creature_tracker();
+        Creature* c = tracker.creature_at(pos);
+        if (c) {
+            monster_now_controlled = c->as_monster();
+        }
+        else {
+            add_msg(m_bad,"%1s %2s %3s",pos.x,pos.y,pos.z);
+        }
+        
+    }
+
+    return monster_now_controlled;
+}
+
+void game::reset_now_controlled_monster() {
+    monster_now_controlled->remove_effect(effect_controlled);
+    monster_now_controlled->remove_value("was_controlled_by_friendly_monster_controller");
+    monster_now_controlled->remove_value("command_dirty");
+    monster_now_controlled = nullptr;
+    u.remove_value("monster_controlled_pos_string");
 }
 
 bool game::try_get_left_click_action( action_id &act, const tripoint_bub_ms &mouse_target )

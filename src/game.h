@@ -538,6 +538,12 @@ class game
         /** Sets the current remotely controlled vehicle. */
         void setremoteveh( vehicle *veh );
 
+        void set_now_controlled_monster(monster* m);
+
+        monster* get_now_controlled_monster();
+
+        void reset_now_controlled_monster();
+
         /** Returns the next available mission id. */
         int assign_mission_id();
         /** Find the npc with the given ID. Returns NULL if the npc could not be found. Searches all loaded overmaps. */
@@ -1229,6 +1235,9 @@ class game
         weak_ptr_fast<ui_adaptor> main_ui_adaptor; // NOLINT(cata-serialize)
 
         std::unique_ptr<static_popup> wait_popup; // NOLINT(cata-serialize)
+
+        monster* monster_now_controlled = nullptr;
+
     public:
         /** Used to implement mouse "edge scrolling". Returns a
          *  tripoint which is a vector of the resulting "move", i.e.
