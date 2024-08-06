@@ -2685,16 +2685,6 @@ void game::set_now_controlled_monster(shared_ptr_fast<monster> m) {
 }
 
 shared_ptr_fast<monster> game::get_now_controlled_monster() {
-    if (!monster_now_controlled && u.has_value("monster_controlled_pos_string")) {
-        std::stringstream monster_controlled_pos_string(u.get_value("monster_controlled_pos_string"));
-        tripoint pos;
-        monster_controlled_pos_string >> pos.x >> pos.y >> pos.z;
-        creature_tracker& tracker = get_creature_tracker();
-        monster* m = tracker.creature_at<monster>(pos);
-        if (m) {
-            monster_now_controlled = g->shared_from(*m);
-        }
-    }
     return monster_now_controlled;
 }
 
@@ -3035,6 +3025,17 @@ bool game::load( const save_t &name )
     effect_on_conditions::load_existing_character( u );
     // recalculate light level for correctly resuming crafting and disassembly
     m.build_map_cache( m.get_abs_sub().z() );
+
+    if (u.has_value("monster_controlled_pos_string")) {
+        std::stringstream monster_controlled_pos_string(u.get_value("monster_controlled_pos_string"));
+        tripoint pos;
+        monster_controlled_pos_string >> pos.x >> pos.y >> pos.z;
+        creature_tracker& tracker = get_creature_tracker();
+        monster* m = tracker.creature_at<monster>(pos);
+        if (m) {
+            monster_now_controlled = g->shared_from(*m);
+        }
+    }
 
     return true;
 }

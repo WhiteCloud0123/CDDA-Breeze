@@ -971,7 +971,7 @@ void monster::move()
         }
     }
 
-    if( ( current_attitude == MATT_IGNORE && patrol_route.empty() ) ||
+    if( ( current_attitude == MATT_IGNORE && patrol_route.empty() && !has_value("was_controlled_by_friendly_monster_controller")) ||
         ( ( current_attitude == MATT_FOLLOW ||
             ( has_flag( MF_KEEP_DISTANCE ) && !( current_attitude == MATT_FLEE ) ) )
           && rl_dist( get_location(), get_dest() ) <= type->tracking_distance ) ) {
