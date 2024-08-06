@@ -601,15 +601,9 @@ void monmove()
           
             }
 
-                        
-           
-            
-
         }
         
         
-
-
         while( critter.moves > 0 && !critter.is_dead() && !critter.has_effect( effect_ridden ) ) {
             critter.made_footstep = false;
             // Controlled critters don't make their own plans
