@@ -2694,10 +2694,6 @@ monster* game::get_now_controlled_monster() {
         if (c) {
             monster_now_controlled = c->as_monster();
         }
-        else {
-            add_msg(m_bad,"%1s %2s %3s",pos.x,pos.y,pos.z);
-        }
-        
     }
 
     return monster_now_controlled;
