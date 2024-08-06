@@ -2511,7 +2511,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             pldrive(get_delta_from_movement_action(act, iso_rotate::no));
         }
         else if(g->get_now_controlled_monster() && player_character.has_active_item(itype_monster_controller_d)) {
-            monster* m = g->get_now_controlled_monster();
+            shared_ptr_fast<monster> m = g->get_now_controlled_monster();
             point dest_delta = get_delta_from_movement_action(act, iso_rotate::yes);
             tripoint_abs_ms goal = m->get_location() + dest_delta;
             m->set_dest(goal);

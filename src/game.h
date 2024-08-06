@@ -538,9 +538,9 @@ class game
         /** Sets the current remotely controlled vehicle. */
         void setremoteveh( vehicle *veh );
 
-        void set_now_controlled_monster(monster* m);
+        void set_now_controlled_monster(shared_ptr_fast<monster> m);
 
-        monster* get_now_controlled_monster();
+        shared_ptr_fast<monster> get_now_controlled_monster();
 
         void reset_now_controlled_monster();
 
@@ -1236,7 +1236,7 @@ class game
 
         std::unique_ptr<static_popup> wait_popup; // NOLINT(cata-serialize)
 
-        monster* monster_now_controlled = nullptr;
+        shared_ptr_fast<monster> monster_now_controlled = nullptr;
 
     public:
         /** Used to implement mouse "edge scrolling". Returns a

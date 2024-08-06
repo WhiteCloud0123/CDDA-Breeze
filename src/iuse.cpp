@@ -8719,7 +8719,7 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
         int choice = fm_menu.ret;
 
         if (choice >= 0) {
-            monster* m = friendly_monsters[choice]->as_monster();
+            shared_ptr_fast<monster> m = g->shared_from(*friendly_monsters[choice]->as_monster());
             if (m->has_value("was_controlled_by_friendly_monster_controller")) {
                 g->reset_now_controlled_monster();
                 add_msg(m_good, "解除了对 %s 的控制。", m->get_name());

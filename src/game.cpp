@@ -433,21 +433,21 @@ static void achievement_failed( const achievement *a, bool achievements_enabled 
 
 // This is the main game set-up process.
 game::game() :
-    liveview( *liveview_ptr ),
-    scent_ptr( *this ),
-    achievements_tracker_ptr( *stats_tracker_ptr, achievement_attained, achievement_failed, true ),
-    m( *map_ptr ),
-    u( *u_ptr ),
-    scent( *scent_ptr ),
-    timed_events( *timed_event_manager_ptr ),
-    uquit( QUIT_NO ),
-    safe_mode( SAFE_MODE_ON ),
-    u_shared_ptr( &u, null_deleter{} ),
-    next_npc_id( 1 ),
-    next_mission_id( 1 ),
-    remoteveh_cache_time( calendar::before_time_starts ),
-    tileset_zoom( DEFAULT_TILESET_ZOOM ),
-    last_mouse_edge_scroll( std::chrono::steady_clock::now() )
+    liveview(*liveview_ptr),
+    scent_ptr(*this),
+    achievements_tracker_ptr(*stats_tracker_ptr, achievement_attained, achievement_failed, true),
+    m(*map_ptr),
+    u(*u_ptr),
+    scent(*scent_ptr),
+    timed_events(*timed_event_manager_ptr),
+    uquit(QUIT_NO),
+    safe_mode(SAFE_MODE_ON),
+    u_shared_ptr(&u, null_deleter{}),
+    next_npc_id(1),
+    next_mission_id(1),
+    remoteveh_cache_time(calendar::before_time_starts),
+    tileset_zoom(DEFAULT_TILESET_ZOOM),
+    last_mouse_edge_scroll(std::chrono::steady_clock::now())
 {
     first_redraw_since_waiting_started = true;
     reset_light_level();
@@ -783,6 +783,7 @@ void game::setup()
     global_variables &globvars = get_globals();
     globvars.clear_global_values();
     unique_npcs.clear();
+    monster_now_controlled.reset();
     get_weather().weather_override = WEATHER_NULL;
     // back to menu for save loading, new game etc
 }
@@ -2675,7 +2676,7 @@ void game::setremoteveh( vehicle *veh )
     u.set_value( "remote_controlling_vehicle", remote_veh_string.str() );
 }
 
-void game::set_now_controlled_monster(monster* m) {
+void game::set_now_controlled_monster(shared_ptr_fast<monster> m) {
     monster_now_controlled = m;
     std::stringstream monster_controlled_pos_string;
     tripoint pos = m->pos();
@@ -2683,19 +2684,17 @@ void game::set_now_controlled_monster(monster* m) {
     u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
 }
 
-monster* game::get_now_controlled_monster() {
-
+shared_ptr_fast<monster> game::get_now_controlled_monster() {
     if (!monster_now_controlled && u.has_value("monster_controlled_pos_string")) {
         std::stringstream monster_controlled_pos_string(u.get_value("monster_controlled_pos_string"));
         tripoint pos;
         monster_controlled_pos_string >> pos.x >> pos.y >> pos.z;
         creature_tracker& tracker = get_creature_tracker();
-        Creature* c = tracker.creature_at(pos);
-        if (c) {
-            monster_now_controlled = c->as_monster();
+        monster* m = tracker.creature_at<monster>(pos);
+        if (m) {
+            monster_now_controlled = g->shared_from(*m);
         }
     }
-
     return monster_now_controlled;
 }
 
@@ -2703,7 +2702,7 @@ void game::reset_now_controlled_monster() {
     monster_now_controlled->remove_effect(effect_controlled);
     monster_now_controlled->remove_value("was_controlled_by_friendly_monster_controller");
     monster_now_controlled->remove_value("command_dirty");
-    monster_now_controlled = nullptr;
+    monster_now_controlled.reset();
     u.remove_value("monster_controlled_pos_string");
 }
 
@@ -12856,7 +12855,7 @@ void game::quickload()
             main_menu::queued_save_id_to_load = save_id;
 
         }
-
+      
     } else {
         popup_getkey( _( "No saves for current character yet." ) );
     }
