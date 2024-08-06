@@ -7,7 +7,9 @@
 #include "avatar.h"
 #include "cata_assert.h"
 #include "debug.h"
+#include "game.h"
 #include "map.h"
+#include "messages.h"
 #include "mongroup.h"
 #include "monster.h"
 #include "mtype.h"
@@ -281,8 +283,12 @@ void creature_tracker::remove_dead()
 {
     // Can't use game::all_monsters() as it would not contain *dead* monsters.
     for( auto iter = monsters_list.begin(); iter != monsters_list.end(); ) {
-        const monster &critter = **iter;
+        monster &critter = **iter;
         if( critter.is_dead() ) {
+            if(critter.has_value("was_controlled_by_friendly_monster_controller")) {
+                g->reset_now_controlled_monster();
+                add_msg(m_bad, "控制的怪物已死亡，断开了连接。");
+            }
             remove_from_location_map( critter );
             iter = monsters_list.erase( iter );
         } else {

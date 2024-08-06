@@ -3091,11 +3091,6 @@ void monster::die(Creature* nkiller)
     }
     mission::on_creature_death(*this);
 
-    if (has_value("was_controlled_by_friendly_monster_controller")) {
-        g->reset_now_controlled_monster();
-        add_msg(m_bad, "控制的怪物已死亡，断开了连接。");
-    }
-
     // Also, perform our death function
     if (is_hallucination() || lifespan_end) {
         //Hallucinations always just disappear

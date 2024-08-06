@@ -12497,6 +12497,11 @@ void game::update_overmap_seen()
 
 void game::despawn_monster( monster &critter )
 {
+    if (critter.has_value("was_controlled_by_friendly_monster_controller")) {
+        g->reset_now_controlled_monster();
+        add_msg(m_bad, "控制的怪物的所在位置超出了信号的传输范围，断开了连接。");
+    }
+
     critter.on_unload();
     // hallucinations aren't stored, they come and go as they like
     if( !critter.is_hallucination() ) {
