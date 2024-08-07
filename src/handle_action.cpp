@@ -2581,7 +2581,15 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                 break;
             }
         }
-        if (!player_character.in_vehicle) {
+        if (g->get_now_controlled_monster() && player_character.has_active_item(itype_monster_controller_d)) {
+            shared_ptr_fast<monster> m = g->get_now_controlled_monster();
+            tripoint dest_delta(0, 0, -1);
+            tripoint_abs_ms goal = m->get_location() + dest_delta;
+            m->set_dest(goal);
+            m->remove_value("command_dirty");
+            player_character.moves = 0;
+        }
+        else if (!player_character.in_vehicle) {
             vertical_move(-1, false);
         }
         else if (has_vehicle_control(player_character)) {
@@ -2600,7 +2608,15 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                 break;
             }
         }
-        if (!player_character.in_vehicle) {
+        if (g->get_now_controlled_monster() && player_character.has_active_item(itype_monster_controller_d)) {
+            shared_ptr_fast<monster> m = g->get_now_controlled_monster();
+            tripoint dest_delta(0, 0, 1);
+            tripoint_abs_ms goal = m->get_location() + dest_delta;
+            m->set_dest(goal);
+            m->remove_value("command_dirty");
+            player_character.moves = 0;
+        }
+        else if (!player_character.in_vehicle) {
             vertical_move(1, false);
         }
         else if (has_vehicle_control(player_character)) {
