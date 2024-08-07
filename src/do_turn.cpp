@@ -620,16 +620,19 @@ void monmove()
         }
 
         if (critter.has_value("was_controlled_by_friendly_monster_controller")) {
-            critter.set_value("command_dirty", "");
             if (rl_dist(critter.get_location(), u.get_location()) > 60) {
                 g->reset_now_controlled_monster();
                 add_msg(m_bad, "控制的怪物的所在位置超出了信号的传输范围，断开了连接。");
             }
-            std::stringstream monster_controlled_pos_string;
-            tripoint pos = critter.pos();
-            monster_controlled_pos_string << pos.x << ' ' << pos.y << ' ' << pos.z;
-            u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
-
+            else {
+                critter.set_value("command_dirty", "");
+                std::stringstream monster_controlled_pos_string;
+                tripoint pos = critter.pos();
+                monster_controlled_pos_string << pos.x << ' ' << pos.y << ' ' << pos.z;
+                u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
+                u.view_offset.x =pos.x - u.posx();
+                u.view_offset.y = pos.y - u.posy();
+            }
         }
         
         if( !critter.is_dead() &&

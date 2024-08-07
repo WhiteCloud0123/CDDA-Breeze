@@ -2694,6 +2694,8 @@ void game::reset_now_controlled_monster() {
     monster_now_controlled->remove_value("command_dirty");
     monster_now_controlled.reset();
     u.remove_value("monster_controlled_pos_string");
+    u.view_offset.x = 0;
+    u.view_offset.y = 0;
 }
 
 bool game::try_get_left_click_action( action_id &act, const tripoint_bub_ms &mouse_target )
