@@ -8660,7 +8660,7 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
         }
         return 1;
     }
-
+    Character& player_character = get_player_character();
     std::vector<monster *> friendly_monsters;
     uilist main_menu;
     main_menu.settext("操作菜单");
@@ -8676,7 +8676,7 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
         uilist fm_menu;
         fm_menu.settext("请选择要控制的怪物");
         map& local_map = get_map();
-        tripoint center = get_player_character().pos();
+        tripoint center = player_character.pos();
         int number = 0;
         for (monster& m : g->all_monsters()) {
             if (&m && m.has_effect(effect_pet)) {
@@ -8705,8 +8705,7 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
                     m->remove_value("was_controlled_by_friendly_monster_controller");
                     m->remove_value("command_dirty");
                 }
-                g->set_now_controlled_monster(nullptr);
-                get_player_character().remove_value("monster_controlled_pos_string");
+                g->reset_now_controlled_monster();
                 add_msg(m_bad,"出现错误，已重置。");
                 return cata::nullopt;
             }

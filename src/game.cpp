@@ -2682,6 +2682,7 @@ void game::set_now_controlled_monster(shared_ptr_fast<monster> m) {
     tripoint pos = m->pos();
     monster_controlled_pos_string << pos.x << ' ' << pos.y << ' ' << pos.z;
     u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
+    u.add_moncam(std::make_pair(m->type->id, 60));   
 }
 
 shared_ptr_fast<monster> game::get_now_controlled_monster() {
@@ -2692,6 +2693,7 @@ void game::reset_now_controlled_monster() {
     monster_now_controlled->remove_effect(effect_controlled);
     monster_now_controlled->remove_value("was_controlled_by_friendly_monster_controller");
     monster_now_controlled->remove_value("command_dirty");
+    u.remove_moncam(monster_now_controlled->type->id);
     monster_now_controlled.reset();
     u.remove_value("monster_controlled_pos_string");
     u.view_offset.x = 0;
