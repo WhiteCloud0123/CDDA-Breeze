@@ -833,5 +833,17 @@
     "allowed_locs": [ "nuclear_plant" ],
     "professions": [ "electrician", "labtech", "medic" ],
     "flags": [ "CHALLENGE", "LONE_START" ]
+  },
+  {
+    "type": "scenario",
+    "id": "wandering_castle",
+    "name": "奇怪的城堡",
+    "points": 2,
+    "description": "当这座奇怪的城堡就在离你不远的地方矗立着的时候，你的生存狩猎之旅就注定要脱轨了。随着你的足迹完全消失，你不妨探索一下这个地方。",
+    "start_name": "Wilderness",
+    "allowed_locs": [ "sloc_forest" ],
+    "missions": [ "MISSION_WANDERING_CASTLE" ],
+    "professions": [ "naturalist", "shotgun_hunter", "rifle_hunter", "bow_hunter", "crossbow_hunter", "unemployed" ],
+    "flags": [ "LONE_START" ]
   }
 ]
