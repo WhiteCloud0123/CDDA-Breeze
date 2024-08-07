@@ -8679,7 +8679,7 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
         int number = 0;
         for (monster& m : g->all_monsters()) {
             if (&m && m.has_effect(effect_pet)) {
-                if (rl_dist(m.get_location(), player_character.get_location()) > 60) {
+                if (rl_dist(m.get_location(), player_character.get_location()) > 60 || &m == player_character.mounted_creature.get()) {
                     continue;
                 }
                 friendly_monsters.push_back(&m);
