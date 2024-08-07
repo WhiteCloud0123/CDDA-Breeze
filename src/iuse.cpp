@@ -8676,7 +8676,6 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
         uilist fm_menu;
         fm_menu.settext("请选择要控制的怪物");
         map& local_map = get_map();
-        tripoint center = player_character.pos();
         int number = 0;
         for (monster& m : g->all_monsters()) {
             if (&m && m.has_effect(effect_pet)) {
