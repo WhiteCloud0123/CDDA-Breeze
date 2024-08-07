@@ -8680,6 +8680,9 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
         int number = 0;
         for (monster& m : g->all_monsters()) {
             if (&m && m.has_effect(effect_pet)) {
+                if (rl_dist(m.get_location(), player_character.get_location()) > 60) {
+                    continue;
+                }
                 friendly_monsters.push_back(&m);
                 std::string extra = m.has_value("was_controlled_by_friendly_monster_controller") ? "  【正在控制】" : "";
                 fm_menu.addentry(number, true, MENU_AUTOASSIGN, m.get_name() + extra);
