@@ -970,11 +970,11 @@ void monster::move()
             }
         }
     }
-
-    if( ( current_attitude == MATT_IGNORE && patrol_route.empty() ) ||
+    bool was_controlled_by_friendly_monster_controller = has_value("was_controlled_by_friendly_monster_controller");
+    if(!was_controlled_by_friendly_monster_controller&&( ( current_attitude == MATT_IGNORE && patrol_route.empty() ) ||
         ( ( current_attitude == MATT_FOLLOW ||
             ( has_flag( MF_KEEP_DISTANCE ) && !( current_attitude == MATT_FLEE ) ) )
-          && rl_dist( get_location(), get_dest() ) <= type->tracking_distance ) ) {
+          && rl_dist( get_location(), get_dest() ) <= type->tracking_distance ) )) {
         moves = 0;
         stumble();
         return;
@@ -1025,11 +1025,17 @@ void monster::move()
     if( !moved && has_flag( MF_SMELLS ) ) {
         // No sight... or our plans are invalid (e.g. moving through a transparent, but
         //  solid, square of terrain).  Fall back to smell if we have it.
-        unset_dest();
-        tripoint tmp = scent_move();
-        if( tmp.x != -1 ) {
-            destination = tmp;
-            moved = true;
+        
+        if (was_controlled_by_friendly_monster_controller) {
+            destination = get_map().getlocal(get_dest());
+        }
+        else {
+            unset_dest();
+            tripoint tmp = scent_move();
+            if (tmp.x != -1) {
+                destination = tmp;
+                moved = true;
+            }
         }
     }
     if( wandf > 0 && !moved && friendly == 0 ) { // No LOS, no scent, so as a fall-back follow sound
@@ -1222,7 +1228,9 @@ void monster::move()
         }
     } else {
         moves = 0;
-        stumble();
+        if (!was_controlled_by_friendly_monster_controller) {
+            stumble();
+        }
         path.clear();
     }
     if( has_effect( effect_led_by_leash ) ) {

@@ -77,6 +77,7 @@ static const efftype_id effect_beartrap("beartrap");
 static const efftype_id effect_bleed("bleed");
 static const efftype_id effect_blind("blind");
 static const efftype_id effect_bouldering("bouldering");
+static const efftype_id effect_controlled("controlled");
 static const efftype_id effect_crushed("crushed");
 static const efftype_id effect_deaf("deaf");
 static const efftype_id effect_docile("docile");

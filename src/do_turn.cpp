@@ -601,22 +601,16 @@ void monmove()
           
             }
 
-                        
-           
-            
-
         }
         
         
-
-
         while( critter.moves > 0 && !critter.is_dead() && !critter.has_effect( effect_ridden ) ) {
             critter.made_footstep = false;
             // Controlled critters don't make their own plans
             if( !critter.has_effect( effect_controlled ) ) {
                 // Formulate a path to follow
                 critter.plan();
-            } else {
+            } else if (!critter.has_value("was_controlled_by_friendly_monster_controller") || critter.has_value("command_dirty")) {
                 critter.moves = 0;
                 break;
             }
@@ -625,6 +619,22 @@ void monmove()
             m.creature_in_field( critter );
         }
 
+        if (critter.has_value("was_controlled_by_friendly_monster_controller")) {
+            if (rl_dist(critter.get_location(), u.get_location()) > 60) {
+                g->reset_now_controlled_monster();
+                add_msg(m_bad, "控制的怪物的所在位置超出了信号的传输范围，断开了连接。");
+            }
+            else {
+                critter.set_value("command_dirty", "");
+                std::stringstream monster_controlled_pos_string;
+                tripoint pos = critter.pos();
+                monster_controlled_pos_string << pos.x << ' ' << pos.y << ' ' << pos.z;
+                u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
+                u.view_offset.x =pos.x - u.posx();
+                u.view_offset.y = pos.y - u.posy();
+            }
+        }
+        
         if( !critter.is_dead() &&
             u.has_active_bionic( bio_alarm ) &&
             u.get_power_level() >= bio_alarm->power_trigger &&

@@ -173,5 +173,32 @@
         "default_magazine": "light_battery_cell"
       }
     ]
+  },
+  {
+    "id": "怪物遥控器-D",
+    "type": "TOOL",
+    "name": { "str": "怪物遥控器-D" },
+    "description": "一种来路不明的遥控器，能够控制被驯服的怪物。",
+    "weight": "907 g",
+    "volume": "1 L",
+    "price": 10000,
+    "price_postapoc": 10000,
+    "to_hit": -1,
+    "material": [ "plastic" ],
+    "symbol": "#",
+    "color": "yellow",
+    "ammo": [ "battery" ],
+    "flags": [ "WATER_BREAK", "ELECTRONIC" ],
+    "charges_per_use": 1,
+    "turns_per_charge": 100,
+    "use_action": [ "FRIENDLY_MONSTER_CONTROL" ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "rigid": true,
+        "flag_restriction": [ "BATTERY_LIGHT", "BATTERY_ULTRA_LIGHT" ],
+        "default_magazine": "light_battery_cell"
+      }
+    ]
   }
 ]

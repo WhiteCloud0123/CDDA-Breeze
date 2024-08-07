@@ -1089,5 +1089,10 @@
     "type": "item_action",
     "id": "VOLTMETER",
     "name": { "str": "Test for voltage" }
+  },
+  {
+    "type": "item_action",
+    "id": "FRIENDLY_MONSTER_CONTROL",
+    "name": { "str": "控制一个被驯服的怪物" }
   }
 ]

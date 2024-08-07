@@ -219,6 +219,7 @@ static const efftype_id effect_asked_to_train( "asked_to_train" );
 static const efftype_id effect_blind( "blind" );
 static const efftype_id effect_bouldering( "bouldering" );
 static const efftype_id effect_contacts( "contacts" );
+static const efftype_id effect_controlled("controlled");
 static const efftype_id effect_docile( "docile" );
 static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_grabbed( "grabbed" );
@@ -432,21 +433,21 @@ static void achievement_failed( const achievement *a, bool achievements_enabled 
 
 // This is the main game set-up process.
 game::game() :
-    liveview( *liveview_ptr ),
-    scent_ptr( *this ),
-    achievements_tracker_ptr( *stats_tracker_ptr, achievement_attained, achievement_failed, true ),
-    m( *map_ptr ),
-    u( *u_ptr ),
-    scent( *scent_ptr ),
-    timed_events( *timed_event_manager_ptr ),
-    uquit( QUIT_NO ),
-    safe_mode( SAFE_MODE_ON ),
-    u_shared_ptr( &u, null_deleter{} ),
-    next_npc_id( 1 ),
-    next_mission_id( 1 ),
-    remoteveh_cache_time( calendar::before_time_starts ),
-    tileset_zoom( DEFAULT_TILESET_ZOOM ),
-    last_mouse_edge_scroll( std::chrono::steady_clock::now() )
+    liveview(*liveview_ptr),
+    scent_ptr(*this),
+    achievements_tracker_ptr(*stats_tracker_ptr, achievement_attained, achievement_failed, true),
+    m(*map_ptr),
+    u(*u_ptr),
+    scent(*scent_ptr),
+    timed_events(*timed_event_manager_ptr),
+    uquit(QUIT_NO),
+    safe_mode(SAFE_MODE_ON),
+    u_shared_ptr(&u, null_deleter{}),
+    next_npc_id(1),
+    next_mission_id(1),
+    remoteveh_cache_time(calendar::before_time_starts),
+    tileset_zoom(DEFAULT_TILESET_ZOOM),
+    last_mouse_edge_scroll(std::chrono::steady_clock::now())
 {
     first_redraw_since_waiting_started = true;
     reset_light_level();
@@ -782,6 +783,7 @@ void game::setup()
     global_variables &globvars = get_globals();
     globvars.clear_global_values();
     unique_npcs.clear();
+    monster_now_controlled.reset();
     get_weather().weather_override = WEATHER_NULL;
     // back to menu for save loading, new game etc
 }
@@ -2674,6 +2676,30 @@ void game::setremoteveh( vehicle *veh )
     u.set_value( "remote_controlling_vehicle", remote_veh_string.str() );
 }
 
+void game::set_now_controlled_monster(shared_ptr_fast<monster> m) {
+    monster_now_controlled = m;
+    std::stringstream monster_controlled_pos_string;
+    tripoint pos = m->pos();
+    monster_controlled_pos_string << pos.x << ' ' << pos.y << ' ' << pos.z;
+    u.set_value("monster_controlled_pos_string", monster_controlled_pos_string.str());
+    u.add_moncam(std::make_pair(m->type->id, 60));   
+}
+
+shared_ptr_fast<monster> game::get_now_controlled_monster() {
+    return monster_now_controlled;
+}
+
+void game::reset_now_controlled_monster() {
+    monster_now_controlled->remove_effect(effect_controlled);
+    monster_now_controlled->remove_value("was_controlled_by_friendly_monster_controller");
+    monster_now_controlled->remove_value("command_dirty");
+    u.remove_moncam(monster_now_controlled->type->id);
+    monster_now_controlled.reset();
+    u.remove_value("monster_controlled_pos_string");
+    u.view_offset.x = 0;
+    u.view_offset.y = 0;
+}
+
 bool game::try_get_left_click_action( action_id &act, const tripoint_bub_ms &mouse_target )
 {
     bool new_destination = true;
@@ -3003,6 +3029,17 @@ bool game::load( const save_t &name )
     effect_on_conditions::load_existing_character( u );
     // recalculate light level for correctly resuming crafting and disassembly
     m.build_map_cache( m.get_abs_sub().z() );
+
+    if (u.has_value("monster_controlled_pos_string")) {
+        std::stringstream monster_controlled_pos_string(u.get_value("monster_controlled_pos_string"));
+        tripoint pos;
+        monster_controlled_pos_string >> pos.x >> pos.y >> pos.z;
+        creature_tracker& tracker = get_creature_tracker();
+        monster* m = tracker.creature_at<monster>(pos);
+        if (m) {
+            monster_now_controlled = g->shared_from(*m);
+        }
+    }
 
     return true;
 }
@@ -12465,6 +12502,11 @@ void game::update_overmap_seen()
 
 void game::despawn_monster( monster &critter )
 {
+    if (critter.has_value("was_controlled_by_friendly_monster_controller")) {
+        g->reset_now_controlled_monster();
+        add_msg(m_bad, "控制的怪物的所在位置超出了信号的传输范围，断开了连接。");
+    }
+
     critter.on_unload();
     // hallucinations aren't stored, they come and go as they like
     if( !critter.is_hallucination() ) {
@@ -12823,7 +12865,7 @@ void game::quickload()
             main_menu::queued_save_id_to_load = save_id;
 
         }
-
+      
     } else {
         popup_getkey( _( "No saves for current character yet." ) );
     }
