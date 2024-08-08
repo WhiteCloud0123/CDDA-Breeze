@@ -1,0 +1,1072 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_difficultysafeguard",
+    "//": "This EOC gets called after a teleport is initialized but before it is finished. It basically just checks if you're running an older save or somehow missed the difficulty assignment.",
+    "condition": {
+      "u_compare_var": "has_set_difficulty",
+      "op": "==",
+      "value": 0
+    },
+    "effect": [
+      {
+        "u_message": "你尚未选择游戏难度.可能是你正在游玩先前的存档导致的.\n\n你目前的游戏难度已设置为普通难度.此难度下,每次前往地面探险都有4个小时去寻找传送点并离开.超出时间后你将开始受到扭曲病影响,受到严重的负面效果.6小时后你将受到扭曲解体的影响,会导致血量迅速降低,直到回归或死亡.",
+        "popup": true
+      },
+      {
+        "run_eocs": [
+          "EOC_difficultycheck1"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_warp_statue",
+    "//": "This EOC is triggered when activating the statue. It grabs a random location of a certain type (here a field), saves it to a global variable, and then triggers the actual teleport-out EOC, which is separate so multiple different things can trigger it and potentially target different locations.",
+    "condition": {
+      "u_query": "开始搜寻传送地点?扫描世界可能需要花费一些时间.你的游戏进程可能会未响应几分钟,首次使用耗时更为明显.",
+      "default": false
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_Random_Loc_Warp",
+          "EOC_difficultysafeguard",
+          "EOC_initiate_randomport"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_initiate_randomport",
+    "//": "The actual EOC that teleports the player to the ground. A target location must already be stored when this is called. When this begins, it also memorizes the player's exact position on leaving, which is where they'll return to when the mission ends or they die. It gives you a warp recharge cooldown, which must expire over time before you're able to voluntarily return home. It also gives you the stable form of warp sickness, so that the player has a visual status reminder they can check. Finally, it turns you invisible for 60 seconds so you can at least try to reach cover if you spawn in danger.",
+    "effect": [
+      {
+        "u_location_variable": {
+          "global_val": "OM_HQ_origin"
+        }
+      },
+      {
+        "u_add_effect": "warpcloak",
+        "intensity": 1,
+        "duration": "60 s"
+      },
+      {
+        "u_teleport": {
+          "global_val": "OM_missionspot"
+        },
+        "fail_message": "传送点未找到有效的地点.",
+        "force": true
+      },
+      {
+        "u_message": "你的身体还在物质化中,尚未完全可见.大概60秒后全世界都看得见你了.如果你的出生点存在危险,现在就是你找掩体的时候.",
+        "popup": false
+      },
+      {
+        "u_message": "你已抵达区域!\n按下任意按键以继续,随机任务将会生成,这可能需要一分钟.",
+        "popup": true
+      },
+      {
+        "run_eocs": [
+          "EOC_safely_landed"
+        ]
+      },
+      {
+        "u_add_trait": "awayfromhome"
+      },
+      {
+        "u_add_effect": "warpsickness",
+        "intensity": 6,
+        "duration": "PERMANENT"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_return_OM_teleport",
+    "//": "This is the EOC which actually returns you home. It brings you home and removes all warp-related effects including warp sickness. It also resets the awayfromhome counter to 0 so warp sickness can be tracked properly next time you're out.",
+    "effect": [
+      {
+        "u_teleport": {
+          "global_val": "OM_HQ_origin"
+        },
+        "force": true
+      },
+      {
+        "u_remove_item_with": "warphome"
+      },
+      {
+        "u_adjust_var": "raidstotal",
+        "adjustment": 1
+      },
+      {
+        "u_lose_trait": "awayfromhome"
+      },
+      {
+        "u_lose_effect": "warpsickness"
+      },
+      {
+        "u_lose_effect": "warpdisintegration"
+      },
+      {
+        "run_eocs": [
+          "EOC_clearmissions",
+          "EOC_clearmissions",
+          "EOC_clearmissions",
+          "EOC_progressgate1",
+          "EOC_progressgate2"
+        ]
+      },
+      {
+        "alter_timed_events": "return_portal_close"
+      },
+      {
+        "u_add_var": "timeawayfromhome",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_progressgate1",
+    "//": "Checks to see if you have successfully completed 5 raids and unlocks higher difficulty.",
+    "condition": {
+      "and": [
+        {
+          "u_compare_var": "isdifficult",
+          "op": "==",
+          "value": 0
+        },
+        {
+          "u_compare_var": "raidswon",
+          "op": ">=",
+          "value": 5
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "从地表的几次短暂探险中存活下来,证明你你自身的能力.像是认可般的,扭曲流中涌动着新的能量.你会发现自己将被传送到更危险的地区,接受更加艰巨的任务.\n疗慰药膏对经历磨难的你不再生效.继续努力的谨慎前行吧.",
+        "popup": true
+      },
+      {
+        "u_add_var": "isdifficult",
+        "value": "1"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardmissions"
+          },
+          "=",
+          {
+            "const": 10
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardermissions"
+          },
+          "=",
+          {
+            "const": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_progressgate2",
+    "//": "Checks to see if you have successfully completed 5 raids and unlocks higher difficulty.",
+    "condition": {
+      "and": [
+        {
+          "u_compare_var": "isdifficult",
+          "op": "==",
+          "value": 1
+        },
+        {
+          "u_compare_var": "raidswon",
+          "op": ">=",
+          "value": 10
+        }
+      ]
+    },
+    "effect": [
+      {
+        "u_message": "你的经历证明了你对扭曲流已经有了充分认识.最高级别的任务可以获取了.你永远不知道地表上有什么在等待着你.",
+        "popup": true
+      },
+      {
+        "u_add_var": "isdifficult",
+        "value": "2"
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardmissions"
+          },
+          "=",
+          {
+            "const": 15
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardermissions"
+          },
+          "=",
+          {
+            "const": 15
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardestmissions"
+          },
+          "=",
+          {
+            "const": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_clearmissions",
+    "//": "This EOC wipes all missions you might have. It's more or less a full list of any random missions you can be assigned.",
+    "effect": [
+      {
+        "remove_active_mission": "MISSION_REACH_EXTRACT"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_TREASURE"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_LIGHT"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_HORDE"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_MID"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_MID_HORDE"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_HARD"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_ELITE"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_BOSS"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_BOSS_GROUP"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_MIGO"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_KILL_MIGO_ELITE"
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_ZED1",
+        "success": false
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_ZED2",
+        "success": false
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_ZED3",
+        "success": false
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_MIGO",
+        "success": false
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_NETHER",
+        "success": false
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_BIRD",
+        "success": false
+      },
+      {
+        "finish_mission": "MISSION_BONUS_SLAUGHTER_MAMMAL",
+        "success": false
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_ASSASSIN1"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_ASSASSIN2"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_ASSASSIN3"
+      },
+      {
+        "remove_active_mission": "MISSION_BONUS_ASSASSIN4"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_statue_return",
+    "//": "This EOC is activated by return portals. It's just here to confirm that you want to return home, then triggers the actual teleport home.",
+    "condition": {
+      "u_query": "你将和所携带的物品传送回归,这片区域剩下的一切物品都会消失.是否要进行传送?",
+      "default": false
+    },
+    "effect": [
+      {
+        "u_adjust_var": "raidswon",
+        "adjustment": 1
+      },
+      {
+        "run_eocs": [
+          "EOC_return_OM_teleport"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_homewardmote",
+    "//": "This EOC is activated by eating a return pill, the homeward mote. Identical to statue return but with no query to avoid wasting the pill. Also destroys any motes you were carrying.",
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_return_OM_teleport"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_youdied",
+    "//": "This EOC is called when the player dies. Before anything else happens, it checks if the player has a lifeshield mote. If so, it warps you home safe and sound, counting as neither a loss nor a victory, and all your stuff comes with you. Otherwise, it moves on to other death checks below.",
+    "eoc_type": "PREVENT_DEATH",
+    "condition": {
+      "u_has_item": "warphome"
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_homewardmote",
+          "EOC_healall"
+        ]
+      },
+      {
+        "u_message": "在你死前只有最后一口气的瞬间,你身上的溯返之尘开始带着耀眼的能量震荡起来,飘荡空中的细线立刻绷紧,在意识到什么救了你之前,你已经回到了岛上.尘埃已经消散了,你完好无损的回来了.",
+        "popup": true
+      }
+    ],
+    "false_effect": [
+      {
+        "run_eocs": [
+          "EOC_deathconfirmed"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_deathconfirmed",
+    "//": "The player's death is now confirmed and not protected. The true effect is when you die on the island, and the false effect is when you die out in the world. Both make you incorporeal, which saves you from damage but also makes you drop all items behind, then heal you slightly to prevent death.",
+    "condition": {
+      "not": {
+        "u_has_trait": "awayfromhome"
+      }
+    },
+    "effect": [
+      {
+        "u_add_effect": "downed",
+        "duration": 1
+      },
+      {
+        "u_add_effect": "incorporeal",
+        "duration": 500
+      },
+      {
+        "run_eocs": [
+          "EOC_death_heal"
+        ]
+      },
+      {
+        "u_message": "你死在岛上了?你在搞什么?停下来.你恢复了原样,某些存在暂时消去了你的肉体,免得你再继续弄死自己.",
+        "popup": true
+      }
+    ],
+    "false_effect": [
+      {
+        "u_add_effect": "incorporeal",
+        "duration": 1
+      },
+      {
+        "u_add_effect": "downed",
+        "duration": 1
+      },
+      {
+        "run_eocs": [
+          "EOC_death_heal"
+        ]
+      },
+      {
+        "u_spawn_item": "corpse_painful"
+      },
+      {
+        "u_adjust_var": "raidslost",
+        "adjustment": 1
+      },
+      {
+        "queue_eocs": "EOC_return_OM_teleport",
+        "time_in_future": "1 s"
+      },
+      {
+        "u_message": "你感觉死亡的冰冷之爪扼住了你,随后世界在飞速旋转.现实开始畸曲起来.在你生命的最后一刻,某个东西抓住了你,拖越了空间与时间.你的灵魂被存留下来了,以某些代价的,而你的身体也紧随其后.",
+        "popup": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_HEAL_NEWBIE",
+    "//": "Runs when using newbie salve. Free heals until you have 5 wins.",
+    "condition": {
+      "u_compare_var": "isdifficult",
+      "op": "==",
+      "value": 0
+    },
+    "effect": [
+      {
+        "run_eocs": [
+          "EOC_healall"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "u_message": "药膏已经无法用来治疗了,它只用于初涉此地或是不幸之人.你已经通过成功的探险证明了你的能力.你现在只能依靠你自己了."
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_healall",
+    "//": "Just a simple EOC to bring all your HP to full, while not addressing most other health factors. Can only be used at home.",
+    "condition": {
+      "not": {
+        "u_has_trait": "awayfromhome"
+      }
+    },
+    "effect": [
+      {
+        "u_message": "你的身体眨眼间便自我痊愈了.潜存的健康问题可能还会困扰你,但至少你的四肢无碍."
+      },
+      {
+        "u_set_hp": 999,
+        "only_increase": true
+      },
+      {
+        "run_eocs": [
+          "EOC_healextras"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "u_message": "药效被浪费掉了,你的身体也没感觉好点,药品只能在你的避难岛上使用!"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_healextras",
+    "//": "Clears up various conditions beyond just your hp. Should cover most diseases and infections, prevent extreme thirst and starvation, wipe pain, and even cure a few edge cases like being covered in acid.",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "u_val": "stored_kcal"
+          },
+          "=",
+          {
+            "u_val": "stored_kcal"
+          }
+        ],
+        "min": 5000
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "thirst"
+          },
+          "=",
+          {
+            "u_val": "thirst"
+          }
+        ],
+        "max": 800
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "vitamin",
+            "name": "redcells"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "vitamin",
+            "name": "bad_food"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "vitamin",
+            "name": "blood"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "vitamin",
+            "name": "instability"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "pain"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "u_add_effect": "cureall",
+        "duration": "1 s",
+        "intensity": 1
+      },
+      {
+        "u_add_effect": "panacea",
+        "duration": "30 s",
+        "intensity": 1
+      },
+      {
+        "u_lose_effect": "corroding"
+      },
+      {
+        "u_lose_effect": "onfire"
+      },
+      {
+        "u_lose_effect": "dazed"
+      },
+      {
+        "u_lose_effect": "stunned"
+      },
+      {
+        "u_lose_effect": "venom_blind"
+      },
+      {
+        "u_lose_effect": "formication"
+      },
+      {
+        "u_lose_effect": "blisters"
+      },
+      {
+        "u_lose_effect": "frostbite"
+      },
+      {
+        "u_lose_effect": "frostbite_recovery"
+      },
+      {
+        "u_lose_effect": "wet"
+      },
+      {
+        "u_lose_effect": "slimed"
+      },
+      {
+        "u_lose_effect": "migo_atmosphere"
+      },
+      {
+        "u_lose_effect": "fetid_goop"
+      },
+      {
+        "u_lose_effect": "sap"
+      },
+      {
+        "u_lose_effect": "nausea"
+      },
+      {
+        "u_lose_effect": "bleed"
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_death_heal",
+    "//": "This is the heal that is called when you die to make sure you have enough health to not-die. It also lowers your hunger and thirst slightly if they're above an extreme limit. Finally it sets your sub-parts to full health since they will otherwise get totally ruined and don't seem to have any natural way to heal.",
+    "effect": [
+      {
+        "u_set_hp": 999,
+        "only_increase": true
+      },
+      {
+        "u_set_hp": 15,
+        "only_increase": false,
+        "target_part": "torso"
+      },
+      {
+        "u_set_hp": 15,
+        "only_increase": false,
+        "target_part": "head"
+      },
+      {
+        "u_set_hp": 15,
+        "only_increase": false,
+        "target_part": "arm_l"
+      },
+      {
+        "u_set_hp": 15,
+        "only_increase": false,
+        "target_part": "arm_r"
+      },
+      {
+        "u_set_hp": 15,
+        "only_increase": false,
+        "target_part": "leg_r"
+      },
+      {
+        "u_set_hp": 15,
+        "only_increase": false,
+        "target_part": "leg_l"
+      },
+      {
+        "run_eocs": [
+          "EOC_healextras"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "scenario_warp_begins",
+    "//": "This EOC is triggered when the Warper scenario begins. It initializes a few variables, and memorizes your spawn location for resurrection just in case you somehow die before using the warp obelisk. Also learns your spell for emergencies.",
+    "eoc_type": "SCENARIO_SPECIFIC",
+    "effect": [
+      {
+        "u_message": "欢迎来到浮空岛.在这里,你必须从漂浮的避难基地传送到下面的世界探险.在一定的时间限制内一路杀到出口,并带回你能携带的任何东西,但如果你死了,你将带着伤口返回岛上,并失去你携带的所有装备.",
+        "popup": true
+      },
+      {
+        "u_message": "在探索的过程中,你需要面对周期性出现的“扭曲脉冲”,当达到第8次出现时,你会患上带有减益效果的“扭曲病”,之后的每次“扭曲脉冲”都会进一步加深这种影响.到了第12次后你会受到“解体”状态,身体状况和血量将会迅速下降直至死亡.\n\n传送回归后将会重置累计次数!",
+        "popup": true
+      },
+      {
+        "u_message": "现在,请选择你想要的游戏难度!\n\n游戏难度只会影响你的最大探险时长.除此之外不会影响其他参数和设置.",
+        "popup": true
+      },
+      {
+        "u_add_var": "has_set_difficulty",
+        "value": "0"
+      },
+      {
+        "run_eocs": [
+          "EOC_difficultycheck0"
+        ]
+      },
+      {
+        "u_location_variable": {
+          "global_val": "OM_HQ_origin"
+        }
+      },
+      {
+        "u_add_var": "timeawayfromhome",
+        "value": "0"
+      },
+      {
+        "u_add_var": "raidstotal",
+        "value": "0"
+      },
+      {
+        "u_add_var": "raidswon",
+        "value": "0"
+      },
+      {
+        "u_add_var": "raidslost",
+        "value": "0"
+      },
+      {
+        "u_add_var": "isdifficult",
+        "value": "0"
+      },
+      {
+        "u_add_var": "missionswon",
+        "value": "0"
+      },
+      {
+        "u_add_var": "slaughterswon",
+        "value": "0"
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "spell_level",
+            "spell": "warp_home"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "u_val": "spell_exp",
+            "spell": "warp_home"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardmissions"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardermissions"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "hardestmissions"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "distancetotarget"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "mindistancetotarget"
+          },
+          "=",
+          {
+            "const": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_difficultycheck0",
+    "//": "Want to play normal?",
+    "condition": {
+      "u_query": "普通难度.此难度下“扭曲脉冲”的间隔为45分钟,这意味着你拥有6个小时进行探险、消灭敌人、寻找物资、以及找到回归传送点.在此之后你会逐渐受到“扭曲病”的影响. 停留超过8小时,你会受到“解体”状态影响.\n此难度为默认难度,此难度下玩家有足够的搜索时间以及不算轻松的回归难度.\n\n确定以普通难度进行游玩?按否以切换难度.",
+      "default": true
+    },
+    "effect": [
+      {
+        "u_message": "难度设定为普通模式.你可以随时通过难度调整石板重新设置."
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "sicknessintervals"
+          },
+          "=",
+          {
+            "time": "45 m"
+          }
+        ]
+      },
+      {
+        "u_add_var": "has_set_difficulty",
+        "value": "1"
+      }
+    ],
+    "false_effect": [
+      {
+        "run_eocs": [
+          "EOC_difficultycheck1"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_difficultycheck1",
+    "//": "Want to play casual?",
+    "condition": {
+      "u_query": "休闲模式,时间限制更为宽松.\n此难度下“扭曲脉冲”的间隔为90分钟. 这意味着你拥有12个小时来进行探险,停留超过18小时才会受到“解体”状态影响.此难度下你拥有充裕的时间进行活动或收集额外物资.\n\n确定以休闲模式进行游玩?按否以切换难度.",
+      "default": false
+    },
+    "effect": [
+      {
+        "u_message": "难度设定为普通难度.你可以随时通过难度调整石板重新设置."
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "sicknessintervals"
+          },
+          "=",
+          {
+            "time": "90 m"
+          }
+        ]
+      },
+      {
+        "u_add_var": "has_set_difficulty",
+        "value": "1"
+      }
+    ],
+    "false_effect": [
+      {
+        "run_eocs": [
+          "EOC_difficultycheck2"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_difficultycheck2",
+    "//": "Want to play hard?",
+    "condition": {
+      "u_query": "困难模式,时间变得更为紧迫.\n此难度下“扭曲脉冲”的间隔为30分钟. 这意味着你只有4个小时来进行探险,停留超过6小时就会受到“解体”状态影响.你可以腾出手的时间会少得多,最好把抵达撤离点作为你的首要目标.\n\n确定以困难模式进行游玩?按否以切换难度.",
+      "default": false
+    },
+    "effect": [
+      {
+        "u_message": "难度设定为困难模式.你可以随时通过难度调整石板重新设置."
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "sicknessintervals"
+          },
+          "=",
+          {
+            "time": "30 m"
+          }
+        ]
+      },
+      {
+        "u_add_var": "has_set_difficulty",
+        "value": "1"
+      }
+    ],
+    "false_effect": [
+      {
+        "run_eocs": [
+          "EOC_difficultycheck3"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_difficultycheck3",
+    "//": "Want to play impossible?",
+    "condition": {
+      "u_query": "极难模式,每次探索都刻不容缓.\n此难度下“扭曲脉冲”的间隔仅为15分钟.仅仅2小时后你便会受到“扭曲病”的影响, 停留超过3小时就会获得“解体”状态. 活着抵达撤离点将会花费你的所有精力.扭曲病也将变得习以为常.一切事物都不会怜悯你!\n\n确定以极难模式进行游玩?.",
+      "default": false
+    },
+    "effect": [
+      {
+        "u_message": "难度设定为极难模式.你可以随时通过难度调整石板重新设置."
+      },
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "sicknessintervals"
+          },
+          "=",
+          {
+            "time": "15 m"
+          }
+        ]
+      },
+      {
+        "u_add_var": "has_set_difficulty",
+        "value": "1"
+      }
+    ],
+    "false_effect": [
+      {
+        "run_eocs": [
+          "EOC_difficultycheck0"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_statcheck",
+    "//": "Displays the player's stats.",
+    "effect": [
+      {
+        "arithmetic": [
+          {
+            "global_val": "var",
+            "var_name": "readablesicknessintervals"
+          },
+          "=",
+          {
+            "global_val": "var",
+            "var_name": "sicknessintervals"
+          },
+          "/",
+          {
+            "const": 60
+          }
+        ]
+      },
+      {
+        "u_message": "探险总次数: <u_val:raidstotal> \n存活次数: <u_val:raidswon> \n死亡次数: <u_val:raidslost> \n任务完成数: <u_val:missionswon> \n歼灭类任务完成数: <u_val:slaughterswon>\n\n当前难度设置:\n扭曲病时限: 8 次“脉冲”\n解体时限: 12 次“脉冲”\n扭曲脉冲间隔: <global_val:readablesicknessintervals> minutes."
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_CHECK_ISLANDSTORM",
+    "//": "Pre-portal-ending check that makes sure you're on the island first. Called by wardstone.",
+    "condition": {
+      "not": {
+        "u_has_trait": "awayfromhome"
+      }
+    },
+    "effect": [
+      {
+        "u_message": "驱散石发出噼啪的静电声."
+      },
+      {
+        "run_eocs": [
+          "EOC_CANCEL_PORTAL_STORM"
+        ]
+      }
+    ],
+    "false_effect": [
+      {
+        "u_message": "这块石头只能在岛上激活!"
+      }
+    ]
+  },
+  {
+    "id": "warp_home",
+    "type": "SPELL",
+    "name": "回归传送术",
+    "//": "A simple no-failure spell that can be cast with hands full and triggers the EOC to return home. Flagged as verbal so you make noise while casting, increasing the need to find a safe spot to warp from. This only exists in case of bugs.",
+    "description": "只需花上一分钟来集中注意力,然后你就回到安全的浮空岛上了!此法术仅适用于作弊或特殊情况使用-在你的回归点未正常生成时使用.",
+    "valid_targets": [
+      "self"
+    ],
+    "spell_class": "NONE",
+    "flags": [
+      "NO_EXPLOSION_SFX",
+      "NO_FAIL",
+      "NO_LEGS",
+      "NO_HANDS",
+      "VERBAL"
+    ],
+    "difficulty": 0,
+    "min_damage": 1,
+    "max_damage": 1,
+    "duration_increment": 1,
+    "effect": "effect_on_condition",
+    "effect_str": "EOC_return_OM_teleport",
+    "shape": "blast",
+    "energy_source": "NONE",
+    "base_energy_cost": 0,
+    "final_energy_cost": 0,
+    "base_casting_time": 6000,
+    "final_casting_time": 6000
+  }
+]
