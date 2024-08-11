@@ -8428,17 +8428,15 @@ int item::reach_range( const Character &guy ) const
 int item::current_reach_range( const Character &guy ) const
 {
     int res = 1;
+    gun_mode mode = gun_current_mode();
 
     if( has_flag( flag_REACH_ATTACK ) ) {
         res = has_flag( flag_REACH3 ) ? 3 : 2;
-    } else if( is_gun() && !is_gunmod() && gun_current_mode().melee() ) {
-        res = gun_current_mode().target->gun_range();
     }
 
     if( is_gun() && !is_gunmod() ) {
-        gun_mode gun = gun_current_mode();
-        if( !( guy.is_npc() && gun.flags.count( "NPC_AVOID" ) ) && gun.melee() ) {
-            res = std::max( res, gun.qty );
+        if( !( guy.is_npc() && mode.flags.count( "NPC_AVOID" ) ) && mode.melee() ) {
+            res = std::max( res, mode.qty );
         }
     }
 
