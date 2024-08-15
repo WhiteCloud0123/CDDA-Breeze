@@ -2901,7 +2901,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
 
         int spell_id = std::stoi(player_character.get_value("before_select_spell_id"));
         
-        if (spell_id > player_character.magic->get_spells().size()) {
+        if (spell_id >= player_character.magic->get_spells().size()) {
             break;
         }
 
