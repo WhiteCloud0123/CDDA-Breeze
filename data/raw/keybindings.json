@@ -4412,8 +4412,14 @@
   },
   {
     "type": "keybinding",
+    "id": "退出到游戏开始界面",
     "name": "退出到游戏开始界面",
-    "category": "DEFAULTMODE",
-    "id": "退出到游戏开始界面"
+    "category": "DEFAULTMODE"
+  },
+  {
+    "type": "keybinding",
+    "id": "释放上次选择的法术",
+    "name": "释放上次选择的法术",
+    "category": "DEFAULTMODE"
   }
 ]

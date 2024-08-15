@@ -2149,7 +2149,7 @@ static void cast_spell()
     }
 
     spell& sp = *player_character.magic->get_spells()[spell_index];
-
+    player_character.set_value("before_select_spell_id",string_format("%s",spell_index));
     player_character.cast_spell(sp, false, cata::nullopt);
 }
 
@@ -2892,6 +2892,24 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
     case ACTION_CAST_SPELL:
         cast_spell();
         break;
+
+    case ACTION_CAST_BEFORE_SELECT_SPELL: {
+        
+        if (!player_character.has_value("before_select_spell_id")) {
+            break;
+        }
+
+        int spell_id = std::stoi(player_character.get_value("before_select_spell_id"));
+        
+        if (spell_id > player_character.magic->get_spells().size()) {
+            break;
+        }
+
+        spell& sp = *player_character.magic->get_spells()[spell_id];
+        player_character.cast_spell(sp, false, cata::nullopt);
+        break;
+
+    }
 
     case ACTION_FIRE_BURST: {
         if (weapon) {
