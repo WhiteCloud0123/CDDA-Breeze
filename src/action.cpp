@@ -249,6 +249,8 @@ std::string action_ident( action_id act )
             return "fire_burst";
         case ACTION_CAST_SPELL:
             return "cast_spell";
+        case ACTION_CAST_BEFORE_SELECT_SPELL:
+            return "释放上次选择的法术";
         case ACTION_SELECT_FIRE_MODE:
             return "select_fire_mode";
         case ACTION_UNLOAD_CONTAINER:
