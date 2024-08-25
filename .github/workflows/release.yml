@@ -100,6 +100,24 @@ jobs:
             artifact: android-x64
             ext: apk
             content: application/apk
+          - name: Linux Tiles Sounds x64
+            os: ubuntu-24.04
+            mxe: none
+            android: none
+            tiles: 1
+            sound: 1
+            artifact: linux-tiles-sounds-x64
+            ext: tar.gz
+            content: application/gzip
+          - name: Linux Curses x64
+            os: ubuntu-24.04
+            mxe: none
+            android: none
+            tiles: 0
+            sound: 0
+            artifact: linux-curses-x64
+            ext: tar.gz
+            content: application/gzip
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     env:
@@ -158,7 +176,7 @@ jobs:
         if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none' 
         run: |
           sudo apt-get update
-          sudo apt-get install libncursesw5-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev \
+          sudo apt-get install libncurses-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev \
             libsdl2-mixer-dev libpulse-dev ccache gettext parallel
       - name: Install dependencies (mac)
         if: runner.os == 'macOS'
@@ -182,8 +200,8 @@ jobs:
       - name: Build CDDA (linux)
         if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none'
         run: |
-          make -j$((`nproc`+0)) TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 bindist
-          mv cataclysmdda-0.G.tar.gz cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.tar.gz
+          make -j$((`nproc`+0)) TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 CLANG=1 bindist
+          mv cataclysmdda-0.G.tar.gz CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.tar.gz
       - name: Build CDDA (windows mxe)
         if: matrix.mxe != 'none'
         env:
@@ -203,7 +221,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           make -j3 TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 USE_HOME_DIR=1 OSX_MIN=10.12 dmgdist
-          mv Cataclysm.dmg cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.dmg
+          mv Cataclysm.dmg CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.dmg
       - name: Set up JDK 11 (android)
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         uses: actions/setup-java@v2
