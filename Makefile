@@ -86,8 +86,6 @@
 # make ASTYLE=0
 # Disable format check of whitelisted json files.
 # make LINTJSON=0
-# Disable building and running tests.
-# make RUNTESTS=0
 
 # comment these to toggle them as one sees fit.
 # DEBUG is best turned on if you plan to debug in gdb -- please do!
@@ -150,7 +148,6 @@ else
 endif
 W32TILESTARGET = $(BUILD_PREFIX)$(TILES_TARGET_NAME).exe
 W32TARGET = $(BUILD_PREFIX)$(TARGET_NAME).exe
-CHKJSON_BIN = $(BUILD_PREFIX)chkjson
 BINDIST_DIR = $(BUILD_PREFIX)bindist
 BUILD_DIR = $(CURDIR)
 SRC_DIR = src
@@ -170,11 +167,6 @@ endif
 # Enable json format check by default
 ifndef LINTJSON
   LINTJSON = 1
-endif
-
-# Enable running tests by default
-ifndef RUNTESTS
-  RUNTESTS = 1
 endif
 
 ifndef PCH
@@ -245,10 +237,6 @@ ifeq ($(BACKTRACE), 1)
       LIBBACKTRACE = 1
     endif
   endif
-endif
-
-ifeq ($(RUNTESTS), 1)
-  TESTS = tests
 endif
 
 # tiles object directories are because gcc gets confused
@@ -611,7 +599,6 @@ endif
 # Global settings for Windows targets
 ifeq ($(TARGETSYSTEM),WINDOWS)
   DEFINES += -DWIN32_LEAN_AND_MEAN
-  CHKJSON_BIN = chkjson.exe
   TARGET = $(W32TARGET)
   BINDIST = $(W32BINDIST)
   BINDIST_CMD = $(W32BINDIST_CMD)
@@ -702,6 +689,9 @@ ifeq ($(TILES), 1)
     endif
   else # not osx
     CXXFLAGS += $(shell $(PKG_CONFIG) --cflags sdl2 SDL2_image SDL2_ttf)
+
+    # To avoid checking SDL2's headers
+    CXXFLAGS += -isystem $(shell $(PKG_CONFIG) --cflags-only-I sdl2 | sed 's/-I//')
 
     ifeq ($(STATIC), 1)
       LDFLAGS += $(shell $(PKG_CONFIG) sdl2 --static --libs)
@@ -834,11 +824,8 @@ endif
 SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
 THIRD_PARTY_SOURCES := $(wildcard $(SRC_DIR)/third-party/flatbuffers/*.cpp)
 HEADERS := $(wildcard $(SRC_DIR)/*.h)
-TESTSRC := $(wildcard tests/*.cpp)
-TESTHDR := $(wildcard tests/*.h)
 JSON_FORMATTER_SOURCES := $(wildcard tools/format/*.cpp) src/json.cpp
 JSON_FORMATTER_HEADERS := $(wildcard tools/format/*.h)
-CHKJSON_SOURCES := $(wildcard src/chkjson/*.cpp) src/json.cpp
 CLANG_TIDY_PLUGIN_SOURCES := \
   $(wildcard tools/clang-tidy-plugin/*.cpp tools/clang-tidy-plugin/*/*.cpp)
 CLANG_TIDY_PLUGIN_HEADERS := \
@@ -847,11 +834,8 @@ CLANG_TIDY_PLUGIN_HEADERS := \
 ASTYLE_SOURCES := $(sort \
   $(SOURCES) \
   $(HEADERS) \
-  $(TESTSRC) \
-  $(TESTHDR) \
   $(JSON_FORMATTER_SOURCES) \
   $(JSON_FORMATTER_HEADERS) \
-  $(CHKJSON_SOURCES) \
   $(CLANG_TIDY_PLUGIN_SOURCES) \
   $(CLANG_TIDY_PLUGIN_HEADERS))
 
@@ -922,7 +906,7 @@ endif
 
 LDFLAGS += -lz
 
-all: version prefix $(CHECKS) $(TARGET) $(L10N) $(TESTS)
+all: version prefix $(CHECKS) $(TARGET) $(L10N)
 	@
 
 $(TARGET): $(OBJS)
@@ -963,7 +947,6 @@ $(ODIR)/%.inc: $(SRC_DIR)/%.cpp
 
 .PHONY: includes
 includes: $(OBJS:.o=.inc)
-	+make -C tests includes
 
 $(ODIR)/%.o: $(SRC_DIR)/%.cpp $(PCH_P)
 	$(CXX) $(CPPFLAGS) $(DEFINES) $(CXXFLAGS) -MMD -MP $(PCHFLAGS) -c $< -o $@
@@ -993,25 +976,17 @@ lang/mo_built.stamp: $(MO_DEPS)
 
 localization: lang/mo_built.stamp
 
-$(CHKJSON_BIN): $(CHKJSON_SOURCES)
-	$(CXX) $(CXXFLAGS) $(TOOL_CXXFLAGS) -Isrc/chkjson -Isrc -isystem src/third-party $(CHKJSON_SOURCES) -o $(CHKJSON_BIN)
-
-json-check: $(CHKJSON_BIN)
-	./$(CHKJSON_BIN)
-
-clean: clean-tests clean-object_creator clean-pch
+clean: clean-pch
 	rm -rf *$(TARGET_NAME) *$(TILES_TARGET_NAME)
 	rm -rf *$(TILES_TARGET_NAME).exe *$(TARGET_NAME).exe *$(TARGET_NAME).a
 	rm -rf *obj *objwin
 	rm -rf *$(BINDIST_DIR) *cataclysmdda-*.tar.gz *cataclysmdda-*.zip
-	rm -f $(SRC_DIR)/version.h
-	rm -f $(CHKJSON_BIN)
 	rm -f $(TEST_MO)
 
 distclean:
 	rm -rf *$(BINDIST_DIR)
 	rm -rf save
-	rm -rf lang/mo lang/mo_built.stamp
+	rm -rf lang/mo_built.stamp
 	rm -f data/options.txt
 	rm -f data/keymap.txt
 	rm -f data/auto_pickup.txt
@@ -1222,7 +1197,7 @@ astyle-fast: $(ASTYLE_SOURCES)
 	echo $(ASTYLE_SOURCES) | xargs -P 0 -L 1 $(ASTYLE_BINARY) --quiet --options=.astylerc -n
 
 astyle-diff: $(ASTYLE_SOURCES)
-	$(ASTYLE_BINARY) --options=.astylerc -n $$(git diff --name-only src/*.h src/*.cpp tests/*.h tests/*.cpp)
+	$(ASTYLE_BINARY) --options=.astylerc -n $$(git diff --name-only src/*.h src/*.cpp)
 
 astyle-all: $(ASTYLE_SOURCES)
 	$(ASTYLE_BINARY) --options=.astylerc -n $(ASTYLE_SOURCES)
@@ -1265,26 +1240,11 @@ $(JSON_FORMATTER_BIN): $(JSON_FORMATTER_SOURCES)
 python-check:
 	flake8
 
-tests: version $(BUILD_PREFIX)cataclysm.a $(LOCALIZE_TEST_DEPS)
-	$(MAKE) -C tests
-
-check: version $(BUILD_PREFIX)cataclysm.a $(LOCALIZE_TEST_DEPS)
-	$(MAKE) -C tests check
-
-clean-tests:
-	$(MAKE) -C tests clean
-
-object_creator: version $(BUILD_PREFIX)cataclysm.a
-	$(MAKE) -C object_creator
-
-clean-object_creator:
-	$(MAKE) -C object_creator clean
-
 clean-pch:
 	rm -f pch/*pch.hpp.gch
 	rm -f pch/*pch.hpp.pch
 	rm -f pch/*pch.hpp.d
 
-.PHONY: tests check ctags etags clean-tests clean-object_creator clean-pch install lint
+.PHONY: ctags etags clean-pch install lint
 
 -include ${OBJS:.o=.d}

@@ -60,7 +60,7 @@ inline static float RANDOM_M11(unsigned int* seed)
         uint32_t d;
         float f;
     } u;
-    u.d = (((uint32_t)(*seed) & 0x7fff) << 8) | 0x40000000;
+    u.d = ((static_cast<uint32_t>(*seed) & 0x7fff) << 8) | 0x40000000;
     return u.f - 3.0f;
 }
 
@@ -83,7 +83,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
 
 void ParticleSystem::resetTotalParticles(int numberOfParticles)
 {
-    if (particle_data_.size() < numberOfParticles)
+    if (static_cast<int>(particle_data_.size()) < numberOfParticles)
     {
         particle_data_.resize(numberOfParticles);
     }
@@ -352,7 +352,7 @@ void ParticleSystem::update()
     {
         if (particle_data_[i].timeToLive <= 0.0f)
         {
-            int j = _particleCount - 1;
+            //int j = _particleCount - 1;
             //while (j > 0 && particle_data_[i].timeToLive <= 0)
             //{
             //    _particleCount--;
@@ -1015,7 +1015,7 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
 }
 
 
-void ParticleSystem::set_style(const std::string& id_str, SDL_Texture* texture, SDL_Renderer* renderer) {
+void ParticleSystem::set_style(const std::string& /* id_str */, SDL_Texture* /* texture */, SDL_Renderer* /* renderer */) {
 
 
 

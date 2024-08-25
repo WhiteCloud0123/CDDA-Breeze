@@ -1627,7 +1627,7 @@ bool map::furn_set( const tripoint &p, const furn_id &new_furniture, const bool 
     if( current_submap->is_open_air( l ) &&
         !new_f.has_flag( ter_furn_flag::TFLAG_ALLOW_ON_OPEN_AIR ) &&
         new_target_furniture != f_null ) {
-        const ter_id current_ter = current_submap->get_ter( l );
+        //const ter_id current_ter = current_submap->get_ter( l );
         //待定
         /*debugmsg( "Setting furniture %s at %s where terrain is %s (which is_open_air)\n"
                   "If this is intentional, set the ALLOW_ON_OPEN_AIR flag on the furniture",
@@ -5816,7 +5816,7 @@ void split_(const std::string& source, const char d, std::set<std::string>& rst)
 {
     if (!source.length()) return;
     rst.clear();
-    for (int i = 0; i < source.length();)
+    for (std::string::size_type i = 0; i < source.length();)
     {
         std::string temp = "";
         while (true)
@@ -5897,48 +5897,25 @@ void map::process_items_in_vehicles( submap &current_submap )
 
                     // 先处理物品
                     for (item& i : cur_veh->get_items(0)) {
-
                         if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {
+                            const optional_vpart_position vp_there_new = veh_at(new_p);
 
-                            if (&i != nullptr) {
-
-                                const optional_vpart_position vp_there_new = veh_at(new_p);
-
-
-                                if (!vp_there_new) {
-                                    
-                                    processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
-
+                            if (!vp_there_new) {
+                                processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
+                            }
+                            else {
+                                vehicle_new = &(vp_there_new->vehicle());
+                                if (vehicle_new->is_appliance() && ( vehicle_new->part(0).info().has_flag("CONVEYOR_BELT")
+                                    || vehicle_new->part(0).info().has_flag("CLASSIFIED_DEVICE") ) ) {
+                                    processed_conveyor_belt_item_set.insert(&(vehicle_new->add_item_new(0, i)));
                                 }
                                 else {
-
-                                    vehicle_new = &(vp_there_new->vehicle());
-                                    
-                                    if (vehicle_new->is_appliance() && ( vehicle_new->part(0).info().has_flag("CONVEYOR_BELT")
-                                        || vehicle_new->part(0).info().has_flag("CLASSIFIED_DEVICE") ) ) {
-                                        
-                                        processed_conveyor_belt_item_set.insert(&(vehicle_new->add_item_new(0, i)));
-
-                                    }
-                                    else {
-                                    
-                                        processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
-                                    
-                                    }
-                                    
-                                    
-                                    
-
+                                    processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
                                 }
-
-
-                                cur_veh->remove_item(0, &i);
-
-
                             }
 
+                            cur_veh->remove_item(0, &i);
                         }
-
                     }
 
 
@@ -6027,13 +6004,6 @@ void map::process_items_in_vehicles( submap &current_submap )
                     for (const tripoint &t : queue_vec) {
 
                         for (item& i : cur_veh->get_items(0)) {
-
-                            if (&i == nullptr) {
-
-                                continue;
-                            
-                            }
-
                             if (t.x> first_part_location.x) {                                       
                                 if (cur_veh->item_to_east.find(i.tname()) == cur_veh->item_to_east.end() && cur_veh->item_to_east.find("剩余的所有物品") == cur_veh->item_to_east.end()) {                              
                                     continue;
@@ -6050,7 +6020,7 @@ void map::process_items_in_vehicles( submap &current_submap )
                                     continue;
                                 }
                             }
-                             else{
+                            else {
                                 if (cur_veh->item_to_north.find(i.tname()) == cur_veh->item_to_north.end() && cur_veh->item_to_north.find("剩余的所有物品") == cur_veh->item_to_north.end()) {
                                     continue;
                                 }
@@ -6059,42 +6029,26 @@ void map::process_items_in_vehicles( submap &current_submap )
 
 
                             if (processed_conveyor_belt_item_set.find(&i) == processed_conveyor_belt_item_set.end()) {
+                                const optional_vpart_position vp_there_new = veh_at(t);
 
-                                if (&i != nullptr) {
+                                if (!vp_there_new) {
+                                    processed_conveyor_belt_item_set.insert(&add_item_or_charges(t, i));
+                                }
+                                else {
+                                    vehicle_new = &(vp_there_new->vehicle());
 
-                                    const optional_vpart_position vp_there_new = veh_at(t);
-
-                                    
-                                    if (!vp_there_new) {
-
-                                        processed_conveyor_belt_item_set.insert(&add_item_or_charges(t, i));
-
+                                    if (vehicle_new->is_appliance() && (vehicle_new->part(0).info().has_flag("CONVEYOR_BELT")
+                                        || vehicle_new->part(0).info().has_flag("CLASSIFIED_DEVICE"))) {
+                                        processed_conveyor_belt_item_set.insert(&(vehicle_new->add_item_new(0, i)));
                                     }
                                     else {
-
-                                        vehicle_new = &(vp_there_new->vehicle());
-
-                                        if (vehicle_new->is_appliance() && (vehicle_new->part(0).info().has_flag("CONVEYOR_BELT")
-                                            || vehicle_new->part(0).info().has_flag("CLASSIFIED_DEVICE"))) {
-
-                                            processed_conveyor_belt_item_set.insert(&(vehicle_new->add_item_new(0, i)));
-
-                                        }
-                                        else {
-
-                                            processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
-
-                                        }
-
+                                        processed_conveyor_belt_item_set.insert(&add_item_or_charges(new_p, i));
                                     }
-
-                                    cur_veh->remove_item(0, &i);
-
                                 }
 
+                                cur_veh->remove_item(0, &i);
                             }
-
-                        }                                
+                        }
                     }
 
                 }
@@ -8043,7 +7997,7 @@ void map::save()
 void map::load( const tripoint_abs_sm &w, const bool update_vehicle,
                 const bool pump_events )
 {
-    map &main_map = get_map();
+    //map &main_map = get_map();
     // It used to be unsafe to load a map that overlaps with the primary map;
     // Show an info line in tests to help track new errors
     for( auto &traps : traplocs ) {

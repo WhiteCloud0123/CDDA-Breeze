@@ -15,8 +15,8 @@ class TranslationManager::Impl
     private:
         std::vector<TranslationDocument> documents;
 
-        std::unordered_map<std::uint32_t, std::vector<std::pair<std::size_t, std::size_t>>> strings;
-        static std::uint32_t Hash( const char *str );
+        std::unordered_map<uint32_t, std::vector<std::pair<std::size_t, std::size_t>>> strings;
+        static uint32_t Hash( const char *str );
         cata::optional<std::pair<std::size_t, std::size_t>> LookupString( const char *query ) const;
 
         std::unordered_map<std::string, std::vector<std::string>> mo_files;

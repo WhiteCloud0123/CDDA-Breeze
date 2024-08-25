@@ -1139,7 +1139,7 @@ static float gurney_spherical( const double charge, const double mass )
 }
 
 // (C1001) Compiler Internal Error on Visual Studio 2015 with Update 2
-static void do_blast( const Creature *source, const tripoint &p, const float power,
+/* static void do_blast( const Creature *source, const tripoint &p, const float power,
                       const float distance_factor, const bool fire )
 {
     const float tile_dist = 1.0f;
@@ -1345,30 +1345,30 @@ static void do_blast( const Creature *source, const tripoint &p, const float pow
             }
         }
     }
-}
+} */
 
-static std::map<const Creature*, int> do_blast_new(const tripoint& blast_center,
+/* static std::map<const Creature*, int> do_blast_new(const tripoint& blast_center,
     const float raw_blast_force,
     const float raw_blast_radius)
 {
-    /*
-    Explosions are completed in 3 stages.
-    1. Shrapnel
-    The very first component: shrapnel is thrown all around.
-    Impassable terrain around has not yet been broken down by the blast, so it will shield mobs.
-    2. Blast wave
-    This propagates the explosion outwards and:
-        1. Damage all items in the tile. Done first to prevent loot from being destroyed too much.
-        2. Bashes critters (unless they had already been bashed before) in the tile.
-        The main bulk of damage is inflicted here.
-        3. Flings still alive critters.
-        This causes some extra damage depending on how the explosion is set up and may fling the same mob several times.
-        This is effective inside buildings since this causes the mobs to be thrown against walls.
-        4. Bashes terrain (and vehicles).
-        All vehicle parts in the tile are bashed 2 times at full force,
-        both to compensate for their tankiness and to make sure they get actually destroyed.
-        Terrain is destroyed in a consistent manner.
-    */
+    
+    // Explosions are completed in 3 stages.
+    // 1. Shrapnel
+    // The very first component: shrapnel is thrown all around.
+    // Impassable terrain around has not yet been broken down by the blast, so it will shield mobs.
+    // 2. Blast wave
+    // This propagates the explosion outwards and:
+    //     1. Damage all items in the tile. Done first to prevent loot from being destroyed too much.
+    //     2. Bashes critters (unless they had already been bashed before) in the tile.
+    //     The main bulk of damage is inflicted here.
+    //     3. Flings still alive critters.
+    //     This causes some extra damage depending on how the explosion is set up and may fling the same mob several times.
+    //     This is effective inside buildings since this causes the mobs to be thrown against walls.
+    //     4. Bashes terrain (and vehicles).
+    //     All vehicle parts in the tile are bashed 2 times at full force,
+    //     both to compensate for their tankiness and to make sure they get actually destroyed.
+    //     Terrain is destroyed in a consistent manner.
+
     using dist_point_pair = std::pair<float, tripoint>;
 
     // TODO: Move the consts outside the function and make static when this information becomes needed for UI
@@ -1620,12 +1620,12 @@ static std::map<const Creature*, int> do_blast_new(const tripoint& blast_center,
     // Final blast wave points
     draw_custom_explosion(blast_center, explosion_colors);
 
-    /*if ( fling_creature_affected_player == true ) {
-        g->update_map(get_player_character());
-
-    }*/
+    //if ( fling_creature_affected_player == true ) {
+    //    g->update_map(get_player_character());
+    //
+    //}
     return blasted;
-}
+} */
 
 
 

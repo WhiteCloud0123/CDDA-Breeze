@@ -153,6 +153,7 @@ public:
     };
 
 public:
+    virtual ~ParticleSystem() = default;
 
     void init_weather_content();
 

@@ -205,7 +205,7 @@ void attach_bag_to( monster &z )
     player_character.moves -= 100;
 }
 
-void dump_items( monster &z )
+/* void dump_items( monster &z )
 {
     std::string pet_name = z.get_name();
     Character &player_character = get_player_character();
@@ -219,7 +219,7 @@ void dump_items( monster &z )
     z.inv.clear();
     add_msg( _( "You dump the contents of the %s's bag on the ground." ), pet_name );
     player_character.moves -= 200;
-}
+} */
 
 void treat_zombie(monster& z) {
 

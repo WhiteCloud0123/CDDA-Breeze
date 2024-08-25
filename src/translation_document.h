@@ -43,11 +43,11 @@ class TranslationDocument
         std::vector<std::vector<std::size_t>> translated_offsets;
         std::unique_ptr<TranslationPluralRulesEvaluator> plural_rules;
 
-        std::uint8_t GetByte( std::size_t byteIndex ) const;
-        std::uint32_t GetUint32BE( std::size_t byteIndex ) const;
-        std::uint32_t GetUint32LE( std::size_t byteIndex ) const;
-        std::uint32_t ( TranslationDocument::*GetUint32FPtr )( const std::size_t ) const;
-        std::uint32_t GetUint32( std::size_t byteIndex ) const;
+        uint8_t GetByte( std::size_t byteIndex ) const;
+        uint32_t GetUint32BE( std::size_t byteIndex ) const;
+        uint32_t GetUint32LE( std::size_t byteIndex ) const;
+        uint32_t ( TranslationDocument::*GetUint32FPtr )( const std::size_t ) const;
+        uint32_t GetUint32( std::size_t byteIndex ) const;
         const char *GetString( std::size_t byteIndex ) const;
         std::size_t EvaluatePluralForm( std::size_t n ) const;
     public:

@@ -1635,7 +1635,7 @@ void vpart_position::form_inventory(inventory& inv) const
         }
     }
 
-    for (const std::pair<item, input_event>& tool : get_tools()) {
+    for (const std::pair<item, input_event> tool : get_tools()) {
         inv.provide_pseudo_item(tool.first.typeId(), veh_battery);
     }
 }

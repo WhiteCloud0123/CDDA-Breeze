@@ -307,12 +307,12 @@ void talk_function::exert_coercion(npc &p) {
     bool done_force_attack = false;
 
     
-    int normal_attack_count = 0;
+    //int normal_attack_count = 0;
 
     bool turn_end = false;
-    bool drew_w_02 = false;
+    //bool drew_w_02 = false;
     bool should_clear = false;
-    bool success_clear = false;
+    //bool success_clear = false;
 
     bool will_break = false;
 
@@ -320,7 +320,7 @@ void talk_function::exert_coercion(npc &p) {
     // 玩家和对方的智力差异，如果为正，代表优势，如果为负代表劣势
     int int_diffence = get_player_character().get_int() - p.get_int();
     // 玩家和对方的力量差异，如果为正，代表优势，如果为负代表劣势
-    int str_diffence = get_player_character().get_str() - p.get_str();
+    //int str_diffence = get_player_character().get_str() - p.get_str();
 
     // 玩家的智力作为基础的心理攻击力
     int base_attack_power = get_player_character().get_int();
@@ -386,7 +386,7 @@ void talk_function::exert_coercion(npc &p) {
         point(TERMX / 2, TERMY / 2)
         };
         const point& beg = beg_and_max.first;
-        const point& max = beg_and_max.second;
+        //const point& max = beg_and_max.second;
         w_01 = catacurses::newwin(40, 40, beg + point(0, 0));
         w_02 = catacurses::newwin(40, 40, beg + point(40, 0));
         w_03 = catacurses::newwin(40, 40, beg + point(80, 0));

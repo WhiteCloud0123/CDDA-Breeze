@@ -843,7 +843,7 @@ void monmove()
                             point(TERMX / 2, TERMY / 2)
                             };
                             const point& beg = beg_and_max.first;
-                            const point& max = beg_and_max.second;
+                            //const point& max = beg_and_max.second;
                             w_01 = catacurses::newwin(10, 40, beg);
                             ui_01.position_from_window(w_01);
                             });

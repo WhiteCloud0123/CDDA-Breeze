@@ -1526,7 +1526,7 @@ void show_当前职业情况() {
     ui_01.on_screen_resize([&](ui_adaptor&) {
         const std::pair<point, point> beg_and_max = draw_position();
         const point& beg = beg_and_max.first;
-        const point& max = beg_and_max.second;
+        //const point& max = beg_and_max.second;
         w_01 = catacurses::newwin(20, 40, beg + point(0, 0));
         ui_01.position_from_window(w_01);
         });
@@ -2899,7 +2899,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             break;
         }
 
-        int spell_id = std::stoi(player_character.get_value("before_select_spell_id"));
+        auto spell_id = std::stoul(player_character.get_value("before_select_spell_id"));
         
         if (spell_id >= player_character.magic->get_spells().size()) {
             break;

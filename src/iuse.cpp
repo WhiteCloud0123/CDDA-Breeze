@@ -8648,7 +8648,7 @@ cata::optional<int> iuse::capture_monster_veh( Character *p, item *it, bool, con
     return 0;
 }
 
-cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool t, const tripoint& pos) {
+cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool t, const tripoint& /* pos */) {
 
     if (t) {
         if (!it->ammo_sufficient(p)) {
@@ -8675,10 +8675,10 @@ cata::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool 
     if (main_menu.ret ==0) {
         uilist fm_menu;
         fm_menu.settext("请选择要控制的怪物");
-        map& local_map = get_map();
+        //map& local_map = get_map();
         int number = 0;
         for (monster& m : g->all_monsters()) {
-            if (&m && m.has_effect(effect_pet)) {
+            if (m.has_effect(effect_pet)) {
                 if (rl_dist(m.get_location(), player_character.get_location()) > 60 || &m == player_character.mounted_creature.get()) {
                     continue;
                 }

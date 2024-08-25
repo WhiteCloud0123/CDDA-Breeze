@@ -1391,7 +1391,7 @@ void npc::execute_action( npc_action action )
 
         case npc_goto_to_this_pos: {
 
-            tripoint_abs_ms t_a_m;
+            //tripoint_abs_ms t_a_m;
             zone_manager& mgr = zone_manager::get_manager();
             std::vector<std::optional<tripoint_abs_ms>> used_trade_point_vec;
             bool found_target_trade_point = false;

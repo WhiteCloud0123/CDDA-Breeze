@@ -206,7 +206,7 @@ int APIENTRY WinMain( _In_ HINSTANCE /* hInstance */, _In_opt_ HINSTANCE /* hPre
 #elif defined(__ANDROID__)
 extern "C" int SDL_main( int argc, char **argv ) {
 #else
-int main( int argc, const char *argv[] )
+int main( int /* argc */, const char ** /* argv[] */ )
 {
 #endif
     ordered_static_globals();

@@ -148,7 +148,7 @@ static bool crafting_allowed( const Character &p, const recipe &rec )
     return true;
 }
 
-float Character::lighting_craft_speed_multiplier(const recipe& rec, const tripoint& p) const
+float Character::lighting_craft_speed_multiplier(const recipe& rec, const tripoint& /* p */) const
 {
     // negative is bright, 0 is just bright enough, positive is dark, +7.0f is pitch black
     // 待定 此处有问题，如果完全按照原版移植 使用fine_detail_vision_mod( p )计算会出现光线太暗

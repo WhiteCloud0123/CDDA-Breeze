@@ -2310,7 +2310,7 @@ void item::debug_info( std::vector<iteminfo> &info, const iteminfo_query *parts,
         }
     }
 }
-void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* parts, int batch) const {
+void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* /* parts */, int /* batch */) const {
 
     if (relic_data) {
         insert_separation_line(info);
@@ -3335,7 +3335,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
                 info.emplace_back("DESCRIPTION", string_format("* 周期性效果："));
 
-                for (const std::pair<time_duration, std::vector<fake_spell>> &p : inter) {
+                for (const std::pair<time_duration, std::vector<fake_spell>> p : inter) {
                     time += string_format(time + "%s", to_turns<int>(p.first));
                    time = "<color_c_yellow>" + time + "</color>";
                    for (const fake_spell &fs : p.second) {
@@ -3351,7 +3351,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
 
             if (!eff_map.empty()) {
                 std::string str = "* 效果：";
-                for (const std::pair<efftype_id,int> &p : eff_map) {                  
+                for (const std::pair<efftype_id,int> p : eff_map) {                  
                     effect et(effect_source::empty(), &p.first.obj(), 1_turns, bodypart_str_id::NULL_ID(), false, p.second,
                         time_point());                  
                     str += "<color_c_yellow>"+ et.disp_name()+"</color>";

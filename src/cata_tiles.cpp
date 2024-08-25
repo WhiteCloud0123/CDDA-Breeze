@@ -1841,7 +1841,7 @@ void cata_tiles::draw_hp_bar( const tripoint& p ) {
         draw_rect.h = tile_height/3;
         creature_tracker& ct = get_creature_tracker();
         Creature* c = ct.creature_at(p);
-        float factor =(float)c->get_hp() / c->get_hp_max();
+        float factor =static_cast<float>(c->get_hp()) / c->get_hp_max();
 
         draw_rect.w = tile_width *  factor;
 
@@ -5075,7 +5075,7 @@ void cata_tiles::lr_generic( Iter begin, Iter end, Func id_func, TILE_CATEGORY c
             missing_with_looks_like_list.append( id_string + " " );
         }
     }
-    const std::string &category_name = TILE_CATEGORY_IDS[static_cast<size_t>( category )];
+    //const std::string &category_name = TILE_CATEGORY_IDS[static_cast<size_t>( category )];
     /*DebugLog( D_INFO, DC_ALL ) << "Missing " << category_name << ": " << missing_list;
     DebugLog( D_INFO, DC_ALL ) << "Missing " << category_name <<
                                " (but looks_like tile exists): " << missing_with_looks_like_list;*/

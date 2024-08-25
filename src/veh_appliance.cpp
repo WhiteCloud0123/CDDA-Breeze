@@ -369,7 +369,7 @@ void split(const std::string& source, const char d, std::set<std::string>& rst)
 {
     if (!source.length()) return;
     rst.clear();
-    for (int i = 0; i < source.length();)
+    for (std::string::size_type i = 0; i < source.length();)
     {
         std::string temp = "";
         while (true)
