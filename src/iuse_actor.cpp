@@ -4371,7 +4371,7 @@ void link_up_actor::info(const item&, std::vector<iteminfo>& dump) const
         targets_strings.emplace_back("家电");
     }
     if (targets.count(link_state::bio_cable) > 0) {
-        targets_strings.emplace_back("生化装置");
+        targets_strings.emplace_back("生化插件");
     }
     if (targets.count(link_state::ups) > 0) {
         targets_strings.emplace_back("UPS");
