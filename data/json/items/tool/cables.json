@@ -64,10 +64,10 @@
     "initial_charges": 4,
     "use_action": {
       "type": "link_up",
-      "menu_text": "Attach / Detach",
+      "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 4,
-      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery" ]
+      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery", "vehicle_port" ]
     },
     "flags": [ "CABLE_SPOOL", "SINGLE_USE" ],
     "melee_damage": { "bash": 2 }
@@ -142,10 +142,10 @@
     "initial_charges": 20,
     "use_action": {
       "type": "link_up",
-      "menu_text": "Attach / Detach",
+      "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 20,
-      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery" ]
+      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery", "vehicle_port" ]
     },
     "copy-from": "jumper_cable"
   },
@@ -160,7 +160,7 @@
     "initial_charges": 100,
     "use_action": {
       "type": "link_up",
-      "menu_text": "Plug in / Unplug",
+      "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 100,
       "efficiency": 1000,

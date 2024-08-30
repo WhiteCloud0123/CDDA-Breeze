@@ -4364,39 +4364,39 @@ void link_up_actor::info(const item&, std::vector<iteminfo>& dump) const
         appliance = true;
     }
     if (targets.count(link_state::vehicle_battery) > 0) {
-        targets_strings.emplace_back(_("vehicle battery"));
+        targets_strings.emplace_back("载具用电池");
         appliance = true;
     }
     if (appliance) {
-        targets_strings.emplace_back(_("appliance"));
+        targets_strings.emplace_back("家电");
     }
     if (targets.count(link_state::bio_cable) > 0) {
-        targets_strings.emplace_back(_("bionic"));
+        targets_strings.emplace_back("生化装置");
     }
     if (targets.count(link_state::ups) > 0) {
-        targets_strings.emplace_back(_("UPS"));
+        targets_strings.emplace_back("UPS");
     }
     if (targets.count(link_state::solarpack) > 0) {
-        targets_strings.emplace_back(_("solar pack"));
+        targets_strings.emplace_back("太阳能背包");
     }
 
     if (!targets_strings.empty()) {
         std::string targets_string = enumerate_as_string(targets_strings, enumeration_conjunction::or_);
         dump.emplace_back("TOOL",
-            string_format(_("<bold>Can be plugged into</bold>: %s."), targets_string));
+            string_format( "<bold>可以连接到</bold>: %s.", targets_string));
     }
     if (targets.count(link_state::vehicle_tow) > 0) {
-        dump.emplace_back("TOOL", _("<bold>Can tow a vehicle</bold>."));
+        dump.emplace_back("TOOL", "<bold>可连接到载具上<</bold>.");
     }
 
-    dump.emplace_back("TOOL", _("Cable length: "), cable_length);
+    dump.emplace_back("TOOL", "线缆长度: ", cable_length);
     if (charge_rate != 0_W) {
         std::string wattage = string_format(_("%+4.1f W"), units::to_milliwatt(charge_rate) / 1000.f);
         if (charge_rate > 0_W) {
-            dump.emplace_back("TOOL", _("Charge rate: "), wattage);
+            dump.emplace_back("TOOL", _("充电功率: "), wattage);
         }
         else {
-            dump.emplace_back("TOOL", _("Discharge rate: "), wattage);
+            dump.emplace_back("TOOL", _("放电功率: "), wattage);
         }
     }
 }
@@ -4441,8 +4441,8 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         }
         is_respool_length = cable->link->max_length - cable->charges > respool_length;
         if (cable->link->s_state == link_state::needs_reeling) {
-            if (query_yn(is_cable_item ? string_format(_("Reel in the %s?"), it.label(1)) :
-                string_format(_("Reel in the %s's cable?"), it.label(1)))) {
+            if (query_yn(is_cable_item ? string_format("卷好 %s？", it.label(1)) :
+                string_format("卷好 %s 的电缆？", it.label(1)))) {
                 p.assign_activity(player_activity(reel_cable_activity_actor((cable->link->max_length -
                     cable->charges - respool_length) * respool_time_per_square, item_location{ p, cable },
                     is_cable_item ? item_location::nowhere : item_location{ p, &it })));
@@ -4455,7 +4455,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         // Cables without any free ends can only be disconnected.
         if (targets.count(link_state::no_link) > 0) {
             if (is_cable_item) {
-                if (query_yn(string_format(_("Detach and re-spool the %s?"), it.label(1)))) {
+                if (query_yn(string_format("断开连接并重新整理 %s", it.label(1)))) {
                     it.reset_cable(&p);
                     if (cable->link && cable->link->s_state == link_state::needs_reeling) {
                         p.assign_activity(player_activity(reel_cable_activity_actor((cable->link->max_length -
@@ -4463,13 +4463,13 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
                             is_cable_item ? item_location::nowhere : item_location{ p, &it })));
                     }
                     else {
-                        p.add_msg_if_player(m_info, string_format(_("You detach the %s."), it.label(1)));
+                        p.add_msg_if_player(m_info, string_format("你断开了 %s 的连接。", it.label(1)));
                     }
                     return 0;
                 }
             }
             else {
-                if (query_yn(string_format(_("Detach and re-spool the %s's cable?"), it.label(1)))) {
+                if (query_yn(string_format("断开连接并重新整理 %s 的电缆", it.label(1)))) {
                     it.reset_cables(&p);
                     if (cable->link && cable->link->s_state == link_state::needs_reeling) {
                         p.assign_activity(player_activity(reel_cable_activity_actor((cable->link->max_length -
@@ -4477,7 +4477,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
                             is_cable_item ? item_location::nowhere : item_location{ p, &it })));
                     }
                     else {
-                        p.add_msg_if_player(m_info, string_format(_("You gather the cable up with the %s."),
+                        p.add_msg_if_player(m_info, string_format("你重新整理好了 %s",
                             it.label(1)));
                     }
                     return 0;
@@ -4496,37 +4496,37 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
     if (cable == nullptr || cable->link->has_no_links()) {
         // Cable doesn't have any connections, or is a device cable:
 
-        link_menu.text = is_cable_item ? string_format(_("Attaching the %s:"), it.label(1)) :
-            string_format(_("Attaching the %s's cable:"), it.label(1));
+        link_menu.text = is_cable_item ? string_format("连接 %s：", it.label(1)) :
+            string_format("连接 %s 的电缆：", it.label(1));
         if (targets.count(link_state::vehicle_port) > 0) {
-            link_menu.addentry(0, true, -1, _("Attach to vehicle controls or appliance"));
+            link_menu.addentry(0, true, -1, "连接到载具控制器或者非蓄电类型的家电。");
         }
         if (targets.count(link_state::vehicle_battery) > 0) {
-            link_menu.addentry(1, true, -1, _("Attach to vehicle battery or appliance"));
+            link_menu.addentry(1, true, -1, "连接到载具用电池或者家电。");
         }
         if (targets.count(link_state::vehicle_tow) > 0) {
-            link_menu.addentry(10, true, -1, _("Attach tow cable to towing vehicle"));
-            link_menu.addentry(11, true, -1, _("Attach tow cable to towed vehicle"));
+            link_menu.addentry(10, true, -1, "将电缆连接到牵引载具上");
+            link_menu.addentry(11, true, -1, "将电缆连接到被牵引载具上");
         }
         if (targets.count(link_state::bio_cable) > 0) {
             if (!p.get_remote_fueled_bionic().is_empty()) {
-                link_menu.addentry(20, true, -1, _("Attach to Cable Charger System CBM"));
+                link_menu.addentry(20, true, -1, "连接到电缆充电器CBM");
             }
         }
         if (targets.count(link_state::ups) > 0) {
             if (!(p.all_items_with_flag(flag_IS_UPS)).empty()) {
-                link_menu.addentry(21, true, -1, _("Attach to UPS"));
+                link_menu.addentry(21, true, -1, "连接到UPS");
             }
         }
         if (targets.count(link_state::solarpack) > 0) {
             const bool has_solar_pack_on = p.worn_with_flag(flag_SOLARPACK_ON);
             if (has_solar_pack_on || p.worn_with_flag(flag_SOLARPACK)) {
-                link_menu.addentry(22, has_solar_pack_on, -1, _("Attach to solar pack"));
+                link_menu.addentry(22, has_solar_pack_on, -1, "连接到太阳能背包");
             }
         }
         if (targets.count(link_state::no_link) > 0) {
             link_menu.addentry(999, false, -1,
-                is_respool_length ? _("Detach and re-spool") : _("Detach"));
+                is_respool_length ? "断开连接并重新整理电缆" : "断开连接");
         }
 
     }
@@ -4534,50 +4534,50 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         // Cables that started a tow can finish one or detach, nothing else.
 
         link_menu.addentry(10, cable->link->t_state == link_state::vehicle_tow, -1,
-            _("Attach loose end to towing vehicle"));
+            "将末端连接到牵引载具上");
         link_menu.addentry(11, cable->link->s_state == link_state::vehicle_tow, -1,
-            _("Attach loose end to towed vehicle"));
+            "将末端连接到被牵引载具上");
         if (targets.count(link_state::no_link) > 0) {
             link_menu.addentry(999, true, -1,
-                is_respool_length ? _("Detach and re-spool") : _("Detach"));
+                is_respool_length ? "断开连接并重新整理电缆" : "断开连接");
         }
 
     }
     else if (is_cable_item) {
         // Cable has one connection already:
 
-        link_menu.text = string_format(_("Attaching the %s's loose end:"), it.label(1));
+        link_menu.text = string_format("连接到 %s 的末端", it.label(1));
 
         // TODO: Allow plugging UPSes and Solar Packs into more than just bionics.
         // There is already code to support setting up a link, but none for actual functionality.
         if (targets.count(link_state::vehicle_port) > 0) {
             link_menu.addentry(0, !cable->link->has_state(link_state::ups) &&
                 !cable->link->has_state(link_state::solarpack),
-                -1, _("Attach loose end to vehicle controls or appliance"));
+                -1, "连接到载具控制器或者家电。");
         }
         if (targets.count(link_state::vehicle_battery) > 0) {
             link_menu.addentry(1, !cable->link->has_state(link_state::ups) &&
                 !cable->link->has_state(link_state::solarpack),
-                -1, _("Attach loose end to vehicle battery or appliance"));
+                -1, "连接到载具用电池或者家电。");
         }
         if (targets.count(link_state::bio_cable) > 0 && !p.get_remote_fueled_bionic().is_empty()) {
             link_menu.addentry(20, !cable->link->has_state(link_state::bio_cable),
-                -1, _("Attach loose end to Cable Charger System CBM"));
+                -1, "连接到电缆充电器CBM");
         }
         if (targets.count(link_state::ups) > 0 && !(p.all_items_with_flag(flag_IS_UPS)).empty()) {
             link_menu.addentry(21, cable->link->has_state(link_state::bio_cable),
-                -1, _("Attach loose end to UPS"));
+                -1, "连接到UPS");
         }
         if (targets.count(link_state::solarpack) > 0) {
             const bool has_solar_pack_on = p.worn_with_flag(flag_SOLARPACK_ON);
             if (has_solar_pack_on || p.worn_with_flag(flag_SOLARPACK)) {
                 link_menu.addentry(22, has_solar_pack_on && cable->link->has_state(link_state::bio_cable),
-                    -1, _("Attach loose end to solar pack"));
+                    -1, "连接到太阳能背包");
             }
         }
         if (targets.count(link_state::no_link) > 0) {
             link_menu.addentry(999, true, -1,
-                is_respool_length ? _("Detach and re-spool") : _("Detach"));
+                is_respool_length ? "断开连接并重新整理电缆" : "断开连接");
         }
     }
     else {
@@ -4616,8 +4616,8 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             return 0;
         }
         else {
-            p.add_msg_if_player(m_info, is_cable_item ? string_format(_("You detach the %s."),
-                it.label(1)) : string_format(_("You gather the cable up with the %s."), it.label(1)));
+            p.add_msg_if_player(m_info, is_cable_item ? string_format("你断开了 %s 的连接。",
+                it.label(1)) : string_format("你重新整理好了 %s", it.label(1)));
         }
         return 0;
     }
@@ -4665,7 +4665,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             }
             return false;
         };
-        const cata::optional<tripoint> pnt_ = choose_adjacent_highlight(_("Attach the cable where?"),
+        const cata::optional<tripoint> pnt_ = choose_adjacent_highlight("将电缆连接到哪里？",
             "", can_link, false, false);
         if (!pnt_) {
             return cata::nullopt;
@@ -4676,14 +4676,14 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         if (!can_link(pnt)) {
             if (choice == 0 && t_vp && t_vp->vehicle().has_part("CABLE_PORTS")) {
                 p.add_msg_if_player(m_info,
-                    _("You can't attach it there; try the dashboard or electronics controls."));
+                    "你无法连接到那里 - 试试连接到仪表板或电子控制装置上。");
             }
             else if (choice == 1 && t_vp && t_vp->vehicle().batteries.empty()) {
                 p.add_msg_if_player(m_info,
-                    _("You can't attach it there; try the battery."));
+                    "你不能连接到那里。实时连接到电池上。");
             }
             else {
-                p.add_msg_if_player(m_info, _("You can't attach it there."));
+                p.add_msg_if_player(m_info,"你不能连接到那里。");
             }
             return cata::nullopt;
         }
@@ -4697,11 +4697,11 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             // Starting a new connection to a vehicle or connecting a cable CBM to a vehicle.
 
             if (cable->link->has_no_links()) {
-                p.add_msg_if_player(_("你将 %1$s 连接到 %2$s."), it.label(1),
+                p.add_msg_if_player("你将 %1$s 连接到 %2$s.", it.label(1),
                     t_vp->vehicle().name);
             }
             else if (cable->link->has_state(link_state::bio_cable)) {
-                p.add_msg_if_player(m_good, _("你现在连接到了%s上。"), t_vp->vehicle().name);
+                p.add_msg_if_player(m_good, "你现在连接到了%s上。", t_vp->vehicle().name);
                 cable->link->s_state = link_state::bio_cable;
             }
             else {
@@ -4735,7 +4735,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             vehicle* const target_veh = &t_vp->vehicle();
             vehicle* const prev_veh = cable->link->t_veh_safe.get();
             if (prev_veh == target_veh) {
-                p.add_msg_if_player(m_warning, _("你无法用%s连接它自己。"), prev_veh->name);
+                p.add_msg_if_player(m_warning, "你无法用%s连接它自己。", prev_veh->name);
                 return cata::nullopt;
             }
             const std::pair<tripoint, tripoint> prev_target = std::make_pair(
@@ -4744,7 +4744,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             for (const vpart_reference& vpr : target_veh->get_any_parts("POWER_TRANSFER")) {
                 if (vpr.part().target.first == prev_target.first &&
                     vpr.part().target.second == prev_target.second) {
-                    p.add_msg_if_player(m_warning, _("%1$s和%2$s已经连接在一起了。"),
+                    p.add_msg_if_player(m_warning, "%1$s和%2$s已经连接在一起了。",
                         target_veh->name, prev_veh->name);
                     return cata::nullopt;
                 }
@@ -4776,7 +4776,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             target_part.target.second = prev_target.second;
             target_veh->install_part(vcoords, target_part);
 
-            p.add_msg_if_player(m_good, _("你把 %1$s 和 %2$s 连接了起来。"),
+            p.add_msg_if_player(m_good, "你把 %1$s 和 %2$s 连接了起来。",
                 prev_veh->name, target_veh->name);
 
             return 1; // Let the cable be destroyed.
@@ -4795,37 +4795,37 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         };
 
         const cata::optional<tripoint> pnt_ = choose_adjacent_highlight(
-            choice == 10 ? _("将电缆连接到将被连接的车辆上。") :
-            _("将电缆连接到将被连接的车辆上。"), "", can_link, false, false);
+            choice == 10 ? "将电缆连接到将被连接的车辆上。" :
+            "将电缆连接到将被连接的车辆上。", "", can_link, false, false);
         if (!pnt_) {
             return cata::nullopt;
         }
         const tripoint& pnt = *pnt_;
         const optional_vpart_position t_vp = here.veh_at(pnt);
         if (!t_vp) {
-            p.add_msg_if_player(_("那里没有载具。"));
+            p.add_msg_if_player("那里没有载具。");
             return cata::nullopt;
         }
 
         vehicle* const target_veh = &t_vp->vehicle();
         if (target_veh->has_tow_attached() || target_veh->is_towed() ||
             target_veh->is_towing()) {
-            p.add_msg_if_player(_("那辆车已经系上了牵引索。"));
+            p.add_msg_if_player("那辆车已经系上了牵引索。");
             return cata::nullopt;
         }
         if (!target_veh->is_external_part(pnt)) {
-            p.add_msg_if_player(_("你不能把牵引索系在内部部件上。"));
+            p.add_msg_if_player("你不能把牵引索系在内部部件上。");
             return cata::nullopt;
         }
         if (!target_veh->part(t_vp->part_index()).carried_stack.empty()) {
-            p.add_msg_if_player(_("你不能把牵引索系在托架部分上。"));
+            p.add_msg_if_player("你不能把牵引索系在托架部分上。");
             return cata::nullopt;
         }
 
         if (cable->link->has_no_links()) {
             // Starting a new tow cable connection.
 
-            p.add_msg_if_player(_("你把 %1$s 和 %2$s 连接了起来。"), it.label(1),
+            p.add_msg_if_player("你把 %1$s 和 %2$s 连接了起来。", it.label(1),
                 t_vp->vehicle().name);
             if (choice == 10) {
                 cable->link->s_state = link_state::vehicle_tow; // Assign towing vehicle.
@@ -4854,7 +4854,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             vehicle* const prev_veh = cable->link->t_veh_safe.get();
             if (prev_veh == target_veh) {
                 if (p.has_item(it)) {
-                    p.add_msg_if_player(m_warning, _("%s无法牵引其本身！"), prev_veh->name);
+                    p.add_msg_if_player(m_warning, "%s无法牵引其本身！", prev_veh->name);
                 }
                 return cata::nullopt;
             };
@@ -4886,7 +4886,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             target_veh->install_part(vcoords, std::move(target_part));
 
             if (p.has_item(it)) {
-                p.add_msg_if_player(m_good, _("你把 %1$s 和 %2$s 连接了起来。"),
+                p.add_msg_if_player(m_good, "你把 %1$s 和 %2$s 连接了起来。",
                     prev_veh->name, target_veh->name);
             }
             if (choice == 10) {
@@ -4907,20 +4907,20 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         }
         if (cable->link->has_no_links()) {
             cable->link->t_state = link_state::bio_cable;
-            p.add_msg_if_player(m_info, _("你将电缆一端连接至你的电缆充电器CBM上。"));
+            p.add_msg_if_player(m_info, "你将电缆一端连接至你的电缆充电器CBM上。");
         }
         else if (cable->link->s_state == link_state::ups) {
             cable->link->t_state = link_state::bio_cable;
-            p.add_msg_if_player(m_good, _("你现在连接到了UPS上。"));
+            p.add_msg_if_player(m_good, "你现在连接到了UPS上。");
         }
         else if (cable->link->s_state == link_state::solarpack) {
             cable->link->t_state = link_state::bio_cable;
-            p.add_msg_if_player(m_good, _("你现在连接到了太阳能背包上。"));
+            p.add_msg_if_player(m_good, "你现在连接到了太阳能背包上。");
         }
         else if (cable->link->t_state == link_state::vehicle_port ||
             cable->link->t_state == link_state::vehicle_battery) {
             cable->link->s_state = link_state::bio_cable;
-            p.add_msg_if_player(m_good, _("你现在通过电缆与载具相连。"));
+            p.add_msg_if_player(m_good, "你现在通过电缆与载具相连。");
         }
         cable->active = true;
         it.contents_linked = !is_cable_item;
@@ -4933,8 +4933,8 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
 
         item_location loc;
         avatar* you = p.as_avatar();
-        const std::string choose_ups = _("Choose UPS:");
-        const std::string dont_have_ups = _("You don't have any UPS.");
+        const std::string choose_ups = "选择UPS：";
+        const std::string dont_have_ups = "你没有任何UPS";
         auto ups_filter = [&](const item& itm) {
             return itm.has_flag(flag_IS_UPS);
         };
@@ -4951,17 +4951,17 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             return cata::nullopt;
         }
         if (cable->link->has_no_links()) {
-            p.add_msg_if_player(m_info, _("You attach the cable to the UPS."));
+            p.add_msg_if_player(m_info, "你将电缆一端连接至UPS。");
         }
         else if (cable->link->t_state == link_state::bio_cable) {
-            p.add_msg_if_player(m_good, _("You are now plugged into the UPS."));
+            p.add_msg_if_player(m_good, "你现在连接到了UPS上。");
         }
         else if (cable->link->s_state == link_state::solarpack) {
-            p.add_msg_if_player(m_good, _("You link up the UPS and the solar backpack."));
+            p.add_msg_if_player(m_good, "你把UPS和太阳能背包连接了起来。");
         }
         else if (cable->link->t_state == link_state::vehicle_port ||
             cable->link->t_state == link_state::vehicle_battery) {
-            p.add_msg_if_player(m_good, _("You link up the UPS and the vehicle."));
+            p.add_msg_if_player(m_good, "你把UPS和载具连接了起来。");
         }
         cable->link->s_state = link_state::ups;
         loc->set_var("cable", "plugged_in");
@@ -4977,8 +4977,8 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
 
         item_location loc;
         avatar* you = p.as_avatar();
-        const std::string choose_solar = _("Choose solar pack:");
-        const std::string dont_have_solar = _("You need an unfolded solar pack.");
+        const std::string choose_solar = "选择太阳能背包：";
+        const std::string dont_have_solar = "你需要一个展开的太阳能背包。";
         auto solar_filter = [&](const item& itm) {
             return itm.has_flag(flag_SOLARPACK_ON);
         };
@@ -4995,17 +4995,17 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             return cata::nullopt;
         }
         if (cable->link->has_no_links()) {
-            p.add_msg_if_player(m_info, _("You attach the cable to the solar pack."));
+            p.add_msg_if_player(m_info, "你将电缆一端连接至太阳能背包。");
         }
         else if (cable->link->t_state == link_state::bio_cable) {
-            p.add_msg_if_player(m_good, _("You are now plugged into the solar pack."));
+            p.add_msg_if_player(m_good, "你现在连接到了太阳能背包上。");
         }
         else if (cable->link->s_state == link_state::ups) {
-            p.add_msg_if_player(m_good, _("You link up the solar pack and the UPS."));
+            p.add_msg_if_player(m_good, "你把太阳能背包和UPS连接了起来。");
         }
         else if (cable->link->t_state == link_state::vehicle_port ||
             cable->link->t_state == link_state::vehicle_battery) {
-            p.add_msg_if_player(m_good, _("You link up the solar pack and the vehicle."));
+            p.add_msg_if_player(m_good, "你把太阳能背包和载具连接了起来。");
         }
         cable->link->s_state = link_state::solarpack;
         loc->set_var("cable", "plugged_in");
