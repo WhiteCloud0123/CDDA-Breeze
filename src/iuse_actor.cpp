@@ -4496,8 +4496,8 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
     if (cable == nullptr || cable->link->has_no_links()) {
         // Cable doesn't have any connections, or is a device cable:
 
-        link_menu.text = is_cable_item ? string_format(_("连接 %s："), it.label(1)) :
-            string_format(_("连接 %s 的电缆："), it.label(1));
+        link_menu.text = is_cable_item ? string_format("连接 %s：", it.label(1)) :
+            string_format("连接 %s 的电缆：", it.label(1));
         if (targets.count(link_state::vehicle_port) > 0) {
             link_menu.addentry(0, true, -1, "连接到载具控制器或者非蓄电类型的家电。");
         }
@@ -4534,9 +4534,9 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         // Cables that started a tow can finish one or detach, nothing else.
 
         link_menu.addentry(10, cable->link->t_state == link_state::vehicle_tow, -1,
-            "将悬空端连接到牵引载具上");
+            "将末端连接到牵引载具上");
         link_menu.addentry(11, cable->link->s_state == link_state::vehicle_tow, -1,
-            "将悬空端连接到被牵引载具上");
+            "将末端连接到被牵引载具上");
         if (targets.count(link_state::no_link) > 0) {
             link_menu.addentry(999, true, -1,
                 is_respool_length ? "断开连接并重新整理电缆" : "断开连接");
