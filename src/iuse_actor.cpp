@@ -4364,7 +4364,7 @@ void link_up_actor::info(const item&, std::vector<iteminfo>& dump) const
         appliance = true;
     }
     if (targets.count(link_state::vehicle_battery) > 0) {
-        targets_strings.emplace_back("载具用电池");
+        targets_strings.emplace_back("载具电池");
         appliance = true;
     }
     if (appliance) {
@@ -4502,7 +4502,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
             link_menu.addentry(0, true, -1, "连接到载具控制器或者非蓄电类型的家电。");
         }
         if (targets.count(link_state::vehicle_battery) > 0) {
-            link_menu.addentry(1, true, -1, "连接到载具用电池或者家电。");
+            link_menu.addentry(1, true, -1, "连接到载具电池或者蓄电类型的家电。");
         }
         if (targets.count(link_state::vehicle_tow) > 0) {
             link_menu.addentry(10, true, -1, "将电缆连接到牵引载具上");
@@ -4558,7 +4558,7 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
         if (targets.count(link_state::vehicle_battery) > 0) {
             link_menu.addentry(1, !cable->link->has_state(link_state::ups) &&
                 !cable->link->has_state(link_state::solarpack),
-                -1, "连接到载具用电池或者家电。");
+                -1, "连接到载具电池或者家电。");
         }
         if (targets.count(link_state::bio_cable) > 0 && !p.get_remote_fueled_bionic().is_empty()) {
             link_menu.addentry(20, !cable->link->has_state(link_state::bio_cable),
