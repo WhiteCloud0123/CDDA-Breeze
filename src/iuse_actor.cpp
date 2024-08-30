@@ -4496,10 +4496,10 @@ cata::optional<int> link_up_actor::use(Character& p, item& it, bool t, const tri
     if (cable == nullptr || cable->link->has_no_links()) {
         // Cable doesn't have any connections, or is a device cable:
 
-        link_menu.text = is_cable_item ? string_format("连接 %s：", it.label(1)) :
+        link_menu.text = is_cable_item ? string_format("连接到 %s 的首端：", it.label(1)) :
             string_format("连接 %s 的电缆：", it.label(1));
         if (targets.count(link_state::vehicle_port) > 0) {
-            link_menu.addentry(0, true, -1, "连接到载具控制器或者非蓄电类型的家电。");
+            link_menu.addentry(0, true, -1, "连接到载具控制器或者家电。");
         }
         if (targets.count(link_state::vehicle_battery) > 0) {
             link_menu.addentry(1, true, -1, "连接到载具电池或者蓄电类型的家电。");
