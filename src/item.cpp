@@ -7733,14 +7733,14 @@ std::string item::tname( unsigned int quantity, bool with_prefix, unsigned int t
         tagtext += _( " (lit)" );
     }
     else if (contents_linked || (has_flag(flag_IS_UPS) && get_var("cable") == "plugged_in")) {
-        tagtext += _( " (plugged in)" );
+        tagtext +=  " （已插入）";
     }
     else if (link) {
         if (link->s_state == link_state::needs_reeling) {
-            tagtext += _(" (unspooled)");
+            tagtext += " （未卷好）";
         }
         else if (active) {
-            tagtext += _(" (connected)");
+            tagtext += " （已连接）";
         }
     } else if( active && !has_temperature() && !is_corpse() &&
                !string_ends_with( typeId().str(), "_on" ) ) {
@@ -14570,7 +14570,7 @@ bool item::process_cable(map& here, Character* carrier, const tripoint& pos, ite
                 link_vp_index = idx;
                 break;
             }
-        }
+        } 
     }
     else if (link->t_state == link_state::vehicle_battery) {
         for (int idx : t_veh->batteries) {

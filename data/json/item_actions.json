@@ -313,7 +313,7 @@
   {
     "type": "item_action",
     "id": "link_up",
-    "name": { "str": "Attach / Detach" }
+    "name": { "str": "接入/管理电网" }
   },
   {
     "type": "item_action",
