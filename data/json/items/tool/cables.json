@@ -67,7 +67,7 @@
       "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 4,
-      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery", "vehicle_port" ]
+      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery" ]
     },
     "flags": [ "CABLE_SPOOL", "SINGLE_USE" ],
     "melee_damage": { "bash": 2 }
@@ -84,7 +84,7 @@
     "initial_charges": 10,
     "use_action": {
       "type": "link_up",
-      "menu_text": "Plug in / Unplug",
+      "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 10,
       "targets": [ "no_link", "vehicle_port" ]
@@ -103,7 +103,7 @@
     "initial_charges": 30,
     "use_action": {
       "type": "link_up",
-      "menu_text": "Plug in / Unplug",
+      "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 30,
       "targets": [ "no_link", "vehicle_port" ]
@@ -145,7 +145,7 @@
       "menu_text": "接入/管理电网",
       "is_cable_item": true,
       "cable_length": 20,
-      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery", "vehicle_port" ]
+      "targets": [ "no_link", "bio_cable", "ups", "solarpack", "vehicle_battery" ]
     },
     "copy-from": "jumper_cable"
   },
