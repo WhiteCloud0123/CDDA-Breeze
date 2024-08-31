@@ -291,7 +291,7 @@ void npc_attack_melee::use( npc &source, const tripoint &location ) const
 
 tripoint_range<tripoint> npc_attack_melee::targetable_points( const npc &source ) const
 {
-    return get_map().points_in_radius( source.pos(), 8 );
+    return get_map().points_in_radius( source.pos(), 8 , 1 );
 }
 
 npc_attack_rating npc_attack_melee::evaluate( const npc &source,
