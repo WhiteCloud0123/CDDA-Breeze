@@ -1742,44 +1742,13 @@ static tripoint_abs_omt display( const tripoint_abs_omt &orig,
     if( data.select != tripoint_abs_omt( -1, -1, -1 ) ) {
         curs = data.select;
     }
-    // Configure input context for navigating the map.
-    input_context ictxt( "OVERMAP" );
-    ictxt.register_action( "ANY_INPUT" );
-    ictxt.register_directions();
-    ictxt.register_action( "CONFIRM" );
-    ictxt.register_action( "LEVEL_UP" );
-    ictxt.register_action( "LEVEL_DOWN" );
-    ictxt.register_action( "zoom_in" );
-    ictxt.register_action( "zoom_out" );
-    ictxt.register_action( "HELP_KEYBINDINGS" );
-    ictxt.register_action( "MOUSE_MOVE" );
-    ictxt.register_action( "SELECT" );
-    ictxt.register_action( "CHOOSE_DESTINATION" );
 
-    // Actions whose keys we want to display.
-    ictxt.register_action( "CENTER" );
-    ictxt.register_action( "CREATE_NOTE" );
-    ictxt.register_action( "DELETE_NOTE" );
-    ictxt.register_action( "SEARCH" );
-    ictxt.register_action( "LIST_NOTES" );
-    ictxt.register_action( "TOGGLE_MAP_NOTES" );
-    ictxt.register_action( "TOGGLE_BLINKING" );
-    ictxt.register_action( "TOGGLE_OVERLAYS" );
-    ictxt.register_action( "TOGGLE_HORDES" );
-    ictxt.register_action( "TOGGLE_LAND_USE_CODES" );
-    ictxt.register_action( "TOGGLE_CITY_LABELS" );
-    ictxt.register_action( "TOGGLE_EXPLORED" );
-    ictxt.register_action( "TOGGLE_FAST_SCROLL" );
-    ictxt.register_action( "TOGGLE_OVERMAP_WEATHER" );
-    ictxt.register_action( "TOGGLE_FOREST_TRAILS" );
-    ictxt.register_action( "MISSIONS" );
-
-    if( data.debug_editor ) {
-        ictxt.register_action( "PLACE_TERRAIN" );
-        ictxt.register_action( "PLACE_SPECIAL" );
-        ictxt.register_action( "SET_SPECIAL_ARGS" );
+    input_context ictxt = get_overmap_input_context();
+    if (data.debug_editor) {
+        ictxt.register_action("PLACE_TERRAIN");
+        ictxt.register_action("PLACE_SPECIAL");
+        ictxt.register_action("SET_SPECIAL_ARGS");
     }
-    ictxt.register_action( "QUIT" );
     std::string action;
     bool show_explored = true;
     static bool fast_scroll = false;
