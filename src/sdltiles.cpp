@@ -3053,6 +3053,9 @@ static void CheckMessages()
                             !std::uncaught_exception() ) {
                             g->quicksave();
                         }
+                        if(SDL_IsTextInputActive()) {
+                            SDL_StopTextInput();
+                        }
                         break;
                     // SDL sends a window size changed event whenever the screen rotates orientation
                     case SDL_WINDOWEVENT_SIZE_CHANGED:
