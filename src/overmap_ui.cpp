@@ -1342,7 +1342,7 @@ static bool search( const ui_adaptor &om_ui, tripoint_abs_omt &curs, const tripo
     std::vector<point_abs_omt> locations;
     std::vector<point_abs_om> overmap_checked;
 
-    const int radius = OMAPX; // arbitrary
+    const int radius = get_option<int>("大地图界面的搜索功能使用的半径"); // arbitrary
     for( const tripoint_abs_omt &p : points_in_radius( curs, radius ) ) {
         overmap_with_local_coords om_loc = overmap_buffer.get_existing_om_global( p );
 
