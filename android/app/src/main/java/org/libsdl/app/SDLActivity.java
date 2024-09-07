@@ -373,6 +373,17 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         Toaster.setGravity(Gravity.TOP);
 
+        View decorView = getWindow().getDecorView();
+        decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                if(!insets.isVisible(WindowInsets.Type.ime())) {
+                    SDLActivity.onNativeKeyboardFocusLost();
+                }
+                return insets;
+            }
+        });
+
     }
 
     protected void pauseNativeThread() {
@@ -736,6 +747,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mTextEdit.getWindowToken(), 0);
+
+                    mTextEdit.clearFocus();
 
                     mScreenKeyboardShown = false;
 
