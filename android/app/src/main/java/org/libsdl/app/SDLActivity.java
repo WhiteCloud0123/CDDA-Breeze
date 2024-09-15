@@ -96,6 +96,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     protected static Thread mSDLThread;
 
     private static boolean forceFullScreen = true;
+    private static boolean hideStatusBar = true;
     Button extraButtonSP;
     ArrayList<Button> extraButtonListNotFull = new ArrayList<Button>();
 
@@ -169,6 +170,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public void set_force_full_screen(boolean value) {
         forceFullScreen = value;
         setWindowStyle(value);
+    }
+
+    public void set_hide_status_bar(boolean value) {
+        hideStatusBar = value;
     }
 
     protected static SDLGenericMotionListener_API12 getMotionListener() {
@@ -731,6 +736,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                             Context appContext = context.getApplicationContext();
                             window.addFlags(forceFullScreen ? WindowManager.LayoutParams.FLAG_FULLSCREEN : WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                             window.clearFlags(forceFullScreen ? WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN : WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                            if(hideStatusBar) {
+                                window.addFlags(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                            }
                             SDLActivity.mFullscreenModeActive = forceFullScreen;
                         }
                     }

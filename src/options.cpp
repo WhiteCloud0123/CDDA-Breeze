@@ -2713,6 +2713,11 @@ void options_manager::add_options_android()
         true
     );
 
+    add("非全屏模式下隐藏状态栏", "android", to_translation("非全屏模式下只隐藏状态栏"),
+        to_translation("非全屏模式下隐藏状态栏。修改后需要重新启动。"),
+        false
+    );
+
     add( "ANDROID_NATIVE_UI", "android", to_translation( "Use native Android UI menus" ),
          to_translation( "If true, native Android dialogs are used for some in-game menus, "
                          "such as popup messages and yes/no dialogs." ),
