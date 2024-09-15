@@ -537,7 +537,6 @@ void npc::assess_danger()
         }
         // ignore targets behind glass even if we can see them
         if( !here.clear_shot_reach( pos(), critter.pos(), false ) ) {
-            add_msg(m_good,critter.get_name());
             continue;
         }
 
