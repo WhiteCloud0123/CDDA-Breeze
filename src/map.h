@@ -484,6 +484,8 @@ class map
         const_maptile maptile_at( const tripoint_bub_ms &p ) const;
         maptile maptile_at( const tripoint &p );
         maptile maptile_at( const tripoint_bub_ms &p );
+        bool has_obstruction(const tripoint& from, const tripoint& to, bool check_ally = false);
+        bool clear_shot_reach(const tripoint& from, const tripoint& to, bool check_ally = true);
     private:
         // Versions of the above that don't do bounds checks
         const_maptile maptile_at_internal( const tripoint &p ) const;

@@ -321,6 +321,45 @@ maptile map::maptile_at( const tripoint_bub_ms &p )
     return maptile_at( p.raw() );
 }
 
+ bool map::has_obstruction(const tripoint& from, const tripoint& to, bool check_ally)
+{
+    std::vector<tripoint> line = line_to(from, to);
+    // @to is what we want to hit. we don't need to check for obstruction there.
+    line.pop_back();
+    const map& here = get_map();
+    creature_tracker& creatures = get_creature_tracker();
+    for (const tripoint& line_point : line) {
+        if (here.impassable(line_point) || (check_ally && creatures.creature_at(line_point))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool map::clear_shot_reach(const tripoint& from, const tripoint& to, bool check_ally)
+{
+    std::vector<tripoint> path = line_to(from, to);
+    path.pop_back();
+    creature_tracker& creatures = get_creature_tracker();
+    map& m = get_map();
+    for (const tripoint& p : path) {
+        Creature* inter = creatures.creature_at(p);
+        if (check_ally && inter != nullptr) {
+            return false;
+        }
+        if (get_map().impassable(p)) {
+            if (m.is_transparent(p) && (square_dist(from.xy(), p.xy()) == 1 || m.coverage(p) <= 60)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 const_maptile map::maptile_at_internal( const tripoint &p ) const
 {
     point l;

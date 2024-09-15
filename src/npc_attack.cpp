@@ -31,23 +31,6 @@ static const int base_time_penalty = 3;
 static const int base_throw_now = 10'000;
 } // namespace npc_attack_constants
 
-// TODO: make a better, more generic "check if this projectile is blocked" function
-// TODO: put this in a namespace for reuse
-static bool has_obstruction( const tripoint &from, const tripoint &to, bool check_ally = false )
-{
-    std::vector<tripoint> line = line_to( from, to );
-    // @to is what we want to hit. we don't need to check for obstruction there.
-    line.pop_back();
-    const map &here = get_map();
-    creature_tracker &creatures = get_creature_tracker();
-    for( const tripoint &line_point : line ) {
-        if( here.impassable( line_point ) || ( check_ally && creatures.creature_at( line_point ) ) ) {
-            return true;
-        }
-    }
-    return false;
-}
-
 static bool can_move( const npc &source )
 {
     return !source.in_vehicle && source.rules.engagement != combat_engagement::NO_MOVE;
@@ -382,6 +365,9 @@ npc_attack_rating npc_attack_melee::evaluate_critter( const npc &source,
 
 void npc_attack_gun::use( npc &source, const tripoint &location ) const
 {
+
+    map& m = get_map();
+
     if( !source.is_wielding( gun ) ) {
         if( !source.wield( gun ) ) {
             debugmsg( "ERROR: npc tried to equip a weapon it couldn't wield" );
@@ -397,8 +383,8 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
                        gun.display_name() );
         return;
     }
-
-    if( has_obstruction( source.pos(), location, false ) ||
+   
+    if( !m.clear_shot_reach( source.pos(), location, false ) ||
         ( source.rules.has_flag( ally_rule::avoid_friendly_fire ) &&
           !source.wont_hit_friend( location, gun, false ) ) ) {
         if( can_move( source ) ) {
@@ -507,6 +493,7 @@ std::vector<npc_attack_rating> npc_attack_gun::all_evaluations( const npc &sourc
 npc_attack_rating npc_attack_gun::evaluate_tripoint(
     const npc &source, const Creature *target, const tripoint &location ) const
 {
+    map& m = get_map();
     const item &gun = *gunmode.target;
     const int damage = gun.gun_damage().total_damage() * gunmode.qty;
     double potential = damage;
@@ -527,7 +514,7 @@ npc_attack_rating npc_attack_gun::evaluate_tripoint(
     const int distance_to_me = rl_dist( location, source.pos() );
 
     // Make attacks that involve moving to find clear LOS slightly less likely
-    if( has_obstruction( source.pos(), location, avoids_friendly_fire ) ) {
+    if( !m.clear_shot_reach( source.pos(), location, avoids_friendly_fire ) ) {
         potential *= 0.9f;
     } else if( avoids_friendly_fire && !source.wont_hit_friend( location, gun, false ) ) {
         potential *= 0.95f;
@@ -591,6 +578,7 @@ std::vector<npc_attack_rating> npc_attack_activate_item::all_evaluations( const 
 
 void npc_attack_throw::use( npc &source, const tripoint &location ) const
 {
+    map& m = get_map();
     if( !source.is_wielding( thrown_item ) ) {
         if( !source.wield( thrown_item ) ) {
             debugmsg( "ERROR: npc tried to equip a weapon it couldn't wield" );
@@ -598,7 +586,7 @@ void npc_attack_throw::use( npc &source, const tripoint &location ) const
         return;
     }
 
-    if( has_obstruction( source.pos(), location, false ) ||
+    if( m.has_obstruction( source.pos(), location, false ) ||
         ( source.rules.has_flag( ally_rule::avoid_friendly_fire ) &&
           !source.wont_hit_friend( location, thrown_item, false ) ) ) {
         if( can_move( source ) ) {
@@ -687,6 +675,7 @@ tripoint_range<tripoint> npc_attack_throw::targetable_points( const npc &source 
 npc_attack_rating npc_attack_throw::evaluate(
     const npc &source, const Creature *target ) const
 {
+    map& m = get_map();
     npc_attack_rating effectiveness( cata::nullopt, source.pos() );
     if( !can_use( source ) ) {
         // please don't throw your pants...
@@ -712,7 +701,7 @@ npc_attack_rating npc_attack_throw::evaluate(
             // TODO: Take into account distance to allies too
             const int distance_to_me = rl_dist( potential, source.pos() );
             int result = npc_attack_constants::base_throw_now + distance_to_me;
-            if( !has_obstruction( source.pos(), potential, avoids_friendly_fire ) ) {
+            if( !m.has_obstruction( source.pos(), potential, avoids_friendly_fire ) ) {
                 // More likely to pick a target tile that isn't obstructed
                 result += 100;
             }
@@ -763,7 +752,8 @@ std::vector<npc_attack_rating> npc_attack_throw::all_evaluations( const npc &sou
 npc_attack_rating npc_attack_throw::evaluate_tripoint(
     const npc &source, const Creature *target, const tripoint &location ) const
 {
-    if( has_obstruction( source.pos(), location ) ) {
+    map& m = get_map();
+    if( m.has_obstruction( source.pos(), location ) ) {
         return npc_attack_rating( cata::nullopt, location );
     }
     item single_item( thrown_item );
