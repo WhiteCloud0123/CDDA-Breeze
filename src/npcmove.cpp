@@ -247,24 +247,6 @@ bool compare_sound_alert( const dangerous_sound &sound_a, const dangerous_sound 
     return sound_a.volume < sound_b.volume;
 }
 
-static bool clear_shot_reach( const tripoint &from, const tripoint &to, bool check_ally = true )
-{
-    std::vector<tripoint> path = line_to( from, to );
-    path.pop_back();
-    creature_tracker &creatures = get_creature_tracker();
-    for( const tripoint &p : path ) {
-        Creature *inter = creatures.creature_at( p );
-        if( check_ally && inter != nullptr ) {
-            return false;
-        }
-        if( get_map().impassable( p ) ) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 tripoint npc::good_escape_direction( bool include_pos )
 {
     map &here = get_map();
@@ -554,7 +536,8 @@ void npc::assess_danger()
             continue;
         }
         // ignore targets behind glass even if we can see them
-        if( !clear_shot_reach( pos(), critter.pos(), false ) ) {
+        if( !here.clear_shot_reach( pos(), critter.pos(), false ) ) {
+            add_msg(m_good,critter.get_name());
             continue;
         }
 
@@ -613,7 +596,7 @@ void npc::assess_danger()
             return 0.0f;
         }
         // ignore targets behind glass even if we can see them
-        if( !clear_shot_reach( pos(), foe.pos(), false ) ) {
+        if( !here.clear_shot_reach( pos(), foe.pos(), false ) ) {
             return 0.0f;
         }
         bool is_too_close = dist <= def_radius;
