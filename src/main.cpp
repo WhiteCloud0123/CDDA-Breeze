@@ -341,6 +341,7 @@ int main( int argc, const char *argv[] )
     method_id_getDefaultSetting = jni_env->GetMethodID(j_class, "getDefaultSetting", "(Ljava/lang/String;Z)Z");
     method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
     method_id_set_force_full_screen = jni_env->GetMethodID(j_class, "set_force_full_screen", "(Z)V");
+    method_id_set_hide_status_bar = jni_env->GetMethodID(j_class, "set_hide_status_bar", "(Z)V");
     jni_env->DeleteLocalRef(temp_activity);
     jni_env->DeleteLocalRef(temp_class);
 
@@ -412,6 +413,7 @@ int main( int argc, const char *argv[] )
 
 #if defined(__ANDROID__)
 
+    jni_env->CallVoidMethod(j_activity, method_id_set_hide_status_bar, ::get_option<bool>("非全屏模式下隐藏状态栏"));
     jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
     jstring extra_button_str = jni_env->NewStringUTF(get_option<std::string>("默认扩展按键").c_str());
     jni_env->CallVoidMethod(j_activity, method_id_addExtraButton, extra_button_str);
