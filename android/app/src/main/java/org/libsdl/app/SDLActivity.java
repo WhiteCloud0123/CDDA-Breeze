@@ -383,7 +383,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 return insets;
             }
         });
-
+        decorView.setBackgroundColor(Color.BLACK);
     }
 
     protected void pauseNativeThread() {
