@@ -2713,7 +2713,7 @@ void options_manager::add_options_android()
         true
     );
 
-    add("非全屏模式下隐藏状态栏", "android", to_translation("非全屏模式下只隐藏状态栏"),
+    add("非全屏模式下隐藏状态栏", "android", to_translation("非全屏模式下隐藏状态栏"),
         to_translation("非全屏模式下隐藏状态栏。修改后需要重新启动。"),
         false
     );
