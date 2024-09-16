@@ -420,6 +420,7 @@ int main( int argc, const char *argv[] )
     jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, ::get_option<bool>("启用扩展按键"));
     jni_env->DeleteLocalRef(extra_button_str);
 
+    input_context::input_context_stack.clear();
 #endif
 
     while( true ) {
