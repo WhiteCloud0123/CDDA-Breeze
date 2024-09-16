@@ -348,7 +348,7 @@ bool map::clear_shot_reach(const tripoint& from, const tripoint& to, bool check_
             return false;
         }
         if (get_map().impassable(p)) {
-            if (m.is_transparent(p) && (square_dist(from.xy(), p.xy()) == 1 || m.coverage(p) <= 60)) {
+            if (m.is_transparent(p) && (square_dist(from.xy(), p.xy()) == 1 || m.coverage(p) <=50) ) {
                 return true;
             }
             else {
