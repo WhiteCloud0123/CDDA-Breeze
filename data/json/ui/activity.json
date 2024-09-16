@@ -7,37 +7,37 @@
     "clauses": [
       {
         "id": "none",
-        "text": "None",
+        "text": "无",
         "color": "light_gray",
         "condition": { "compare_int": [ { "u_val": "activity_level" }, "==", { "const": 0 } ] }
       },
       {
         "id": "light",
-        "text": "Light",
+        "text": "轻度",
         "color": "yellow",
         "condition": { "compare_int": [ { "u_val": "activity_level" }, "==", { "const": 1 } ] }
       },
       {
         "id": "moderate",
-        "text": "Moderate",
+        "text": "中度",
         "color": "yellow",
         "condition": { "compare_int": [ { "u_val": "activity_level" }, "==", { "const": 2 } ] }
       },
       {
         "id": "brisk",
-        "text": "Brisk",
+        "text": "重度",
         "color": "light_red",
         "condition": { "compare_int": [ { "u_val": "activity_level" }, "==", { "const": 3 } ] }
       },
       {
         "id": "active",
-        "text": "Active",
+        "text": "剧烈",
         "color": "light_red",
         "condition": { "compare_int": [ { "u_val": "activity_level" }, "==", { "const": 4 } ] }
       },
       {
         "id": "extreme",
-        "text": "Extreme",
+        "text": "极限",
         "color": "red",
         "condition": { "compare_int": [ { "u_val": "activity_level" }, ">=", { "const": 5 } ] }
       }
