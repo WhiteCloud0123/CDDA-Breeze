@@ -404,8 +404,8 @@
         "min_radius": 3,
         "max_radius": 20,
         "lifespan": [ "5 seconds", "2 minutes" ],
-        "spawn_message": "Small gashes in reality open nearby, revealing an endless expanse of black water.  An alien being spills through before the portals close.",
-        "spawn_message_plural": "Small gashes in reality open nearby, revealing an endless expanse of black water.  Several alien beings spill out before the portals close."
+        "spawn_message": "四周的现实撕裂出了几道细小的裂缝，露出一望无际的黑水。数只异界生物在传送门关闭前从中涌出。",
+        "spawn_message_plural": "四周的现实撕裂出了几道细小的裂缝，露出一望无际的黑水。数只异界生物在传送门关闭前从中涌出。"
       }
     ]
   },
@@ -671,7 +671,7 @@
         "outdoor_only": true
       },
       {
-        "u_make_sound": "a high-pitched squeal.",
+        "u_make_sound": "尖利的叫声",
         "target_var": { "global_val": "grass_transform" },
         "volume": 60,
         "type": "alert"

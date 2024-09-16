@@ -1083,17 +1083,17 @@ std::function<bool( const item & )> recipe::get_component_filter(
 bool recipe::npc_can_craft(std::string& reason) const
 {
     if (is_practice()) {
-        reason = _("Ordering practice to NPC is not implemented yet.");
+        reason = "要求NPC练习的功能尚未实现。";
         return false;
     }
     if (result()->phase != phase_id::SOLID) {
-        reason = _("Ordering no solid item to NPC is not implemented yet.");
+        reason = "要求NPC制作非固体物品的功能尚未实现。";
         return false;
     }
     if (!get_byproducts().empty()) {
         for (const std::pair<const itype_id, int>& bp : get_byproducts()) {
             if (bp.first->phase != phase_id::SOLID) {
-                reason = _("Ordering no solid item to NPC is not implemented yet.");
+                reason = "要求NPC制作非固体物品的功能尚未实现。";
                 return false;
             }
         }
