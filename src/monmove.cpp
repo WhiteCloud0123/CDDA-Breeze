@@ -364,7 +364,7 @@ static void flood_fill_zone(Creature& origin)
             return false;
         },
         [&tracker](const tripoint_bub_ms& loc) {
-            Creature* creature = tracker.creature_at<Creature>(loc);
+            Creature* creature = tracker.creature_at<Creature>(loc,true);
             if (creature) {
                 creature->set_reachable_zone(zone_number * zone_tick);
             }
