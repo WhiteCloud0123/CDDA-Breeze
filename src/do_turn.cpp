@@ -500,6 +500,9 @@ void handle_key_blocking_activity()
             || u.activity.moves_left > 0 );
     if( has_unfinished_activity || u.has_destination() ) {
         input_context ctxt = get_default_mode_input_context();
+#if defined (__ANDROID__)
+        input_context::input_context_stack.push_back(&ctxt);
+#endif
         const std::string action = ctxt.handle_input( 0 );
         bool refresh = true;
         if( action == "pause" ) {
