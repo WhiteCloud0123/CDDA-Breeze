@@ -128,12 +128,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         extraButtonSP = new Button(this);
         extraButtonSP.setBackgroundColor(android.R.color.transparent);
-        extraButtonSP.setText("键盘");
+        extraButtonSP.setText("tab");
+        extraButtonSP.setAllCaps(false);
         extraButtonSP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_TAB));
             }
         });
         extraButtonSP.setAlpha(0.5f);
