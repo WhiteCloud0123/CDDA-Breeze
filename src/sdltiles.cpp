@@ -153,9 +153,6 @@ static int TERMINAL_HEIGHT;
 static bool fullscreen;
 static int scaling_factor;
 
-std::string character_name_breeze = "";
-bool is_in_trading = false;
-
 using cata_cursesport::curseline;
 using cata_cursesport::cursecell;
 static std::vector<curseline> oversized_framebuffer;
@@ -548,7 +545,7 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
 void draw_character_picture() {
 
     std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-    std::string gfx_p_t = gfx_string + "/character_picture/" + character_name_breeze + ".png";
+    std::string gfx_p_t = gfx_string + "/character_picture/" + "" + ".png";
     
     if (character_texture == nullptr) {
 
@@ -621,17 +618,6 @@ void refresh_display()
     }
     draw_virtual_joystick();
 #endif
-    
-
-    if ( character_name_breeze != "") {
-        if (get_option<bool>("显示特殊NPC的图片") && is_in_trading ==false) {
-            
-            draw_character_picture();
-
-        }
-        
-            
-    }
 
     SDL_RenderPresent( renderer.get() );
     SetRenderTarget( renderer, display_buffer );
@@ -1474,6 +1460,26 @@ static bool draw_window( Font_Ptr &font, const catacurses::window &w, const poin
             }
         }
     }
+
+    if (win->image) {
+
+        SDL_Rect srcrect;
+        srcrect.x = 0;
+        srcrect.y = 0;
+        srcrect.w = 381;
+        srcrect.h = 522;
+
+        SDL_Rect dstrect;
+        dstrect.x = 0;
+        dstrect.y = 0;
+        dstrect.w = 381;
+        dstrect.h = 522;
+
+        SDL_RenderCopy(renderer.get(),win->image, &srcrect, &dstrect);
+        
+    }
+
+
     win->draw = false; //We drew the window, mark it as so
     //Keeping track of last drawn window and tilemode zoom level
     ::winBuffer = w.weak_ptr();

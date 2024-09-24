@@ -7,6 +7,7 @@
 #include <type_traits>
 
 #include "string_formatter.h"
+#include "sdl_wrappers.h"
 
 class nc_color;
 struct point;
@@ -92,7 +93,9 @@ using attr_t = unsigned short;
 extern window newscr;
 extern window stdscr;
 
-window newwin( int nlines, int ncols, const point &begin );
+window newwin(int nlines, int ncols, const point& begin );
+window newwin(int nlines, int ncols, const point& begin, SDL_Texture* image, int image_width, int image_height, point &image_pos);
+
 void wborder( const window &win, chtype ls, chtype rs, chtype ts, chtype bs, chtype tl, chtype tr,
               chtype bl, chtype br );
 void mvwhline( const window &win, const point &p, chtype ch, int n );

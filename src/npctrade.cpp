@@ -278,8 +278,6 @@ void npc_trading::update_npc_owed( npc &np, int your_balance, int your_sale_valu
 // cost is positive when the player owes the NPC money for a service to be performed
 bool npc_trading::trade( npc &np, int cost, const std::string &deal )
 {   
-    
-    is_in_trading = true;
 
     np.shop_restock();
     //np.drop_items( np.weight_carried() - np.weight_capacity(),
@@ -336,7 +334,6 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
         }
     }
 
-    is_in_trading = false;
     return trade_result.traded ;
 }
 

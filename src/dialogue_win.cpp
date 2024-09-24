@@ -181,3 +181,22 @@ void dialogue_window::set_responses( const std::vector<talk_data> &responses )
 {
     responses_list->create_entries( responses );
 }
+
+catacurses::window* dialogue_window::get_d_win() {
+    return &d_win;
+}
+
+catacurses::window* dialogue_window::get_history_win() {
+    return &history_win;
+}
+
+catacurses::window* dialogue_window::get_resp_win() {
+    return &resp_win;
+}
+
+void dialogue_window::prepare_image(SDL_Texture* image, int image_width, int image_height, point& image_pos) {
+    this->image = image;
+    this->image_width = image_width;
+    this->image_height = image_height;
+    this->image_pos = &image_pos;
+}

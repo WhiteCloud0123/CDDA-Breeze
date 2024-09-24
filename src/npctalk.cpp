@@ -29,6 +29,7 @@
 #include "condition.h"
 #include "coordinates.h"
 #include "creature_tracker.h"
+#include "cursesport.h"
 #include "debug.h"
 #include "effect_on_condition.h"
 #include "enums.h"
@@ -1147,12 +1148,10 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
 
     
     dialogue d( get_talker_for( *this ), std::move( talk_with ) );
-    
+    std::string character_name = "";
     // 传递这个npc的名字
     if (who != nullptr) {
-        
-        character_name_breeze = who->get_name();
-    
+        character_name = who->get_name();
     }
     
 
@@ -1194,17 +1193,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         }
     } while( !d.done );
 
-    if (who != nullptr) {
-
-        // 重新将名字重置
-        character_name_breeze = "";
-        // 将texture重置
-        character_texture = nullptr;
-    
-    }
-    
-
-
+   
     if( activity.id() == ACT_AIM && !has_weapon() ) {
         cancel_activity();
         // don't query certain activities that are started from dialogue

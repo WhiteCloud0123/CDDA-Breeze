@@ -46,9 +46,6 @@ extern int fontheight;
 extern int fontwidth;
 
 extern ParticleSystem particle_system_weather;
-extern std::string character_name_breeze;
-extern SDL_Texture* character_texture;
-extern bool is_in_trading;
 
 
 
