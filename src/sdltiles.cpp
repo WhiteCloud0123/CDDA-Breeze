@@ -126,9 +126,6 @@ static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
 ParticleSystem particle_system_weather;
-SDL_Texture* character_texture  =  nullptr;
-
-
 
 static SDL_Window_Ptr window;
 static SDL_Renderer_Ptr renderer;
@@ -542,49 +539,12 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
 
 #endif
 
-void draw_character_picture() {
+SDL_Texture* get_character_picture(std::string &name) {
 
     std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-    std::string gfx_p_t = gfx_string + "/character_picture/" + "" + ".png";
-    
-    if (character_texture == nullptr) {
-
-        character_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
-    
-    }
-    
-    if (character_texture != nullptr) {
-
-        const int& font_width_ref = get_option<int>("FONT_WIDTH");
-        const int& font_height_ref = get_option<int>("FONT_HEIGHT");
-
-        const int& win_beginx = TERMX > FULL_SCREEN_WIDTH ? (TERMX - FULL_SCREEN_WIDTH) / 4 : 0;
-        const int& win_beginy = TERMY > FULL_SCREEN_HEIGHT ? (TERMY - FULL_SCREEN_HEIGHT) / 4 : 0;
-
-        SDL_Rect srcrect;
-        srcrect.x = 0;
-        srcrect.y = 0;
-        srcrect.w = 381;
-        srcrect.h = 522;
-
-
-        SDL_Rect dstrect;
-        dstrect.x = (TERMX - win_beginx) * font_width_ref - 381;
-        dstrect.y = WindowHeight - 531 - win_beginy * font_height_ref;
-        dstrect.w = 381;
-        dstrect.h = 522;
-
-#if defined(__ANDROID__)
-       
-        dstrect.x = WindowWidth - win_beginx * font_width_ref - 381 - visible_display_frame.x * 2;
-        dstrect.y = WindowHeight - 531 - win_beginy * font_height_ref * 2;
-
-#endif
-        
-
-        SDL_RenderCopy(renderer.get(), character_texture, &srcrect, &dstrect);
-
-    }
+    std::string gfx_p_t = gfx_string + "/character_picture/" + name + ".png";
+    SDL_Texture* image = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+    return image;
 
 }
 
@@ -1466,14 +1426,14 @@ static bool draw_window( Font_Ptr &font, const catacurses::window &w, const poin
         SDL_Rect srcrect;
         srcrect.x = 0;
         srcrect.y = 0;
-        srcrect.w = 381;
-        srcrect.h = 522;
+        srcrect.w = win->image_width;
+        srcrect.h = win->image_height;
 
         SDL_Rect dstrect;
-        dstrect.x = 0;
-        dstrect.y = 0;
-        dstrect.w = 381;
-        dstrect.h = 522;
+        dstrect.x = win->image_pos.x;
+        dstrect.y = win->image_pos.y;
+        dstrect.w = win->image_width;
+        dstrect.h = win->image_height;
 
         SDL_RenderCopy(renderer.get(),win->image, &srcrect, &dstrect);
         

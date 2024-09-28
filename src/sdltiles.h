@@ -47,6 +47,7 @@ extern int fontwidth;
 
 extern ParticleSystem particle_system_weather;
 
+SDL_Texture* get_character_picture(std::string& name);
 
 
 // This function may refresh the screen, so it should not be used where tiles
