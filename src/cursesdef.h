@@ -94,7 +94,7 @@ extern window newscr;
 extern window stdscr;
 
 window newwin(int nlines, int ncols, const point& begin );
-window newwin(int nlines, int ncols, const point& begin, SDL_Texture* image, int image_width, int image_height, point &image_pos);
+window newwin(int nlines, int ncols, const point& begin, SDL_Texture* image, int image_width, int image_height, point image_pos);
 
 void wborder( const window &win, chtype ls, chtype rs, chtype ts, chtype bs, chtype tl, chtype tr,
               chtype bl, chtype br );

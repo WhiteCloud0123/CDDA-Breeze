@@ -96,7 +96,7 @@ catacurses::window catacurses::newwin( int nlines, int ncols, const point &begin
 }
 
 catacurses::window catacurses::newwin(int nlines, int ncols, const point& begin, 
-    SDL_Texture* image, int image_width, int image_height, point& image_pos)
+    SDL_Texture* image, int image_width, int image_height, point image_pos)
 {
     if (begin.y < 0 || begin.x < 0) {
         return window(); //it's the caller's problem now (since they have logging functions declared)
