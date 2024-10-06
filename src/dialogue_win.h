@@ -54,10 +54,22 @@ class dialogue_window
         bool is_computer = false;
         bool is_not_conversation = false;
         int sel_response = 0;
+
+        catacurses::window* get_d_win();
+        catacurses::window* get_history_win();
+        catacurses::window* get_resp_win();
+
+        void prepare_image(SDL_Texture* image, int image_width, int image_height, point image_pos);
+
     private:
         catacurses::window d_win;
         catacurses::window history_win;
         catacurses::window resp_win;
+
+        SDL_Texture* image;
+        int image_width;
+        int image_height;
+        point image_pos;
 
         struct history_message {
             inline history_message( nc_color c, const std::string &t ) : color( c ), text( t ) {}

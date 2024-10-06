@@ -31,6 +31,7 @@
 #include "construction.h"
 #include "creature_tracker.h"
 #include "cursesdef.h"
+#include "cursesport.h"
 #include "damage.h"
 #include "debug.h"
 #include "debug_menu.h"
@@ -79,6 +80,7 @@
 #include "rng.h"
 #include "safemode_ui.h"
 #include "scores_ui.h"
+#include "sdltiles.h"
 #include "sounds.h"
 #include "string_formatter.h"
 #include "timed_event.h"
@@ -1510,13 +1512,10 @@ std::pair<point, point> draw_position() {
 
 
 
-
-void show_当前职业情况() {
+void show_profession_status() {
 
 
     avatar& player_avatar = get_avatar();
-
-
 
     catacurses::window w_01;
     input_context ctxt("");
@@ -3221,7 +3220,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
         break;
     case ACTION_显示当前职业情况:
 
-        show_当前职业情况();
+        show_profession_status();
 
         break;
     case ACTION_命令视野中的我方丧尸全部等待: {

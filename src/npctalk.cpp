@@ -29,6 +29,7 @@
 #include "condition.h"
 #include "coordinates.h"
 #include "creature_tracker.h"
+#include "cursesport.h"
 #include "debug.h"
 #include "effect_on_condition.h"
 #include "enums.h"
@@ -57,6 +58,7 @@
 #include "npc.h"
 #include "npctalk.h"
 #include "npctrade.h"
+#include "options.h"
 #include "output.h"
 #include "overmapbuffer.h"
 #include "pimpl.h"
@@ -1147,12 +1149,10 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
 
     
     dialogue d( get_talker_for( *this ), std::move( talk_with ) );
-    
-    // 传递这个npc的名字
+    std::string character_name = "";
+    SDL_Texture* image;
     if (who != nullptr) {
-        
-        character_name_breeze = who->get_name();
-    
+        character_name = who->get_name();
     }
     
 
@@ -1173,6 +1173,30 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     dialogue_window d_win;
     d_win.is_computer = is_computer;
     d_win.is_not_conversation = is_not_conversation;
+
+    if (character_name != "") {
+        image = get_character_picture(character_name);
+
+        const int font_width = get_option<int>("FONT_WIDTH");
+        const int font_height = get_option<int>("FONT_HEIGHT");
+
+        const int win_beginx = TERMX > FULL_SCREEN_WIDTH ? (TERMX - FULL_SCREEN_WIDTH) / 4 : 0;
+        const int win_beginy = TERMY > FULL_SCREEN_HEIGHT ? (TERMY - FULL_SCREEN_HEIGHT) / 4 : 0;
+
+        point p((TERMX - win_beginx) * font_width - 381, WindowHeight - 531 - win_beginy * font_height);
+        
+
+#if defined(__ANDROID__)
+
+        p.x = WindowWidth - win_beginx * font_width - 381 - visible_display_frame.x * 2;
+        p.y = WindowHeight - 531 - win_beginy * font_height * 2;
+
+#endif
+
+        d_win.prepare_image(image,381,522,p);
+    }
+
+
     // Main dialogue loop
     do {
         d.actor( true )->update_missions( d.missions_assigned );
@@ -1194,15 +1218,10 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         }
     } while( !d.done );
 
-    if (who != nullptr) {
-
-        // 重新将名字重置
-        character_name_breeze = "";
-        // 将texture重置
-        character_texture = nullptr;
-    
+   
+    if (character_name != "") {
+        SDL_DestroyTexture(image);
     }
-    
 
 
     if( activity.id() == ACT_AIM && !has_weapon() ) {

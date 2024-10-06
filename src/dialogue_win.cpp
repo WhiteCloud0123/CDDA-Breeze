@@ -38,7 +38,7 @@ void dialogue_window::resize( ui_adaptor &ui )
     d_win = catacurses::newwin( maxy, maxx, point( win_beginx, win_beginy ) );
     ui.position_from_window( d_win );
     history_win = catacurses::newwin( maxy - 1 - RESPONSES_LINES - 2 - 1, maxx - 1, point( win_beginx,
-                                      win_beginy + 2 ) );
+                                      win_beginy + 2 ) , image, image_width, image_height, image_pos);
     resp_win = catacurses::newwin( RESPONSES_LINES - 1, maxx / 2, point( win_beginx,
                                    win_beginy + maxy - RESPONSES_LINES ) );
 
@@ -180,4 +180,23 @@ void dialogue_window::print_header( const std::string &name ) const
 void dialogue_window::set_responses( const std::vector<talk_data> &responses )
 {
     responses_list->create_entries( responses );
+}
+
+catacurses::window* dialogue_window::get_d_win() {
+    return &d_win;
+}
+
+catacurses::window* dialogue_window::get_history_win() {
+    return &history_win;
+}
+
+catacurses::window* dialogue_window::get_resp_win() {
+    return &resp_win;
+}
+
+void dialogue_window::prepare_image(SDL_Texture* image, int image_width, int image_height, point image_pos) {
+    this->image = image;
+    this->image_width = image_width;
+    this->image_height = image_height;
+    this->image_pos = image_pos;
 }

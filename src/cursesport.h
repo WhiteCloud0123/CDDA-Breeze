@@ -67,6 +67,11 @@ struct WINDOW {
     bool draw;
     point cursor;
     std::vector<curseline> line;
+    SDL_Texture* image;
+    int image_width;
+    int image_height;
+    point image_pos;
+
 };
 
 extern std::array<pairs, 100> colorpairs;

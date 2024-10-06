@@ -61,7 +61,7 @@ static bool wmove_internal( const catacurses::window &win_, const point &p )
 //Pseudo-Curses Functions           *
 //***********************************
 
-catacurses::window catacurses::newwin( int nlines, int ncols, const point &begin )
+catacurses::window catacurses::newwin( int nlines, int ncols, const point &begin)
 {
     if( begin.y < 0 || begin.x < 0 ) {
         return window(); //it's the caller's problem now (since they have logging functions declared)
@@ -93,6 +93,46 @@ catacurses::window catacurses::newwin( int nlines, int ncols, const point &begin
     return catacurses::window( std::shared_ptr<void>( newwindow, []( void *const w ) {
         delete static_cast<cata_cursesport::WINDOW *>( w );
     } ) );
+}
+
+catacurses::window catacurses::newwin(int nlines, int ncols, const point& begin, 
+    SDL_Texture* image, int image_width, int image_height, point image_pos)
+{
+    if (begin.y < 0 || begin.x < 0) {
+        return window(); //it's the caller's problem now (since they have logging functions declared)
+    }
+
+    // default values
+    if (ncols == 0) {
+        ncols = TERMX - begin.x;
+    }
+    if (nlines == 0) {
+        nlines = TERMY - begin.y;
+    }
+
+    cata_cursesport::WINDOW* newwindow = new cata_cursesport::WINDOW();
+    newwindow->width = ncols;
+    newwindow->height = nlines;
+    newwindow->pos = begin;
+    newwindow->inuse = true;
+    newwindow->draw = false;
+    newwindow->BG = black;
+    newwindow->FG = static_cast<base_color>(8);
+    newwindow->cursor = point_zero;
+    newwindow->line.resize(nlines);
+
+    newwindow->image = image;
+    newwindow->image_width = image_width;
+    newwindow->image_height = image_height;
+    newwindow->image_pos = image_pos;
+
+    for (int j = 0; j < nlines; j++) {
+        newwindow->line[j].chars.resize(ncols);
+        newwindow->line[j].touched = true; //Touch them all !?
+    }
+    return catacurses::window(std::shared_ptr<void>(newwindow, [](void* const w) {
+        delete static_cast<cata_cursesport::WINDOW*>(w);
+        }));
 }
 
 static int newline( cata_cursesport::WINDOW *win )
