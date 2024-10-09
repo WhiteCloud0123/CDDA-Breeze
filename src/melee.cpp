@@ -2808,7 +2808,7 @@ void player_hit_message( Character *attacker, const std::string &message,
         //player hits monster melee
         SCT.add( point( t.posx(), t.posy() ),
                  direction_from( point_zero, point( t.posx() - attacker->posx(), t.posy() - attacker->posy() ) ),
-                 get_hp_bar( dam, t.get_hp_max(), true ).first, m_good,
+                 std::to_string(dam), m_good,
                  sSCTmod, gmtSCTcolor );
 
         if( t.get_hp() > 0 ) {

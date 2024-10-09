@@ -989,7 +989,7 @@ void Creature::messaging_projectile_attack( const Creature *source,
                 //player hits monster ranged
                 SCT.add( point( posx(), posy() ),
                          direction_from( point_zero, point( posx() - source->posx(), posy() - source->posy() ) ),
-                         get_hp_bar( total_damage, get_hp_max(), true ).first,
+                         std::to_string(total_damage),
                          m_good, hit_selection.message, hit_selection.gmtSCTcolor );
 
                 if( get_hp() > 0 ) {

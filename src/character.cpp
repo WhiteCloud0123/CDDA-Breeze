@@ -7621,7 +7621,7 @@ dealt_damage_instance Character::deal_damage( Creature *source, bodypart_id bp,
             //monster hits player melee
             SCT.add( point( posx(), posy() ),
                      direction_from( point_zero, point( posx() - source->posx(), posy() - source->posy() ) ),
-                     get_hp_bar( dam, get_hp_max( bp ) ).first, m_bad, body_part_name( bp ), m_neutral );
+                     std::to_string(dam), m_bad, body_part_name(bp), m_neutral);
         }
     }
 
