@@ -20,6 +20,7 @@ int pixel_minimap_b;
 int pixel_minimap_a;
 bool use_particle_system;
 bool use_show_creature_hp_bar;
+bool use_show_creature_view_line;
 bool use_show_player_move_point;
 bool use_animation;
 int terminal_x;

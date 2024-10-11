@@ -407,6 +407,7 @@ class cata_tiles
 
         void draw_hp_bar(const tripoint& p);
 
+        void draw_creature_view_line();
 
     protected:
         /** How many rows and columns of tiles fit into given dimensions **/

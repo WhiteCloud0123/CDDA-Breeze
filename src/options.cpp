@@ -1635,6 +1635,10 @@ void options_manager::add_options_interface()
     add("派系态度以数值显示", "interface", to_translation("派系态度以数值显示"), to_translation("当此选项的值为 是 时，在派系界面，对你的态度会显示具体的数值。"), false);
     add("显示玩家的剩余行动点", "interface", to_translation("显示玩家的剩余行动点"), to_translation("当此选项的值为 是 时，会在游戏画面上显示玩家的剩余行动点。"), false);
     add("显示生物血条", "interface", to_translation("显示生物血条"), to_translation("当此选项的值为 是 时，会在游戏画面上显示除了玩家之外的其他生物的血条。"), false);
+    add("显示生物视线", "interface", to_translation("显示生物视线"),
+        to_translation("开启后，当视野中的生物看见玩家时，会绘制一条从怪物到玩家的直线。生物对玩家的态度与直线颜色的对照：敌对->红色；友好->绿色；其他态度->灰白色"),
+        false
+    );
     add("启用新版区域显示", "interface", to_translation("启用新版区域显示"),
         to_translation("开启后，当进行区域管理时，将同时显示当前选定的区域和未选定的区域，并用两种颜色进行区分。"),
         true
@@ -3702,6 +3706,7 @@ static void update_options_cache()
     use_pinyin_search = ::get_option<bool>("USE_PINYIN_SEARCH");
     use_particle_system = ::get_option<bool>("启用粒子系统");
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
+    use_show_creature_view_line = ::get_option<bool>("显示生物视线");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_animation =::get_option<bool>("ANIMATIONS");
     terminal_x = ::get_option<int>("TERMINAL_X");
