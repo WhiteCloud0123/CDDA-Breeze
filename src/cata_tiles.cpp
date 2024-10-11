@@ -1862,28 +1862,22 @@ void cata_tiles::draw_hp_bar( const tripoint& p ) {
 void cata_tiles::draw_creature_view_line() {
     Character& player = get_player_character();
     point player_screen_pos = player_to_screen(player.pos().xy());
-    std::map<point, SDL_Color> line_data_map;
-
+    point creature_screen_pos;
+    SDL_Color line_color;
     for (Creature* c : player.get_visible_creatures(MAX_VIEW_DISTANCE)) {
         if (c->sees(player)) {
             if (c->attitude_to(player) == Creature::Attitude::HOSTILE) {
-                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_red);
+                line_color = curses_color_to_SDL(c_red);
             }
             else if (c->attitude_to(player) == Creature::Attitude::FRIENDLY) {
-                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_light_green);
+                line_color = curses_color_to_SDL(c_light_green);
             }
             else {
-                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_black_white);
+                line_color = curses_color_to_SDL(c_black_white);
             }
-        }
-    }
-
-    if (!line_data_map.empty()) {
-        for (const std::pair<point, SDL_Color>& data : line_data_map) {
-            const point& first_point = data.first;
-            const SDL_Color& line_color = data.second;
+            creature_screen_pos = player_to_screen(c->pos().xy());
             SetRenderDrawColor(renderer, line_color.r, line_color.g, line_color.b, line_color.a);
-            SDL_RenderDrawLine(renderer.get(), first_point.x, first_point.y, player_screen_pos.x, player_screen_pos.y);
+            SDL_RenderDrawLine(renderer.get(), creature_screen_pos.x, creature_screen_pos.y, player_screen_pos.x, player_screen_pos.y);
         }
     }
 }
