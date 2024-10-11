@@ -54,7 +54,8 @@
     "based_on": "neither",
     "suspendable": false,
     "no_resume": true,
-    "multi_activity": true
+    "multi_activity": true,
+    "auto_needs": true
   },
   {
     "type": "activity_type",
@@ -264,56 +265,64 @@
     "type": "activity_type",
     "activity_level": "LIGHT_EXERCISE",
     "verb": "bleeding",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_BUTCHER",
     "type": "activity_type",
     "activity_level": "BRISK_EXERCISE",
     "verb": "butchering",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_BUTCHER_FULL",
     "type": "activity_type",
     "activity_level": "BRISK_EXERCISE",
     "verb": "butchering",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_FIELD_DRESS",
     "type": "activity_type",
     "activity_level": "MODERATE_EXERCISE",
     "verb": "field dressing",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_SKIN",
     "type": "activity_type",
     "activity_level": "MODERATE_EXERCISE",
     "verb": "skinning",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_QUARTER",
     "type": "activity_type",
     "activity_level": "ACTIVE_EXERCISE",
     "verb": "quartering",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_DISMEMBER",
     "type": "activity_type",
     "activity_level": "ACTIVE_EXERCISE",
     "verb": "dismembering",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_DISSECT",
     "type": "activity_type",
     "activity_level": "LIGHT_EXERCISE",
     "verb": "dissecting",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_LONGSALVAGE",
@@ -404,7 +413,8 @@
     "type": "activity_type",
     "activity_level": "EXTRA_EXERCISE",
     "verb": "mining",
-    "based_on": "speed"
+    "based_on": "speed",
+    "auto_needs": true
   },
   {
     "id": "ACT_PULP",
