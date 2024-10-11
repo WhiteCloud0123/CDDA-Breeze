@@ -2616,6 +2616,7 @@ input_context create_default_mode_input_context()
     ctxt.register_action( "toggle_auto_pickup" );
     ctxt.register_action( "toggle_thief_mode" );
     ctxt.register_action( "toggle_iso_walls" );
+    ctxt.register_action("toggle_show_creature_view_line");
     ctxt.register_action( "diary" );
     ctxt.register_action( "action_menu" );
     ctxt.register_action( "main_menu" );

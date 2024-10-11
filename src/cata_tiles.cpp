@@ -1867,7 +1867,7 @@ void cata_tiles::draw_creature_view_line() {
     for (Creature* c : player.get_visible_creatures(MAX_VIEW_DISTANCE)) {
         if (c->sees(player)) {
             if (c->attitude_to(player) == Creature::Attitude::HOSTILE) {
-                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_red_red);
+                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_red);
             }
             else if (c->attitude_to(player) == Creature::Attitude::FRIENDLY) {
                 line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_light_green);
