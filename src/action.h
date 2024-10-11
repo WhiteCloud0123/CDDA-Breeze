@@ -330,6 +330,7 @@ enum action_id : int {
     ACTION_TOGGLE_AUTO_FORAGING,
     /** Turn auto pickup on/off */
     ACTION_TOGGLE_AUTO_PICKUP,
+    ACTION_TOGGLE_SHOW_CREATURE_VIEW_LINE,
     /** Toggle temperature map */
     ACTION_DISPLAY_TEMPERATURE,
     /** Toggle vehicle autopilot data */

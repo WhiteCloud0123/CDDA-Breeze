@@ -1761,6 +1761,11 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                    do_draw_sct || do_draw_zones;
 
     draw_footsteps_frame( center );
+
+    if (use_show_creature_view_line) {
+        draw_creature_view_line();
+    }
+
     if( in_animation ) {
         if( do_draw_explosion ) {
             draw_explosion_frame();
@@ -1852,6 +1857,35 @@ void cata_tiles::draw_hp_bar( const tripoint& p ) {
         geometry->rect(renderer, draw_rect, fog_color);
         SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 
+}
+
+void cata_tiles::draw_creature_view_line() {
+    Character& player = get_player_character();
+    const point& player_screen_pos = player_to_screen(player.pos().xy());
+    std::map<point, SDL_Color> line_data_map;
+
+    for (Creature* c : player.get_visible_creatures(MAX_VIEW_DISTANCE)) {
+        if (c->sees(player)) {
+            if (c->attitude_to(player) == Creature::Attitude::HOSTILE) {
+                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_red_red);
+            }
+            else if (c->attitude_to(player) == Creature::Attitude::FRIENDLY) {
+                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_light_green);
+            }
+            else {
+                line_data_map[player_to_screen(c->pos().xy())] = curses_color_to_SDL(c_black_white);
+            }
+        }
+    }
+
+    if (!line_data_map.empty()) {
+        for (const std::pair<point, SDL_Color>& data : line_data_map) {
+            const point& first_point = data.first;
+            const SDL_Color& line_color = data.second;
+            SetRenderDrawColor(renderer, line_color.r, line_color.g, line_color.b, line_color.a);
+            SDL_RenderDrawLine(renderer.get(), first_point.x, first_point.y, player_screen_pos.x, player_screen_pos.y);
+        }
+    }
 }
 
 void cata_tiles::get_window_tile_counts( const int width, const int height, int &columns,

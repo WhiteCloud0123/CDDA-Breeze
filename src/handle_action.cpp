@@ -3549,6 +3549,15 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             get_option<bool>("AUTO_MINING") ? _("ON") : _("OFF"));
         break;
 
+    case ACTION_TOGGLE_SHOW_CREATURE_VIEW_LINE:
+        get_options().get_option("显示生物视线").setNext();
+        get_options().save();
+        //~ Auto Mining is now ON/OFF
+        add_msg(_("%s is now %s."),
+            get_options().get_option("显示生物视线").getMenuText(),
+            get_option<bool>("显示生物视线") ? _("ON") : _("OFF"));
+        break;
+
     case ACTION_TOGGLE_THIEF_MODE:
         if (player_character.get_value("THIEF_MODE") == "THIEF_ASK") {
             player_character.set_value("THIEF_MODE", "THIEF_HONEST");
