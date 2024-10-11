@@ -1861,7 +1861,7 @@ void cata_tiles::draw_hp_bar( const tripoint& p ) {
 
 void cata_tiles::draw_creature_view_line() {
     Character& player = get_player_character();
-    const point& player_screen_pos = player_to_screen(player.pos().xy());
+    point player_screen_pos = player_to_screen(player.pos().xy());
     std::map<point, SDL_Color> line_data_map;
 
     for (Creature* c : player.get_visible_creatures(MAX_VIEW_DISTANCE)) {
