@@ -10,6 +10,8 @@
 
 #include "point.h"
 
+#include "sdl_wrappers.h"
+
 namespace catacurses
 {
 class window;
