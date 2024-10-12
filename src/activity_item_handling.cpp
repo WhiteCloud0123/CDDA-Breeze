@@ -442,7 +442,6 @@ void put_into_vehicle_or_drop( Character &you, item_drop_reason reason,
         int fix_y_dest_omt = dest_abs_ms.y() >= 0 ? dest_abs_ms.y() / 24  : std::floor(static_cast<double>(-dest_abs_ms.y()) / 24);
 
         const tripoint_abs_omt &dest_omt = tripoint_abs_omt(fix_x_dest_omt, fix_y_dest_omt, dest_abs_ms.z());
-        const tripoint_abs_omt &player_omt = you.global_omt_location();
         
         std::set<std::string> name_set;
         std::string note = "";
@@ -3229,7 +3228,6 @@ static bool generic_multi_activity_do(
             const optional_vpart_position vp = here.veh_at(src_loc);
             if (vp) {
                 int cargo_part = vp->vehicle().part_with_feature(vp->part_index(), "CARGO", false);
-                bool vp_has_items = cargo_part >= 0 && !vp->vehicle().get_items(cargo_part).empty();
 
                 for (item& elem : vp->vehicle().get_items(cargo_part)) {
                     if (elem.is_disassemblable()) {
