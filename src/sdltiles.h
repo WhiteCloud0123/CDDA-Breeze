@@ -49,6 +49,9 @@ extern ParticleSystem particle_system_weather;
 
 SDL_Texture* get_character_picture(std::string& name);
 
+#if defined(__ANDROID__)
+SDL_Rect &get_visible_display_frame();
+#endif
 
 // This function may refresh the screen, so it should not be used where tiles
 // may be displayed. Actually, this is supposed to be called from init.cpp,

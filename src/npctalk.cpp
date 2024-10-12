@@ -1187,7 +1187,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         
 
 #if defined(__ANDROID__)
-
+        SDL_Rect& visible_display_frame = get_visible_display_frame();
         p.x = WindowWidth - win_beginx * font_width - 381 - visible_display_frame.x * 2;
         p.y = WindowHeight - 531 - win_beginy * font_height * 2;
 

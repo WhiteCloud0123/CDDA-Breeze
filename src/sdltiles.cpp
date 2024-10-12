@@ -537,6 +537,12 @@ SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferH
     return dstrect;
 }
 
+
+SDL_Rect& get_visible_display_frame() {
+    return visible_display_frame;
+}
+
+
 #endif
 
 SDL_Texture* get_character_picture(std::string &name) {
