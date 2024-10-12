@@ -3090,6 +3090,7 @@ void craft_activity_actor::do_turn( player_activity &act, Character &crafter )
     const int assistants = crafter.available_assistant_count( craft.get_making() );
 
     if( crafting_speed <= 0.0f ) {
+        craft.erase_var("crafter");
         crafter.cancel_activity();
         return;
     }
@@ -3164,6 +3165,7 @@ void craft_activity_actor::do_turn( player_activity &act, Character &crafter )
         if( !crafter.craft_consume_tools( craft, five_percent_steps, false ) ) {
             // So we don't skip over any tool comsuption
             craft.item_counter -= craft.item_counter % 500'000 + 1;
+            craft.erase_var("crafter");
             crafter.cancel_activity();
             return;
         }
