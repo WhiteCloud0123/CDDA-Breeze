@@ -72,7 +72,7 @@ struct WINDOW {
     SDL_Texture* image;
     int image_width;
     int image_height;
-    point image_pos;
+    SDL_Rect rect_2;
 
 };
 

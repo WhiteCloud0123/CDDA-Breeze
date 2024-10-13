@@ -1182,18 +1182,20 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
 
         const int win_beginx = TERMX > FULL_SCREEN_WIDTH ? (TERMX - FULL_SCREEN_WIDTH) / 4 : 0;
         const int win_beginy = TERMY > FULL_SCREEN_HEIGHT ? (TERMY - FULL_SCREEN_HEIGHT) / 4 : 0;
-
-        point p((TERMX - win_beginx) * font_width - 381, WindowHeight - 531 - win_beginy * font_height);
         
+        SDL_Rect rect_2;
+        rect_2.x = (TERMX - win_beginx) * font_width - 381;
+        rect_2.y = (TERMY * font_height) - 522 - win_beginy * font_height;
+        rect_2.w = 381;
+        rect_2.h = 522;
 
 #if defined(__ANDROID__)
         SDL_Rect& visible_display_frame = get_visible_display_frame();
-        p.x = WindowWidth - win_beginx * font_width - 381 - visible_display_frame.x * 2;
-        p.y = WindowHeight - 531 - win_beginy * font_height * 2;
-
+        rect_2.x = (TERMX - win_beginx) * font_width - 381;
+        rect_2.y = (TERMY * font_height) - 522 - win_beginy * font_height;
 #endif
 
-        d_win.prepare_image(image,381,522,p);
+        d_win.prepare_image(image,381,522,rect_2);
     }
 
 
