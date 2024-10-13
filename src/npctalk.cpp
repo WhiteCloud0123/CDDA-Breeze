@@ -1185,15 +1185,9 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         
         SDL_Rect rect_2;
         rect_2.x = (TERMX - win_beginx) * font_width - 381;
-        rect_2.y = (TERMY * font_height) - 522 - win_beginy * font_height;
+        rect_2.y = (TERMY - win_beginy) * font_height- 522;
         rect_2.w = 381;
         rect_2.h = 522;
-
-#if defined(__ANDROID__)
-        SDL_Rect& visible_display_frame = get_visible_display_frame();
-        rect_2.x = (TERMX - win_beginx) * font_width - 381;
-        rect_2.y = (TERMY * font_height) - 522 - win_beginy * font_height;
-#endif
 
         d_win.prepare_image(image,381,522,rect_2);
     }
