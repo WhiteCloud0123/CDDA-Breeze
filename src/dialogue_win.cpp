@@ -38,7 +38,7 @@ void dialogue_window::resize( ui_adaptor &ui )
     d_win = catacurses::newwin( maxy, maxx, point( win_beginx, win_beginy ) );
     ui.position_from_window( d_win );
     history_win = catacurses::newwin( maxy - 1 - RESPONSES_LINES - 2 - 1, maxx - 1, point( win_beginx,
-                                      win_beginy + 2 ) , image, image_width, image_height, image_pos);
+                                      win_beginy + 2 ) , image, image_width, image_height,rect_2);
     resp_win = catacurses::newwin( RESPONSES_LINES - 1, maxx / 2, point( win_beginx,
                                    win_beginy + maxy - RESPONSES_LINES ) );
 
@@ -194,9 +194,9 @@ catacurses::window* dialogue_window::get_resp_win() {
     return &resp_win;
 }
 
-void dialogue_window::prepare_image(SDL_Texture* image, int image_width, int image_height, point image_pos) {
+void dialogue_window::prepare_image(SDL_Texture* image, int image_width, int image_height,SDL_Rect rect_2) {
     this->image = image;
     this->image_width = image_width;
     this->image_height = image_height;
-    this->image_pos = image_pos;
+    this->rect_2 = rect_2;
 }

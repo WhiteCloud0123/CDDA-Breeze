@@ -59,7 +59,7 @@ class dialogue_window
         catacurses::window* get_history_win();
         catacurses::window* get_resp_win();
 
-        void prepare_image(SDL_Texture* image, int image_width, int image_height, point image_pos);
+        void prepare_image(SDL_Texture* image, int image_width, int image_height,SDL_Rect rect_2);
 
     private:
         catacurses::window d_win;
@@ -69,7 +69,7 @@ class dialogue_window
         SDL_Texture* image;
         int image_width;
         int image_height;
-        point image_pos;
+        SDL_Rect rect_2;
 
         struct history_message {
             inline history_message( nc_color c, const std::string &t ) : color( c ), text( t ) {}

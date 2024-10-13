@@ -1435,13 +1435,7 @@ static bool draw_window( Font_Ptr &font, const catacurses::window &w, const poin
         srcrect.w = win->image_width;
         srcrect.h = win->image_height;
 
-        SDL_Rect dstrect;
-        dstrect.x = win->image_pos.x;
-        dstrect.y = win->image_pos.y;
-        dstrect.w = win->image_width;
-        dstrect.h = win->image_height;
-
-        SDL_RenderCopy(renderer.get(),win->image, &srcrect, &dstrect);
+        SDL_RenderCopy(renderer.get(),win->image, &srcrect, &win->rect_2);
         
     }
 
