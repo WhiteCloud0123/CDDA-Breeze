@@ -66,7 +66,7 @@ class dialogue_window
         catacurses::window history_win;
         catacurses::window resp_win;
 
-        SDL_Texture* image;
+        SDL_Texture* image = nullptr;
         int image_width;
         int image_height;
         SDL_Rect rect_2;
