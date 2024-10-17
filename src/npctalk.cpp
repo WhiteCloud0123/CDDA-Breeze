@@ -1150,7 +1150,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     
     dialogue d( get_talker_for( *this ), std::move( talk_with ) );
     std::string character_name = "";
-    SDL_Texture* image;
+    SDL_Texture* image = nullptr;
     if (who != nullptr && get_option<bool>("显示特殊NPC的图片")) {
         character_name = who->get_name();
     }

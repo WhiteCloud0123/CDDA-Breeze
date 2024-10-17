@@ -69,7 +69,7 @@ struct WINDOW {
     bool draw;
     point cursor;
     std::vector<curseline> line;
-    SDL_Texture* image;
+    SDL_Texture* image = nullptr;
     int image_width;
     int image_height;
     SDL_Rect rect_2;
