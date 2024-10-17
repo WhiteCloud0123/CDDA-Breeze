@@ -9680,7 +9680,9 @@ void map::build_map_cache( const int zlev, bool skip_lightmap )
         do_vehicle_caching( z );
     }
 
-    seen_cache_dirty |= build_vision_transparency_cache( zlev );
+    for (int z = minz; z <= maxz; z++) {
+        seen_cache_dirty |= build_vision_transparency_cache(z);
+    }
 
     if( seen_cache_dirty ) {
         skew_vision_cache.clear();
