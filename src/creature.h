@@ -1297,6 +1297,9 @@ class Creature : public viewer
          * Returns the location of the creature in global overmap terrain coordinates.
          */
         tripoint_abs_omt global_omt_location() const;
+
+        void discuss_with_particle_system();
+
     protected:
         /**
          * These two functions are responsible for storing and loading the members

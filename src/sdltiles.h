@@ -45,7 +45,7 @@ extern int WindowHeight;
 extern int fontheight;
 extern int fontwidth;
 
-extern ParticleSystem particle_system_weather;
+extern Particle_System particle_system;
 
 SDL_Texture* get_character_picture(std::string& name);
 

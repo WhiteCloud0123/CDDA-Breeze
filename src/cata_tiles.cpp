@@ -222,6 +222,11 @@ cata_tiles::cata_tiles( const SDL_Renderer_Ptr &renderer, const GeometryRenderer
     nv_goggles_activated = false;
 
     on_options_changed();
+
+    std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+    std::string gfx_p_t = gfx_string + "/particle/01.png";
+    Particle_Activity::_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+
 }
 
 cata_tiles::~cata_tiles() = default;
@@ -1766,6 +1771,13 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         draw_creature_view_line();
     }
 
+    const std::string& id = get_weather().weather_id.str();
+    if (use_particle_system && particle_system.get_all_activity()[0].is_support_weather(id)) {
+        particle_system.get_all_activity()[0].set_style_for_weather(id, renderer.get());
+        particle_system.get_all_activity()[0].draw();
+    }
+  
+
     if( in_animation ) {
         if( do_draw_explosion ) {
             draw_explosion_frame();
@@ -1784,15 +1796,10 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             draw_line();
             void_line();
         }
-        if( do_draw_weather ) {
-            const std::string& id = get_weather().weather_id.str();
-            if (use_particle_system && particle_system_weather.is_support_weather(id)) {
-                particle_system_weather.set_style_for_weather(id, renderer.get());
-                particle_system_weather.draw();
-            }
-            else {
-                draw_weather_frame();
-            }
+        if( do_draw_weather && !use_particle_system ) {
+            
+            draw_weather_frame();
+            
             void_weather();
         }
         if( do_draw_sct ) {

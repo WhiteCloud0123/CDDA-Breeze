@@ -348,7 +348,7 @@ int main( int argc, const char *argv[] )
 
 #endif
 
-    particle_system_weather.init_weather_content();
+    particle_system.init();;
 
 
     try {

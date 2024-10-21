@@ -123,7 +123,7 @@ emitter.startSpin = 0;
 
 */
 
-class ParticleSystem
+class Particle_Activity
 {
 
 
@@ -153,6 +153,8 @@ public:
     };
 
 public:
+
+    static SDL_Texture* _texture;
 
     void init_weather_content();
 
@@ -766,7 +768,6 @@ protected:
     /** maximum particles of the system */
     int _totalParticles = 0;
     /** conforms to CocosNodeTexture protocol */
-    SDL_Texture* _texture = nullptr;
     /** conforms to CocosNodeTexture protocol */
     //BlendFunc _blendFunc;
     /** does the alpha value modify color */
@@ -791,5 +792,21 @@ public:
     void setRenderer(SDL_Renderer* ren) { _renderer = ren; }
     void setPosition(int x, int y) { x_ = x; y_ = y; }
 };
+
+
+class Particle_System {
+
+private:
+
+    std::vector<Particle_Activity> vec;
+
+public:
+
+    void init();
+
+    std::vector<Particle_Activity>& get_all_activity();
+
+};
+
 
 #endif // CATA_SRC_PARTICLESYSTEM_H

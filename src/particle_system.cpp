@@ -5,8 +5,22 @@
 #include "output.h"
 #include"options.h"
 #include "sdltiles.h"
+#include "messages.h"
+SDL_Texture* Particle_Activity::_texture = nullptr;
 
 
+void Particle_System::init() {
+
+    // 第一个是为天气准备的粒子活动 [0]
+    Particle_Activity weather_activity;
+    weather_activity.init_weather_content();
+    vec.push_back(weather_activity);
+
+}
+
+std::vector<Particle_Activity>& Particle_System::get_all_activity() {
+    return vec;
+}
 
 
 inline float Deg2Rad(float a)
@@ -66,9 +80,9 @@ inline static float RANDOM_M11(unsigned int* seed)
 
 
 
-// implementation ParticleSystem
+// implementation Particle_Activity
 
-bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
+bool Particle_Activity::initWithTotalParticles(int numberOfParticles)
 {
     _totalParticles = numberOfParticles;
     _isActive = true;
@@ -81,7 +95,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     return true;
 }
 
-void ParticleSystem::resetTotalParticles(int numberOfParticles)
+void Particle_Activity::resetTotalParticles(int numberOfParticles)
 {
     if (particle_data_.size() < numberOfParticles)
     {
@@ -89,18 +103,18 @@ void ParticleSystem::resetTotalParticles(int numberOfParticles)
     }
 }
 
-void ParticleSystem::init_weather_content() {
+void Particle_Activity::init_weather_content() {
     w_t_i_str = "null";
     support_weather_id = { "light_drizzle","drizzle" ,"rain","snowing" };
 }
 
-bool ParticleSystem::is_support_weather(const std::string& id) {
+bool Particle_Activity::is_support_weather(const std::string& id) {
     
     return support_weather_id.find(id) != support_weather_id.end();
 
 }
 
-void ParticleSystem::addParticles(int count)
+void Particle_Activity::addParticles(int count)
 {
     if (_paused)
     {
@@ -286,14 +300,14 @@ void ParticleSystem::addParticles(int count)
     }
 }
 
-void ParticleSystem::stopSystem()
+void Particle_Activity::stopSystem()
 {
     _isActive = false;
     _elapsed = _duration;
     _emitCounter = 0;
 }
 
-void ParticleSystem::resetSystem()
+void Particle_Activity::resetSystem()
 {
     _isActive = true;
     _elapsed = 0;
@@ -303,13 +317,13 @@ void ParticleSystem::resetSystem()
     }
 }
 
-bool ParticleSystem::isFull()
+bool Particle_Activity::isFull()
 {
     return (_particleCount == _totalParticles);
 }
 
-// ParticleSystem - MainLoop
-void ParticleSystem::update()
+// Particle_Activity - MainLoop
+void Particle_Activity::update()
 {
     float dt = 1.0 / 25;
     if (_isActive && _emissionRate)
@@ -426,8 +440,8 @@ void ParticleSystem::update()
     }
 }
 
-// ParticleSystem - Texture protocol
-void ParticleSystem::setTexture(SDL_Texture* var)
+// Particle_Activity - Texture protocol
+void Particle_Activity::setTexture(SDL_Texture* var)
 {
     if (_texture != var)
     {
@@ -435,10 +449,11 @@ void ParticleSystem::setTexture(SDL_Texture* var)
     }
 }
 
-void ParticleSystem::draw()
+void Particle_Activity::draw()
 {
     if (_texture == nullptr)
     {
+        add_msg("texture为空");
         return;
     }
     for (int i = 0; i < _particleCount; i++)
@@ -458,218 +473,218 @@ void ParticleSystem::draw()
     update();
 }
 
-SDL_Texture* ParticleSystem::getTexture()
+SDL_Texture* Particle_Activity::getTexture()
 {
     return _texture;
 }
 
-// ParticleSystem - Properties of Gravity Mode
-void ParticleSystem::setTangentialAccel(float t)
+// Particle_Activity - Properties of Gravity Mode
+void Particle_Activity::setTangentialAccel(float t)
 {
     modeA.tangentialAccel = t;
 }
 
-float ParticleSystem::getTangentialAccel() const
+float Particle_Activity::getTangentialAccel() const
 {
     return modeA.tangentialAccel;
 }
 
-void ParticleSystem::setTangentialAccelVar(float t)
+void Particle_Activity::setTangentialAccelVar(float t)
 {
     modeA.tangentialAccelVar = t;
 }
 
-float ParticleSystem::getTangentialAccelVar() const
+float Particle_Activity::getTangentialAccelVar() const
 {
     return modeA.tangentialAccelVar;
 }
 
-void ParticleSystem::setRadialAccel(float t)
+void Particle_Activity::setRadialAccel(float t)
 {
     modeA.radialAccel = t;
 }
 
-float ParticleSystem::getRadialAccel() const
+float Particle_Activity::getRadialAccel() const
 {
     return modeA.radialAccel;
 }
 
-void ParticleSystem::setRadialAccelVar(float t)
+void Particle_Activity::setRadialAccelVar(float t)
 {
     modeA.radialAccelVar = t;
 }
 
-float ParticleSystem::getRadialAccelVar() const
+float Particle_Activity::getRadialAccelVar() const
 {
     return modeA.radialAccelVar;
 }
 
-void ParticleSystem::setRotationIsDir(bool t)
+void Particle_Activity::setRotationIsDir(bool t)
 {
     modeA.rotationIsDir = t;
 }
 
-bool ParticleSystem::getRotationIsDir() const
+bool Particle_Activity::getRotationIsDir() const
 {
     return modeA.rotationIsDir;
 }
 
-void ParticleSystem::setGravity(const Vec2& g)
+void Particle_Activity::setGravity(const Vec2& g)
 {
     modeA.gravity = g;
 }
 
 
-void ParticleSystem::setSpeed(float speed)
+void Particle_Activity::setSpeed(float speed)
 {
     modeA.speed = speed;
 }
 
-float ParticleSystem::getSpeed() const
+float Particle_Activity::getSpeed() const
 {
     return modeA.speed;
 }
 
-void ParticleSystem::setSpeedVar(float speedVar)
+void Particle_Activity::setSpeedVar(float speedVar)
 {
 
     modeA.speedVar = speedVar;
 }
 
-float ParticleSystem::getSpeedVar() const
+float Particle_Activity::getSpeedVar() const
 {
 
     return modeA.speedVar;
 }
 
-// ParticleSystem - Properties of Radius Mode
-void ParticleSystem::setStartRadius(float startRadius)
+// Particle_Activity - Properties of Radius Mode
+void Particle_Activity::setStartRadius(float startRadius)
 {
     modeB.startRadius = startRadius;
 }
 
-float ParticleSystem::getStartRadius() const
+float Particle_Activity::getStartRadius() const
 {
     return modeB.startRadius;
 }
 
-void ParticleSystem::setStartRadiusVar(float startRadiusVar)
+void Particle_Activity::setStartRadiusVar(float startRadiusVar)
 {
     modeB.startRadiusVar = startRadiusVar;
 }
 
-float ParticleSystem::getStartRadiusVar() const
+float Particle_Activity::getStartRadiusVar() const
 {
     return modeB.startRadiusVar;
 }
 
-void ParticleSystem::setEndRadius(float endRadius)
+void Particle_Activity::setEndRadius(float endRadius)
 {
     modeB.endRadius = endRadius;
 }
 
-float ParticleSystem::getEndRadius() const
+float Particle_Activity::getEndRadius() const
 {
     return modeB.endRadius;
 }
 
-void ParticleSystem::setEndRadiusVar(float endRadiusVar)
+void Particle_Activity::setEndRadiusVar(float endRadiusVar)
 {
     modeB.endRadiusVar = endRadiusVar;
 }
 
-float ParticleSystem::getEndRadiusVar() const
+float Particle_Activity::getEndRadiusVar() const
 {
 
     return modeB.endRadiusVar;
 }
 
-void ParticleSystem::setRotatePerSecond(float degrees)
+void Particle_Activity::setRotatePerSecond(float degrees)
 {
     modeB.rotatePerSecond = degrees;
 }
 
-float ParticleSystem::getRotatePerSecond() const
+float Particle_Activity::getRotatePerSecond() const
 {
     return modeB.rotatePerSecond;
 }
 
-void ParticleSystem::setRotatePerSecondVar(float degrees)
+void Particle_Activity::setRotatePerSecondVar(float degrees)
 {
     modeB.rotatePerSecondVar = degrees;
 }
 
-float ParticleSystem::getRotatePerSecondVar() const
+float Particle_Activity::getRotatePerSecondVar() const
 {
     return modeB.rotatePerSecondVar;
 }
 
-bool ParticleSystem::isActive() const
+bool Particle_Activity::isActive() const
 {
     return _isActive;
 }
 
-int ParticleSystem::getTotalParticles() const
+int Particle_Activity::getTotalParticles() const
 {
     return _totalParticles;
 }
 
-void ParticleSystem::setTotalParticles(int var)
+void Particle_Activity::setTotalParticles(int var)
 {
     _totalParticles = var;
 }
 
-bool ParticleSystem::isAutoRemoveOnFinish() const
+bool Particle_Activity::isAutoRemoveOnFinish() const
 {
     return _isAutoRemoveOnFinish;
 }
 
-void ParticleSystem::setAutoRemoveOnFinish(bool var)
+void Particle_Activity::setAutoRemoveOnFinish(bool var)
 {
     _isAutoRemoveOnFinish = var;
 }
 
 ////don't use a transform matrix, this is faster
-//void ParticleSystem::setScale(float s)
+//void Particle_Activity::setScale(float s)
 //{
 //    _transformSystemDirty = true;
 //    Node::setScale(s);
 //}
 //
-//void ParticleSystem::setRotation(float newRotation)
+//void Particle_Activity::setRotation(float newRotation)
 //{
 //    _transformSystemDirty = true;
 //    Node::setRotation(newRotation);
 //}
 //
-//void ParticleSystem::setScaleX(float newScaleX)
+//void Particle_Activity::setScaleX(float newScaleX)
 //{
 //    _transformSystemDirty = true;
 //    Node::setScaleX(newScaleX);
 //}
 //
-//void ParticleSystem::setScaleY(float newScaleY)
+//void Particle_Activity::setScaleY(float newScaleY)
 //{
 //    _transformSystemDirty = true;
 //    Node::setScaleY(newScaleY);
 //}
 
-bool ParticleSystem::isPaused() const
+bool Particle_Activity::isPaused() const
 {
     return _paused;
 }
 
-void ParticleSystem::pauseEmissions()
+void Particle_Activity::pauseEmissions()
 {
     _paused = true;
 }
 
-void ParticleSystem::resumeEmissions()
+void Particle_Activity::resumeEmissions()
 {
     _paused = false;
 }
 
-void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Renderer *renderer) {
+void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Renderer *renderer) {
 
     
     if (w_t_i_str == id_str) {
@@ -693,11 +708,6 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
         setStartSpinVar(90);
         setEndSpin(90);
         setStartSpinVar(90);
-
-        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-        std::string gfx_p_t = gfx_string + "/particle/01.png";
-        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
-        setTexture(texture);
 
         initWithTotalParticles(700);
 
@@ -774,11 +784,6 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
         setEndSpin(90);
         setStartSpinVar(90);
         
-        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-        std::string gfx_p_t = gfx_string + "/particle/01.png";
-        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
-        setTexture(texture);
-
         initWithTotalParticles(2000);
 
         // duration
@@ -852,11 +857,6 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
         setStartSpinVar(90);
         setEndSpin(90);
         setStartSpinVar(90);
-
-        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-        std::string gfx_p_t = gfx_string + "/particle/01.png";
-        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
-        setTexture(texture);
 
         initWithTotalParticles(1000);
 
@@ -934,11 +934,6 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
         setEndSpin(90);
         setStartSpinVar(90);
 
-        std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
-        std::string gfx_p_t = gfx_string + "/particle/01.png";
-        SDL_Texture* texture = IMG_LoadTexture(renderer, gfx_p_t.c_str());
-        setTexture(texture);
-
         initWithTotalParticles(800);
 
         // duration
@@ -1005,7 +1000,8 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
 
     else {
     
-        setTexture(nullptr);
+        //
+        add_msg("测试信息");
         
     }
 
@@ -1015,7 +1011,7 @@ void ParticleSystem::set_style_for_weather(const std::string &id_str , SDL_Rende
 }
 
 
-void ParticleSystem::set_style(const std::string& id_str, SDL_Texture* texture, SDL_Renderer* renderer) {
+void Particle_Activity::set_style(const std::string& id_str, SDL_Texture* texture, SDL_Renderer* renderer) {
 
 
 

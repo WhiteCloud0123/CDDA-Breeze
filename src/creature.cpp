@@ -2955,6 +2955,12 @@ tripoint_abs_omt Creature::global_omt_location() const
     return project_to<coords::omt>( location );
 }
 
+void Creature::discuss_with_particle_system() {
+
+
+
+}
+
 std::unique_ptr<talker> get_talker_for( Creature &me )
 {
     if( me.is_monster() ) {
