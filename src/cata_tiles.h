@@ -28,6 +28,7 @@
 #include "type_id.h"
 #include "weather.h"
 #include "weighted_list.h"
+#include "particle_system.h"
 
 class Character;
 class JsonObject;
@@ -693,6 +694,7 @@ class cata_tiles
         const GeometryRenderer_Ptr &geometry;
         tileset_cache &cache;
         std::shared_ptr<const tileset> tileset_ptr;
+        Particle_Activity weather_particle_activity;
 
         int tile_height = 0;
         int tile_width = 0;

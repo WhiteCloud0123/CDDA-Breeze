@@ -125,8 +125,6 @@ static Font_Ptr font;
 static Font_Ptr map_font;
 static Font_Ptr overmap_font;
 
-Particle_System particle_system;
-
 static SDL_Window_Ptr window;
 static SDL_Renderer_Ptr renderer;
 static SDL_PixelFormat_Ptr format;

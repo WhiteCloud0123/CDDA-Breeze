@@ -348,9 +348,6 @@ int main( int argc, const char *argv[] )
 
 #endif
 
-    particle_system.init();;
-
-
     try {
             // set minimum FULL_SCREEN sizes
         FULL_SCREEN_WIDTH = EVEN_MINIMUM_TERM_WIDTH;

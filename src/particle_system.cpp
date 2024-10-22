@@ -6,22 +6,10 @@
 #include"options.h"
 #include "sdltiles.h"
 #include "messages.h"
+
 SDL_Texture* Particle_Activity::_texture = nullptr;
 
-
-void Particle_System::init() {
-
-    // 第一个是为天气准备的粒子活动 [0]
-    Particle_Activity weather_activity;
-    weather_activity.init_weather_content();
-    vec.push_back(weather_activity);
-
-}
-
-std::vector<Particle_Activity>& Particle_System::get_all_activity() {
-    return vec;
-}
-
+std::list<Particle_Activity*> Particle_Activity::particle_activity_list;
 
 inline float Deg2Rad(float a)
 {

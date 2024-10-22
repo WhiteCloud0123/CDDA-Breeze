@@ -154,7 +154,18 @@ public:
 
 public:
 
+    Particle_Activity() {
+        particle_activity_list.push_back(this);
+    }
+
+    ~Particle_Activity() {
+        particle_activity_list.remove(this);
+    }
+
+
     static SDL_Texture* _texture;
+
+    static std::list<Particle_Activity*> particle_activity_list;
 
     void init_weather_content();
 
@@ -791,21 +802,6 @@ protected:
 public:
     void setRenderer(SDL_Renderer* ren) { _renderer = ren; }
     void setPosition(int x, int y) { x_ = x; y_ = y; }
-};
-
-
-class Particle_System {
-
-private:
-
-    std::vector<Particle_Activity> vec;
-
-public:
-
-    void init();
-
-    std::vector<Particle_Activity>& get_all_activity();
-
 };
 
 

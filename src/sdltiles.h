@@ -45,8 +45,6 @@ extern int WindowHeight;
 extern int fontheight;
 extern int fontwidth;
 
-extern Particle_System particle_system;
-
 SDL_Texture* get_character_picture(std::string& name);
 
 #if defined(__ANDROID__)

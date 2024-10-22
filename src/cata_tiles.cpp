@@ -226,6 +226,8 @@ cata_tiles::cata_tiles( const SDL_Renderer_Ptr &renderer, const GeometryRenderer
     std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
     std::string gfx_p_t = gfx_string + "/particle/01.png";
     Particle_Activity::_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+    
+    weather_particle_activity.init_weather_content();
 
 }
 
@@ -1772,9 +1774,9 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     }
 
     const std::string& id = get_weather().weather_id.str();
-    if (use_particle_system && particle_system.get_all_activity()[0].is_support_weather(id)) {
-        particle_system.get_all_activity()[0].set_style_for_weather(id, renderer.get());
-        particle_system.get_all_activity()[0].draw();
+    if (use_particle_system && weather_particle_activity.is_support_weather(id)) {
+        weather_particle_activity.set_style_for_weather(id, renderer.get());
+        weather_particle_activity.draw();
     }
   
 
