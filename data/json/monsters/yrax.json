@@ -87,6 +87,7 @@
     "armor_fire": 100,
     "vision_day": 50,
     "vision_night": 20,
+    "luminance": 10,
     "anger_triggers": [ "FRIEND_ATTACKED", "FRIEND_DIED", "HURT" ],
     "death_function": { "corpse_type": "NO_CORPSE", "message": "The %s folds away." },
     "flags": [

@@ -1789,19 +1789,18 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     }
 
     
-    if (use_particle_system) {
+    if (use_particle_system ) {
         // 天气
         const std::string& id = get_weather().weather_id.str();
         if (weather_particle_activity.is_support_weather(id)) {
-            weather_particle_activity.set_style_for_weather(id, renderer.get());
-            weather_particle_activity.draw();
+            weather_particle_activity.set_style(id);
         }
         
         for (Creature* c :get_player_character().get_visible_creatures(MAX_VIEW_DISTANCE)) {
             c->process_particle_activity();
         }
 
-        for (std::list<Particle_Activity*>::iterator iter = ++Particle_Activity::particle_activity_list.begin();
+        for (std::list<Particle_Activity*>::iterator iter = Particle_Activity::particle_activity_list.begin();
             iter != Particle_Activity::particle_activity_list.end(); ++iter) {
             (*iter)->draw();
         }
@@ -1894,7 +1893,7 @@ void cata_tiles::draw_hp_bar( const tripoint& p ) {
         SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         geometry->rect(renderer, draw_rect, fog_color);
         SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-
+        
 }
 
 void cata_tiles::draw_creature_view_line() {
