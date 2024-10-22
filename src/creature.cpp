@@ -61,6 +61,8 @@
 #include "value_ptr.h"
 #include "vehicle.h"
 #include "vpart_position.h"
+#include "particle_system.h"
+#include "cata_tiles.h"
 
 struct mutation_branch;
 
@@ -84,6 +86,7 @@ static const efftype_id effect_sleep( "sleep" );
 static const efftype_id effect_stunned( "stunned" );
 static const efftype_id effect_tied( "tied" );
 static const efftype_id effect_zapped( "zapped" );
+static const efftype_id effect_pet("pet");
 
 static const json_character_flag json_flag_IGNORE_TEMP( "IGNORE_TEMP" );
 static const json_character_flag json_flag_LIMB_LOWER( "LIMB_LOWER" );
@@ -2955,9 +2958,13 @@ tripoint_abs_omt Creature::global_omt_location() const
     return project_to<coords::omt>( location );
 }
 
-void Creature::discuss_with_particle_system() {
+void Creature::process_particle_activity() {
 
-
+    if (has_effect(effect_pet)) {
+        particle_activity.set_style("effect_pet");
+        point screen_pos =cata_tiles::pos_to_screen(pos().xy());
+        particle_activity.setPosition(screen_pos.x,screen_pos.y);
+    }
 
 }
 

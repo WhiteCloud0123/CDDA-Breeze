@@ -8,7 +8,7 @@
 #include "messages.h"
 
 SDL_Texture* Particle_Activity::_texture = nullptr;
-
+SDL_Renderer* Particle_Activity::_renderer = nullptr;
 std::list<Particle_Activity*> Particle_Activity::particle_activity_list;
 
 inline float Deg2Rad(float a)
@@ -99,6 +99,18 @@ void Particle_Activity::init_weather_content() {
 bool Particle_Activity::is_support_weather(const std::string& id) {
     
     return support_weather_id.find(id) != support_weather_id.end();
+
+}
+
+void Particle_Activity::init_texture(SDL_Texture* texture) {
+
+    _texture = texture;
+
+}
+
+void Particle_Activity::init_renderer(SDL_Renderer* renderer) {
+
+    _renderer = renderer;
 
 }
 
@@ -444,21 +456,25 @@ void Particle_Activity::draw()
         add_msg("texture为空");
         return;
     }
-    for (int i = 0; i < _particleCount; i++)
-    {
-        auto& p = particle_data_[i];
-        if (p.size <= 0 || p.colorA <= 0)
+
+    if (style != "") {
+        for (int i = 0; i < _particleCount; i++)
         {
-            continue;
+            auto& p = particle_data_[i];
+            if (p.size <= 0 || p.colorA <= 0)
+            {
+                continue;
+            }
+            SDL_Rect r = { int(p.posx + p.startPosX - p.size / 2), int(p.posy + p.startPosY - p.size / 2), int(p.size), int(p.size) };
+            SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
+            SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
+            SDL_SetTextureAlphaMod(_texture, c.a);
+            SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
+            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
         }
-        SDL_Rect r = { int(p.posx + p.startPosX - p.size / 2), int(p.posy + p.startPosY - p.size / 2), int(p.size), int(p.size) };
-        SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
-        SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
-        SDL_SetTextureAlphaMod(_texture, c.a);
-        SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-        SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
+        update();
     }
-    update();
+
 }
 
 SDL_Texture* Particle_Activity::getTexture()
@@ -684,14 +700,8 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
     if ( w_t_i_str == "snowing" ) {
         
 
+        setPosition(TERMX*fontwidth *0.35,0);
 
-        setRenderer(renderer);                   // set the renderer
-        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
-#if defined(__ANDROID__)
-
-        setPosition(WindowWidth * 0.38 , 0);
-
-#endif
         setStartSpin(0);
         setStartSpinVar(90);
         setEndSpin(90);
@@ -760,7 +770,6 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
     }
     else if (w_t_i_str == "rain") {
 
-        setRenderer(renderer);                   // set the renderer
         setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
 #if defined(__ANDROID__)
 
@@ -834,7 +843,6 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
     }
     else if (w_t_i_str == "drizzle") {
 
-        setRenderer(renderer);                   // set the renderer
         setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
 #if defined(__ANDROID__)
 
@@ -910,7 +918,6 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
     }
     else if (w_t_i_str == "light_drizzle") {
 
-        setRenderer(renderer);                   // set the renderer
         setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
 #if defined(__ANDROID__)
 
@@ -999,7 +1006,77 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
 }
 
 
-void Particle_Activity::set_style(const std::string& id_str, SDL_Texture* texture, SDL_Renderer* renderer) {
+void Particle_Activity::set_style(const std::string& str) {
+    
+    if (style != str) {
+        style = str;
+    }
+    else {
+        return;
+    }
+    
+    if (str=="effect_pet") {
+    
+
+        initWithTotalParticles(10);
+        // duration
+        _duration = DURATION_INFINITY;
+
+        // Gravity Mode
+        setEmitterMode(Mode::GRAVITY);
+
+        // Gravity Mode: gravity
+        setGravity(Vec2(0, 0));
+
+        // Gravity Mode: speed of particles
+        setSpeed(-60);
+        setSpeedVar(10);
+
+        // Gravity Mode: radial
+        setRadialAccel(-80);
+        setRadialAccelVar(0);
+
+        // Gravity Mode: tangential
+        setTangentialAccel(80);
+        setTangentialAccelVar(0);
+
+        // angle
+        _angle = 90;
+        _angleVar = 360;
+
+        // life of particles
+        _life = 4;
+        _lifeVar = 1;
+
+        // size, in pixels
+        _startSize = 37.0f;
+        _startSizeVar = 10.0f;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
+
+        // emits per second
+        _emissionRate = _totalParticles / _life;
+
+        // color of particles
+        _startColor.r = 1.00f; 
+        _startColor.g = 0.90f; 
+        _startColor.b = 0.05f; 
+        _startColor.a = 1.0f;
+        _startColorVar.r = 0.0f;
+        _startColorVar.g = 0.0f;
+        _startColorVar.b = 0.0f;
+        _startColorVar.a = 0.0f;
+        _endColor.r = 0.90f; 
+        _endColor.g = 0.85f; 
+        _endColor.b = 0.60f;
+        _endColor.a = 0.2f;   
+        _endColorVar.r = 0.0f;
+        _endColorVar.g = 0.0f;
+        _endColorVar.b = 0.0f;
+        _endColorVar.a = 0.0f;
+
+        _posVar = { 0, 0 };
+
+    }
 
 
 

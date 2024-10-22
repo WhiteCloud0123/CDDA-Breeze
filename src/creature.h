@@ -26,6 +26,7 @@
 #include "units_fwd.h"
 #include "viewer.h"
 #include "weakpoint.h"
+#include "particle_system.h"
 
 class monster;
 class translation;
@@ -1298,7 +1299,7 @@ class Creature : public viewer
          */
         tripoint_abs_omt global_omt_location() const;
 
-        void discuss_with_particle_system();
+        void process_particle_activity();
 
     protected:
         /**
@@ -1341,6 +1342,9 @@ class Creature : public viewer
         // do messaging and SCT for projectile hit
         void messaging_projectile_attack( const Creature *source,
                                           const projectile_attack_results &hit_selection, int total_damage ) const;
+        
+        Particle_Activity particle_activity;
+
 };
 std::unique_ptr<talker> get_talker_for( Creature &me );
 std::unique_ptr<talker> get_talker_for( const Creature &me );

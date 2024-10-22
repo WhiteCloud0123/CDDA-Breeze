@@ -117,7 +117,20 @@ static const std::array<std::string, 15> TILE_CATEGORY_IDS = {{
 };
 
 static_assert( TILE_CATEGORY_IDS.size() == static_cast<size_t>( TILE_CATEGORY::last ),
-               "TILE_CATEGORY_IDS must match list of TILE_CATEGORY values" );
+    "TILE_CATEGORY_IDS must match list of TILE_CATEGORY values" );
+
+point cata_tiles::o;
+point cata_tiles::op;
+int cata_tiles::tile_width = 0;
+int cata_tiles::tile_height = 0;
+
+point cata_tiles::pos_to_screen(const point& p) {
+    point screen;
+    screen.x = (p.x - o.x) * tile_width + op.x;
+    screen.y = (p.y - o.y) * tile_height + op.y;
+    return { screen };
+}
+
 
 namespace
 {
@@ -225,8 +238,10 @@ cata_tiles::cata_tiles( const SDL_Renderer_Ptr &renderer, const GeometryRenderer
 
     std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
     std::string gfx_p_t = gfx_string + "/particle/01.png";
-    Particle_Activity::_texture = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+    Particle_Activity::init_texture(IMG_LoadTexture(renderer.get(), gfx_p_t.c_str()));
     
+    Particle_Activity::init_renderer(renderer.get());
+
     weather_particle_activity.init_weather_content();
 
 }
@@ -1773,10 +1788,24 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         draw_creature_view_line();
     }
 
-    const std::string& id = get_weather().weather_id.str();
-    if (use_particle_system && weather_particle_activity.is_support_weather(id)) {
-        weather_particle_activity.set_style_for_weather(id, renderer.get());
-        weather_particle_activity.draw();
+    
+    if (use_particle_system) {
+        // 天气
+        const std::string& id = get_weather().weather_id.str();
+        if (weather_particle_activity.is_support_weather(id)) {
+            weather_particle_activity.set_style_for_weather(id, renderer.get());
+            weather_particle_activity.draw();
+        }
+        
+        for (Creature* c :get_player_character().get_visible_creatures(MAX_VIEW_DISTANCE)) {
+            c->process_particle_activity();
+        }
+
+        for (std::list<Particle_Activity*>::iterator iter = ++Particle_Activity::particle_activity_list.begin();
+            iter != Particle_Activity::particle_activity_list.end(); ++iter) {
+            (*iter)->draw();
+        }
+    
     }
   
 
@@ -5158,6 +5187,14 @@ void cata_tiles::tile_loading_report_count( const size_t count, TILE_CATEGORY ca
     []( const size_t i ) {
         return int_id<base_type>( i ).id().str();
     }, category, prefix );
+}
+
+point& cata_tiles::get_o() {
+    return o;
+}
+
+point& cata_tiles::get_op() {
+    return op;
 }
 
 std::vector<options_manager::id_and_option> cata_tiles::build_renderer_list()
