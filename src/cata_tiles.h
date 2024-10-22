@@ -28,6 +28,7 @@
 #include "type_id.h"
 #include "weather.h"
 #include "weighted_list.h"
+#include "particle_system.h"
 
 class Character;
 class JsonObject;
@@ -643,10 +644,10 @@ class cata_tiles
         bool is_isometric() const {
             return tileset_ptr->is_isometric();
         }
-        int get_tile_height() const {
+        static int get_tile_height() {
             return tile_height;
         }
-        int get_tile_width() const {
+        static int get_tile_width() {
             return tile_width;
         }
         float get_tile_ratiox() const {
@@ -693,9 +694,10 @@ class cata_tiles
         const GeometryRenderer_Ptr &geometry;
         tileset_cache &cache;
         std::shared_ptr<const tileset> tileset_ptr;
+        Particle_Activity weather_particle_activity;
 
-        int tile_height = 0;
-        int tile_width = 0;
+        static  int tile_height;
+        static  int tile_width;
         // The width and height of the area we can draw in,
         // measured in map coordinates, *not* in pixels.
         int screentile_width = 0;
@@ -744,9 +746,9 @@ class cata_tiles
         tripoint zone_offset;
 
         // offset values, in tile coordinates, not pixels
-        point o;
+        static point o;
         // offset for drawing, in pixels.
-        point op;
+        static point op;
 
         std::map<tripoint, int> radiation_override;
         std::map<tripoint, ter_id> terrain_override;
@@ -798,7 +800,17 @@ class cata_tiles
         point quarter_tile_point;
 
     public:
-        std::string memory_map_mode = "color_pixel_sepia";        
+        std::string memory_map_mode = "color_pixel_sepia";    
+
+        static point& get_o();
+
+        static point& get_op();
+
+        static point pos_to_screen(const point& p);
+
 };
+
+
+
 
 #endif // CATA_SRC_CATA_TILES_H

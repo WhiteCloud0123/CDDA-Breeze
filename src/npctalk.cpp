@@ -1116,7 +1116,7 @@ void npc::handle_sound( const sounds::sound_t spriority, const std::string &desc
                 temp_sound.type = spriority;
                 if( !ai_cache.sound_alerts.empty() ) {
                     // TODO: fix point types
-                    if( ai_cache.sound_alerts.back().abs_pos != s_abs_pos.raw() ) {
+                    if( ai_cache.sound_alerts.back().abs_pos != temp_sound.abs_pos) {
                         ai_cache.sound_alerts.push_back( temp_sound );
                     }
                 } else {

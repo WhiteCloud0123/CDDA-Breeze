@@ -123,15 +123,21 @@ emitter.startSpin = 0;
 
 */
 
-class ParticleSystem
+class Particle_Activity
 {
 
 
 private :
 
-    std::string w_t_i_str;
+    std::string w_t_i_str = "";
     // 粒子系统支持的天气的id
     std::unordered_set<std::string>support_weather_id;
+
+    std::string style = "";
+
+    static SDL_Texture* _texture;
+
+    static SDL_Renderer* _renderer;
 
 public:
     enum class Mode
@@ -154,9 +160,24 @@ public:
 
 public:
 
+    Particle_Activity() {
+        particle_activity_list.push_back(this);
+    }
+
+    ~Particle_Activity() {
+        particle_activity_list.remove(this);
+    }
+
+
+    static std::list<Particle_Activity*> particle_activity_list;
+
     void init_weather_content();
 
     bool is_support_weather(const std::string& id);
+
+    static void init_texture(SDL_Texture* texture);
+
+    static void init_renderer(SDL_Renderer* renderer);
 
     void addParticles(int count);
 
@@ -618,7 +639,7 @@ public:
 
      void set_style_for_weather(const std::string &id_str,SDL_Renderer *renderer );
 
-     void set_style(const std::string& id_str, SDL_Texture* texture,SDL_Renderer* renderer);
+     void set_style(const std::string& str);
 
 
 protected:
@@ -766,7 +787,6 @@ protected:
     /** maximum particles of the system */
     int _totalParticles = 0;
     /** conforms to CocosNodeTexture protocol */
-    SDL_Texture* _texture = nullptr;
     /** conforms to CocosNodeTexture protocol */
     //BlendFunc _blendFunc;
     /** does the alpha value modify color */
@@ -785,11 +805,11 @@ protected:
     /** is sourcePosition compatible */
     bool _sourcePositionCompatible = false;
 
-    SDL_Renderer* _renderer = nullptr;
     int x_ = 0, y_ = 0;
 public:
-    void setRenderer(SDL_Renderer* ren) { _renderer = ren; }
+    
     void setPosition(int x, int y) { x_ = x; y_ = y; }
 };
+
 
 #endif // CATA_SRC_PARTICLESYSTEM_H

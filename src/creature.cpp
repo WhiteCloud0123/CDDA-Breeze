@@ -61,6 +61,8 @@
 #include "value_ptr.h"
 #include "vehicle.h"
 #include "vpart_position.h"
+#include "particle_system.h"
+#include "cata_tiles.h"
 
 struct mutation_branch;
 
@@ -84,6 +86,7 @@ static const efftype_id effect_sleep( "sleep" );
 static const efftype_id effect_stunned( "stunned" );
 static const efftype_id effect_tied( "tied" );
 static const efftype_id effect_zapped( "zapped" );
+static const efftype_id effect_pet("pet");
 
 static const json_character_flag json_flag_IGNORE_TEMP( "IGNORE_TEMP" );
 static const json_character_flag json_flag_LIMB_LOWER( "LIMB_LOWER" );
@@ -105,6 +108,9 @@ static const species_id species_ROBOT( "ROBOT" );
 
 static const trait_id trait_GLASSJAW( "GLASSJAW" );
 static const trait_id trait_PYROMANIA( "PYROMANIA" );
+
+static const mtype_id mon_yrax_apeirogon("mon_yrax_apeirogon");
+static const mtype_id mon_zombie_smoker("mon_zombie_smoker");
 
 const std::map<std::string, creature_size> Creature::size_map = {
     {"TINY",   creature_size::tiny},
@@ -2953,6 +2959,21 @@ tripoint_abs_sm Creature::global_sm_location() const
 tripoint_abs_omt Creature::global_omt_location() const
 {
     return project_to<coords::omt>( location );
+}
+
+void Creature::process_particle_activity() {
+
+    if (is_monster()) {
+        monster* m = as_monster();
+        if (m->type->id== mon_yrax_apeirogon || m->type->id== mon_zombie_smoker) {
+            particle_activity.set_style(m->type->id.str());
+            point screen_pos = cata_tiles::pos_to_screen(pos().xy());
+            screen_pos.x += cata_tiles::get_tile_width() / 2;
+            screen_pos.y += cata_tiles::get_tile_height() / 2;
+            particle_activity.setPosition(screen_pos.x, screen_pos.y);
+        }
+    }
+
 }
 
 std::unique_ptr<talker> get_talker_for( Creature &me )
