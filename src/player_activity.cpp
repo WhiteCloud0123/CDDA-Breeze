@@ -427,7 +427,7 @@ bool player_activity::can_resume_with( const player_activity &other, const Chara
 
     if( id() != other.id() ) {
 
-        //TODO: 对 #812 提到的一个问题的简单的修复。当有更多需要活动灵活结合的需求时，应该对相关部分进行扩展和完善。
+        //TODO: 对 #812 提到的一个问题的简单的修复。当有更多需要活动连续结合的需求时，应该对相关部分进行扩展和完善。
         if (id()== ACT_UNLOAD_LOOT && other.id()== ACT_GUNMOD_REMOVE) {
             return true;
         }
