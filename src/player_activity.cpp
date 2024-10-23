@@ -414,7 +414,8 @@ bool containers_equal( const T &left, const T &right )
 
     return std::equal( left.begin(), left.end(), right.begin() );
 }
-
+static const activity_id ACT_UNLOAD_LOOT("ACT_UNLOAD_LOOT");
+static const activity_id ACT_GUNMOD_REMOVE("ACT_GUNMOD_REMOVE");
 bool player_activity::can_resume_with( const player_activity &other, const Character &who ) const
 {
     // Should be used for relative positions
@@ -425,6 +426,12 @@ bool player_activity::can_resume_with( const player_activity &other, const Chara
     }
 
     if( id() != other.id() ) {
+
+        //TODO: 对 #812 提到的一个问题的简单修复。当有更多需要活动连续结合的需求时，应该对相关部分进行扩展和完善。
+        if (id()== ACT_UNLOAD_LOOT && other.id()== ACT_GUNMOD_REMOVE) {
+            return true;
+        }
+
         return false;
     }
 
