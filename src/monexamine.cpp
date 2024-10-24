@@ -736,7 +736,7 @@ bool monexamine::pet_menu( monster &z )
     std::string bar_str;
     z.get_HP_Bar(bar_color, bar_str);
     text << get_tag_from_color(bar_color) << bar_str<<"</color>"<< std::endl;
-    text << "等级:：" << z.lv << std::endl;
+    text << "等级：" << z.lv << std::endl;
     text << "经验值：" << z.exp << std::endl;
     std::string cwt = string_format("%.1f", round_up(units::to_kilogram(z.get_carried_weight()), 1));
     std::string wct = string_format("%.1f", round_up(units::to_kilogram(z.weight_capacity()), 1));
