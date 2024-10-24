@@ -212,6 +212,7 @@ static const ter_str_id ter_t_underbrush_harvested_summer( "t_underbrush_harvest
 static const ter_str_id ter_t_underbrush_harvested_winter( "t_underbrush_harvested_winter" );
 
 static const trait_id trait_SCHIZOPHRENIC( "SCHIZOPHRENIC" );
+static const trait_id trait_DEBUG_HS("DEBUG_HS");
 
 static const vproto_id vehicle_prototype_none( "none" );
 
@@ -6322,6 +6323,63 @@ static void move_item( Character &you, item &it, const int quantity, const tripo
     }
 }
 
+// 结合了 move_item
+static void gunmod_remove(Character& who, item& gun, item& mod, const int quantity, const tripoint_bub_ms& src,
+    const tripoint_bub_ms& dest, vehicle* src_veh, int src_part)
+{
+    std::vector<item*> mods = gun.gunmods();
+    size_t gunmod_idx = mods.size();
+    for (size_t i = 0; i < mods.size(); i++) {
+        if (mods[i] == &mod) {
+            gunmod_idx = i;
+            break;
+        }
+    }
+    if (gunmod_idx == mods.size()) {
+        debugmsg("Cannot remove non-existent gunmod");
+        return;
+    }
+
+    if (!gunmod_remove_activity_actor::gunmod_unload(who, mod)) {
+        return;
+    }
+
+    gun.gun_set_mode(gun_mode_DEFAULT);
+    const itype* modtype = mod.type;
+
+    map& m = get_map();
+    move_item(who, mod, 1, src, src, src_veh, src_part);
+    gun.remove_item(mod);
+
+    // If the removed gunmod added mod locations, check to see if any mods are in invalid locations
+    if (!modtype->gunmod->add_mod.empty()) {
+        std::map<gunmod_location, int> mod_locations = gun.get_mod_locations();
+        for (const auto& slot : mod_locations) {
+            int free_slots = gun.get_free_mod_locations(slot.first);
+
+            for (item* the_mod : gun.gunmods()) {
+                if (the_mod->type->gunmod->location == slot.first && free_slots < 0) {
+                    gunmod_remove(who, gun, *the_mod, 1, src, src, src_veh, src_part);
+                    free_slots++;
+                }
+                else if (mod_locations.find(the_mod->type->gunmod->location) ==
+                    mod_locations.end()) {
+                    gunmod_remove(who, gun, *the_mod, 1, src, src, src_veh, src_part);
+                }
+            }
+        }
+    }
+
+    const int moves = who.has_trait(trait_DEBUG_HS) ? 0 : mod.type->gunmod->install_time / 2;
+
+    who.mod_moves(-moves);
+
+    //~ %1$s - gunmod, %2$s - gun.
+    who.add_msg_if_player(_("You remove your %1$s from your %2$s."), modtype->nname(1),
+        gun.tname());
+
+}
+
 void unload_loot_activity_actor::do_turn( player_activity &act, Character &you )
 {
     enum activity_stage : int {
@@ -6594,7 +6652,9 @@ void unload_loot_activity_actor::do_turn( player_activity &act, Character &you )
                         if( mod->is_irremovable() ) {
                             continue;
                         }
-                        you.gunmod_remove( *it->first, *mod );
+
+                        gunmod_remove(you, *it->first, *mod , 1, src_loc, src_loc, this_veh, this_part);
+
                         if( you.moves <= 0 ) {
                             return;
                         }
