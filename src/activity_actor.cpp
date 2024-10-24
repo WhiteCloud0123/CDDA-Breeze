@@ -6323,7 +6323,7 @@ static void move_item( Character &you, item &it, const int quantity, const tripo
     }
 }
 
-// 结合了 move_item
+// 结合了 Character::gunmod_remove、move_item
 static void gunmod_remove(Character& who, item& gun, item& mod, const int quantity, const tripoint_bub_ms& src,
     const tripoint_bub_ms& dest, vehicle* src_veh, int src_part)
 {
