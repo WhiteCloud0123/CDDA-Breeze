@@ -1025,6 +1025,28 @@ void gun_actor::shoot( monster &z, const tripoint &target, const gun_mode_id &mo
         tmp.throw_item( target, item( ammo, calendar::turn, 1 ) );
         z.ammo[ammo]--;
     } else {
-        z.ammo[ammo] -= tmp.fire_gun( target, gun.gun_current_mode().qty );
+
+        int consume = 0;
+        bool used_inv_magazine = false;
+        
+
+        for (std::vector<item>::iterator iter = z.inv.begin() ; iter != z.inv.end();++iter) {
+            if (iter->has_var("ammo_belt_monster_use") && iter->ammo_default() == ammo) {
+                consume = tmp.fire_gun(target, gun.gun_current_mode().qty);
+                iter->ammo_consume(consume,z.pos(),nullptr);
+                if (z.ammo[ammo]-consume <=0) {
+                    z.inv.erase(iter);
+                }
+                used_inv_magazine = true;
+                break;
+            }
+        }
+
+        if (!used_inv_magazine) {
+            consume = tmp.fire_gun(target, gun.gun_current_mode().qty);
+        }
+
+        z.ammo[ammo] -= consume;
+
     }
 }

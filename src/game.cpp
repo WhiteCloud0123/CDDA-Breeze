@@ -5983,7 +5983,7 @@ void game::examine( const tripoint &examp, bool with_pickup )
                     return;
                 }
             } else if( mon->attitude_to( u ) == Creature::Attitude::FRIENDLY && !u.is_mounted() ) {
-                if( monexamine::mfriend_menu( *mon ) ) {
+                if( monexamine::pet_menu( *mon ) ) {
                     return;
                 }
             }
