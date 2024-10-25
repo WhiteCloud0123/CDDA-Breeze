@@ -3848,8 +3848,17 @@ void disable_activity_actor::finish( player_activity &act, Character &/*who*/ )
     } else {
         get_map().add_item_or_charges( target, critter.to_item() );
         if( !critter.has_flag( MF_INTERIOR_AMMO ) ) {
+
+            std::set<itype_id> inv_ammo_belt_default_ammo_set;
+            for (item &i :critter.inv) {
+                if (i.has_var("ammo_belt_monster_use")) {
+                    inv_ammo_belt_default_ammo_set.insert(i.ammo_default());
+                    get_map().add_item_or_charges(critter.pos(),i);
+                }
+            }
+
             for( std::pair<const itype_id, int> &ammodef : critter.ammo ) {
-                if( ammodef.second > 0 ) {
+                if( ammodef.second > 0 && inv_ammo_belt_default_ammo_set.find(ammodef.first) == inv_ammo_belt_default_ammo_set.end()) {
                     get_map().spawn_item( target.xy(), ammodef.first, 1, ammodef.second, calendar::turn );
                 }
             }

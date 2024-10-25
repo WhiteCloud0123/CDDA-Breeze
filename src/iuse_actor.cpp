@@ -93,6 +93,7 @@
 #include "vpart_range.h"
 #include "weather.h"
 #include "weather_type.h"
+#include "mattack_actors.h"
 
 static const activity_id ACT_FIRSTAID( "ACT_FIRSTAID" );
 static const activity_id ACT_REPAIR_ITEM( "ACT_REPAIR_ITEM" );
@@ -907,7 +908,57 @@ cata::optional<int> place_monster_iuse::use( Character &p, item &it, bool, const
 
     newmon.ammo = newmon.type->starting_ammo;
     if( !newmon.has_flag( MF_INTERIOR_AMMO ) ) {
-        for( std::pair<const itype_id, int> &amdef : newmon.ammo ) {
+
+        for (std::pair<const itype_id,int>&p : newmon.ammo) {
+            p.second = 0;
+        }
+
+        std::vector<item> ammo_belt_vec;
+        // 收集子弹带
+        std::vector<item*> aim_ab_vec;
+        // 将经过筛选，不用包含与子弹带弹药相匹配的数据
+        std::map<itype_id, int> ammo_data = newmon.ammo;
+        for (const std::pair<std::string, mtype_special_attack>& sa : newmon.type->special_attacks) {
+            if (sa.second->id == "gun") {
+                const gun_actor* actor = dynamic_cast<const gun_actor*>(sa.second.get());
+                item gun = item(actor->gun_type);
+                item magazine = item(gun.magazine_default());
+                if (magazine.is_ammo_belt()) {
+                    ammo_belt_vec.push_back(magazine);
+                }
+            }
+        }
+        // 查找玩家身上是否有目标子弹带
+        for (item& ab : ammo_belt_vec) {
+            std::vector<item*> temp_vec= p.items_with([&p,ab](const item& itm) {
+                return itm.typeId()==ab.typeId();
+                });
+            for (item* i : temp_vec) {
+                aim_ab_vec.push_back(i);
+            }
+        }
+
+        for (item *i :  aim_ab_vec) {
+            item ammo_belt = *i;
+            ammo_belt.set_var("ammo_belt_monster_use","");
+            newmon.inv.push_back(ammo_belt);
+            newmon.ammo[ammo_belt.ammo_default()] += ammo_belt.all_items_top().front()->charges;
+            p.add_msg_if_player("你为 %1s 填充了 %2s 。",newmon.name(),ammo_belt.tname(), ammo_belt.all_items_top().front()->charges);
+
+            p.remove_item(*i);
+
+            for (std::map<itype_id, int>::iterator iter = ammo_data.begin(); iter != ammo_data.end();++iter) {
+                if (iter->first == ammo_belt.ammo_default()) {
+                     iter =  ammo_data.erase(iter);
+                }
+            }
+
+            
+
+        }
+
+
+        for( std::pair<const itype_id, int> &amdef : ammo_data ) {
             item ammo_item( amdef.first, calendar::turn_zero );
             const int available = p.charges_of( amdef.first );
             if( available == 0 ) {
@@ -927,6 +978,11 @@ cata::optional<int> place_monster_iuse::use( Character &p, item &it, bool, const
                                  newmon.name() );
             amdef.second = ammo_item.charges;
         }
+
+        for (std::pair<const itype_id, int>& amdef : ammo_data) {
+            newmon.ammo[amdef.first] = amdef.second;
+        }
+
     }
 
     int skill_offset = 0;
