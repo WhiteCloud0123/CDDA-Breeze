@@ -953,8 +953,6 @@ cata::optional<int> place_monster_iuse::use( Character &p, item &it, bool, const
                 }
             }
 
-            
-
         }
 
 

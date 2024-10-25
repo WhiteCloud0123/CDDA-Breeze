@@ -1030,12 +1030,12 @@ void gun_actor::shoot( monster &z, const tripoint &target, const gun_mode_id &mo
         bool used_inv_magazine = false;
         
 
-        for (std::vector<item>::iterator magazine = z.inv.begin() ; magazine != z.inv.end();++magazine) {
-            if (magazine->has_var("ammo_belt_monster_use") && magazine->ammo_default() == ammo) {
+        for (std::vector<item>::iterator iter = z.inv.begin() ; iter != z.inv.end();++iter) {
+            if (iter->has_var("ammo_belt_monster_use") && iter->ammo_default() == ammo) {
                 consume = tmp.fire_gun(target, gun.gun_current_mode().qty);
-                magazine->ammo_consume(consume,z.pos(),nullptr);
+                iter->ammo_consume(consume,z.pos(),nullptr);
                 if (z.ammo[ammo]-consume <=0) {
-                    z.inv.erase(magazine);
+                    z.inv.erase(iter);
                 }
                 used_inv_magazine = true;
                 break;
