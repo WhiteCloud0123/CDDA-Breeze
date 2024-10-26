@@ -1027,7 +1027,7 @@ void gun_actor::shoot( monster &z, const tripoint &target, const gun_mode_id &mo
     } else {
 
         int consume = 0;
-        bool used_inv_magazine = false;
+        bool used_inv_ammo_belt = false;
         
 
         for (std::vector<item>::iterator iter = z.inv.begin() ; iter != z.inv.end();++iter) {
@@ -1037,12 +1037,12 @@ void gun_actor::shoot( monster &z, const tripoint &target, const gun_mode_id &mo
                 if (z.ammo[ammo]-consume <=0) {
                     z.inv.erase(iter);
                 }
-                used_inv_magazine = true;
+                used_inv_ammo_belt = true;
                 break;
             }
         }
 
-        if (!used_inv_magazine) {
+        if (!used_inv_ammo_belt) {
             consume = tmp.fire_gun(target, gun.gun_current_mode().qty);
         }
 

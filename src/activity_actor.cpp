@@ -3853,6 +3853,7 @@ void disable_activity_actor::finish( player_activity &act, Character &/*who*/ )
             for (item &i :critter.inv) {
                 if (i.has_var("ammo_belt_monster_use")) {
                     inv_ammo_belt_default_ammo_set.insert(i.ammo_default());
+                    i.erase_var("ammo_belt_monster_use");
                     get_map().add_item_or_charges(critter.pos(),i);
                 }
             }
