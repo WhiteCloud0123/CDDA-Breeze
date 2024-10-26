@@ -1,2 +1,0 @@
-NAME: Breeze_Sounds
-VIEW: Breeze_Sounds
