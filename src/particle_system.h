@@ -9,6 +9,7 @@
         #include <SDL.h>
 #endif
 #include <vector>
+#include<list>
 #include <string>
 #include"sdl_wrappers.h"
 #include<unordered_set>
