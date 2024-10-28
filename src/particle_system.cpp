@@ -6,6 +6,7 @@
 #include"options.h"
 #include "sdltiles.h"
 #include "messages.h"
+#include "game.h"
 
 SDL_Texture* Particle_Activity::_texture = nullptr;
 SDL_Renderer* Particle_Activity::_renderer = nullptr;
@@ -458,6 +459,9 @@ void Particle_Activity::draw()
     }
 
     if (style != "") {
+
+        double scale = (double)g->get_zoom() / 16;
+
         for (int i = 0; i < _particleCount; i++)
         {
             auto& p = particle_data_[i];
@@ -465,7 +469,7 @@ void Particle_Activity::draw()
             {
                 continue;
             }
-            SDL_Rect r = { int(p.posx + p.startPosX - p.size / 2), int(p.posy + p.startPosY - p.size / 2), int(p.size), int(p.size) };
+            SDL_Rect r = { int(p.posx + p.startPosX - p.size / 2), int(p.posy + p.startPosY - p.size / 2), int(p.size* scale), int(p.size*scale) };
             SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
             SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
             SDL_SetTextureAlphaMod(_texture, c.a);
