@@ -96,9 +96,9 @@
 
     燃料装填完毕后，回到CBM界面启用供能即可；
 
-    ![descript](media/cf2beb7daa7fa1da4da1a605e82df994.png)
+    ![descript](image/cf2beb7daa7fa1da4da1a605e82df994.png)
 
-    ![descript](media/0a8d07f98c8e428d89d8b016129034da.png)
+    ![descript](image/0a8d07f98c8e428d89d8b016129034da.png)
 
 #### 涓流充能：
 

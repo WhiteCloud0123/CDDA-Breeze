@@ -240,13 +240,13 @@
 
 关闭时空裂隙可以使用稀有且独特的实验室神器「导线外露的原型」，需要你付出一些随机且可能相当严重的代价（如严重受伤、廷达罗斯裂隙等）来关闭传送门，关闭之后这个神器就失去作用了，丢家里当摆件吧；
 
-![descript](media/b76d22c07ad16fc48940b38e2f718a98.png)
+![descript](image/b76d22c07ad16fc48940b38e2f718a98.png)
 
-![descript](media/64d4945390e9b79337d8b81e730b8fbd.png)
+![descript](image/64d4945390e9b79337d8b81e730b8fbd.png)
 
-![descript](media/cfc5559be213a574473daf699939f810.png)
+![descript](image/cfc5559be213a574473daf699939f810.png)
 
-![descript](media/2329aa27672fa4dd6a84a9069d27d163.png)
+![descript](image/2329aa27672fa4dd6a84a9069d27d163.png)
 
 ## 22、破墙拆门的方法？
 
@@ -286,7 +286,7 @@
 
 **Q：游戏中有大量的保险箱与电子保险柜，我应当如何撬开他们？**
 
-**A：0.F稳定版可以用冲击钻，实验版本目前通用解法是焊炬；**不过焊炬有可能会引燃保险箱内的可燃物质；另一种通用解法是破坏保险柜，方法不限；
+**A：目前通用解法是焊炬；**不过焊炬有可能会引燃保险箱内的可燃物质；另一种通用解法是破坏保险柜，方法不限；
 
 其他方法就，每个保险箱有每个保险箱的应对方法：
 
@@ -318,9 +318,9 @@ HUB01相邻气象站，所以监听到天气信息时一般就是HUB01；
 
 **A**：完整的混凝土斜坡至少需要两个「露天」区域，你可以打开3D视野并按「x」观察，使用「\<和\>」来切换上下层观察。图中便是在地下挖掘出的一块地洞，**其地表的天花板因缺乏墙体支撑自然坍塌**，让我们得到了两块露天区域来建造混凝土斜坡；
 
-![descript](media/8a26166bf460b608bb3475b7f91e3f8e.png)![descript](media/d18d1eff1ad040359f65b337e5f7e108.png)
+![descript](image/8a26166bf460b608bb3475b7f91e3f8e.png)![descript](image/d18d1eff1ad040359f65b337e5f7e108.png)
 
-![descript](media/f2ad4495f654a12cb24c04a60356c8a0.png)![descript](media/512ca5557ed4bc34ce3aacec9af5eb44.png)
+![descript](image/f2ad4495f654a12cb24c04a60356c8a0.png)![descript](image/512ca5557ed4bc34ce3aacec9af5eb44.png)
 
 混凝土斜坡的底层与顶层都需要在同一层建造，建造完成后便是图中的效果，混凝土斜坡可以让载具穿梭Z轴也就是上下层，也可以让你不用按上下楼按键就能穿梭楼层；小到基地建设，大到活捉三尖树之心、蚁后，其应用范围颇为广泛，泥土斜坡同理。
 
