@@ -2968,6 +2968,7 @@ void Creature::process_particle_activity() {
         if (m->type->id== mon_yrax_apeirogon || m->type->id== mon_zombie_smoker) {
             particle_activity.set_style(m->type->id.str());
             point screen_pos = cata_tiles::pos_to_screen(pos().xy());
+            add_msg(m_bad,"monster screen pos %1s / %2s ",screen_pos.x,screen_pos.y);
             screen_pos.x += cata_tiles::get_tile_width() / 2;
             screen_pos.y += cata_tiles::get_tile_height() / 2;
             particle_activity.setPosition(screen_pos.x, screen_pos.y);

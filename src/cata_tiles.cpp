@@ -1304,6 +1304,8 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     // Rounding up to include incomplete tiles at the bottom/right edges
     screentile_width = divide_round_up( width, tile_width );
     screentile_height = divide_round_up( height, tile_height );
+    add_msg(m_critical,"screentile_width %1s / screentile_height %2s", screentile_width, screentile_height);
+
 
     const int min_col = 0;
     const int max_col = s.x;
