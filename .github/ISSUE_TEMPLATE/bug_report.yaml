@@ -39,7 +39,7 @@ body:
   - type: textarea
     id: if_use_third_mod
     attributes:
-      label: 是否使用了第三方mod
+      label: 是否使用了非内置mod
     validations:
       required: true
 
