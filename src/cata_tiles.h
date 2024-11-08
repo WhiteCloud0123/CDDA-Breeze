@@ -700,8 +700,8 @@ class cata_tiles
         static  int tile_width;
         // The width and height of the area we can draw in,
         // measured in map coordinates, *not* in pixels.
-        int screentile_width = 0;
-        int screentile_height = 0;
+        static int screentile_width;
+        static int screentile_height;
         float tile_ratiox = 0.0f;
         float tile_ratioy = 0.0f;
 
@@ -807,6 +807,11 @@ class cata_tiles
         static point& get_op();
 
         static point pos_to_screen(const point& p);
+
+        static int &get_screentile_wdith();
+
+        static int &get_screentile_height();
+
 
 };
 

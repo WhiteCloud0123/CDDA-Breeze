@@ -462,8 +462,8 @@ void Particle_Activity::draw()
     if (style != "") {
 
         double scale = (double)g->get_zoom() / 16;
-        point player_sp = cata_tiles::pos_to_screen(get_player_character().pos().xy());
-
+        int tile_width = cata_tiles::get_tile_width();
+        int tile_height = cata_tiles::get_tile_height();
 
         for (int i = 0; i < _particleCount; i++)
         {
@@ -473,50 +473,33 @@ void Particle_Activity::draw()
                 continue;
             }
 
-            point& o = cata_tiles::get_o();
-            int tile_width = cata_tiles::get_tile_width();
-            int tile_height = cata_tiles::get_tile_height();
 
-            int p_x = int(p.posx + p.startPosX - p.size / 2);
-            int p_y = int(p.posy + p.startPosY - p.size / 2);
+            int p_x = int(p.posx + x_ - p.size / 2);
+            int p_y = int(p.posy + y_ - p.size / 2);
+            int p_size = p.size * scale;
 
-            // 放大
-            if (scale > 1.0) {
+            if (scale>1.0) {
 
-                int i = scale - 1;
-
-                for (int r = 0; r < i;r++) {
-                    p_x = int(2 * p_x - player_sp.x);
-                    p_y = int(2 * p_y - player_sp.y);
+                for (int r = 1; r < scale;r++) {
+                    p_x = p_x * 2 - x_;
+                    p_y = p_y * 2 - y_;
                 }
 
-  
+            }else if(scale<1.0) {
+
+                for (int r = 1; r < 1/scale; r++) {
+                    p_x = (p_x+x_)/2;
+                    p_y = (p_y + y_) /2;
+                }
+
             }
-            // 缩小
-            else if (scale<1.0) {
-
-                int i = (1 / scale)-1;
-
-                for (int r = 0; r < i;r++) {
-                    p_x = int((p_x + player_sp.x) / 2);
-                    p_y = int((p_y + player_sp.y) / 2);
-                }
             
-            }
- 
-            add_msg(m_good, "scale %s", scale);
-            add_msg(m_good, "o %1s / %2s",o.x,o.y);
-            add_msg(m_good, "player_sp %1s / %2s", player_sp.x, player_sp.y);
-            add_msg(m_good,"%1s / %2s",p_x,p_y);
-            add_msg(m_good, "POS %1s / %2s", POSX, POSY);
-
-
-            SDL_Rect r = { p_x, p_y, int(p.size* scale), int(p.size*scale) };
+            SDL_Rect r = { p_x, p_y, p_size, p_size };
             SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
             SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
             SDL_SetTextureAlphaMod(_texture, c.a);
             SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);        
         }
         update();
     }
@@ -1053,7 +1036,6 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
 
 
 void Particle_Activity::set_style(const std::string& str) {
-    
     if (style != str) {
         style = str;
     }
