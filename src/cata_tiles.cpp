@@ -123,12 +123,22 @@ point cata_tiles::o;
 point cata_tiles::op;
 int cata_tiles::tile_width = 0;
 int cata_tiles::tile_height = 0;
+int cata_tiles::screentile_width = 0;
+int cata_tiles::screentile_height = 0;
 
 point cata_tiles::pos_to_screen(const point& p) {
     point screen;
     screen.x = (p.x - o.x) * tile_width + op.x;
     screen.y = (p.y - o.y) * tile_height + op.y;
     return { screen };
+}
+
+int& cata_tiles::get_screentile_wdith() {
+    return screentile_width;
+}
+
+int& cata_tiles::get_screentile_height() {
+    return screentile_height;
 }
 
 

@@ -585,6 +585,11 @@ void refresh_display()
 
     SDL_RenderPresent( renderer.get() );
     SetRenderTarget( renderer, display_buffer );
+
+    if (use_particle_system) {
+        ui_manager::redraw();
+    }
+
 }
 
 // only update if the set interval has elapsed

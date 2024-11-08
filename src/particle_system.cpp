@@ -6,6 +6,8 @@
 #include"options.h"
 #include "sdltiles.h"
 #include "messages.h"
+#include "game.h"
+#include "cata_tiles.h"
 
 SDL_Texture* Particle_Activity::_texture = nullptr;
 SDL_Renderer* Particle_Activity::_renderer = nullptr;
@@ -458,6 +460,11 @@ void Particle_Activity::draw()
     }
 
     if (style != "") {
+
+        double scale = (double)g->get_zoom() / 16;
+        int tile_width = cata_tiles::get_tile_width();
+        int tile_height = cata_tiles::get_tile_height();
+
         for (int i = 0; i < _particleCount; i++)
         {
             auto& p = particle_data_[i];
@@ -465,12 +472,34 @@ void Particle_Activity::draw()
             {
                 continue;
             }
-            SDL_Rect r = { int(p.posx + p.startPosX - p.size / 2), int(p.posy + p.startPosY - p.size / 2), int(p.size), int(p.size) };
+
+
+            int p_x = int(p.posx + x_ - p.size / 2);
+            int p_y = int(p.posy + y_ - p.size / 2);
+            int p_size = p.size * scale;
+
+            if (scale>1.0) {
+
+                for (int r = 1; r < scale;r++) {
+                    p_x = p_x * 2 - x_;
+                    p_y = p_y * 2 - y_;
+                }
+
+            }else if(scale<1.0) {
+
+                for (int r = 1; r < 1/scale; r++) {
+                    p_x = (p_x+x_)/2;
+                    p_y = (p_y + y_) /2;
+                }
+
+            }
+            
+            SDL_Rect r = { p_x, p_y, p_size, p_size };
             SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
             SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
             SDL_SetTextureAlphaMod(_texture, c.a);
             SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);        
         }
         update();
     }
@@ -1007,7 +1036,6 @@ void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Re
 
 
 void Particle_Activity::set_style(const std::string& str) {
-    
     if (style != str) {
         style = str;
     }
