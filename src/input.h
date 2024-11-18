@@ -546,7 +546,7 @@ class input_context
     public:
 #if defined(__ANDROID__)
         // Whatever's on top is our current input context.
-        static std::list<input_context *> input_context_stack;
+        inline static std::list<input_context *> input_context_stack;
 #endif
 
         input_context() : registered_any_input( false ), category( "default" ),
