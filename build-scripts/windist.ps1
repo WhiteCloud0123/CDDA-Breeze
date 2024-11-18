@@ -9,7 +9,7 @@ cp tools/format/json_formatter.exe bindist/json_formatter.exe
 mkdir bindist/lang
 cp -r lang/mo bindist/lang
 
-$extras = "data", "doc", "gfx", "LICENSE.txt", "LICENSE-OFL-Terminus-Font.txt", "README.md", "VERSION.txt"
+$extras = "data", "doc", "gfx", "LICENSE.txt", "README.md", "VERSION.txt"
 ForEach ($extra in $extras) {
 	cp -r $extra bindist
 }
