@@ -947,9 +947,11 @@ cata::optional<int> place_monster_iuse::use( Character &p, item &it, bool, const
 
             p.remove_item(*i);
 
-            for (std::map<itype_id, int>::iterator iter = ammo_data.begin(); iter != ammo_data.end();++iter) {
+            for (std::map<itype_id, int>::iterator iter = ammo_data.begin(); iter != ammo_data.end();) {
                 if (iter->first == ammo_belt.ammo_default()) {
                      iter =  ammo_data.erase(iter);
+                }else {
+                     ++iter;
                 }
             }
 
