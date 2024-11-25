@@ -930,7 +930,7 @@ cata::optional<int> place_monster_iuse::use( Character &p, item &it, bool, const
         }
         // 查找玩家身上是否有目标子弹带
         for (item& ab : ammo_belt_vec) {
-            std::vector<item*> temp_vec= p.items_with([&p,ab](const item& itm) {
+            std::vector<item*> temp_vec= p.items_with([ab](const item& itm) {
                 return itm.typeId()==ab.typeId();
                 });
             for (item* i : temp_vec) {
