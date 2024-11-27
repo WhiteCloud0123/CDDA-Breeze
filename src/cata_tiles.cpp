@@ -1499,18 +1499,6 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                 }
             }
 
-
-            if (use_show_player_move_point) {
-                Creature* c = creatures.creature_at(pos);
-                if (c && c->is_avatar()) {
-                    std::string temp_str;
-                    temp_str = string_format("%s",get_avatar().get_moves());
-                    overlay_strings.emplace(player_to_screen(point(x, y)) - 2 * half_tile_height_point,
-                        formatted_text(temp_str, catacurses::white + 8, direction::NORTHEAST)
-                    );
-                }
-            }
-
             // Add temperature value to the overlay_strings list for every visible tile when
             // displaying temperature
             if( g->display_overlay_state( ACTION_DISPLAY_TEMPERATURE ) && !invisible[0] ) {
@@ -1717,6 +1705,15 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                 }
             }
     }
+
+        if (use_show_player_move_point) {
+            std::string temp_str;
+            temp_str = string_format("%s", you.get_moves());
+            overlay_strings.emplace(player_to_screen(you.pos().xy()) - 2 * half_tile_height_point,
+                    formatted_text(temp_str, catacurses::white + 8, direction::NORTHEAST));
+        }
+
+
     // tile overrides are already drawn in the previous code
     void_radiation_override();
     void_terrain_override();
