@@ -1704,7 +1704,7 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
                     here.check_and_set_seen_cache(p.pos);
                 }
             }
-    }
+        }
 
         if (use_show_player_move_point) {
             std::string temp_str;

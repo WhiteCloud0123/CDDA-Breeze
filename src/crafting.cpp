@@ -943,6 +943,7 @@ void Character::start_craft( craft_command &command, const cata::optional<tripoi
     else {
         // set flag to craft
         craft_in_world.get_item()->set_var("crafter", name);
+        craft_in_world.get_item()->set_var("crafter_id", id.get_value());
         assign_activity(ACT_MULTIPLE_CRAFT);
     }
 
@@ -1447,6 +1448,10 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
         }
 
         newit.set_owner( get_faction()->id );
+        if (craft.has_var("crafter_id")) {
+            newit.set_var("crafter_id", craft.get_var("crafter_id"));
+        }
+
         // If these aren't equal, newit is a container, so finalize its contents too.
         if( &newit != &food_contained ) {
             food_contained.set_owner( get_faction()->id );
