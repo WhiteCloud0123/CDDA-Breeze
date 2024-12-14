@@ -59,6 +59,7 @@
 #include "output.h"
 #include "pimpl.h"
 #include "player_activity.h"
+#include "popup.h"
 #include "point.h"
 #include "proficiency.h"
 #include "recipe.h"
@@ -478,13 +479,23 @@ bool Character::check_eligible_containers_for_crafting( const recipe &rec, int b
                 }
             }
         }
-
+       
         if( charges_to_store > 0 ) {
-            if( !query_yn(
-                    _( "You don't have anything in which to store %s and may have to pour it out as soon as it is prepared!  Proceed?" ),
-                    prod.tname() ) ) {
+
+            if (is_avatar()) {
+                if (!query_yn(
+                    _("You don't have anything in which to store %s and may have to pour it out as soon as it is prepared!  Proceed?"),
+                    prod.tname())) {
+                    return false;
+                }
+            }
+            else {
+                query_popup().message("%1s 没有装 %2s 的容器！", get_name(), prod.tname())
+                    .option("QUIT")
+                    .query();    
                 return false;
             }
+            
         }
     }
 
