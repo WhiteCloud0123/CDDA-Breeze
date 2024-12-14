@@ -1320,8 +1320,10 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
         if( first ) {
             first = false;
             // TODO: reconsider recipe memorization
-            if( knows_recipe( &making ) && is_avatar() ) {
-                add_msg( _( "You craft %s from memory." ), making.result_name() );
+            if( knows_recipe( &making )) {
+                std::string character_name = is_avatar()? "你":get_name();
+                add_msg( "%1s根据记忆制造了%2s。", character_name, making.result_name() );
+            
             } else {
 
                 if (is_avatar()) {
@@ -1348,7 +1350,7 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
                             making.result_name());
                     }
                     else {
-                        add_msg_if_player_sees(pos(), m_good, _("%1s memorized the recipe for %2s!"),
+                        add_msg_if_player_sees(pos(), m_good, "%1s记住了%2s的制造方法！",
                             get_name(), making.result_name());
                     }
                 }
