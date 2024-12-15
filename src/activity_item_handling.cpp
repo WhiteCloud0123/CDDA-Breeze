@@ -56,6 +56,7 @@
 #include "requirements.h"
 #include "ret_val.h"
 #include "rng.h"
+#include "skill.h"
 #include "stomach.h"
 #include "temp_crafting_inventory.h"
 #include "translations.h"
@@ -2883,7 +2884,22 @@ static requirement_check_result generic_multi_activity_check_requirement(
         reason == do_activity_reason::UNKNOWN_ACTIVITY ) {
         // we can discount this tile, the work can't be done.
         if( reason == do_activity_reason::DONT_HAVE_SKILL ) {
-            you.add_msg_if_player( m_info, _( "You don't have the skill for this task." ) );
+            std::string character_name = you.is_avatar() ? "你" : you.get_name();
+            add_msg( m_info, "%s的技能不足以完成该任务。",character_name);           
+            if (act_info.con_idx) {
+                std::string skills = "";
+                const std::map<skill_id, int>& required_skills = act_info.con_idx->obj().required_skills;
+                for (std::map<skill_id,int>::const_iterator iter = required_skills.begin(); 
+                    iter != required_skills.end();iter++) {
+                    if (you.get_skill_level(iter->first) < iter->second) {
+                        skills = skills + iter->first.obj().name() + "（" + std::to_string(iter->second) + "）";
+                        if (iter != required_skills.end()) {
+                            skills = skills + " ";
+                        }
+                    }                   
+                }
+                add_msg(m_bad,"需要的技能：%s",skills);
+            }           
         } else if( reason == do_activity_reason::BLOCKING_TILE ) {
             you.add_msg_if_player( m_info, _( "There is something blocking the location for this task." ) );
         }
@@ -3012,6 +3028,9 @@ static requirement_check_result generic_multi_activity_check_requirement(
             you.add_msg_player_or_npc( m_info,
                                        _( "The required items are not available to complete this task." ),
                                        _( "The required items are not available to complete this task." ) );
+
+            add_msg(m_bad,what_we_need.obj().list_missing());
+
             if( reason == do_activity_reason::NEEDS_VEH_DECONST ||
                 reason == do_activity_reason::NEEDS_VEH_REPAIR ) {
                 you.activity_vehicle_part_index = -1;
