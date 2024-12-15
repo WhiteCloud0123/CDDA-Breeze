@@ -59,6 +59,7 @@
 #include "output.h"
 #include "pimpl.h"
 #include "player_activity.h"
+#include "popup.h"
 #include "point.h"
 #include "proficiency.h"
 #include "recipe.h"
@@ -478,11 +479,12 @@ bool Character::check_eligible_containers_for_crafting( const recipe &rec, int b
                 }
             }
         }
-
+       
         if( charges_to_store > 0 ) {
-            if( !query_yn(
-                    _( "You don't have anything in which to store %s and may have to pour it out as soon as it is prepared!  Proceed?" ),
-                    prod.tname() ) ) {
+            std::string character_name = is_avatar() ? "你" : get_name();
+            if (!get_player_character().query_yn(
+                "%1s 没有装 %2s 的容器，可能只能倒掉所做的东西！是否继续？",
+                character_name,prod.tname())) {
                 return false;
             }
         }
@@ -943,6 +945,7 @@ void Character::start_craft( craft_command &command, const cata::optional<tripoi
     else {
         // set flag to craft
         craft_in_world.get_item()->set_var("crafter", name);
+        craft_in_world.get_item()->set_var("crafter_id", id.get_value());
         assign_activity(ACT_MULTIPLE_CRAFT);
     }
 
@@ -1319,8 +1322,10 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
         if( first ) {
             first = false;
             // TODO: reconsider recipe memorization
-            if( knows_recipe( &making ) && is_avatar() ) {
-                add_msg( _( "You craft %s from memory." ), making.result_name() );
+            if( knows_recipe( &making )) {
+                std::string character_name = is_avatar()? "你":get_name();
+                add_msg( "%1s 根据记忆制造了 %2s 。", character_name, making.result_name() );
+            
             } else {
 
                 if (is_avatar()) {
@@ -1342,14 +1347,9 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
                 const double time_to_learn = 1000 * 8 * std::pow( difficulty, 4 ) / learning_speed;
                 if( x_in_y( making.time_to_craft_moves( *this ),  time_to_learn ) ) {
                     learn_recipe( &making );
-                    if (is_avatar()) {
-                        add_msg(m_good, _("You memorized the recipe for %s!"),
-                            making.result_name());
-                    }
-                    else {
-                        add_msg_if_player_sees(pos(), m_good, _("%1s memorized the recipe for %2s!"),
-                            get_name(), making.result_name());
-                    }
+                    std::string character_name = is_avatar() ? "你" : get_name();
+                    add_msg(m_good, "%1s 记住了 %2s 的制造方法！",
+                        character_name, making.result_name());
                 }
             }
         }
@@ -1447,6 +1447,10 @@ void Character::complete_craft( item &craft, const cata::optional<tripoint> &loc
         }
 
         newit.set_owner( get_faction()->id );
+        if (craft.has_var("crafter_id")) {
+            newit.set_var("crafter_id", craft.get_var("crafter_id"));
+        }
+
         // If these aren't equal, newit is a container, so finalize its contents too.
         if( &newit != &food_contained ) {
             food_contained.set_owner( get_faction()->id );

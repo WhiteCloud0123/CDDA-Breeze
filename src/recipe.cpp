@@ -1086,18 +1086,6 @@ bool recipe::npc_can_craft(std::string& reason) const
         reason = "要求NPC练习的功能尚未实现。";
         return false;
     }
-    if (result()->phase != phase_id::SOLID) {
-        reason = "要求NPC制作非固体物品的功能尚未实现。";
-        return false;
-    }
-    if (!get_byproducts().empty()) {
-        for (const std::pair<const itype_id, int>& bp : get_byproducts()) {
-            if (bp.first->phase != phase_id::SOLID) {
-                reason = "要求NPC制作非固体物品的功能尚未实现。";
-                return false;
-            }
-        }
-    }
     return true;
 }
 

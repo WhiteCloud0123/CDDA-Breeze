@@ -5670,7 +5670,8 @@ bool Character::pour_into( item_location &container, item &liquid, bool ignore_s
         amount = std::min( amount, liquid.charges );
     }
 
-    add_msg_if_player( _( "You pour %1$s into the %2$s." ), liquid.tname(), container->tname() );
+    std::string character_name = is_avatar() ? "你" : get_name();
+    add_msg( "%1s 把 %2s 灌进 %3s 。",character_name,liquid.tname(), container->tname() );
 
     liquid.charges -= container->fill_with( liquid, amount, false, false, ignore_settings );
     inv->unsort();
