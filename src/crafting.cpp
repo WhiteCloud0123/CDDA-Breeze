@@ -3035,8 +3035,8 @@ void npc::do_npc_craft(const cata::optional<tripoint>& loc, const recipe_id& got
     }
     else {
         uilist menu;
-        menu.text = "Craft what?";
-        menu.addentry(0, true, MENU_AUTOASSIGN, _("Craft new item"));
+        menu.text = "制作什么？";
+        menu.addentry(0, true, MENU_AUTOASSIGN, "制作新物品");
         menu.addentry(1, true, MENU_AUTOASSIGN, _("Work on craft"));
         menu.query();
 
@@ -3048,10 +3048,10 @@ void npc::do_npc_craft(const cata::optional<tripoint>& loc, const recipe_id& got
             uilist item_selection;
             do {
                 item_selection.init();
-                item_selection.text = "Craft what?";
+                item_selection.text = "制作什么? ";
                 item_selection.selected = selected;
-                item_selection.addentry(0, true, MENU_AUTOASSIGN, "Start crafting");
-                item_selection.addentry(1, true, MENU_AUTOASSIGN, "Select all");
+                item_selection.addentry(0, true, MENU_AUTOASSIGN, "开始制作");
+                item_selection.addentry(1, true, MENU_AUTOASSIGN, "选中全部");
                 int index = 2;
 
                 for (item_location& itm : craft_item_list) {
