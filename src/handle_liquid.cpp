@@ -185,7 +185,6 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
     uilist menu;
     const std::string liquid_name = liquid.display_name(liquid.charges);
     if (character.is_npc()) {
-        add_msg(m_good,"npc");
         std::vector<item_location> can_contain;
         for (const tripoint& pos : here.points_in_radius(character.pos(), radius)) {
             map_stack item_stack = here.i_at(pos);
@@ -448,7 +447,7 @@ bool perform_liquid_transfer(Character &character, item &liquid, const tripoint 
                     here.add_item_or_charges( target.pos, liquid );
                     liquid.charges = 0;
                     std::string character_name = character.is_avatar() ? "你" : character.get_name();
-                    add_msg(m_info,"%1s 把 %2s 倒在了地上。",character_name,liquid.tname());
+                    add_msg("%1s 把 %2s 倒在了地上。",character_name,liquid.tname());
                 }
                 character.mod_moves( -100 );
             }
