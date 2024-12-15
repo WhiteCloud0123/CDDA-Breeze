@@ -2885,18 +2885,21 @@ static requirement_check_result generic_multi_activity_check_requirement(
         // we can discount this tile, the work can't be done.
         if( reason == do_activity_reason::DONT_HAVE_SKILL ) {
             std::string character_name = you.is_avatar() ? "你" : you.get_name();
-            you.add_msg_if_player( m_info, "%s的技能不足以完成该任务。",character_name);           
+            add_msg( m_info, "%s的技能不足以完成该任务。",character_name);           
             if (act_info.con_idx) {
                 std::string skills = "";
-                for (const std::pair<const skill_id, int> & pair : act_info.con_idx->obj().required_skills) {
-                    if (you.get_skill_level(pair.first) < pair.second) {
-                        skills = skills + pair.first.obj().name() + "（"+std::to_string(pair.second)+"） ";
-                    }
+                const std::map<skill_id, int>& required_skills = act_info.con_idx->obj().required_skills;
+                for (std::map<skill_id,int>::const_iterator iter = required_skills.begin(); 
+                    iter != required_skills.end();iter++) {
+                    if (you.get_skill_level(iter->first) < iter->second) {
+                        skills = skills + iter->first.obj().name() + "（" + std::to_string(iter->second) + "）";
+                        if (iter != required_skills.end()) {
+                            skills = skills + " ";
+                        }
+                    }                   
                 }
                 add_msg(m_bad,"需要的技能：%s",skills);
-            }
-            
-
+            }           
         } else if( reason == do_activity_reason::BLOCKING_TILE ) {
             you.add_msg_if_player( m_info, _( "There is something blocking the location for this task." ) );
         }
