@@ -484,7 +484,7 @@ bool handle_liquid( item &liquid, const item *const source, const int radius,
     }
     struct liquid_dest_opt liquid_target;
 
-    Character* character = nullptr;;
+    Character* character = nullptr;
     if (liquid.has_var("crafter_id")) {
         character = overmap_buffer.find_npc(character_id(std::stoi(liquid.get_var("crafter_id"))))->as_character();
     }
