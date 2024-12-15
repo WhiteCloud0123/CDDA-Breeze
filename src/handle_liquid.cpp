@@ -184,9 +184,27 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
     map& here = get_map();
     uilist menu;
     const std::string liquid_name = liquid.display_name(liquid.charges);
-    int npc_select = 0;
     if (character.is_npc()) {
         add_msg(m_good,"npc");
+        std::vector<item_location> can_contain;
+        for (const tripoint& pos : here.points_in_radius(character.pos(), radius)) {
+            map_stack item_stack = here.i_at(pos);
+            for (item& i : item_stack) {
+                if (i.get_remaining_capacity_for_liquid(liquid) > 0) {
+                    can_contain.push_back(item_location(map_cursor(pos), &i));
+                }
+            }
+        }
+
+        if (can_contain.empty()) {
+            target.pos = character.pos();
+            target.dest_opt = LD_GROUND;
+        }
+        else {
+            target.item_loc = can_contain[0];
+            target.dest_opt = LD_ITEM;
+        }
+        return true;
     }
 
     if( source_pos != nullptr ) {
@@ -214,40 +232,10 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
     }
     // This handles containers found anywhere near the player, including on the map and in vehicle storage.
     menu.addentry( -1, true, 'c', _( "Pour into a container" ) );
-    // npc优先将制作出的液体放入容器
-    if (character.is_npc()) {
-        npc_select= menu.entries.size() - 1;
-    }
     actions.emplace_back( [&]() {
-        // 目标容器
-        item* cont;
-
-        if (character.is_avatar()) {
-            target.item_loc = game_menus::inv::container_for(character, liquid,
-                radius, /*avoid=*/source);
-            cont = target.item_loc.get_item();
-        }
-        else {
-
-            std::vector<item_location> can_contain;
-
-            for (const tripoint& pos : here.points_in_radius(character.pos(),radius)) {
-                map_stack item_stack = here.i_at(pos);
-                for (item& i : item_stack) {
-                    if (i.get_remaining_capacity_for_liquid(liquid) > 0) {
-                        can_contain.push_back(item_location(map_cursor(pos),&i));
-                    }
-                }
-            }
-
-            if (can_contain.empty()) {
-                return;
-            }
-
-            target.item_loc = can_contain[0];
-            cont = target.item_loc.get_item();
-            
-        }
+        target.item_loc = game_menus::inv::container_for(character, liquid,
+            radius, /*avoid=*/source);
+        item* const cont = target.item_loc.get_item();
         
         if( cont == nullptr || cont->is_null() ) {
             add_msg( _( "Never mind." ) );
@@ -346,16 +334,6 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
 
     if( menu.entries.empty() ) {
         return false;
-    }
-
-    if (character.is_npc()) {
-
-        if (npc_select >= actions.size()) {
-            return false;
-        }
-
-        actions[npc_select]();
-        return true;
     }
 
     while( target.dest_opt == LD_NULL ) {
@@ -469,6 +447,8 @@ bool perform_liquid_transfer(Character &character, item &liquid, const tripoint 
                 } else {
                     here.add_item_or_charges( target.pos, liquid );
                     liquid.charges = 0;
+                    std::string character_name = character.is_avatar() ? "你" : character.get_name();
+                    add_msg(m_info,"%1s 把 %2s 倒在了地上。",character_name,liquid.tname());
                 }
                 character.mod_moves( -100 );
             }
