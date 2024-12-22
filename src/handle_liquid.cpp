@@ -115,6 +115,9 @@ void handle_all_liquid( item liquid, const int radius, const item *const avoid )
         // The result of handle_liquid is ignored, the player *has* to handle all the liquid.
         handle_liquid( liquid, avoid, radius );
     }
+    if (liquid.has_var("crafter_id")) {
+        liquid.erase_var("crafter_id");
+    }
 }
 
 bool consume_liquid( item &liquid, const int radius, const item *const avoid )
@@ -185,22 +188,24 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
     uilist menu;
     const std::string liquid_name = liquid.display_name(liquid.charges);
     if (character.is_npc()) {
-        std::vector<item_location> can_contain;
-        for (const tripoint& pos : here.points_in_radius(character.pos(), radius)) {
+
+        std::vector<item_location> container_location;
+       
+        for (const tripoint& pos : here.points_in_radius(character.pos(), PICKUP_RANGE)) {
             map_stack item_stack = here.i_at(pos);
             for (item& i : item_stack) {
-                if (i.get_remaining_capacity_for_liquid(liquid) > 0) {
-                    can_contain.push_back(item_location(map_cursor(pos), &i));
+                if (i.get_remaining_capacity_for_liquid(liquid,true) > 0 ) {
+                    container_location.push_back(item_location(map_cursor(pos), &i));
                 }
             }
         }
 
-        if (can_contain.empty()) {
+        if (container_location.empty()) {
             target.pos = character.pos();
             target.dest_opt = LD_GROUND;
         }
         else {
-            target.item_loc = can_contain[0];
+            target.item_loc = container_location[0];
             target.dest_opt = LD_ITEM;
         }
         return true;
@@ -491,8 +496,7 @@ bool handle_liquid( item &liquid, const item *const source, const int radius,
     else {
         character = &get_player_character();
     }
-    
-    liquid.erase_var("crafter_id");
+        
 
     if( get_liquid_target(*character,liquid, source, radius, source_pos, source_veh, source_mon,
                            liquid_target) ) {
