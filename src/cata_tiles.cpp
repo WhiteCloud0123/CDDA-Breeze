@@ -1889,7 +1889,7 @@ void cata_tiles::draw_hp_bar( const tripoint& p ) {
         draw_rect.y = screen.y;        
         draw_rect.h = tile_height/3;
         creature_tracker& ct = get_creature_tracker();
-        Creature* c = ct.creature_at(p);
+        Creature* c = ct.creature_at(p,true);
         float factor =(float)c->get_hp() / c->get_hp_max();
 
         draw_rect.w = tile_width *  factor;
