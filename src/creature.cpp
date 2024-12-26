@@ -1744,7 +1744,7 @@ bool Creature::has_value(const std::string& key)
 
 void Creature::set_value( const std::string &key, const std::string &value )
 {
-    values[ key ] = value;
+    values.insert_or_assign(key,value);
 }
 
 void Creature::remove_value( const std::string &key )

@@ -1543,7 +1543,7 @@ void item::set_var( const std::string &name, const int value )
     std::ostringstream tmpstream;
     tmpstream.imbue( std::locale::classic() );
     tmpstream << value;
-    item_vars[name] = tmpstream.str();
+    item_vars.insert_or_assign(name, tmpstream.str());
 }
 
 void item::set_var( const std::string &name, const long long value )
@@ -1551,7 +1551,7 @@ void item::set_var( const std::string &name, const long long value )
     std::ostringstream tmpstream;
     tmpstream.imbue( std::locale::classic() );
     tmpstream << value;
-    item_vars[name] = tmpstream.str();
+    item_vars.insert_or_assign(name, tmpstream.str());
 }
 
 // NOLINTNEXTLINE(cata-no-long)
@@ -1560,12 +1560,12 @@ void item::set_var( const std::string &name, const long value )
     std::ostringstream tmpstream;
     tmpstream.imbue( std::locale::classic() );
     tmpstream << value;
-    item_vars[name] = tmpstream.str();
+    item_vars.insert_or_assign(name, tmpstream.str());
 }
 
 void item::set_var( const std::string &name, const double value )
 {
-    item_vars[name] = string_format( "%f", value );
+    item_vars.insert_or_assign(name, string_format("%f", value));
 }
 
 double item::get_var( const std::string &name, const double default_value ) const
@@ -1607,7 +1607,7 @@ double item::get_var( const std::string &name, const double default_value ) cons
 
 void item::set_var( const std::string &name, const tripoint &value )
 {
-    item_vars[name] = string_format( "%d,%d,%d", value.x, value.y, value.z );
+    item_vars.insert_or_assign(name, string_format("%d,%d,%d", value.x, value.y, value.z));
 }
 
 tripoint item::get_var( const std::string &name, const tripoint &default_value ) const
@@ -1634,7 +1634,7 @@ tripoint item::get_var( const std::string &name, const tripoint &default_value )
 
 void item::set_var( const std::string &name, const std::string &value )
 {
-    item_vars[name] = value;
+    item_vars.insert_or_assign(name,value);
 }
 
 std::string item::get_var( const std::string &name, const std::string &default_value ) const
