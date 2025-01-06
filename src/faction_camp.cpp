@@ -56,7 +56,7 @@
 #include "npc.h"
 #include "npctalk.h"
 #include "omdata.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "overmap.h"
 #include "overmap_ui.h"
@@ -613,17 +613,17 @@ static bool extract_and_check_orientation_flags( const recipe_id &recipe,
     return true;
 }
 
-static cata::optional<basecamp *> get_basecamp( npc &p, const std::string &camp_type = "default" )
+static std::optional<basecamp *> get_basecamp( npc &p, const std::string &camp_type = "default" )
 {
     tripoint_abs_omt omt_pos = p.global_omt_location();
-    cata::optional<basecamp *> bcp = overmap_buffer.find_camp( omt_pos.xy() );
+    std::optional<basecamp *> bcp = overmap_buffer.find_camp( omt_pos.xy() );
     if( bcp ) {
         return bcp;
     }
     get_map().add_camp( omt_pos, "faction_camp" );
     bcp = overmap_buffer.find_camp( omt_pos.xy() );
     if( !bcp ) {
-        return cata::nullopt;
+        return std::nullopt;
     }
     basecamp *temp_camp = *bcp;
     temp_camp->define_camp( omt_pos, camp_type );
@@ -699,7 +699,7 @@ void talk_function::start_camp( npc &p )
                p.disp_name(), making.get_blueprint().str() );
         return;
     }
-    cata::optional<basecamp *> camp = get_basecamp( p, camp_type.str() );
+    std::optional<basecamp *> camp = get_basecamp( p, camp_type.str() );
     if( camp.has_value() ) {
         for( int tab_num = base_camps::TAB_MAIN; tab_num < base_camps::TAB_NW; tab_num++ ) {
             std::vector<ui_mission_id> temp;
@@ -737,7 +737,7 @@ void talk_function::basecamp_mission( npc &p )
     const tripoint_abs_omt omt_pos = p.global_omt_location();
     mission_data mission_key;
 
-    cata::optional<basecamp *> temp_camp = get_basecamp( p );
+    std::optional<basecamp *> temp_camp = get_basecamp( p );
     if( !temp_camp ) {
         return;
     }
@@ -4078,7 +4078,7 @@ std::string talk_function::name_mission_tabs(
     if( role_id != base_camps::id ) {
         return cur_title;
     }
-    cata::optional<basecamp *> temp_camp = overmap_buffer.find_camp( omt_pos.xy() );
+    std::optional<basecamp *> temp_camp = overmap_buffer.find_camp( omt_pos.xy() );
     if( !temp_camp ) {
         return cur_title;
     }

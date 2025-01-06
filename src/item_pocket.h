@@ -14,7 +14,7 @@
 
 #include "enums.h"
 #include "flat_set.h"
-#include "optional.h"
+#include <optional>
 #include "ret_val.h"
 #include "type_id.h"
 #include "units.h"
@@ -285,8 +285,8 @@ class item_pocket
         void set_item_defaults();
 
         // removes and returns the item from the pocket.
-        cata::optional<item> remove_item( const item &it );
-        cata::optional<item> remove_item( const item_location &it );
+        std::optional<item> remove_item( const item &it );
+        std::optional<item> remove_item( const item_location &it );
         // spills any contents that can't fit into the pocket, largest items first
         void overflow( const tripoint &pos );
         bool spill_contents( const tripoint &pos );
@@ -445,7 +445,7 @@ class pocket_data
         // max volume of stuff the pocket can hold
         units::volume volume_capacity = max_volume_for_container;
         // max volume of item that can be contained, otherwise it spills
-        cata::optional<units::volume> max_item_volume = cata::nullopt;
+        std::optional<units::volume> max_item_volume = std::nullopt;
         // min volume of item that can be contained, otherwise it spills
         units::volume min_item_volume = 0_ml;
         // min length of item that can be contained used for exterior pockets

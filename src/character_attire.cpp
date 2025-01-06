@@ -197,13 +197,13 @@ ret_val<void> Character::can_wear( const item &it, bool with_equip_change ) cons
     return ret_val<void>::make_success();
 }
 
-cata::optional<std::list<item>::iterator>
+std::optional<std::list<item>::iterator>
 Character::wear( int pos, bool interactive )
 {
     return wear( item_location( *this, &i_at( pos ) ), interactive );
 }
 
-cata::optional<std::list<item>::iterator>
+std::optional<std::list<item>::iterator>
 Character::wear( item_location item_wear, bool interactive )
 {
     item to_wear = *item_wear;
@@ -214,7 +214,7 @@ Character::wear( item_location item_wear, bool interactive )
                                    _( "<npcname> is already wearing that." )
                                  );
         }
-        return cata::nullopt;
+        return std::nullopt;
     }
     if( to_wear.is_null() ) {
         if( interactive ) {
@@ -222,7 +222,7 @@ Character::wear( item_location item_wear, bool interactive )
                                    _( "You don't have that item." ),
                                    _( "<npcname> doesn't have that item." ) );
         }
-        return cata::nullopt;
+        return std::nullopt;
     }
 
     bool was_weapon;
@@ -251,7 +251,7 @@ Character::wear( item_location item_wear, bool interactive )
         } else {
             i_add( to_wear_copy );
         }
-        return cata::nullopt;
+        return std::nullopt;
     }
 
     if( was_weapon ) {
@@ -261,7 +261,7 @@ Character::wear( item_location item_wear, bool interactive )
     return result;
 }
 
-cata::optional<std::list<item>::iterator> outfit::wear_item( Character &guy, const item &to_wear,
+std::optional<std::list<item>::iterator> outfit::wear_item( Character &guy, const item &to_wear,
         bool interactive, bool do_calc_encumbrance, bool do_sort_items, bool quiet )
 {
     const bool was_deaf = guy.is_deaf();
@@ -337,7 +337,7 @@ cata::optional<std::list<item>::iterator> outfit::wear_item( Character &guy, con
     return new_item_it;
 }
 
-cata::optional<std::list<item>::iterator> Character::wear_item( const item &to_wear,
+std::optional<std::list<item>::iterator> Character::wear_item( const item &to_wear,
         bool interactive, bool do_calc_encumbrance )
 {
     invalidate_inventory_validity_cache();
@@ -347,7 +347,7 @@ cata::optional<std::list<item>::iterator> Character::wear_item( const item &to_w
         if( interactive ) {
             add_msg_if_player( m_info, "%s", ret.c_str() );
         }
-        return cata::nullopt;
+        return std::nullopt;
     }
 
     return worn.wear_item( *this, to_wear, interactive, do_calc_encumbrance );
@@ -487,14 +487,14 @@ bool Character::is_barefoot() const
     return worn.is_barefoot();
 }
 
-cata::optional<const item *> outfit::item_worn_with_inv_let( const char invlet ) const
+std::optional<const item *> outfit::item_worn_with_inv_let( const char invlet ) const
 {
     for( const item &i : worn ) {
         if( i.invlet == invlet ) {
             return &i;
         }
     }
-    return cata::nullopt;
+    return std::nullopt;
 }
 
 side outfit::is_wearing_shoes( const bodypart_id &bp ) const
@@ -641,7 +641,7 @@ bool outfit::one_per_layer_change_side( item &it, const Character &guy ) const
     const bool item_one_per_layer = it_copy.has_flag( json_flag_ONE_PER_LAYER );
     for( const item &worn_item : worn ) {
         if( item_one_per_layer && worn_item.has_flag( json_flag_ONE_PER_LAYER ) ) {
-            const cata::optional<side> sidedness_conflict = it_copy.covers_overlaps( worn_item );
+            const std::optional<side> sidedness_conflict = it_copy.covers_overlaps( worn_item );
             if( sidedness_conflict ) {
                 const std::string player_msg = string_format(
                                                    _( "Your %s conflicts with %s, so you cannot swap its side." ),
@@ -1219,7 +1219,7 @@ ret_val<void> outfit::only_one_conflicts( const item &clothing ) const
         }
 
         if( this_restricts_only_one || i.has_flag( json_flag_ONE_PER_LAYER ) ) {
-            cata::optional<side> overlaps = clothing.covers_overlaps( i );
+            std::optional<side> overlaps = clothing.covers_overlaps( i );
             if( overlaps && sidedness_conflicts( *overlaps ) ) {
                 return ret_val<void>::make_failure( _( "%1$s conflicts with %2$s!" ), clothing.tname(), i.tname() );
             }
@@ -1307,7 +1307,7 @@ void outfit::one_per_layer_sidedness( item &clothing ) const
 {
     const bool item_one_per_layer = clothing.has_flag( json_flag_ONE_PER_LAYER );
     for( const item &worn_item : worn ) {
-        const cata::optional<side> sidedness_conflict = clothing.covers_overlaps( worn_item );
+        const std::optional<side> sidedness_conflict = clothing.covers_overlaps( worn_item );
         if( sidedness_conflict && ( item_one_per_layer ||
                                     worn_item.has_flag( json_flag_ONE_PER_LAYER ) ) ) {
             // we can assume both isn't an option because it'll be caught in can_wear
@@ -2409,7 +2409,7 @@ item_location outfit::first_item_covering_bp( Character &guy, bodypart_id bp )
     return item_location{};
 }
 
-cata::optional<int> outfit::get_item_position( const item &it ) const
+std::optional<int> outfit::get_item_position( const item &it ) const
 {
     int pos = 0;
     for( const item &clothing : worn ) {
@@ -2418,7 +2418,7 @@ cata::optional<int> outfit::get_item_position( const item &it ) const
         }
         pos++;
     }
-    return cata::nullopt;
+    return std::nullopt;
 }
 
 const item &outfit::i_at( int position ) const

@@ -28,7 +28,7 @@
 #include "material.h"
 #include "messages.h"
 #include "monster.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "rng.h"
 #include "sounds.h"
@@ -123,11 +123,11 @@ int vehicle::slowdown( int at_velocity ) const
 }
 
 void vehicle::smart_controller_handle_turn( bool thrusting,
-        const cata::optional<float> &k_traction_cache )
+        const std::optional<float> &k_traction_cache )
 {
 
     if( !engine_on || !has_enabled_smart_controller ) {
-        smart_controller_state = cata::nullopt;
+        smart_controller_state = std::nullopt;
         return;
     }
 
@@ -166,7 +166,7 @@ void vehicle::smart_controller_handle_turn( bool thrusting,
             add_msg( m_bad, _( "Smart controller is shutting down." ) );
         }
         has_enabled_smart_controller = false;
-        smart_controller_state = cata::nullopt;
+        smart_controller_state = std::nullopt;
         return;
     }
 
@@ -356,7 +356,7 @@ void vehicle::smart_controller_handle_turn( bool thrusting,
             }
         }
         if( failed_to_start ) {
-            this->smart_controller_state = cata::nullopt;
+            this->smart_controller_state = std::nullopt;
 
             for( size_t i = 0; i < c_engines.size(); ++i ) { // return to prev state
                 toggle_specific_engine( c_engines[i], static_cast<bool>( prev_mask & ( 1 << i ) ) );

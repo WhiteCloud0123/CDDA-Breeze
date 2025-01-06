@@ -63,7 +63,7 @@ struct uilist_entry {
     bool force_color = false;   // Never darken this option
     // cata::nullopt: automatically assign an unassigned hotkey
     // input_event(): disable hotkey
-    cata::optional<input_event> hotkey;
+    std::optional<input_event> hotkey;
     std::string txt;            // what it says on the tin
     std::string desc;           // optional, possibly longer, description
     std::string ctxt;           // second column text
@@ -94,7 +94,7 @@ struct uilist_entry {
     * @param txt string that will be displayed on the entry first column
     * @param key hotkey character that when pressed will return this entry return value
     */
-    uilist_entry( const std::string &txt, const cata::optional<input_event> &key );
+    uilist_entry( const std::string &txt, const std::optional<input_event> &key );
     /**
     * @param retval return value of this option when selected during menu query
     * @param enable is entry enabled. disabled entries will be grayed out and won't be selectable
@@ -108,7 +108,7 @@ struct uilist_entry {
     * @param key hotkey character that when pressed will return this entry return value
     * @param txt string that will be displayed on the entry first column
     */
-    uilist_entry( int retval, bool enabled, const cata::optional<input_event> &key,
+    uilist_entry( int retval, bool enabled, const std::optional<input_event> &key,
                   const std::string &txt );
     /**
     * @param retval return value of this option when selected during menu query
@@ -127,7 +127,7 @@ struct uilist_entry {
     * @param desc entry description if menu desc_enabled is true
     * @see uilist::desc_enabled
     */
-    uilist_entry( int retval, bool enabled, const cata::optional<input_event> &key,
+    uilist_entry( int retval, bool enabled, const std::optional<input_event> &key,
                   const std::string &txt, const std::string &desc );
     /**
     * @param retval return value of this option when selected during menu query
@@ -149,7 +149,7 @@ struct uilist_entry {
     * @param column string that will be displayed on the entry second column
     * @see uilist::desc_enabled
     */
-    uilist_entry( int retval, bool enabled, const cata::optional<input_event> &key,
+    uilist_entry( int retval, bool enabled, const std::optional<input_event> &key,
                   const std::string &txt, const std::string &desc,
                   const std::string &column );
     /**
@@ -168,7 +168,7 @@ struct uilist_entry {
         uilist_entry( static_cast<int>( e ), std::forward<Args>( args )... )
     {}
 
-    cata::optional<inclusive_rectangle<point>> drawn_rect;
+    std::optional<inclusive_rectangle<point>> drawn_rect;
 };
 
 /**
@@ -311,7 +311,7 @@ class uilist // NOLINT(cata-xy)
         * @param key hotkey character that when pressed will return this entry return value
         * @param txt string that will be displayed on the entry first column
         */
-        void addentry( int retval, bool enabled, const cata::optional<input_event> &key,
+        void addentry( int retval, bool enabled, const std::optional<input_event> &key,
                        const std::string &txt );
         /**
         * @param retval return value of this option when selected during menu query
@@ -350,7 +350,7 @@ class uilist // NOLINT(cata-xy)
         * @param desc entry description if menu desc_enabled is true
         * @see uilist::desc_enabled
         */
-        void addentry_desc( int retval, bool enabled, const cata::optional<input_event> &key,
+        void addentry_desc( int retval, bool enabled, const std::optional<input_event> &key,
                             const std::string &txt,
                             const std::string &desc );
         /**
@@ -374,7 +374,7 @@ class uilist // NOLINT(cata-xy)
         * @param desc entry description if menu desc_enabled is true
         * @see uilist::desc_enabled
         */
-        void addentry_col( int retval, bool enabled, const cata::optional<input_event> &key,
+        void addentry_col( int retval, bool enabled, const std::optional<input_event> &key,
                            const std::string &txt, const std::string &column,
                            const std::string &desc = std::string() );
         void settext( const std::string &str );

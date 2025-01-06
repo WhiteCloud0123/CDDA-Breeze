@@ -28,7 +28,7 @@
 #include "mapdata.h"
 #include "math_defines.h"
 #include "monster.h"
-#include "optional.h"
+#include <optional>
 #include "pixel_minimap_projectors.h"
 #include "sdl_utils.h"
 #include "vehicle.h"

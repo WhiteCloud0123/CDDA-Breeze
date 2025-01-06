@@ -50,7 +50,7 @@
 #include "mtype.h"
 #include "mutation.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "overmapbuffer.h"
@@ -1538,7 +1538,7 @@ void monster::set_dest(const tripoint_abs_ms& p)
 
 void monster::unset_dest()
 {
-    goal = cata::nullopt;
+    goal = std::nullopt;
     path.clear();
 }
 

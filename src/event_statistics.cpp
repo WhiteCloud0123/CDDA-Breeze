@@ -18,7 +18,7 @@
 #include "event_field_transformations.h"
 #include "generic_factory.h"
 #include "json.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "stats_tracker.h"
 #include "string_formatter.h"
@@ -170,7 +170,7 @@ class event_statistic::impl
 
 struct value_constraint {
     std::vector<cata_variant> equals_any_;
-    cata::optional<string_id<event_statistic>> equals_statistic_;
+    std::optional<string_id<event_statistic>> equals_statistic_;
 
     bool permits( const cata_variant &v, stats_tracker &stats ) const {
         if( std::find( equals_any_.begin(), equals_any_.end(), v ) != equals_any_.end() ) {
@@ -980,7 +980,7 @@ struct event_statistic_first_value : event_statistic_field_summary<false> {
 
     cata_variant value( stats_tracker &stats ) const override {
         const event_multiset &events = source->get( stats );
-        const cata::optional<event_multiset::summaries_type::value_type> d = events.first();
+        const std::optional<event_multiset::summaries_type::value_type> d = events.first();
         if( d ) {
             auto it = d->first.find( field );
             if( it == d->first.end() ) {
@@ -1049,7 +1049,7 @@ struct event_statistic_last_value : event_statistic_field_summary<false> {
 
     cata_variant value( stats_tracker &stats ) const override {
         const event_multiset &events = source->get( stats );
-        const cata::optional<event_multiset::summaries_type::value_type> d = events.last();
+        const std::optional<event_multiset::summaries_type::value_type> d = events.last();
         if( d ) {
             auto it = d->first.find( field );
             if( it == d->first.end() ) {

@@ -19,7 +19,7 @@
 #include "map.h"
 #include "map_iterator.h"
 #include "mapdata.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "overmap.h"
 #include "overmapbuffer.h"

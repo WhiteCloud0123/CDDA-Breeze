@@ -10,7 +10,7 @@
 
 #include "cuboid_rectangle.h"
 #include "input.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "rng.h"
 #include "text_snippets.h"

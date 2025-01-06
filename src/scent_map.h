@@ -10,7 +10,7 @@
 #include "calendar.h"
 #include "enums.h" // IWYU pragma: keep
 #include "game_constants.h"
-#include "optional.h"
+#include <optional>
 #include "point.h"
 #include "type_id.h"
 
@@ -49,7 +49,7 @@ class scent_map
 
         scent_array<int> grscent;
         scenttype_id typescent;
-        cata::optional<tripoint> player_last_position; // NOLINT(cata-serialize)
+        std::optional<tripoint> player_last_position; // NOLINT(cata-serialize)
         time_point player_last_moved = calendar::before_time_starts; // NOLINT(cata-serialize)
 
         const game &gm; // NOLINT(cata-serialize)

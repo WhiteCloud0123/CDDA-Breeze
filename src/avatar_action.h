@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "activity_type.h"
-#include "optional.h"
+#include <optional>
 #include "point.h"
 #include "units_fwd.h"
 
@@ -73,7 +73,7 @@ void fire_turret_manual( avatar &you, map &m, turret_data &turret );
 
 // Throw an item  't'
 void plthrow( avatar &you, item_location loc,
-              const cata::optional<tripoint> &blind_throw_from_pos = cata::nullopt );
+              const std::optional<tripoint> &blind_throw_from_pos = std::nullopt );
 
 void unload( avatar &you );
 

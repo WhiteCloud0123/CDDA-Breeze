@@ -31,7 +31,7 @@
 #include "messages.h"
 #include "monster.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "overmapbuffer.h"
 #include "player_activity.h"
 #include "string_formatter.h"
@@ -312,7 +312,7 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
 
         const std::string liqstr = string_format( _( "Pour %s where?" ), liquid_name );
 
-        const cata::optional<tripoint> target_pos_ = choose_adjacent( liqstr );
+        const std::optional<tripoint> target_pos_ = choose_adjacent( liqstr );
         if( !target_pos_ ) {
             return;
         }

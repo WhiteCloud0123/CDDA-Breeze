@@ -22,7 +22,7 @@
 #include "line.h"
 #include "map.h"
 #include "map_selector.h"
-#include "optional.h"
+#include <optional>
 #include "point.h"
 #include "ret_val.h"
 #include "safe_reference.h"

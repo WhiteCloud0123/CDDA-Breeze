@@ -10,7 +10,7 @@
 #include "enums.h"
 #include "flat_set.h"
 #include "json.h"
-#include "optional.h"
+#include <optional>
 #include "omdata.h"
 #include "type_id.h"
 
@@ -118,7 +118,7 @@ class uistatedata
 
         advanced_inv_save_state transfer_save;
 
-        cata::optional<bool> hide_entries_override = cata::nullopt;
+        std::optional<bool> hide_entries_override = std::nullopt;
 
         bool editmap_nsa_viewmode = false;      // true: ignore LOS and lighting
         bool overmap_blinking = true;           // toggles active blinking of overlays.

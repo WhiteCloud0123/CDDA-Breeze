@@ -17,7 +17,7 @@
 #include "inventory.h"
 #include "item_location.h"
 #include "memory_fast.h"
-#include "optional.h"
+#include <optional>
 #include "player_activity.h"
 #include "point.h"
 #include "type_id.h"
@@ -101,8 +101,8 @@ class veh_interact
         bool ui_hidden = false;
         weak_ptr_fast<ui_adaptor> ui;
 
-        cata::optional<std::string> title;
-        cata::optional<std::string> msg;
+        std::optional<std::string> title;
+        std::optional<std::string> msg;
 
         int highlight_part = -1;
 

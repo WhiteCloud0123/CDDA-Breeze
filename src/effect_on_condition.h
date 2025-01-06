@@ -9,7 +9,7 @@
 #include "condition.h"
 #include "dialogue.h"
 #include "json.h"
-#include "optional.h"
+#include <optional>
 #include "type_id.h"
 
 template<typename T>

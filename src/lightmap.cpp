@@ -33,7 +33,7 @@
 #include "monster.h"
 #include "mtype.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "point.h"
 #include "string_formatter.h"
 #include "submap.h"

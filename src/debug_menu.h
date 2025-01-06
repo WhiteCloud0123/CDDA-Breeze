@@ -6,15 +6,10 @@
 #include <functional>
 #include <iosfwd>
 #include <string> // IWYU pragma: keep
-
+#include <optional>
 struct tripoint;
 template <typename E> struct enum_traits;
 
-namespace cata
-{
-template<typename T>
-class optional;
-} // namespace cata
 
 class Character;
 
@@ -106,7 +101,7 @@ enum class debug_menu_index : int {
 void wisheffect( Character &p );
 void wishitem( Character *you = nullptr );
 void wishitem( Character *you, const tripoint & );
-void wishmonster( const cata::optional<tripoint> &p );
+void wishmonster( const std::optional<tripoint> &p );
 void wishmutate( Character *you );
 void wishskill( Character *you, bool change_theory = false );
 void wishproficiency( Character *you );

@@ -34,7 +34,7 @@
 #include "mission.h"
 #include "mtype.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "overmap.h"
 #include "overmapbuffer.h"
 #include "point.h"
@@ -238,7 +238,7 @@ str_or_var<T> get_str_or_var( const JsonValue &jv, const std::string &member, bo
 }
 
 template<class T>
-tripoint_abs_ms get_tripoint_from_var( cata::optional<var_info> var, const T &d )
+tripoint_abs_ms get_tripoint_from_var( std::optional<var_info> var, const T &d )
 {
     tripoint_abs_ms target_pos = get_map().getglobal( d.actor( false )->pos() );
     if( var.has_value() ) {
@@ -522,7 +522,7 @@ template<class T>
 void conditional_t<T>::set_has_hp( const JsonObject &jo, const std::string &member, bool is_npc )
 {
     int_or_var<T> iov = get_int_or_var<T>( jo, member );
-    cata::optional<bodypart_id> bp;
+    std::optional<bodypart_id> bp;
     optional( jo, false, "bodypart", bp );
     condition = [iov, bp, is_npc]( const T & d ) {
         bodypart_id bid = bp.value_or( get_bp_from_str( d.reason ) );
@@ -535,7 +535,7 @@ void conditional_t<T>::set_has_part_temp( const JsonObject &jo, const std::strin
         bool is_npc )
 {
     int_or_var<T> iov = get_int_or_var<T>( jo, member );
-    cata::optional<bodypart_id> bp;
+    std::optional<bodypart_id> bp;
     optional( jo, false, "bodypart", bp );
     condition = [iov, bp, is_npc]( const T & d ) {
         bodypart_id bid = bp.value_or( get_bp_from_str( d.reason ) );
@@ -699,7 +699,7 @@ void conditional_t<T>::set_at_om_location( const JsonObject &jo, const std::stri
         std::string location_value = location.evaluate(d);
 
         if (location_value == "FACTION_CAMP_ANY") {
-            cata::optional<basecamp *> bcp = overmap_buffer.find_camp( omt_pos.xy() );
+            std::optional<basecamp *> bcp = overmap_buffer.find_camp( omt_pos.xy() );
             if( bcp ) {
                 return true;
             }
@@ -729,7 +729,7 @@ void conditional_t<T>::set_near_om_location( const JsonObject &jo, const std::st
             std::string location_value = location.evaluate(d);
 
             if (location_value == "FACTION_CAMP_ANY") {
-                cata::optional<basecamp *> bcp = overmap_buffer.find_camp( curr_pos.xy() );
+                std::optional<basecamp *> bcp = overmap_buffer.find_camp( curr_pos.xy() );
                 if( bcp ) {
                     return true;
                 }
@@ -1542,14 +1542,14 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const JsonObject 
                 return d.actor( is_npc )->get_per_bonus();
             };
         } else if( checked_value == "hp" ) {
-            cata::optional<bodypart_id> bp;
+            std::optional<bodypart_id> bp;
             optional( jo, false, "bodypart", bp );
             return [is_npc, bp]( const T & d ) {
                 bodypart_id bid = bp.value_or( get_bp_from_str( d.reason ) );
                 return d.actor( is_npc )->get_cur_hp( bid );
             };
         } else if( checked_value == "warmth" ) {
-            cata::optional<bodypart_id> bp;
+            std::optional<bodypart_id> bp;
             optional( jo, false, "bodypart", bp );
             return [is_npc, bp]( const T & d ) {
                 bodypart_id bid = bp.value_or( get_bp_from_str( d.reason ) );
@@ -1557,7 +1557,7 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const JsonObject 
             };
         } else if( checked_value == "effect_intensity" ) {
             const std::string &effect_id = jo.get_string( "effect" );
-            cata::optional<bodypart_id> bp;
+            std::optional<bodypart_id> bp;
             optional( jo, false, "bodypart", bp );
             return [effect_id, bp, is_npc]( const T & d ) {
                 bodypart_id bid = bp.value_or( get_bp_from_str( d.reason ) );
@@ -1840,7 +1840,7 @@ std::function<int( const T & )> conditional_t<T>::get_get_int( const JsonObject 
                 return d.actor( is_npc )->get_npc_anger();
             };
         } else if( checked_value == "monsters_nearby" ) {
-            cata::optional<var_info> target_var;
+            std::optional<var_info> target_var;
             if( jo.has_object( "target_var" ) ) {
                 read_var_info( jo.get_member( "target_var" ) );
             }
@@ -2057,8 +2057,8 @@ void conditional_t<T>::set_u_reported_work(const JsonObject& jo, const std::stri
 
 
 template<class T>
-static int handle_min_max( const T &d, int input, cata::optional<int_or_var_part<T>> min,
-                           cata::optional<int_or_var_part<T>> max )
+static int handle_min_max( const T &d, int input, std::optional<int_or_var_part<T>> min,
+                           std::optional<int_or_var_part<T>> max )
 {
     if( min.has_value() ) {
         int min_val = min.value().evaluate( d );
@@ -2073,7 +2073,7 @@ static int handle_min_max( const T &d, int input, cata::optional<int_or_var_part
 
 template<class T>
 static std::function<void( const T &, int )> get_set_int( const JsonObject &jo,
-        const cata::optional<int_or_var_part<T>> &min, const cata::optional<int_or_var_part<T>> &max,
+        const std::optional<int_or_var_part<T>> &min, const std::optional<int_or_var_part<T>> &max,
         bool temp_var )
 {
     if( temp_var ) {
@@ -2446,8 +2446,8 @@ void talk_effect_fun_t<T>::set_arithmetic( const JsonObject &jo, const std::stri
         bool no_result )
 {
     JsonArray objects = jo.get_array( member );
-    cata::optional<int_or_var_part<T>> min;
-    cata::optional<int_or_var_part<T>> max;
+    std::optional<int_or_var_part<T>> min;
+    std::optional<int_or_var_part<T>> max;
     if( jo.has_member( "min" ) ) {
         min = get_int_or_var_part<T>( jo.get_member( "min" ), "min" );
     } else if( jo.has_member( "min_time" ) ) {
@@ -2721,7 +2721,7 @@ void conditional_t<T>::set_has_worn_with_flag( const JsonObject &jo, const std::
         bool is_npc )
 {
     str_or_var<T> flag = get_str_or_var<T>( jo.get_member( member ), member, true );
-    cata::optional<bodypart_id> bp;
+    std::optional<bodypart_id> bp;
     optional( jo, false, "bodypart", bp );
     condition = [flag, bp, is_npc]( const T & d ) {
         bodypart_id bid = bp.value_or( get_bp_from_str( d.reason ) );

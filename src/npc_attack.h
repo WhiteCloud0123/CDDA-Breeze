@@ -7,7 +7,7 @@
 #include "gun_mode.h"
 #include "item.h"
 #include "map_iterator.h"
-#include "optional.h"
+#include <optional>
 #include "point.h"
 #include "type_id.h"
 
@@ -18,14 +18,14 @@ class npc;
 class npc_attack_rating
 {
         // the total calculated effectiveness of this attack. no value means this attack is not possible.
-        cata::optional<int> _value = cata::nullopt;
+        std::optional<int> _value = std::nullopt;
         // the target tile of the attack
         tripoint _target;
     public:
         npc_attack_rating() = default;
-        npc_attack_rating( const cata::optional<int> &_value,
+        npc_attack_rating( const std::optional<int> &_value,
                            const tripoint &_target ) : _value( _value ), _target( _target ) {}
-        cata::optional<int> value() const {
+        std::optional<int> value() const {
             return _value;
         }
         tripoint target() const {

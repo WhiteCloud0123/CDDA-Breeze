@@ -46,7 +46,7 @@
 #include "morale_types.h"
 #include "mtype.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "point.h"
 #include "projectile.h"

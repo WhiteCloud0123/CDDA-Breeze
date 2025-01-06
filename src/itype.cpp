@@ -185,7 +185,7 @@ int itype::tick( Character &p, item &it, const tripoint &pos ) const
     return charges_to_use;
 }
 
-cata::optional<int> itype::invoke( Character &p, item &it, const tripoint &pos ) const
+std::optional<int> itype::invoke( Character &p, item &it, const tripoint &pos ) const
 {
     if( !has_use() ) {
         return 0;
@@ -197,7 +197,7 @@ cata::optional<int> itype::invoke( Character &p, item &it, const tripoint &pos )
     }
 }
 
-cata::optional<int> itype::invoke( Character &p, item &it, const tripoint &pos,
+std::optional<int> itype::invoke( Character &p, item &it, const tripoint &pos,
                                    const std::string &iuse_name ) const
 {
     const use_function *use = get_use( iuse_name );

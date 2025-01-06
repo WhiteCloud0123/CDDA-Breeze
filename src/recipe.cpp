@@ -25,7 +25,7 @@
 #include "json.h"
 #include "mapgen_functions.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "proficiency.h"
 #include "skill.h"
@@ -39,7 +39,7 @@
 
 static const itype_id itype_atomic_coffeepot( "atomic_coffeepot" );
 static const itype_id itype_hotplate( "hotplate" );
-
+static const itype_id itype_null("null");
 recipe::recipe() : skill_used( skill_id::NULL_ID() ) {}
 
 int recipe::get_difficulty( const Character &crafter ) const
@@ -456,7 +456,7 @@ void recipe::finalize()
     deduped_requirements_ = deduped_requirement_data( requirements_, ident() );
 
     if( contained && container.is_null() ) {
-        container = item::find_type( result_ )->default_container.value_or( "null" );
+        container = item::find_type( result_ )->default_container.value_or( itype_null );
     }
 
     std::set<proficiency_id> required;

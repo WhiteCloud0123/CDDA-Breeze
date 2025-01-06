@@ -17,7 +17,7 @@
 #include "enums.h"
 #include "magic.h"
 #include "mattack_common.h"
-#include "optional.h"
+#include <optional>
 #include "pathfinding.h"
 #include "shearing.h"
 #include "speed_description.h"
@@ -409,14 +409,14 @@ struct mtype {
         mtype_id upgrade_into;
         mongroup_id upgrade_group;
         mtype_id burn_into;
-        cata::optional<int> upgrade_multi_range;
+        std::optional<int> upgrade_multi_range;
         bool upgrade_null_despawn;
 
         mtype_id zombify_into; // mtype_id this monster zombifies into
         mtype_id fungalize_into; // mtype_id this monster fungalize into
 
         // Monster reproduction variables
-        cata::optional<time_duration> baby_timer;
+        std::optional<time_duration> baby_timer;
         int baby_count;
         mtype_id baby_monster;
         itype_id baby_egg;
@@ -424,7 +424,7 @@ struct mtype {
 
         // Monster biosignature variables
         itype_id biosig_item;
-        cata::optional<time_duration> biosig_timer;
+        std::optional<time_duration> biosig_timer;
 
         // All the bools together for space efficiency
 
