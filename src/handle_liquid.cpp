@@ -189,23 +189,21 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
     const std::string liquid_name = liquid.display_name(liquid.charges);
     if (character.is_npc()) {
 
-        std::vector<item_location> container_location;
-       
-        for (const tripoint& pos : here.points_in_radius(character.pos(), PICKUP_RANGE)) {
-            map_stack item_stack = here.i_at(pos);
-            for (item& i : item_stack) {
-                if (i.get_remaining_capacity_for_liquid(liquid,true) > 0 ) {
-                    container_location.push_back(item_location(map_cursor(pos), &i));
-                }
+        std::vector<item_location> containers_locations;
+
+        for (item_location &loc : character.get_eligible_containers_locations_for_crafting()) {
+            item* i = loc.get_item();
+            if (i->get_remaining_capacity_for_liquid(liquid,true)>0) {
+                containers_locations.push_back(loc);
             }
         }
 
-        if (container_location.empty()) {
+        if (containers_locations.empty()) {
             target.pos = character.pos();
             target.dest_opt = LD_GROUND;
         }
         else {
-            target.item_loc = container_location[0];
+            target.item_loc = containers_locations[0];
             target.dest_opt = LD_ITEM;
         }
         return true;

@@ -197,6 +197,7 @@ class outfit
         void overflow( const tripoint &pos );
         void holster_opts( std::vector<dispose_option> &opts, item_location obj, Character &guy );
         void get_eligible_containers_for_crafting( std::vector<const item *> &conts ) const;
+        void get_eligible_containers_locations_for_crafting(std::vector<item_location>& conts, const std::vector<item_location>& outfit_items_locations);
         // convenient way to call on_takeoff for all clothing. does not actually delete them, call clear() to do that
         void on_takeoff( Character &guy );
         // called after reading in savegame json to update the whole outfit

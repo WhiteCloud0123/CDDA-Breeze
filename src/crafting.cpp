@@ -502,6 +502,15 @@ static bool is_container_eligible_for_crafting( const item &cont, bool allow_buc
     return false;
 }
 
+static bool is_container_eligible_for_crafting(item_location &cont, bool allow_bucket)
+{
+    if (cont->is_watertight_container() && cont->num_item_stacks() <= 1 && (allow_bucket ||
+        !cont->will_spill())) {
+        return !cont->is_container_full(allow_bucket);
+    }
+    return false;
+}
+
 static std::vector<const item *> get_eligible_containers_recursive( const item &cont,
         bool allow_bucket )
 {
@@ -517,7 +526,21 @@ static std::vector<const item *> get_eligible_containers_recursive( const item &
     }
     return ret;
 }
+static std::vector<item_location> get_eligible_containers_locations_recursive(item_location cont,
+    bool allow_bucket)
+{
+    std::vector<item_location> ret;
 
+    if (is_container_eligible_for_crafting(cont, allow_bucket)) {
+        ret.push_back(cont);
+    }
+    for (item* it : cont->all_items_top(item_pocket::pocket_type::CONTAINER)) {
+        //buckets are never allowed when inside another container
+        std::vector<item_location> inside = get_eligible_containers_locations_recursive(item_location(cont, it), false);
+        ret.insert(ret.end(), inside.begin(), inside.end());
+    }
+    return ret;
+}
 void outfit::get_eligible_containers_for_crafting( std::vector<const item *> &conts ) const
 {
     for( const item &it : worn ) {
@@ -525,7 +548,12 @@ void outfit::get_eligible_containers_for_crafting( std::vector<const item *> &co
         conts.insert( conts.begin(), eligible.begin(), eligible.end() );
     }
 }
-
+void outfit::get_eligible_containers_locations_for_crafting(std::vector<item_location>& conts, const std::vector<item_location>& outfit_items_locations) {
+    for (const item_location &it : outfit_items_locations) {
+        std::vector<item_location> eligible = get_eligible_containers_locations_recursive(it, false);
+        conts.insert(conts.begin(), eligible.begin(), eligible.end());
+    }
+}
 std::vector<const item *> Character::get_eligible_containers_for_crafting() const
 {
     std::vector<const item *> conts;
@@ -560,6 +588,35 @@ std::vector<const item *> Character::get_eligible_containers_for_crafting() cons
     }
 
     return conts;
+}
+
+std::vector<item_location> Character::get_eligible_containers_locations_for_crafting() {
+    std::vector<item_location> containers_locations;
+    item_location weapon = get_wielded_item();
+    if (weapon) {
+        containers_locations = get_eligible_containers_locations_recursive(weapon, true);
+    }
+    worn.get_eligible_containers_locations_for_crafting(containers_locations,worn.all_items_loc(*this));
+    map& here = get_map();
+    for (const tripoint& loc : closest_points_first(pos(), PICKUP_RANGE)) {
+        if (pos() != loc && !here.clear_path(pos(), loc, PICKUP_RANGE, 1, 100)) {
+            continue;
+        }
+        if (here.accessible_items(loc)) {
+            for (item& it : here.i_at(loc)) {
+                std::vector<item_location> eligible = get_eligible_containers_locations_recursive(item_location(map_cursor(loc),&it), true);
+                containers_locations.insert(containers_locations.begin(), eligible.begin(), eligible.end());
+            }
+        }
+        if (const cata::optional<vpart_reference> vp = here.veh_at(loc).part_with_feature("CARGO",
+            true)) {
+            for (item& it : vp->vehicle().get_items(vp->part_index())) {
+                std::vector<item_location> eligible = get_eligible_containers_locations_recursive(item_location(vehicle_cursor(vp->vehicle(), vp->part_index()), &it), true);
+                containers_locations.insert(containers_locations.begin(), eligible.begin(), eligible.end());
+            }
+        }
+    }
+    return containers_locations;
 }
 
 bool Character::can_make( const recipe *r, int batch_size ) const
