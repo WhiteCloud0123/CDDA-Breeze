@@ -918,7 +918,7 @@ std::optional<int> place_monster_iuse::use( Character &p, item &it, bool, const 
         std::vector<item*> aim_ab_vec;
         // 将经过筛选，不用包含与子弹带弹药相匹配的数据
         std::map<itype_id, int> ammo_data = newmon.ammo;
-        for (const std::pair<std::string, mtype_special_attack>& sa : newmon.type->special_attacks) {
+        for (const auto& sa : newmon.type->special_attacks) {
             if (sa.second->id == "gun") {
                 const gun_actor* actor = dynamic_cast<const gun_actor*>(sa.second.get());
                 item gun = item(actor->gun_type);

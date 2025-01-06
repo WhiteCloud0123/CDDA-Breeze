@@ -6,7 +6,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-
+#include <optional>
 #include "units_fwd.h"
 
 class JsonOut;

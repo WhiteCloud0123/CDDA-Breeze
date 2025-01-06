@@ -3654,7 +3654,6 @@ static shared_ptr_fast<game::draw_callback_t> create_zone_callback_new(
     const bool& is_moving_zone = false
 )
 {
-    map& m = get_map();
     return make_shared_fast<game::draw_callback_t>(
         [&]() {
             if (zone_cursor) {
@@ -6173,7 +6172,6 @@ static void reach_attack_in_peeking(avatar& you ,tripoint p)
 static void fire_in_peeking(tripoint p)
 {
     avatar& player_character = get_avatar();
-    map& here = get_map();
 
     if (!player_character.is_armed()) {
 

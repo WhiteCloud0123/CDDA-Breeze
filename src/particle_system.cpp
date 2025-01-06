@@ -368,12 +368,6 @@ void Particle_Activity::update()
     {
         if (particle_data_[i].timeToLive <= 0.0f)
         {
-            int j = _particleCount - 1;
-            //while (j > 0 && particle_data_[i].timeToLive <= 0)
-            //{
-            //    _particleCount--;
-            //    j--;
-            //}
             particle_data_[i] = particle_data_[_particleCount - 1];
             --_particleCount;
         }
@@ -462,8 +456,6 @@ void Particle_Activity::draw()
     if (style != "") {
 
         double scale = (double)g->get_zoom() / 16;
-        int tile_width = cata_tiles::get_tile_width();
-        int tile_height = cata_tiles::get_tile_height();
 
         for (int i = 0; i < _particleCount; i++)
         {
