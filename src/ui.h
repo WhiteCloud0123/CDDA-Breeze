@@ -18,7 +18,7 @@
 #include "cursesdef.h"
 #include "input.h"
 #include "memory_fast.h"
-#include "optional.h"
+#include <optional>
 #include "pimpl.h"
 #include "point.h"
 #include "string_formatter.h"
