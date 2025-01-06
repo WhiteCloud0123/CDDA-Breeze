@@ -6357,7 +6357,6 @@ static void gunmod_remove(Character& who, item& gun, item& mod, const int quanti
     gun.gun_set_mode(gun_mode_DEFAULT);
     const itype* modtype = mod.type;
 
-    map& m = get_map();
     move_item(who, mod, 1, src, src, src_veh, src_part);
     gun.remove_item(mod);
 

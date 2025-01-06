@@ -1666,7 +1666,6 @@ bool map::furn_set( const tripoint &p, const furn_id &new_furniture, const bool 
     if( current_submap->is_open_air( l ) &&
         !new_f.has_flag( ter_furn_flag::TFLAG_ALLOW_ON_OPEN_AIR ) &&
         new_target_furniture != f_null ) {
-        const ter_id current_ter = current_submap->get_ter( l );
         //待定
         /*debugmsg( "Setting furniture %s at %s where terrain is %s (which is_open_air)\n"
                   "If this is intentional, set the ALLOW_ON_OPEN_AIR flag on the furniture",
@@ -8082,7 +8081,6 @@ void map::save()
 void map::load( const tripoint_abs_sm &w, const bool update_vehicle,
                 const bool pump_events )
 {
-    map &main_map = get_map();
     // It used to be unsafe to load a map that overlaps with the primary map;
     // Show an info line in tests to help track new errors
     for( auto &traps : traplocs ) {

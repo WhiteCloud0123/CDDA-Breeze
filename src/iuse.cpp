@@ -8675,7 +8675,6 @@ std::optional<int> iuse::friendly_monster_control(Character* p, item* it, bool t
     if (main_menu.ret ==0) {
         uilist fm_menu;
         fm_menu.settext("请选择要控制的怪物");
-        map& local_map = get_map();
         int number = 0;
         for (monster& m : g->all_monsters()) {
             if (&m && m.has_effect(effect_pet)) {

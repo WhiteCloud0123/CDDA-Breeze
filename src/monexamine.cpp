@@ -205,22 +205,6 @@ void attach_bag_to( monster &z )
     player_character.moves -= 100;
 }
 
-void dump_items( monster &z )
-{
-    std::string pet_name = z.get_name();
-    Character &player_character = get_player_character();
-    map &here = get_map();
-    for( item &it : z.inv ) {
-        if( it.has_var( "DESTROY_ITEM_ON_MON_DEATH" ) ) {
-            continue;
-        }
-        here.add_item_or_charges( player_character.pos(), it );
-    }
-    z.inv.clear();
-    add_msg( _( "You dump the contents of the %s's bag on the ground." ), pet_name );
-    player_character.moves -= 200;
-}
-
 void treat_zombie(monster& z) {
 
     avatar& player_avatar = get_avatar();

@@ -366,7 +366,6 @@ bool Pickup::do_pickup( std::vector<item_location> &targets, std::vector<int> &q
         int fix_x_dest_omt = target_abs_ms.x() >= 0 ? target_abs_ms.x() / 24 : std::floor(static_cast<double>(target_abs_ms.x()) / 24);
         int fix_y_dest_omt = target_abs_ms.y() >= 0 ? target_abs_ms.y() / 24 : std::floor(static_cast<double>(target_abs_ms.y()) / 24);
         const tripoint_abs_omt& dest_omt = tripoint_abs_omt(fix_x_dest_omt, fix_y_dest_omt, target_abs_ms.z());
-        const tripoint_abs_omt& player_omt = player_character.global_omt_location();
 
         std::set<std::string> name_set;
         std::string note = "";

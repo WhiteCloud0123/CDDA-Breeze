@@ -3570,7 +3570,6 @@ void Item_factory::add_special_pockets( itype &def )
     if( !has_pocket_type( def.pockets, item_pocket::pocket_type::MIGRATION ) ) {
         def.pockets.emplace_back( item_pocket::pocket_type::MIGRATION );
     }
-    const use_function* iuse = def.get_use("link_up");
     if (!has_pocket_type(def.pockets, item_pocket::pocket_type::CABLE)) {
         const use_function* iuse = def.get_use("link_up");
         if (iuse != nullptr) {
