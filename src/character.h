@@ -3142,6 +3142,7 @@ class Character : public Creature, public visitable
          */
         int64_t expected_time_to_craft( const recipe &rec, int batch_size = 1 ) const;
         std::vector<const item *> get_eligible_containers_for_crafting() const;
+        std::vector<item_location> get_eligible_containers_locations_for_crafting();
         bool check_eligible_containers_for_crafting( const recipe &rec, int batch_size = 1 ) const;
         bool can_make( const recipe *r, int batch_size = 1 ) const;  // have components?
         /**
