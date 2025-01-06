@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "optional.h"
+#include <optional>
 #include "translation_cache.h"
 #include "value_ptr.h"
 
@@ -131,7 +131,7 @@ class translation
         /**
          * Only used for migrating old snippet hashes into snippet ids.
          */
-        cata::optional<int> legacy_hash() const;
+        std::optional<int> legacy_hash() const;
     private:
         translation( const std::string &ctxt, const std::string &raw );
         explicit translation( const std::string &raw );

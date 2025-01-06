@@ -27,7 +27,7 @@
 #include "mongroup.h"
 #include "monster.h"
 #include "omdata.h"
-#include "optional.h"
+#include <optional>
 #include "overmap_types.h" // IWYU pragma: keep
 #include "point.h"
 #include "rng.h"
@@ -257,10 +257,10 @@ class overmap
          * Returns @ref invalid_tripoint if no suitable place has been found.
          */
         tripoint_om_omt find_random_omt( const std::pair<std::string, ot_match_type> &target,
-                                         cata::optional<city> target_city = cata::nullopt ) const;
+                                         std::optional<city> target_city = std::nullopt ) const;
         tripoint_om_omt find_random_omt( const std::string &omt_base_type,
                                          ot_match_type match_type = ot_match_type::type,
-                                         cata::optional<city> target_city = cata::nullopt ) const {
+                                         std::optional<city> target_city = std::nullopt ) const {
             return find_random_omt( std::make_pair( omt_base_type, match_type ), std::move( target_city ) );
         }
         /**
@@ -276,7 +276,7 @@ class overmap
         const oter_id &ter( const tripoint_om_omt &p ) const;
         // ter_unsafe is UB when out of bounds.
         const oter_id &ter_unsafe( const tripoint_om_omt &p ) const;
-        cata::optional<mapgen_arguments> *mapgen_args( const tripoint_om_omt & );
+        std::optional<mapgen_arguments> *mapgen_args( const tripoint_om_omt & );
         std::string *join_used_at( const om_pos_dir & );
         std::vector<oter_id> predecessors( const tripoint_om_omt & );
         void set_seen( const tripoint_om_omt &p, bool val );
@@ -368,7 +368,7 @@ class overmap
         std::vector<basecamp> camps;
         std::vector<city> cities;
         std::map<string_id<overmap_connection>, std::vector<tripoint_om_omt>> connections_out;
-        cata::optional<basecamp *> find_camp( const point_abs_omt &p );
+        std::optional<basecamp *> find_camp( const point_abs_omt &p );
         /// Adds the npc to the contained list of npcs ( @ref npcs ).
         void insert_npc( const shared_ptr_fast<npc> &who );
         /// Removes the npc and returns it ( or returns nullptr if not found ).
@@ -410,8 +410,8 @@ class overmap
         // Records mapgen parameters required at the overmap special level
         // These are lazily evaluated; empty optional means that they have yet
         // to be evaluated.
-        cata::colony<cata::optional<mapgen_arguments>> mapgen_arg_storage;
-        std::unordered_map<tripoint_om_omt, cata::optional<mapgen_arguments> *> mapgen_args_index;
+        cata::colony<std::optional<mapgen_arguments>> mapgen_arg_storage;
+        std::unordered_map<tripoint_om_omt, std::optional<mapgen_arguments> *> mapgen_args_index;
 
         // Records the joins that were chosen during placement of a mutable
         // special, so that it can be queried later by mapgen
@@ -540,7 +540,7 @@ class overmap
                        const tripoint_om_omt &p ) const;
         bool check_overmap_special_type( const overmap_special_id &id,
                                          const tripoint_om_omt &location ) const;
-        cata::optional<overmap_special_id> overmap_special_at( const tripoint_om_omt &p ) const;
+        std::optional<overmap_special_id> overmap_special_at( const tripoint_om_omt &p ) const;
         void chip_rock( const tripoint_om_omt &p );
 
         void polish_river();

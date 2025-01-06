@@ -57,7 +57,7 @@
 #include "morale_types.h"
 #include "mtype.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "pickup.h"
@@ -830,13 +830,13 @@ void hacking_activity_actor::finish( player_activity &act, Character &who )
             if( type == hack_type::GAS ) {
                 int tankUnits;
                 fuel_station_fuel_type fuelType;
-                const cata::optional<tripoint> pTank_ = iexamine::getNearFilledGasTank( examp, tankUnits,
+                const std::optional<tripoint> pTank_ = iexamine::getNearFilledGasTank( examp, tankUnits,
                                                         fuelType );
                 if( !pTank_ ) {
                     break;
                 }
                 const tripoint pTank = *pTank_;
-                const cata::optional<tripoint> pGasPump = iexamine::getGasPumpByNumber( examp,
+                const std::optional<tripoint> pGasPump = iexamine::getGasPumpByNumber( examp,
                         uistate.ags_pay_gas_selected_pump );
                 if( pGasPump && iexamine::toPumpFuel( pTank, *pGasPump, tankUnits ) ) {
                     who.add_msg_if_player( _( "You hack the terminal and route all available fuel to your pump!" ) );
@@ -2034,7 +2034,7 @@ void pickup_activity_actor::serialize( JsonOut &jsout ) const
 
 std::unique_ptr<activity_actor> pickup_activity_actor::deserialize( JsonValue &jsin )
 {
-    pickup_activity_actor actor( {}, {}, cata::nullopt, false );
+    pickup_activity_actor actor( {}, {}, std::nullopt, false );
 
     JsonObject data = jsin.get_object();
 
@@ -2208,7 +2208,7 @@ lockpick_activity_actor lockpick_activity_actor::use_item(
     return lockpick_activity_actor {
         moves_total,
         lockpick,
-        cata::nullopt,
+        std::nullopt,
         target
     };
 }
@@ -2219,7 +2219,7 @@ lockpick_activity_actor lockpick_activity_actor::use_bionic(
 {
     return lockpick_activity_actor {
         to_moves<int>( 4_seconds ),
-        cata::nullopt,
+        std::nullopt,
         item( itype_pseudo_bio_picklock ),
         target
     };
@@ -2383,11 +2383,11 @@ void lockpick_activity_actor::finish( player_activity &act, Character &who )
                               time_duration::from_moves( act.moves_total ) / duration_proficiency_factor );
 }
 
-cata::optional<tripoint> lockpick_activity_actor::select_location( avatar &you )
+std::optional<tripoint> lockpick_activity_actor::select_location( avatar &you )
 {
     if( you.is_mounted() ) {
         you.add_msg_if_player( m_info, _( "You cannot do that while mounted." ) );
-        return cata::nullopt;
+        return std::nullopt;
     }
 
     const std::function<bool( const tripoint & )> is_pickable = [&you]( const tripoint & p ) {
@@ -2397,10 +2397,10 @@ cata::optional<tripoint> lockpick_activity_actor::select_location( avatar &you )
         return get_map().has_flag( ter_furn_flag::TFLAG_PICKABLE, p );
     };
 
-    cata::optional<tripoint> target = choose_adjacent_highlight(
+    std::optional<tripoint> target = choose_adjacent_highlight(
                                           _( "Use your lockpick where?" ), _( "There is nothing to lockpick nearby." ), is_pickable, false );
     if( !target ) {
-        return cata::nullopt;
+        return std::nullopt;
     }
 
     if( is_pickable( *target ) ) {
@@ -2418,7 +2418,7 @@ cata::optional<tripoint> lockpick_activity_actor::select_location( avatar &you )
     } else {
         you.add_msg_if_player( m_info, _( "That cannot be picked." ) );
     }
-    return cata::nullopt;
+    return std::nullopt;
 }
 
 void lockpick_activity_actor::serialize( JsonOut &jsout ) const
@@ -2435,7 +2435,7 @@ void lockpick_activity_actor::serialize( JsonOut &jsout ) const
 
 std::unique_ptr<activity_actor> lockpick_activity_actor::deserialize( JsonValue &jsin )
 {
-    lockpick_activity_actor actor( 0, cata::nullopt, cata::nullopt, tripoint_zero );
+    lockpick_activity_actor actor( 0, std::nullopt, std::nullopt, tripoint_zero );
 
     JsonObject data = jsin.get_object();
 
@@ -3072,8 +3072,8 @@ void craft_activity_actor::do_turn( player_activity &act, Character &crafter )
     // We already checked if this is nullptr above
     item &craft = *craft_item.get_item();
 
-    const cata::optional<tripoint> location = craft_item.where() == item_location::type::character
-            ? cata::optional<tripoint>() : cata::optional<tripoint>( craft_item.position() );
+    const std::optional<tripoint> location = craft_item.where() == item_location::type::character
+            ? std::optional<tripoint>() : std::optional<tripoint>( craft_item.position() );
     const recipe &rec = craft.get_making();
 
 
@@ -4529,8 +4529,8 @@ void disassemble_activity_actor::do_turn( player_activity &act, Character &who )
     // We already checked if this is nullptr above
     item &craft = *target;
 
-    const cata::optional<tripoint> location = target.where() == item_location::type::character
-            ? cata::optional<tripoint>() : cata::optional<tripoint>( target.position() );
+    const std::optional<tripoint> location = target.where() == item_location::type::character
+            ? std::optional<tripoint>() : std::optional<tripoint>( target.position() );
     if( !use_cached_workbench_multiplier ) {
         cached_workbench_multiplier = who.workbench_crafting_speed_multiplier( craft, location );
         use_cached_workbench_multiplier = true;
@@ -5499,7 +5499,7 @@ std::unique_ptr<activity_actor> wear_activity_actor::deserialize( JsonValue &jsi
 
 void pickup_menu_activity_actor::do_turn( player_activity &, Character &who )
 {
-    cata::optional<tripoint> p( where );
+    std::optional<tripoint> p( where );
     std::vector<drop_location> s( selection );
     who.cancel_activity();
     who.pick_up( game_menus::inv::pickup( *who.as_avatar(), p, s ) );
@@ -5690,7 +5690,7 @@ void chop_tree_activity_actor::finish( player_activity &act, Character &who )
     if( !who.is_npc() &&
         ( who.backlog.empty() || who.backlog.front().id() != ACT_MULTIPLE_CHOP_TREES ) ) {
         while( true ) {
-            if( const cata::optional<tripoint> dir = choose_direction(
+            if( const std::optional<tripoint> dir = choose_direction(
                         _( "Select a direction for the tree to fall in." ) ) ) {
                 direction = *dir;
                 break;
@@ -6478,7 +6478,7 @@ void unload_loot_activity_actor::do_turn( player_activity &act, Character &you )
             }
 
             //nothing to sort?
-            const cata::optional<vpart_reference> vp = here.veh_at( src_loc ).part_with_feature( "CARGO",
+            const std::optional<vpart_reference> vp = here.veh_at( src_loc ).part_with_feature( "CARGO",
                     false );
             if( ( !vp || vp->vehicle().get_items( vp->part_index() ).empty() )
                 && here.i_at( src_loc ).empty() ) {
@@ -6550,7 +6550,7 @@ void unload_loot_activity_actor::do_turn( player_activity &act, Character &you )
         //Check source for cargo part
         //map_stack and vehicle_stack are different types but inherit from item_stack
         // TODO: use one for loop
-        if( const cata::optional<vpart_reference> vp = here.veh_at( src_loc ).part_with_feature( "CARGO",
+        if( const std::optional<vpart_reference> vp = here.veh_at( src_loc ).part_with_feature( "CARGO",
                 false ) ) {
             src_veh = &vp->vehicle();
             src_part = vp->part_index();

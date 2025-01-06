@@ -30,7 +30,7 @@
 #include "json.h"
 #include "json_loader.h"
 #include "map.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "path_info.h"
@@ -258,7 +258,7 @@ static constexpr int current_keybinding_version = 2;
 
 void input_manager::load( const cata_path &file_name, bool is_user_preferences )
 {
-    cata::optional<JsonValue> jsin_opt = json_loader::from_path_opt( file_name );
+    std::optional<JsonValue> jsin_opt = json_loader::from_path_opt( file_name );
 
     if( !jsin_opt.has_value() ) {
         // Only throw if this is the first file to load, that file _must_ exist,
@@ -1275,7 +1275,7 @@ void rotate_direction_cw( int &dx, int &dy )
     dy = dir_num / 3 - 1;
 }
 
-cata::optional<tripoint> input_context::get_direction( const std::string &action ) const
+std::optional<tripoint> input_context::get_direction( const std::string &action ) const
 {
     static const auto noop = static_cast<tripoint( * )( tripoint )>( []( tripoint p ) {
         return p;
@@ -1303,7 +1303,7 @@ cata::optional<tripoint> input_context::get_direction( const std::string &action
     } else if( action == "RIGHTDOWN" ) {
         return transform( tripoint_south_east );
     } else {
-        return cata::nullopt;
+        return std::nullopt;
     }
 }
 
@@ -1723,18 +1723,18 @@ bool gamepad_available()
     return false;
 }
 
-cata::optional<tripoint> input_context::get_coordinates( const catacurses::window &capture_win,
+std::optional<tripoint> input_context::get_coordinates( const catacurses::window &capture_win,
         const point &offset, const bool center_cursor ) const
 {
     if( !coordinate_input_received ) {
-        return cata::nullopt;
+        return std::nullopt;
     }
     const point view_size( getmaxx( capture_win ), getmaxy( capture_win ) );
     const point win_min( getbegx( capture_win ),
                          getbegy( capture_win ) );
     const half_open_rectangle<point> win_bounds( win_min, win_min + view_size );
     if( !win_bounds.contains( coordinate ) ) {
-        return cata::nullopt;
+        return std::nullopt;
     }
 
     point p = coordinate + offset;
@@ -1750,19 +1750,19 @@ cata::optional<tripoint> input_context::get_coordinates( const catacurses::windo
 }
 #endif
 
-cata::optional<point> input_context::get_coordinates_text( const catacurses::window
+std::optional<point> input_context::get_coordinates_text( const catacurses::window
         &capture_win ) const
 {
 #if !defined( TILES )
-    cata::optional<tripoint> coord3d = get_coordinates( capture_win );
+    std::optional<tripoint> coord3d = get_coordinates( capture_win );
     if( coord3d.has_value() ) {
         return get_coordinates( capture_win )->xy();
     } else {
-        return cata::nullopt;
+        return std::nullopt;
     }
 #else
     if( !coordinate_input_received ) {
-        return cata::nullopt;
+        return std::nullopt;
     }
     const window_dimensions dim = get_window_dimensions( capture_win );
     const int &fw = dim.scaled_font_size.x;

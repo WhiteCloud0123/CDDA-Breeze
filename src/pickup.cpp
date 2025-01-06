@@ -34,7 +34,7 @@
 #include "map_selector.h"
 #include "mapdata.h"
 #include "messages.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "overmapbuffer.h"

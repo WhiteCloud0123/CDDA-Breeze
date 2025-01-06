@@ -56,7 +56,7 @@
 #include "move_mode.h"
 #include "mutation.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "overmap.h"

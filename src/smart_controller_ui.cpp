@@ -10,7 +10,7 @@
 #include "color.h"
 #include "cursesdef.h"
 #include "input.h"
-#include "optional.h"
+#include <optional>
 #include "output.h"
 #include "point.h"
 #include "string_formatter.h"

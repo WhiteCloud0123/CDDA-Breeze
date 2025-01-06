@@ -48,7 +48,7 @@
 #include "monster.h"
 #include "mtype.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "point.h"

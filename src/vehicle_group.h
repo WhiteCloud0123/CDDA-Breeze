@@ -8,7 +8,7 @@
 
 #include "mapgen.h"
 #include "memory_fast.h"
-#include "optional.h"
+#include <optional>
 #include "rng.h"
 #include "type_id.h"
 #include "units_fwd.h"
@@ -150,7 +150,7 @@ class VehicleFunction_json : public VehicleFunction
         int status;
 
         std::string placement;
-        cata::optional<VehicleLocation> location;
+        std::optional<VehicleLocation> location;
 };
 
 /**

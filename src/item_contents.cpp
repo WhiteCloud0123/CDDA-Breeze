@@ -1671,7 +1671,7 @@ std::vector<const item*> item_contents::cables(bool active_only) const
 
 
 void item_contents::update_modified_pockets(
-    const cata::optional<const pocket_data *> &mag_or_mag_well,
+    const std::optional<const pocket_data *> &mag_or_mag_well,
     std::vector<const pocket_data *> container_pockets )
 {
     for( auto pocket_iter = contents.begin(); pocket_iter != contents.end(); ) {

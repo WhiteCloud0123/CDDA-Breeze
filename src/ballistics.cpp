@@ -25,7 +25,7 @@
 #include "messages.h"
 #include "monster.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "point.h"
 #include "projectile.h"

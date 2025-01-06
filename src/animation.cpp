@@ -303,7 +303,7 @@ void explosion_handler::draw_explosion( const tripoint &p, const int r, const nc
 }
 
 void explosion_handler::draw_custom_explosion( const tripoint &,
-        const std::map<tripoint, nc_color> &all_area, const cata::optional<std::string> &tile_id )
+        const std::map<tripoint, nc_color> &all_area, const std::optional<std::string> &tile_id )
 {
 
     constexpr explosion_neighbors all_neighbors = N_NORTH | N_SOUTH | N_WEST | N_EAST;

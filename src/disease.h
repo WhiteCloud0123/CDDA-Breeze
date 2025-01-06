@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "calendar.h"
-#include "optional.h"
+#include <optional>
 #include "type_id.h"
 
 class JsonObject;
@@ -32,7 +32,7 @@ class disease_type
         /**Affected body parts*/
         std::set<bodypart_str_id> affected_bodyparts;
         /**If not empty this sets the health threshold above which you're immune to the disease*/
-        cata::optional<int> health_threshold;
+        std::optional<int> health_threshold;
         /**effect applied by this disease*/
         efftype_id symptoms;
 

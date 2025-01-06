@@ -35,7 +35,7 @@
 #include "get_version.h"
 #include "input.h"
 #include "mod_manager.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "path_info.h"
@@ -868,7 +868,7 @@ static std::string debug_resolve_binary( const std::string &binary, std::ostream
     return binary;
 }
 
-static cata::optional<uintptr_t> debug_compute_load_offset(
+static std::optional<uintptr_t> debug_compute_load_offset(
     const std::string &binary, const std::string &symbol,
     const std::string &offset_within_symbol_s, void *address, std::ostream &out )
 {
@@ -895,7 +895,7 @@ static cata::optional<uintptr_t> debug_compute_load_offset(
         FILE *nm = popen( cmd.str().c_str(), "re" );
         if( !nm ) {
             out << "    backtrace: popen(nm) failed: " << strerror( errno ) << "\n";
-            return cata::nullopt;
+            return std::nullopt;
         }
 
         std::array<char, 1024> buf;
@@ -919,7 +919,7 @@ static cata::optional<uintptr_t> debug_compute_load_offset(
         pclose( nm );
     }
 
-    return cata::nullopt;
+    return std::nullopt;
 }
 #endif
 
@@ -1320,7 +1320,7 @@ void debug_write_backtrace( std::ostream &out )
                 std::string symbol_name( symbolNameStart, symbolNameEnd );
                 std::string offset_within_symbol( offsetStart, offsetEnd );
 
-                cata::optional<uintptr_t> offset =
+                std::optional<uintptr_t> offset =
                     debug_compute_load_offset( binary_name, symbol_name, offset_within_symbol,
                                                bt[i], out );
                 if( offset ) {

@@ -25,7 +25,7 @@
 #include "mapdata.h"
 #include "messages.h" //for rust message
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "point.h"
 #include "proficiency.h"

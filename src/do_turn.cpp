@@ -831,7 +831,7 @@ void monmove()
 
                     tripoint_abs_omt omt_pos = u.global_omt_location();
                     
-                    cata::optional<basecamp*> camp = overmap_buffer.find_camp(omt_pos.xy());
+                    std::optional<basecamp*> camp = overmap_buffer.find_camp(omt_pos.xy());
 
                     // 如果玩家不处于营地的范围内，不要生成交易人员
                     if (camp) {
@@ -1199,7 +1199,7 @@ bool do_turn()
         wait_redraw = true;
         wait_message = _( "Wait till you wake up…" );
         wait_refresh_rate = 30_minutes;
-    } else if( const cata::optional<std::string> progress = u.activity.get_progress_message( u ) ) {
+    } else if( const std::optional<std::string> progress = u.activity.get_progress_message( u ) ) {
         wait_redraw = true;
         wait_message = *progress;
         if( u.activity.is_interruptible() && u.activity.interruptable_with_kb ) {

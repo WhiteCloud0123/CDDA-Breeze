@@ -22,7 +22,7 @@
 #include "map.h"
 #include "mapdata.h"
 #include "messages.h"
-#include "optional.h"
+#include <optional>
 #include "player_activity.h"
 #include "point.h"
 #include "translations.h"

@@ -11,7 +11,7 @@
 #include "calendar.h"
 #include "coordinates.h"
 #include "memory_fast.h"
-#include "optional.h"
+#include <optional>
 #include "point.h"
 #include "type_id.h"
 
@@ -92,7 +92,7 @@ std::string action_of( mission_kind kind );
 struct mission_id {
     mission_kind id = No_Mission;
     std::string parameters;
-    cata::optional<point> dir;
+    std::optional<point> dir;
 };
 
 bool is_equal( const mission_id &first, const mission_id &second );

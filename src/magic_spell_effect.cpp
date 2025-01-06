@@ -50,7 +50,7 @@
 #include "morale_types.h"
 #include "mtype.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "overmapbuffer.h"
 #include "pimpl.h"
 #include "point.h"

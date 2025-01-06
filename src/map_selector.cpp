@@ -8,7 +8,7 @@
 #include "game_constants.h"
 #include "map.h"
 #include "map_iterator.h"
-#include "optional.h"
+#include <optional>
 #include "rng.h"
 
 class game;
@@ -31,13 +31,13 @@ tripoint_range<tripoint> points_in_range( const map &m )
                tripoint( SEEX * m.getmapsize() - 1, SEEY * m.getmapsize() - 1, OVERMAP_HEIGHT ) );
 }
 
-cata::optional<tripoint> random_point( const map &m,
+std::optional<tripoint> random_point( const map &m,
                                        const std::function<bool( const tripoint & )> &predicate )
 {
     return random_point( points_in_range( m ), predicate );
 }
 
-cata::optional<tripoint> random_point( const tripoint_range<tripoint> &range,
+std::optional<tripoint> random_point( const tripoint_range<tripoint> &range,
                                        const std::function<bool( const tripoint & )> &predicate )
 {
     // Optimist approach: just assume there are plenty of suitable places and a randomly

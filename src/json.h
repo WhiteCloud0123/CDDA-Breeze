@@ -43,11 +43,6 @@ class TextJsonObject;
 class TextJsonValue;
 class item;
 
-namespace cata
-{
-template<typename T>
-class optional;
-} // namespace cata
 
 template<typename T, typename Enable = void>
 struct key_from_json_string;
@@ -1575,7 +1570,7 @@ void add_array_to_set( std::set<std::string> &, const TextJsonObject &json,
 std::ostream &operator<<( std::ostream &stream, const JsonError &err );
 
 template<typename T>
-void serialize( const cata::optional<T> &obj, JsonOut &jsout )
+void serialize( const std::optional<T> &obj, JsonOut &jsout )
 {
     if( obj ) {
         jsout.write( *obj );
@@ -1585,7 +1580,7 @@ void serialize( const cata::optional<T> &obj, JsonOut &jsout )
 }
 
 template<typename T>
-void deserialize( cata::optional<T> &obj, const TextJsonValue &jsin )
+void deserialize( std::optional<T> &obj, const TextJsonValue &jsin )
 {
     if( jsin.test_null() ) {
         obj.reset();

@@ -25,7 +25,7 @@
 #include "item_location.h"
 #include "item_pocket.h"
 #include "material.h"
-#include "optional.h"
+#include <optional>
 #include "requirements.h"
 #include "safe_reference.h"
 #include "type_id.h"
@@ -400,7 +400,7 @@ class item : public visitable
                            unsigned int truncate = 0, bool with_contents_full = true,
                            bool with_collapsed = true, bool with_contents_abbrev = true ) const;
         std::string display_money( unsigned int quantity, unsigned int total,
-                                   const cata::optional<unsigned int> &selected = cata::nullopt ) const;
+                                   const std::optional<unsigned int> &selected = std::nullopt ) const;
         /**
          * Returns the item name and the charges or contained charges (if the item can have
          * charges at all). Calls @ref tname with given quantity and with_prefix being true.
@@ -591,7 +591,7 @@ class item : public visitable
          * If `practical` is false, returns pre-Cataclysm market value,
          * otherwise returns approximate post-cataclysm value.
          */
-        int price_no_contents( bool practical, cata::optional<int> price_override = cata::nullopt ) const;
+        int price_no_contents( bool practical, std::optional<int> price_override = std::nullopt ) const;
 
         /**
          * Whether two items should stack when displayed in a inventory menu.
@@ -1976,7 +1976,7 @@ class item : public visitable
          */
         bool covers( const sub_bodypart_id &bp ) const;
         // do both items overlap a bodypart at all? returns the side that conflicts via rhs
-        cata::optional<side> covers_overlaps( const item &rhs ) const;
+        std::optional<side> covers_overlaps( const item &rhs ) const;
         /**
          * Bitset of all covered body parts.
          *
@@ -2947,8 +2947,8 @@ class item : public visitable
                 bool tools_to_continue = false;
                 int batch_size = -1;
                 std::vector<comp_selection<tool_comp>> cached_tool_selections;
-                cata::optional<units::mass> cached_weight; // NOLINT(cata-serialize)
-                cata::optional<units::volume> cached_volume; // NOLINT(cata-serialize)
+                std::optional<units::mass> cached_weight; // NOLINT(cata-serialize)
+                std::optional<units::volume> cached_volume; // NOLINT(cata-serialize)
 
                 // if this is an in progress disassembly as opposed to craft
                 bool disassembly = false;
@@ -3025,7 +3025,7 @@ class item : public visitable
         int damage_ = 0;
         int degradation_ = 0;
         light_emission light = nolight;
-        mutable cata::optional<float> cached_relative_encumbrance;
+        mutable std::optional<float> cached_relative_encumbrance;
 
         // additional encumbrance this specific item has
         units::volume additional_encumbrance = 0_ml;

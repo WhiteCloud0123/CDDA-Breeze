@@ -55,7 +55,7 @@ std::vector<display_proficiency> Character::display_proficiencies() const
 }
 
 bool Character::practice_proficiency( const proficiency_id &prof, const time_duration &amount,
-                                      const cata::optional<time_duration> &max )
+                                      const std::optional<time_duration> &max )
 {
     // Proficiencies can ignore focus using the `ignore_focus` JSON property
     const bool ignore_focus = prof->ignore_focus();

@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "fire.h"
-#include "optional.h"
+#include <optional>
 #include "translations.h"
 #include "type_id.h"
 
@@ -77,7 +77,7 @@ class material_type
 
     private:
         translation _name;
-        cata::optional<itype_id> _salvaged_into; // this material turns into this item when salvaged
+        std::optional<itype_id> _salvaged_into; // this material turns into this item when salvaged
         itype_id _repaired_with = itype_id( "null" ); // this material can be repaired with this item
         float _bash_resist = 0.0f;                         // negative integers means susceptibility
         float _cut_resist = 0.0f;
@@ -92,7 +92,7 @@ class material_type
         // ability of a fabric to allow moisture vapor to be transmitted through the material
         breathability_rating _breathability = breathability_rating::IMPERMEABLE;
         // How resistant this material is to wind as a percentage - 0 to 100
-        cata::optional<int> _wind_resist;
+        std::optional<int> _wind_resist;
         float _specific_heat_liquid = 4.186f;
         float _specific_heat_solid = 2.108f;
         float _latent_heat = 334.0f;
@@ -135,7 +135,7 @@ class material_type
          * into (e.g. clothes made of material leather can be salvaged
          * into leather patches).
          */
-        cata::optional<itype_id> salvaged_into() const;
+        std::optional<itype_id> salvaged_into() const;
         itype_id repaired_with() const;
         float bash_resist() const;
         float cut_resist() const;
@@ -163,7 +163,7 @@ class material_type
         // converts from the breathability enum to a fixed integer value from 0-100
         static int breathability_to_rating( breathability_rating breathability );
         int breathability() const;
-        cata::optional<int> wind_resist() const;
+        std::optional<int> wind_resist() const;
         bool edible() const;
         bool rotting() const;
         bool soft() const;

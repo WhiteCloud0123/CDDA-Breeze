@@ -1573,7 +1573,7 @@ bool item_pocket::can_reload_with( const item &ammo, const bool now ) const
     return false;
 }
 
-cata::optional<item> item_pocket::remove_item( const item &it )
+std::optional<item> item_pocket::remove_item( const item &it )
 {
     item ret( it );
     const size_t sz = contents.size();
@@ -1581,7 +1581,7 @@ cata::optional<item> item_pocket::remove_item( const item &it )
         return &rhs == &it;
     } );
     if( sz == contents.size() ) {
-        return cata::nullopt;
+        return std::nullopt;
     } else {
         return ret;
     }
@@ -1604,10 +1604,10 @@ bool item_pocket::remove_internal( const std::function<bool( item & )> &filter,
     return false;
 }
 
-cata::optional<item> item_pocket::remove_item( const item_location &it )
+std::optional<item> item_pocket::remove_item( const item_location &it )
 {
     if( !it ) {
-        return cata::nullopt;
+        return std::nullopt;
     }
     return remove_item( *it );
 }

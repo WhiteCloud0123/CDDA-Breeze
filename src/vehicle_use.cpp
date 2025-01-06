@@ -1511,7 +1511,7 @@ void vehicle::use_harness( int part, const tripoint &pos )
                                     f.has_flag( MF_PET_HARNESSABLE ) );
     };
 
-    const cata::optional<tripoint> pnt_ = choose_adjacent_highlight(
+    const std::optional<tripoint> pnt_ = choose_adjacent_highlight(
             _( "Where is the creature to harness?" ), _( "There is no creature to harness nearby." ), f,
             false );
     if( !pnt_ ) {
@@ -1611,8 +1611,8 @@ void vehicle::build_bike_rack_menu( veh_menu &menu, int part )
 void vpart_position::form_inventory(inventory& inv) const
 {
     const int veh_battery = vehicle().fuel_left(itype_battery, true);
-    const cata::optional<vpart_reference> vp_faucet = part_with_tool(itype_water_faucet);
-    const cata::optional<vpart_reference> vp_cargo = part_with_feature("CARGO", true);
+    const std::optional<vpart_reference> vp_faucet = part_with_tool(itype_water_faucet);
+    const std::optional<vpart_reference> vp_cargo = part_with_feature("CARGO", true);
 
     if (vp_cargo) {
         const vehicle_stack items = vehicle().get_items(vp_cargo->part_index());
@@ -2006,7 +2006,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
             .on_submit([this, vppos, tool_type] { use_vehicle_tool(*this, vppos, tool_type); });
     }
 
-    const cata::optional<vpart_reference> vp_autoclave = vp.avail_part_with_feature( "AUTOCLAVE" );
+    const std::optional<vpart_reference> vp_autoclave = vp.avail_part_with_feature( "AUTOCLAVE" );
     if( vp_autoclave ) {
         const size_t cl_idx = vp_autoclave->part_index();
         menu.add( vp_autoclave->part().enabled
@@ -2016,7 +2016,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         .on_submit( [this, cl_idx] { use_autoclave( cl_idx ); } );
     }
 
-    const cata::optional<vpart_reference> vp_washing_machine =
+    const std::optional<vpart_reference> vp_washing_machine =
         vp.avail_part_with_feature( "WASHING_MACHINE" );
     if( vp_washing_machine ) {
         const size_t wm_idx = vp_washing_machine->part_index();
@@ -2027,7 +2027,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         .on_submit( [this, wm_idx] { use_washing_machine( wm_idx ); } );
     }
 
-    const cata::optional<vpart_reference> vp_dishwasher = vp.avail_part_with_feature( "DISHWASHER" );
+    const std::optional<vpart_reference> vp_dishwasher = vp.avail_part_with_feature( "DISHWASHER" );
     if( vp_dishwasher ) {
         const size_t dw_idx = vp_dishwasher->part_index();
         menu.add( vp_dishwasher->part().enabled
@@ -2037,7 +2037,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         .on_submit( [this, dw_idx] { use_dishwasher( dw_idx ); } );
     }
 
-    const cata::optional<vpart_reference> vp_cargo = vp.part_with_feature( "CARGO", false );
+    const std::optional<vpart_reference> vp_cargo = vp.part_with_feature( "CARGO", false );
     // Whether vehicle part (cargo) contains items, and whether map tile (ground) has items
     if( with_pickup && (
             get_map().has_items( vp.pos() ) ||
@@ -2049,7 +2049,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         .on_submit( [vppos] { g->pickup( vppos ); } );
     }
 
-    const cata::optional<vpart_reference> vp_curtain = vp.avail_part_with_feature( "CURTAIN" );
+    const std::optional<vpart_reference> vp_curtain = vp.avail_part_with_feature( "CURTAIN" );
     if( vp_curtain && !vp_curtain->part().open ) {
         menu.add( _( "Peek through the closed curtains" ) )
         .hotkey( "CURTAIN_PEEK" )
@@ -2132,7 +2132,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         } );
     }
 
-    const cata::optional<vpart_reference> vp_monster_capture =
+    const std::optional<vpart_reference> vp_monster_capture =
         vp.avail_part_with_feature( "CAPTURE_MONSTER_VEH" );
     if( vp_monster_capture ) {
         const size_t mc_idx = vp_monster_capture->part_index();
@@ -2141,12 +2141,12 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         .on_submit( [this, mc_idx, vppos] { use_monster_capture( mc_idx, vppos ); } );
     }
 
-    const cata::optional<vpart_reference> vp_bike_rack = vp.avail_part_with_feature( "BIKE_RACK_VEH" );
+    const std::optional<vpart_reference> vp_bike_rack = vp.avail_part_with_feature( "BIKE_RACK_VEH" );
     if( vp_bike_rack ) {
         build_bike_rack_menu( menu, vp_bike_rack->part_index() );
     }
 
-    const cata::optional<vpart_reference> vp_harness = vp.avail_part_with_feature( "ANIMAL_CTRL" );
+    const std::optional<vpart_reference> vp_harness = vp.avail_part_with_feature( "ANIMAL_CTRL" );
     if( vp_harness ) {
         const size_t hn_idx = vp_harness->part_index();
         menu.add( _( "Harness an animal" ) )
@@ -2160,7 +2160,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         .on_submit( [this, vppos] { reload_seeds( vppos ); } );
     }
 
-    const cata::optional<vpart_reference> vp_workbench = vp.avail_part_with_feature( "WORKBENCH" );
+    const std::optional<vpart_reference> vp_workbench = vp.avail_part_with_feature( "WORKBENCH" );
     if( vp_workbench ) {
         const size_t wb_idx = vp_workbench->part_index();
         menu.add( string_format( _( "Craft at the %s" ), vp_workbench->part().name() ) )
@@ -2172,7 +2172,7 @@ void vehicle::build_interact_menu( veh_menu &menu, const tripoint &p, bool with_
         } );
     }
 
-    const cata::optional<vpart_reference> vp_toolstation = vp.avail_part_with_feature("VEH_TOOLS");
+    const std::optional<vpart_reference> vp_toolstation = vp.avail_part_with_feature("VEH_TOOLS");
     if (vp_toolstation && vp_toolstation->info().get_toolkit_info()) {
         const size_t vp_idx = vp_toolstation->part_index();
         const std::string vp_name = vp_toolstation->part().name( /* with_prefix = */ false);

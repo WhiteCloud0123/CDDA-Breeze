@@ -30,7 +30,7 @@
 #include "json.h"
 #include "localized_comparator.h"
 #include "npc.h"
-#include "optional.h"
+#include <optional>
 #include "options.h"
 #include "output.h"
 #include "point.h"
@@ -886,7 +886,7 @@ static const translation filter_help_start = to_translation(
             "\n\n"
             "<color_white>Examples:</color>\n" );
 
-static bool mouse_in_window( cata::optional<point> coord, const catacurses::window &w_ )
+static bool mouse_in_window( std::optional<point> coord, const catacurses::window &w_ )
 {
     if( coord.has_value() ) {
         inclusive_rectangle<point> window_area( point( getbegx( w_ ), getbegy( w_ ) ),
@@ -1547,7 +1547,7 @@ const recipe* select_crafting_recipe(int& batch_size_out, const recipe_id& goto_
         const int recmax = static_cast<int>( current.size() );
         const int scroll_rate = recmax > 20 ? 10 : 3;
 
-        cata::optional<point> coord = ctxt.get_coordinates_text( catacurses::stdscr );
+        std::optional<point> coord = ctxt.get_coordinates_text( catacurses::stdscr );
         const bool mouse_in_list = coord.has_value() && mouseover_area_list.contains( coord.value() );
         const bool mouse_in_recipe = coord.has_value() && mouseover_area_recipe.contains( coord.value() );
 
