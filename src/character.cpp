@@ -5647,14 +5647,18 @@ bool Character::sees_with_specials( const Creature &critter ) const
 
 bool Character::pour_into( item_location &container, item &liquid, bool ignore_settings )
 {
+    item liquid_copy = liquid;
+    if (liquid_copy.has_var("crafter_id")) {
+        liquid_copy.erase_var("crafter_id");
+    }
     std::string err;
-    int max_remaining_capacity = container->get_remaining_capacity_for_liquid( liquid, *this, &err );
+    int max_remaining_capacity = container->get_remaining_capacity_for_liquid( liquid_copy, *this, &err );
     int amount = container->all_pockets_rigid() ? max_remaining_capacity :
-                 std::min( max_remaining_capacity, container.max_charges_by_parent_recursive( liquid ) );
+                 std::min( max_remaining_capacity, container.max_charges_by_parent_recursive( liquid_copy ) );
 
     if( !err.empty() ) {
-        if( !container->has_item_with( [&liquid]( const item & it ) {
-        return it.typeId() == liquid.typeId();
+        if( !container->has_item_with( [&liquid_copy]( const item & it ) {
+        return it.typeId() == liquid_copy.typeId();
         } ) ) {
             add_msg_if_player( m_bad, err );
         } else {
@@ -5672,8 +5676,8 @@ bool Character::pour_into( item_location &container, item &liquid, bool ignore_s
 
     std::string character_name = is_avatar() ? "你" : get_name();
     add_msg( "%1s 把 %2s 灌进 %3s 。",character_name,liquid.tname(), container->tname() );
-
-    liquid.charges -= container->fill_with( liquid, amount, false, false, ignore_settings );
+    
+    liquid.charges -= container->fill_with( liquid_copy, amount, false, false, ignore_settings );
     inv->unsort();
 
     if( liquid.charges > 0 ) {

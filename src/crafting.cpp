@@ -596,7 +596,7 @@ std::vector<item_location> Character::get_eligible_containers_locations_for_craf
     if (weapon) {
         containers_locations = get_eligible_containers_locations_recursive(weapon, true);
     }
-    worn.get_eligible_containers_locations_for_crafting(containers_locations,worn.all_items_loc(*this));
+    worn.get_eligible_containers_locations_for_crafting(containers_locations,worn.top_items_loc(*this));
     map& here = get_map();
     for (const tripoint& loc : closest_points_first(pos(), PICKUP_RANGE)) {
         if (pos() != loc && !here.clear_path(pos(), loc, PICKUP_RANGE, 1, 100)) {

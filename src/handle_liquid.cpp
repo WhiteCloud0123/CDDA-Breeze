@@ -188,12 +188,15 @@ static bool get_liquid_target(Character& character, item &liquid, const item *co
     uilist menu;
     const std::string liquid_name = liquid.display_name(liquid.charges);
     if (character.is_npc()) {
-
+        item liquid_copy = liquid;
+        if (liquid_copy.has_var("crafter_id")) {
+            liquid_copy.erase_var("crafter_id");
+        }
         std::vector<item_location> containers_locations;
 
         for (item_location &loc : character.get_eligible_containers_locations_for_crafting()) {
-            item* i = loc.get_item();
-            if (i->get_remaining_capacity_for_liquid(liquid,true)>0) {
+            item *i = loc.get_item();
+            if (i->get_remaining_capacity_for_liquid(liquid_copy,true)>0) {
                 containers_locations.push_back(loc);
             }
         }
