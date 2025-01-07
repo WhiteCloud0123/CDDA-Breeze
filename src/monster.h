@@ -584,6 +584,7 @@ class monster : public Creature
         void set_summon_time( const time_duration &length );
         // handles removing the monster if the timer runs out
         void decrement_summon_timer();
+        std::vector<std::pair<std::string, std::string>> get_overlay_ids() const;
     private:
         void process_trigger( mon_trigger trig, int amount );
         void process_trigger( mon_trigger trig, const std::function<int()> &amount_func );
