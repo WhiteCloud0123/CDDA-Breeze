@@ -350,6 +350,7 @@ enum action_id : int {
     // 标记 添加actionCreateWorldBackup
     actionCreateWorldBackup,
     ACTION_数据检索,
+    ACTION_管理扩展按键,
     ACTION_网络功能,
     ACTION_命令视野中的我方丧尸全部等待,
     ACTION_结束视野中的我方全部丧尸的等待状态,

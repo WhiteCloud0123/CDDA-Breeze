@@ -50,8 +50,6 @@ extern JNIEnv* jni_env;
 extern jobject j_activity;
 extern jclass j_class;
 
-extern jmethodID method_id_setExtraButtonVisibility;
-extern jmethodID method_id_addExtraButton;
 extern jmethodID method_id_getDisplayDensity;
 extern jmethodID method_id_isHardwareKeyboardAvailable;
 extern jmethodID method_id_vibrate;
@@ -62,6 +60,7 @@ extern jmethodID method_id_getDefaultSetting;
 extern jmethodID method_id_getSystemLang;
 extern jmethodID method_id_set_force_full_screen;
 extern jmethodID method_id_set_hide_status_bar;
+extern jmethodID method_id_show_button_manage;
 
 #endif
 
