@@ -147,16 +147,39 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private Set<View> mainButtons = new HashSet<>();
     private View buttonManageLayout;
     private Semaphore semaphore = new Semaphore(0, true);
-
+    private Button buttonNew;
+    private boolean deleteButtonMode = false;
     private void showButtonManageLayout() {
+ 
         buttonManageLayout = getLayoutInflater().inflate(R.layout.button_manage, null);
         container = buttonManageLayout.findViewById(R.id.container);
 
-        Button buttonNew = buttonManageLayout.findViewById(R.id.button_new);
-        buttonNew.setOnClickListener(new View.OnClickListener() {
+        buttonNew = buttonManageLayout.findViewById(R.id.button_new);
+        buttonNew.setOnTouchListener(new View.OnTouchListener() {
+            private long startTime = 0;
+            private boolean isLongPress = false;
+
             @Override
-            public void onClick(View v) {
-                showNewButtonDialog();
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startTime = System.currentTimeMillis();
+                        isLongPress = false;
+                        v.postDelayed(() -> {
+                            if (System.currentTimeMillis() - startTime >= 3000) {
+                                isLongPress = true;
+                                deleteButtonMode = !deleteButtonMode;
+                                Toaster.show(deleteButtonMode?"删除按钮模式，点击按钮即可删除":"新建按钮模式");
+                            }
+                        }, 3000);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (!isLongPress) {
+                            showNewButtonDialog();
+                        }
+                        break;
+                }
+                return true;
             }
         });
 
@@ -237,6 +260,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        if(deleteButtonMode) {
+                            buttons.remove(newButton);
+                            container.removeView(newButton);
+                            break;
+                        }
                         dX = v.getX() - event.getRawX();
                         dY = v.getY() - event.getRawY();
                         break;
@@ -347,13 +375,16 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         if (isDraggable) {
             newButton.setOnTouchListener(new View.OnTouchListener() {
                 float dX, dY;
-                private long startClickTime;
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            startClickTime = System.currentTimeMillis();
+                            if(deleteButtonMode) {
+                                buttons.remove(newButton);
+                                container.removeView(newButton);
+                                break;
+                            }
                             dX = v.getX() - event.getRawX();
                             dY = v.getY() - event.getRawY();
                             break;
@@ -367,11 +398,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                             break;
 
                         case MotionEvent.ACTION_UP:
-                            long clickDuration = System.currentTimeMillis() - startClickTime;
-                            if (clickDuration >= 1000) {
-                                showDeleteDialog(newButton);
-                                return true;
-                            }
                             break;
 
                         default:
