@@ -150,7 +150,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private Button buttonNew;
     private boolean deleteButtonMode = false;
     private void showButtonManageLayout() {
- 
+        deleteButtonMode = false;
         buttonManageLayout = getLayoutInflater().inflate(R.layout.button_manage, null);
         container = buttonManageLayout.findViewById(R.id.container);
 
@@ -158,6 +158,16 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         buttonNew.setOnTouchListener(new View.OnTouchListener() {
             private long startTime = 0;
             private boolean isLongPress = false;
+            private Runnable longPressRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (System.currentTimeMillis() - startTime >= 3000) {
+                        isLongPress = true;
+                        deleteButtonMode = !deleteButtonMode;
+                        Toaster.show(deleteButtonMode ? "删除按钮模式，点击按钮即可删除" : "新建按钮模式");
+                    }
+                }
+            };
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -165,15 +175,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                     case MotionEvent.ACTION_DOWN:
                         startTime = System.currentTimeMillis();
                         isLongPress = false;
-                        v.postDelayed(() -> {
-                            if (System.currentTimeMillis() - startTime >= 3000) {
-                                isLongPress = true;
-                                deleteButtonMode = !deleteButtonMode;
-                                Toaster.show(deleteButtonMode?"删除按钮模式，点击按钮即可删除":"新建按钮模式");
-                            }
-                        }, 3000);
+                        v.postDelayed(longPressRunnable, 3000);
                         break;
                     case MotionEvent.ACTION_UP:
+                        v.removeCallbacks(longPressRunnable);
                         if (!isLongPress) {
                             showNewButtonDialog();
                         }
@@ -205,7 +210,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         final EditText input = new EditText(this);
         builder.setView(input);
-        builder.setMessage("请输入单个字符或者tab");
+        builder.setMessage("支持单个字符、两个字符的“键盘“、三个字符的“tab“");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -225,7 +230,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private boolean isValidText(String text) {
         if (text.length() == 1) {
             return true;
-        } else if (text.length() == 3 && text.equals("tab")) {
+        }else if(text.length()==2&&text.equals("键盘")){
+            return true;
+        }
+        else if (text.length() == 3 && text.equals("tab")) {
             return true;
         }
         return false;
@@ -233,8 +241,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     private void showErrorDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("无效的文本")
-            .setMessage("请输入一个单个字符。")
+        builder.setTitle("无效的字符")
             .setPositiveButton("确定", null);
         builder.show();
     }
@@ -412,7 +419,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 public void onClick(View v) {
                     if (newButton.getText().toString().equals("tab")) {
                         dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
-                    } else {
+                    } else if(newButton.getText().toString().equals("键盘")) {
+                        dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+                        dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+                    }
+                    else {
                         nativeButtonClick(newButton.getText().toString());
                     }
                 }
