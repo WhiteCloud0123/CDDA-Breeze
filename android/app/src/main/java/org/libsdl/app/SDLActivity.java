@@ -64,6 +64,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
 
 import com.cleverraven.cataclysmdda.R;
 import com.hjq.toast.ToastStrategy;
@@ -143,7 +144,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private Set<View> buttons = new HashSet<>();
     private Set<View> mainButtons = new HashSet<>();
     private View buttonManageLayout;
-
+    private Semaphore semaphore = new Semaphore(0, true);
     private void showButtonManageLayout() {
         buttonManageLayout = getLayoutInflater().inflate(R.layout.button_manage, null);
         container = buttonManageLayout.findViewById(R.id.container);
@@ -283,6 +284,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                         buttons.clear();
                         removeButtonManageLayout();
                         loadButtonsData(false);
+                        semaphore.release();
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -290,6 +292,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                         removeButtonManageLayout();
                         buttons.clear();
                         loadButtonsData(false);
+                        semaphore.release();
                     }
                 });
         builder.create().show();
@@ -399,7 +402,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         mainButtons.clear();
     }
 
-    public void showButtonManage() {
+    public void showButtonManage()  {
         this.runOnUiThread(new Runnable() {
             public void run() {
                 Toaster.show("确认点击“其他");
@@ -407,6 +410,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 showButtonManageLayout();
             }
         });
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setExtraButtonVisibility(boolean visible) {
