@@ -410,8 +410,6 @@ int main( int argc, const char *argv[] )
 
     jni_env->CallVoidMethod(j_activity, method_id_set_hide_status_bar, ::get_option<bool>("非全屏模式下隐藏状态栏"));
     jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
-    jstring extra_button_str = jni_env->NewStringUTF(get_option<std::string>("默认扩展按键").c_str());
-    jni_env->DeleteLocalRef(extra_button_str);
 
     input_context::input_context_stack.clear();
 #endif
