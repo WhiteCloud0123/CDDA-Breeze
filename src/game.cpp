@@ -365,8 +365,6 @@ JNIEnv* jni_env;
 jobject j_activity;
 jclass j_class;
 
-jmethodID method_id_setExtraButtonVisibility;
-jmethodID method_id_addExtraButton;
 jmethodID method_id_getDisplayDensity;
 jmethodID method_id_isHardwareKeyboardAvailable;
 jmethodID method_id_vibrate;

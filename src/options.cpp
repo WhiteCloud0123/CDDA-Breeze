@@ -2728,11 +2728,6 @@ void options_manager::add_options_android()
          android_get_default_setting( "Native Android UI", false )
        );
 
-    add("启用扩展按键", "android", to_translation("启用扩展按键"),
-        to_translation("开启后，屏幕上会显示扩展按键。修改后需要重新启动。"),
-        false
-    );
-
     add("默认扩展按键", "android", to_translation("默认扩展按键"),
         to_translation("“tab”按键是不可修改的。你可以在此添加扩展按键。修改后需要重新启动。"),
         "0mi", 10

@@ -330,8 +330,6 @@ int main( int argc, const char *argv[] )
     jclass temp_class(jni_env->GetObjectClass(j_activity));
     j_class = (jclass)jni_env->NewGlobalRef(temp_class);
 
-    method_id_setExtraButtonVisibility = jni_env->GetMethodID(j_class, "setExtraButtonVisibility", "(Z)V");
-    method_id_addExtraButton = jni_env->GetMethodID(j_class, "addExtraButton", "(Ljava/lang/String;)V");
     method_id_getDisplayDensity = jni_env->GetMethodID(j_class, "getDisplayDensity", "()F");
     method_id_isHardwareKeyboardAvailable = jni_env->GetMethodID(j_class, "isHardwareKeyboardAvailable", "()Z");
     method_id_vibrate = jni_env->GetMethodID(j_class, "vibrate", "(I)V");
@@ -345,7 +343,6 @@ int main( int argc, const char *argv[] )
     method_id_show_button_manage = jni_env->GetMethodID(j_class, "showButtonManage", "()V");
     jni_env->DeleteLocalRef(temp_activity);
     jni_env->DeleteLocalRef(temp_class);
-
 
 #endif
 
@@ -414,8 +411,6 @@ int main( int argc, const char *argv[] )
     jni_env->CallVoidMethod(j_activity, method_id_set_hide_status_bar, ::get_option<bool>("非全屏模式下隐藏状态栏"));
     jni_env->CallVoidMethod(j_activity, method_id_set_force_full_screen, ::get_option<bool>("强制全屏"));
     jstring extra_button_str = jni_env->NewStringUTF(get_option<std::string>("默认扩展按键").c_str());
-    jni_env->CallVoidMethod(j_activity, method_id_addExtraButton, extra_button_str);
-    jni_env->CallVoidMethod(j_activity, method_id_setExtraButtonVisibility, ::get_option<bool>("启用扩展按键"));
     jni_env->DeleteLocalRef(extra_button_str);
 
     input_context::input_context_stack.clear();

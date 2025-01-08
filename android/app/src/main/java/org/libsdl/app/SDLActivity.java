@@ -138,8 +138,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     private static boolean forceFullScreen = true;
     private static boolean hideStatusBar = true;
-    Button extraButtonSP;
-    ArrayList<Button> extraButtonListNotFull = new ArrayList<Button>();
+
 
     private FrameLayout container;
     private ViewGroup mainContainer;
@@ -468,65 +467,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             e.printStackTrace();
         }
 
-    }
-
-    public void setExtraButtonVisibility(boolean visible) {
-        this.runOnUiThread(new Runnable() {
-            public void run() {
-                mLayout.addView(extraButtonSP);
-                if (!extraButtonListNotFull.isEmpty()) {
-                    int space = 0;
-                    for (Button button : extraButtonListNotFull) {
-                        mLayout.addView(button);
-                        space += 200;
-                        button.setX(space);
-                    }
-                }
-                int flag = visible ? 0 : 4;
-                extraButtonSP.setVisibility(flag);
-                if (!extraButtonListNotFull.isEmpty()) {
-                    for (Button button : extraButtonListNotFull) {
-                        button.setVisibility(flag);
-                    }
-                }
-
-            }
-        });
-    }
-
-    public void addExtraButton(String string) {
-
-        extraButtonSP = new Button(this);
-        extraButtonSP.setBackgroundColor(android.R.color.transparent);
-        extraButtonSP.setText("tab");
-        extraButtonSP.setAllCaps(false);
-        extraButtonSP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
-            }
-        });
-        extraButtonSP.setAlpha(0.5f);
-        extraButtonSP.setVisibility(View.INVISIBLE);
-
-        if (string != null && string != "") {
-            for (char c : string.toCharArray()) {
-                String s = String.valueOf(c);
-                Button button = new Button(this);
-                button.setText(s);
-                button.setBackgroundColor(android.R.color.transparent);
-                button.setAlpha(0.5f);
-                button.setAllCaps(false);
-                button.setVisibility(View.INVISIBLE);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        nativeButtonClick(button.getText().toString());
-                    }
-                });
-                extraButtonListNotFull.add(button);
-            }
-        }
     }
 
     public void showToastMessage(String string) {
