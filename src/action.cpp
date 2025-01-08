@@ -419,6 +419,8 @@ std::string action_ident( action_id act )
             return "备份当前世界";
         case ACTION_数据检索:
             return "数据检索";
+        case ACTION_管理扩展按键:
+            return "管理扩展按键";
         case ACTION_网络功能:
             return "网络功能";
         case ACTION_命令视野中的我方丧尸全部等待:
@@ -1089,8 +1091,9 @@ action_id handle_main_menu()
     // The hotkey is reserved for the uilist keybindings menu
     entries.emplace_back( ACTION_KEYBINDINGS, true, std::nullopt,
                           ctxt.get_action_name( action_ident( ACTION_KEYBINDINGS ) ) );
-
-    
+#if defined(__ANDROID__)
+    REGISTER_ACTION(ACTION_管理扩展按键);
+#endif
     REGISTER_ACTION( ACTION_OPTIONS );
     REGISTER_ACTION( ACTION_AUTOPICKUP );
     REGISTER_ACTION( ACTION_AUTONOTES );

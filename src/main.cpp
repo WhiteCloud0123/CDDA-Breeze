@@ -342,6 +342,7 @@ int main( int argc, const char *argv[] )
     method_id_getSystemLang = jni_env->GetMethodID(j_class, "getSystemLang", "()Ljava/lang/String;");
     method_id_set_force_full_screen = jni_env->GetMethodID(j_class, "set_force_full_screen", "(Z)V");
     method_id_set_hide_status_bar = jni_env->GetMethodID(j_class, "set_hide_status_bar", "(Z)V");
+    method_id_show_button_manage = jni_env->GetMethodID(j_class, "showButtonManage", "()V");
     jni_env->DeleteLocalRef(temp_activity);
     jni_env->DeleteLocalRef(temp_class);
 

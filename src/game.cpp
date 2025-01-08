@@ -377,6 +377,7 @@ jmethodID method_id_getDefaultSetting;
 jmethodID method_id_getSystemLang;
 jmethodID method_id_set_force_full_screen;
 jmethodID method_id_set_hide_status_bar;
+jmethodID method_id_show_button_manage;
 
 #endif
 

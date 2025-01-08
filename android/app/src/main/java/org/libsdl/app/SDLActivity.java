@@ -1,5 +1,6 @@
 package org.libsdl.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +10,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -34,6 +36,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.PointerIcon;
 import android.view.Surface;
 import android.view.View;
@@ -48,6 +51,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,9 +60,14 @@ import android.widget.Toast;
 import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Locale;
-import com.hjq.toast.*;
+import java.util.Set;
+
+import com.cleverraven.cataclysmdda.R;
+import com.hjq.toast.ToastStrategy;
+import com.hjq.toast.Toaster;
 
 /**
     SDL Activity
@@ -129,6 +138,277 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     Button extraButtonSP;
     ArrayList<Button> extraButtonListNotFull = new ArrayList<Button>();
 
+    private FrameLayout container;
+    private ViewGroup mainContainer;
+    private Set<View> buttons = new HashSet<>();
+    private Set<View> mainButtons = new HashSet<>();
+    private View buttonManageLayout;
+
+    private void showButtonManageLayout() {
+        buttonManageLayout = getLayoutInflater().inflate(R.layout.button_manage, null);
+        container = buttonManageLayout.findViewById(R.id.container);
+
+        Button buttonNew = buttonManageLayout.findViewById(R.id.button_new);
+        buttonNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNewButtonDialog();
+            }
+        });
+
+        Button buttonBack = buttonManageLayout.findViewById(R.id.button_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSaveDialog();
+            }
+        });
+
+        this.addContentView(buttonManageLayout, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+
+        loadButtonsData(true);
+    }
+
+    private void showNewButtonDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("新建按钮");
+
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = input.getText().toString();
+                if (isValidText(text)) {
+                    createNewButton(text, true);
+                } else {
+                    showErrorDialog();
+                }
+            }
+        });
+        builder.setNegativeButton("取消", null);
+
+        builder.show();
+    }
+
+    private boolean isValidText(String text) {
+        return text.length() == 1;
+    }
+
+    private void showErrorDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("无效的文本")
+                .setMessage("请输入一个单个字符。")
+                .setPositiveButton("确定", null);
+        builder.show();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void createNewButton(String text, boolean isDraggable) {
+        final Button newButton = new Button(this);
+        newButton.setText(text);
+        newButton.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        ));
+        newButton.setX(container.getWidth() / 2f - newButton.getWidth() / 2f);
+        newButton.setY(container.getHeight() / 2f - newButton.getHeight() / 2f);
+
+        if (isDraggable) {
+            newButton.setOnTouchListener(new View.OnTouchListener() {
+                float dX, dY;
+                private long startClickTime;
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startClickTime = System.currentTimeMillis();
+                            dX = v.getX() - event.getRawX();
+                            dY = v.getY() - event.getRawY();
+                            break;
+
+                        case MotionEvent.ACTION_MOVE:
+                            v.animate()
+                                    .x(event.getRawX() + dX)
+                                    .y(event.getRawY() + dY)
+                                    .setDuration(0)
+                                    .start();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            long clickDuration = System.currentTimeMillis() - startClickTime;
+                            if (clickDuration >= 1000) {
+                                showDeleteDialog(newButton);
+                                return true;
+                            }
+                            break;
+
+                        default:
+                            return false;
+                    }
+                    return true;
+                }
+            });
+        }
+
+        buttons.add(newButton);
+        container.addView(newButton);
+    }
+
+    private void showDeleteDialog(final Button button) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("删除按钮")
+                .setMessage("确定要删除这个按钮吗？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        container.removeView(button);
+                        buttons.remove(button);
+                    }
+                })
+                .setNegativeButton("取消", null);
+        builder.create().show();
+    }
+
+    private void showSaveDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("是否保存")
+                .setMessage("是否保存所有新建的按钮？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        saveButtonsData();
+                        buttons.clear();
+                        removeButtonManageLayout();
+                        loadButtonsData(false);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        removeButtonManageLayout();
+                        buttons.clear();
+                        loadButtonsData(false);
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void saveButtonsData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("button", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        Set<String> buttonData = new HashSet<>();
+        for (View button : buttons) {
+            float x = button.getX();
+            float y = button.getY();
+            String text = ((Button) button).getText().toString();
+            buttonData.add(text + "|" + x + "|" + y);
+        }
+
+        editor.putStringSet("buttons", buttonData);
+        editor.commit();
+    }
+
+    private void loadButtonsData(boolean isDraggable) {
+        SharedPreferences sharedPreferences = getSharedPreferences("button", MODE_PRIVATE);
+        Set<String> buttonData = sharedPreferences.getStringSet("buttons", new HashSet<String>());
+
+        for (String data : buttonData) {
+            String[] parts = data.split("\\|");
+            if (parts.length == 3) {
+                String text = parts[0];
+                float x = Float.parseFloat(parts[1]);
+                float y = Float.parseFloat(parts[2]);
+                createNewButtonFromData(text, x, y, isDraggable);
+            }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void createNewButtonFromData(String text, float x, float y, boolean isDraggable) {
+        final Button newButton = new Button(this);
+        newButton.setText(text);
+        newButton.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        ));
+        newButton.setX(x);
+        newButton.setY(y);
+
+        if (isDraggable) {
+            newButton.setOnTouchListener(new View.OnTouchListener() {
+                float dX, dY;
+                private long startClickTime;
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startClickTime = System.currentTimeMillis();
+                            dX = v.getX() - event.getRawX();
+                            dY = v.getY() - event.getRawY();
+                            break;
+
+                        case MotionEvent.ACTION_MOVE:
+                            v.animate()
+                                    .x(event.getRawX() + dX)
+                                    .y(event.getRawY() + dY)
+                                    .setDuration(0)
+                                    .start();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            long clickDuration = System.currentTimeMillis() - startClickTime;
+                            if (clickDuration >= 1000) {
+                                showDeleteDialog(newButton);
+                                return true;
+                            }
+                            break;
+
+                        default:
+                            return false;
+                    }
+                    return true;
+                }
+            });
+        }
+
+        if (isDraggable) {
+            buttons.add(newButton);
+            container.addView(newButton);
+        } else {
+            mainContainer.addView(newButton);
+            mainButtons.add(newButton);
+        }
+    }
+
+    private void removeButtonManageLayout() {
+        if (buttonManageLayout != null) {
+            ViewGroup parent = (ViewGroup) buttonManageLayout.getParent();
+            if (parent != null) {
+                parent.removeView(buttonManageLayout);
+            }
+        }
+    }
+
+    private void removeButtonsFromMainContainer() {
+        for (View button : mainButtons) {
+            mainContainer.removeView(button);
+        }
+        mainButtons.clear();
+    }
+
+    public void showButtonManage() {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toaster.show("确认点击“其他");
+                removeButtonsFromMainContainer();
+                showButtonManageLayout();
+            }
+        });
+    }
+
     public void setExtraButtonVisibility(boolean visible) {
         this.runOnUiThread(new Runnable() {
             public void run() {
@@ -163,6 +443,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             @Override
             public void onClick(View v) {
                 dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_TAB));
+                showButtonManage();
             }
         });
         extraButtonSP.setAlpha(0.5f);
@@ -427,6 +708,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         }
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         Toaster.setGravity(Gravity.TOP);
+
+        mainContainer = mLayout;
+
+        loadButtonsData(false);
 
         View decorView = getWindow().getDecorView();
         decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {

@@ -165,6 +165,11 @@ void main_menu::display_sub_menu( int sel, const point &bottom_left, int sel_lin
     int xlen = 0;
     main_menu_opts sel_o = static_cast<main_menu_opts>( sel );
     switch( sel_o ) {
+        case main_menu_opts::OTHER:
+#if defined(__ANDROID__)
+            jni_env->CallVoidMethod( j_activity, method_id_show_button_manage);
+#endif
+            return;
         case main_menu_opts::CREDITS:
             display_text( mmenu_credits, _( "Credits" ), sel_line );
             return;
