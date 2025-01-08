@@ -141,7 +141,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
 
     private FrameLayout container;
-    private ViewGroup mainContainer;
     private Set<View> buttons = new HashSet<>();
     private Set<View> mainButtons = new HashSet<>();
     private View buttonManageLayout;
@@ -433,7 +432,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             buttons.add(newButton);
             container.addView(newButton);
         } else {
-            mainContainer.addView(newButton);
+            mLayout.addView(newButton);
             mainButtons.add(newButton);
         }
     }
@@ -449,7 +448,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     private void removeButtonsFromMainContainer() {
         for (View button : mainButtons) {
-            mainContainer.removeView(button);
+            mLayout.removeView(button);
         }
         mainButtons.clear();
     }
@@ -710,8 +709,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         }
         Toaster.init(getApplication(), new ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE));
         Toaster.setGravity(Gravity.TOP);
-
-        mainContainer = mLayout;
 
         loadButtonsData(false);
 
