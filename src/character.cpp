@@ -2274,8 +2274,8 @@ void Character::recalc_hp()
         str_boost_val = str_boost->calc_bonus( skill_total );
     }
     // Mutated toughness stacks with starting, by design.
-    float hp_mod = 1.0f + mutation_value( "hp_modifier" ) + mutation_value( "hp_modifier_secondary" );
-    float hp_adjustment = mutation_value( "hp_adjustment" ) + ( str_boost_val * 3 );
+    float hp_mod = 1.0f + mutation_value("hp_modifier") + mutation_value("hp_modifier_secondary") + enchantment_cache->get_value_multiply(enchant_vals::mod::MAX_HP);
+    float hp_adjustment = mutation_value("hp_adjustment") + (str_boost_val * 3) + enchantment_cache->get_value_add(enchant_vals::mod::MAX_HP);
     calc_all_parts_hp( hp_mod, hp_adjustment, get_str_base(), get_dex_base(), get_per_base(),
                        get_int_base(), get_lifestyle(), get_fat_to_hp() );
     cached_dead_state.reset();
@@ -2302,12 +2302,6 @@ void Character::calc_all_parts_hp(float hp_mod, float hp_adjustment, int str_max
         part.second.set_hp_max(std::max(new_max, 1));
         part.second.set_hp_cur(std::max(std::min(new_cur, new_max), 0));
     }
-}
-
-int Character::get_part_hp_max( const bodypart_id &id ) const
-{
-    return enchantment_cache->modify_value( enchant_vals::mod::MAX_HP,
-                                            Creature::get_part_hp_max( id ) );
 }
 
 // This must be called when any of the following change:
@@ -5900,7 +5894,7 @@ float Character::healing_rate( float at_rest_quality ) const
     if( asleep_rate > 0.0f ) {
         final_rate += asleep_rate * ( 1.0f + get_lifestyle() / 200.0f );
     }
-
+    final_rate = enchantment_cache->modify_value(enchant_vals::mod::REGEN_HP, final_rate);
     // Most common case: awake player with no regenerative abilities
     // ~7e-5 is 1 hp per day, anything less than that is totally negligible
     static constexpr float eps = 0.000007f;
@@ -5909,13 +5903,13 @@ float Character::healing_rate( float at_rest_quality ) const
         return 0.0f;
     }
 
-    float primary_hp_mod = mutation_value( "hp_modifier" );
-    if( primary_hp_mod < 0.0f ) {
+    float primary_hp_mod = mutation_value("hp_modifier");
+    if (primary_hp_mod < 0.0f) {
         // HP mod can't get below -1.0
         final_rate *= 1.0f + primary_hp_mod;
     }
 
-    return enchantment_cache->modify_value( enchant_vals::mod::REGEN_HP, final_rate );
+    return final_rate;
 }
 
 float Character::healing_rate_medicine( float at_rest_quality, const bodypart_id &bp ) const
@@ -7221,6 +7215,7 @@ void Character::recalculate_enchantment_cache()
     if( enchantment_cache->modifies_bodyparts() ) {
         recalculate_bodyparts();
     }
+    recalc_hp();
 }
 
 double Character::calculate_by_enchantment( double modify, enchant_vals::mod value,
