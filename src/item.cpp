@@ -2333,6 +2333,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double footstep_noise = 0.0;
         double attack_noise = 0.0;
         double shout_noise = 0.0;
+        double block_nums = 0.0;
         double max_hp = 0.0;
         double str = 0.0;
         double dex = 0.0;
@@ -2370,6 +2371,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         double footstep_noise_mult = 1.0;
         double attack_noise_mult = 1.0;
         double shout_noise_mult = 1.0;
+        double block_nums_mult = 1.0;
         double max_hp_mult = 1.0;
         double str_mult = 1.0;
         double dex_mult = 1.0;
@@ -2439,6 +2441,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             footstep_noise += e.get_value_add(enchant_vals::mod::FOOTSTEP_NOISE);
             attack_noise += e.get_value_add(enchant_vals::mod::ATTACK_NOISE);
             shout_noise += e.get_value_add(enchant_vals::mod::SHOUT_NOISE);
+            block_nums += e.get_value_add(enchant_vals::mod::BONUS_BLOCK);
             max_hp += e.get_value_add(enchant_vals::mod::MAX_HP);
             str += e.get_value_add(enchant_vals::mod::STRENGTH);
             dex += e.get_value_add(enchant_vals::mod::DEXTERITY);
@@ -2475,6 +2478,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             footstep_noise_mult += e.get_value_multiply(enchant_vals::mod::FOOTSTEP_NOISE);
             attack_noise_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_NOISE);
             shout_noise_mult += e.get_value_multiply(enchant_vals::mod::SHOUT_NOISE);
+            block_nums_mult += e.get_value_multiply(enchant_vals::mod::BONUS_BLOCK);
             max_hp_mult += e.get_value_multiply(enchant_vals::mod::MAX_HP);
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH);
             dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY);
@@ -2558,6 +2562,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             footstep_noise += e.get_value_add(enchant_vals::mod::FOOTSTEP_NOISE, player);
             attack_noise += e.get_value_add(enchant_vals::mod::ATTACK_NOISE, player);
             shout_noise += e.get_value_add(enchant_vals::mod::SHOUT_NOISE, player);
+            block_nums += e.get_value_add(enchant_vals::mod::BONUS_BLOCK, player);
             max_hp += e.get_value_add(enchant_vals::mod::MAX_HP, player);
             str += e.get_value_add(enchant_vals::mod::STRENGTH, player);
             dex += e.get_value_add(enchant_vals::mod::DEXTERITY, player);
@@ -2594,6 +2599,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             footstep_noise_mult += e.get_value_multiply(enchant_vals::mod::FOOTSTEP_NOISE, player);
             attack_noise_mult += e.get_value_multiply(enchant_vals::mod::ATTACK_NOISE, player);
             shout_noise_mult += e.get_value_multiply(enchant_vals::mod::SHOUT_NOISE, player);
+            block_nums_mult += e.get_value_multiply(enchant_vals::mod::BONUS_BLOCK, player);
             max_hp_mult += e.get_value_multiply(enchant_vals::mod::MAX_HP, player);
             str_mult += e.get_value_multiply(enchant_vals::mod::STRENGTH, player);
             dex_mult += e.get_value_multiply(enchant_vals::mod::DEXTERITY, player);
@@ -2650,7 +2656,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
         if (resonance != 0.0 || pain != 0.0 || speed != 0.0 || base_move_cost != 0.0 || attack_speed != 0.0
             || max_mana != 0.0 || regen_mana != 0.0 || regen_hp!=0.0|| carry_weight != 0.0 || climate_control_heat != 0.0 || climate_control_chill != 0.0
             || skill_rust_resist!=0.0 || footstep_noise != 0.0 || attack_noise != 0.0 || shout_noise != 0.0
-            || max_hp!=0.0 || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
+            || block_nums!=0.0 || max_hp!=0.0 || str != 0.0 || dex != 0.0 || inte != 0.0 || per != 0.0
             || item_damage_heat != 0.0 || item_damage_bash != 0.0 || item_damage_cut != 0.0 || item_damage_acid != 0.0
             || item_damage_cold != 0.0
             || armor_bash != 0.0 || armor_cut != 0.0 || armor_stab != 0.0
@@ -2663,7 +2669,7 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
             || max_mana_mult != 1.0  || regen_mana_mult != 1.0 || regen_hp_mult != 1.0 || carry_weight_mult !=1.0
             || climate_control_heat_mult != 1.0 || climate_control_chill_mult != 1.0 || skill_rust_resist_mult != 1.0 
             || footstep_noise_mult !=1.0 || attack_noise_mult != 1.0|| shout_noise_mult != 1.0
-            || max_hp_mult!=1.0 || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0            
+            || block_nums_mult != 1.0 || max_hp_mult!=1.0 || str_mult != 1.0 || dex_mult != 1.0 || inte_mult != 1.0 || per_mult != 1.0
             || item_damage_heat_mult != 1.0 || item_damage_bash_mult !=1.0 || item_damage_cut_mult != 1.0 || item_damage_acid_mult !=1.0 
             || item_damage_cold_mult != 1.0           
             || armor_bash_mult != 1.0 || armor_cut_mult != 1.0 || armor_stab_mult != 1.0
@@ -2971,6 +2977,25 @@ void item::enchantment_info(std::vector<iteminfo>& info, const iteminfo_query* p
                 }
             }
             if (base_str != "* 喊叫声：") {
+                info.emplace_back("DESCRIPTION",
+                    string_format("%s", base_str));
+            }
+
+            base_str = "* 格挡次数：";
+            need_space = false;
+            if (block_nums != 0.0) {
+                base_str += string_format("<color_c_yellow>%d</color>", static_cast<int>(block_nums));
+                need_space = true;
+            }
+            if (block_nums_mult != 1.0) {
+                if (need_space) {
+                    base_str += string_format("   <color_c_yellow>x %.2f</color>", block_nums_mult);
+                }
+                else {
+                    base_str += string_format("<color_c_yellow>x %.2f</color>", block_nums_mult);
+                }
+            }
+            if (base_str != "* 格挡次数：") {
                 info.emplace_back("DESCRIPTION",
                     string_format("%s", base_str));
             }
