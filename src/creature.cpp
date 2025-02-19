@@ -1844,6 +1844,10 @@ int Creature::get_num_dodges_bonus() const
 {
     return num_dodges_bonus;
 }
+int Creature::get_num_blocks_base() const
+{
+    return num_blocks;
+}
 int Creature::get_num_dodges_base() const
 {
     return num_dodges;
@@ -2573,6 +2577,10 @@ void Creature::mod_stat( const std::string &stat, float modifier )
 void Creature::set_num_blocks_bonus( int nblocks )
 {
     num_blocks_bonus = nblocks;
+}
+void Creature::mod_num_blocks_bonus(int nblocks)
+{
+    num_blocks_bonus += nblocks;
 }
 void Creature::mod_num_dodges_bonus( int ndodges )
 {

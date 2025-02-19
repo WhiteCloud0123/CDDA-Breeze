@@ -675,6 +675,7 @@ class Creature : public viewer
         virtual int get_num_blocks_bonus() const;
         virtual int get_num_dodges_bonus() const;
         virtual int get_num_dodges_base() const;
+        virtual int get_num_blocks_base() const;
 
         virtual int get_env_resist( bodypart_id bp ) const;
 
@@ -860,6 +861,7 @@ class Creature : public viewer
         virtual void mod_stat( const std::string &stat, float modifier );
 
         virtual void set_num_blocks_bonus( int nblocks );
+        virtual void mod_num_blocks_bonus(int nblocks);
         virtual void mod_num_dodges_bonus( int ndodges );
 
         virtual void set_armor_bash_bonus( int nbasharm );
