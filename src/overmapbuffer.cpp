@@ -837,7 +837,7 @@ bool overmapbuffer::reveal( const tripoint_abs_omt &center, int radius,
             if( seen( p ) ) {
                 continue;
             }
-            if( trigdist && i * i + j * j > radius_squared ) {
+            if( i * i + j * j > radius_squared ) {
                 continue;
             }
             if( !filter( ter( p ) ) ) {

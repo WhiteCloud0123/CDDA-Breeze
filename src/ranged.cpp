@@ -2845,7 +2845,7 @@ bool target_ui::set_cursor_pos( const tripoint &new_pos )
             if( square_dist( src, valid_pos ) > 1 ) {
                 valid_pos = new_traj[0];
             }
-        } else if( trigdist ) {
+        } else {
             if( dist_fn( valid_pos ) > range ) {
                 // Find the farthest point that is still in range
                 for( size_t i = new_traj.size(); i > 0; i-- ) {
@@ -2864,14 +2864,7 @@ bool target_ui::set_cursor_pos( const tripoint &new_pos )
                     valid_pos = src;
                 }
             }
-        } else {
-            tripoint delta = valid_pos - src;
-            valid_pos = src + tripoint(
-                            clamp( delta.x, -range, range ),
-                            clamp( delta.y, -range, range ),
-                            clamp( delta.z, -range, range )
-                        );
-        }
+        } 
     } else {
         new_traj.push_back( src );
     }

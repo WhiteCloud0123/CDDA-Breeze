@@ -166,8 +166,7 @@ bool leap_actor::call( monster &z ) const
                            candidate.x, candidate.y, candidate.z );
             continue;
         }
-        float leap_dist = trigdist ? trig_dist( z.pos(), candidate ) :
-                          square_dist( z.pos(), candidate );
+        float leap_dist = trig_dist(z.pos(), candidate);
         add_msg_debug( debugmode::DF_MATTACK,
                        "Candidate coordinates %d,%d,%d, distance %.1f, min range %.1f, max range %.1f",
                        candidate.x, candidate.y, candidate.z, leap_dist, min_range, max_range );

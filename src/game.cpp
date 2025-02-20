@@ -10391,7 +10391,7 @@ bool game::walk_move( const tripoint &dest_loc, const bool via_ramp, const bool 
     } else if( mcost == 0 ) {
         return false;
     }
-    bool diag = trigdist && u.posx() != dest_loc.x && u.posy() != dest_loc.y;
+    bool diag = u.posx() != dest_loc.x && u.posy() != dest_loc.y;
     const int previous_moves = u.moves;
     if( u.is_mounted() ) {
         auto *crit = u.mounted_creature.get();
@@ -12465,7 +12465,7 @@ void game::update_overmap_seen()
     for( const tripoint_abs_omt &p : points_in_radius( ompos, dist ) ) {
         const point_rel_omt delta = p.xy() - ompos.xy();
         const int h_squared = delta.x() * delta.x() + delta.y() * delta.y();
-        if( trigdist && h_squared > dist_squared ) {
+        if( h_squared > dist_squared ) {
             continue;
         }
         if( delta == point_rel_omt() ) {
@@ -12476,7 +12476,7 @@ void game::update_overmap_seen()
         // If circular distances are enabled, scale overmap distances by the diagonality of the sight line.
         point abs_delta = delta.raw().abs();
         int max_delta = std::max( abs_delta.x, abs_delta.y );
-        const float multiplier = trigdist ? std::sqrt( h_squared ) / max_delta : 1;
+        const float multiplier = std::sqrt(h_squared) / max_delta;
         const std::vector<tripoint_abs_omt> line = line_to( ompos, p );
         float sight_points = dist;
         for( auto it = line.begin();

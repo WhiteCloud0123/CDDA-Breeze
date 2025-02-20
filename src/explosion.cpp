@@ -408,11 +408,7 @@ void ExplosionProcess::fill_maps()
         }
 
         // Uses this ternany check instead of rl_dist because it converts trig_dist's distance to int implicitly
-        const float distance = (
-            trigdist ?
-            trig_dist(center, target) :
-            square_dist(center, target)
-            );
+        const float distance = trig_dist(center, target);
         const float z_distance = abs(target.z - center.z);
         const float z_aware_distance = distance + (ExplosionConstants::Z_LEVEL_DIST - 1) * z_distance;
         // We static_cast<int> in order to keep parity with legacy blasts using rl_dist for distance
