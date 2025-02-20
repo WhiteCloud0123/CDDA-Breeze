@@ -793,10 +793,8 @@ static float get_stagger_adjust( const tripoint &source, const tripoint &destina
                                  const tripoint &next_step )
 {
     // TODO: push this down into rl_dist
-    const float initial_dist =
-        trigdist ? trig_dist( source, destination ) : rl_dist( source, destination );
-    const float new_dist =
-        trigdist ? trig_dist( next_step, destination ) : rl_dist( next_step, destination );
+    const float initial_dist = trig_dist( source, destination );
+    const float new_dist = trig_dist( next_step, destination );
     // If we return 0, it wil cancel the action.
     return std::max( 0.01f, initial_dist - new_dist );
 }

@@ -311,11 +311,6 @@ std::set<tripoint> spell_effect::spell_effect_line( const override_parameters &p
     int ccw_len = params.aoe_radius / 2;
     int cw_len = params.aoe_radius - ccw_len;
 
-    if( !trigdist ) {
-        ccw_len = ( ccw_len * ( abs_delta.x + abs_delta.y ) ) / dist;
-        cw_len = ( cw_len * ( abs_delta.x + abs_delta.y ) ) / dist;
-    }
-
     // is delta aligned with, cw, or ccw of primary axis
     int delta_side = spell_detail::side_of( point_zero, axis_delta, delta );
 

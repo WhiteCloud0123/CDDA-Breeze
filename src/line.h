@@ -14,8 +14,6 @@
 template <typename T> struct enum_traits;
 struct rl_vec2d;
 
-extern bool trigdist;
-
 /**
  * Calculate base of an isosceles triangle
  * @param distance one of the equal lengths
@@ -180,10 +178,7 @@ inline int square_dist( const point &loc1, const point &loc2 )
 // Choose between the above two according to the "circular distances" option
 inline int rl_dist( const tripoint &loc1, const tripoint &loc2 )
 {
-    if( trigdist ) {
-        return trig_dist( loc1, loc2 );
-    }
-    return square_dist( loc1, loc2 );
+    return trig_dist( loc1, loc2 );
 }
 inline int rl_dist( const point &a, const point &b )
 {
@@ -202,23 +197,14 @@ struct FastDistanceApproximation {
         explicit inline FastDistanceApproximation( int value ) : value( value ) { }
         template<typename T>
         inline bool operator<=( const T &rhs ) const {
-            if( trigdist ) {
-                return value <= rhs * rhs;
-            }
-            return value <= rhs;
+            return value <= rhs * rhs;
         }
         template<typename T>
         inline bool operator>=( const T &rhs ) const {
-            if( trigdist ) {
-                return value >= rhs * rhs;
-            }
-            return value >= rhs;
+            return value >= rhs * rhs;
         }
         inline explicit operator int() const {
-            if( trigdist ) {
-                return std::sqrt( value );
-            }
-            return value;
+            return std::sqrt( value );
         }
 };
 
@@ -236,10 +222,7 @@ inline FastDistanceApproximation square_dist_fast( const tripoint &loc1, const t
 }
 inline FastDistanceApproximation rl_dist_fast( const tripoint &loc1, const tripoint &loc2 )
 {
-    if( trigdist ) {
-        return trig_dist_fast( loc1, loc2 );
-    }
-    return square_dist_fast( loc1, loc2 );
+    return trig_dist_fast( loc1, loc2 );
 }
 inline FastDistanceApproximation rl_dist_fast( const point &a, const point &b )
 {

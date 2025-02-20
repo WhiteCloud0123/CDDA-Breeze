@@ -2501,7 +2501,7 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
         moves -= 100;
         moved = true;
     } else if( here.passable( p ) && !here.has_flag( ter_furn_flag::TFLAG_DOOR, p ) ) {
-        bool diag = trigdist && posx() != p.x && posy() != p.y;
+        bool diag = posx() != p.x && posy() != p.y;
         if( is_mounted() ) {
             const double base_moves = run_cost( here.combined_movecost( pos(), p ),
                                                 diag ) * 100.0 / mounted_creature->get_speed();
