@@ -446,7 +446,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         }
     }
 
-    private void removeButtonsFromMainContainer() {
+    private void removeButtonsFromMLayout() {
         for (View button : mainButtons) {
             mLayout.removeView(button);
         }
@@ -456,7 +456,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public void showButtonManage() {
         this.runOnUiThread(new Runnable() {
             public void run() {
-                removeButtonsFromMainContainer();
+                removeButtonsFromMLayout();
                 showButtonManageLayout();
             }
         });
