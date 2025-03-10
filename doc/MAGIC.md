@@ -818,7 +818,11 @@ The following is a list of possible enchantment `values`:
 | `PAIN` | 
 | `SHOUT_NOISE` | 
 | `SIGHT_RANGE_ELECTRIC` | How many tiles away is_electric() creatures are visible from.
+| `SKILL_RUST_RESIST` | Chance / 100 to resist skill rust.
 | `SLEEPY` | The higher this the easier you fall asleep.
+| `SOCIAL_INTIMIDATE` | 
+| `SOCIAL_LIE` | 
+| `SOCIAL_PERSUADE` | 
 | `READING_EXP` | Changes the minimum you learn from each reading increment.
 | `RECOIL_MODIFIER` | Affects recoil when shooting a gun.
 | `REGEN_HP` | 
