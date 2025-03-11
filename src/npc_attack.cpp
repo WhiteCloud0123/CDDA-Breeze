@@ -204,7 +204,7 @@ npc_attack_rating npc_attack_spell::evaluate_tripoint(
         }
         total_potential += potential;
     }
-    return npc_attack_rating( std::round( total_potential ), location );
+    return npc_attack_rating( static_cast<int>(std::round( total_potential )), location );
 }
 
 void npc_attack_melee::use( npc &source, const tripoint &location ) const
@@ -360,7 +360,7 @@ npc_attack_rating npc_attack_melee::evaluate_critter( const npc &source,
         potential *= npc_attack_constants::target_modifier;
     }
 
-    return npc_attack_rating( std::round( potential ), critter->pos() );
+    return npc_attack_rating( static_cast<int>(std::round( potential )), critter->pos() );
 }
 
 void npc_attack_gun::use( npc &source, const tripoint &location ) const
@@ -529,7 +529,7 @@ npc_attack_rating npc_attack_gun::evaluate_tripoint(
     if( target && target->pos() == critter->pos() ) {
         potential *= npc_attack_constants::target_modifier;
     }
-    return npc_attack_rating( std::round( potential ), location );
+    return npc_attack_rating(static_cast<int>(std::round( potential )), location );
 }
 
 void npc_attack_activate_item::use( npc &source, const tripoint &/*location*/ ) const
@@ -798,5 +798,5 @@ npc_attack_rating npc_attack_throw::evaluate_tripoint(
     if( potential > 0.0f && target && critter && target->pos() == critter->pos() ) {
         potential *= npc_attack_constants::target_modifier;
     }
-    return npc_attack_rating( std::round( potential ), location );
+    return npc_attack_rating( static_cast<int>(std::round( potential )), location );
 }
