@@ -4,6 +4,7 @@
 #include "character.h"
 #include "creature_tracker.h"
 #include "flag.h"
+#include "game.h"
 #include "item.h"
 #include "line.h"
 #include "magic.h"
@@ -278,6 +279,12 @@ tripoint_range<tripoint> npc_attack_melee::targetable_points( const npc &source 
     return get_map().points_in_radius( source.pos(), 8 , 1 );
 }
 
+bool is_in_radius(const tripoint& center, const tripoint& target, int radius) {
+    return (std::abs(center.x - target.x) <= radius &&
+        std::abs(center.y - target.y) <= radius &&
+        std::abs(center.z - target.z) <= radius);
+}
+
 npc_attack_rating npc_attack_melee::evaluate( const npc &source,
         const Creature *target ) const
 {
@@ -286,20 +293,24 @@ npc_attack_rating npc_attack_melee::evaluate( const npc &source,
         return effectiveness;
     }
     const int time_penalty = base_time_penalty( source );
-    creature_tracker &creatures = get_creature_tracker();
-    for( const tripoint &targetable_point : targetable_points( source ) ) {
-        if( Creature *critter = creatures.creature_at( targetable_point ) ) {
-            if( source.attitude_to( *critter ) != Creature::Attitude::HOSTILE ) {
-                // no point in swinging a sword at a friendly!
-                continue;
-            }
-            npc_attack_rating effectiveness_at_point = evaluate_critter( source, target, critter );
+
+    for (Creature& c : g->all_creatures()) {
+        if (&c == &source) {
+            continue;
+        }
+        else if (source.attitude_to(c) != Creature::Attitude::HOSTILE) {
+            continue;
+        }
+        tripoint c_pos = c.pos();
+        if (is_in_radius(source.pos(), c_pos, 3)) {
+            npc_attack_rating effectiveness_at_point = evaluate_critter(source, target, &c);
             effectiveness_at_point -= time_penalty;
-            if( effectiveness_at_point > effectiveness ) {
+            if (effectiveness_at_point > effectiveness) {
                 effectiveness = effectiveness_at_point;
             }
         }
     }
+
     return effectiveness;
 }
 
@@ -396,7 +407,7 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
         return;
     }
 
-    const int dist = rl_dist( source.pos(), location );
+    const int dist = rl_dist_exact( source.pos(), location );
 
     // Only aim if we aren't in risk of being hit
     // TODO: Get distance to closest enemy
@@ -458,16 +469,23 @@ npc_attack_rating npc_attack_gun::evaluate(
     }
     const int time_penalty = base_time_penalty( source );
     creature_tracker &creatures = get_creature_tracker();
-    for( const tripoint &targetable_point : targetable_points( source ) ) {
-        if( creatures.creature_at( targetable_point ) ) {
-            npc_attack_rating effectiveness_at_point = evaluate_tripoint( source, target,
-                    targetable_point );
+    const item& weapon = *gunmode;
+
+    for (Creature &c:g->all_creatures()) {
+        if (&c==&source) {
+            continue;
+        }
+        tripoint c_pos = c.pos();
+        if (is_in_radius(source.pos(),c_pos,10)) {
+            npc_attack_rating effectiveness_at_point = evaluate_tripoint(source, target,
+                c_pos);
             effectiveness_at_point -= time_penalty;
-            if( effectiveness_at_point > effectiveness ) {
+            if (effectiveness_at_point > effectiveness) {
                 effectiveness = effectiveness_at_point;
             }
         }
     }
+
     return effectiveness;
 }
 
