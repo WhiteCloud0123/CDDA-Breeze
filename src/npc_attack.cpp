@@ -105,6 +105,7 @@ npc_attack_rating npc_attack_spell::evaluate( const npc &source,
             effectiveness = effectiveness_at_point;
         }
     }
+    
     return effectiveness;
 }
 
@@ -445,7 +446,7 @@ int npc_attack_gun::base_time_penalty( const npc &source ) const
 tripoint_range<tripoint> npc_attack_gun::targetable_points( const npc &source ) const
 {
     const item &weapon = *gunmode;
-    return get_map().points_in_radius( source.pos(), weapon.gun_range() );
+    return get_map().points_in_radius( source.pos(), weapon.gun_range(),1);
 }
 
 npc_attack_rating npc_attack_gun::evaluate(
@@ -669,7 +670,7 @@ tripoint_range<tripoint> npc_attack_throw::targetable_points( const npc &source 
         single_item.charges = 1;
     }
     const int range = source.throw_range( single_item );
-    return get_map().points_in_radius( source.pos(), range );
+    return get_map().points_in_radius( source.pos(), range);
 }
 
 npc_attack_rating npc_attack_throw::evaluate(
