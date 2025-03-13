@@ -221,7 +221,7 @@ void npc_attack_melee::use( npc &source, const tripoint &location ) const
         return;
     }
     if( !source.is_adjacent( critter, true ) ) {
-        if( rl_dist( source.pos(), location ) <= weapon.reach_range( source ) ) {
+        if( rl_dist_exact( source.pos(), location ) <= weapon.reach_range( source ) ) {
             add_msg_debug( debugmode::debug_filter::DF_NPC, "%s is attempting a reach attack",
                            source.disp_name() );
             // check for friendlies in the line of fire
