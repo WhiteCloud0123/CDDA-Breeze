@@ -577,6 +577,9 @@ class map
         * Returns whether `F` sees `T` with a view range of `range`.
         */
         bool sees( const tripoint &F, const tripoint &T, int range ) const;
+
+        bool is_in_radius(const tripoint& center, const tripoint& target, int radius);
+
     private:
         /**
          * Don't expose the slope adjust outside map functions.

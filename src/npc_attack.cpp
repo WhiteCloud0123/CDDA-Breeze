@@ -279,12 +279,6 @@ tripoint_range<tripoint> npc_attack_melee::targetable_points( const npc &source 
     return get_map().points_in_radius( source.pos(), 8 , 1 );
 }
 
-bool is_in_radius(const tripoint& center, const tripoint& target, int radius) {
-    return (std::abs(center.x - target.x) <= radius &&
-        std::abs(center.y - target.y) <= radius &&
-        std::abs(center.z - target.z) <= radius);
-}
-
 npc_attack_rating npc_attack_melee::evaluate( const npc &source,
         const Creature *target ) const
 {
@@ -293,7 +287,7 @@ npc_attack_rating npc_attack_melee::evaluate( const npc &source,
         return effectiveness;
     }
     const int time_penalty = base_time_penalty( source );
-
+    map& m = get_map();
     for (Creature& c : g->all_creatures()) {
         if (&c == &source) {
             continue;
@@ -302,7 +296,7 @@ npc_attack_rating npc_attack_melee::evaluate( const npc &source,
             continue;
         }
         tripoint c_pos = c.pos();
-        if (is_in_radius(source.pos(), c_pos, 3)) {
+        if (m.is_in_radius(source.pos(), c_pos, 3)) {
             npc_attack_rating effectiveness_at_point = evaluate_critter(source, target, &c);
             effectiveness_at_point -= time_penalty;
             if (effectiveness_at_point > effectiveness) {
@@ -470,13 +464,13 @@ npc_attack_rating npc_attack_gun::evaluate(
     const int time_penalty = base_time_penalty( source );
     creature_tracker &creatures = get_creature_tracker();
     const item& weapon = *gunmode;
-
+    map& m = get_map();
     for (Creature &c:g->all_creatures()) {
         if (&c==&source) {
             continue;
         }
         tripoint c_pos = c.pos();
-        if (is_in_radius(source.pos(),c_pos,10)) {
+        if (m.is_in_radius(source.pos(),c_pos,10)) {
             npc_attack_rating effectiveness_at_point = evaluate_tripoint(source, target,
                 c_pos);
             effectiveness_at_point -= time_penalty;
