@@ -7679,6 +7679,12 @@ bool map::sees( const tripoint &F, const tripoint &T, const int range ) const
     return sees( F, T, range, dummy );
 }
 
+bool map::is_in_radius(const tripoint& center, const tripoint& target, int radius) {
+    return (std::abs(center.x - target.x) <= radius &&
+        std::abs(center.y - target.y) <= radius &&
+        std::abs(center.z - target.z) <= radius);
+}
+
 /**
  * This one is internal-only, we don't want to expose the slope tweaking ickiness outside the map class.
  **/
