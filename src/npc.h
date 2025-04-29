@@ -1297,6 +1297,9 @@ class npc : public Character
         npc_short_term_cache ai_cache;
 
         std::map<npc_need, npc_need_goal_cache> goal_cache;
+
+        int vertical_alert_range = 1;
+
     public:
         const std::shared_ptr<npc_attack> &get_current_attack() const {
             return ai_cache.current_attack;
@@ -1389,6 +1392,11 @@ class npc : public Character
         attitude_group get_attitude_group( npc_attitude att ) const;
         void set_unique_id( const std::string &id );
         std::string get_unique_id() const;
+
+        int get_vertical_alert_range() const;
+
+        void set_vertical_alert_range(int value);
+
     protected:
         void store( JsonOut &json ) const;
         void load( const JsonObject &data );

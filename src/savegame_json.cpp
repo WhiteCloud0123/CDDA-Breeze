@@ -2415,6 +2415,7 @@ void npc::load( const JsonObject &data )
     }
     real_weapon = item();
     data.read( "real_weapon", real_weapon );
+    data.read("vertical_alert_range",vertical_alert_range);
 
     complaints.clear();
     for( const JsonMember member : data.get_object( "complaints" ) ) {
@@ -2479,6 +2480,8 @@ void npc::store( JsonOut &json ) const
     if( !real_weapon.is_null() ) {
         json.member( "real_weapon", real_weapon ); // also saves contents
     }
+
+    json.member("vertical_alert_range", vertical_alert_range);
 
     json.member( "comp_mission_id", string_of( comp_mission.miss_id ) );
     json.member( "comp_mission_pt", comp_mission.position );

@@ -54,6 +54,7 @@
 #include "player_activity.h"
 #include "point.h"
 #include "rng.h"
+#include "string_input_popup.h"
 #include "text_snippets.h"
 #include "translations.h"
 #include "ui.h"
@@ -1971,4 +1972,15 @@ void talk_function::npc_thankful( npc &p )
 void talk_function::clear_overrides( npc &p )
 {
     p.rules.clear_overrides();
+}
+
+void talk_function::set_npc_vertical_alert_range(npc &p) {
+    int value = string_input_popup()
+        .title(_("设置垂直警戒范围"))
+        .description(string_format("当前：%d",p.get_vertical_alert_range()))
+        .width(2)
+        .only_digits(true)
+        .query_int();
+    
+    p.set_vertical_alert_range(value);
 }

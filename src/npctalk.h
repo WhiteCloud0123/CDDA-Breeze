@@ -114,6 +114,9 @@ void npc_thankful( npc &p );
 void clear_overrides( npc &p );
 void do_craft(npc&);
 void do_disassembly( npc &p );
+
+void set_npc_vertical_alert_range(npc &p);
+
 } // namespace talk_function
 
 time_duration calc_skill_training_time( const npc &p, const skill_id &skill );
