@@ -536,7 +536,7 @@ void npc::assess_danger()
             continue;
         }
         // ignore targets behind glass even if we can see them
-        if( !here.clear_shot_reach( pos(), critter.pos(), false ) ) {
+        if( !here.clear_shoot_reach( pos(), critter.pos(), false ) ) {
             continue;
         }
 
@@ -595,7 +595,7 @@ void npc::assess_danger()
             return 0.0f;
         }
         // ignore targets behind glass even if we can see them
-        if( !here.clear_shot_reach( pos(), foe.pos(), false ) ) {
+        if( !here.clear_shoot_reach( pos(), foe.pos(), false ) ) {
             return 0.0f;
         }
         bool is_too_close = dist <= def_radius;
