@@ -393,7 +393,7 @@ void npc_attack_gun::use( npc &source, const tripoint &location ) const
         return;
     }
    
-    if( !m.clear_shot_reach( source.pos(), location, false ) ||
+    if( !m.clear_shoot_reach( source.pos(), location, false ) ||
         ( source.rules.has_flag( ally_rule::avoid_friendly_fire ) &&
           !source.wont_hit_friend( location, gun, false ) ) ) {
         if( can_move( source ) ) {
@@ -530,7 +530,7 @@ npc_attack_rating npc_attack_gun::evaluate_tripoint(
     const int distance_to_me = rl_dist( location, source.pos() );
 
     // Make attacks that involve moving to find clear LOS slightly less likely
-    if( !m.clear_shot_reach( source.pos(), location, avoids_friendly_fire ) ) {
+    if( !m.clear_shoot_reach( source.pos(), location, avoids_friendly_fire ) ) {
         potential *= 0.9f;
     } else if( avoids_friendly_fire && !source.wont_hit_friend( location, gun, false ) ) {
         potential *= 0.95f;

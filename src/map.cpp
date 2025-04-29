@@ -336,7 +336,7 @@ maptile map::maptile_at( const tripoint_bub_ms &p )
     return false;
 }
 
-bool map::clear_shot_reach(const tripoint& from, const tripoint& to, bool check_ally)
+bool map::clear_shoot_reach(const tripoint& from, const tripoint& to, bool check_ally)
 {
     std::vector<tripoint> path = line_to(from, to);
     path.pop_back();
