@@ -1975,12 +1975,16 @@ void talk_function::clear_overrides( npc &p )
 }
 
 void talk_function::set_npc_vertical_alert_range(npc &p) {
-    int value = string_input_popup()
-        .title(_("设置垂直警戒范围"))
-        .description(string_format("当前：%d",p.get_vertical_alert_range()))
+
+    int value = p.get_vertical_alert_range();
+
+    string_input_popup popup;
+    popup.title("设置垂直警戒范围")
+        .description(string_format("当前：%d", p.get_vertical_alert_range()))
         .width(2)
         .only_digits(true)
-        .query_int();
-    
+        .edit(value);
+
     p.set_vertical_alert_range(value);
+    
 }

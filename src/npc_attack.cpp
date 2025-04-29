@@ -279,7 +279,7 @@ tripoint_range<tripoint> npc_attack_melee::targetable_points( const npc &source 
 
     int range = weapon.current_reach_range(source);
 
-    return get_map().points_in_radius( source.pos(), 8 , range);
+    return get_map().points_in_radius( source.pos(),8,range);
 }
 
 npc_attack_rating npc_attack_melee::evaluate( const npc &source,
@@ -290,6 +290,8 @@ npc_attack_rating npc_attack_melee::evaluate( const npc &source,
         return effectiveness;
     }
     const int time_penalty = base_time_penalty( source );
+    const int vertical_alert_range = source.get_vertical_alert_range();
+
     map& m = get_map();
     for (Creature& c : g->all_creatures()) {
         if (&c == &source) {
@@ -299,7 +301,7 @@ npc_attack_rating npc_attack_melee::evaluate( const npc &source,
             continue;
         }
         tripoint c_pos = c.pos();
-        if (m.is_in_radius(source.pos(), c_pos, source.get_vertical_alert_range())) {
+        if (m.is_in_radius(source.pos(), c_pos, vertical_alert_range)) {
             npc_attack_rating effectiveness_at_point = evaluate_critter(source, target, &c);
             effectiveness_at_point -= time_penalty;
             if (effectiveness_at_point > effectiveness) {
@@ -454,7 +456,7 @@ int npc_attack_gun::base_time_penalty( const npc &source ) const
 tripoint_range<tripoint> npc_attack_gun::targetable_points( const npc &source ) const
 {
     const item &weapon = *gunmode;
-    return get_map().points_in_radius( source.pos(), weapon.gun_range(), weapon.gun_range());
+    return get_map().points_in_radius( source.pos(), weapon.gun_range(),source.get_vertical_alert_range());
 }
 
 npc_attack_rating npc_attack_gun::evaluate(
@@ -466,6 +468,7 @@ npc_attack_rating npc_attack_gun::evaluate(
     }
     const int time_penalty = base_time_penalty( source );
     creature_tracker &creatures = get_creature_tracker();
+    const int vertical_alert_range = source.get_vertical_alert_range();
     const item& weapon = *gunmode;
     map& m = get_map();
     for (Creature &c:g->all_creatures()) {
@@ -473,7 +476,7 @@ npc_attack_rating npc_attack_gun::evaluate(
             continue;
         }
         tripoint c_pos = c.pos();
-        if (m.is_in_radius(source.pos(),c_pos,source.get_vertical_alert_range())) {
+        if (m.is_in_radius(source.pos(),c_pos, vertical_alert_range)) {
             npc_attack_rating effectiveness_at_point = evaluate_tripoint(source, target,
                 c_pos);
             effectiveness_at_point -= time_penalty;
@@ -685,7 +688,7 @@ tripoint_range<tripoint> npc_attack_throw::targetable_points( const npc &source 
         single_item.charges = 1;
     }
     const int range = source.throw_range( single_item );
-    return get_map().points_in_radius( source.pos(), range,range);
+    return get_map().points_in_radius( source.pos(), range,source.get_vertical_alert_range());
 }
 
 npc_attack_rating npc_attack_throw::evaluate(
@@ -708,33 +711,39 @@ npc_attack_rating npc_attack_throw::evaluate(
     const bool throw_now = thrown_item.has_flag( flag_NPC_THROW_NOW );
     // TODO: Should this be a field to cache the result?
     const bool avoids_friendly_fire = source.rules.has_flag( ally_rule::avoid_friendly_fire );
+    const int vertical_alert_range = source.get_vertical_alert_range();
     creature_tracker &creatures = get_creature_tracker();
-    for( const tripoint &potential : targetable_points( source ) ) {
 
+    for (Creature& c : g->all_creatures()) {
+
+        tripoint c_pos = c.pos();
         // hot potato! HOT POTATO!
         // Calculated for all targetable points, not just those with targets
-        if( throw_now ) {
+        if (throw_now) {
             // TODO: Take into account distance to allies too
-            const int distance_to_me = rl_dist( potential, source.pos() );
+            const int distance_to_me = rl_dist_exact(c.pos(), source.pos());
             int result = npc_attack_constants::base_throw_now + distance_to_me;
-            if( !m.has_obstruction( source.pos(), potential, avoids_friendly_fire ) ) {
+            if (!m.has_obstruction(source.pos(), c_pos, avoids_friendly_fire)) {
                 // More likely to pick a target tile that isn't obstructed
                 result += 100;
             }
-            return npc_attack_rating( result, potential );
+            return npc_attack_rating(result, c_pos);
         }
 
-        if( Creature *critter = creatures.creature_at( potential ) ) {
-            if( source.attitude_to( *critter ) != Creature::Attitude::HOSTILE ) {
-                // no point in friendly fire!
-                continue;
-            }
-            npc_attack_rating effectiveness_at_point = evaluate_tripoint( source, target,
-                    potential );
-            effectiveness_at_point -= penalty;
-            if( effectiveness_at_point > effectiveness ) {
-                effectiveness = effectiveness_at_point;
-            }
+        if (&c == &source) {
+            continue;
+        }
+        else if (source.attitude_to(c) != Creature::Attitude::HOSTILE) {
+            continue;
+        }
+        else if (!m.is_in_radius(source.pos(), c_pos, vertical_alert_range)) {
+            continue;
+        }
+        npc_attack_rating effectiveness_at_point = evaluate_tripoint(source, target,
+            c_pos);
+        effectiveness_at_point -= penalty;
+        if (effectiveness_at_point > effectiveness) {
+            effectiveness = effectiveness_at_point;
         }
     }
     return effectiveness;

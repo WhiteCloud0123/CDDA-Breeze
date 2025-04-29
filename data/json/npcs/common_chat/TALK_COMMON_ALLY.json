@@ -408,7 +408,7 @@
         "topic": "TALK_COMBAT_COMMANDS",
         "effect": { "toggle_npc_rule": "hold_the_line" }
       },
-      { "text": "让我来告诉你应当注意的垂直范围", "topic": "TALK_NONE" ,"effect":"set_npc_vertical_alert_range"},
+      { "text": "让我来告诉你应当警戒的垂直范围", "topic": "TALK_NONE" ,"effect":"set_npc_vertical_alert_range"},
       { "text": "Never mind.", "topic": "TALK_NONE" }
     ]
   },
