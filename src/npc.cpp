@@ -3679,6 +3679,14 @@ std::string npc::get_unique_id() const
     return unique_id;
 }
 
+int npc::get_vertical_alert_range() const {
+    return vertical_alert_range;
+}
+
+void npc::set_vertical_alert_range(int value) {
+    vertical_alert_range = value;
+}
+
 void npc::set_mission( npc_mission new_mission )
 {
     if( new_mission != mission ) {

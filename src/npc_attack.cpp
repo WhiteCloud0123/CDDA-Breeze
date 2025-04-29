@@ -276,7 +276,10 @@ void npc_attack_melee::use( npc &source, const tripoint &location ) const
 
 tripoint_range<tripoint> npc_attack_melee::targetable_points( const npc &source ) const
 {
-    return get_map().points_in_radius( source.pos(), 8 , 1 );
+
+    int range = weapon.current_reach_range(source);
+
+    return get_map().points_in_radius( source.pos(), 8 , range);
 }
 
 npc_attack_rating npc_attack_melee::evaluate( const npc &source,
@@ -296,7 +299,7 @@ npc_attack_rating npc_attack_melee::evaluate( const npc &source,
             continue;
         }
         tripoint c_pos = c.pos();
-        if (m.is_in_radius(source.pos(), c_pos, 3)) {
+        if (m.is_in_radius(source.pos(), c_pos, source.get_vertical_alert_range())) {
             npc_attack_rating effectiveness_at_point = evaluate_critter(source, target, &c);
             effectiveness_at_point -= time_penalty;
             if (effectiveness_at_point > effectiveness) {
@@ -451,7 +454,7 @@ int npc_attack_gun::base_time_penalty( const npc &source ) const
 tripoint_range<tripoint> npc_attack_gun::targetable_points( const npc &source ) const
 {
     const item &weapon = *gunmode;
-    return get_map().points_in_radius( source.pos(), weapon.gun_range(),1);
+    return get_map().points_in_radius( source.pos(), weapon.gun_range(), weapon.gun_range());
 }
 
 npc_attack_rating npc_attack_gun::evaluate(
@@ -470,7 +473,7 @@ npc_attack_rating npc_attack_gun::evaluate(
             continue;
         }
         tripoint c_pos = c.pos();
-        if (m.is_in_radius(source.pos(),c_pos,10)) {
+        if (m.is_in_radius(source.pos(),c_pos,source.get_vertical_alert_range())) {
             npc_attack_rating effectiveness_at_point = evaluate_tripoint(source, target,
                 c_pos);
             effectiveness_at_point -= time_penalty;
@@ -682,7 +685,7 @@ tripoint_range<tripoint> npc_attack_throw::targetable_points( const npc &source 
         single_item.charges = 1;
     }
     const int range = source.throw_range( single_item );
-    return get_map().points_in_radius( source.pos(), range);
+    return get_map().points_in_radius( source.pos(), range,range);
 }
 
 npc_attack_rating npc_attack_throw::evaluate(
