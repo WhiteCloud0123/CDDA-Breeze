@@ -232,8 +232,6 @@ class target_ui
         // List of visible hostile targets
         std::vector<Creature *> targets;
 
-        // 'true' if map has z levels and 3D fov is on
-        bool allow_zlevel_shift = false;
         // Snap camera to cursor. Can be permanently toggled in settings
         // or temporarily in this window
         bool snap_to_target = false;
@@ -2437,7 +2435,6 @@ target_handler::trajectory target_ui::run()
 
     map &here = get_map();
     // Load settings
-    allow_zlevel_shift = get_option<bool>( "FOV_3D" );
     snap_to_target = get_option<bool>( "SNAP_TO_TARGET" );
     if( mode == TargetMode::Turrets ) {
         // Due to how cluttered the display would become, disable it by default
@@ -2727,10 +2724,9 @@ void target_ui::init_window_and_input()
     ctxt.register_action( "zoom_out" );
     ctxt.register_action( "zoom_in" );
     ctxt.register_action( "TOGGLE_MOVE_CURSOR_VIEW" );
-    if( allow_zlevel_shift ) {
-        ctxt.register_action( "LEVEL_UP" );
-        ctxt.register_action( "LEVEL_DOWN" );
-    }
+    ctxt.register_action( "LEVEL_UP" );
+    ctxt.register_action( "LEVEL_DOWN" );
+    
     if( mode == TargetMode::Fire || mode == TargetMode::TurretManual || ( mode == TargetMode::Reach &&
             relevant->is_gun() && you->get_aim_types( *relevant ).size() > 1 ) ) {
         ctxt.register_action( "SWITCH_MODE" );
@@ -3732,9 +3728,7 @@ void target_ui::panel_cursor_info( int &text_y )
 
     std::vector<std::string> labels;
     labels.push_back( label_range );
-    if( allow_zlevel_shift ) {
-        labels.push_back( string_format( _( "Elevation: %d" ), dst.z - src.z ) );
-    }
+    labels.push_back( string_format( _( "Elevation: %d" ), dst.z - src.z ) );
     labels.push_back( string_format( _( "Targets: %d" ), targets.size() ) );
 
     nc_color col = c_light_gray;

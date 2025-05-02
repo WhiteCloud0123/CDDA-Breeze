@@ -348,10 +348,6 @@ bool Creature::sees( const Creature &critter ) const
         return false;
     }
 
-    if( !fov_3d && posz() != critter.posz() ) {
-        return false;
-    }
-
     // This check is ridiculously expensive so defer it to after everything else.
     auto visible = []( const Character * ch ) {
         return ch == nullptr || !ch->is_invisible();
@@ -428,10 +424,6 @@ bool Creature::sees( const Creature &critter ) const
 
 bool Creature::sees( const tripoint &t, bool is_avatar, int range_mod ) const
 {
-    if( !fov_3d && posz() != t.z ) {
-        return false;
-    }
-
     map &here = get_map();
     const int range_cur = sight_range( here.ambient_light_at( t ) );
     const int range_day = sight_range( default_daylight_level() );

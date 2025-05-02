@@ -2645,13 +2645,9 @@ void options_manager::add_options_debug()
 
     add_empty_line();
 
-    add( "FOV_3D", "debug", to_translation( "实验性3D视野" ),
-         to_translation( "开启时，将启用z轴，视野会不限于玩家所处的高度。关闭是，视野会仅限于当前高度。" ),
-         true
-       );
 
     add( "FOV_3D_Z_RANGE", "debug", to_translation( "3D视野垂直可见范围" ),
-         to_translation( "实验性3D视野中上方和下方的最大视野层数及对下方多少层进行绘制。过高的3D视野会严重拖慢游戏速度。能看到的层数越少速度越快。" ),
+         to_translation( "3D视野中上方和下方的最大视野层数及对下方多少层进行绘制。过高的3D视野会严重拖慢游戏速度。能看到的层数越少速度越快。" ),
          0, OVERMAP_LAYERS, 2
        );
 
@@ -2681,10 +2677,6 @@ void options_manager::add_options_debug()
         false
     );
 
-
-
-
-    get_option( "FOV_3D_Z_RANGE" ).setPrerequisite( "FOV_3D" );
 }
 
 void options_manager::add_options_android()
@@ -3685,7 +3677,6 @@ static void update_options_cache()
     log_from_top = ::get_option<std::string>( "LOG_FLOW" ) == "new_top";
     message_ttl = ::get_option<int>( "MESSAGE_TTL" );
     message_cooldown = ::get_option<int>( "MESSAGE_COOLDOWN" );
-    fov_3d = ::get_option<bool>( "FOV_3D" );
     fov_3d_z_range = ::get_option<int>( "FOV_3D_Z_RANGE" );
     keycode_mode = ::get_option<std::string>( "SDL_KEYBOARD_MODE" ) == "keycode";
     use_pinyin_search = ::get_option<bool>("USE_PINYIN_SEARCH");
