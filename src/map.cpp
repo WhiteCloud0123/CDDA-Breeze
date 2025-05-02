@@ -7711,7 +7711,7 @@ bool map::sees( const tripoint &F, const tripoint &T, const int range,
     bool visible = true;
 
     // Ugly `if` for now
-    if( !fov_3d || F.z == T.z ) {
+    if( F.z == T.z ) {
         bresenham( F.xy(), T.xy(), bresenham_slope,
         [this, &visible, &T]( const point & new_point ) {
             // Exit before checking the last square, it's still visible even if opaque.
@@ -7941,10 +7941,6 @@ void map::reachable_flood_steps( std::vector<tripoint> &reachable_pts, const tri
 bool map::clear_path( const tripoint &f, const tripoint &t, const int range,
                       const int cost_min, const int cost_max ) const
 {
-    // Ugly `if` for now
-    if( !fov_3d && f.z != t.z ) {
-        return false;
-    }
 
     if( f.z == t.z ) {
         if( ( range >= 0 && range < rl_dist( f.xy(), t.xy() ) ) ||
@@ -9667,8 +9663,7 @@ void map::build_map_cache( const int zlev, bool skip_lightmap )
     bool seen_cache_dirty = false;
     bool camera_cache_dirty = false;
     for( int z = minz; z <= maxz; z++ ) {
-        // trigger FOV recalculation only when there is a change on the player's level or if fov_3d is enabled
-        const bool affects_seen_cache =  z == zlev || fov_3d;
+        const bool affects_seen_cache =  z == zlev;
         build_outside_cache( z );
         build_transparency_cache( z );
         bool floor_cache_was_dirty = build_floor_cache( z );

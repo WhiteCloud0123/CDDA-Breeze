@@ -547,7 +547,7 @@ bool Character::melee_attack( Creature &t, bool allow_special, const matec_id &f
         return false;
     }
 
-    if (!allow_not_adjacent && !is_adjacent(&t, fov_3d)) {
+    if (!allow_not_adjacent && !is_adjacent(&t, true)) {
         return false;
     }
 
