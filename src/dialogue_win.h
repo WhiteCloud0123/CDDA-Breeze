@@ -59,7 +59,7 @@ class dialogue_window
         catacurses::window* get_history_win();
         catacurses::window* get_resp_win();
 
-        void prepare_image(SDL_Texture* image, int image_width, int image_height,SDL_Rect rect_2);
+        void set_image(SDL_Texture* image);
 
     private:
         catacurses::window d_win;

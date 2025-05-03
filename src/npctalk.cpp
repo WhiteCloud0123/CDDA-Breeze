@@ -1176,20 +1176,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
 
     if (character_name != "") {
         image = get_character_picture(character_name);
-
-        const int font_width = get_option<int>("FONT_WIDTH");
-        const int font_height = get_option<int>("FONT_HEIGHT");
-
-        const int win_beginx = TERMX > FULL_SCREEN_WIDTH ? (TERMX - FULL_SCREEN_WIDTH) / 4 : 0;
-        const int win_beginy = TERMY > FULL_SCREEN_HEIGHT ? (TERMY - FULL_SCREEN_HEIGHT) / 4 : 0;
-        
-        SDL_Rect rect_2;
-        rect_2.x = (TERMX - win_beginx) * font_width - 381;
-        rect_2.y = (TERMY - win_beginy) * font_height- 522;
-        rect_2.w = 381;
-        rect_2.h = 522;
-
-        d_win.prepare_image(image,381,522,rect_2);
+        d_win.set_image(image);
     }
 
 

@@ -551,6 +551,7 @@ SDL_Texture* get_character_picture(std::string &name) {
     std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
     std::string gfx_p_t = gfx_string + "/character_picture/" + name + ".png";
     SDL_Texture* image = IMG_LoadTexture(renderer.get(), gfx_p_t.c_str());
+
     return image;
 
 }
@@ -1431,13 +1432,7 @@ static bool draw_window( Font_Ptr &font, const catacurses::window &w, const poin
 
     if (win->image) {
 
-        SDL_Rect srcrect;
-        srcrect.x = 0;
-        srcrect.y = 0;
-        srcrect.w = win->image_width;
-        srcrect.h = win->image_height;
-
-        SDL_RenderCopy(renderer.get(),win->image, &srcrect, &win->rect_2);
+        SDL_RenderCopy(renderer.get(),win->image, nullptr, &win->rect_2);
         
     }
 

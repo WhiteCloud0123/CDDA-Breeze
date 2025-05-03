@@ -5,9 +5,11 @@
 #include <vector>
 
 #include "catacharset.h"
+#include "messages.h"
 #include "input.h"
 #include "output.h"
 #include "point.h"
+#include "sdltiles.h"
 #include "string_formatter.h"
 #include "translations.h"
 #include "ui_manager.h"
@@ -37,8 +39,16 @@ void dialogue_window::resize( ui_adaptor &ui )
     const int maxx = win_beginx ? TERMX - 2 * win_beginx : FULL_SCREEN_WIDTH;
     d_win = catacurses::newwin( maxy, maxx, point( win_beginx, win_beginy ) );
     ui.position_from_window( d_win );
-    history_win = catacurses::newwin( maxy - 1 - RESPONSES_LINES - 2 - 1, maxx - 1, point( win_beginx,
-                                      win_beginy + 2 ) , image, image_width, image_height,rect_2);
+
+    image_width = maxx * 0.35 * fontwidth;
+    image_height = maxy * 0.85 * fontheight;
+    rect_2.x = (TERMX - win_beginx) * fontwidth - image_width;
+    rect_2.y = (TERMY - win_beginy) * fontheight - image_height;
+    rect_2.w = image_width;
+    rect_2.h = image_height;
+
+    history_win = catacurses::newwin(maxy - 1 - RESPONSES_LINES - 2 - 1, maxx - 1, point(win_beginx,
+        win_beginy + 2), image, image_width, image_height, rect_2);
     resp_win = catacurses::newwin( RESPONSES_LINES - 1, maxx / 2, point( win_beginx,
                                    win_beginy + maxy - RESPONSES_LINES ) );
 
@@ -194,9 +204,6 @@ catacurses::window* dialogue_window::get_resp_win() {
     return &resp_win;
 }
 
-void dialogue_window::prepare_image(SDL_Texture* image, int image_width, int image_height,SDL_Rect rect_2) {
+void dialogue_window::set_image(SDL_Texture* image) {
     this->image = image;
-    this->image_width = image_width;
-    this->image_height = image_height;
-    this->rect_2 = rect_2;
 }
