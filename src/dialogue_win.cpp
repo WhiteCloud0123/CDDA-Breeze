@@ -40,8 +40,9 @@ void dialogue_window::resize( ui_adaptor &ui )
     d_win = catacurses::newwin( maxy, maxx, point( win_beginx, win_beginy ) );
     ui.position_from_window( d_win );
 
-    image_width = maxx * 0.35 * fontwidth;
-    image_height = image_width/0.73;
+    image_height = maxy * 0.85 * fontheight;
+    image_width = image_height*0.73;
+
     rect_2.x = (TERMX - win_beginx) * fontwidth - image_width;
     rect_2.y = (TERMY - win_beginy) * fontheight - image_height;
     rect_2.w = image_width;
