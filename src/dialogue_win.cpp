@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "catacharset.h"
-#include "messages.h"
 #include "input.h"
+#include "messages.h"
 #include "output.h"
 #include "point.h"
 #include "sdltiles.h"
