@@ -217,6 +217,14 @@ task createWindowsJunctionLinks() {
 
         println("Creating junctions for the assets")
 
+        def winAsset = new File(projectDir, assetsDirWindows)
+        if (winAsset.exists()) {
+            println("删除已经存在的资源文件夹："+winAsset.getPath())
+            exec {
+                commandLine 'cmd', '/c', "rd", "/s", "/q", winAsset.getPath()
+            }
+        }
+
         mkdir assetsDirWindows
         mkdir "$assetsDirWindows/lang"
 
