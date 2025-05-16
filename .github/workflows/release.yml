@@ -114,6 +114,9 @@ jobs:
       - name: Install dependencies (windows msvc) (0/4)
         if: runner.os == 'Windows'
         uses: lukka/get-cmake@latest
+        with:
+        # 4.0.0 has issues compiling old packages in vcpkg
+          cmakeVersion: 3.31.6
       - name: Install dependencies (windows msvc) (1/4)
         if: runner.os == 'Windows'
         uses: microsoft/setup-msbuild@v1.0.2
@@ -127,7 +130,7 @@ jobs:
           # availability only as an x86 host tool. Keep it in sync with the builtin-baseline
           # field in vcpkg.json. Caching happens as a post-action which runs at the end of
           # the whole workflow, after vcpkg install happens during msbuild run.
-          vcpkgGitCommitId: "3b57fb2e1ff55613db14d2aaf0a30529289c7050"
+          vcpkgGitCommitId: "9dd12f8d791f6fa4e396adbebc714d51cbee2143"
       - name: Install dependencies (windows msvc) (3/4)
         if: runner.os == 'Windows'
         run: |
