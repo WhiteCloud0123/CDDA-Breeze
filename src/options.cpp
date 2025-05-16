@@ -2091,7 +2091,7 @@ void options_manager::add_options_graphics()
     get_option( "ALT_TITLE" ).setPrerequisite( "ENABLE_ASCII_TITLE" );
 
     add_empty_line();
-
+#if defined(_WIN32)
     add( "TERMINAL_X", "graphics", to_translation( "Terminal width" ),
          to_translation( "Set the size of the terminal along the X axis." ),
          80, 960, 80, COPT_POSIX_CURSES_HIDE
@@ -2101,6 +2101,18 @@ void options_manager::add_options_graphics()
          to_translation( "Set the size of the terminal along the Y axis." ),
          24, 270, 24, COPT_POSIX_CURSES_HIDE
        );
+#else
+    add("TERMINAL_X", "graphics", to_translation("Terminal width"),
+        to_translation("Set the size of the terminal along the X axis."),
+        80, 960, 144, COPT_POSIX_CURSES_HIDE
+    );
+
+    add("TERMINAL_Y", "graphics", to_translation("Terminal height"),
+        to_translation("Set the size of the terminal along the Y axis."),
+        24, 270, 36, COPT_POSIX_CURSES_HIDE
+    );
+#endif
+
 
     add_empty_line();
 
