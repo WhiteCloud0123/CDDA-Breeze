@@ -47,8 +47,13 @@ void dialogue_window::resize( ui_adaptor &ui )
     rect_2.y = (TERMY - win_beginy) * fontheight - image_height;
     rect_2.w = image_width;
     rect_2.h = image_height;
+    
+    int fold_x = 0;
+    if (image) {
+        fold_x = image_width / fontwidth;
+    }
 
-    history_win = catacurses::newwin(maxy - 1 - RESPONSES_LINES - 2 - 1, maxx - 1, point(win_beginx,
+    history_win = catacurses::newwin(maxy - 1 - RESPONSES_LINES - 2 - 1, maxx - 1-fold_x, point(win_beginx,
         win_beginy + 2), image, image_width, image_height, rect_2);
     resp_win = catacurses::newwin( RESPONSES_LINES - 1, maxx / 2, point( win_beginx,
                                    win_beginy + maxy - RESPONSES_LINES ) );
