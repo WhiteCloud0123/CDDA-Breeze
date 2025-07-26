@@ -64,6 +64,7 @@ static const efftype_id effect_led_by_leash( "led_by_leash" );
 static const efftype_id effect_no_sight( "no_sight" );
 static const efftype_id effect_operating( "operating" );
 static const efftype_id effect_pacified( "pacified" );
+static const efftype_id effect_pet("pet");
 static const efftype_id effect_pushed( "pushed" );
 static const efftype_id effect_stunned( "stunned" );
 
@@ -756,13 +757,11 @@ void monster::plan()
             next_stop = patrol_route.at( next_patrol_point );
         }
         set_dest( next_stop );
-    } else if( friendly != 0 && has_effect( effect_led_by_leash ) ) {
+    } else if (friendly != 0 && has_effect(effect_led_by_leash) &&
+        get_location().z() == get_dest().z()) {
         // visibility doesn't matter, we're getting pulled by a leash
-        if( rl_dist( get_location(), player_character.get_location() ) > 1 ) {
-            set_dest( player_character.get_location() );
-        } else {
-            unset_dest();
-        }
+        // To use stairs smoothly, if the destination is on a different Z-level, move there first.
+        set_dest(player_character.get_location());
         if( friendly > 0 && one_in( 3 ) ) {
             // Grow restless with no targets
             friendly--;
@@ -770,14 +769,12 @@ void monster::plan()
     } else if( friendly > 0 && one_in( 3 ) ) {
         // Grow restless with no targets
         friendly--;
-    } else if( friendly < 0 && sees( player_character ) &&
-               // Simpleminded animals are too dumb to follow the player.
-               !has_flag( MF_PET_WONT_FOLLOW ) ) {
-        if( rl_dist( get_location(), player_character.get_location() ) > 2 ) {
-            set_dest( player_character.get_location() );
-        } else {
-            unset_dest();
-        }
+    } else if (has_effect(effect_pet) && friendly == -1 && sees(player_character) &&
+        (get_location().z() == player_character.get_location().z() ||
+            get_location().z() == get_dest().z())) {
+        // Simpleminded animals are too dumb to follow the player.
+        // To use stairs smoothly, if the destination is on a different Z-level, move there first.
+        set_dest(player_character.get_location());
     }
 }
 
@@ -969,7 +966,18 @@ void monster::move()
         }
     }
     bool was_controlled_by_friendly_monster_controller = has_value("was_controlled_by_friendly_monster_controller");
-    if(!was_controlled_by_friendly_monster_controller&&( ( current_attitude == MATT_IGNORE && patrol_route.empty() ) ||
+    
+    if ((friendly==-1&&has_effect(effect_pet)&&!has_flag(MF_PET_WONT_FOLLOW)) || (friendly != 0 && has_effect(effect_led_by_leash))) {
+        const int dist = rl_dist(get_location(), get_dest());
+        if ((dist <= 1 || (dist <= 2 && !has_effect(effect_led_by_leash) &&
+            sees(player_character))) &&
+            (get_dest() == player_character.get_location() &&
+                get_location().z() == player_character.get_location().z())) {
+            moves = 0;
+            stumble();
+            return;
+        }
+    } else if(!was_controlled_by_friendly_monster_controller&&( ( current_attitude == MATT_IGNORE && patrol_route.empty() ) ||
         ( ( current_attitude == MATT_FOLLOW ||
             ( has_flag( MF_KEEP_DISTANCE ) && !( current_attitude == MATT_FLEE ) ) )
           && rl_dist( get_location(), get_dest() ) <= type->tracking_distance ) )) {
