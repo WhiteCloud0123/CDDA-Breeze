@@ -769,7 +769,7 @@ void monster::plan()
     } else if( friendly > 0 && one_in( 3 ) ) {
         // Grow restless with no targets
         friendly--;
-    } else if (has_effect(effect_pet) && friendly == -1 && sees(player_character) &&
+    } else if (has_effect(effect_pet) && sees(player_character) &&
         (get_location().z() == player_character.get_location().z() ||
             get_location().z() == get_dest().z())) {
         // Simpleminded animals are too dumb to follow the player.
@@ -967,7 +967,7 @@ void monster::move()
     }
     bool was_controlled_by_friendly_monster_controller = has_value("was_controlled_by_friendly_monster_controller");
     
-    if ((friendly==-1&&has_effect(effect_pet)&&!has_flag(MF_PET_WONT_FOLLOW)) || (friendly != 0 && has_effect(effect_led_by_leash))) {
+    if ((has_effect(effect_pet)&&!has_flag(MF_PET_WONT_FOLLOW)) || (friendly != 0 && has_effect(effect_led_by_leash))) {
         const int dist = rl_dist(get_location(), get_dest());
         if ((dist <= 1 || (dist <= 2 && !has_effect(effect_led_by_leash) &&
             sees(player_character))) &&
