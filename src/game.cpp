@@ -11996,7 +11996,7 @@ void game::vertical_move( int movez, bool force, bool peeking )
             // TODO: just check if it's going for the avatar's location, it's simpler 将是否有“在这里等待”的效果列入检查
             Creature *target = critter.attack_target();
             if( ( target && target->is_avatar() ) || ( !critter.has_effect( effect_ridden ) &&
-                    ((critter.has_effect( effect_pet ) && critter.friendly == -1)|| critter.has_effect(effect_led_by_leash)) &&
+                    (critter.has_effect( effect_pet )|| critter.has_effect(effect_led_by_leash)) &&
                     !critter.has_effect( effect_tied ) && !critter.has_effect( effect_wait_here ) && critter.sees(u) ) ) {
                 monsters_following.push_back( &critter );
             }

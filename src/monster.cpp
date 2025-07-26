@@ -2472,7 +2472,6 @@ bool monster::move_effects(bool)
     map& here = get_map();
     bool u_see_me = get_player_view().sees(*this);
 
-    //
     if (has_effect(effect_tied) || has_effect(effect_wait_here)) {
         // friendly pet, will stay tied down and obey.同时，接受了等待命令也可以继续在当前位置继续等待
         if (friendly == -1 || has_effect(effect_pet)) {
