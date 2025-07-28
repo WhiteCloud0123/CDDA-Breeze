@@ -8,4 +8,5 @@ CDDA-Breeze是[Cataclysm-DDA](https://github.com/CleverRaven/Cataclysm-DDA)的�
 
 如果喜欢我的工作，可以帮项目点一个star。
 
--> [捐赠者名单](./文件存放/捐赠者名单.md)
+
+感谢所有曾为此项目提供捐赠的朋友！✨ [捐赠者名单](./文件存放/捐赠者名单.md)
