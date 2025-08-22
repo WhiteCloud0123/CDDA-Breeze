@@ -3293,6 +3293,30 @@ void Character::die( Creature *nkiller )
         inv->add_item( item( "beartrap", calendar::turn_zero ) );
     }
     mission::on_creature_death( *this );
+
+    if (use_monster_gain_exp_level_up && nkiller != nullptr && nkiller->is_monster()) {
+        monster* killer = nkiller->as_monster();
+        int& killer_lv = killer->lv;
+        killer_lv = 0;
+        int& killer_exp = killer->exp;
+        // 经验值 = 10 + 被击杀角色的力量 + 智力 + 敏捷 + 速度
+        killer_exp = killer_exp +
+            10 +
+            get_str() +
+            get_int() +
+            get_dex() +
+            get_per();
+        for (int i = 0; i < 10; i++) {
+            if (killer_exp > monster_exp_array[i]) {
+                killer_lv++;
+                killer->set_speed_base(killer->type->speed + 5 * killer_lv);
+            }
+            else {
+                break;
+            }
+        }
+    }
+
 }
 
 void Character::apply_skill_boost()
