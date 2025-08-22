@@ -365,7 +365,7 @@ public:
 
                 oss << "\n";
                 oss << "\n";
-                oss << "难度 : ";
+                oss << "威胁度 : ";
                 oss << tmp.type->difficulty;
 
 
