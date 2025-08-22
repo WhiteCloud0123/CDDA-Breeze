@@ -23,6 +23,8 @@ bool use_show_creature_hp_bar;
 bool use_show_creature_view_line;
 bool use_show_player_move_point;
 bool use_animation;
+bool use_monster_level_dynamic;
+bool use_monster_gain_exp_level_up;
 int terminal_x;
 int terminal_y;
 // 安卓

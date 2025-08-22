@@ -251,33 +251,19 @@ monster::monster(const mtype_id& id) : monster()
     }
     aggro_character = type->aggro_character;
 
-
-    if (get_option<bool>("怪物的等级动态变化") == true) {
+    if (use_monster_level_dynamic) {
         int chance = rng(1, 10);
-
         if (chance == 1) {
-
             int chance_ = rng(1, 100);
-
             if (chance_ == 1) {
-
                 lv = rng(6, 10);
-
                 set_speed_base(type->speed + 5 * lv);
-
                 exp = monster_exp_array[lv - 1];
-
-
             }
             else {
-
                 lv = rng(1, 5);
-
                 set_speed_base(type->speed + 5 * lv);
-
                 exp = monster_exp_array[lv - 1];
-
-
             }
         }
     }
@@ -2214,33 +2200,21 @@ bool monster::melee_attack(Creature& target, float accuracy)
     }
 
     //怪物击杀敌人可以获取经验
-    if ( target.is_dead_state() ) {
-
-
+    if ( use_monster_gain_exp_level_up && target.is_dead_state() ) {
         if (target.is_monster()) {
-
             exp = exp + target.as_monster()->type->difficulty;
             lv = 0;
             for (int i = 0; i < 10; i++) {
-
                 if (exp > monster_exp_array[i]) {
-
                     lv++;
                     set_speed_base(type->speed + 5 * lv);
                 }
                 else {
-
                     break;
-
                 }
-
-
             }
-
-
         }
         else {
-
             // 对于击杀npc获得的经验计算: 10 + 力量 + 智力 + 敏捷 + 感知 
             exp = exp +
                 10 +
@@ -2248,43 +2222,19 @@ bool monster::melee_attack(Creature& target, float accuracy)
                 target.as_character()->get_int_base() +
                 target.as_character()->get_dex_base() +
                 target.as_character()->get_per_base();
-
             lv = 0;
             for (int i = 0; i < 10; i++) {
-
                 if (exp > monster_exp_array[i]) {
-
                     lv++;
                     //   = Json定义的速度 + 5 * 怪物当前的等级
                     set_speed_base(type->speed + 5 * lv);
-
                 }
                 else {
-
                     break;
-
                 }
-
-
             }
-
-
-
-
-
-
         }
-
-
-
-
-
-
     }
-
-
-
-
 
     target.check_dead_state();
 

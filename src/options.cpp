@@ -1337,7 +1337,6 @@ void options_manager::add_options_general()
         to_translation("设置大地图界面的搜索功能使用的半径，数值越大，搜索越耗时。"), 
         1,5000,900);
     add("骑乘状态可以上下楼", "general", to_translation("骑乘状态可以上下楼"), to_translation("当此选项的值为 是 时，骑乘状态可以上下楼。"), true);
-    add("怪物的等级动态变化", "general", to_translation("怪物的等级动态变化"), to_translation("当此选项的值为 是 时，怪物的等级将动态变化。当此选项的值为 否 时，怪物的等级默认为0级。"), false);
     add("精英怪物警告", "general", to_translation("精英怪物警告"), to_translation("如果玩家的视野中有等级有6级及以上的怪物，玩家的信息栏会不断的输出警告信息。"), true);
 
     add_empty_line();
@@ -2492,6 +2491,8 @@ void options_manager::add_options_world_default()
          to_translation( "Determines how much damage monsters can take.  A higher value makes monsters more resilient and a lower makes them more flimsy.  Requires world reset." ),
          1, 1000, 100, COPT_NO_HIDE, "%i%%"
        );
+    add("怪物的等级动态变化", "world_default", to_translation("怪物的等级动态变化"), to_translation("当此选项的值为 是 时，怪物的等级将动态变化。当此选项的值为 否 时，怪物的等级默认为0级。等级影响生命值和速度。"), false);
+    add("怪物可以积累经验值而升级", "world_default", to_translation("怪物可以积累经验值而升级"), to_translation("当此选项的值为 是 时，怪物可以通过击杀敌人来获取经验值，当经验值达到标准后，怪物即可升级。"), false);
 
     add_empty_line();
 
