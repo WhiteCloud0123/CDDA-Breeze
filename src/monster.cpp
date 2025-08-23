@@ -251,7 +251,7 @@ monster::monster(const mtype_id& id) : monster()
     }
     aggro_character = type->aggro_character;
 
-    if (get_option<bool>("怪物的等级动态变化")) {
+    if (use_monster_level_dynamic) {
         int chance = rng(1, 10);
         if (chance == 1) {
             int chance_ = rng(1, 100);
@@ -3120,7 +3120,7 @@ void monster::die(Creature* nkiller)
         }
     }
 
-    if (get_option<bool>("怪物可以积累经验值而升级") && nkiller != nullptr && nkiller->is_monster()) {
+    if (use_monster_gain_exp_level_up && nkiller != nullptr && nkiller->is_monster()) {
         monster* killer = nkiller->as_monster();
         int& killer_lv = killer->lv;
         killer_lv = 0;

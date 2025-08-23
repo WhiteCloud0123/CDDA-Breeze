@@ -3294,7 +3294,7 @@ void Character::die( Creature *nkiller )
     }
     mission::on_creature_death( *this );
 
-    if (get_option<bool>("怪物可以积累经验值而升级") && nkiller != nullptr && nkiller->is_monster()) {
+    if (use_monster_gain_exp_level_up && nkiller != nullptr && nkiller->is_monster()) {
         monster* killer = nkiller->as_monster();
         int& killer_lv = killer->lv;
         killer_lv = 0;
