@@ -3651,7 +3651,7 @@ std::string options_manager::migrateOptionValue( const std::string &name,
     return iter_val != iter->second.second.end() ? iter_val->second : val;
 }
 
-static void update_options_cache()
+void options_manager::update_options_cache() const
 {
     // cache to global due to heavy usage.
     use_tiles = ::get_option<bool>( "USE_TILES" );
@@ -3662,7 +3662,7 @@ static void update_options_cache()
 
     // if the tilesets are identical don't duplicate
     use_far_tiles = ::get_option<bool>( "USE_DISTANT_TILES" ) ||
-                    get_option<std::string>( "TILES" ) == get_option<std::string>( "DISTANT_TILES" );
+                    ::get_option<std::string>( "TILES" ) == ::get_option<std::string>( "DISTANT_TILES" );
     use_tiles_overmap = ::get_option<bool>( "USE_OVERMAP_TILES" );
     log_from_top = ::get_option<std::string>( "LOG_FLOW" ) == "new_top";
     message_ttl = ::get_option<int>( "MESSAGE_TTL" );
@@ -3674,6 +3674,8 @@ static void update_options_cache()
     use_show_creature_hp_bar = ::get_option<bool>("显示生物血条");
     use_show_creature_view_line = ::get_option<bool>("显示生物视线");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
+    use_monster_level_dynamic = ::get_option<bool>("怪物的等级动态变化");
+    use_monster_gain_exp_level_up = ::get_option<bool>("怪物积累经验值而升级");
     use_animation =::get_option<bool>("ANIMATIONS");
     terminal_x = ::get_option<int>("TERMINAL_X");
     terminal_y = ::get_option<int>("TERMINAL_Y");

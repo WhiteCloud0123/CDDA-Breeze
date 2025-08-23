@@ -33,6 +33,7 @@ class options_manager
         using id_and_option = std::pair<std::string, translation>;
         using int_and_option = std::pair<int, translation>;
         static std::vector<id_and_option> get_lang_options();
+        void update_options_cache() const;
     private:
         /**
          * Search for resources.

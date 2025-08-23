@@ -3037,7 +3037,7 @@ bool game::load( const save_t &name )
             monster_now_controlled = g->shared_from(*m);
         }
     }
-
+    get_options().update_options_cache();
     return true;
 }
 
