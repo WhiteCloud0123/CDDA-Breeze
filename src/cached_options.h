@@ -28,8 +28,6 @@ extern bool use_show_creature_hp_bar;
 extern bool use_show_creature_view_line;
 extern bool use_show_player_move_point;
 extern bool use_animation;
-extern bool use_monster_level_dynamic;
-extern bool use_monster_gain_exp_level_up;
 extern int terminal_x;
 extern int terminal_y;
 
