@@ -3309,7 +3309,7 @@ void Character::die( Creature *nkiller )
         for (int i = 0; i < 10; i++) {
             if (killer_exp > monster_exp_array[i]) {
                 killer_lv++;
-                killer->set_speed_base(killer->type->speed + 5 * killer_lv);
+                killer->set_speed_base(killer->type->speed + 10 * killer_lv);
             }
             else {
                 break;
