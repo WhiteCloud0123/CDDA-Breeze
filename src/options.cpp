@@ -3675,7 +3675,7 @@ void options_manager::update_options_cache() const
     use_show_creature_view_line = ::get_option<bool>("显示生物视线");
     use_show_player_move_point = ::get_option<bool>("显示玩家的剩余行动点");
     use_monster_level_dynamic = ::get_option<bool>("怪物的等级动态变化");
-    use_monster_gain_exp_level_up = ::get_option<bool>("怪物积累经验值而升级");
+    use_monster_gain_exp_level_up = ::get_option<bool>("怪物可以积累经验值而升级");
     use_animation =::get_option<bool>("ANIMATIONS");
     terminal_x = ::get_option<int>("TERMINAL_X");
     terminal_y = ::get_option<int>("TERMINAL_Y");
