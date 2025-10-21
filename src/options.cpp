@@ -3526,15 +3526,18 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
             }
         }
     }
+    std::string changed_options_name="";
     for( auto &iter : WOPTIONS_OLD ) {
         if( iter.second != ACTIVE_WORLD_OPTIONS[iter.first] ) {
             options_changed = true;
             world_options_changed = true;
+            changed_options_name = changed_options_name +"<color_light_green>"+iter.second.getMenuText() + "</color>\n";
         }
     }
 
+    
     if( options_changed ) {
-        if( query_yn( _( "Save changes?" ) ) ) {
+        if( query_yn("以下设置发生了变化：\n"+ changed_options_name + "\n保存更改？")) {
             static_popup popup;
             popup.message( "%s", _( "Please wait…\nApplying option changes…" ) );
             ui_manager::redraw();
