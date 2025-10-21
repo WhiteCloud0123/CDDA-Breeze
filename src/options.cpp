@@ -3531,7 +3531,7 @@ std::string options_manager::show( bool ingame, const bool world_options_only, b
         if( iter.second != ACTIVE_WORLD_OPTIONS[iter.first] ) {
             options_changed = true;
             world_options_changed = true;
-            changed_options_name = changed_options_name +"<color_light_green>"+iter.second.getMenuText() + "</color>" + "\n";
+            changed_options_name = changed_options_name +"<color_light_green>"+iter.second.getMenuText() + "</color>\n";
         }
     }
 
