@@ -145,54 +145,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private Set<View> mainButtons = new HashSet<>();
     private View buttonManageLayout;
     private Semaphore semaphore = new Semaphore(0, true);
-    private Button buttonNew;
     private boolean deleteButtonMode = false;
     private void showButtonManageLayout() {
         deleteButtonMode = false;
         buttonManageLayout = getLayoutInflater().inflate(R.layout.button_manage, null);
         container = buttonManageLayout.findViewById(R.id.container);
-
-        buttonNew = buttonManageLayout.findViewById(R.id.button_new);
-        buttonNew.setOnTouchListener(new View.OnTouchListener() {
-            private long startTime = 0;
-            private boolean isLongPress = false;
-            private Runnable longPressRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    if (System.currentTimeMillis() - startTime >= 3000) {
-                        isLongPress = true;
-                        deleteButtonMode = !deleteButtonMode;
-                        Toaster.show(deleteButtonMode ? "删除按钮模式，点击按钮即可删除" : "新建按钮模式");
-                    }
-                }
-            };
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startTime = System.currentTimeMillis();
-                        isLongPress = false;
-                        v.postDelayed(longPressRunnable, 3000);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        v.removeCallbacks(longPressRunnable);
-                        if (!isLongPress) {
-                            showNewButtonDialog();
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
-
-        Button buttonBack = buttonManageLayout.findViewById(R.id.button_back);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSaveDialog();
-            }
-        });
 
         this.addContentView(buttonManageLayout, new RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -241,6 +198,37 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("无效的字符")
             .setPositiveButton("确定", null);
+        builder.show();
+    }
+
+    private void showButtonManageMenu() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("按键管理菜单");
+        
+        String[] menuItems = {
+            "新增按钮",
+            deleteButtonMode ? "关闭删除模式" : "开启删除模式",
+            "退出管理面板"
+        };
+        
+        builder.setItems(menuItems, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // 新增按钮
+                        showNewButtonDialog();
+                        break;
+                    case 1: // 开启/关闭删除模式
+                        deleteButtonMode = !deleteButtonMode;
+                        Toaster.show(deleteButtonMode ? "删除按钮模式，点击按钮即可删除" : "新建按钮模式");
+                        break;
+                    case 2: // 退出管理面板
+                        showSaveDialog();
+                        break;
+                }
+            }
+        });
+        
         builder.show();
     }
 
@@ -443,6 +431,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             if (parent != null) {
                 parent.removeView(buttonManageLayout);
             }
+            buttonManageLayout = null;
         }
     }
 
@@ -958,6 +947,14 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         }
 
         int keyCode = event.getKeyCode();
+        
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (buttonManageLayout != null) {
+                showButtonManageMenu();
+                return true; 
+            }
+        }
+        
         // Ignore certain special keys so they're handled by Android
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
             keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
