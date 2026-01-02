@@ -483,12 +483,12 @@ void Particle_Activity::draw()
 
             map& m = get_map();
             point local_pos = m.getlocal(point(p.world_start_pos_x, p.world_start_pos_y));
-            point screen_pos = cata_tiles::pos_to_screen(local_pos);
-            screen_pos.x += cata_tiles::get_tile_width() / 2;
-            screen_pos.y += cata_tiles::get_tile_height() / 2;
+            point world_start_pos_screen_pos = cata_tiles::pos_to_screen(local_pos);
+            world_start_pos_screen_pos.x += cata_tiles::get_tile_width() / 2;
+            world_start_pos_screen_pos.y += cata_tiles::get_tile_height() / 2;
 
-            int p_x = int(scaled_relative_x + screen_pos.x - (p.size * scale) / 2);
-            int p_y = int(scaled_relative_y + screen_pos.y - (p.size * scale) / 2);
+            int p_x = int(scaled_relative_x + world_start_pos_screen_pos.x - (p.size * scale) / 2);
+            int p_y = int(scaled_relative_y + world_start_pos_screen_pos.y - (p.size * scale) / 2);
             int p_size = int(p.size * scale);
 
             SDL_Rect r = { p_x, p_y, p_size, p_size };
