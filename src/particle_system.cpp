@@ -8,10 +8,30 @@
 #include "messages.h"
 #include "game.h"
 #include "cata_tiles.h"
+#include "map.h"
 
 SDL_Texture* Particle_Activity::_texture = nullptr;
 SDL_Renderer* Particle_Activity::_renderer = nullptr;
 std::list<Particle_Activity*> Particle_Activity::particle_activity_list;
+std::map<std::string, std::string> monster_appearance_style_map = {
+    {"mon_yrax_apeirogon","mon_yrax_apeirogon"},
+    {"mon_zombie_smoker","mon_zombie_smoker"}
+};
+
+void Particle_Activity::set_position(const tripoint& p) {
+    point screen_pos = cata_tiles::pos_to_screen(p.xy());
+    screen_pos.x += cata_tiles::get_tile_width() / 2;
+    screen_pos.y += cata_tiles::get_tile_height() / 2;
+    x_ = screen_pos.x;
+    y_ = screen_pos.y;
+    z_ = p.z;
+
+    map& m = get_map();
+    tripoint abs_p = m.getabs(p);
+    world_position_x_ = abs_p.x;
+    world_position_y_ = abs_p.y;
+    world_position_z_ = abs_p.z;
+}
 
 inline float Deg2Rad(float a)
 {
@@ -127,23 +147,19 @@ void Particle_Activity::addParticles(int count)
     int start = _particleCount;
     _particleCount += count;
 
-    //life
     for (int i = start; i < _particleCount; ++i)
     {
         float theLife = _life + _lifeVar * RANDOM_M11(&RANDSEED);
         particle_data_[i].timeToLive = (std::max)(0.0f, theLife);
-    }
-
-    //position
-    for (int i = start; i < _particleCount; ++i)
-    {
         particle_data_[i].posx = _sourcePosition.x + _posVar.x * RANDOM_M11(&RANDSEED);
+        particle_data_[i].posy = _sourcePosition.y + _posVar.y * RANDOM_M11(&RANDSEED);
+        particle_data_[i].posz = z_;
+        particle_data_[i].world_start_pos_x = world_position_x_;
+        particle_data_[i].world_start_pos_y = world_position_y_;
+        particle_data_[i].world_start_pos_z = world_position_z_;
+
     }
 
-    for (int i = start; i < _particleCount; ++i)
-    {
-        particle_data_[i].posy = _sourcePosition.y + _posVar.y * RANDOM_M11(&RANDSEED);
-    }
 
     //color
 #define SET_COLOR(c, b, v)                                                 \
@@ -201,9 +217,6 @@ void Particle_Activity::addParticles(int count)
     for (int i = start; i < _particleCount; ++i)
     {
         particle_data_[i].rotation = _startSpin + _startSpinVar * RANDOM_M11(&RANDSEED);
-    }
-    for (int i = start; i < _particleCount; ++i)
-    {
         float endA = _endSpin + _endSpinVar * RANDOM_M11(&RANDSEED);
         particle_data_[i].deltaRotation = (endA - particle_data_[i].rotation) / particle_data_[i].timeToLive;
     }
@@ -216,9 +229,6 @@ void Particle_Activity::addParticles(int count)
     for (int i = start; i < _particleCount; ++i)
     {
         particle_data_[i].startPosX = pos.x;
-    }
-    for (int i = start; i < _particleCount; ++i)
-    {
         particle_data_[i].startPosY = pos.y;
     }
 
@@ -449,7 +459,7 @@ void Particle_Activity::draw()
 {
     if (_texture == nullptr)
     {
-        add_msg("texture为空");
+        // add_msg("texture为空");
         return;
     }
 
@@ -465,38 +475,33 @@ void Particle_Activity::draw()
                 continue;
             }
 
+            float relative_x = p.posx;
+            float relative_y = p.posy;
 
-            int p_x = int(p.posx + x_ - p.size / 2);
-            int p_y = int(p.posy + y_ - p.size / 2);
-            int p_size = p.size * scale;
+            float scaled_relative_x = relative_x * scale;
+            float scaled_relative_y = relative_y * scale;
 
-            if (scale>1.0) {
+            map& m = get_map();
+            point local_pos = m.getlocal(point(p.world_start_pos_x, p.world_start_pos_y));
+            point world_start_pos_screen_pos = cata_tiles::pos_to_screen(local_pos);
+            world_start_pos_screen_pos.x += cata_tiles::get_tile_width() / 2;
+            world_start_pos_screen_pos.y += cata_tiles::get_tile_height() / 2;
 
-                for (int r = 1; r < scale;r++) {
-                    p_x = p_x * 2 - x_;
-                    p_y = p_y * 2 - y_;
-                }
+            int p_x = int(scaled_relative_x + world_start_pos_screen_pos.x - (p.size * scale) / 2);
+            int p_y = int(scaled_relative_y + world_start_pos_screen_pos.y - (p.size * scale) / 2);
+            int p_size = int(p.size * scale);
 
-            }else if(scale<1.0) {
-
-                for (int r = 1; r < 1/scale; r++) {
-                    p_x = (p_x+x_)/2;
-                    p_y = (p_y + y_) /2;
-                }
-
-            }
-            
             SDL_Rect r = { p_x, p_y, p_size, p_size };
             SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
             SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
             SDL_SetTextureAlphaMod(_texture, c.a);
             SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);        
+            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
         }
         update();
     }
-
 }
+
 
 SDL_Texture* Particle_Activity::getTexture()
 {
@@ -709,324 +714,6 @@ void Particle_Activity::resumeEmissions()
     _paused = false;
 }
 
-void Particle_Activity::set_style_for_weather(const std::string &id_str , SDL_Renderer *renderer) {
-
-    
-    if (w_t_i_str == id_str) {
-        return;
-    }
-
-    w_t_i_str = id_str;
-
-    if ( w_t_i_str == "snowing" ) {
-        
-
-        setPosition(TERMX*fontwidth *0.35,0);
-
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(700);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        // set gravity mode.
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(0, 1));
-
-        // Gravity Mode: speed of particles
-        setSpeed(-5);
-        setSpeedVar(1);
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 45;
-        _lifeVar = 15;
-
-        // size, in pixels
-        _startSize = 10.0f;
-        _startSizeVar = 5.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 10;
-
-        // color of particles
-        _startColor.r = 1.0f;
-        _startColor.g = 1.0f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 1.0f;
-        _endColor.g = 1.0f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.0f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-
-    }
-    else if (w_t_i_str == "rain") {
-
-        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
-#if defined(__ANDROID__)
-
-        setPosition(WindowWidth * 0.38, 0);
-
-#endif
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-        
-        initWithTotalParticles(2000);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(10, 10));
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity Mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // Gravity Mode: speed of particles
-        setSpeed(-130);
-        setSpeedVar(30);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 4.5f;
-        _lifeVar = 0;
-
-        // size, in pixels
-        _startSize = 6.0f;
-        _startSizeVar = 2.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 20;
-
-        // color of particles
-        _startColor.r = 0.7f;
-        _startColor.g = 0.8f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 0.7f;
-        _endColor.g = 0.8f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.5f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-    
-    }
-    else if (w_t_i_str == "drizzle") {
-
-        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
-#if defined(__ANDROID__)
-
-        setPosition(WindowWidth * 0.38, 0);
-
-#endif
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(1000);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(10, 10));
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity Mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // Gravity Mode: speed of particles
-        setSpeed(-130);
-        setSpeedVar(30);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 4.5f;
-        _lifeVar = 0;
-
-        // size, in pixels
-        _startSize = 4.0f;
-        _startSizeVar = 2.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 20;
-
-        // color of particles
-        _startColor.r = 0.7f;
-        _startColor.g = 0.8f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 0.7f;
-        _endColor.g = 0.8f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.5f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-    
-    
-    
-    
-    }
-    else if (w_t_i_str == "light_drizzle") {
-
-        setPosition(TERMX * 0.35 * get_option<int>("FONT_WIDTH"), 0);              // set the position
-#if defined(__ANDROID__)
-
-        setPosition(WindowWidth * 0.38, 0);
-
-#endif
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(800);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(10, 10));
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity Mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // Gravity Mode: speed of particles
-        setSpeed(-130);
-        setSpeedVar(30);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 4.5f;
-        _lifeVar = 0;
-
-        // size, in pixels
-        _startSize = 4.0f;
-        _startSizeVar = 2.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 20;
-
-        // color of particles
-        _startColor.r = 0.7f;
-        _startColor.g = 0.8f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 0.7f;
-        _endColor.g = 0.8f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.5f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-
-
-
-        }
-
-
-    else {
-    
-        //
-        add_msg("测试信息");
-        
-    }
-
-
-
-
-}
-
-
 void Particle_Activity::set_style(const std::string& str) {
     if (style != str) {
         style = str;
@@ -1153,291 +840,6 @@ void Particle_Activity::set_style(const std::string& str) {
         _posVar = { 20.0f, 0.0f };
     
     }
-    // 天气
-    else if (style == "snowing") {
-
-
-        setPosition(TERMX * fontwidth * 0.35, 0);
-
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(700);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        // set gravity mode.
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(0, 1));
-
-        // Gravity Mode: speed of particles
-        setSpeed(-5);
-        setSpeedVar(1);
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 45;
-        _lifeVar = 15;
-
-        // size, in pixels
-        _startSize = 10.0f;
-        _startSizeVar = 5.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 10;
-
-        // color of particles
-        _startColor.r = 1.0f;
-        _startColor.g = 1.0f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 1.0f;
-        _endColor.g = 1.0f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.0f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-
-    }
-    else if (style == "rain") {
-
-        setPosition(TERMX * 0.35 * fontwidth, 0);              
-
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(2000);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(10, 10));
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity Mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // Gravity Mode: speed of particles
-        setSpeed(-130);
-        setSpeedVar(30);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 4.5f;
-        _lifeVar = 0;
-
-        // size, in pixels
-        _startSize = 6.0f;
-        _startSizeVar = 2.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 20;
-
-        // color of particles
-        _startColor.r = 0.7f;
-        _startColor.g = 0.8f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 0.7f;
-        _endColor.g = 0.8f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.5f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-
-    }
-    else if (style == "drizzle") {
-
-        setPosition(TERMX * 0.35 * fontwidth, 0);
-
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(1000);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(10, 10));
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity Mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // Gravity Mode: speed of particles
-        setSpeed(-130);
-        setSpeedVar(30);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 4.5f;
-        _lifeVar = 0;
-
-        // size, in pixels
-        _startSize = 4.0f;
-        _startSizeVar = 2.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 20;
-
-        // color of particles
-        _startColor.r = 0.7f;
-        _startColor.g = 0.8f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 0.7f;
-        _endColor.g = 0.8f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.5f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-
-
-
-    }
-    else if (style == "light_drizzle") {
-
-        setPosition(TERMX * 0.35 * fontwidth, 0);             
-
-        setStartSpin(0);
-        setStartSpinVar(90);
-        setEndSpin(90);
-        setStartSpinVar(90);
-
-        initWithTotalParticles(800);
-
-        // duration
-        _duration = DURATION_INFINITY;
-
-        setEmitterMode(Mode::GRAVITY);
-
-        // Gravity Mode: gravity
-        setGravity(Vec2(10, 10));
-
-        // Gravity Mode: radial
-        setRadialAccel(0);
-        setRadialAccelVar(1);
-
-        // Gravity Mode: tangential
-        setTangentialAccel(0);
-        setTangentialAccelVar(1);
-
-        // Gravity Mode: speed of particles
-        setSpeed(-130);
-        setSpeedVar(30);
-
-        // angle
-        _angle = -90;
-        _angleVar = 5;
-
-        // life of particles
-        _life = 4.5f;
-        _lifeVar = 0;
-
-        // size, in pixels
-        _startSize = 4.0f;
-        _startSizeVar = 2.0f;
-        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
-
-        // emits per second
-        _emissionRate = 20;
-
-        // color of particles
-        _startColor.r = 0.7f;
-        _startColor.g = 0.8f;
-        _startColor.b = 1.0f;
-        _startColor.a = 1.0f;
-        _startColorVar.r = 0.0f;
-        _startColorVar.g = 0.0f;
-        _startColorVar.b = 0.0f;
-        _startColorVar.a = 0.0f;
-        _endColor.r = 0.7f;
-        _endColor.g = 0.8f;
-        _endColor.b = 1.0f;
-        _endColor.a = 0.5f;
-        _endColorVar.r = 0.0f;
-        _endColorVar.g = 0.0f;
-        _endColorVar.b = 0.0f;
-        _endColorVar.a = 0.0f;
-
-        _posVar = { 1.0f * x_, 0.0f };
-
-    }
-
-
-
-
-
 }
 
 
