@@ -1,7 +1,7 @@
 #pragma once
 #ifndef CATA_SRC_PARTICLESYSTEM_H
 #define CATA_SRC_PARTICLESYSTEM_H
-//移植自Cocos2dx，版权声明请查看“文件存放”文件夹
+
 #if defined(_MSC_VER) && defined(USE_VCPKG)
 #      include <SDL2/SDL.h>
 
@@ -13,6 +13,10 @@
 #include <string>
 #include"sdl_wrappers.h"
 #include<unordered_set>
+#include "point.h"
+#include <map.h>
+
+extern std::map<std::string,std::string> monster_appearance_style_map;
 
 struct Pointf
 {
@@ -50,8 +54,13 @@ class ParticleData
 public:
     float posx = 0;
     float posy = 0;
+    int posz = 0;
     float startPosX = 0;
     float startPosY = 0;
+    int startPosZ = 0;
+    int world_start_pos_x = 0;
+    int world_start_pos_y = 0;
+    int world_start_pos_z = 0;
 
     float colorR = 0;
     float colorG = 0;
@@ -806,10 +815,15 @@ protected:
     /** is sourcePosition compatible */
     bool _sourcePositionCompatible = false;
 
-    int x_ = 0, y_ = 0;
+    int x_ = 0;
+    int y_ = 0; 
+    int z_ = 0;
+    int world_position_x_ = 0;
+    int world_position_y_ = 0;
+    int world_position_z_ = 0;
+
 public:
-    
-    void setPosition(int x, int y) { x_ = x; y_ = y; }
+    void set_position(const tripoint &p);
 };
 
 

@@ -2965,12 +2965,9 @@ void Creature::process_particle_activity() {
 
     if (is_monster()) {
         monster* m = as_monster();
-        if (m->type->id== mon_yrax_apeirogon || m->type->id== mon_zombie_smoker) {
+        if (monster_appearance_style_map.find(m->type->id.str()) != monster_appearance_style_map.end()) {
             particle_activity.set_style(m->type->id.str());
-            point screen_pos = cata_tiles::pos_to_screen(pos().xy());
-            screen_pos.x += cata_tiles::get_tile_width() / 2;
-            screen_pos.y += cata_tiles::get_tile_height() / 2;
-            particle_activity.setPosition(screen_pos.x, screen_pos.y);
+            particle_activity.set_position(m->pos());
         }
     }
 
