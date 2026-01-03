@@ -170,17 +170,6 @@ public:
 
 public:
 
-    Particle_Activity() {
-        particle_activity_list.push_back(this);
-    }
-
-    ~Particle_Activity() {
-        particle_activity_list.remove(this);
-    }
-
-
-    static std::list<Particle_Activity*> particle_activity_list;
-
     void init_weather_content();
 
     bool is_support_weather(const std::string& id);

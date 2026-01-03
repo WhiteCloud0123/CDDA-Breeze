@@ -3992,7 +3992,7 @@ void monster::on_load()
             local_attack_data.cooldown = std::max(0, local_attack_data.cooldown - to_turns<int>(dt));
         }
     }
-
+        
     add_msg_debug(debugmode::DF_MONSTER, "on_load() by %s, %d turns, healed %d hp, %d speed",
         name(), to_turns<int>(dt), healed, healed_speed);
 }
