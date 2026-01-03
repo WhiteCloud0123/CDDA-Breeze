@@ -1806,11 +1806,6 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
         for (Creature* c :get_player_character().get_visible_creatures(MAX_VIEW_DISTANCE)) {
             c->process_particle_activity();
         }
-
-        for (std::list<Particle_Activity*>::iterator iter = Particle_Activity::particle_activity_list.begin();
-            iter != Particle_Activity::particle_activity_list.end(); ++iter) {
-            (*iter)->draw();
-        }
     
     }
   

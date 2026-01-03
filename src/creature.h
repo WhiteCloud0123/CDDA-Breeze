@@ -1301,6 +1301,8 @@ class Creature : public viewer
          */
         tripoint_abs_omt global_omt_location() const;
 
+        Particle_Activity* get_particle_activity();
+
         void process_particle_activity();
 
     protected:

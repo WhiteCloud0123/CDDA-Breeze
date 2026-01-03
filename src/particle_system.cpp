@@ -12,7 +12,7 @@
 
 SDL_Texture* Particle_Activity::_texture = nullptr;
 SDL_Renderer* Particle_Activity::_renderer = nullptr;
-std::list<Particle_Activity*> Particle_Activity::particle_activity_list;
+
 std::map<std::string, std::string> monster_appearance_style_map = {
     {"mon_yrax_apeirogon","mon_yrax_apeirogon"},
     {"mon_zombie_smoker","mon_zombie_smoker"}

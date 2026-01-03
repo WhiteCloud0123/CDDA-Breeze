@@ -2961,13 +2961,19 @@ tripoint_abs_omt Creature::global_omt_location() const
     return project_to<coords::omt>( location );
 }
 
+Particle_Activity* Creature::get_particle_activity() {
+    return &particle_activity;
+}
+
 void Creature::process_particle_activity() {
 
     if (is_monster()) {
         monster* m = as_monster();
-        if (monster_appearance_style_map.find(m->type->id.str()) != monster_appearance_style_map.end()) {
-            particle_activity.set_style(m->type->id.str());
+        auto iter = monster_appearance_style_map.find(m->type->id.str());
+        if (iter != monster_appearance_style_map.end()) {
+            particle_activity.set_style(iter->second);
             particle_activity.set_position(m->pos());
+            particle_activity.draw();
         }
     }
 
