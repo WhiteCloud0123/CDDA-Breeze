@@ -2946,6 +2946,12 @@ void monster::die(Creature* nkiller)
     }
     g->set_critter_died();
     dead = true;
+    
+    // 清理粒子效果 - 当怪物死亡时删除其粒子效果
+    if (active_particle_effect != nullptr) {
+        ParticleEffectManager::get_instance().destroy_effect(active_particle_effect);
+        active_particle_effect = nullptr;
+    }
     set_killer(nkiller);
     if (get_killer() != nullptr) {
         Character* ch = get_killer()->as_character();

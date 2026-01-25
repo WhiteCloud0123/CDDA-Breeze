@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "particle_effect_manager.h"
 
 #include <algorithm>
 #include <array>
@@ -2971,12 +2972,13 @@ void Creature::process_particle_activity() {
         monster* m = as_monster();
         auto iter = monster_appearance_style_map.find(m->type->id.str());
         if (iter != monster_appearance_style_map.end()) {
-            particle_activity.set_style(iter->second);
-            particle_activity.set_position(m->pos());
-            particle_activity.draw();
+            if (active_particle_effect == nullptr) {
+                active_particle_effect = ParticleEffectManager::get_instance().create_effect(iter->second, m->pos());
+            } else {
+                active_particle_effect->set_position(m->pos());
+            }
         }
     }
-
 }
 
 std::unique_ptr<talker> get_talker_for( Creature &me )
