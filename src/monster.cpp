@@ -1,4 +1,5 @@
 #include "monster.h"
+#include "particle_effect_manager.h"
 
 #include <algorithm>
 #include <array>
