@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "particle_effect_manager.h"
 
 #include <algorithm>
 #include <array>
@@ -1192,6 +1193,7 @@ void Creature::deal_damage_handle_type( const effect_source &source, const damag
         case damage_type::BASH:
             // Bashing damage is less painful
             div = 5.0f;
+            ParticleEffectManager::get_instance().create_effect( "bleed", pos() );
             break;
 
         case damage_type::HEAT:
@@ -1236,6 +1238,7 @@ void Creature::deal_damage_handle_type( const effect_source &source, const damag
         case damage_type::ACID:
             // Acid damage and acid burns are more painful
             div = 3.0f;
+            ParticleEffectManager::get_instance().create_effect( "bleed", pos() );
             break;
 
         case damage_type::CUT:
@@ -1243,6 +1246,8 @@ void Creature::deal_damage_handle_type( const effect_source &source, const damag
         case damage_type::BULLET:
             // these are bleed inducing damage types
             make_bleed( source, bp, 1_minutes * rng( 1, adjusted_damage ) );
+            ParticleEffectManager::get_instance().create_effect( "bleed", pos() );
+            break;
 
         default:
             break;
@@ -2969,14 +2974,25 @@ void Creature::process_particle_activity() {
 
     if (is_monster()) {
         monster* m = as_monster();
+        
         auto iter = monster_appearance_style_map.find(m->type->id.str());
         if (iter != monster_appearance_style_map.end()) {
-            particle_activity.set_style(iter->second);
-            particle_activity.set_position(m->pos());
-            particle_activity.draw();
+            if (active_particle_effect == nullptr) {
+                active_particle_effect = ParticleEffectManager::get_instance().create_effect(iter->second, m->pos());
+            } else {
+                active_particle_effect->set_position(m->pos());
+            }
+        }
+        
+        if (has_effect(efftype_id("bleed")) || has_effect(efftype_id("dripping_mechanical_fluid"))) {
+            // Create or update bleeding particle effect
+            if (active_particle_effect == nullptr) {
+                active_particle_effect = ParticleEffectManager::get_instance().create_effect("bleed", m->pos());
+            } else {
+                active_particle_effect->set_position(m->pos());
+            }
         }
     }
-
 }
 
 std::unique_ptr<talker> get_talker_for( Creature &me )

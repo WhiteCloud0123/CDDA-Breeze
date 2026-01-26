@@ -1,4 +1,5 @@
 #include "cata_tiles.h"
+#include "particle_effect_manager.h"
 
 #include <algorithm>
 #include <array>
@@ -253,6 +254,8 @@ cata_tiles::cata_tiles( const SDL_Renderer_Ptr &renderer, const GeometryRenderer
     Particle_Activity::init_renderer(renderer.get());
 
     weather_particle_activity.init_weather_content();
+    
+    ParticleEffectManager::get_instance().load_config("particle_effects.json");
 
 }
 
@@ -1797,16 +1800,13 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
 
     
     if (use_particle_system ) {
-        // 天气
-        const std::string& id = get_weather().weather_id.str();
-        if (weather_particle_activity.is_support_weather(id)) {
-            weather_particle_activity.set_style(id);
-        }
-        
+
         for (Creature* c :get_player_character().get_visible_creatures(MAX_VIEW_DISTANCE)) {
             c->process_particle_activity();
         }
-    
+        
+        ParticleEffectManager::get_instance().update();
+        ParticleEffectManager::get_instance().draw();
     }
   
 

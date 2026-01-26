@@ -1,0 +1,176 @@
+{
+  "particle_effects": [
+    {
+      "id": "mon_yrax_apeirogon",
+      "name": "Yellow Aura",
+      "description": "无限面体外观的粒子效果",
+      "mode": "GRAVITY",
+      "total_particles": 10,
+      "duration": -1,
+      "gravity": {
+        "x": 0,
+        "y": 0
+      },
+      "speed": -60,
+      "speed_var": 10,
+      "radial_accel": -80,
+      "radial_accel_var": 0,
+      "tangential_accel": 80,
+      "tangential_accel_var": 0,
+      "angle": 90,
+      "angle_var": 360,
+      "life": 4,
+      "life_var": 1,
+      "start_size": 37.0,
+      "start_size_var": 10.0,
+      "end_size": "equal",
+      "start_color": {
+        "r": 1.00,
+        "g": 0.90,
+        "b": 0.05,
+        "a": 1.0
+      },
+      "start_color_var": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "end_color": {
+        "r": 0.90,
+        "g": 0.85,
+        "b": 0.60,
+        "a": 0.2
+      },
+      "end_color_var": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "pos_var": {
+        "x": 0,
+        "y": 0
+      },
+      "start_spin": 0,
+      "start_spin_var": 0,
+      "end_spin": 0,
+      "end_spin_var": 0
+    },
+    {
+      "id": "mon_zombie_smoker",
+      "name": "Smoke",
+      "description": "烟雾丧尸外观的粒子效果",
+      "mode": "GRAVITY",
+      "total_particles": 15,
+      "duration": -1,
+      "gravity": {
+        "x": 0,
+        "y": 0
+      },
+      "speed": -25,
+      "speed_var": 10,
+      "radial_accel": 0,
+      "radial_accel_var": 0,
+      "tangential_accel": 0,
+      "tangential_accel_var": 0,
+      "angle": 90,
+      "angle_var": 5,
+      "life": 1,
+      "life_var": 1,
+      "start_size": 20.0,
+      "start_size_var": 10.0,
+      "end_size": "equal",
+      "start_color": {
+        "r": 0.8,
+        "g": 0.8,
+        "b": 0.8,
+        "a": 1.0
+      },
+      "start_color_var": {
+        "r": 0.02,
+        "g": 0.02,
+        "b": 0.02,
+        "a": 0.0
+      },
+      "end_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "end_color_var": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "pos_var": {
+        "x": 20.0,
+        "y": 0.0
+      },
+      "start_spin": 0,
+      "start_spin_var": 0,
+      "end_spin": 0,
+      "end_spin_var": 0
+    },
+    {
+      "id": "bleed",
+      "name": "Bleed Effect",
+      "description": "生物受伤时的流血效果",
+      "mode": "GRAVITY",
+      "total_particles": 8,
+      "duration": 1,
+      "gravity": {
+        "x": 0,
+        "y": 50
+      },
+      "speed": 20,
+      "speed_var": 10,
+      "radial_accel": 0,
+      "radial_accel_var": 0,
+      "tangential_accel": 0,
+      "tangential_accel_var": 0,
+      "angle": 180,
+      "angle_var": 90,
+      "life": 1.5,
+      "life_var": 0.5,
+      "start_size": 5.0,
+      "start_size_var": 2.0,
+      "end_size": 2.0,
+      "end_size_var": 1.0,
+      "start_color": {
+        "r": 0.8,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "start_color_var": {
+        "r": 0.2,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.2
+      },
+      "end_color": {
+        "r": 0.5,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.3
+      },
+      "end_color_var": {
+        "r": 0.1,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.2
+      },
+      "pos_var": {
+        "x": 10.0,
+        "y": 10.0
+      },
+      "start_spin": 0,
+      "start_spin_var": 0,
+      "end_spin": 0,
+      "end_spin_var": 0
+    }
+  ]
+}
