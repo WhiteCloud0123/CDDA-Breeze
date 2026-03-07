@@ -2497,7 +2497,7 @@ void veh_interact::display_veh()
     win_lines = getmaxy(w_disp);
     
     termx_pixels = projected_window_width() / TERMX;
-    termy_pixels = projected_window_width() / TERMY;
+    termy_pixels = projected_window_height() / TERMY;
 
     tilecontext->set_draw_scale(zoom);
 // --------------------------------------------------------------------------
