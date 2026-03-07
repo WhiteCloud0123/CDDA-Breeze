@@ -2553,9 +2553,12 @@ void veh_interact::display_veh()
         }
     }
 
+    // Draw cursor at the current position
     int height_3d = 0;
-    tilecontext->draw_from_id_string_public("cursor", TILE_CATEGORY::NONE, "",tripoint(center_px,0),
-        0, 0, lit_level::LIT, false,height_3d);
+    // Use relative map coordinates for the cursor
+    // Cursor should be at (0,0) in relative coordinates (window center)
+    tilecontext->draw_from_id_string_public("cursor", TILE_CATEGORY::NONE, "", tripoint(0, 0, 0),
+        0, 0, lit_level::LIT, false, height_3d);
 
 // ------------------------------------------------------------------------------
     SDL_RenderSetClipRect(renderer.get(), nullptr);
