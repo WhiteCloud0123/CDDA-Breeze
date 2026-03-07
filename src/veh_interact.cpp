@@ -2438,8 +2438,7 @@ void veh_interact::display_grid()
 }
 
 
-void draw_vpart_tile(const vpart_id& vp_id, const point& pixel_pos,
-    int part_mod, int rotation_degrees) {
+void draw_vpart_tile(const vpart_id& vp_id, const point& rel_pos, int part_mod, int rotation_degrees) {
     if (!vp_id.is_valid()) {
         return;
     }
@@ -2457,7 +2456,8 @@ void draw_vpart_tile(const vpart_id& vp_id, const point& pixel_pos,
 
     int height_3d = 0;
     
-    tilecontext->draw_from_id_string_public(vpname, TILE_CATEGORY::VEHICLE_PART, "", tripoint(pixel_pos,0),
+    // Use relative position as map coordinates instead of pixel coordinates
+    tilecontext->draw_from_id_string_public(vpname, TILE_CATEGORY::VEHICLE_PART, "", tripoint(rel_pos,0),
         subtile, rotation_degrees, lit_level::BRIGHT, false, height_3d);
 }
 
@@ -2518,6 +2518,15 @@ void veh_interact::display_veh()
     SDL_Rect clip_rect = { win_left, win_top, win_width, win_height };
     SDL_RenderSetClipRect(renderer.get(), &clip_rect);
     
+    // Set o and op to map relative coordinates to screen coordinates
+    // o is the origin in map coordinates (set to 0,0 for relative coordinates)
+    // op is the origin in pixel coordinates (set to center of window)
+    cata_tiles::get_o() = point(0, 0);
+    cata_tiles::get_op() = center_px;
+    // Set screen tile dimensions based on window size
+    cata_tiles::get_screentile_wdith() = win_width / tile_w;
+    cata_tiles::get_screentile_height() = win_height / tile_h;
+    
     std::vector<int> structural_parts;
     for (auto& p : veh->get_all_parts()) {
         structural_parts.push_back(p.part_index());
@@ -2531,13 +2540,11 @@ void veh_interact::display_veh()
         // Calculate position relative to cursor
         // rotate(3) matches the rotation used in ASCII display_veh()
         const point rel = (mount + dd).rotate(3);
-        // Convert to pixel position (centered in window)
-        const point pixel_pos = center_px + point(rel.x * tile_w, rel.y * tile_h);
         // Get part rendering info
         char part_mod = 0;
         const vpart_id vp_id = part.id;
         const int rotation_degrees = static_cast<int>(std::round(to_degrees(270_degrees)));
-        draw_vpart_tile(vp_id, pixel_pos, part_mod, rotation_degrees);
+        draw_vpart_tile(vp_id, rel, part_mod, rotation_degrees);
     }
 
 
