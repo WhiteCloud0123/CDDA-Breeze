@@ -2506,18 +2506,12 @@ point calc_window_center_pixels(point win_pos,int termx_pixels,int termy_pixels,
  */
 void veh_interact::display_veh()
 {
-    point win_pos;
-    int win_cols = 0;
-    int win_lines = 0;
-    int termx_pixels = 0;
-    int termy_pixels = 0;
-
-    win_pos = point(getbegx(w_disp), getbegy(w_disp));
-    win_cols = getmaxx(w_disp);
-    win_lines = getmaxy(w_disp);
+    point win_pos = point(getbegx(w_disp), getbegy(w_disp));
+    int win_cols = getmaxx(w_disp);
+    int win_lines = getmaxy(w_disp);
     
-    termx_pixels = projected_window_width() / TERMX;
-    termy_pixels = projected_window_height() / TERMY;
+    int termx_pixels = projected_window_width() / TERMX;
+    int termy_pixels = projected_window_height() / TERMY;
 
     tilecontext->set_draw_scale(veh_interact_tile_zoom);
     werase(w_disp);
