@@ -2519,19 +2519,14 @@ void veh_interact::display_veh()
     SDL_Rect clip_rect = { win_left, win_top, win_width, win_height };
     SDL_RenderSetClipRect(renderer.get(), &clip_rect);
     
-    // Set o and op to map relative coordinates to screen coordinates
-    // o is the origin in map coordinates (set to 0,0 for relative coordinates)
-    // op is the origin in pixel coordinates (set to center of window)
     cata_tiles::get_o() = point(0, 0);
     cata_tiles::get_op() = center_px;
-    // Set screen tile dimensions based on window size
     cata_tiles::get_screentile_wdith() = win_width / tile_w;
     cata_tiles::get_screentile_height() = win_height / tile_h;
     
     // Get vehicle direction
     const int rotation = static_cast<int>(std::round(to_degrees(veh->face.dir())));
     
-    // Draw all parts, ensuring cross-shaped parts are included
     for (int i = 0; i < veh->part_count(); i++) {
         const vehicle_part& part = veh->part(i);
         if (part.removed) {
@@ -2541,22 +2536,16 @@ void veh_interact::display_veh()
             continue;
         }
         const point mount = part.mount;
-        // Calculate position relative to cursor
-        // rotate(3) matches the rotation used in ASCII display_veh()
         const point rel = (mount + dd).rotate(3);
-        // Get part rendering info
         char part_mod = 0;
         
-        // First try to get the part ID using part_id_string (non-roof)
         const std::string& vp_id_str1 = veh->part_id_string(i, part_mod, true, false);
         if (!vp_id_str1.empty()) {
             draw_vpart_tile(vp_id_str1, rel, part_mod, rotation);
         } else {
-            // If part_id_string returns empty, try using the raw part.id directly
             draw_vpart_tile(part.id.str(), rel, 0, rotation);
         }
         
-        // Reset part_mod for roof version
         part_mod = 0;
         const std::string& vp_id_str2 = veh->part_id_string(i, part_mod, false, true);
         if (!vp_id_str2.empty() && vp_id_str2 != vp_id_str1) {
@@ -2564,6 +2553,9 @@ void veh_interact::display_veh()
         }
     }
 
+    int height_3d = 0;
+    tilecontext->draw_from_id_string_public("cursor", TILE_CATEGORY::NONE, "",tripoint(center_px,0),
+        0, 0, lit_level::LIT, false,height_3d);
 
 // ------------------------------------------------------------------------------
     SDL_RenderSetClipRect(renderer.get(), nullptr);
