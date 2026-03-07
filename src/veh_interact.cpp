@@ -76,6 +76,12 @@
 #include "cata_tiles.h"
 #include "cursesport.h"
 
+
+const int VEH_INTERACT_TILE_MAXIMUM_ZOOM_LEVEL = 4;
+const int VEH_INTERACT_TILE_DEFAULT_ZOOM = 16;
+int veh_interact_tile_zoom = VEH_INTERACT_TILE_DEFAULT_ZOOM;
+int cache_tile_zoom = 0;
+
 static const activity_id ACT_VEHICLE( "ACT_VEHICLE" );
 
 static const ammotype ammo_battery( "battery" );
@@ -262,6 +268,8 @@ veh_interact::veh_interact( vehicle &veh, const point &p )
     main_context.register_action( "CONFIRM" );
     main_context.register_action( "HELP_KEYBINDINGS" );
     main_context.register_action( "FILTER" );
+    main_context.register_action("ZOOM_IN");
+    main_context.register_action("ZOOM_OUT");
     main_context.register_action( "ANY_INPUT" );
 
     count_durability();
@@ -289,7 +297,7 @@ void veh_interact::allocate_windows()
     const int pane_w = ( grid_w / 3 ) - 1;
 
     const int disp_w = grid_w - ( pane_w * 2 ) - 2;
-    const int disp_h = page_size * 0.45;
+    const int disp_h = page_size * 0.65;
     const int parts_h = page_size - disp_h;
     const int parts_y = pane_y + disp_h;
 
@@ -456,6 +464,7 @@ void veh_interact::hide_ui( const bool hide )
 
 void veh_interact::do_main_loop()
 {
+    cache_tile_zoom = g->get_zoom();
     bool finish = false;
     Character &player_character = get_player_character();
     const bool owned_by_player = veh->handle_potential_theft( dynamic_cast<Character &>
@@ -559,10 +568,30 @@ void veh_interact::do_main_loop()
         } else if( action == "PAGE_UP" ) {
             move_cursor( point_zero, -description_scroll_lines );
         }
+        else if (action=="ZOOM_IN") {
+            if (veh_interact_tile_zoom == 64) {
+                veh_interact_tile_zoom = VEH_INTERACT_TILE_MAXIMUM_ZOOM_LEVEL;
+            }
+            else {
+                veh_interact_tile_zoom = veh_interact_tile_zoom * 2;
+            }
+        }
+        else if(action=="ZOOM_OUT") {
+            if (veh_interact_tile_zoom > VEH_INTERACT_TILE_MAXIMUM_ZOOM_LEVEL) {
+                veh_interact_tile_zoom = veh_interact_tile_zoom/2;
+            }
+            else {
+                veh_interact_tile_zoom = 64;
+            }
+        }
         if( sel_cmd != ' ' ) {
             finish = true;
         }
     }
+
+    veh_interact_tile_zoom = VEH_INTERACT_TILE_DEFAULT_ZOOM;
+    tilecontext->set_draw_scale(cache_tile_zoom);
+
 }
 
 void veh_interact::cache_tool_availability()
@@ -2477,21 +2506,11 @@ point calc_window_center_pixels(point win_pos,int termx_pixels,int termy_pixels,
  */
 void veh_interact::display_veh()
 {
-    // Window position in terminal units
     point win_pos;
-    // Window size in terminal units
     int win_cols = 0;
     int win_lines = 0;
-
-    // Pixel dimensions of a terminal cell
     int termx_pixels = 0;
     int termy_pixels = 0;
-
-    // Zoom settings
-    int MIN_ZOOM = 8;
-    int MAX_ZOOM = 64;
-    int DEFAULT_ZOOM = 16;
-    int zoom = DEFAULT_ZOOM;
 
     win_pos = point(getbegx(w_disp), getbegy(w_disp));
     win_cols = getmaxx(w_disp);
@@ -2500,31 +2519,28 @@ void veh_interact::display_veh()
     termx_pixels = projected_window_width() / TERMX;
     termy_pixels = projected_window_height() / TERMY;
 
-    tilecontext->set_draw_scale(zoom);
-// --------------------------------------------------------------------------
+    tilecontext->set_draw_scale(veh_interact_tile_zoom);
     werase(w_disp);
 
     wnoutrefresh(w_disp);
-// --------------------------------------------------------------------------
-// display 开始
-    const point center_px = calc_window_center_pixels(win_pos,termx_pixels,termy_pixels,win_cols,win_lines);
+
     const int tile_w = tilecontext->get_tile_width();
     const int tile_h = tilecontext->get_tile_height();
     const int win_left = win_pos.x * termx_pixels;
     const int win_top = win_pos.y * termy_pixels;
     const int win_width = win_cols * termx_pixels;
     const int win_height = win_lines * termy_pixels;
-    // Set SDL clip rectangle to prevent drawing outside the window bounds
+
     const SDL_Renderer_Ptr& renderer = get_sdl_renderer();
     SDL_Rect clip_rect = { win_left, win_top, win_width, win_height };
     SDL_RenderSetClipRect(renderer.get(), &clip_rect);
     
     cata_tiles::get_o() = point(0, 0);
-    cata_tiles::get_op() = center_px;
-    cata_tiles::get_screentile_wdith() = win_width / tile_w;
-    cata_tiles::get_screentile_height() = win_height / tile_h;
-    
-    // Get vehicle direction
+    cata_tiles::get_op() = point(win_left, win_top);
+    cata_tiles::get_screentile_wdith() = win_cols;
+    cata_tiles::get_screentile_height() = win_lines;
+    point offset((win_width/tile_w) / 2, (win_height/tile_h) / 2);
+
     const int rotation = static_cast<int>(std::round(to_degrees(veh->face.dir())));
     
     for (int i = 0; i < veh->part_count(); i++) {
@@ -2536,7 +2552,8 @@ void veh_interact::display_veh()
             continue;
         }
         const point mount = part.mount;
-        const point rel = (mount + dd).rotate(3);
+        const point rel = (mount + dd).rotate(3) + offset;
+
         char part_mod = 0;
         
         const std::string& vp_id_str1 = veh->part_id_string(i, part_mod, true, false);
@@ -2553,14 +2570,11 @@ void veh_interact::display_veh()
         }
     }
 
-    // Draw cursor at the current position
     int height_3d = 0;
-    // Use relative map coordinates for the cursor
-    // Cursor should be at (0,0) in relative coordinates (window center)
-    tilecontext->draw_from_id_string_public("cursor", TILE_CATEGORY::NONE, "", tripoint(0, 0, 0),
+
+    tilecontext->draw_from_id_string_public("cursor", TILE_CATEGORY::NONE, "", tripoint(offset, 0),
         0, 0, lit_level::LIT, false, height_3d);
 
-// ------------------------------------------------------------------------------
     SDL_RenderSetClipRect(renderer.get(), nullptr);
 }
 
