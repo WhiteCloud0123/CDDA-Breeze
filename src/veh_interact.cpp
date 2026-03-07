@@ -2438,11 +2438,11 @@ void veh_interact::display_grid()
 }
 
 
-void draw_vpart_tile(const vpart_id& vp_id, const point& rel_pos, int part_mod, int rotation_degrees) {
-    if (!vp_id.is_valid()) {
+void draw_vpart_tile(const std::string& vp_id_str, const point& rel_pos, int part_mod, int rotation_degrees) {
+    if (vp_id_str.empty()) {
         return;
     }
-    const std::string vpname = "vp_" + vp_id.str();
+    const std::string vpname = "vp_" + vp_id_str;
 
     // part_mod: 0=normal, 1=open, 2=broken
     // Maps to subtile values used by cata_tiles
@@ -2457,8 +2457,9 @@ void draw_vpart_tile(const vpart_id& vp_id, const point& rel_pos, int part_mod, 
     int height_3d = 0;
     
     // Use relative position as map coordinates instead of pixel coordinates
+    // Use lit_level::LIT instead of BRIGHT to ensure consistent lighting
     tilecontext->draw_from_id_string_public(vpname, TILE_CATEGORY::VEHICLE_PART, "", tripoint(rel_pos,0),
-        subtile, rotation_degrees, lit_level::BRIGHT, false, height_3d);
+        subtile, rotation_degrees, lit_level::LIT, false, height_3d);
 }
 
 
@@ -2527,12 +2528,12 @@ void veh_interact::display_veh()
     cata_tiles::get_screentile_wdith() = win_width / tile_w;
     cata_tiles::get_screentile_height() = win_height / tile_h;
     
-    std::vector<int> structural_parts;
-    for (auto& p : veh->get_all_parts()) {
-        structural_parts.push_back(p.part_index());
-    }
-    for (int part_idx : structural_parts) {
-        const vehicle_part& part = veh->part(part_idx);
+    // Get vehicle direction
+    const int rotation = static_cast<int>(std::round(to_degrees(veh->face.dir())));
+    
+    // Draw all parts, ensuring cross-shaped parts are included
+    for (int i = 0; i < veh->part_count(); i++) {
+        const vehicle_part& part = veh->part(i);
         if (part.removed) {
             continue;
         }
@@ -2542,9 +2543,22 @@ void veh_interact::display_veh()
         const point rel = (mount + dd).rotate(3);
         // Get part rendering info
         char part_mod = 0;
-        const vpart_id vp_id = part.id;
-        const int rotation_degrees = static_cast<int>(std::round(to_degrees(270_degrees)));
-        draw_vpart_tile(vp_id, rel, part_mod, rotation_degrees);
+        
+        // First try to get the part ID using part_id_string (non-roof)
+        const std::string& vp_id_str1 = veh->part_id_string(i, part_mod, true, false);
+        if (!vp_id_str1.empty()) {
+            draw_vpart_tile(vp_id_str1, rel, part_mod, rotation);
+        } else {
+            // If part_id_string returns empty, try using the raw part.id directly
+            draw_vpart_tile(part.id.str(), rel, 0, rotation);
+        }
+        
+        // Reset part_mod for roof version
+        part_mod = 0;
+        const std::string& vp_id_str2 = veh->part_id_string(i, part_mod, false, true);
+        if (!vp_id_str2.empty() && vp_id_str2 != vp_id_str1) {
+            draw_vpart_tile(vp_id_str2, rel, part_mod, rotation);
+        }
     }
 
 
