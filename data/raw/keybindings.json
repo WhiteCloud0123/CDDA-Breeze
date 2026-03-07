@@ -1801,6 +1801,20 @@
   },
   {
     "type": "keybinding",
+    "id": "ZOOM_IN",
+    "category": "VEH_INTERACT",
+    "name": "缩小",
+    "bindings": [ { "input_method": "keyboard", "key": "z" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "ZOOM_OUT",
+    "category": "VEH_INTERACT",
+    "name": "放大",
+    "bindings": [ { "input_method": "keyboard", "key": "Z" } ]
+  },
+  {
+    "type": "keybinding",
     "id": "TOGGLE_UNAVAILABLE_CONSTRUCTIONS",
     "category": "CONSTRUCTION",
     "name": "Toggle unavailable constructions",
