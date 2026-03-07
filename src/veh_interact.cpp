@@ -2537,6 +2537,9 @@ void veh_interact::display_veh()
         if (part.removed) {
             continue;
         }
+        if (part.is_fake) {
+            continue;
+        }
         const point mount = part.mount;
         // Calculate position relative to cursor
         // rotate(3) matches the rotation used in ASCII display_veh()
