@@ -614,6 +614,13 @@ class cata_tiles
                                        const units::angle &veh_dir, bool hilite, const point &mount );
         void void_vpart_override();
 
+        bool draw_from_id_string_public(const std::string& id, TILE_CATEGORY category,
+            const std::string& subcategory, const tripoint& pos, int subtile, int rota,
+            lit_level ll, bool apply_night_vision_goggles, int& height_3d)
+        {
+            return draw_from_id_string(id, category, subcategory, pos, subtile, rota, ll, apply_night_vision_goggles, height_3d);
+        }
+
         void init_draw_below_override( const tripoint &p, bool draw );
         void void_draw_below_override();
 

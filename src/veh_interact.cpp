@@ -72,6 +72,9 @@
 #include "vehicle_selector.h"
 #include "vpart_position.h"
 #include "vpart_range.h"
+#include "sdltiles.h"
+#include "cata_tiles.h"
+#include "cursesport.h"
 
 static const activity_id ACT_VEHICLE( "ACT_VEHICLE" );
 
@@ -2434,89 +2437,112 @@ void veh_interact::display_grid()
     wnoutrefresh( w_border );
 }
 
+
+void draw_vpart_tile(const vpart_id& vp_id, const point& pixel_pos,
+    int part_mod, int rotation_degrees) {
+    if (!vp_id.is_valid()) {
+        return;
+    }
+    const std::string vpname = "vp_" + vp_id.str();
+
+    // part_mod: 0=normal, 1=open, 2=broken
+    // Maps to subtile values used by cata_tiles
+    int subtile = 0;
+    if (part_mod == 1) {
+        subtile = open_;
+    }
+    else if (part_mod == 2) {
+        subtile = broken;
+    }
+
+    int height_3d = 0;
+    
+    tilecontext->draw_from_id_string_public(vpname, TILE_CATEGORY::VEHICLE_PART, "", tripoint(pixel_pos,0),
+        subtile, rotation_degrees, lit_level::BRIGHT, false, height_3d);
+}
+
+
+point calc_window_center_pixels(point win_pos,int termx_pixels,int termy_pixels,int win_cols,int win_lines)
+{
+    // Calculate center of window in pixel coordinates
+    const int center_x = win_pos.x * termx_pixels + (win_cols * termx_pixels) / 2;
+    const int center_y = win_pos.y * termy_pixels + (win_lines * termy_pixels) / 2;
+    return point(center_x, center_y);
+}
+
+
 /**
  * Draws the viewport with the vehicle.
  */
 void veh_interact::display_veh()
 {
-    werase( w_disp );
-    const point h_size = point( getmaxx( w_disp ), getmaxy( w_disp ) ) / 2;
+    // Window position in terminal units
+    point win_pos;
+    // Window size in terminal units
+    int win_cols = 0;
+    int win_lines = 0;
 
-    if( debug_mode ) {
-        // show CoM, pivot in debug mode
+    // Pixel dimensions of a terminal cell
+    int termx_pixels = 0;
+    int termy_pixels = 0;
 
-        const point &pivot = veh->pivot_point();
-        const point &com = veh->local_center_of_mass();
+    // Zoom settings
+    int MIN_ZOOM = 8;
+    int MAX_ZOOM = 64;
+    int DEFAULT_ZOOM = 16;
+    int zoom = DEFAULT_ZOOM;
 
-        mvwprintz( w_disp, point_zero, c_green, "CoM   %d,%d", com.x, com.y );
-        // NOLINTNEXTLINE(cata-use-named-point-constants)
-        mvwprintz( w_disp, point( 0, 1 ), c_red,   "Pivot %d,%d", pivot.x, pivot.y );
+    win_pos = point(getbegx(w_disp), getbegy(w_disp));
+    win_cols = getmaxx(w_disp);
+    win_lines = getmaxy(w_disp);
+    
+    termx_pixels = projected_window_width() / TERMX;
+    termy_pixels = projected_window_width() / TERMY;
 
-        const point com_s = ( com + dd ).rotate( 3 ) + h_size;
-        const point pivot_s = ( pivot + dd ).rotate( 3 ) + h_size;
+    tilecontext->set_draw_scale(zoom);
+// --------------------------------------------------------------------------
+    werase(w_disp);
 
-        for( int x = 0; x < getmaxx( w_disp ); ++x ) {
-            if( x <= com_s.x ) {
-                mvwputch( w_disp, point( x, com_s.y ), c_green, LINE_OXOX );
-            }
-
-            if( x >= pivot_s.x ) {
-                mvwputch( w_disp, point( x, pivot_s.y ), c_red, LINE_OXOX );
-            }
+    wnoutrefresh(w_disp);
+// --------------------------------------------------------------------------
+// display 开始
+    const point center_px = calc_window_center_pixels(win_pos,termx_pixels,termy_pixels,win_cols,win_lines);
+    const int tile_w = tilecontext->get_tile_width();
+    const int tile_h = tilecontext->get_tile_height();
+    const int win_left = win_pos.x * termx_pixels;
+    const int win_top = win_pos.y * termy_pixels;
+    const int win_width = win_cols * termx_pixels;
+    const int win_height = win_lines * termy_pixels;
+    // Set SDL clip rectangle to prevent drawing outside the window bounds
+    const SDL_Renderer_Ptr& renderer = get_sdl_renderer();
+    SDL_Rect clip_rect = { win_left, win_top, win_width, win_height };
+    SDL_RenderSetClipRect(renderer.get(), &clip_rect);
+    
+    std::vector<int> structural_parts;
+    for (auto& p : veh->get_all_parts()) {
+        structural_parts.push_back(p.part_index());
+    }
+    for (int part_idx : structural_parts) {
+        const vehicle_part& part = veh->part(part_idx);
+        if (part.removed) {
+            continue;
         }
-
-        for( int y = 0; y < getmaxy( w_disp ); ++y ) {
-            if( y <= com_s.y ) {
-                mvwputch( w_disp, point( com_s.x, y ), c_green, LINE_XOXO );
-            }
-
-            if( y >= pivot_s.y ) {
-                mvwputch( w_disp, point( pivot_s.x, y ), c_red, LINE_XOXO );
-            }
-        }
+        const point mount = part.mount;
+        // Calculate position relative to cursor
+        // rotate(3) matches the rotation used in ASCII display_veh()
+        const point rel = (mount + dd).rotate(3);
+        // Convert to pixel position (centered in window)
+        const point pixel_pos = center_px + point(rel.x * tile_w, rel.y * tile_h);
+        // Get part rendering info
+        char part_mod = 0;
+        const vpart_id vp_id = part.id;
+        const int rotation_degrees = static_cast<int>(std::round(to_degrees(270_degrees)));
+        draw_vpart_tile(vp_id, pixel_pos, part_mod, rotation_degrees);
     }
 
-    // Draw guidelines to make current selection point more visible.
-    for( int y = 0; y < getmaxy( w_disp ); ++y ) {
-        mvwputch( w_disp, point( h_size.x, y ), c_dark_gray, LINE_XOXO );
-    }
 
-    for( int x = 0; x < getmaxx( w_disp ); ++x ) {
-        mvwputch( w_disp, point( x, h_size.y ), c_dark_gray, LINE_OXOX );
-    }
-
-    //Iterate over structural parts so we only hit each square once
-    std::vector<int> structural_parts = veh->all_parts_at_location( "structure" );
-    for( int &structural_part : structural_parts ) {
-        const int p = structural_part;
-        char sym = veh->part_sym( p, false, false );
-        nc_color col = veh->part_color( p, false, false );
-
-        const point q = ( veh->part( p ).mount + dd ).rotate( 3 );
-
-        if( q == point_zero ) {
-            col = hilite( col );
-            cpart = p;
-        }
-        mvwputch( w_disp, h_size + q, col, special_symbol( sym ) );
-    }
-
-    const int hw = getmaxx( w_disp ) / 2;
-    const int hh = getmaxy( w_disp ) / 2;
-    const point vd = -dd;
-    const point q = veh->coord_translate( vd );
-    const tripoint vehp = veh->global_pos3() + q;
-    map &here = get_map();
-    bool obstruct = here.impassable_ter_furn( vehp );
-    const optional_vpart_position ovp = here.veh_at( vehp );
-    if( ovp && &ovp->vehicle() != veh ) {
-        obstruct = true;
-    }
-    nc_color col = cpart >= 0 ? veh->part_color( cpart, false, false ) : c_black;
-    char sym = cpart >= 0 ? veh->part_sym( cpart, false, false ) : ' ';
-    mvwputch( w_disp, point( hw, hh ), obstruct ? red_background( col ) : hilite( col ),
-              special_symbol( sym ) );
-    wnoutrefresh( w_disp );
+// ------------------------------------------------------------------------------
+    SDL_RenderSetClipRect(renderer.get(), nullptr);
 }
 
 static std::string wheel_state_description( const vehicle &veh )
