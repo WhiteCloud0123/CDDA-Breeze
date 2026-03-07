@@ -119,58 +119,58 @@
       "name": "Bleed Effect",
       "description": "生物受伤时的流血效果",
       "mode": "GRAVITY",
-      "total_particles": 8,
+      "total_particles": 64,
       "duration": 1,
       "gravity": {
         "x": 0,
-        "y": 50
+        "y": 80
       },
-      "speed": 20,
-      "speed_var": 10,
-      "radial_accel": 0,
-      "radial_accel_var": 0,
-      "tangential_accel": 0,
-      "tangential_accel_var": 0,
+      "speed": 80,
+      "speed_var": 30,
+      "radial_accel": 20,
+      "radial_accel_var": 10,
+      "tangential_accel": 15,
+      "tangential_accel_var": 5,
       "angle": 180,
-      "angle_var": 90,
-      "life": 1.5,
-      "life_var": 0.5,
+      "angle_var": 150,
+      "life": 3.0,
+      "life_var": 1.0,
       "start_size": 5.0,
-      "start_size_var": 2.0,
+      "start_size_var": 1.5,
       "end_size": 2.0,
-      "end_size_var": 1.0,
+      "end_size_var": 0.8,
       "start_color": {
-        "r": 0.8,
+        "r": 0.7,
         "g": 0.0,
         "b": 0.0,
         "a": 1.0
       },
       "start_color_var": {
-        "r": 0.2,
+        "r": 0.1,
         "g": 0.0,
         "b": 0.0,
-        "a": 0.2
+        "a": 0.4
       },
       "end_color": {
-        "r": 0.5,
+        "r": 0.4,
         "g": 0.0,
         "b": 0.0,
-        "a": 0.3
+        "a": 0.5
       },
       "end_color_var": {
         "r": 0.1,
         "g": 0.0,
         "b": 0.0,
-        "a": 0.2
+        "a": 0.3
       },
       "pos_var": {
-        "x": 10.0,
-        "y": 10.0
+        "x": 20.0,
+        "y": 20.0
       },
-      "start_spin": 0,
-      "start_spin_var": 0,
-      "end_spin": 0,
-      "end_spin_var": 0
+      "start_spin": 180,
+      "start_spin_var": 90,
+      "end_spin": 360,
+      "end_spin_var": 180
     }
   ]
 }
