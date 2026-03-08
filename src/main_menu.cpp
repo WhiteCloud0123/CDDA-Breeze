@@ -50,7 +50,7 @@
 #include "worldfactory.h"
 
 enum class main_menu_opts : int {
-    OTHER = 0,
+    COMMUNITY = 0,
     NEWCHAR = 1,
     LOADCHAR = 2,
     WORLD = 3,
@@ -165,7 +165,7 @@ void main_menu::display_sub_menu( int sel, const point &bottom_left, int sel_lin
     int xlen = 0;
     main_menu_opts sel_o = static_cast<main_menu_opts>( sel );
     switch( sel_o ) {
-        case main_menu_opts::OTHER:
+        case main_menu_opts::COMMUNITY:
             return;
         case main_menu_opts::CREDITS:
             display_text( mmenu_credits, _( "Credits" ), sel_line );
@@ -439,7 +439,7 @@ void main_menu::init_strings()
 
     // fill menu with translated menu items
     vMenuItems.clear();
-    vMenuItems.emplace_back(pgettext("Main Menu", "其他"));
+    vMenuItems.emplace_back(pgettext("Main Menu", "社区"));
     vMenuItems.emplace_back( pgettext( "Main Menu", "<N|n>ew Game" ) );
     vMenuItems.emplace_back( pgettext( "Main Menu", "Lo<a|A>d" ) );
     vMenuItems.emplace_back( pgettext( "Main Menu", "<W|w>orld" ) );
@@ -791,6 +791,9 @@ bool main_menu::opening_screen()
             switch( static_cast<main_menu_opts>( sel1 ) ) {
                 case main_menu_opts::HELP:
                     get_help().display_help();
+                    break;
+                case main_menu_opts::COMMUNITY:
+                    popup("QQ群：1082913120");
                     break;
                 case main_menu_opts::QUIT:
                     return false;
