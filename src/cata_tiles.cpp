@@ -1802,7 +1802,9 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
     if (use_particle_system ) {
 
         for (Creature* c :get_player_character().get_visible_creatures(MAX_VIEW_DISTANCE)) {
-            c->process_particle_activity();
+            if (c != nullptr) {
+                c->process_particle_activity();
+            }
         }
         
         ParticleEffectManager::get_instance().update();
