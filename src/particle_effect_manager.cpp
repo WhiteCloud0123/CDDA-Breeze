@@ -4,6 +4,7 @@
 #include "output.h"
 #include "game.h"
 #include "map.h"
+#include "cached_options.h"
 
 ParticleEffectManager::ParticleEffectManager() {
 
@@ -58,6 +59,11 @@ const ParticleEffectConfig* ParticleEffectManager::get_effect_config(const std::
 }
 
 Particle_Activity* ParticleEffectManager::create_effect(const std::string& effect_id, const tripoint& pos) {
+    
+    if (use_particle_system == false) {
+        return;
+    }
+    
     const ParticleEffectConfig* config = get_effect_config(effect_id);
     if (!config) {
         debugmsg("Attempt to create unknown particle effect: %s", effect_id.c_str());
