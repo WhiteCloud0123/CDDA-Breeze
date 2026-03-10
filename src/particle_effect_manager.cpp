@@ -61,7 +61,7 @@ const ParticleEffectConfig* ParticleEffectManager::get_effect_config(const std::
 Particle_Activity* ParticleEffectManager::create_effect(const std::string& effect_id, const tripoint& pos) {
     
     if (use_particle_system == false) {
-        return;
+        return nullptr;
     }
     
     const ParticleEffectConfig* config = get_effect_config(effect_id);
