@@ -7680,9 +7680,10 @@ bool map::sees( const tripoint &F, const tripoint &T, const int range ) const
 }
 
 bool map::is_in_radius(const tripoint& center, const tripoint& target, int radius) {
-    return (std::abs(center.x - target.x) <= radius &&
-        std::abs(center.y - target.y) <= radius &&
-        std::abs(center.z - target.z) <= radius);
+    int dx = center.x - target.x;
+    int dy = center.y - target.y;
+    int dz = center.z - target.z;
+    return dx * dx + dy * dy + dz * dz <= radius * radius;
 }
 
 /**
