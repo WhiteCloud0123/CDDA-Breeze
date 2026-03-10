@@ -4660,7 +4660,6 @@ void talk_effect_t<T>::parse_string_effect( const std::string &effect_id, const 
             WRAP( npc_thankful ),
             WRAP( clear_overrides ),
             WRAP( do_disassembly ),
-            WRAP(set_npc_vertical_alert_range),
             WRAP( nothing ),
 #undef WRAP
         }
