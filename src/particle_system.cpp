@@ -14,8 +14,7 @@ SDL_Texture* Particle_Activity::_texture = nullptr;
 SDL_Renderer* Particle_Activity::_renderer = nullptr;
 
 std::map<std::string, std::string> monster_appearance_style_map = {
-    {"mon_yrax_apeirogon","mon_yrax_apeirogon"},
-    {"mon_zombie_smoker","mon_zombie_smoker"}
+    {"mon_yrax_apeirogon","mon_yrax_apeirogon"}
 };
 
 void Particle_Activity::set_position(const tripoint& p) {
