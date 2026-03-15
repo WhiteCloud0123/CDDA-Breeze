@@ -72,6 +72,7 @@ SDL_Texture_Ptr CreateTextureFromSurface( const SDL_Renderer_Ptr &renderer,
         return SDL_Texture_Ptr();
     }
     SDL_Texture_Ptr result( SDL_CreateTextureFromSurface( renderer.get(), surface.get() ) );
+    SetTextureBlendMode(result, SDL_BLENDMODE_BLEND);
     printErrorIf( !result, "SDL_CreateTextureFromSurface failed" );
     return result;
 }
