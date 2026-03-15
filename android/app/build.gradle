@@ -256,10 +256,10 @@ android {
         versionCode 90
         versionName "10.10"
         if (buildAsApplication) {
-            applicationId "WhiteCloud.CDDA_Test"
-            setProperty("archivesBaseName", "CDDA-Test-" + versionName)
+            applicationId "WhiteCloud.CDDA_Breeze"
+            setProperty("archivesBaseName", "CDDA-Breeze-" + versionName)
         }
-        resValue "string", "app_name", "CDDA Test "
+        resValue "string", "app_name", "CDDA Breeze "
 
         splits {
             // Configures multiple APKs based on ABI.
