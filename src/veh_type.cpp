@@ -126,7 +126,8 @@ static const std::unordered_map<std::string, vpart_bitflags> vpart_bitflag_map =
     { "ROOF", VPFLAG_ROOF },
     { "CABLE_PORTS", VPFLAG_CABLE_PORTS },
     {"CONVEYOR_BELT",VPFLAG_CONVEYOR_BELT},
-    {"CLASSIFIED_DEVICE",VPFLAG_CLASSIFIED_DEVICE}
+    {"CLASSIFIED_DEVICE",VPFLAG_CLASSIFIED_DEVICE},
+    { "AUTONOMOUS_CONTROL", VPFLAG_AUTONOMOUS_CONTROL }
 };
 
 static const std::vector<std::pair<std::string, veh_ter_mod>> standard_terrain_mod = {{
@@ -433,7 +434,7 @@ void vpart_info::load( const JsonObject &jo, const std::string &src )
     assign( jo, "categories", def.categories );
     assign( jo, "flags", def.flags );
     assign( jo, "description", def.description );
-
+    assign( jo, "decision_source_monster_id", def.decision_source_monster_id);
     assign( jo, "comfort", def.comfort );
     assign( jo, "floor_bedding_warmth", def.floor_bedding_warmth );
     assign( jo, "bonus_fire_warmth_feet", def.bonus_fire_warmth_feet );
