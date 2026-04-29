@@ -88,6 +88,10 @@
           {
             "id": "sloppyjoe",
             "fg": 19
+          },
+          {
+            "id": "flesh_core_control_1",
+            "fg": 20
           }
         ],
         "sprite_width": 32,

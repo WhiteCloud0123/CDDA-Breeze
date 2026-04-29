@@ -642,5 +642,9 @@
   {
     "id": "CLASSIFIED_DEVICE",
     "type": "json_flag"
+  },
+  {
+    "id": "AUTONOMOUS_CONTROL",
+    "type": "json_flag"
   }
 ]

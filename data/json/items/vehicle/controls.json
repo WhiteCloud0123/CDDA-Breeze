@@ -135,5 +135,17 @@
     "price": 500000,
     "price_postapoc": 3000,
     "copy-from": "vehicle_controls"
+  },
+    {
+    "type": "GENERIC",
+    "id": "flesh_core_control_1",
+    "name": { "str": "血肉核心" },
+    "description": "一个看起来令人毛骨悚然的血与肉融合而成的物体。",
+    "weight": "6000 g",
+    "color": "red",
+    "symbol": "o",
+    "volume": "9 L",
+    "price": 500000,
+    "price_postapoc": 3000
   }
 ]
