@@ -3284,8 +3284,8 @@
   },
   {
     "type": "vehicle_part",
-    "id": "vp_flesh_core_control_1",
-    "name": { "str": "血肉核心" },
+    "id": "vp_decision_control_boss_end_wheel",
+    "name": { "str": "决策中枢【终焉碾轮】" },
     "symbol": "o",
     "categories": [ "operations" ],
     "color": "red",
@@ -3293,16 +3293,14 @@
     "broken_color": "light_red",
     "damage_modifier": 10,
     "durability": 5000,
-    "description": "一个看起来令人毛骨悚然的血与肉融合而成的物体。",
-    "item": "flesh_core_control_1",
+    "description": "一块被厚重装甲保护的巨大电路板。内部具备多个集成电路芯片，决策逻辑被直接蚀刻在其中。",
+    "item": "decision_control_boss_end_wheel",
     "decision_source_monster_id": "mon_zombie",
-    "looks_like": "flesh_core_control_1",
-    "folded_volume": "1250 ml",
+    "looks_like": "decision_control_boss_end_wheel",
     "location": "center",
     "requirements": {
-      "install": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "welding_standard", 5 ] ] },
-      "removal": { "skills": [ [ "mechanics", 2 ] ], "time": "30 m", "using": [ [ "vehicle_weld_removal", 1 ] ] }
+      "removal": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "vehicle_weld_removal", 1 ] ] }
     },
-    "flags": [ "OBSTACLE", "NO_ROOF_NEEDED" , "HALF_BOARD","AUTONOMOUS_CONTROL"]
+    "flags": [ "OBSTACLE", "HALF_BOARD","AUTONOMOUS_CONTROL"]
   }
 ]

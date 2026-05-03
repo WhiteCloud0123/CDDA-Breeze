@@ -1,0 +1,42 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "smart_research_lab_nw",
+    "name": "智控研究所",
+    "sym": "#",
+    "color": "blue",
+    "see_cost": 5,
+    "monster_group": "GROUP_NULL",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_research_lab_ne",
+    "name": "智控研究所",
+    "sym": "#",
+    "color": "blue",
+    "see_cost": 5,
+    "monster_group": "GROUP_NULL",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_research_lab_sw",
+    "name": "智控研究所",
+    "sym": "#",
+    "color": "blue",
+    "see_cost": 5,
+    "monster_group": "GROUP_NULL",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_research_lab_se",
+    "name": "智控研究所",
+    "sym": "#",
+    "color": "blue",
+    "see_cost": 5,
+    "monster_group": "GROUP_NULL",
+    "flags": [ "NO_ROTATE" ]
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "TALK_SMART_RESEARCH",
+    "type": "talk_topic",
+    "dynamic_line": "你好！欢迎来到智控研究所。我是这里的研究员，迦勒·索恩。",
+    "responses": [
+      {
+        "text": "你好，这里发生了什么事？",
+        "topic": "TALK_SMART_RESEARCH_EXPLAIN"
+      },
+      {
+        "text": "我要走了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SMART_RESEARCH_EXPLAIN",
+    "type": "talk_topic",
+    "dynamic_line": "我们研究所正在开发的智控载具终焉碾轮，因为系统失控，现在被困在试验场里了。我们需要你帮我们取回它的核心决策模块。",
+    "responses": [
+      {
+        "text": "好的，我来帮你们。",
+        "condition": { "not": { "u_has_mission": "MISSION_GET_DECISION_CORE" } },
+        "topic": "TALK_SMART_RESEARCH_MISSION_OFFER"
+      },
+      {
+        "text": "我已经完成任务了。【交付决策中枢】",
+        "condition": { "and": [ { "u_has_mission": "MISSION_GET_DECISION_CORE" }, { "u_has_item": "decision_control_boss_end_wheel" } ] },
+        "effect": [
+          { "u_consume_item": "decision_control_boss_end_wheel", "count": 1, "popup": true },
+          { "u_spawn_item": "superglue", "count": 5 },
+          { "u_spawn_item": "toolbox", "count": 1 },
+          { "u_spawn_item": "screwdriver", "count": 2 },
+          { "u_spawn_item": "welding_goggles", "count": 1 },
+          { "finish_mission": "MISSION_GET_DECISION_CORE", "success": true }
+        ],
+        "topic": "TALK_SMART_RESEARCH_MISSION_COMPLETE"
+      },
+      {
+        "text": "任务进行中…",
+        "condition": { "u_has_mission": "MISSION_GET_DECISION_CORE" },
+        "topic": "TALK_SMART_RESEARCH_MISSION_INPROGRESS"
+      },
+      {
+        "text": "我要走了。",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SMART_RESEARCH_MISSION_OFFER",
+    "type": "talk_topic",
+    "dynamic_line": "太好了！我现在就给你安排任务。请务必小心，终焉碾轮是个极其危险的对手。",
+    "responses": [
+      {
+        "text": "好的，我准备好了！",
+        "effect": { "assign_mission": "MISSION_GET_DECISION_CORE" },
+        "topic": "TALK_SMART_RESEARCH_MISSION_ACCEPTED"
+      },
+      {
+        "text": "等等，我还没准备好。",
+        "topic": "TALK_SMART_RESEARCH"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SMART_RESEARCH_MISSION_ACCEPTED",
+    "type": "talk_topic",
+    "dynamic_line": "好的，任务已经给你了！试验场的位置我也给你标注在地图上了。祝你好运！",
+    "responses": [
+      {
+        "text": "谢谢，我会尽力的！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SMART_RESEARCH_MISSION_INPROGRESS",
+    "type": "talk_topic",
+    "dynamic_line": "加油！相信你一定能完成任务的。有什么需要我帮忙的吗？",
+    "responses": [
+      {
+        "text": "暂时没有，谢谢！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "id": "TALK_SMART_RESEARCH_MISSION_COMPLETE",
+    "type": "talk_topic",
+    "dynamic_line": "太棒了！谢谢你！这是我们研究所的一点心意，请收下！",
+    "responses": [
+      {
+        "text": "不客气！",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

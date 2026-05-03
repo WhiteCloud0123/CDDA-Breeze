@@ -1,0 +1,83 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_nw",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_n",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_ne",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_w",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_c",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_e",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_sw",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_s",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "smart_vehicle_testing_ground_se",
+    "name": "智控载具试验场",
+    "sym": "T",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "NO_ROTATE" ]
+  }
+]

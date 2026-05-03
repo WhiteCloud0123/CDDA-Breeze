@@ -1,0 +1,351 @@
+[
+    {
+        "id": "boss_end_wheel",
+        "type": "vehicle",
+        "name": "终焉碾轮",
+        "blueprint": [
+            [
+                "B--+'B"
+            ],
+            [
+                "B='H'B"
+            ],
+            [
+                "B=+#'B"
+            ],
+            [
+                "B='H'B"
+            ],
+            [
+                "B--+'B"
+            ]
+        ],
+        "parts": [
+            {
+                "x": 0,
+                "y": 0,
+                "parts": [
+                    "frame_cross",
+                    "seat",
+                    "seatbelt",
+                    "controls",
+                    "dashboard"
+                ]
+            },
+            {
+                "x": 0,
+                "y": 0,
+                "parts": [
+                    "vehicle_alarm",
+                    "horn_car",
+                    "roof"
+                ]
+            },
+            {
+                "x": 0,
+                "y": -1,
+                "parts": [
+                    "frame_horizontal_2",
+                    "roof",
+                    "trunk_floor"
+                ]
+            },
+            {
+                "x": 0,
+                "y": -2,
+                "parts": [
+                    "frame_vertical_T_left",
+                    "door_nw",
+                    "roof"
+                ]
+            },
+            {
+                "x": 0,
+                "y": 1,
+                "parts": [
+                    "frame_horizontal_2",
+                    "roof",
+                    "trunk_floor"
+                ]
+            },
+            {
+                "x": 0,
+                "y": 2,
+                "parts": [
+                    "frame_vertical_T_right",
+                    "door_front_right",
+                    "roof"
+                ]
+            },
+            {
+                "x": 1,
+                "y": -1,
+                "parts": [
+                    "frame_vertical",
+                    "windshield_horizontal_front"
+                ]
+            },
+            {
+                "x": 1,
+                "y": -1,
+                "parts": [
+                    "headlight",
+                    "roof"
+                ]
+            },
+            {
+                "x": 1,
+                "y": -2,
+                "parts": [
+                    "frame_vertical_left",
+                    "windshield_nw",
+                    "roof"
+                ]
+            },
+            {
+                "x": 1,
+                "y": 0,
+                "parts": [
+                    "frame_vertical",
+                    "windshield_horizontal_front"
+                ]
+            },
+            {
+                "x": 1,
+                "y": 0,
+                "parts": [
+                    "diesel_engine_i6",
+                    "roof",
+                    "alternator_truck"
+                ]
+            },
+            {
+                "x": 1,
+                "y": 0,
+                "part": "battery_car"
+            },
+            {
+                "x": 1,
+                "y": 1,
+                "parts": [
+                    "frame_vertical",
+                    "windshield_horizontal_front"
+                ]
+            },
+            {
+                "x": 1,
+                "y": 1,
+                "parts": [
+                    "headlight",
+                    "roof"
+                ]
+            },
+            {
+                "x": 1,
+                "y": 2,
+                "parts": [
+                    "frame_vertical_right",
+                    "windshield_ne",
+                    "roof"
+                ]
+            },
+            {
+                "x": 2,
+                "y": -1,
+                "parts": [
+                    "frame_horizontal_front",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": 2,
+                "y": -2,
+                "parts": [
+                    "frame_nw",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": 2,
+                "y": 0,
+                "parts": [
+                    "frame_horizontal_front",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": 2,
+                "y": 1,
+                "parts": [
+                    "frame_horizontal_front",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": 2,
+                "y": 2,
+                "parts": [
+                    "frame_ne",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": -1,
+                "y": -1,
+                "parts": [
+                    "frame_cross",
+                    "windshield_horizontal_rear",
+                    "roof"
+                ]
+            },
+            {
+                "x": -1,
+                "y": -2,
+                "part": "frame_vertical_left"
+            },
+            {
+                "x": -1,
+                "y": -2,
+                "parts": [
+                    {
+                        "part": "tank",
+                        "fuel": "diesel"
+                    },
+                    "roof"
+                ]
+            },
+            {
+                "x": -1,
+                "y": -2,
+                "part": "halfboard_vertical_left"
+            },
+            {
+                "x": -1,
+                "y": 0,
+                "parts": [
+                    "frame_cross",
+                    "vp_decision_control_boss_end_wheel",
+                    "roof"
+                ]
+            },
+            {
+                "x": -1,
+                "y": 1,
+                "parts": [
+                    "frame_cross",
+                    "windshield_horizontal_rear",
+                    "roof"
+                ]
+            },
+            {
+                "x": -1,
+                "y": 2,
+                "parts": [
+                    "frame_vertical_right",
+                    "halfboard_vertical_right"
+                ]
+            },
+            {
+                "x": -1,
+                "y": 2,
+                "parts": [
+                    {
+                        "part": "tank",
+                        "fuel": "diesel"
+                    },
+                    "roof"
+                ]
+            },
+            {
+                "x": -2,
+                "y": -1,
+                "parts": [
+                    "frame_horizontal_2",
+                    "trunk"
+                ]
+            },
+            {
+                "x": -2,
+                "y": -2,
+                "parts": [
+                    "frame_vertical_T_left",
+                    "halfboard_sw"
+                ]
+            },
+            {
+                "x": -2,
+                "y": 0,
+                "parts": [
+                    "frame_horizontal",
+                    "trunk"
+                ]
+            },
+            {
+                "x": -2,
+                "y": 1,
+                "parts": [
+                    "frame_horizontal_2",
+                    "trunk"
+                ]
+            },
+            {
+                "x": -2,
+                "y": 2,
+                "parts": [
+                    "frame_vertical_T_right",
+                    "halfboard_se"
+                ]
+            },
+            {
+                "x": -3,
+                "y": -1,
+                "parts": [
+                    "frame_horizontal_rear",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": -3,
+                "y": -2,
+                "parts": [
+                    "frame_sw",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": -3,
+                "y": 0,
+                "parts": [
+                    "frame_horizontal_rear",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": -3,
+                "y": 1,
+                "parts": [
+                    "frame_horizontal_rear",
+                    "roller_drum"
+                ]
+            },
+            {
+                "x": -3,
+                "y": 2,
+                "parts": [
+                    "frame_se",
+                    "roller_drum"
+                ]
+            }
+        ],
+        "items": [
+            {
+                "x": 0,
+                "y": 0,
+                "chance": 5,
+                "items": [
+                    "hat_hard"
+                ]
+            }
+        ]
+    }
+]

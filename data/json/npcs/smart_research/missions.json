@@ -1,0 +1,32 @@
+[
+  {
+    "id": "MISSION_GET_DECISION_CORE",
+    "type": "mission_definition",
+    "name": { "str": "取回决策中枢【终焉碾轮】" },
+    "goal": "MGOAL_FIND_ITEM",
+    "difficulty": 5,
+    "value": 200000,
+    "item": "decision_control_boss_end_wheel",
+    "origins": [ "ORIGIN_OPENER_NPC" ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "smart_vehicle_testing_ground_c",
+        "om_special": "智控载具试验场",
+        "reveal_radius": 3,
+        "search_range": 480,
+        "min_distance": 30
+      }
+    },
+    "dialogue": {
+      "describe": "我们需要你帮我们完成一项重要任务。",
+      "offer": "我们研究所正在开发的智控载具终焉碾轮失控了，我们需要你去智控载具试验场，击败它，然后带回它的核心决策模块——决策中枢【终焉碾轮】。只有把这个交给我们，任务才算完成。",
+      "accepted": "太好了！请务必小心，终焉碾轮是个极其危险的对手。",
+      "rejected": "好吧，我理解。但如果你改变主意了，随时回来找我。",
+      "advice": "智控载具试验场在荒野里，你需要做好充分准备。带够武器、弹药和医疗用品。",
+      "inquire": "任务进行得怎么样了？找到智控载具试验场了吗？",
+      "success": "太棒了！你成功了！谢谢你为研究所做出的巨大贡献！",
+      "success_lie": "别想骗我，我能看出来你没带回正确的东西。",
+      "failure": "没关系，这确实是个非常困难的任务。如果你愿意，我们可以再试一次。"
+    }
+  }
+]
