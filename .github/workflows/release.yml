@@ -135,6 +135,13 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           vcpkg integrate install --vcpkg-root '${{ runner.workspace }}\b\vcpkg'
+      - name: Cache vcpkg installed packages
+        if: runner.os == 'Windows'
+        uses: actions/cache@v4
+        id: cache-vcpkg
+        with:
+          path: msvc-full-features/vcpkg_installed/
+          key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/${{ matrix.arch }}-windows-static.cmake') }}-9dd12f8d791f6fa4e396adbebc714d51cbee2143
       - name: Install dependencies (windows msvc) (4/4)
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
