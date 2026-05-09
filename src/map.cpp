@@ -649,40 +649,46 @@ void map::vehmove()
                         }
                     }
                     can_move = can_move && has_fuel;
-                    
-                    Character &player_character = get_player_character();
                     tripoint veh_pos = veh->global_pos3();
+                    Creature* target = nullptr;
+                    // 创建临时怪物判断态度
+                    monster temp_monster(decision_monster_id);
+                    temp_monster.setpos(veh_pos);
+                    monster_attitude* attitude = nullptr;
+                    for (Creature &c : g->all_creatures()) {
+                        // 不处于同一z轴，不用管
+                        if (c.posz()!=veh_pos.z) {
+                            continue;
+                        }
+                        if (temp_monster.attitude_to(c)==Creature::Attitude::HOSTILE) {
+                            target = &c;
+                            break;
+                        }
+                    }
                     
-                    // 检查玩家是否在附近（30格范围内）
-                    int distance = rl_dist( veh_pos.xy(), player_pos.xy() );
-                    bool player_nearby = distance <= 30;
-                    
-                    // 创建假怪物判断态度
-                    monster temp_monster( decision_monster_id );
-                    monster_attitude attitude = temp_monster.attitude( &player_character );
-                    
-                    if( player_nearby && attitude == MATT_ATTACK && can_move ) {
-                        add_msg( "Autonomous control: ATTACKING!" );
-                        // 敌人！敌对，启动引擎
-                        if( !veh->engine_on ) {
-                            for( size_t e = 0; e < veh->engines.size(); ++e ) {
-                                veh->toggle_specific_engine( e, true );
+                    if(target!=nullptr) {
+                        bool can_see = temp_monster.sees(*target);
+                        if (can_move && can_see) {
+                            add_msg("Autonomous control: ATTACKING!");
+                            // 敌人！敌对，启动引擎
+                            if (!veh->engine_on) {
+                                for (size_t e = 0; e < veh->engines.size(); ++e) {
+                                    veh->toggle_specific_engine(e, true);
+                                }
+                                veh->engine_on = true;
                             }
-                            veh->engine_on = true;
-                        }  
+
+                            // 设置跟随状态，这样 gain_moves 中的巡航控制会执行    
+                            veh->is_following = true;
+                            // 设置巡航速度
+                            veh->cruise_velocity = veh->safe_velocity();
+                            veh->cruise_on = true;
+                            veh->drive_to_local_target(getabs(target->pos()), false);
+                        }
                         
-                        // 设置跟随状态，这样 gain_moves 中的巡航控制会执行    
-                        veh->is_following = true;
-                        // 设置巡航速度
-                        veh->cruise_velocity = veh->safe_velocity();
-                        veh->cruise_on = true;
-                               
-                        // 直接朝玩家冲过去，无视障碍物 - 使用 drive_to_local_ta
-                        veh->drive_to_local_target( getabs( player_pos ), false );
                         
-                    } else if( veh->engine_on && !player_nearby ) {
+                    } else if( veh->engine_on) {
                         add_msg( "Autonomous control: Stopping engine" );
-                        // 附近没有玩家了，自动熄火
                         veh->is_following = false;
                         veh->cruise_on = false;
                         veh->cruise_velocity = 0;
