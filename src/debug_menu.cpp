@@ -3356,40 +3356,57 @@ void debug()
                         jsout.member( "weight", 100 );
                         jsout.member( "object" );
                         jsout.start_object();
-                        jsout.member( "palettes", std::vector<std::string>{ "exported_palette" } );
+                        jsout.member( "fill_ter", "t_dirt" ); // 默认填充地形
+                        jsout.member( "terrain" );
+                        jsout.start_object();
+                        for( const auto &pair : terrain_to_char ) {
+                            jsout.member( std::string( 1, pair.second ), pair.first );
+                        }
+                        jsout.end_object();
+                        jsout.member( "furniture" );
+                        jsout.start_object();
+                        for( const auto &pair : furniture_to_char ) {
+                            jsout.member( std::string( 1, pair.second ), pair.first );
+                        }
+                        jsout.end_object();
                         jsout.member( "flags", std::vector<std::string>{ "ERASE_ALL_BEFORE_PLACING_TERRAIN" } );
 
-                        // 写出地形行
+                        // 写出包含地形和家具的行
                         jsout.member( "rows" );
                         jsout.start_array();
                         for( int y = 0; y < SEEX * 2; ++y ) {
                             std::string row;
                             for( int x = 0; x < SEEY * 2; ++x ) {
                                 tripoint p( x, y, 0 );
-                                std::string ter_str = tm.ter( p ).id().str();
-                                row += terrain_to_char[ter_str];
-                            }
-                            jsout.write( row );
-                        }
-                        jsout.end_array();
-
-                        // 写出家具（覆盖在地形上）
-                        jsout.member( "furniture" );
-                        jsout.start_array();
-                        for( int y = 0; y < SEEX * 2; ++y ) {
-                            std::string row;
-                            for( int x = 0; x < SEEY * 2; ++x ) {
-                                tripoint p( x, y, 0 );
                                 furn_id fid = tm.furn( p );
-                                if( fid == f_null ) {
-                                    row += " ";
+                                if( fid != f_null ) {
+                                    std::string furn_str = fid.id().str();
+                                    row += furniture_to_char[furn_str];
                                 } else {
-                                    row += furniture_to_char[fid.id().str()];
+                                    std::string ter_str = tm.ter( p ).id().str();
+                                    row += terrain_to_char[ter_str];
                                 }
                             }
                             jsout.write( row );
                         }
                         jsout.end_array();
+
+                        // 递归收集所有物品（包括嵌套物品）
+                        std::function<void( const item &, int, int )> add_item_with_contents =
+                            [&]( const item &it, int x, int y ) {
+                                // 先添加这个物品本身
+                                jsout.start_object();
+                                jsout.member( "item", it.typeId() );
+                                jsout.member( "chance", 100 );
+                                jsout.member( "x", x );
+                                jsout.member( "y", y );
+                                jsout.end_object();
+
+                                // 然后递归添加所有嵌套内容
+                                for( const item *content : it.all_known_contents() ) {
+                                    add_item_with_contents( *content, x, y );
+                                }
+                            };
 
                         // 写出物品
                         jsout.member( "loot" );
@@ -3399,12 +3416,7 @@ void debug()
                                 tripoint p( x, y, 0 );
                                 map_stack items = tm.i_at( p );
                                 for( const item &it : items ) {
-                                    jsout.start_object();
-                                    jsout.member( "item", it.typeId() );
-                                    jsout.member( "chance", 100 );
-                                    jsout.member( "x", x );
-                                    jsout.member( "y", y );
-                                    jsout.end_object();
+                                    add_item_with_contents( it, x, y );
                                 }
                             }
                         }
