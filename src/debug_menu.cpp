@@ -227,6 +227,7 @@ std::string enum_to_string<debug_menu::debug_menu_index>( debug_menu::debug_menu
         case debug_menu::debug_menu_index::VEHICLE_BATTERY_CHARGE: return "VEHICLE_BATTERY_CHARGE";
         case debug_menu::debug_menu_index::GENERATE_EFFECT_LIST: return "GENERATE_EFFECT_LIST";
         case debug_menu::debug_menu_index::ACTIVATE_EOC: return "ACTIVATE_EOC";
+        case debug_menu::debug_menu_index::EXPORT_OVERMAP_SPECIAL: return "EXPORT_OVERMAP_SPECIAL";
         // *INDENT-ON*
         case debug_menu::debug_menu_index::last:
             break;
@@ -552,6 +553,7 @@ static int map_uilist()
         { uilist_entry( debug_menu_index::MAP_EXTRA, true, 'm', _( "Spawn map extra" ) ) },
         { uilist_entry( debug_menu_index::NESTED_MAPGEN, true, 'n', _( "Spawn nested mapgen" ) ) },
         { uilist_entry( debug_menu_index::EDIT_CAMP_LARDER, true, 'l', _( "Edit the faction camp larder" ) ) },
+        { uilist_entry( debug_menu_index::EXPORT_OVERMAP_SPECIAL, true, 'E', _( "Export overmap special" ) ) },
     };
 
     return uilist( _( "Map…" ), uilist_initializer );
@@ -3219,6 +3221,235 @@ void debug()
                 g->quickload();
             }
             break;
+        case debug_menu_index::EXPORT_OVERMAP_SPECIAL: {
+            // 1. 让用户选择两个点作为范围
+            popup( _( "Select first overmap tile for export" ) );
+            const tripoint_abs_omt first_omt( ui::omap::choose_point( true ) );
+            if( first_omt == overmap::invalid_tripoint ) {
+                break;
+            }
+
+            popup( _( "Select second overmap tile for export" ) );
+            const tripoint_abs_omt second_omt( ui::omap::choose_point( true ) );
+            if( second_omt == overmap::invalid_tripoint ) {
+                break;
+            }
+
+            // 2. 确定范围的边界
+            const int min_x = std::min( first_omt.x(), second_omt.x() );
+            const int max_x = std::max( first_omt.x(), second_omt.x() );
+            const int min_y = std::min( first_omt.y(), second_omt.y() );
+            const int max_y = std::max( first_omt.y(), second_omt.y() );
+            const int z_level = first_omt.z(); // 使用第一个点的 z 层
+
+            // 3. 获取文件名
+            std::string filename = "overmap_special_export.json";
+            string_input_popup filename_popup;
+            filename_popup
+                .title( _( "Enter filename for export" ) )
+                .width( 60 )
+                .edit( filename );
+            if( filename_popup.canceled() ) {
+                break;
+            }
+
+            // 4. 导出到 JSON 文件
+            write_to_file( filename, [&]( std::ostream & outfile ) {
+                JsonOut jsout( outfile, true ); // pretty print = true
+                jsout.start_array(); // 数组根节点
+
+                // 首先创建调色板
+                std::map<std::string, char> terrain_to_char;
+                std::map<std::string, char> furniture_to_char;
+                char next_ter_char = 'a';
+                char next_furn_char = 'A';
+
+                // 第一次遍历以收集所有唯一的地形和家具
+                int mapgen_idx = 0;
+                for( int omt_x = min_x; omt_x <= max_x; ++omt_x ) {
+                    for( int omt_y = min_y; omt_y <= max_y; ++omt_y ) {
+                        tripoint_abs_omt current_omt( omt_x, omt_y, z_level );
+                        tripoint_abs_sm sm_start = project_to<coords::sm>( current_omt );
+                        tinymap tm;
+                        tm.load( sm_start, false );
+
+                        // 收集唯一地形 ID
+                        for( int y = 0; y < SEEX * 2; ++y ) {
+                            for( int x = 0; x < SEEY * 2; ++x ) {
+                                tripoint p( x, y, 0 );
+                                std::string ter_str = tm.ter( p ).id().str();
+                                if( terrain_to_char.find( ter_str ) == terrain_to_char.end() ) {
+                                    terrain_to_char[ter_str] = next_ter_char++;
+                                    if( next_ter_char > 'z' ) {
+                                        next_ter_char = '0';
+                                    }
+                                    if( next_ter_char > '9' ) {
+                                        next_ter_char = '!';
+                                    }
+                                }
+
+                                furn_id fid = tm.furn( p );
+                                if( fid != f_null ) {
+                                    std::string furn_str = fid.id().str();
+                                    if( furniture_to_char.find( furn_str ) == furniture_to_char.end() ) {
+                                        furniture_to_char[furn_str] = next_furn_char++;
+                                        if( next_furn_char > 'Z' ) {
+                                            next_furn_char = '@';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 写出调色板
+                jsout.start_object();
+                jsout.member( "type", "palette" );
+                jsout.member( "id", "exported_palette" );
+                jsout.member( "terrain" );
+                jsout.start_object();
+                for( const auto &pair : terrain_to_char ) {
+                    jsout.member( std::string( 1, pair.second ), pair.first );
+                }
+                jsout.end_object();
+                jsout.member( "furniture" );
+                jsout.start_object();
+                for( const auto &pair : furniture_to_char ) {
+                    jsout.member( std::string( 1, pair.second ), pair.first );
+                }
+                jsout.end_object();
+                jsout.end_object();
+
+                // 写出 overmap_terrain 定义
+                for( int omt_x = min_x; omt_x <= max_x; ++omt_x ) {
+                    for( int omt_y = min_y; omt_y <= max_y; ++omt_y ) {
+                        std::string mapgen_id = "exported_mapgen_" + std::to_string( mapgen_idx++ );
+                        jsout.start_object();
+                        jsout.member( "type", "overmap_terrain" );
+                        jsout.member( "id", mapgen_id );
+                        jsout.member( "name", "Exported Tile" );
+                        jsout.member( "sym", "?" );
+                        jsout.member( "color", "white" );
+                        jsout.member( "flags", std::vector<std::string>{ "NO_ROTATE" } );
+                        jsout.end_object();
+                    }
+                }
+                mapgen_idx = 0;
+
+                // 现在写出每个大地图格子对应的 mapgen
+                std::vector<std::string> mapgen_ids;
+                for( int omt_x = min_x; omt_x <= max_x; ++omt_x ) {
+                    for( int omt_y = min_y; omt_y <= max_y; ++omt_y ) {
+                        tripoint_abs_omt current_omt( omt_x, omt_y, z_level );
+                        tripoint_abs_sm sm_start = project_to<coords::sm>( current_omt );
+                        tinymap tm;
+                        tm.load( sm_start, false );
+
+                        std::string mapgen_id = "exported_mapgen_" + std::to_string( mapgen_idx++ );
+                        mapgen_ids.push_back( mapgen_id );
+
+                        jsout.start_object();
+                        jsout.member( "type", "mapgen" );
+                        jsout.member( "method", "json" );
+                        jsout.member( "om_terrain", mapgen_id );
+                        jsout.member( "weight", 100 );
+                        jsout.member( "object" );
+                        jsout.start_object();
+                        jsout.member( "palettes", std::vector<std::string>{ "exported_palette" } );
+                        jsout.member( "flags", std::vector<std::string>{ "ERASE_ALL_BEFORE_PLACING_TERRAIN" } );
+
+                        // 写出地形行
+                        jsout.member( "rows" );
+                        jsout.start_array();
+                        for( int y = 0; y < SEEX * 2; ++y ) {
+                            std::string row;
+                            for( int x = 0; x < SEEY * 2; ++x ) {
+                                tripoint p( x, y, 0 );
+                                std::string ter_str = tm.ter( p ).id().str();
+                                row += terrain_to_char[ter_str];
+                            }
+                            jsout.write( row );
+                        }
+                        jsout.end_array();
+
+                        // 写出家具（覆盖在地形上）
+                        jsout.member( "furniture" );
+                        jsout.start_array();
+                        for( int y = 0; y < SEEX * 2; ++y ) {
+                            std::string row;
+                            for( int x = 0; x < SEEY * 2; ++x ) {
+                                tripoint p( x, y, 0 );
+                                furn_id fid = tm.furn( p );
+                                if( fid == f_null ) {
+                                    row += " ";
+                                } else {
+                                    row += furniture_to_char[fid.id().str()];
+                                }
+                            }
+                            jsout.write( row );
+                        }
+                        jsout.end_array();
+
+                        // 写出物品
+                        jsout.member( "loot" );
+                        jsout.start_array();
+                        for( int y = 0; y < SEEX * 2; ++y ) {
+                            for( int x = 0; x < SEEY * 2; ++x ) {
+                                tripoint p( x, y, 0 );
+                                map_stack items = tm.i_at( p );
+                                for( const item &it : items ) {
+                                    jsout.start_object();
+                                    jsout.member( "item", it.typeId() );
+                                    jsout.member( "chance", 100 );
+                                    jsout.member( "x", x );
+                                    jsout.member( "y", y );
+                                    jsout.end_object();
+                                }
+                            }
+                        }
+                        jsout.end_array(); // 结束 loot
+
+                        jsout.end_object(); // 结束 object
+                        jsout.end_object(); // 结束 mapgen
+                    }
+                }
+
+                // 最后，写出 overmap_special
+                jsout.start_object();
+                jsout.member( "type", "overmap_special" );
+                jsout.member( "id", "exported_special" );
+                jsout.member( "locations", std::vector<std::string>{ "field", "forest", "land" } );
+                jsout.member( "city_distance", std::vector<int>{ 5, -1 } );
+                jsout.member( "occurrences", std::vector<int>{ 100, 100 } );
+                jsout.member( "rotate", false );
+                jsout.member( "flags", std::vector<std::string>{ "CLASSIC", "MAN_MADE", "GLOBALLY_UNIQUE" } );
+
+                // 写出 overmaps 数组
+                jsout.member( "overmaps" );
+                jsout.start_array();
+                mapgen_idx = 0;
+                for( int omt_x = min_x; omt_x <= max_x; ++omt_x ) {
+                    for( int omt_y = min_y; omt_y <= max_y; ++omt_y ) {
+                        jsout.start_object();
+                        const int rel_x = omt_x - min_x;
+                        const int rel_y = omt_y - min_y;
+                        jsout.member( "point", std::vector<int>{ rel_x, rel_y, z_level } );
+                        jsout.member( "overmap", mapgen_ids[mapgen_idx++] );
+                        jsout.end_object();
+                    }
+                }
+                jsout.end_array(); // 结束 overmaps
+
+                jsout.end_object(); // 结束 overmap special 对象
+
+                jsout.end_array(); // 结束根数组
+
+            }, "overmap special export" );
+
+            popup( _( "Overmap special exported successfully!" ) );
+            break;
+        }
         case debug_menu_index::TEST_WEATHER: {
             get_weather().get_cur_weather_gen().test_weather( g->get_seed() );
         }
