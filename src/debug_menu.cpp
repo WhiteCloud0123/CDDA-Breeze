@@ -3253,7 +3253,37 @@ void debug()
                 break;
             }
 
-            // 4. 导出到 JSON 文件
+            // 4. 先收集所有怪物，按它们所在的大地图格子组织
+            struct MonsterExport {
+                std::string type_id;
+                int rel_x; // 相对于 mapgen 左上角的坐标
+                int rel_y;
+            };
+            std::map<std::pair<int, int>, std::vector<MonsterExport>> omt_monsters;
+
+            for( monster &mon : g->all_monsters() ) {
+                // 获取怪物位置，转换为大地图坐标
+                tripoint_abs_ms mon_pos_abs = mon.get_location();
+                auto proj_result = project_remain<coords::omt>( mon_pos_abs );
+                // 注意：project_remain 返回的是 quotient_remainder_tripoint
+                // 要获取 quotient 和 remainder 两种组合方式
+                // 我们使用 quotient_tripoint 和 remainder
+                tripoint_abs_omt mon_omt_pos = proj_result.quotient_tripoint;
+                point_omt_ms mon_rel_point = proj_result.remainder;
+                // 检查怪物是否在我们选择的区域和同一 z 层
+                if( mon_omt_pos.z() != z_level || mon_omt_pos.x() < min_x || mon_omt_pos.x() > max_x || mon_omt_pos.y() < min_y || mon_omt_pos.y() > max_y ) {
+                    continue;
+                }
+                MonsterExport me;
+                me.type_id = mon.type->id.str();
+                me.rel_x = mon_rel_point.x();
+                me.rel_y = mon_rel_point.y();
+                // 存储
+                std::pair<int, int> key( mon_omt_pos.x(), mon_omt_pos.y() );
+                omt_monsters[key].push_back( me );
+            }
+
+            // 5. 导出到 JSON 文件
             write_to_file( filename, [&]( std::ostream & outfile ) {
                 JsonOut jsout( outfile, true ); // pretty print = true
                 jsout.start_array(); // 数组根节点
@@ -3421,6 +3451,23 @@ void debug()
                             }
                         }
                         jsout.end_array(); // 结束 loot
+
+                        // 写出怪物
+                        std::pair<int, int> key( omt_x, omt_y );
+                        auto monster_it = omt_monsters.find( key );
+                        if( monster_it != omt_monsters.end() ) {
+                            jsout.member( "place_monster" );
+                            jsout.start_array();
+                            for( const MonsterExport &me : monster_it->second ) {
+                                jsout.start_object();
+                                jsout.member( "monster", me.type_id );
+                                jsout.member( "chance", 100 );
+                                jsout.member( "x", me.rel_x );
+                                jsout.member( "y", me.rel_y );
+                                jsout.end_object();
+                            }
+                            jsout.end_array();
+                        }
 
                         jsout.end_object(); // 结束 object
                         jsout.end_object(); // 结束 mapgen
