@@ -61,7 +61,7 @@ static const efftype_id effect_wait_here( "在这里等待" );
 static const flag_id json_flag_MECH_BAT( "MECH_BAT" );
 static const flag_id json_flag_TACK( "TACK" );
 static const flag_id json_flag_TIE_UP( "TIE_UP" );
-static const flag_id json_flag_TIE_UP("AUTONOMOUS_CONTROL");
+static const flag_id json_flag_AUTONOMOUS_CONTROL("AUTONOMOUS_CONTROL");
 
 static const itype_id itype_cash_card( "cash_card" );
 static const itype_id itype_id_military( "id_military" );
@@ -1209,9 +1209,7 @@ bool monexamine::mon_robot_exist_menu(monster& z)
         if (m.has_flag_ter("INPUT_FOR_MON_ROBOT_EXIST", p)) {
             if (m.has_items(p)) {
                 for (item& i : m.i_at(p)) {
-                    if (i.has_flag("")) {
-                    
-                    }
+
                 }
             }
         }
