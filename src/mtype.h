@@ -176,6 +176,7 @@ enum m_flag : int {
     MF_ALWAYS_SEES_YOU,     // This monster always knows where the avatar is
     MF_ALL_SEEING,          // This monster can see everything within its vision range regardless of light or obstacles
     MF_NEVER_WANDER,        // This monster will never join wandering hordes.
+    MF_ADD_INTERACT_MON_ROBOT_EXIST, // 玩家可以与之交互，交互界面会新增一些选项，与艾克西斯的设定相关.
     MF_MAX                  // Sets the length of the flags - obviously must be LAST
 };
 

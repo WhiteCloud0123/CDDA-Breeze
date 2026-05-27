@@ -2129,5 +2129,9 @@
   {
     "id": "IS_EXPLOSION_PROPELLED",
     "type": "json_flag"
+  },
+  {
+    "id": "AUTONOMOUS_CONTROL",
+    "type": "json_flag"
   }
 ]

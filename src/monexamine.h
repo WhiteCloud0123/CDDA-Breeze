@@ -8,6 +8,7 @@ namespace monexamine
 {
 
 bool pet_menu( monster &z );
+bool mon_robot_exist_menu(monster& z);
 bool mech_hack( monster &z );
 bool pay_bot( monster &z );
 bool mfriend_menu( monster &z );

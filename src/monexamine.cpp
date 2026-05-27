@@ -61,6 +61,7 @@ static const efftype_id effect_wait_here( "在这里等待" );
 static const flag_id json_flag_MECH_BAT( "MECH_BAT" );
 static const flag_id json_flag_TACK( "TACK" );
 static const flag_id json_flag_TIE_UP( "TIE_UP" );
+static const flag_id json_flag_TIE_UP("AUTONOMOUS_CONTROL");
 
 static const itype_id itype_cash_card( "cash_card" );
 static const itype_id itype_id_military( "id_military" );
@@ -1187,6 +1188,57 @@ bool monexamine::mfriend_menu( monster &z )
             break;
         default:
             break;
+    }
+
+    return true;
+}
+
+bool monexamine::mon_robot_exist_menu(monster& z)
+{
+    enum choices {
+        change_model = 0,
+    };
+
+
+    map& m = get_map();
+
+    for (const tripoint& p : m.points_in_radius(z.pos(),30)) {
+        if (!m.inbounds(p)) {
+            continue;
+        }
+        if (m.has_flag_ter("INPUT_FOR_MON_ROBOT_EXIST", p)) {
+            if (m.has_items(p)) {
+                for (item& i : m.i_at(p)) {
+                    if (i.has_flag("")) {
+                    
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    uilist amenu;
+    const std::string pet_name = z.get_name();
+
+    amenu.text = "控制台";
+
+    amenu.addentry(change_model, true, 's', "为决策中枢更换模型");
+
+    amenu.query();
+    const int choice = amenu.ret;
+
+    switch (choice) {
+    case change_model: {
+        
+    
+    
+    
+    }
+        break;
+    default:
+        break;
     }
 
     return true;
