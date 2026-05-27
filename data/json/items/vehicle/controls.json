@@ -135,5 +135,32 @@
     "price": 500000,
     "price_postapoc": 3000,
     "copy-from": "vehicle_controls"
+  },
+  {
+    "type": "GENERIC",
+    "id": "decision_control_boss_end_wheel",
+    "name": { "str": "决策中枢【终焉碾轮】" },
+    "description": "一块被厚重装甲保护的巨大电路板。内部具备多个集成电路芯片，决策逻辑被直接蚀刻在其中。",
+    "weight": "10 kg",
+    "color": "red",
+    "symbol": "o",
+    "volume": "20 L",
+    "price": 900000,
+    "price_postapoc": 3000,
+    "flags": ["ELECTRONIC","AUTONOMOUS_CONTROL" ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "decision_control_stable_extreme",
+    "name": { "str": "决策中枢【定极】" },
+    "description": "一块被厚重装甲保护的巨大电路板。内部具备多个集成电路芯片，决策逻辑被直接蚀刻在其中。\n- 它会使用远程武器\n- 它会跟随着你",
+    "weight": "10 kg",
+    "color": "red",
+    "symbol": "o",
+    "volume": "20 L",
+    "price": 900000,
+    "price_postapoc": 3000,
+    "looks_like": "decision_control_boss_end_wheel",
+    "flags": ["ELECTRONIC","AUTONOMOUS_CONTROL" ]
   }
 ]

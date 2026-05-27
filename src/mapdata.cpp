@@ -263,6 +263,8 @@ std::string enum_to_string<ter_furn_flag>( ter_furn_flag data )
         case ter_furn_flag::TFLAG_CONVEYOR_BELT_EAST: return "CONVEYOR_BELT_EAST";
         case ter_furn_flag::TFLAG_SINGLE_SUPPORT: return "SINGLE_SUPPORT";
         case ter_furn_flag::TFLAG_CLIMB_ADJACENT: return "CLIMB_ADJACENT";
+        case ter_furn_flag::TFLAG_INPUT_FOR_MON_ROBOT_EXIST: return "INPUT_FOR_MON_ROBOT_EXIST";
+        case ter_furn_flag::TFLAG_OUTPUT_FOR_MON_ROBOT_EXIST: return "OUTPUT_FOR_MON_ROBOT_EXIST";
         // *INDENT-ON*
         case ter_furn_flag::NUM_TFLAG_FLAGS:
             break;

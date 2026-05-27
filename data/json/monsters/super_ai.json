@@ -1,0 +1,43 @@
+[
+    {
+        "id": "mon_robot_exist",
+        "type": "MONSTER",
+        "name": {
+            "str": "艾克西斯"
+        },
+        "description": "一个一切只为“存在”的智能AI。不过，现在绝大部分机能处于休眠状态。",
+        "default_faction": "isolated_artisans",
+        "species": [
+            "ROBOT"
+        ],
+        "diff": 30,
+        "volume": "7000000 ml",
+        "weight": "50000 kg",
+        "hp": 90000,
+        "speed": 100,
+        "material": [
+            "steel"
+        ],
+        "symbol": "A",
+        "color": "green",
+        "aggression": -10,
+        "morale": 100,
+        "armor_bash": 30,
+        "armor_cut": 30,
+        "armor_bullet": 30,
+        "vision_day": 60,
+        "vision_night": 60,
+        "regenerates": 50,
+        "aggro_character": false,
+        "death_drops": {},
+        "flags": [
+            "SEES",
+            "NOHEAD",
+            "ELECTRONIC",
+            "COLDPROOF",
+            "IMMOBILE",
+            "NO_BREATHE",
+            "STUN_IMMUNE"
+        ]
+    }
+]

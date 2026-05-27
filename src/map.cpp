@@ -116,6 +116,29 @@ static const efftype_id effect_boomered( "boomered" );
 static const efftype_id effect_crushed( "crushed" );
 static const efftype_id effect_pet( "pet" );
 
+static int get_turn_from_angle( const units::angle &angle, const tripoint &vehpos,
+                                const tripoint &target, bool reverse = false )
+{
+    if( angle > 10.0_degrees && angle <= 45.0_degrees ) {
+        return reverse ? 4 : 1;
+    } else if( angle > 45.0_degrees && angle <= 90.0_degrees ) {
+        return 3;
+    } else if( angle > 90.0_degrees && angle < 180.0_degrees ) {
+        return reverse ? 1 : 4;
+    } else if( angle < -10.0_degrees && angle >= -45.0_degrees ) {
+        return reverse ? -4 : -1;
+    } else if( angle < -45.0_degrees && angle >= -90.0_degrees ) {
+        return -3;
+    } else if( angle < -90.0_degrees && angle > -180.0_degrees ) {
+        return reverse ? -1 : -4;
+        // edge case of being exactly on the button for the target.
+        // just keep driving, the next path point will be picked up.
+    } else if( ( angle == 180_degrees || angle == -180_degrees ) && vehpos == target ) {
+        return 0;
+    }
+    return 0;
+}
+
 static const field_type_str_id field_fd_clairvoyant( "fd_clairvoyant" );
 
 static const flag_id json_flag_AVATAR_ONLY( "AVATAR_ONLY" );
@@ -603,6 +626,78 @@ void map::vehmove()
                 veh->drive_to_local_target( getabs( player_pos ), true );
             } else if( veh->is_patrolling ) {
                 veh->autopilot_patrol();
+            } else if( veh->has_part( "AUTONOMOUS_CONTROL" ) ) {
+                // 处理 AUTONOMOUS_CONTROL 载具
+                mtype_id decision_monster_id;
+                bool found_decision_monster = false;
+                for( const vpart_reference &vp : veh->get_avail_parts( "AUTONOMOUS_CONTROL" ) ) {
+                    decision_monster_id = vp.part().info().decision_source_monster_id;
+                    found_decision_monster = true;
+                    break;
+                }
+                
+                if( found_decision_monster && !decision_monster_id.is_null() ) {
+                    // 检查载具是否能开动
+                    bool valid_wheel = veh->valid_wheel_config();
+                    bool has_engine = !veh->engines.empty();
+                    bool can_move = valid_wheel && has_engine;
+                    bool has_fuel = false;
+                    for( int e : veh->engines ) {
+                        if( veh->fuel_left( veh->part_info( e ).fuel_type ) > 0 ) {
+                            has_fuel = true;
+                            break;
+                        }
+                    }
+                    can_move = can_move && has_fuel;
+                    tripoint veh_pos = veh->global_pos3();
+                    Creature* target = nullptr;
+                    // 创建临时怪物判断态度
+                    monster temp_monster(decision_monster_id);
+                    temp_monster.setpos(veh_pos);
+                    monster_attitude* attitude = nullptr;
+                    for (Creature &c : g->all_creatures()) {
+                        // 不处于同一z轴，不用管
+                        if (c.posz()!=veh_pos.z) {
+                            continue;
+                        }
+                        if (temp_monster.attitude_to(c)==Creature::Attitude::HOSTILE) {
+                            target = &c;
+                            break;
+                        }
+                    }
+                    
+                    if(target!=nullptr) {
+                        bool can_see = temp_monster.sees(*target);
+                        if (can_move && can_see) {
+                            add_msg("Autonomous control: ATTACKING!");
+                            // 敌人！敌对，启动引擎
+                            if (!veh->engine_on) {
+                                for (size_t e = 0; e < veh->engines.size(); ++e) {
+                                    veh->toggle_specific_engine(e, true);
+                                }
+                                veh->engine_on = true;
+                            }
+
+                            // 设置跟随状态，这样 gain_moves 中的巡航控制会执行    
+                            veh->is_following = true;
+                            // 设置巡航速度
+                            veh->cruise_velocity = veh->safe_velocity();
+                            veh->cruise_on = true;
+                            veh->drive_to_local_target(getabs(target->pos()), false);
+                        }
+                        
+                        
+                    } else if( veh->engine_on) {
+                        add_msg( "Autonomous control: Stopping engine" );
+                        veh->is_following = false;
+                        veh->cruise_on = false;
+                        veh->cruise_velocity = 0;
+                        for( size_t e = 0; e < veh->engines.size(); ++e ) {
+                            veh->toggle_specific_engine( e, false );
+                        }
+                        veh->engine_on = false;
+                    }
+                }
             }
 
             if (!veh->is_appliance()) {

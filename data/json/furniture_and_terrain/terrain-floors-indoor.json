@@ -1329,6 +1329,50 @@
   },
   {
     "type": "terrain",
+    "id": "t_linoleum_input_for_mon_robot_exist",
+    "name": "油毡地砖【输入地】",
+    "description": "看上去跟普通的油毡地砖没有什么不同，但却不可思议的与艾克西斯处于连接状态，承担着输入任务。",
+    "symbol": ".",
+    "color": "light_gray",
+    "connect_groups": "LINOLEUM",
+    "connects_to": "LINOLEUM",
+    "move_cost": 2,
+    "roof": "t_flat_roof",
+    "looks_like": "t_linoleum_gray",
+    "flags": [ "TRANSPARENT", "SUPPORTS_ROOF", "COLLAPSES", "INDOORS", "FLAT", "ROAD","INPUT_FOR_MON_ROBOT_EXIST" ],
+    "bash": {
+      "sound": "SMASH!",
+      "ter_set": "t_null",
+      "str_min": 50,
+      "str_max": 400,
+      "str_min_supported": 100,
+      "items": [ { "item": "splinter", "count": [ 2, 8 ] }, { "item": "nail", "charges": [ 5, 10 ] } ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "t_linoleum_output_for_mon_robot_exist",
+    "name": "油毡地砖【输出地】",
+    "description": "看上去跟普通的油毡地砖没有什么不同，但却不可思议的与艾克西斯处于连接状态，承担着输出任务。",
+    "symbol": ".",
+    "color": "light_gray",
+    "connect_groups": "LINOLEUM",
+    "connects_to": "LINOLEUM",
+    "move_cost": 2,
+    "roof": "t_flat_roof",
+    "flags": [ "TRANSPARENT", "SUPPORTS_ROOF", "COLLAPSES", "INDOORS", "FLAT", "ROAD","OUTPUT_FOR_MON_ROBOT_EXIST" ],
+    "looks_like": "t_linoleum_gray",
+    "bash": {
+      "sound": "SMASH!",
+      "ter_set": "t_null",
+      "str_min": 50,
+      "str_max": 400,
+      "str_min_supported": 100,
+      "items": [ { "item": "splinter", "count": [ 2, 8 ] }, { "item": "nail", "charges": [ 5, 10 ] } ]
+    }
+  },
+  {
+    "type": "terrain",
     "id": "t_linoleum_white",
     "name": "linoleum tile",
     "description": "A section of flooring made out of a tough, rubbery material.  Colored a simple white.",

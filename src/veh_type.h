@@ -86,6 +86,7 @@ enum vpart_bitflags : int {
     VPFLAG_CABLE_PORTS,
     VPFLAG_CONVEYOR_BELT,
     VPFLAG_CLASSIFIED_DEVICE,
+    VPFLAG_AUTONOMOUS_CONTROL,
     NUM_VPFLAGS
 };
 /* Flag info:
@@ -430,6 +431,9 @@ class vpart_info
 
         /** A text description of the part as a vehicle part */
         translation description;
+        
+        // 采用何种怪物作为决策时的模板
+        mtype_id decision_source_monster_id;
 
         /** base item for this part */
         itype_id base_item;

@@ -3281,5 +3281,26 @@
       "removal": { "time": "50 s", "skills": [ [ "mechanics", 2 ] ] }
     },
     "flags": [  ]
+  },
+  {
+    "type": "vehicle_part",
+    "id": "vp_decision_control_boss_end_wheel",
+    "name": { "str": "决策中枢【终焉碾轮】" },
+    "symbol": "o",
+    "categories": [ "operations" ],
+    "color": "red",
+    "broken_symbol": "x",
+    "broken_color": "light_red",
+    "damage_modifier": 10,
+    "durability": 5000,
+    "description": "一块被厚重装甲保护的巨大电路板。内部具备多个集成电路芯片，决策逻辑被直接蚀刻在其中。",
+    "item": "decision_control_boss_end_wheel",
+    "decision_source_monster_id": "mon_zombie",
+    "looks_like": "decision_control_boss_end_wheel",
+    "location": "center",
+    "requirements": {
+      "removal": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "vehicle_weld_removal", 1 ] ] }
+    },
+    "flags": [ "OBSTACLE", "HALF_BOARD","AUTONOMOUS_CONTROL"]
   }
 ]

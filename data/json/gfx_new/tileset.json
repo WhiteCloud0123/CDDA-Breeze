@@ -88,6 +88,10 @@
           {
             "id": "sloppyjoe",
             "fg": 19
+          },
+          {
+            "id": "decision_control_boss_end_wheel",
+            "fg": 20
           }
         ],
         "sprite_width": 32,
@@ -107,6 +111,19 @@
         "sprite_height": 48,
         "sprite_offset_x": 0,
         "sprite_offset_y": -16
+      },
+      {
+        "file": "gfx_new/64_64_01.png",
+        "tiles": [
+          {
+            "id": "mon_robot_exist",
+            "fg": 288
+          }
+        ],
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "sprite_offset_x": -16,
+        "sprite_offset_y": -32
       }
     ]
   }
