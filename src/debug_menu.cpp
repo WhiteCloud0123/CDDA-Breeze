@@ -3222,14 +3222,14 @@ void debug()
             }
             break;
         case debug_menu_index::EXPORT_OVERMAP_SPECIAL: {
-            // 1. 让用户选择两个点作为范围
-            popup( _( "Select first overmap tile for export" ) );
+            // 1. 让玩家选择两个点作为范围
+            popup("选择第一点");
             const tripoint_abs_omt first_omt( ui::omap::choose_point( true ) );
             if( first_omt == overmap::invalid_tripoint ) {
                 break;
             }
 
-            popup( _( "Select second overmap tile for export" ) );
+            popup("选择第二点");
             const tripoint_abs_omt second_omt( ui::omap::choose_point( true ) );
             if( second_omt == overmap::invalid_tripoint ) {
                 break;
@@ -3246,7 +3246,7 @@ void debug()
             std::string filename = "overmap_special_export.json";
             string_input_popup filename_popup;
             filename_popup
-                .title( _( "Enter filename for export" ) )
+                .title("输入导出文件名称")
                 .width( 60 )
                 .edit( filename );
             if( filename_popup.canceled() ) {
@@ -3475,7 +3475,7 @@ void debug()
 
             }, "overmap special export" );
 
-            popup( _( "Overmap special exported successfully!" ) );
+            popup("导出成功！");
             break;
         }
         case debug_menu_index::TEST_WEATHER: {
