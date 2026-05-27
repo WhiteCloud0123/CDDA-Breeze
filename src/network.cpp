@@ -2,6 +2,7 @@
 #include "options.h"
 #include "filesystem.h"
 #include "json.h"
+#include "catacharset.h"
 #include <fstream>
 #include <chrono>
 #include <curl/curl.h>
@@ -347,7 +348,7 @@ std::vector<RequestId> get_all_requests()
 RequestId start_pollinations_request( const std::string &system_prompt,const std::string& user_prompt )
 {
     std::string api_key = get_option<std::string>( "密钥" );
-    std::string model = get_option<std::string>( "模型名称" );
+    std::string model = get_option<std::string>( "文本模型名称" );
     std::string temperature = std::to_string(get_option<float>("温度"));
     
     Headers headers;
@@ -443,6 +444,185 @@ std::string parse_pollinations_response( const std::string &json_response, bool 
         return content;
     } catch( ... ) {
         return json_response;
+    }
+}
+
+RequestId start_pollinations_image_request( const std::string &prompt )
+{
+    std::string api_key = get_option<std::string>( "密钥" );
+    std::string model = get_option<std::string>( "生图模型名称" );
+
+    Headers headers;
+    headers["Content-Type"] = "application/json";
+    headers["Accept"] = "application/json";
+    if( !api_key.empty() ) {
+        headers["Authorization"] = "Bearer " + api_key;
+    }
+
+    std::string json_body = "{\"prompt\":\"" + json_escape( prompt ) + "\",\"model\":\"" + json_escape( model.empty() ? "flux" : model ) + "\",\"size\":\"381x522\",\"n\":1,\"response_format\":\"b64_json\"}";
+
+    std::string url = "https://gen.pollinations.ai/v1/images/generations";
+
+    return start_post( url, json_body, headers );
+}
+
+static std::string standard_base64_decode( const std::string &encoded_string )
+{
+    static const std::string base64_chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789+/";
+
+    auto is_base64 = []( unsigned char c ) {
+        return ( isalnum( c ) || ( c == '+' ) || ( c == '/' ) );
+    };
+
+    int in_len = encoded_string.size();
+    int i = 0;
+    int j = 0;
+    int in_ = 0;
+    unsigned char char_array_4[4], char_array_3[3];
+    std::string ret;
+
+    while( in_len-- && ( encoded_string[in_] != '=' ) && is_base64( encoded_string[in_] ) ) {
+        char_array_4[i++] = encoded_string[in_];
+        in_++;
+        if( i == 4 ) {
+            for( i = 0; i < 4; i++ ) {
+                char_array_4[i] = base64_chars.find( char_array_4[i] );
+            }
+
+            char_array_3[0] = ( char_array_4[0] << 2 ) + ( ( char_array_4[1] & 0x30 ) >> 4 );
+            char_array_3[1] = ( ( char_array_4[1] & 0xF ) << 4 ) + ( ( char_array_4[2] & 0x3C ) >> 2 );
+            char_array_3[2] = ( ( char_array_4[2] & 0x3 ) << 6 ) + char_array_4[3];
+
+            for( i = 0; ( i < 3 ); i++ ) {
+                ret += char_array_3[i];
+            }
+            i = 0;
+        }
+    }
+
+    if( i ) {
+        for( j = i; j < 4; j++ ) {
+            char_array_4[j] = 0;
+        }
+
+        for( j = 0; j < 4; j++ ) {
+            char_array_4[j] = base64_chars.find( char_array_4[j] );
+        }
+
+        char_array_3[0] = ( char_array_4[0] << 2 ) + ( ( char_array_4[1] & 0x30 ) >> 4 );
+        char_array_3[1] = ( ( char_array_4[1] & 0xF ) << 4 ) + ( ( char_array_4[2] & 0x3C ) >> 2 );
+        char_array_3[2] = ( ( char_array_4[2] & 0x3 ) << 6 ) + char_array_4[3];
+
+        for( j = 0; ( j < i - 1 ); j++ ) {
+            ret += char_array_3[j];
+        }
+    }
+
+    return ret;
+}
+
+bool parse_pollinations_image_response( const std::string &json_response, const std::string &save_path )
+{
+    try {
+        // 调试日志：保存原始响应到文件
+        {
+            std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::trunc );
+            if( debug_log.is_open() ) {
+                debug_log << "=== 图片生成响应 ===\n";
+                debug_log << "保存路径: " << save_path << "\n";
+                debug_log << "响应长度: " << json_response.size() << " 字节\n";
+                debug_log << "响应内容:\n" << json_response << "\n";
+                debug_log.close();
+            }
+        }
+
+        std::istringstream ss( json_response );
+        TextJsonIn jsin( ss );
+        TextJsonObject jo = jsin.get_object();
+        jo.allow_omitted_members();
+
+        if( !jo.has_member( "data" ) ) {
+            return false;
+        }
+
+        TextJsonArray data = jo.get_array( "data" );
+        if( data.empty() ) {
+            return false;
+        }
+
+        TextJsonObject image_data = data.get_object( 0 );
+        image_data.allow_omitted_members();
+        if( image_data.has_member( "b64_json" ) ) {
+            std::string b64_data = image_data.get_string( "b64_json" );
+            std::string decoded_data = standard_base64_decode( b64_data );
+
+            // 调试日志
+            {
+                std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
+                if( debug_log.is_open() ) {
+                    debug_log << "\n=== 解码信息 ===\n";
+                    debug_log << "Base64数据长度: " << b64_data.size() << " 字节\n";
+                    debug_log << "解码后数据长度: " << decoded_data.size() << " 字节\n";
+                    debug_log.close();
+                }
+            }
+
+            std::ofstream out_file( save_path, std::ios::binary );
+            if( out_file.is_open() ) {
+                out_file.write( decoded_data.c_str(), decoded_data.size() );
+                out_file.close();
+                
+                // 验证文件是否成功写入
+                std::ifstream check_file( save_path, std::ios::binary | std::ios::ate );
+                if( check_file.is_open() ) {
+                    std::streamsize file_size = check_file.tellg();
+                    {
+                        std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
+                        if( debug_log.is_open() ) {
+                            debug_log << "文件写入成功: " << save_path << "\n";
+                            debug_log << "文件大小: " << file_size << " 字节\n";
+                            debug_log.close();
+                        }
+                    }
+                    check_file.close();
+                }
+                return true;
+            } else {
+                // 调试日志：无法打开文件
+                {
+                    std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
+                    if( debug_log.is_open() ) {
+                        debug_log << "错误: 无法打开文件进行写入: " << save_path << "\n";
+                        debug_log.close();
+                    }
+                }
+            }
+        }
+
+        return false;
+    } catch( const std::exception &e ) {
+        // 调试日志：异常
+        {
+            std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
+            if( debug_log.is_open() ) {
+                debug_log << "异常错误: " << e.what() << "\n";
+                debug_log.close();
+            }
+        }
+        return false;
+    } catch( ... ) {
+        // 调试日志：未知异常
+        {
+            std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
+            if( debug_log.is_open() ) {
+                debug_log << "未知异常错误\n";
+                debug_log.close();
+            }
+        }
+        return false;
     }
 }
 

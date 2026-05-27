@@ -125,37 +125,77 @@ const std::string basic_prompt =
 "- 是否有可见的敌人：%s"
 ;
 
-std::string fill_prompt(const std::string &original_prompt,npc& n) {
+const std::string basic_prompt_for_image =
+"# 风格 \n"
+"- 二次元手游风格的角色上半身立绘，图片背景色为黑色 \n"
+"# 角色数据 \n"
+"- 性别：%s \n"
+"- 职业：%s \n"
+"- 穿着：%s \n"
+"- 特性：%s \n"
+;
+
+std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image=false) {
     Character& player = get_player_character();
-    std::string has_visible_enemy = "否";
-    if (n.get_hostile_creatures(60).empty() == false) {
-        has_visible_enemy = "是";
+    std::string prompt = "";
+    if (!for_image) {
+        std::string has_visible_enemy = "否";
+        if (n.get_hostile_creatures(60).empty() == false) {
+            has_visible_enemy = "是";
+        }
+        prompt = string_format(original_prompt,
+            // npc的基本信息
+            n.get_name(),
+            n.male ? "男" : "女",
+            n.myclass->get_name(),
+            n.personality.bravery,
+            n.personality.altruism,
+            n.personality.aggression,
+            // 对玩家的态度
+            n.op_of_u.trust,
+            n.op_of_u.fear,
+            n.op_of_u.value,
+            n.op_of_u.anger,
+            // 玩家的基本信息
+            player.get_name(),
+            player.male ? "男" : "女",
+            // 周围环境信息
+            has_visible_enemy
+        );
     }
-    std::string prompt = string_format(original_prompt,
-        // npc的基本信息
-        n.get_name(),
-        n.male ? "男" : "女",
-        n.myclass->get_name(),
-        n.personality.bravery,
-        n.personality.altruism,
-        n.personality.aggression,
-        // 对玩家的态度
-        n.op_of_u.trust,
-        n.op_of_u.fear,
-        n.op_of_u.value,
-        n.op_of_u.anger,
-        // 玩家的基本信息
-        player.get_name(),
-        player.male ? "男" : "女",
-        // 周围环境信息
-        has_visible_enemy
-    );
+    else {
+        const std::list<item> visible_worn_items = n.get_visible_worn_items();
+        // 使用enumerate_as_string将物品列表转换为字符串
+        std::string worn_string = enumerate_as_string(
+            visible_worn_items.begin(),
+            visible_worn_items.end(),
+            [](const item& it) {
+                return it.tname();  // 获取物品的翻译名称
+            }
+        );
+        const std::string trait_str = n.visible_mutations(1);
+        prompt = string_format(original_prompt,
+            // npc的基本信息
+            n.male ? "男" : "女",
+            n.myclass->get_name(),
+            worn_string,
+            trait_str
+        );
+    }
+
     return prompt;
 }
 
-std::string build_prompt(npc& n) {
-    std::string template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
-    std::string prompt = fill_prompt(template_str,n);
+std::string build_prompt(npc& n,bool for_image=false) {
+    std::string template_str = "";
+    std::string prompt = "";
+    if (!for_image) {
+        template_str = !n.ai_prompt.empty() ? n.ai_prompt : basic_prompt;
+    }
+    else {
+        template_str = !n.ai_prompt_for_image.empty() ? n.ai_prompt_for_image : basic_prompt_for_image;
+    }
+    prompt = fill_prompt(template_str, n,for_image);
     return prompt;
 }
 
@@ -196,7 +236,7 @@ void talk_function::edit_ai_prompt(npc& n) {
         editor_ui.on_redraw([&](const ui_adaptor&) {
             werase(w_editor_border);
             draw_border(w_editor_border);
-            center_print(w_editor_border, 0, c_light_gray, _("编辑AI提示词"));
+            center_print(w_editor_border, 0, c_light_gray, _("编辑AI提示词【文本】"));
             wnoutrefresh(w_editor_border);
         });
         
@@ -356,6 +396,209 @@ void talk_function::edit_ai_prompt(npc& n) {
             continue;
         }
         
+        if (result.first) {
+            return;
+        }
+    }
+}
+
+void talk_function::edit_ai_prompt_for_image(npc& n) {
+    if (n.ai_prompt_for_image.empty()) {
+        n.ai_prompt_for_image = basic_prompt_for_image;
+    }
+    std::string old_text = n.ai_prompt_for_image;
+    std::string new_text = old_text;
+    while (true) {
+        catacurses::window w_editor_border;
+        catacurses::window w_editor;
+        ui_adaptor editor_ui;
+
+        auto create_editor_window = [&]() {
+            const std::pair<point, point> beg_and_max = ai_prompt_window_position();
+            const point& beg = beg_and_max.first;
+            const point& max = beg_and_max.second;
+
+            w_editor_border = catacurses::newwin(max.y + 4, max.x + 4, beg + point(-2, -2));
+            w_editor = catacurses::newwin(max.y, max.x, beg);
+            return w_editor;
+            };
+
+        editor_ui.on_screen_resize([&](ui_adaptor& ui) {
+            create_editor_window();
+            ui.position_from_window(w_editor_border);
+            });
+        editor_ui.mark_resize();
+        editor_ui.on_redraw([&](const ui_adaptor&) {
+            werase(w_editor_border);
+            draw_border(w_editor_border);
+            center_print(w_editor_border, 0, c_light_gray, _("编辑AI提示词【生图】"));
+            wnoutrefresh(w_editor_border);
+            });
+
+        string_editor_window ed(create_editor_window, new_text);
+        const std::pair<bool, std::string> result = ed.query_string();
+        new_text = result.second;
+
+
+        if (!result.first) {
+            editor_ui.reset();
+
+            uilist menu;
+            int option_index = 0;
+            menu.text = old_text != new_text ? "保存修改？" : "没有修改提示词。";
+            menu.addentry(0, true, 'p', "预览");
+            if (old_text != new_text) {
+                menu.addentry(1, true, 's', "保存并退出");
+            }
+            menu.addentry(2, true, 'q', "退出");
+            menu.query();
+
+            if (menu.ret == 1) {
+                n.ai_prompt_for_image = new_text;
+                return;
+            }
+            else if (menu.ret == 2) {
+                return;
+            }
+
+            catacurses::window w_preview;
+            catacurses::window w_border;
+
+            ui_adaptor ui;
+            int scroll_pos = 0;
+
+            auto create_folded_text = [](const std::string& str, int width) -> std::vector<std::string> {
+                std::vector<std::string> lines;
+                std::string current_line;
+                int current_width = 0;
+
+                const char* src = str.c_str();
+                int bytes = str.length();
+
+                while (bytes > 0) {
+                    const uint32_t uc = UTF8_getch(&src, &bytes);
+                    const int cw = uc == '\n' ? 0 : std::max(0, mk_wcwidth(uc));
+
+                    if (uc == '\n') {
+                        lines.push_back(current_line);
+                        current_line.clear();
+                        current_width = 0;
+                    }
+                    else if (current_width + cw > width && !current_line.empty()) {
+                        lines.push_back(current_line);
+                        current_line = utf32_to_utf8(uc);
+                        current_width = cw;
+                    }
+                    else {
+                        current_line += utf32_to_utf8(uc);
+                        current_width += cw;
+                    }
+                }
+                if (!current_line.empty()) {
+                    lines.push_back(current_line);
+                }
+
+                return lines;
+                };
+
+            ui.on_screen_resize([&](ui_adaptor& ui) {
+                const std::pair<point, point> beg_and_max = ai_prompt_window_position();
+                const point& beg = beg_and_max.first;
+                const point& max = beg_and_max.second;
+
+                w_preview = catacurses::newwin(max.y, max.x, beg);
+                w_border = catacurses::newwin(max.y + 4, max.x + 4, beg + point(-2, -2));
+
+                ui.position_from_window(w_border);
+                });
+
+            ui.mark_resize();
+
+            std::vector<std::string> preview_lines;
+            int preview_height;
+
+            ui.on_redraw([&](const ui_adaptor&) {
+                werase(w_border);
+                werase(w_preview);
+
+                draw_border(w_border);
+                center_print(w_border, 0, c_light_green, _("预览 - 上/下方向键滚动，其他键返回"));
+
+                const int preview_width = getmaxx(w_preview);
+                preview_height = getmaxy(w_preview);
+
+                // Draw preview content
+                std::string preview_text = fill_prompt(new_text, n,true);
+                preview_lines = create_folded_text(preview_text, preview_width - 2);
+
+                const int max_scroll = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                if (scroll_pos > max_scroll) {
+                    scroll_pos = max_scroll;
+                }
+                if (scroll_pos < 0) {
+                    scroll_pos = 0;
+                }
+
+                const int end_line = std::min(scroll_pos + preview_height, static_cast<int>(preview_lines.size()));
+                for (int i = scroll_pos; i < end_line; i++) {
+                    const int y = i - scroll_pos;
+                    mvwprintz(w_preview, point(1, y), c_white, "%s", preview_lines[i]);
+                }
+
+                // Draw scrollbar if needed
+                if (static_cast<int>(preview_lines.size()) > preview_height) {
+                    scrollbar()
+                        .content_size(preview_lines.size())
+                        .viewport_pos(scroll_pos)
+                        .viewport_size(preview_height)
+                        .apply(w_preview);
+                }
+
+                wnoutrefresh(w_border);
+                wnoutrefresh(w_preview);
+                });
+
+            input_context ctxt("PREVIEW");
+            ctxt.register_action("CONFIRM");
+            ctxt.register_action("QUIT");
+            ctxt.register_action("TEXT.UP");
+            ctxt.register_action("TEXT.DOWN");
+            ctxt.register_action("TEXT.PAGE_UP");
+            ctxt.register_action("TEXT.PAGE_DOWN");
+            ctxt.register_action("TEXT.HOME");
+            ctxt.register_action("TEXT.END");
+            ctxt.register_action("ANY_INPUT");
+
+            while (true) {
+                ui_manager::redraw();
+                const std::string action = ctxt.handle_input();
+
+                if (action == "TEXT.UP") {
+                    scroll_pos = std::max(0, scroll_pos - 1);
+                }
+                else if (action == "TEXT.DOWN") {
+                    scroll_pos = std::min(scroll_pos + 1, std::max(0, static_cast<int>(preview_lines.size()) - preview_height));
+                }
+                else if (action == "TEXT.PAGE_UP") {
+                    scroll_pos = std::max(0, scroll_pos - preview_height);
+                }
+                else if (action == "TEXT.PAGE_DOWN") {
+                    const int max_scroll = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                    scroll_pos = std::min(scroll_pos + preview_height, max_scroll);
+                }
+                else if (action == "TEXT.HOME") {
+                    scroll_pos = 0;
+                }
+                else if (action == "TEXT.END") {
+                    scroll_pos = std::max(0, static_cast<int>(preview_lines.size()) - preview_height);
+                }
+                else {
+                    break;
+                }
+            }
+            continue;
+        }
+
         if (result.first) {
             return;
         }
@@ -617,7 +860,8 @@ enum npc_chat_menu {
     NPC_CHAT_ACTIVITIES_VEHICLE_DECONSTRUCTION,
     NPC_CHAT_ACTIVITIES_VEHICLE_REPAIR,
     NPC_CHAT_ACTIVITIES_UNASSIGN,
-    NPC_CHAT_EDIT_AI_PROMPT
+    NPC_CHAT_EDIT_AI_PROMPT,
+    NPC_CHAT_EDIT_AI_PROMPT_FOR_IMAGE
 
 };
 
@@ -1031,7 +1275,8 @@ void game::chat()
         nmenu.addentry( NPC_CHAT_CLEAR_OVERRIDES, true, 'r',
                         _( "Tell everyone on your team to relax (Clear Overrides)" ) );
         nmenu.addentry( NPC_CHAT_ORDERS, true, 'o', _( "Tell everyone on your team to temporarily…" ) );
-        nmenu.addentry( NPC_CHAT_EDIT_AI_PROMPT, true, 'p', _( "自定义AI提示词" ) );
+        nmenu.addentry( NPC_CHAT_EDIT_AI_PROMPT, true, 'p', _( "自定义AI提示词【文本】" ) );
+        nmenu.addentry(NPC_CHAT_EDIT_AI_PROMPT_FOR_IMAGE, true, 'p', _("自定义AI提示词【生图】"));
     }
     std::string message;
     std::string yell_msg;
@@ -1203,6 +1448,14 @@ void game::chat()
                 return;
             }
             talk_function::edit_ai_prompt( *available[npcselect] );
+            break;
+        }
+        case NPC_CHAT_EDIT_AI_PROMPT_FOR_IMAGE: {
+            const int npcselect = npc_select_menu(available, _("为谁编辑自定义AI提示词?"), false);
+            if (npcselect < 0) {
+                return;
+            }
+            talk_function::edit_ai_prompt_for_image(*available[npcselect]);
             break;
         }
         case NPC_CHAT_ANIMAL_VEHICLE_FOLLOW:
@@ -1434,8 +1687,115 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     dialogue d( get_talker_for( *this ), std::move( talk_with ) );
     std::string character_name = "";
     SDL_Texture* image = nullptr;
+    int npc_id = -1;
+    
+    // 创建调试日志
+    std::ofstream debug_log( "debug_npc_image.txt", std::ios::out | std::ios::trunc );
+    if( debug_log.is_open() ) {
+        debug_log << "=== NPC 对话图片处理 ===\n";
+        debug_log << "NPC指针: " << (void*)who << "\n";
+        debug_log << "显示特殊NPC图片选项: " << (get_option<bool>("显示特殊NPC的图片") ? "是" : "否") << "\n";
+    }
+    
     if (who != nullptr && get_option<bool>("显示特殊NPC的图片")) {
         character_name = who->get_name();
+        npc_id = who->getID().get_value();
+        
+        if( debug_log.is_open() ) {
+            debug_log << "NPC名称: " << character_name << "\n";
+            debug_log << "NPC ID: " << npc_id << "\n";
+        }
+        
+        // 首先尝试获取动态立绘
+        if (npc_id > 0) {
+            if( debug_log.is_open() ) {
+                debug_log << "步骤1: 尝试获取动态立绘\n";
+            }
+            image = get_npc_dynamic_picture(npc_id);
+            if( debug_log.is_open() ) {
+                debug_log << "动态立绘加载结果: " << (image != nullptr ? "成功" : "失败") << "\n";
+            }
+        }
+        
+        // 如果没有动态立绘且启用了AI生成，直接等待生成
+        if (image == nullptr && get_option<bool>("AI生成NPC立绘")) {
+            if( debug_log.is_open() ) {
+                debug_log << "步骤2: 动态立绘不存在，开始AI生成\n";
+                debug_log << "AI生成NPC立绘选项: 是\n";
+            }
+            // 使用专用函数构建生图提示词
+            std::string prompt = build_prompt(*who,true);
+            if( debug_log.is_open() ) {
+                debug_log << "生图提示词长度: " << prompt.size() << " 字节\n";
+            }
+            // 开始生图请求
+            network::RequestId req_id = network::start_pollinations_image_request(prompt);
+            // 照搬文本请求的超时处理设计
+            while (true) {
+                network::process();
+                if (network::get_status(req_id) == network::RequestStatus::Completed) {
+                    if( debug_log.is_open() ) {
+                        debug_log << "生图请求完成\n";
+                    }
+                    network::RequestResult result = network::get_result(req_id);
+                    // 确保目录存在
+                    std::string image_path = get_npc_dynamic_picture_path(npc_id);
+                    if( debug_log.is_open() ) {
+                        debug_log << "准备保存到: " << image_path << "\n";
+                    }
+                    size_t last_slash = image_path.find_last_of("/\\");
+                    if (last_slash != std::string::npos) {
+                        std::string dir_path = image_path.substr(0, last_slash);
+                        if( debug_log.is_open() ) {
+                            debug_log << "确保目录存在: " << dir_path << "\n";
+                        }
+                        ensure_directory_exists(dir_path);
+                    }
+                    bool success = network::parse_pollinations_image_response(result.response_body, image_path);
+                    if( debug_log.is_open() ) {
+                        debug_log << "图片保存结果: " << (success ? "成功" : "失败") << "\n";
+                    }
+                    if (success) {
+                        // 加载刚生成的图片
+                        image = get_npc_dynamic_picture(npc_id);
+                        if( debug_log.is_open() ) {
+                            debug_log << "重新加载生成的图片: " << (image != nullptr ? "成功" : "失败") << "\n";
+                        }
+                    }
+                    network::clear_completed();
+                    break;
+                } else if (network::get_status(req_id) == network::RequestStatus::Failed) {
+                    if( debug_log.is_open() ) {
+                        debug_log << "生图请求失败\n";
+                    }
+                    add_msg(m_bad, network::get_result(req_id).response_body);
+                    network::clear_completed();
+                    break;
+                }
+                inp_mngr.pump_events();
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            }
+        } else if( image == nullptr ) {
+            if( debug_log.is_open() ) {
+                debug_log << "跳过AI生成: " << (get_option<bool>("AI生成NPC立绘") ? "原因未知" : "选项未打开") << "\n";
+            }
+        }
+        
+        // 如果还是没有图片，尝试获取默认图片
+        if (image == nullptr && character_name != "") {
+            if( debug_log.is_open() ) {
+                debug_log << "步骤3: 尝试获取默认图片\n";
+            }
+            image = get_character_picture(character_name);
+            if( debug_log.is_open() ) {
+                debug_log << "默认图片加载结果: " << (image != nullptr ? "成功" : "失败") << "\n";
+            }
+        }
+    }
+    
+    if( debug_log.is_open() ) {
+        debug_log << "最终图片状态: " << (image != nullptr ? "有图片" : "无图片") << "\n";
+        debug_log.close();
     }
     
 
@@ -1457,8 +1817,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     d_win.is_computer = is_computer;
     d_win.is_not_conversation = is_not_conversation;
 
-    if (character_name != "") {
-        image = get_character_picture(character_name);
+    if (image != nullptr) {
         d_win.set_image(image);
     }
 
@@ -1485,7 +1844,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     } while( !d.done );
 
    
-    if (character_name != "") {
+    if (image != nullptr) {
         SDL_DestroyTexture(image);
     }
 
@@ -2333,7 +2692,7 @@ talk_topic dialogue::opt( dialogue_window &d_win, const talk_topic &topic )
         while (true) {
             network::process();
             if (network::get_status(requ_id) == network::RequestStatus::Completed) {
-                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body,get_option<bool>("显示消耗的Token数量"));
+                challenge = network::parse_pollinations_response(network::get_result(requ_id).response_body,get_option<bool>("对话界面显示消耗的Token数量"));
                 network::clear_completed();
                 break;
             }
@@ -4967,6 +5326,7 @@ void talk_effect_t<T>::parse_string_effect( const std::string &effect_id, const 
             WRAP( do_disassembly ),
             WRAP( nothing ),
             WRAP( edit_ai_prompt ),
+            WRAP(edit_ai_prompt_for_image),
 #undef WRAP
         }
     };

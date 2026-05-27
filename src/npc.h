@@ -1359,6 +1359,7 @@ class npc : public Character
         static constexpr tripoint_abs_omt no_goal_point{ tripoint_min };
         job_data job;
         std::string ai_prompt; // 自定义AI提示词
+        std::string ai_prompt_for_image;
         /**
          * Do some cleanup and caching as npc is being unloaded from map.
          */
