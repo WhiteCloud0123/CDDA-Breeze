@@ -3421,37 +3421,6 @@ void debug()
                         }
                         jsout.end_array();
 
-                        // 递归收集所有物品（包括嵌套物品）
-                        std::function<void( const item &, int, int )> add_item_with_contents =
-                            [&]( const item &it, int x, int y ) {
-                                // 先添加这个物品本身
-                                jsout.start_object();
-                                jsout.member( "item", it.typeId() );
-                                jsout.member( "chance", 100 );
-                                jsout.member( "x", x );
-                                jsout.member( "y", y );
-                                jsout.end_object();
-
-                                // 然后递归添加所有嵌套内容
-                                for( const item *content : it.all_known_contents() ) {
-                                    add_item_with_contents( *content, x, y );
-                                }
-                            };
-
-                        // 写出物品
-                        jsout.member( "loot" );
-                        jsout.start_array();
-                        for( int y = 0; y < SEEX * 2; ++y ) {
-                            for( int x = 0; x < SEEY * 2; ++x ) {
-                                tripoint p( x, y, 0 );
-                                map_stack items = tm.i_at( p );
-                                for( const item &it : items ) {
-                                    add_item_with_contents( it, x, y );
-                                }
-                            }
-                        }
-                        jsout.end_array(); // 结束 loot
-
                         // 写出怪物
                         std::pair<int, int> key( omt_x, omt_y );
                         auto monster_it = omt_monsters.find( key );
