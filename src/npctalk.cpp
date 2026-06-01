@@ -1711,116 +1711,54 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     SDL_Texture* image = nullptr;
     int npc_id = -1;
     
-    // 创建调试日志
-    std::ofstream debug_log( "debug_npc_image.txt", std::ios::out | std::ios::trunc );
-    if( debug_log.is_open() ) {
-        debug_log << "=== NPC 对话图片处理 ===\n";
-        debug_log << "NPC指针: " << (void*)who << "\n";
-        debug_log << "显示特殊NPC图片选项: " << (get_option<bool>("显示特殊NPC的图片") ? "是" : "否") << "\n";
-    }
-    
     if (who != nullptr && get_option<bool>("显示特殊NPC的图片")) {
         character_name = who->get_name();
         npc_id = who->getID().get_value();
         
-        if( debug_log.is_open() ) {
-            debug_log << "NPC名称: " << character_name << "\n";
-            debug_log << "NPC ID: " << npc_id << "\n";
-        }
-        
-        // 首先尝试获取动态立绘
-        if (npc_id > 0) {
-            if( debug_log.is_open() ) {
-                debug_log << "步骤1: 尝试获取动态立绘\n";
+        image = get_character_picture(character_name);
+        // 预设图优先 
+        if (image == nullptr) {
+            // 首先尝试获取动态立绘
+            if (npc_id > 0) {
+                image = get_npc_dynamic_picture(npc_id);
             }
-            image = get_npc_dynamic_picture(npc_id);
-            if( debug_log.is_open() ) {
-                debug_log << "动态立绘加载结果: " << (image != nullptr ? "成功" : "失败") << "\n";
-            }
-        }
-        
-        // 如果没有动态立绘且启用了AI生成，直接等待生成
-        if (image == nullptr && get_option<bool>("AI生成NPC立绘")) {
-            if( debug_log.is_open() ) {
-                debug_log << "步骤2: 动态立绘不存在，开始AI生成\n";
-                debug_log << "AI生成NPC立绘选项: 是\n";
-            }
-            // 使用专用函数构建生图提示词
-            std::string prompt = build_prompt(*who,true);
-            if( debug_log.is_open() ) {
-                debug_log << "生图提示词长度: " << prompt.size() << " 字节\n";
-            }
-            // 开始生图请求
-            network::RequestId req_id = network::start_pollinations_image_request(prompt);
-            // 照搬文本请求的超时处理设计
-            while (true) {
-                network::process();
-                if (network::get_status(req_id) == network::RequestStatus::Completed) {
-                    if( debug_log.is_open() ) {
-                        debug_log << "生图请求完成\n";
-                    }
-                    network::RequestResult result = network::get_result(req_id);
-                    // 确保目录存在
-                    std::string image_path = get_npc_dynamic_picture_path(npc_id);
-                    if( debug_log.is_open() ) {
-                        debug_log << "准备保存到: " << image_path << "\n";
-                    }
-                    size_t last_slash = image_path.find_last_of("/\\");
-                    if (last_slash != std::string::npos) {
-                        std::string dir_path = image_path.substr(0, last_slash);
-                        if( debug_log.is_open() ) {
-                            debug_log << "确保目录存在: " << dir_path << "\n";
-                        }
-                        assure_dir_exist(dir_path);
-                    }
-                    bool success = network::parse_pollinations_image_response(result.response_body, image_path);
-                    if( debug_log.is_open() ) {
-                        debug_log << "图片保存结果: " << (success ? "成功" : "失败") << "\n";
-                    }
-                    if (success) {
-                        // 加载刚生成的图片
-                        image = get_npc_dynamic_picture(npc_id);
-                        if( debug_log.is_open() ) {
-                            debug_log << "重新加载生成的图片: " << (image != nullptr ? "成功" : "失败") << "\n";
-                        }
-                    }
-                    network::clear_completed();
-                    break;
-                } else if (network::get_status(req_id) == network::RequestStatus::Failed) {
-                    if( debug_log.is_open() ) {
-                        debug_log << "生图请求失败\n";
-                    }
-                    add_msg(m_bad, network::get_result(req_id).response_body);
-                    network::clear_completed();
-                    break;
-                }
-                inp_mngr.pump_events();
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
-            }
-        } else if( image == nullptr ) {
-            if( debug_log.is_open() ) {
-                debug_log << "跳过AI生成: " << (get_option<bool>("AI生成NPC立绘") ? "原因未知" : "选项未打开") << "\n";
-            }
-        }
-        
-        // 如果还是没有图片，尝试获取默认图片
-        if (image == nullptr && character_name != "") {
-            if( debug_log.is_open() ) {
-                debug_log << "步骤3: 尝试获取默认图片\n";
-            }
-            image = get_character_picture(character_name);
-            if( debug_log.is_open() ) {
-                debug_log << "默认图片加载结果: " << (image != nullptr ? "成功" : "失败") << "\n";
-            }
-        }
-    }
-    
-    if( debug_log.is_open() ) {
-        debug_log << "最终图片状态: " << (image != nullptr ? "有图片" : "无图片") << "\n";
-        debug_log.close();
-    }
-    
 
+            // 如果没有动态立绘且启用了AI生成，直接等待生成
+            if (image == nullptr && get_option<bool>("AI生成NPC立绘")) {
+                std::string prompt = build_prompt(*who, true);
+                // 开始生图请求
+                network::RequestId req_id = network::start_pollinations_image_request(prompt);
+                while (true) {
+                    network::process();
+                    if (network::get_status(req_id) == network::RequestStatus::Completed) {
+                        network::RequestResult result = network::get_result(req_id);
+                        // 确保目录存在
+                        std::string image_path = get_npc_dynamic_picture_path(npc_id);
+                        size_t last_slash = image_path.find_last_of("/\\");
+                        if (last_slash != std::string::npos) {
+                            std::string dir_path = image_path.substr(0, last_slash);
+                            assure_dir_exist(dir_path);
+                        }
+                        bool success = network::parse_pollinations_image_response(result.response_body, image_path);
+                        if (success) {
+                            // 加载刚生成的图片
+                            image = get_npc_dynamic_picture(npc_id);
+                        }
+                        network::clear_completed();
+                        break;
+                    }
+                    else if (network::get_status(req_id) == network::RequestStatus::Failed) {
+                        add_msg(m_bad, network::get_result(req_id).response_body);
+                        network::clear_completed();
+                        break;
+                    }
+                    inp_mngr.pump_events();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                }
+            }
+        }
+    }
+    
     d.by_radio = radio_contact;
     dialogue_by_radio = radio_contact;
     d.actor( true )->check_missions();

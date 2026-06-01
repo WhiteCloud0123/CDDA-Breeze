@@ -563,27 +563,8 @@ SDL_Texture* get_character_picture(std::string &name) {
 }
 
 std::string get_npc_dynamic_picture_path( int npc_id ) {
-    // 调试日志
-    {
-        std::ofstream debug_log( "debug_image_load.txt", std::ios::out | std::ios::app );
-        if( debug_log.is_open() ) {
-            debug_log << "=== 调用 get_npc_dynamic_picture_path, npc_id=" << npc_id << "\n";
-            debug_log << "world_generator=" << (world_generator ? "存在" : "空") << "\n";
-            if( world_generator ) {
-                debug_log << "active_world=" << (world_generator->active_world ? "存在" : "空") << "\n";
-            }
-        }
-    }
 
     if( !world_generator || !world_generator->active_world ) {
-        // 调试日志
-        {
-            std::ofstream debug_log( "debug_image_load.txt", std::ios::out | std::ios::app );
-            if( debug_log.is_open() ) {
-                debug_log << "错误: world_generator 或 active_world 为空\n";
-                debug_log.close();
-            }
-        }
         return "";
     }
 
@@ -591,35 +572,13 @@ std::string get_npc_dynamic_picture_path( int npc_id ) {
     std::string image_dir = world_path + "/image/npc/";
     std::string image_path = image_dir + std::to_string( npc_id ) + ".png";
     
-    // 调试日志
-    {
-        std::ofstream debug_log( "debug_image_load.txt", std::ios::out | std::ios::app );
-        if( debug_log.is_open() ) {
-            debug_log << "世界路径: " << world_path << "\n";
-            debug_log << "图片目录: " << image_dir << "\n";
-            debug_log << "完整路径: " << image_path << "\n";
-            debug_log.close();
-        }
-    }
-    
     return image_path;
 }
 
 SDL_Texture* get_npc_dynamic_picture( int npc_id ) {
-    // 清空或创建调试日志
-    std::ofstream debug_log( "debug_image_load.txt", std::ios::out | std::ios::trunc );
-    if( debug_log.is_open() ) {
-        debug_log << "=== 获取 NPC 动态图片 ===\n";
-        debug_log << "NPC ID: " << npc_id << "\n";
-    }
-
     std::string image_path = get_npc_dynamic_picture_path(npc_id);
     
     if( image_path.empty() ) {
-        if( debug_log.is_open() ) {
-            debug_log << "错误: 图片路径为空\n";
-            debug_log.close();
-        }
         return nullptr;
     }
 
@@ -627,41 +586,12 @@ SDL_Texture* get_npc_dynamic_picture( int npc_id ) {
     std::ifstream check_file( image_path, std::ios::binary );
     bool file_exists = check_file.good();
     check_file.close();
-    
-    if( debug_log.is_open() ) {
-        debug_log << "文件存在检查: " << (file_exists ? "是" : "否") << "\n";
-        if( file_exists ) {
-            // 获取文件大小
-            std::ifstream file_size_check( image_path, std::ios::binary | std::ios::ate );
-            if( file_size_check.is_open() ) {
-                std::streamsize size = file_size_check.tellg();
-                debug_log << "文件大小: " << size << " 字节\n";
-                file_size_check.close();
-            }
-        }
-    }
 
     SDL_Texture* result = nullptr;
     if( file_exists ) {
         result = IMG_LoadTexture(renderer.get(), image_path.c_str());
-        if( debug_log.is_open() ) {
-            if( result ) {
-                debug_log << "图片加载成功\n";
-            } else {
-                const char* error = IMG_GetError();
-                debug_log << "图片加载失败: " << (error ? error : "未知错误") << "\n";
-            }
-        }
-    } else {
-        if( debug_log.is_open() ) {
-            debug_log << "文件不存在，不尝试加载\n";
-        }
     }
-    
-    if( debug_log.is_open() ) {
-        debug_log.close();
-    }
-    
+   
     return result;
 }
 

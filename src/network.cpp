@@ -527,17 +527,6 @@ static std::string standard_base64_decode( const std::string &encoded_string )
 bool parse_pollinations_image_response( const std::string &json_response, const std::string &save_path )
 {
     try {
-        // 调试日志：保存原始响应到文件
-        {
-            std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::trunc );
-            if( debug_log.is_open() ) {
-                debug_log << "=== 图片生成响应 ===\n";
-                debug_log << "保存路径: " << save_path << "\n";
-                debug_log << "响应长度: " << json_response.size() << " 字节\n";
-                debug_log << "响应内容:\n" << json_response << "\n";
-                debug_log.close();
-            }
-        }
 
         std::istringstream ss( json_response );
         TextJsonIn jsin( ss );
@@ -559,17 +548,6 @@ bool parse_pollinations_image_response( const std::string &json_response, const 
             std::string b64_data = image_data.get_string( "b64_json" );
             std::string decoded_data = standard_base64_decode( b64_data );
 
-            // 调试日志
-            {
-                std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
-                if( debug_log.is_open() ) {
-                    debug_log << "\n=== 解码信息 ===\n";
-                    debug_log << "Base64数据长度: " << b64_data.size() << " 字节\n";
-                    debug_log << "解码后数据长度: " << decoded_data.size() << " 字节\n";
-                    debug_log.close();
-                }
-            }
-
             std::ofstream out_file( save_path, std::ios::binary );
             if( out_file.is_open() ) {
                 out_file.write( decoded_data.c_str(), decoded_data.size() );
@@ -579,49 +557,16 @@ bool parse_pollinations_image_response( const std::string &json_response, const 
                 std::ifstream check_file( save_path, std::ios::binary | std::ios::ate );
                 if( check_file.is_open() ) {
                     std::streamsize file_size = check_file.tellg();
-                    {
-                        std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
-                        if( debug_log.is_open() ) {
-                            debug_log << "文件写入成功: " << save_path << "\n";
-                            debug_log << "文件大小: " << file_size << " 字节\n";
-                            debug_log.close();
-                        }
-                    }
                     check_file.close();
                 }
                 return true;
-            } else {
-                // 调试日志：无法打开文件
-                {
-                    std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
-                    if( debug_log.is_open() ) {
-                        debug_log << "错误: 无法打开文件进行写入: " << save_path << "\n";
-                        debug_log.close();
-                    }
-                }
             }
         }
 
         return false;
     } catch( const std::exception &e ) {
-        // 调试日志：异常
-        {
-            std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
-            if( debug_log.is_open() ) {
-                debug_log << "异常错误: " << e.what() << "\n";
-                debug_log.close();
-            }
-        }
         return false;
     } catch( ... ) {
-        // 调试日志：未知异常
-        {
-            std::ofstream debug_log( "debug_image_response.txt", std::ios::out | std::ios::app );
-            if( debug_log.is_open() ) {
-                debug_log << "未知异常错误\n";
-                debug_log.close();
-            }
-        }
         return false;
     }
 }
