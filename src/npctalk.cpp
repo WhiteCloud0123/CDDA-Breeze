@@ -57,6 +57,7 @@
 #include "messages.h"
 #include "mission.h"
 #include "mtype.h"
+#include "mutation.h"
 #include "network.h"
 #include "npc.h"
 #include "npctalk.h"
@@ -132,8 +133,16 @@ const std::string basic_prompt_for_image =
 "- 性别：%s \n"
 "- 职业：%s \n"
 "- 穿着：%s \n"
+"- 手持物品：%s \n"
 "- 特性：%s \n"
 ;
+
+const std::vector<std::string> APPEARANCE_TYPES = {
+    "hair_style",
+    "eye_color",
+    "skin_tone",
+    "facial_hair"
+};
 
 std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image=false) {
     Character& player = get_player_character();
@@ -170,15 +179,28 @@ std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image
             visible_worn_items.begin(),
             visible_worn_items.end(),
             [](const item& it) {
-                return it.tname();  // 获取物品的翻译名称
+                return it.tname(1,false);  // 获取物品的翻译名称
             }
         );
-        const std::string trait_str = n.visible_mutations(1);
+        item* wield_item = n.get_wielded_item() ? &*n.get_wielded_item() : &null_item_reference();
+        std::string trait_str = "";
+        // 使用 get_mutations_variants(true) 获取所有特征（包括隐藏的）
+        for (const trait_and_var& trait : n.get_mutations_variants(true)) {
+            const mutation_branch& mut = trait.trait.obj();
+            // 检查是否是外观特征类型
+            for (const std::string& type : APPEARANCE_TYPES) {
+                if (mut.types.count(type)) {
+                    trait_str = trait_str + trait.name() + "；";
+                    break;
+                }
+            }
+        }
         prompt = string_format(original_prompt,
             // npc的基本信息
             n.male ? "男" : "女",
             n.myclass->get_name(),
             worn_string,
+            wield_item->tname(1, false),
             trait_str
         );
     }
