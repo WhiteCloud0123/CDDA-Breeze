@@ -1771,7 +1771,7 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                         if( debug_log.is_open() ) {
                             debug_log << "确保目录存在: " << dir_path << "\n";
                         }
-                        ensure_directory_exists(dir_path);
+                        assure_dir_exist(dir_path);
                     }
                     bool success = network::parse_pollinations_image_response(result.response_body, image_path);
                     if( debug_log.is_open() ) {

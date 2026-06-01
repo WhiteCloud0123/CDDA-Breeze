@@ -53,9 +53,6 @@ SDL_Texture* get_npc_dynamic_picture( int npc_id );
 // 获取 NPC 动态立绘的保存路径
 std::string get_npc_dynamic_picture_path( int npc_id );
 
-// 确保目录存在
-bool ensure_directory_exists( const std::string &path );
-
 #if defined(__ANDROID__)
 SDL_Rect &get_visible_display_frame();
 #endif

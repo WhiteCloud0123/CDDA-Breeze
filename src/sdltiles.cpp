@@ -665,31 +665,7 @@ SDL_Texture* get_npc_dynamic_picture( int npc_id ) {
     return result;
 }
 
-bool ensure_directory_exists( const std::string &path ) {
-    // 递归创建目录
-    size_t pos = 0;
-    std::string current_path;
-    
-    // 处理路径分隔符
-    while ((pos = path.find_first_of("/\\", pos)) != std::string::npos) {
-        current_path = path.substr(0, pos);
-        if (!current_path.empty()) {
-#ifdef _WIN32
-            CreateDirectoryA(current_path.c_str(), nullptr);
-#else
-            mkdir(current_path.c_str(), 0755);
-#endif
-        }
-        pos++;
-    }
-    
-    // 创建最后一个目录
-#ifdef _WIN32
-    return CreateDirectoryA(path.c_str(), nullptr) != 0 || GetLastError() == ERROR_ALREADY_EXISTS;
-#else
-    return mkdir(path.c_str(), 0755) == 0 || errno == EEXIST;
-#endif
-}
+
 
 void refresh_display()
 {   
