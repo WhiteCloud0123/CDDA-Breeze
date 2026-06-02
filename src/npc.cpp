@@ -591,6 +591,10 @@ void npc_template::load( const JsonObject &jsobj )
         guy.death_eocs.emplace_back( effect_on_conditions::load_inline_eoc( jv, "" ) );
     }
 
+    if( jsobj.has_string( "ai_prompt" ) ) {
+        guy.ai_prompt_from_npc_json = jsobj.get_string( "ai_prompt" );
+    }
+
     npc_templates.emplace( string_id<npc_template>( guy.idz.str() ), std::move( tem ) );
 }
 
@@ -758,6 +762,22 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
         add_new_mission( mission::reserve_new( miss_id, getID() ) );
     }
     death_eocs = tguy.death_eocs;
+    
+    // 从模板复制 ai_prompt_from_npc_json
+    ai_prompt_from_npc_json = tguy.ai_prompt_from_npc_json;
+    
+    // 从 npc_class 读取 ai_prompt
+    if( myclass.is_valid() ) {
+        const npc_class &nc = myclass.obj();
+        ai_prompt_from_class_json = nc.get_ai_prompt();
+    }
+    
+    // 按照优先级初始化 ai_prompt：npc json > npc_class json > 留空（后续会用 basic_prompt）
+    if( !ai_prompt_from_npc_json.empty() ) {
+        ai_prompt = ai_prompt_from_npc_json;
+    } else if( !ai_prompt_from_class_json.empty() ) {
+        ai_prompt = ai_prompt_from_class_json;
+    }
 }
 
 npc::~npc() = default;
