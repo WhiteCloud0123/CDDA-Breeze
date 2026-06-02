@@ -96,7 +96,6 @@ enum class debug_menu_index : int {
     WRITE_TIMED_EVENTS,
     QUICKLOAD,
     EXPORT_OVERMAP_SPECIAL,
-    EDIT_AI_PROMPT,
     last
 };
 

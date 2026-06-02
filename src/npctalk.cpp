@@ -1739,22 +1739,34 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         image = get_character_picture(character_name);
         // 预设图优先 
         if (image == nullptr) {
-            // 首先尝试获取动态立绘
+            // 首先构建当前提示词
+            std::string current_prompt = build_prompt(*who, true);
+            bool need_regenerate = false;
+            std::string image_path;
+            
             if (npc_id > 0) {
+                image_path = get_npc_dynamic_picture_path(npc_id);
+                // 尝试获取动态立绘
                 image = get_npc_dynamic_picture(npc_id);
+                
+                // 检查是否需要重新生成：如果有动态立绘，但提示词变化了
+                if (image != nullptr && who->BUILT_ai_prompt_for_image != current_prompt) {
+                    need_regenerate = true;
+                    // 删除旧图片
+                    remove_file(image_path);
+                    image = nullptr;
+                }
             }
 
-            // 如果没有动态立绘且启用了AI生成，直接等待生成
-            if (image == nullptr && get_option<bool>("AI生成NPC立绘")) {
-                std::string prompt = build_prompt(*who, true);
+            // 如果没有动态立绘且启用了AI生成，或者需要重新生成
+            if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_regenerate) {
                 // 开始生图请求
-                network::RequestId req_id = network::start_pollinations_image_request(prompt);
+                network::RequestId req_id = network::start_pollinations_image_request(current_prompt);
                 while (true) {
                     network::process();
                     if (network::get_status(req_id) == network::RequestStatus::Completed) {
                         network::RequestResult result = network::get_result(req_id);
                         // 确保目录存在
-                        std::string image_path = get_npc_dynamic_picture_path(npc_id);
                         size_t last_slash = image_path.find_last_of("/\\");
                         if (last_slash != std::string::npos) {
                             std::string dir_path = image_path.substr(0, last_slash);
@@ -1762,6 +1774,8 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                         }
                         bool success = network::parse_pollinations_image_response(result.response_body, image_path);
                         if (success) {
+                            // 更新 BUILT_ai_prompt_for_image 为当前提示词
+                            who->BUILT_ai_prompt_for_image = current_prompt;
                             // 加载刚生成的图片
                             image = get_npc_dynamic_picture(npc_id);
                         }
