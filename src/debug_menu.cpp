@@ -3300,10 +3300,55 @@ void debug()
                 jsout.start_array(); // 数组根节点
 
                 // 首先创建调色板
-                std::map<std::string, char> terrain_to_char;
-                std::map<std::string, char> furniture_to_char;
-                char next_ter_char = 'a';
-                char next_furn_char = 'A';
+                // 可用字符集：ASCII + Unicode，排除 " 和 \（JSON 转义）以及空格
+                // 地形字符集：小写字母 + 数字 + ASCII符号 + 希腊小写 + 西里尔小写 + 方块/制表符
+                static const std::vector<std::string> ter_chars = {
+                    "a","b","c","d","e","f","g","h","i","j","k","l","m",
+                    "n","o","p","q","r","s","t","u","v","w","x","y","z",
+                    "0","1","2","3","4","5","6","7","8","9",
+                    "!","#","$","%","&","'","(",")","*","+",",","-",".",
+                    "/",":",";","<","=",">","?","[","]","^","_","`","{","|","}","~",
+                    "\xce\xb1","\xce\xb2","\xce\xb3","\xce\xb4","\xce\xb5","\xce\xb6","\xce\xb7","\xce\xb8",
+                    "\xce\xb9","\xce\xba","\xce\xbb","\xce\xbc","\xce\xbd","\xce\xbe","\xce\xbf",
+                    "\xcf\x80","\xcf\x81","\xcf\x83","\xcf\x84","\xcf\x85","\xcf\x86","\xcf\x87","\xcf\x88","\xcf\x89",
+                    "\xd0\xb0","\xd0\xb1","\xd0\xb2","\xd0\xb3","\xd0\xb4","\xd0\xb5","\xd0\xb6","\xd0\xb7",
+                    "\xd0\xb8","\xd0\xb9","\xd0\xba","\xd0\xbb","\xd0\xbc","\xd0\xbd","\xd0\xbe","\xd0\xbf",
+                    "\xd1\x80","\xd1\x81","\xd1\x82","\xd1\x83","\xd1\x84","\xd1\x85","\xd1\x86","\xd1\x87",
+                    "\xd1\x88","\xd1\x89","\xd1\x8a","\xd1\x8b","\xd1\x8c","\xd1\x8d","\xd1\x8e","\xd1\x8f",
+                    "\xe2\x96\x91","\xe2\x96\x92","\xe2\x96\x93","\xe2\x96\x88",
+                    "\xe2\x96\x84","\xe2\x96\x80","\xe2\x96\xbc","\xe2\x96\xb2",
+                    "\xe2\x97\x86","\xe2\x97\x87","\xe2\x97\x8b","\xe2\x97\x8f",
+                    "\xe2\x97\x98","\xe2\x97\x99","\xe2\x97\x9a","\xe2\x97\x9b",
+                    "\xe2\x94\x80","\xe2\x94\x82","\xe2\x94\x8c","\xe2\x94\x90",
+                    "\xe2\x94\x94","\xe2\x94\x98","\xe2\x94\x9c","\xe2\x94\xa4",
+                    "\xe2\x94\xac","\xe2\x94\xb4","\xe2\x94\xbc",
+                    "\xe2\x95\x90","\xe2\x95\x91","\xe2\x95\x94","\xe2\x95\x97",
+                    "\xe2\x95\x9a","\xe2\x95\x9d","\xe2\x95\xa0","\xe2\x95\xa3",
+                    "\xe2\x95\xa6","\xe2\x95\xa9","\xe2\x95\xac",
+                };
+                // 家具字符集：大写字母 + ASCII符号 + 希腊大写 + 西里尔大写 + 杂项符号
+                static const std::vector<std::string> furn_chars = {
+                    "A","B","C","D","E","F","G","H","I","J","K","L","M",
+                    "N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+                    "@","^","|","~","!","#","$","%","&","*","+","-","=","?",":",".","/",
+                    "\xce\x91","\xce\x92","\xce\x93","\xce\x94","\xce\x95","\xce\x96","\xce\x97","\xce\x98",
+                    "\xce\x99","\xce\x9a","\xce\x9b","\xce\x9c","\xce\x9d","\xce\x9e","\xce\x9f",
+                    "\xce\xa0","\xce\xa1","\xce\xa3","\xce\xa4","\xce\xa5","\xce\xa6","\xce\xa7","\xce\xa8","\xce\xa9",
+                    "\xd0\x90","\xd0\x91","\xd0\x92","\xd0\x93","\xd0\x94","\xd0\x95","\xd0\x96","\xd0\x97",
+                    "\xd0\x98","\xd0\x99","\xd0\x9a","\xd0\x9b","\xd0\x9c","\xd0\x9d","\xd0\x9e","\xd0\x9f",
+                    "\xd0\xa0","\xd0\xa1","\xd0\xa2","\xd0\xa3","\xd0\xa4","\xd0\xa5","\xd0\xa6","\xd0\xa7",
+                    "\xd0\xa8","\xd0\xa9","\xd0\xaa","\xd0\xab","\xd0\xac","\xd0\xad","\xd0\xae","\xd0\xaf",
+                    "\xe2\x99\xa0","\xe2\x99\xa3","\xe2\x99\xa5","\xe2\x99\xa6",
+                    "\xe2\x98\x85","\xe2\x98\x86","\xe2\x98\x80","\xe2\x98\x81",
+                    "\xe2\x9c\xbf","\xe2\x9d\x80","\xe2\x9d\x81","\xe2\x9d\x82","\xe2\x9d\x83","\xe2\x9d\x84",
+                    "\xe2\x97\x86","\xe2\x97\x87","\xe2\x97\x8b","\xe2\x97\x8f",
+                    "\xe2\x97\xbe","\xe2\x97\xbf","\xe2\x97\xbd","\xe2\x97\xbc",
+                    "\xe2\x96\xaa","\xe2\x96\xab","\xe2\x96\xac","\xe2\x96\xad",
+                };
+                std::map<std::string, std::string> terrain_to_char;
+                std::map<std::string, std::string> furniture_to_char;
+                size_t next_ter_idx = 0;
+                size_t next_furn_idx = 0;
 
                 // 第一次遍历以收集所有唯一的地形和家具
                 int mapgen_idx = 0;
@@ -3320,23 +3365,22 @@ void debug()
                                 tripoint p( x, y, 0 );
                                 std::string ter_str = tm.ter( p ).id().str();
                                 if( terrain_to_char.find( ter_str ) == terrain_to_char.end() ) {
-                                    terrain_to_char[ter_str] = next_ter_char++;
-                                    if( next_ter_char > 'z' ) {
-                                        next_ter_char = '0';
+                                    if( next_ter_idx >= ter_chars.size() ) {
+                                        debugmsg( "地形种类超过 %d 种，字符集已用尽，部分地形将无法正确映射", ter_chars.size() );
+                                        break;
                                     }
-                                    if( next_ter_char > '9' ) {
-                                        next_ter_char = '!';
-                                    }
+                                    terrain_to_char[ter_str] = ter_chars[next_ter_idx++];
                                 }
 
                                 furn_id fid = tm.furn( p );
                                 if( fid != f_null ) {
                                     std::string furn_str = fid.id().str();
                                     if( furniture_to_char.find( furn_str ) == furniture_to_char.end() ) {
-                                        furniture_to_char[furn_str] = next_furn_char++;
-                                        if( next_furn_char > 'Z' ) {
-                                            next_furn_char = '@';
+                                        if( next_furn_idx >= furn_chars.size() ) {
+                                            debugmsg( "家具种类超过 %d 种，字符集已用尽，部分家具将无法正确映射", furn_chars.size() );
+                                            break;
                                         }
+                                        furniture_to_char[furn_str] = furn_chars[next_furn_idx++];
                                     }
                                 }
                             }
@@ -3351,13 +3395,13 @@ void debug()
                 jsout.member( "terrain" );
                 jsout.start_object();
                 for( const auto &pair : terrain_to_char ) {
-                    jsout.member( std::string( 1, pair.second ), pair.first );
+                    jsout.member( pair.second, pair.first );
                 }
                 jsout.end_object();
                 jsout.member( "furniture" );
                 jsout.start_object();
                 for( const auto &pair : furniture_to_char ) {
-                    jsout.member( std::string( 1, pair.second ), pair.first );
+                    jsout.member( pair.second, pair.first );
                 }
                 jsout.end_object();
                 jsout.end_object();
@@ -3401,13 +3445,13 @@ void debug()
                         jsout.member( "terrain" );
                         jsout.start_object();
                         for( const auto &pair : terrain_to_char ) {
-                            jsout.member( std::string( 1, pair.second ), pair.first );
+                            jsout.member( pair.second, pair.first );
                         }
                         jsout.end_object();
                         jsout.member( "furniture" );
                         jsout.start_object();
                         for( const auto &pair : furniture_to_char ) {
-                            jsout.member( std::string( 1, pair.second ), pair.first );
+                            jsout.member( pair.second, pair.first );
                         }
                         jsout.end_object();
                         jsout.member( "flags", std::vector<std::string>{ "ERASE_ALL_BEFORE_PLACING_TERRAIN" } );
