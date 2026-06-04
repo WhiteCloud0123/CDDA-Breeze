@@ -554,7 +554,7 @@ static int map_uilist()
         { uilist_entry( debug_menu_index::MAP_EXTRA, true, 'm', _( "Spawn map extra" ) ) },
         { uilist_entry( debug_menu_index::NESTED_MAPGEN, true, 'n', _( "Spawn nested mapgen" ) ) },
         { uilist_entry( debug_menu_index::EDIT_CAMP_LARDER, true, 'l', _( "Edit the faction camp larder" ) ) },
-        { uilist_entry( debug_menu_index::EXPORT_OVERMAP_SPECIAL, true, 'E', _( "Export overmap special" ) ) },
+        { uilist_entry( debug_menu_index::EXPORT_OVERMAP_SPECIAL, true, 'E', "导出大地图特殊地点")},
     };
 
     return uilist( _( "Map…" ), uilist_initializer );
@@ -3252,12 +3252,17 @@ void debug()
             std::string filename = "overmap_special_export.json";
             string_input_popup filename_popup;
             filename_popup
-                .title("输入导出文件名称")
+                .title("导出文件名称")
                 .width( 60 )
                 .edit( filename );
             if( filename_popup.canceled() ) {
                 break;
             }
+
+            // 构建导出路径：data目录同级下的export文件夹
+            const std::string export_dir = PATH_INFO::base_path() + "export";
+            assure_dir_exist( export_dir );
+            const std::string filepath = export_dir + "/" + filename;
 
             // 4. 先收集所有怪物，按它们所在的大地图格子组织
             struct MonsterExport {
@@ -3290,7 +3295,7 @@ void debug()
             }
 
             // 5. 导出到 JSON 文件
-            write_to_file( filename, [&]( std::ostream & outfile ) {
+            write_to_file( filepath, [&]( std::ostream & outfile ) {
                 JsonOut jsout( outfile, true ); // pretty print = true
                 jsout.start_array(); // 数组根节点
 
@@ -3481,7 +3486,7 @@ void debug()
 
             }, "overmap special export" );
 
-            popup("导出成功！");
+            popup("导出成功！文件已保存至：" + filepath);
             break;
         }
         case debug_menu_index::TEST_WEATHER: {
