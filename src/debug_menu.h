@@ -88,15 +88,15 @@ enum class debug_menu_index : int {
     NESTED_MAPGEN,
     VEHICLE_BATTERY_CHARGE,
     GENERATE_EFFECT_LIST,
-        EDIT_CAMP_LARDER,
-        WRITE_GLOBAL_EOCS,
-        WRITE_GLOBAL_VARS,
-        EDIT_GLOBAL_VARS,
-        ACTIVATE_EOC,
-        WRITE_TIMED_EVENTS,
-        QUICKLOAD,
-        EXPORT_OVERMAP_SPECIAL,
-        last
+    EDIT_CAMP_LARDER,
+    WRITE_GLOBAL_EOCS,
+    WRITE_GLOBAL_VARS,
+    EDIT_GLOBAL_VARS,
+    ACTIVATE_EOC,
+    WRITE_TIMED_EVENTS,
+    QUICKLOAD,
+    EXPORT_OVERMAP_SPECIAL,
+    last
 };
 
 void wisheffect( Character &p );

@@ -47,6 +47,12 @@ extern int fontwidth;
 
 SDL_Texture* get_character_picture(std::string& name);
 
+// 从世界存档的 image/npc 目录获取 NPC 动态立绘
+SDL_Texture* get_npc_dynamic_picture( int npc_id );
+
+// 获取 NPC 动态立绘的保存路径
+std::string get_npc_dynamic_picture_path( int npc_id );
+
 #if defined(__ANDROID__)
 SDL_Rect &get_visible_display_frame();
 #endif

@@ -115,6 +115,7 @@ void clear_overrides( npc &p );
 void do_craft(npc&);
 void do_disassembly( npc &p );
 void edit_ai_prompt( npc &p );
+void edit_ai_prompt_for_image(npc& p);
 
 } // namespace talk_function
 
@@ -147,7 +148,5 @@ const json_talk_topic *get_talk_topic( const std::string &id );
 std::vector<int> npcs_select_menu( const std::vector<Character *> &npc_list,
                                    const std::string &prompt,
                                    const std::function<bool( const Character * )> &exclude_func );
-
-void edit_npc_ai_prompt( npc &n );
 
 #endif // CATA_SRC_NPCTALK_H

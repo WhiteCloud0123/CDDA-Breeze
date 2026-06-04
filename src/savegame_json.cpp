@@ -2425,6 +2425,8 @@ void npc::load( const JsonObject &data )
     }
     data.read( "unique_id", unique_id );
     data.read( "ai_prompt", ai_prompt );
+    data.read("ai_prompt_for_image", ai_prompt_for_image);
+    data.read("BUILT_ai_prompt_for_image", BUILT_ai_prompt_for_image);
 }
 
 /*
@@ -2495,6 +2497,8 @@ void npc::store( JsonOut &json ) const
     json.member( "complaints", complaints );
     json.member( "unique_id", unique_id );
     json.member( "ai_prompt", ai_prompt );
+    json.member("ai_prompt_for_image", ai_prompt_for_image);
+    json.member("BUILT_ai_prompt_for_image", BUILT_ai_prompt_for_image);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

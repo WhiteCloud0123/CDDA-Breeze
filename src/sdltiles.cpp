@@ -76,6 +76,8 @@
 #include "particle_system.h"
 #include "path_info.h"
 #include "messages.h"
+#include "worldfactory.h"
+#include "filesystem.h"
 
 #if defined(__linux__)
 #   include <cstdlib> // getenv()/setenv()
@@ -559,6 +561,41 @@ SDL_Texture* get_character_picture(std::string &name) {
     return image;
 
 }
+
+std::string get_npc_dynamic_picture_path( int npc_id ) {
+
+    if( !world_generator || !world_generator->active_world ) {
+        return "";
+    }
+
+    std::string world_path = world_generator->active_world->folder_path();
+    std::string image_dir = world_path + "/image/npc/";
+    std::string image_path = image_dir + std::to_string( npc_id ) + ".png";
+    
+    return image_path;
+}
+
+SDL_Texture* get_npc_dynamic_picture( int npc_id ) {
+    std::string image_path = get_npc_dynamic_picture_path(npc_id);
+    
+    if( image_path.empty() ) {
+        return nullptr;
+    }
+
+    // 检查文件是否存在
+    std::ifstream check_file( image_path, std::ios::binary );
+    bool file_exists = check_file.good();
+    check_file.close();
+
+    SDL_Texture* result = nullptr;
+    if( file_exists ) {
+        result = IMG_LoadTexture(renderer.get(), image_path.c_str());
+    }
+   
+    return result;
+}
+
+
 
 void refresh_display()
 {   

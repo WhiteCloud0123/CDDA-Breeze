@@ -52,6 +52,12 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
 // 解析 pollinations API 响应，提取 content，可选追加token消耗信息
 std::string parse_pollinations_response( const std::string &json_response, bool include_token_usage = false );
 
+// 发送 pollinations AI 生图 API 请求
+RequestId start_pollinations_image_request( const std::string &prompt );
+
+// 解析 pollinations AI 生图 API 响应，保存图片到指定路径
+bool parse_pollinations_image_response( const std::string &json_response, const std::string &save_path );
+
 } // namespace network
 
 #endif // CATA_SRC_NETWORK_H

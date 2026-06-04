@@ -81,6 +81,7 @@
 #include "mutation.h"
 #include "npc.h"
 #include "npc_class.h"
+#include "npctalk.h"
 #include "omdata.h"
 #include <optional>
 #include "options.h"
@@ -553,7 +554,7 @@ static int map_uilist()
         { uilist_entry( debug_menu_index::MAP_EXTRA, true, 'm', _( "Spawn map extra" ) ) },
         { uilist_entry( debug_menu_index::NESTED_MAPGEN, true, 'n', _( "Spawn nested mapgen" ) ) },
         { uilist_entry( debug_menu_index::EDIT_CAMP_LARDER, true, 'l', _( "Edit the faction camp larder" ) ) },
-        { uilist_entry( debug_menu_index::EXPORT_OVERMAP_SPECIAL, true, 'E', _( "Export overmap special" ) ) },
+        { uilist_entry( debug_menu_index::EXPORT_OVERMAP_SPECIAL, true, 'E', "导出大地图特殊地点")},
     };
 
     return uilist( _( "Map…" ), uilist_initializer );
@@ -1818,7 +1819,7 @@ static void character_edit_menu()
         D_DESC, D_SKILLS, D_THEORY, D_PROF, D_STATS, D_SPELLS, D_ITEMS, D_DELETE_ITEMS, D_ITEM_WORN,
         D_HP, D_STAMINA, D_MORALE, D_PAIN, D_NEEDS, D_HEALTHY, D_STATUS, D_MISSION_ADD, D_MISSION_EDIT,
         D_TELE, D_MUTATE, D_CLASS, D_ATTITUDE, D_OPINION, D_ADD_EFFECT, D_ASTHMA, D_PRINT_VARS,
-        D_WRITE_EOCS, D_KILL_XP, D_CHECK_TEMP, D_EDIT_VARS
+        D_WRITE_EOCS, D_KILL_XP, D_CHECK_TEMP, D_EDIT_AI_PROMPT,D_EDIT_VARS
     };
     nmenu.addentry( D_DESC, true, 'D', "%s",
                     _( "Edit description - name, age, height or blood type" ) );
@@ -1858,6 +1859,7 @@ static void character_edit_menu()
         nmenu.addentry( D_CLASS, true, 'c', "%s", _( "Randomize with class" ) );
         nmenu.addentry( D_ATTITUDE, true, 'A', "%s", _( "Set attitude" ) );
         nmenu.addentry( D_OPINION, true, 'O', "%s", _( "Set opinion" ) );
+        nmenu.addentry(D_EDIT_AI_PROMPT, true, 'Q', "%s", "编辑AI提示词【文本】");
     }
     nmenu.query();
     switch( nmenu.ret ) {
@@ -2126,6 +2128,10 @@ static void character_edit_menu()
         case D_WRITE_EOCS: {
             effect_on_conditions::write_eocs_to_file( you );
             popup( _( "effect_on_condition list written to eocs.output" ) );
+            break;
+        }
+        case D_EDIT_AI_PROMPT: {
+            talk_function::edit_ai_prompt(*you.as_npc());
             break;
         }
         case D_EDIT_VARS: {
@@ -3246,12 +3252,17 @@ void debug()
             std::string filename = "overmap_special_export.json";
             string_input_popup filename_popup;
             filename_popup
-                .title("输入导出文件名称")
+                .title("导出文件名称")
                 .width( 60 )
                 .edit( filename );
             if( filename_popup.canceled() ) {
                 break;
             }
+
+            // 构建导出路径：data目录同级下的export文件夹
+            const std::string export_dir = PATH_INFO::base_path() + "export";
+            assure_dir_exist( export_dir );
+            const std::string filepath = export_dir + "/" + filename;
 
             // 4. 先收集所有怪物，按它们所在的大地图格子组织
             struct MonsterExport {
@@ -3284,7 +3295,7 @@ void debug()
             }
 
             // 5. 导出到 JSON 文件
-            write_to_file( filename, [&]( std::ostream & outfile ) {
+            write_to_file( filepath, [&]( std::ostream & outfile ) {
                 JsonOut jsout( outfile, true ); // pretty print = true
                 jsout.start_array(); // 数组根节点
 
@@ -3475,7 +3486,7 @@ void debug()
 
             }, "overmap special export" );
 
-            popup("导出成功！");
+            popup("导出成功！文件已保存至：" + filepath);
             break;
         }
         case debug_menu_index::TEST_WEATHER: {
