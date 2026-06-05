@@ -114,6 +114,180 @@
       "start_spin_var": 90,
       "end_spin": 360,
       "end_spin_var": 180
+    },
+    {
+      "id": "spark_flash",
+      "name": "Spark Flash",
+      "description": "机器人受击瞬间的闪弧冲击",
+      "mode": "GRAVITY",
+      "total_particles": 18,
+      "duration": 0.07,
+      "gravity": {
+        "x": 0,
+        "y": 0
+      },
+      "speed": 45,
+      "speed_var": 30,
+      "radial_accel": 0,
+      "radial_accel_var": 0,
+      "tangential_accel": 0,
+      "tangential_accel_var": 0,
+      "angle": 90,
+      "angle_var": 360,
+      "life": 0.16,
+      "life_var": 0.06,
+      "start_size": 38.0,
+      "start_size_var": 18.0,
+      "end_size": 0.0,
+      "end_size_var": 0.0,
+      "start_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "start_color_var": {
+        "r": 0.0,
+        "g": 0.1,
+        "b": 0.5,
+        "a": 0.0
+      },
+      "end_color": {
+        "r": 1.0,
+        "g": 0.4,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "end_color_var": {
+        "r": 0.0,
+        "g": 0.2,
+        "b": 0.2,
+        "a": 0.0
+      },
+      "pos_var": {
+        "x": 4.0,
+        "y": 4.0
+      },
+      "start_spin": 0,
+      "start_spin_var": 0,
+      "end_spin": 0,
+      "end_spin_var": 0
+    },
+    {
+      "id": "spark",
+      "name": "Spark Scatter",
+      "description": "机器人受伤时的火花迸溅",
+      "mode": "GRAVITY",
+      "total_particles": 160,
+      "duration": 0.22,
+      "gravity": {
+        "x": 0,
+        "y": 420
+      },
+      "speed": 520,
+      "speed_var": 300,
+      "radial_accel": 120,
+      "radial_accel_var": 50,
+      "tangential_accel": 0,
+      "tangential_accel_var": 0,
+      "angle": 90,
+      "angle_var": 360,
+      "life": 0.75,
+      "life_var": 0.45,
+      "start_size": 3.5,
+      "start_size_var": 2.0,
+      "end_size": 0.0,
+      "end_size_var": 0.0,
+      "start_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "start_color_var": {
+        "r": 0.0,
+        "g": 0.2,
+        "b": 0.6,
+        "a": 0.0
+      },
+      "end_color": {
+        "r": 1.0,
+        "g": 0.25,
+        "b": 0.0,
+        "a": 0.35
+      },
+      "end_color_var": {
+        "r": 0.0,
+        "g": 0.15,
+        "b": 0.1,
+        "a": 0.25
+      },
+      "pos_var": {
+        "x": 4.0,
+        "y": 4.0
+      },
+      "start_spin": 0,
+      "start_spin_var": 0,
+      "end_spin": 0,
+      "end_spin_var": 0
+    },
+    {
+      "id": "spark_ember",
+      "name": "Spark Ember",
+      "description": "火花迸溅后的余烬飘下",
+      "mode": "GRAVITY",
+      "total_particles": 40,
+      "duration": 0.45,
+      "gravity": {
+        "x": 0,
+        "y": 160
+      },
+      "speed": 120,
+      "speed_var": 80,
+      "radial_accel": 30,
+      "radial_accel_var": 20,
+      "tangential_accel": 0,
+      "tangential_accel_var": 0,
+      "angle": 90,
+      "angle_var": 360,
+      "life": 1.3,
+      "life_var": 0.7,
+      "start_size": 4.0,
+      "start_size_var": 2.5,
+      "end_size": 0.8,
+      "end_size_var": 0.5,
+      "start_color": {
+        "r": 1.0,
+        "g": 0.7,
+        "b": 0.1,
+        "a": 1.0
+      },
+      "start_color_var": {
+        "r": 0.0,
+        "g": 0.15,
+        "b": 0.4,
+        "a": 0.0
+      },
+      "end_color": {
+        "r": 0.7,
+        "g": 0.05,
+        "b": 0.0,
+        "a": 0.2
+      },
+      "end_color_var": {
+        "r": 0.15,
+        "g": 0.1,
+        "b": 0.05,
+        "a": 0.15
+      },
+      "pos_var": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "start_spin": 0,
+      "start_spin_var": 0,
+      "end_spin": 0,
+      "end_spin_var": 0
     }
   ]
 }
