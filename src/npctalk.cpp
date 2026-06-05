@@ -179,7 +179,7 @@ std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image
             visible_worn_items.begin(),
             visible_worn_items.end(),
             [](const item& it) {
-                return it.tname(1,false);  // 获取物品的翻译名称
+                return remove_color_tags(it.tname(1,false));  // 获取物品的翻译名称并移除颜色标签
             }
         );
         item* wield_item = n.get_wielded_item() ? &*n.get_wielded_item() : &null_item_reference();
@@ -200,7 +200,7 @@ std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image
             n.male ? "男" : "女",
             n.myclass->get_name(),
             worn_string,
-            wield_item->tname(1, false),
+            remove_color_tags(wield_item->tname(1, false)),
             trait_str
         );
     }
@@ -1785,15 +1785,28 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
             // 如果没有动态立绘且启用了AI生成，或者需要更新图片
             if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_update) {
                 network::RequestId req_id = 0;
+                std::string waiting_msg;
                 
                 if (has_existing_image && need_update) {
                     // 有图片但提示词变化了，使用改图功能
-                    std::string edit_prompt = "Modify this exact character with new clothing and gear. Keep the same face, body, and hairstyle unchanged: " + current_prompt;
+                    waiting_msg = string_format( _( "正在生成 %s 的新立绘..." ), character_name.c_str() );
+                    std::string edit_prompt = "修改这个完全相同的角色，为其更换新的服装和装备。请保持其面部、体型不变：" + current_prompt;
                     req_id = network::start_pollinations_image_edit_request(edit_prompt, image_path);
                 } else {
                     // 没有图片，使用生图功能
+                    waiting_msg = string_format( _( "正在为 %s 生成首次立绘..." ), character_name.c_str() );
                     req_id = network::start_pollinations_image_request(current_prompt);
                 }
+                
+                // 显示等待提示窗口
+                catacurses::window w_wait_border = catacurses::newwin( 5, waiting_msg.length() + 6, point( TERMX / 2 - (waiting_msg.length() + 6) / 2, TERMY / 2 - 2 ) );
+                catacurses::window w_wait = catacurses::newwin( 3, waiting_msg.length() + 4, point( TERMX / 2 - (waiting_msg.length() + 4) / 2 + 1, TERMY / 2 - 1 ) );
+                draw_border( w_wait_border );
+                center_print( w_wait_border, 1, c_light_gray, waiting_msg.c_str() );
+                wnoutrefresh( w_wait_border );
+                wnoutrefresh( w_wait );
+                wrefresh( w_wait_border );
+                wrefresh( w_wait );
                 
                 while (true) {
                     network::process();
@@ -1835,6 +1848,11 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                     inp_mngr.pump_events();
                     std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 }
+                
+                // 清除等待提示窗口
+                werase( w_wait_border );
+                wnoutrefresh( w_wait_border );
+                wrefresh( w_wait_border );
             }
         }
     }
