@@ -135,6 +135,10 @@ void Particle_Activity::init_renderer(SDL_Renderer* renderer) {
 
 }
 
+SDL_Renderer* Particle_Activity::get_renderer() {
+    return _renderer;
+}
+
 void Particle_Activity::addParticles(int count)
 {
     if (_paused)
@@ -454,9 +458,15 @@ void Particle_Activity::setTexture(SDL_Texture* var)
     }
 }
 
+void Particle_Activity::setInstanceTexture(SDL_Texture* texture)
+{
+    _instance_texture = texture;
+}
+
 void Particle_Activity::draw()
 {
-    if (_texture == nullptr)
+    SDL_Texture* active_texture = _instance_texture ? _instance_texture : _texture;
+    if (active_texture == nullptr)
     {
         // add_msg("texture为空");
         return;
@@ -492,10 +502,10 @@ void Particle_Activity::draw()
 
             SDL_Rect r = { p_x, p_y, p_size, p_size };
             SDL_Color c = { Uint8(p.colorR * 255), Uint8(p.colorG * 255), Uint8(p.colorB * 255), Uint8(p.colorA * 255) };
-            SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
-            SDL_SetTextureAlphaMod(_texture, c.a);
-            SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-            SDL_RenderCopyEx(_renderer, _texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
+            SDL_SetTextureColorMod(active_texture, c.r, c.g, c.b);
+            SDL_SetTextureAlphaMod(active_texture, c.a);
+            SDL_SetTextureBlendMode(active_texture, SDL_BLENDMODE_BLEND);
+            SDL_RenderCopyEx(_renderer, active_texture, nullptr, &r, p.rotation, nullptr, SDL_FLIP_NONE);
         }
         update();
     }
@@ -503,6 +513,11 @@ void Particle_Activity::draw()
 
 
 SDL_Texture* Particle_Activity::getTexture()
+{
+    return _texture;
+}
+
+SDL_Texture* Particle_Activity::get_texture_static()
 {
     return _texture;
 }

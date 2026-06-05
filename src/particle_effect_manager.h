@@ -2,9 +2,16 @@
 #ifndef CATA_SRC_PARTICLE_EFFECT_MANAGER_H
 #define CATA_SRC_PARTICLE_EFFECT_MANAGER_H
 
+#if defined(_MSC_VER) && defined(USE_VCPKG)
+#      include <SDL2/SDL.h>
+#else
+#      include <SDL.h>
+#endif
+
 #include <map>
 #include <string>
 #include <vector>
+#include <memory>
 #include "particle_system.h"
 #include "json.h"
 
@@ -39,6 +46,7 @@ struct ParticleEffectConfig {
     float start_spin_var;
     float end_spin;
     float end_spin_var;
+    std::string texture_id;
 };
 
 class ParticleEffectManager {
@@ -50,6 +58,8 @@ public:
     const ParticleEffectConfig* get_effect_config(const std::string& id) const;
     
     Particle_Activity* create_effect(const std::string& effect_id, const tripoint& pos);
+    
+    SDL_Texture* get_texture(const std::string& texture_id);
     
     void update();
     void draw();
@@ -69,9 +79,11 @@ private:
     
     bool parse_effect_config(const JsonObject& obj, ParticleEffectConfig& config);
     Particle_Activity::Mode parse_effect_mode(const std::string& mode_str);
+    SDL_Texture* load_particle_texture(const std::string& texture_id);
     
     std::map<std::string, ParticleEffectConfig> effect_configs;
     std::vector<Particle_Activity*> active_effects;
+    std::map<std::string, SDL_Texture*> texture_cache;
     
     bool is_initialized = false;
 };

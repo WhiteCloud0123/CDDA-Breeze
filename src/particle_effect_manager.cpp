@@ -5,12 +5,18 @@
 #include "game.h"
 #include "map.h"
 #include "cached_options.h"
+#include "path_info.h"
+#include "sdl_wrappers.h"
 
 ParticleEffectManager::ParticleEffectManager() {
 
 }
 
 ParticleEffectManager::~ParticleEffectManager() {
+    for (auto& pair : texture_cache) {
+        SDL_DestroyTexture(pair.second);
+    }
+    texture_cache.clear();
     clear_all_effects();
 }
 
@@ -118,6 +124,14 @@ Particle_Activity* ParticleEffectManager::create_effect(const std::string& effec
     
     // 设置发射率
     effect->setEmissionRate(effect->getTotalParticles() / effect->getLife());
+    
+    // 设置纹理
+    if (!config->texture_id.empty()) {
+        SDL_Texture* tex = get_texture(config->texture_id);
+        if (tex) {
+            effect->setInstanceTexture(tex);
+        }
+    }
     
     active_effects.push_back(effect);
     return effect;
@@ -270,11 +284,56 @@ bool ParticleEffectManager::parse_effect_config(const JsonObject& obj, ParticleE
         config.end_spin = obj.get_float("end_spin", 0.0f);
         config.end_spin_var = obj.get_float("end_spin_var", 0.0f);
         
+        // 纹理 ID（可选）
+        config.texture_id = obj.get_string("texture_id", "");
+        
         return true;
     } catch (const std::exception& e) {
         debugmsg("Error parsing particle effect config: %s", e.what());
         return false;
     }
+}
+
+SDL_Texture* ParticleEffectManager::load_particle_texture(const std::string& texture_id) {
+    SDL_Renderer* renderer = Particle_Activity::get_renderer();
+    if (!renderer) {
+        return nullptr;
+    }
+    
+    // 默认纹理使用现有的全局纹理
+    if (texture_id == "01" || texture_id.empty()) {
+        return Particle_Activity::get_texture_static();
+    }
+    
+    // 尝试从 gfx/particle/ 目录加载
+    std::string gfx_string = PATH_INFO::gfxdir().get_unrelative_path().u8string();
+    std::string texture_path = gfx_string + "/particle/" + texture_id + ".png";
+    
+    SDL_Texture* texture = IMG_LoadTexture(renderer, texture_path.c_str());
+    if (!texture) {
+        debugmsg("Failed to load particle texture '%s' from '%s', using default", 
+                 texture_id.c_str(), texture_path.c_str());
+        return Particle_Activity::get_texture_static();
+    }
+    
+    return texture;
+}
+
+SDL_Texture* ParticleEffectManager::get_texture(const std::string& texture_id) {
+    if (texture_id.empty() || texture_id == "01") {
+        return Particle_Activity::get_texture_static();
+    }
+    
+    auto it = texture_cache.find(texture_id);
+    if (it != texture_cache.end()) {
+        return it->second;
+    }
+    
+    SDL_Texture* texture = load_particle_texture(texture_id);
+    if (texture) {
+        texture_cache[texture_id] = texture;
+    }
+    return texture;
 }
 
 Particle_Activity::Mode ParticleEffectManager::parse_effect_mode(const std::string& mode_str) {
