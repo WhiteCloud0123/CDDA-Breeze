@@ -97,9 +97,14 @@ class npc_class
         std::vector<std::pair<npc_class_id, mod_id>> src;
         bool was_loaded = false;
         std::string ai_prompt;
+        std::string ai_prompt_for_image;
         
         const std::string &get_ai_prompt() const {
             return ai_prompt;
+        }
+
+        const std::string& get_ai_prompt_for_image() const {
+            return ai_prompt_for_image;
         }
 
         // By default, NPCs will be open to trade anything in their inventory, including worn items. If this is set to false, they won't sell items that they're directly wearing or wielding. Items inside of pockets/bags/etc are still fair game.

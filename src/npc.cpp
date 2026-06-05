@@ -595,6 +595,10 @@ void npc_template::load( const JsonObject &jsobj )
         guy.ai_prompt_from_npc_json = jsobj.get_string( "ai_prompt" );
     }
 
+    if (jsobj.has_string("ai_prompt_for_image")) {
+        guy.ai_prompt_for_image_from_npc_json = jsobj.get_string("ai_prompt_for_image");
+    }
+
     npc_templates.emplace( string_id<npc_template>( guy.idz.str() ), std::move( tem ) );
 }
 
@@ -765,11 +769,13 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
     
     // 从模板复制 ai_prompt_from_npc_json
     ai_prompt_from_npc_json = tguy.ai_prompt_from_npc_json;
+    ai_prompt_for_image_from_npc_json = tguy.ai_prompt_for_image_from_npc_json;
     
     // 从 npc_class 读取 ai_prompt
     if( myclass.is_valid() ) {
         const npc_class &nc = myclass.obj();
         ai_prompt_from_class_json = nc.get_ai_prompt();
+        ai_prompt_for_image_from_class_json = nc.get_ai_prompt_for_image();
     }
     
     // 按照优先级初始化 ai_prompt：npc json > npc_class json > 留空（后续会用 basic_prompt）
@@ -777,6 +783,13 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
         ai_prompt = ai_prompt_from_npc_json;
     } else if( !ai_prompt_from_class_json.empty() ) {
         ai_prompt = ai_prompt_from_class_json;
+    }
+
+    if (!ai_prompt_for_image_from_npc_json.empty()) {
+        ai_prompt_for_image = ai_prompt_for_image_from_npc_json;
+    }
+    else if (!ai_prompt_for_image_from_class_json.empty()) {
+        ai_prompt_for_image = ai_prompt_for_image_from_class_json;
     }
 }
 

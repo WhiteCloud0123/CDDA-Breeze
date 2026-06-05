@@ -447,7 +447,16 @@ void talk_function::edit_ai_prompt(npc& n) {
 
 void talk_function::edit_ai_prompt_for_image(npc& n) {
     if (n.ai_prompt_for_image.empty()) {
-        n.ai_prompt_for_image = basic_prompt_for_image;
+        // 按照优先级初始化 ai_prompt_for_image
+        if (!n.ai_prompt_for_image_from_npc_json.empty()) {
+            n.ai_prompt_for_image = n.ai_prompt_for_image_from_npc_json;
+        }
+        else if (!n.ai_prompt_for_image_from_class_json.empty()) {
+            n.ai_prompt_for_image = n.ai_prompt_for_image_from_class_json;
+        }
+        else {
+            n.ai_prompt_for_image = basic_prompt_for_image;
+        }
     }
     std::string old_text = n.ai_prompt_for_image;
     std::string new_text = old_text;
@@ -493,6 +502,8 @@ void talk_function::edit_ai_prompt_for_image(npc& n) {
             if (old_text != new_text) {
                 menu.addentry(1, true, 's', "保存并退出");
             }
+            // 添加重置选项
+            menu.addentry(3, true, 'r', "重置为默认值");
             menu.addentry(2, true, 'q', "退出");
             menu.query();
 
@@ -502,6 +513,20 @@ void talk_function::edit_ai_prompt_for_image(npc& n) {
             }
             else if (menu.ret == 2) {
                 return;
+            }
+            else if (menu.ret == 3) {
+                // 按照优先级重置为默认值
+                if (!n.ai_prompt_for_image_from_npc_json.empty()) {
+                    new_text = n.ai_prompt_for_image_from_npc_json;
+                }
+                else if (!n.ai_prompt_for_image_from_class_json.empty()) {
+                    new_text = n.ai_prompt_for_image_from_class_json;
+                }
+                else {
+                    new_text = basic_prompt_for_image;
+                }
+                old_text = new_text;
+                continue;
             }
 
             catacurses::window w_preview;
