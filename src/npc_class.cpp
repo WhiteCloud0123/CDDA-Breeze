@@ -314,7 +314,7 @@ void npc_class::load( const JsonObject &jo, const std::string & )
     optional( jo, was_loaded, "proficiencies", _starting_proficiencies );
     optional( jo, was_loaded, "sells_belongings", sells_belongings, true );
     optional( jo, was_loaded, "ai_prompt", ai_prompt, std::string() );
-    optional(jo, was_loaded, "ai_prompt_for_image", ai_prompt, std::string());
+    optional(jo, was_loaded, "ai_prompt_for_image", ai_prompt_for_image, std::string());
     /* Mutation rounds can be specified as follows:
      *   "mutation_rounds": {
      *     "ANY" : { "constant": 1 },
