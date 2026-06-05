@@ -1363,6 +1363,8 @@ class npc : public Character
         std::string BUILT_ai_prompt_for_image; // 构建好的真实提示词，用于判断是否需要重新生成图片
         std::string ai_prompt_from_npc_json; // 从npc json读取的ai_prompt
         std::string ai_prompt_from_class_json; // 从npc_class json读取的ai_prompt
+        std::string ai_prompt_for_image_from_npc_json;
+        std::string ai_prompt_for_image_from_class_json;
         /**
          * Do some cleanup and caching as npc is being unloaded from map.
          */

@@ -1819,7 +1819,7 @@ static void character_edit_menu()
         D_DESC, D_SKILLS, D_THEORY, D_PROF, D_STATS, D_SPELLS, D_ITEMS, D_DELETE_ITEMS, D_ITEM_WORN,
         D_HP, D_STAMINA, D_MORALE, D_PAIN, D_NEEDS, D_HEALTHY, D_STATUS, D_MISSION_ADD, D_MISSION_EDIT,
         D_TELE, D_MUTATE, D_CLASS, D_ATTITUDE, D_OPINION, D_ADD_EFFECT, D_ASTHMA, D_PRINT_VARS,
-        D_WRITE_EOCS, D_KILL_XP, D_CHECK_TEMP, D_EDIT_AI_PROMPT,D_EDIT_VARS
+        D_WRITE_EOCS, D_KILL_XP, D_CHECK_TEMP, D_EDIT_AI_PROMPT, D_EDIT_AI_PROMPT_FOR_IMAGE,D_EDIT_VARS
     };
     nmenu.addentry( D_DESC, true, 'D', "%s",
                     _( "Edit description - name, age, height or blood type" ) );
@@ -1860,6 +1860,7 @@ static void character_edit_menu()
         nmenu.addentry( D_ATTITUDE, true, 'A', "%s", _( "Set attitude" ) );
         nmenu.addentry( D_OPINION, true, 'O', "%s", _( "Set opinion" ) );
         nmenu.addentry(D_EDIT_AI_PROMPT, true, 'Q', "%s", "编辑AI提示词【文本】");
+        nmenu.addentry(D_EDIT_AI_PROMPT_FOR_IMAGE, true, 'G', "%s", "编辑AI提示词【生图】");
     }
     nmenu.query();
     switch( nmenu.ret ) {
