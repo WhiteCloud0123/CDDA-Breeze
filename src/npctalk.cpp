@@ -179,7 +179,7 @@ std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image
             visible_worn_items.begin(),
             visible_worn_items.end(),
             [](const item& it) {
-                return it.tname(1,false);  // 获取物品的翻译名称
+                return remove_color_tags(it.tname(1,false));  // 获取物品的翻译名称并移除颜色标签
             }
         );
         item* wield_item = n.get_wielded_item() ? &*n.get_wielded_item() : &null_item_reference();
@@ -200,7 +200,7 @@ std::string fill_prompt(const std::string &original_prompt,npc& n,bool for_image
             n.male ? "男" : "女",
             n.myclass->get_name(),
             worn_string,
-            wield_item->tname(1, false),
+            remove_color_tags(wield_item->tname(1, false)),
             trait_str
         );
     }
@@ -1766,27 +1766,48 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         if (image == nullptr) {
             // 首先构建当前提示词
             std::string current_prompt = build_prompt(*who, true);
-            bool need_regenerate = false;
+            bool need_update = false;
             std::string image_path;
+            bool has_existing_image = false;
             
             if (npc_id > 0) {
                 image_path = get_npc_dynamic_picture_path(npc_id);
                 // 尝试获取动态立绘
                 image = get_npc_dynamic_picture(npc_id);
+                has_existing_image = (image != nullptr);
                 
-                // 检查是否需要重新生成：如果有动态立绘，但提示词变化了
-                if (image != nullptr && who->BUILT_ai_prompt_for_image != current_prompt) {
-                    need_regenerate = true;
-                    // 删除旧图片
-                    remove_file(image_path);
-                    image = nullptr;
+                // 检查是否需要更新：如果有动态立绘，但提示词变化了
+                if (has_existing_image && who->BUILT_ai_prompt_for_image != current_prompt) {
+                    need_update = true;
                 }
             }
 
-            // 如果没有动态立绘且启用了AI生成，或者需要重新生成
-            if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_regenerate) {
-                // 开始生图请求
-                network::RequestId req_id = network::start_pollinations_image_request(current_prompt);
+            // 如果没有动态立绘且启用了AI生成，或者需要更新图片
+            if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_update) {
+                network::RequestId req_id = 0;
+                std::string waiting_msg;
+                
+                if (has_existing_image && need_update) {
+                    // 有图片但提示词变化了，使用改图功能
+                    waiting_msg = string_format( _( "正在生成 %s 的新立绘..." ), character_name.c_str() );
+                    std::string edit_prompt = "修改这个完全相同的角色，为其更换新的服装和装备。请保持其面部、体型不变：" + current_prompt;
+                    req_id = network::start_pollinations_image_edit_request(edit_prompt, image_path);
+                } else {
+                    // 没有图片，使用生图功能
+                    waiting_msg = string_format( _( "正在为 %s 生成首次立绘..." ), character_name.c_str() );
+                    req_id = network::start_pollinations_image_request(current_prompt);
+                }
+                
+                // 显示等待提示窗口
+                catacurses::window w_wait_border = catacurses::newwin( 5, waiting_msg.length() + 6, point( TERMX / 2 - (waiting_msg.length() + 6) / 2, TERMY / 2 - 2 ) );
+                catacurses::window w_wait = catacurses::newwin( 3, waiting_msg.length() + 4, point( TERMX / 2 - (waiting_msg.length() + 4) / 2 + 1, TERMY / 2 - 1 ) );
+                draw_border( w_wait_border );
+                center_print( w_wait_border, 1, c_light_gray, waiting_msg.c_str() );
+                wnoutrefresh( w_wait_border );
+                wnoutrefresh( w_wait );
+                wrefresh( w_wait_border );
+                wrefresh( w_wait );
+                
                 while (true) {
                     network::process();
                     if (network::get_status(req_id) == network::RequestStatus::Completed) {
@@ -1803,18 +1824,35 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                             who->BUILT_ai_prompt_for_image = current_prompt;
                             // 加载刚生成的图片
                             image = get_npc_dynamic_picture(npc_id);
+                        } else {
+                            add_msg(m_bad, string_format("AI图片解析失败！HTTP状态码：%d", result.http_code));
+                            if (!result.response_body.empty()) {
+                                add_msg(m_bad, string_format("响应内容：%s", result.response_body.c_str()));
+                            }
                         }
                         network::clear_completed();
                         break;
                     }
                     else if (network::get_status(req_id) == network::RequestStatus::Failed) {
-                        add_msg(m_bad, network::get_result(req_id).response_body);
+                        network::RequestResult result = network::get_result(req_id);
+                        add_msg(m_bad, string_format("AI图片请求失败！HTTP状态码：%d", result.http_code));
+                        if (!result.error_message.empty()) {
+                            add_msg(m_bad, string_format("错误信息：%s", result.error_message.c_str()));
+                        }
+                        if (!result.response_body.empty()) {
+                            add_msg(m_bad, string_format("响应内容：%s", result.response_body.c_str()));
+                        }
                         network::clear_completed();
                         break;
                     }
                     inp_mngr.pump_events();
                     std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 }
+                
+                // 清除等待提示窗口
+                werase( w_wait_border );
+                wnoutrefresh( w_wait_border );
+                wrefresh( w_wait_border );
             }
         }
     }

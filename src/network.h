@@ -58,6 +58,9 @@ RequestId start_pollinations_image_request( const std::string &prompt );
 // 解析 pollinations AI 生图 API 响应，保存图片到指定路径
 bool parse_pollinations_image_response( const std::string &json_response, const std::string &save_path );
 
+// 发送 pollinations AI 改图 API 请求（基于已有图片进行修改）
+RequestId start_pollinations_image_edit_request( const std::string &prompt, const std::string &image_path );
+
 } // namespace network
 
 #endif // CATA_SRC_NETWORK_H
