@@ -1766,27 +1766,35 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
         if (image == nullptr) {
             // 首先构建当前提示词
             std::string current_prompt = build_prompt(*who, true);
-            bool need_regenerate = false;
+            bool need_update = false;
             std::string image_path;
+            bool has_existing_image = false;
             
             if (npc_id > 0) {
                 image_path = get_npc_dynamic_picture_path(npc_id);
                 // 尝试获取动态立绘
                 image = get_npc_dynamic_picture(npc_id);
+                has_existing_image = (image != nullptr);
                 
-                // 检查是否需要重新生成：如果有动态立绘，但提示词变化了
-                if (image != nullptr && who->BUILT_ai_prompt_for_image != current_prompt) {
-                    need_regenerate = true;
-                    // 删除旧图片
-                    remove_file(image_path);
-                    image = nullptr;
+                // 检查是否需要更新：如果有动态立绘，但提示词变化了
+                if (has_existing_image && who->BUILT_ai_prompt_for_image != current_prompt) {
+                    need_update = true;
                 }
             }
 
-            // 如果没有动态立绘且启用了AI生成，或者需要重新生成
-            if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_regenerate) {
-                // 开始生图请求
-                network::RequestId req_id = network::start_pollinations_image_request(current_prompt);
+            // 如果没有动态立绘且启用了AI生成，或者需要更新图片
+            if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_update) {
+                network::RequestId req_id = 0;
+                
+                if (has_existing_image && need_update) {
+                    // 有图片但提示词变化了，使用改图功能
+                    std::string edit_prompt = "Modify this exact character with new clothing and gear. Keep the same face, body, and hairstyle unchanged: " + current_prompt;
+                    req_id = network::start_pollinations_image_edit_request(edit_prompt, image_path);
+                } else {
+                    // 没有图片，使用生图功能
+                    req_id = network::start_pollinations_image_request(current_prompt);
+                }
+                
                 while (true) {
                     network::process();
                     if (network::get_status(req_id) == network::RequestStatus::Completed) {
@@ -1803,12 +1811,24 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                             who->BUILT_ai_prompt_for_image = current_prompt;
                             // 加载刚生成的图片
                             image = get_npc_dynamic_picture(npc_id);
+                        } else {
+                            add_msg(m_bad, string_format("AI图片解析失败！HTTP状态码：%d", result.http_code));
+                            if (!result.response_body.empty()) {
+                                add_msg(m_bad, string_format("响应内容：%s", result.response_body.c_str()));
+                            }
                         }
                         network::clear_completed();
                         break;
                     }
                     else if (network::get_status(req_id) == network::RequestStatus::Failed) {
-                        add_msg(m_bad, network::get_result(req_id).response_body);
+                        network::RequestResult result = network::get_result(req_id);
+                        add_msg(m_bad, string_format("AI图片请求失败！HTTP状态码：%d", result.http_code));
+                        if (!result.error_message.empty()) {
+                            add_msg(m_bad, string_format("错误信息：%s", result.error_message.c_str()));
+                        }
+                        if (!result.response_body.empty()) {
+                            add_msg(m_bad, string_format("响应内容：%s", result.response_body.c_str()));
+                        }
                         network::clear_completed();
                         break;
                     }

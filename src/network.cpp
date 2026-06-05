@@ -263,10 +263,10 @@ void process()
         Request *req = pair.second.get();
         if( req->status == RequestStatus::InProgress ) {
             auto elapsed = std::chrono::duration_cast<std::chrono::seconds>( now - req->start_time ).count();
-            if( elapsed >= 40 ) {
+            if( elapsed >= 120 ) {
                 req->status = RequestStatus::Failed;
-                req->error_message = "Request timed out after 40 seconds";
-                req->response_body = "Error: Request timed out after 40 seconds";
+                req->error_message = "Request timed out after 120 seconds";
+                req->response_body = "Error: Request timed out after 120 seconds";
                 if( req->handle ) {
                     curl_multi_remove_handle( g_multi_handle, req->handle );
                 }
@@ -464,6 +464,120 @@ RequestId start_pollinations_image_request( const std::string &prompt )
     std::string url = "https://gen.pollinations.ai/v1/images/generations";
 
     return start_post( url, json_body, headers );
+}
+
+RequestId start_pollinations_image_edit_request( const std::string &prompt, const std::string &image_path )
+{
+    std::string api_key = get_option<std::string>( "密钥" );
+    std::string model = get_option<std::string>( "生图模型名称" );
+
+    // 读取本地图片文件数据
+    std::ifstream image_file( image_path, std::ios::binary | std::ios::ate );
+    if( !image_file.is_open() ) {
+        add_msg(m_bad, string_format("无法打开参考图片：%s", image_path.c_str()));
+        return 0;
+    }
+
+    std::streamsize file_size = image_file.tellg();
+    image_file.seekg( 0, std::ios::beg );
+
+    std::vector<char> buffer( file_size );
+    image_file.read( buffer.data(), file_size );
+    image_file.close();
+
+    // 将图片数据转换为 base64（用于 data URI 格式）
+    std::string base64_image;
+    base64_image.resize( ( file_size + 2 ) / 3 * 4 );
+
+    static const std::string base64_chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789+/";
+
+    int bi = 0;
+    int out_i = 0;
+    unsigned char char_array_3[3];
+    unsigned char char_array_4[4];
+
+    for( std::streamsize k = 0; k < file_size; ) {
+        int char_array_3_len = 0;
+        while( bi < 3 && k < file_size ) {
+            char_array_3[bi++] = buffer[k++];
+            char_array_3_len++;
+        }
+
+        char_array_4[0] = ( char_array_3[0] & 0xFC ) >> 2;
+        char_array_4[1] = ( ( char_array_3[0] & 0x03 ) << 4 ) + ( ( char_array_3[1] & 0xF0 ) >> 4 );
+        char_array_4[2] = ( ( char_array_3[1] & 0x0F ) << 2 ) + ( ( char_array_3[2] & 0xC0 ) >> 6 );
+        char_array_4[3] = char_array_3[2] & 0x3F;
+
+        for( int m = 0; m < char_array_3_len + 1; m++ ) {
+            if( out_i < static_cast<int>( base64_image.size() ) ) {
+                base64_image[out_i++] = base64_chars[char_array_4[m]];
+            }
+        }
+
+        if( bi < 3 ) {
+            char_array_4[bi] = 64; // '='
+            while( bi < 3 ) {
+                if( out_i < static_cast<int>( base64_image.size() ) ) {
+                    base64_image[out_i++] = '=';
+                }
+                bi++;
+            }
+        }
+
+        bi = 0;
+    }
+
+    // 构建 multipart/form-data body
+    std::string boundary = "----CDDABreezeFormBoundary" + std::to_string( std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now().time_since_epoch() ).count() );
+
+    std::string body;
+
+    // prompt 字段
+    body += "--" + boundary + "\r\n";
+    body += "Content-Disposition: form-data; name=\"prompt\"\r\n\r\n";
+    body += prompt + "\r\n";
+
+    // model 字段
+    body += "--" + boundary + "\r\n";
+    body += "Content-Disposition: form-data; name=\"model\"\r\n\r\n";
+    body += ( model.empty() ? "flux" : model ) + "\r\n";
+
+    // size 字段
+    body += "--" + boundary + "\r\n";
+    body += "Content-Disposition: form-data; name=\"size\"\r\n\r\n";
+    body += "381x522\r\n";
+
+    // n 字段
+    body += "--" + boundary + "\r\n";
+    body += "Content-Disposition: form-data; name=\"n\"\r\n\r\n";
+    body += "1\r\n";
+
+    // response_format 字段
+    body += "--" + boundary + "\r\n";
+    body += "Content-Disposition: form-data; name=\"response_format\"\r\n\r\n";
+    body += "b64_json\r\n";
+
+    // image 字段 - 使用 data URI 格式
+    body += "--" + boundary + "\r\n";
+    body += "Content-Disposition: form-data; name=\"image\"\r\n\r\n";
+    body += "data:image/png;base64," + base64_image + "\r\n";
+
+    body += "--" + boundary + "--\r\n";
+
+    Headers headers;
+    headers["Content-Type"] = "multipart/form-data; boundary=" + boundary;
+    headers["Accept"] = "application/json";
+    if( !api_key.empty() ) {
+        headers["Authorization"] = "Bearer " + api_key;
+    }
+
+    std::string url = "https://gen.pollinations.ai/v1/images/edits";
+
+    return start_post( url, body, headers );
 }
 
 static std::string standard_base64_decode( const std::string &encoded_string )
