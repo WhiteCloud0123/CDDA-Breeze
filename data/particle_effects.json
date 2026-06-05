@@ -176,6 +176,7 @@
     {
       "id": "spark",
       "name": "Spark Scatter",
+      "texture_id": "02",
       "description": "机器人受伤时的火花迸溅",
       "mode": "GRAVITY",
       "total_particles": 160,
@@ -200,19 +201,19 @@
       "end_size_var": 0.0,
       "start_color": {
         "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
+        "g": 0.95,
+        "b": 0.3,
         "a": 1.0
       },
       "start_color_var": {
         "r": 0.0,
-        "g": 0.2,
-        "b": 0.6,
+        "g": 0.05,
+        "b": 0.3,
         "a": 0.0
       },
       "end_color": {
         "r": 1.0,
-        "g": 0.25,
+        "g": 0.1,
         "b": 0.0,
         "a": 0.35
       },
@@ -227,13 +228,14 @@
         "y": 4.0
       },
       "start_spin": 0,
-      "start_spin_var": 0,
-      "end_spin": 0,
-      "end_spin_var": 0
+      "start_spin_var": 360,
+      "end_spin": 720,
+      "end_spin_var": 360
     },
     {
       "id": "spark_ember",
       "name": "Spark Ember",
+      "texture_id": "02",
       "description": "火花迸溅后的余烬飘下",
       "mode": "GRAVITY",
       "total_particles": 40,
@@ -285,9 +287,9 @@
         "y": 8.0
       },
       "start_spin": 0,
-      "start_spin_var": 0,
-      "end_spin": 0,
-      "end_spin_var": 0
+      "start_spin_var": 180,
+      "end_spin": 360,
+      "end_spin_var": 180
     }
   ]
 }

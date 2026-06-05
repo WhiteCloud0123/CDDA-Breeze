@@ -178,6 +178,8 @@ public:
 
     static void init_renderer(SDL_Renderer* renderer);
 
+    static SDL_Renderer* get_renderer();
+
     void addParticles(int count);
 
     void stopSystem();
@@ -624,7 +626,9 @@ public:
     bool isOpacityModifyRGB() const { return _opacityModifyRGB; }
 
     SDL_Texture* getTexture();
+    static SDL_Texture* get_texture_static();
     void setTexture(SDL_Texture* texture);
+    void setInstanceTexture(SDL_Texture* texture);
     void draw();
     void update();
 
@@ -813,6 +817,9 @@ protected:
 
 public:
     void set_position(const tripoint &p);
+
+private:
+    SDL_Texture* _instance_texture = nullptr;
 };
 
 
