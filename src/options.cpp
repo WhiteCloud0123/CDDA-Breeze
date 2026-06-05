@@ -2978,7 +2978,7 @@ void options_manager::add_options_ai() {
     add_empty_line();
 
     add("AI生成NPC立绘", "ai", to_translation("AI生成NPC立绘"),
-        to_translation("当此选项的值为 是 时，在与NPC对话时，AI会根据NPC的数据来生成立绘。"),
+        to_translation("当此选项的值为 是 时，在与NPC对话时，AI会根据NPC的数据来生成立绘。当检测到填充后的提示词发生变化时，会以修改原图的方式更新立绘。"),
         false
     );
 }
