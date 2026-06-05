@@ -2427,6 +2427,10 @@ void npc::load( const JsonObject &data )
     data.read( "ai_prompt", ai_prompt );
     data.read("ai_prompt_for_image", ai_prompt_for_image);
     data.read("BUILT_ai_prompt_for_image", BUILT_ai_prompt_for_image);
+    data.read("ai_prompt_from_npc_json", ai_prompt_from_npc_json);
+    data.read("ai_prompt_for_image_from_npc_json", ai_prompt_for_image_from_npc_json);
+    data.read("ai_prompt_from_class_json", ai_prompt_from_class_json);
+    data.read("ai_prompt_for_image_from_class_json", ai_prompt_for_image_from_class_json);
 }
 
 /*
@@ -2499,6 +2503,10 @@ void npc::store( JsonOut &json ) const
     json.member( "ai_prompt", ai_prompt );
     json.member("ai_prompt_for_image", ai_prompt_for_image);
     json.member("BUILT_ai_prompt_for_image", BUILT_ai_prompt_for_image);
+    json.member("ai_prompt_from_npc_json", ai_prompt_from_npc_json);
+    json.member("ai_prompt_for_image_from_npc_json", ai_prompt_for_image_from_npc_json);
+    json.member("ai_prompt_from_class_json", ai_prompt_from_class_json);
+    json.member("ai_prompt_for_image_from_class_json", ai_prompt_for_image_from_class_json);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

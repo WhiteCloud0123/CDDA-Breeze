@@ -2135,6 +2135,10 @@ static void character_edit_menu()
             talk_function::edit_ai_prompt(*you.as_npc());
             break;
         }
+        case D_EDIT_AI_PROMPT_FOR_IMAGE: {
+            talk_function::edit_ai_prompt_for_image(*you.as_npc());
+            break;
+        }
         case D_EDIT_VARS: {
             std::string key;
             std::string value;
