@@ -2950,7 +2950,9 @@ void monster::die(Creature* nkiller)
     
     // 清理粒子效果 - 当怪物死亡时删除其粒子效果
     if (active_particle_effect != nullptr) {
-        ParticleEffectManager::get_instance().destroy_effect(active_particle_effect);
+        if( ParticleEffectManager::get_instance().is_effect_alive( active_particle_effect ) ) {
+            ParticleEffectManager::get_instance().destroy_effect(active_particle_effect);
+        }
         active_particle_effect = nullptr;
     }
     set_killer(nkiller);

@@ -69,7 +69,9 @@ public:
     void clear_all_effects();
     
     int get_active_effect_count() const;
-    
+
+    bool is_effect_alive( const Particle_Activity *effect ) const;
+
 private:
     ParticleEffectManager();
     ~ParticleEffectManager();

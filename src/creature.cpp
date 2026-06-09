@@ -3004,7 +3004,12 @@ void Creature::process_particle_activity() {
 
     if (is_monster()) {
         monster* m = as_monster();
-        
+
+        if( active_particle_effect != nullptr &&
+            !ParticleEffectManager::get_instance().is_effect_alive( active_particle_effect ) ) {
+            active_particle_effect = nullptr;
+        }
+
         auto iter = monster_appearance_style_map.find(m->type->id.str());
         if (iter != monster_appearance_style_map.end()) {
             if (active_particle_effect == nullptr) {
