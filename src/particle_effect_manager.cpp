@@ -192,6 +192,19 @@ int ParticleEffectManager::get_active_effect_count() const {
     return active_effects.size();
 }
 
+bool ParticleEffectManager::is_effect_alive( const Particle_Activity *effect ) const
+{
+    if( effect == nullptr ) {
+        return false;
+    }
+    for( const Particle_Activity *p : active_effects ) {
+        if( p == effect ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool ParticleEffectManager::parse_effect_config(const JsonObject& obj, ParticleEffectConfig& config) {
     try {
         // 基本属性
