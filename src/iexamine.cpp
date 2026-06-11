@@ -5051,8 +5051,12 @@ void iexamine::ledge( Character &you, const tripoint &examp )
             } else if( has_grapnel ) {
                 you.add_msg_if_player( _( "You tie the rope around your waist and begin to climb down." ) );
                 g->vertical_move( -1, true );
-                you.use_amount( itype_grapnel, 1 );
-                here.furn_set( you.pos(), furn_f_rope_up );
+                if( here.has_flag( ter_furn_flag::TFLAG_LADDER, you.pos() ) ) {
+                    you.add_msg_if_player("梯子已经在这里了，所以你不需要留下绳子。");
+                } else {
+                    you.use_amount( itype_grapnel, 1 );
+                    here.furn_set( you.pos(), furn_f_rope_up );
+                }
             } else if( !g->slip_down( true ) ) {
                 // One tile of falling less (possibly zero)
                 add_msg_debug( debugmode::DF_IEXAMINE, "Safe movement down one Z-level" );
