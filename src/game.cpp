@@ -11833,7 +11833,8 @@ void game::vertical_move( int movez, bool force, bool peeking )
 
     map &here = get_map();
     // > and < are used for diving underwater.
-    if( here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, u.pos() ) &&
+    if( !u.in_vehicle &&
+        here.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, u.pos() ) &&
         here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, u.pos() ) ) {
         if( movez == -1 ) {
             if( u.is_underwater() ) {
