@@ -1,0 +1,12 @@
+[
+  {
+    "type": "item_group",
+    "id": "supplies_skyfarer_ballista",
+    "subtype": "collection",
+    "entries": [
+      { "item": "bolt_ballista_steel", "count": [ 5, 15 ] },
+      { "item": "ammo_ballista_wood", "count": [ 3, 8 ], "prob": 50 },
+      { "item": "ammo_ballista_iron", "count": [ 2, 5 ], "prob": 50 }
+    ]
+  }
+]

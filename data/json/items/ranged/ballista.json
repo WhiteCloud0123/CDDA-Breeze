@@ -1,0 +1,59 @@
+[
+    {
+        "id": "launcher_ballista",
+        "copy-from": "launcher_base",
+        "type": "ITEM",
+        "subtypes": [
+            "GUN"
+        ],
+        "name": {
+            "str": "弩炮"
+        },
+        "description": "一种巨大的类弩武器，动力来自两根由绳索紧密缠绕而成的扭力弹簧，并通过绞盘拉弦。在攻城武器中它相对较轻，但没有足够的支撑就完全无法发射，且装填缓慢。即便如此，它仍能以毁灭性的力量将石块或特制的箭矢射向远方。",
+        "price": "350 USD",
+        "price_postapoc": "50 USD",
+        "material": [
+            "iron",
+            "wood"
+        ],
+        "weight": "20 kg",
+        "volume": "10 L",
+        "melee_damage": {
+            "bash": 25
+        },
+        "to_hit": -2,
+        "ranged_damage": {
+            "damage_type": "stab",
+            "amount": 80
+        },
+        "looks_like": "huge_crossbow",
+        "range": 45,
+        "loudness": 30,
+        "dispersion": 250,
+        "recoil": 50,
+        "durability": 5,
+        "ammo": [
+            "bolt_heavy",
+            "rock"
+        ],
+        "clip_size": 1,
+        "reload": 7000,
+        "pocket_data": [
+            {
+                "pocket_type": "MAGAZINE",
+                "ammo_restriction": {
+                    "bolt_heavy": 1,
+                    "rock": 1
+                }
+            }
+        ],
+        "valid_mod_locations": [],
+        "flags": [
+            "PRIMITIVE_RANGED_WEAPON",
+            "FIRE_TWOHAND",
+            "MOUNTED_GUN",
+            "NEVER_JAMS",
+            "STR_RELOAD"
+        ]
+    }
+]
