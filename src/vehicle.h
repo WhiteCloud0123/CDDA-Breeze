@@ -1512,15 +1512,18 @@ class vehicle
          */
         bool is_in_water( bool deep_water = false ) const;
         bool is_watercraft() const;
+        double total_balloon_lift() const;
         /**
          * is the vehicle flying? is it a rotorcraft?
          */
         double lift_thrust_of_rotorcraft( bool fuelled, bool safe = false ) const;
+        bool has_sufficient_balloonlift() const;
         bool has_sufficient_rotorlift() const;
         int get_z_change() const;
         bool is_flying_in_air() const;
         void set_flying( bool new_flying_value );
         bool is_rotorcraft() const;
+        bool is_airship() const;
         // Can the vehicle safely fly? E.g. there haven't been any player modifications
         // of non-simple parts
         bool is_flyable() const;
@@ -2035,6 +2038,8 @@ class vehicle
         std::vector<int> loose_parts; // NOLINT(cata-serialize)
         std::vector<int> wheelcache; // NOLINT(cata-serialize)
         std::vector<int> rotors; // NOLINT(cata-serialize)
+        std::vector<int> balloons;
+        std::vector<int> propellers;
         std::vector<int> rail_wheelcache; // NOLINT(cata-serialize)
         std::vector<int> steering; // NOLINT(cata-serialize)
         // Intended to be a misc list, but currently only security systems.

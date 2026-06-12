@@ -3600,12 +3600,21 @@ int vehicle::ground_acceleration( const bool fueled, int at_vel_in_vmi ) const
 
 int vehicle::rotor_acceleration( const bool fueled, int at_vel_in_vmi ) const
 {
-    ( void )at_vel_in_vmi;
+
     if( !( engine_on || is_flying ) ) {
         return 0;
     }
-    const int accel_at_vel = 100 * lift_thrust_of_rotorcraft( fueled ) / to_kilogram( total_mass() );
-    return cmps_to_vmiph( accel_at_vel );
+    if (rotors.empty()) {
+        // 飞艇的前进推力来自螺旋桨，而非旋翼升力
+        int target_vmiph = std::max({ at_vel_in_vmi, 1000, max_rotor_velocity(fueled) / 4 });
+        int cmps = vmiph_to_cmps(target_vmiph);
+        double weight = to_kilogram(total_mass());
+        int engine_power_ratio = total_power_w(fueled) / weight;
+        int accel_at_vel = 100 * 100 * engine_power_ratio / cmps;
+        return cmps_to_vmiph(accel_at_vel);
+    }
+    const int accel_at_vel = 100 * lift_thrust_of_rotorcraft(fueled) / to_kilogram(total_mass());
+    return cmps_to_vmiph(accel_at_vel);
 }
 
 int vehicle::water_acceleration( const bool fueled, int at_vel_in_vmi ) const
@@ -3740,6 +3749,14 @@ int vehicle::max_water_velocity( const bool fueled ) const
 
 int vehicle::max_rotor_velocity( const bool fueled ) const
 {
+    if (rotors.empty()) {
+        // 飞艇：推力来自螺旋桨，最大速度受空气阻力限制
+        // 发动机功率 = 空气阻力系数 * 速度^3  ->  速度 = 立方根( 功率 / 空气阻力系数 )
+        const int total_engine_w = total_power_w(fueled);
+        const double max_air_mps = std::cbrt(total_engine_w / coeff_air_drag());
+        // airships are slow, cap their top speed well below rotorcraft
+        return std::min(5001, mps_to_vmiph(max_air_mps));
+    }
     const double max_air_mps = std::sqrt( lift_thrust_of_rotorcraft( fueled ) / coeff_air_drag() );
     // helicopters just cannot go over 250mph at very maximum
     // weird things start happening to their rotors if they do.
@@ -3783,6 +3800,12 @@ int vehicle::safe_ground_velocity( const bool fueled ) const
 
 int vehicle::safe_rotor_velocity( const bool fueled ) const
 {
+    if (rotors.empty()) {
+        // 飞艇：螺旋桨推力克服空气阻力时的安全巡航速度
+        const int effective_engine_w = total_power_w(fueled, true);
+        const double safe_air_mps = std::cbrt(effective_engine_w / coeff_air_drag());
+        return std::min(4501, mps_to_vmiph(safe_air_mps));
+    }
     const double max_air_mps = std::sqrt( lift_thrust_of_rotorcraft( fueled,
                                           true ) / coeff_air_drag() );
     return std::min( 22501, mps_to_vmiph( max_air_mps ) );
@@ -4217,17 +4240,60 @@ bool vehicle::has_sufficient_rotorlift() const
     return lift_thrust_of_rotorcraft( true ) > to_kilogram( total_mass() ) * 9.8;
 }
 
+double vehicle::total_balloon_lift() const
+{
+    // 浮力升力，单位为牛顿。每个气囊部件都声明了一个 "balloon_height" 值，
+    // 我们将其视为升力气体的有效体积（单位：立方米）。
+    // 在海平面附近，氦气/氢气气囊的净升力约为 1.1 千克/立方米。
+    // 受损的气囊会泄漏气体，其升力会随剩余耐久度等比例下降。
+    constexpr double net_lift_kg_per_m3 = 1.1;
+    double lift_kg = 0.0;
+    for (const int balloon : balloons) {
+        const vehicle_part& vp = parts[balloon];
+        if (vp.is_broken() || vp.removed) {
+            continue;
+        }
+        if (!vp.info().balloon_info) {
+            continue;
+        }
+        lift_kg += vp.info().balloon_info->height * net_lift_kg_per_m3 * vp.health_percent();
+    }
+    return lift_kg * 9.8;
+}
+
+bool vehicle::has_sufficient_balloonlift() const
+{
+    // 牛顿与牛顿的比较 - 将千克转换为牛顿。
+    return total_balloon_lift() >= to_kilogram(total_mass()) * 9.8;
+}
+
+bool vehicle::is_airship() const
+{
+    // 轻于空气的飞行器依靠气囊漂浮，并通过螺旋桨操控方向。
+    return !balloons.empty() && player_in_control(get_player_character()) && has_sufficient_balloonlift();
+}
+
 bool vehicle::is_rotorcraft() const
 {   
     if (is_AUTOPILOT_fly == true) {
-
-        return !rotors.empty() && has_sufficient_rotorlift();
-    
+        return (!rotors.empty() && has_sufficient_rotorlift()) || is_airship();
     }
     
+    return (!rotors.empty() && player_in_control( get_player_character() ) && 
+           has_sufficient_rotorlift()) || is_airship();
+}
 
-    return !rotors.empty() && player_in_control( get_player_character() ) && 
-           has_sufficient_rotorlift();
+bool vehicle::is_airship() const
+{
+    if (is_AUTOPILOT_fly == true) {
+
+        return !rotors.empty() && has_sufficient_rotorlift();
+
+    }
+
+
+    return !rotors.empty() && player_in_control(get_player_character()) &&
+        has_sufficient_rotorlift();
 }
 
 bool vehicle::is_flyable() const

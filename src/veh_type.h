@@ -87,6 +87,8 @@ enum vpart_bitflags : int {
     VPFLAG_CONVEYOR_BELT,
     VPFLAG_CLASSIFIED_DEVICE,
     VPFLAG_AUTONOMOUS_CONTROL,
+    VPFLAG_BALLOON,
+    VPFLAG_PROPELLER,
     NUM_VPFLAGS
 };
 /* Flag info:
@@ -130,7 +132,14 @@ struct vpslot_wheel {
 struct vpslot_rotor {
     int rotor_diameter = 1;
 };
+struct vpslot_propeller {
+    int propeller_diameter = 1;
+};
 
+struct vpslot_balloon {
+    // 气艇的有效升力“高度” / 体积，用于计算以千克为单位的升力。
+    float height = 0.0f;
+};
 struct vpslot_workbench {
     // Base multiplier applied for crafting here
     float multiplier = 1.0f;
@@ -247,6 +256,8 @@ class vpart_info
         static void load_wheel( std::optional<vpslot_wheel> &whptr, const JsonObject &jo );
         static void load_workbench( std::optional<vpslot_workbench> &wbptr, const JsonObject &jo );
         static void load_rotor( std::optional<vpslot_rotor> &roptr, const JsonObject &jo );
+        static void load_propeller(std::optional<vpslot_propeller>& propeller_ptr, const JsonObject& jo);
+        static void load_balloon(std::optional<vpslot_balloon>& balloon_ptr, const JsonObject& jo);
         static void load_toolkit(std::optional<vpslot_toolkit>& tkptr, const JsonObject& jo);
         static void load( const JsonObject &jo, const std::string &src );
         static void finalize();
@@ -379,6 +390,10 @@ class vpart_info
         translation name_;
 
     public:
+
+        std::optional<vpslot_propeller> propeller_info;
+        std::optional<vpslot_balloon> balloon_info;
+        
         /* map of standard variant names to symbols */
         std::map<std::string, int> symbols;
 
