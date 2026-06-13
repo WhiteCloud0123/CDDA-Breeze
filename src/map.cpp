@@ -2562,8 +2562,19 @@ bool map::valid_move( const tripoint &from, const tripoint &to,
     int part_up;
     const vehicle *veh_up = veh_at_internal( up_p, part_up );
     if( veh_up != nullptr ) {
-        // TODO: Hatches below the vehicle, passable frames
-        return false;
+        // 只有可登上的车辆部件提供可行走的表面。
+        // 不可登上的部件（气球、旋翼、框架等）不应阻止从边缘坠落。
+        bool has_boardable = false;
+        const point mount = veh_up->part( part_up ).mount;
+        for( const int pid : veh_up->parts_at_relative( mount, true ) ) {
+            if( veh_up->part_flag( pid, VPFLAG_BOARDABLE ) ) {
+                has_boardable = true;
+                break;
+            }
+        }
+        if( has_boardable ) {
+            return false;
+        }
     }
 
     int part_down;
