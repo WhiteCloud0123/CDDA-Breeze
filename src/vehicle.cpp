@@ -5986,6 +5986,8 @@ void vehicle::refresh( const bool remove_fakes )
     steering.clear();
     speciality.clear();
     floating.clear();
+    balloons.clear();
+    propellers.clear();
     batteries.clear();
     fuel_containers.clear();
     turret_locations.clear();
@@ -6054,6 +6056,12 @@ void vehicle::refresh( const bool remove_fakes )
 
         if( vp.part().is_unavailable() ) {
             continue;
+        }
+        if (vpi.has_flag(VPFLAG_BALLOON)) {
+            balloons.push_back(p);
+        }
+        if (vpi.has_flag(VPFLAG_PROPELLER)) {
+            propellers.push_back(p);
         }
         if( vpi.has_flag( VPFLAG_ALTERNATOR ) ) {
             alternators.push_back( p );
