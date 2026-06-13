@@ -10158,6 +10158,14 @@ void map::creature_on_trap( Creature &c, const bool may_avoid ) const
     if( you != nullptr && you->in_vehicle ) {
         return;
     }
+    // 即使并非正式处于车内，只要站在可支撑的载具部件上，
+    // 即表示该生物正立于载具之上，不应触发地形陷阱（例如挂在载具层 t_open_air 地形上的 tr_ledge）。
+    if( you != nullptr ) {
+        if( const std::optional<vpart_reference> vp = veh_at( c.pos() ).part_with_feature(
+                VPFLAG_BOARDABLE, true ) ) {
+            return;
+        }
+    }
     maybe_trigger_trap( c.pos(), c, may_avoid );
 }
 
