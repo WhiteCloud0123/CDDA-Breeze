@@ -403,6 +403,25 @@ void vehicle::thrust( int thd, int z )
     }
     bool pl_ctrl = player_in_control( get_player_character() );
 
+    // 飞艇在空中需要至少一个能正常工作的螺旋桨才能进行水平移动。
+    // 没有螺旋桨，它们只能依靠气球的升力进行垂直移动（上升/下降）。
+    if( z == 0 && is_flying && !balloons.empty() ) {
+        bool has_working_propeller = false;
+        for( const int p : propellers ) {
+            if( !part( p ).is_broken() ) {
+                has_working_propeller = true;
+                break;
+            }
+        }
+        if( !has_working_propeller ) {
+            stop();
+            if( pl_ctrl ) {
+                add_msg(m_warning,"%s需要安装飞机螺旋桨才能水平移动！", name );
+            }
+            return;
+        }
+    }
+
     // No need to change velocity if there are no wheels
     if( ( in_water && can_float() ) || ( is_rotorcraft() && ( z != 0 || is_flying ) ) ) {
         // we're good
@@ -1448,6 +1467,20 @@ void vehicle::pldrive( Character &driver, const point &p, int z )
     }
 
     if( p.y != 0 ) {
+        // 即使启用了巡航控制，飞艇也需要螺旋桨才能进行水平移动。
+        if( is_flying && !balloons.empty() && z == 0 ) {
+            bool has_working_propeller = false;
+            for( const int p_idx : propellers ) {
+                if( !part( p_idx ).is_broken() ) {
+                    has_working_propeller = true;
+                    break;
+                }
+            }
+            if( !has_working_propeller ) {
+                add_msg(m_warning,"%s需要安装飞机螺旋桨才能水平移动！", name );
+                return;
+            }
+        }
         if( cruise_on ) {
             cruise_thrust( -p.y * 400 );
         } else {
