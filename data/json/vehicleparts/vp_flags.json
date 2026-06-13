@@ -646,5 +646,55 @@
   {
     "id": "AUTONOMOUS_CONTROL",
     "type": "json_flag"
+  },
+  {
+    "id": "BALLOON",
+    "type": "json_flag",
+    "info": "该部件为燃气囊，用于提供升力使飞艇保持在空中。"
+  },
+  {
+    "id": "PROPELLER",
+    "type": "json_flag",
+    "info": "该部件为螺旋桨，用于提供推力使飞艇移动。"
+  },
+  {
+    "id": "EXTENDABLE",
+    "type": "json_flag",
+    "info": "该部件可向相邻的同种部件所在的方格延展。"
+  },
+  {
+    "id": "SHOCK_IMMUNE",
+    "type": "json_flag",
+    "info": "该部件免疫碰撞造成的冲击伤害。"
+  },
+  {
+    "id": "SHOCK_RESISTANT",
+    "type": "json_flag",
+    "info": "该部件对碰撞造成的冲击伤害具有抗性。"
+  },
+  {
+    "id": "NOCOLLIDE",
+    "type": "json_flag",
+    "info": "该部件不会与任何物体发生碰撞。"
+  },
+  {
+    "id": "NOCOLLIDEBELOW",
+    "type": "json_flag",
+    "info": "该部件不会与其正下方z层的 terrain 发生碰撞。"
+  },
+  {
+    "id": "FOLDABLE",
+    "type": "json_flag",
+    "info": "该部件可折叠以便储存和运输。"
+  },
+  {
+    "id": "MANUAL",
+    "type": "json_flag",
+    "info": "该部件缺少远程操作所需的电子设备，必须手动操作。"
+  },
+  {
+    "id": "LADDER",
+    "type": "json_flag",
+    "info": "该部件为梯子，可让您从载具上爬下。"
   }
 ]

@@ -13,6 +13,12 @@
   },
   {
     "type": "ammunition_type",
+    "id": "bolt_heavy",
+    "name": "弩炮箭矢",
+    "default": "ammo_ballista_iron"
+  },
+  {
+    "type": "ammunition_type",
     "id": "50",
     "name": ".50 BMG",
     "default": "50bmg"
@@ -778,5 +784,11 @@
     "id": "turpentine",
     "name": "turpentine",
     "default": "chem_turpentine"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "c_hydrogen",
+    "name": "氢气",
+    "default": "c_hydrogen_gas"
   }
 ]

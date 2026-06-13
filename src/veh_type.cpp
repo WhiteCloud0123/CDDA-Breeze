@@ -93,6 +93,8 @@ static const std::unordered_map<std::string, vpart_bitflags> vpart_bitflag_map =
     { "WHEEL", VPFLAG_WHEEL },
     { "ROTOR", VPFLAG_ROTOR },
     { "ROTOR_SIMPLE", VPFLAG_ROTOR_SIMPLE },
+    { "BALLOON", VPFLAG_BALLOON },
+    { "PROPELLER", VPFLAG_PROPELLER },
     { "FLOATS", VPFLAG_FLOATS },
     { "DOME_LIGHT", VPFLAG_DOME_LIGHT },
     { "AISLE_LIGHT", VPFLAG_AISLE_LIGHT },
@@ -306,6 +308,28 @@ void vpart_info::load_rotor( std::optional<vpslot_rotor> &roptr, const JsonObjec
     assign( jo, "rotor_diameter", rotor_info.rotor_diameter );
     roptr = rotor_info;
     cata_assert( roptr );
+}
+
+void vpart_info::load_propeller(std::optional<vpslot_propeller>& propeller_ptr, const JsonObject& jo)
+{
+    vpslot_propeller propeller_info{};
+    if (propeller_ptr) {
+        propeller_info = *propeller_ptr;
+    }
+    assign(jo, "propeller_diameter", propeller_info.propeller_diameter);
+    propeller_ptr = propeller_info;
+    cata_assert(propeller_ptr);
+}
+
+void vpart_info::load_balloon(std::optional<vpslot_balloon>& balloon_ptr, const JsonObject& jo)
+{
+    vpslot_balloon balloon_info{};
+    if (balloon_ptr) {
+        balloon_info = *balloon_ptr;
+    }
+    assign(jo, "height", balloon_info.height);
+    balloon_ptr = balloon_info;
+    cata_assert(balloon_ptr);
 }
 
 void vpart_info::load_toolkit(std::optional<vpslot_toolkit>& tkptr, const JsonObject& jo)
@@ -552,6 +576,14 @@ void vpart_info::load( const JsonObject &jo, const std::string &src )
 
     if( def.has_flag( "ROTOR" ) || def.has_flag( "ROTOR_SIMPLE" ) ) {
         load_rotor( def.rotor_info, jo );
+    }
+
+    if (def.has_flag("PROPELLER")) {
+        load_propeller(def.propeller_info, jo);
+    }
+
+    if (def.has_flag("BALLOON")) {
+        load_balloon(def.balloon_info, jo);
     }
 
     if( def.has_flag( "WORKBENCH" ) ) {

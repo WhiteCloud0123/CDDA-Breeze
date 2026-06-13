@@ -132,6 +132,18 @@
   },
   {
     "type": "proficiency",
+    "id": "prof_airship_pilot",
+    "category": "prof_vehicles",
+    "name": { "str": "飞艇驾驶" },
+    "description": "你掌握了如何管理轻于空气飞行器的浮力，并使用螺旋桨进行操控。它比直升机更慢，操控也更宽容，但这些原理仍需学习才能精通。",
+    "can_learn": true,
+    "time_to_learn": "10 h",
+    "default_time_multiplier": 2.0,
+    "default_skill_penalty": 0.25,
+    "ignore_focus": true
+  },
+  {
+    "type": "proficiency",
     "id": "prof_aircraft_mechanic",
     "category": "prof_mechanic",
     "name": { "str": "飞行器机械师" },

@@ -1,0 +1,57 @@
+[
+  {
+    "type": "vehicle_part",
+    "id": "turret_mount_manual_wood",
+    "copy-from": "turret_mount",
+    "name": { "str": "简易木质炮塔底座" },
+    "color": "brown",
+    "broken_color": "brown",
+    "durability": 150,
+    "description": "一个用于安装武器的简易挂载点。缺少支持安装炮塔控制装置所必需的电子设备。",
+    "item": "frame_wood",
+    "folded_volume": "7500 ml",
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 1 ] ], "time": "15 m", "using": [ [ "vehicle_nail_install", 20 ] ] },
+      "removal": { "skills": [ [ "mechanics", 1 ] ], "time": "10 m", "using": [ [ "vehicle_nail_removal", 1 ] ] },
+      "repair": {
+        "skills": [ [ "mechanics", 1 ] ],
+        "time": "15 m",
+        "using": [ [ "nail_any_adhesive", 2 ], [ "wood_structural_small", 1 ] ]
+      }
+    },
+    "extend": { "flags": [ "MANUAL" ] },
+    "breaks_into": [ { "item": "splinter", "count": [ 7, 9 ] }, { "item": "nail", "charges": [ 5, 10 ] } ]
+  },
+  {
+    "id": "mounted_launcher_ballista",
+    "copy-from": "turret",
+    "type": "vehicle_part",
+    "name": { "str": "车载弩炮" },
+    "item": "launcher_ballista",
+    "looks_like": "mounted_huge_crossbow",
+    "color": "green",
+    "broken_color": "green",
+    "breaks_into": [
+      { "item": "scrap", "count": [ 10, 20 ] },
+      { "item": "splinter", "count": [ 12, 24 ] },
+      { "item": "string_36", "count": [ 5, 10 ] }
+    ],
+    "requirements": { "install": { "skills": [ [ "mechanics", 3 ], [ "launcher", 1 ] ] }, "removal": { "skills": [ [ "mechanics", 1 ] ] } }
+  },
+  {
+    "id": "mounted_huge_crossbow",
+    "copy-from": "turret",
+    "type": "vehicle_part",
+    "name": { "str": "车载巨弩" },
+    "item": "huge_crossbow",
+    "looks_like": "turret_generic",
+    "color": "green",
+    "broken_color": "green",
+    "breaks_into": [
+      { "item": "scrap", "count": [ 6, 12 ] },
+      { "item": "splinter", "count": [ 8, 16 ] },
+      { "item": "string_36", "count": [ 3, 6 ] }
+    ],
+    "requirements": { "install": { "skills": [ [ "mechanics", 2 ] ] }, "removal": { "skills": [ [ "mechanics", 0 ] ] } }
+  }
+]

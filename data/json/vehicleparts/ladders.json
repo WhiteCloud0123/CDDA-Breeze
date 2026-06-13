@@ -1,0 +1,25 @@
+[
+  {
+    "abstract": "ladder",
+    "type": "vehicle_part",
+    "location": "under",
+    "color": "brown",
+    "looks_like": "f_rope_up",
+    "symbol": "<",
+    "broken_symbol": "O",
+    "flags": [ "LADDER", "SHOCK_IMMUNE", "BOARDABLE" ],
+    "description": "A ladder that lets you down from heights."
+  },
+  {
+    "id": "ladder_3",
+    "copy-from": "ladder",
+    "type": "vehicle_part",
+    "name": "三节绳梯",
+    "item": "rope_30",
+    "requirements": { "removal": { "skills": [ [ "mechanics", 2 ] ], "time": "60 m", "using": [  ] } },
+    "durability": 60,
+    "damage_modifier": 80,
+    "breaks_into": [ { "item": "string_6", "count": [ 10, 20 ] } ],
+    "damage_reduction": { "bash": 10 }
+  }
+]
