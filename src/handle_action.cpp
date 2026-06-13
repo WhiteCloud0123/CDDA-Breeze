@@ -2602,6 +2602,13 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                     }
                 }
             }
+
+            if (has_vehicle_control(player_character)) {
+                const optional_vpart_position vp = get_map().veh_at(player_character.pos());
+                if (vp && vp->vehicle().is_rotorcraft()) {
+                    pldrive(tripoint_below);
+                }
+            }
         }
         else if (!player_character.in_vehicle) {
             // Check for vehicle rope ladder above before climbing down other ways
