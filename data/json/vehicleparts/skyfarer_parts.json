@@ -1,0 +1,47 @@
+[
+  {
+    "type": "vehicle_part",
+    "id": "sail_large",
+    "copy-from": "sail",
+    "name": { "str": "大型帆装" },
+    "description": "适合游艇或单桅帆船使用的船帆和索具，其规模大约在一个单人能够合理操控的范围内。",
+    "durability": 150,
+    "power": "4000 W",
+    "item": "sail_large_item",
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "vehicle_nail_install", 30 ] ] },
+      "removal": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "vehicle_nail_removal", 2 ] ] },
+      "repair": {
+        "skills": [ [ "mechanics", 5 ] ],
+        "time": "60 m",
+        "using": [ [ "nail_any_adhesive", 2 ], [ "wood_structural_small", 1 ] ]
+      }
+    },
+    "breaks_into": [
+      { "item": "log", "count": [ 1, 2 ] },
+      { "item": "splinter", "count": [ 10, 20 ] },
+      { "item": "sheet", "count": [ 1, 2 ] }
+    ],
+    "delete": { "flags": [ "UNMOUNT_ON_DAMAGE" ] }
+  },
+  {
+    "type": "vehicle_part",
+    "id": "seat_wood_light",
+    "copy-from": "seat_wood",
+    "name": { "str": "轻型木制座椅" },
+    "looks_like": "seat_wood",
+    "durability": 80,
+    "item": "frame_wood_light",
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 0 ] ], "time": "10 m", "using": [ [ "rope_natural_short", 1 ] ] },
+      "removal": { "skills": [ [ "mechanics", 0 ] ], "time": "5 m", "using": [  ] },
+      "repair": {
+        "skills": [ [ "mechanics", 0 ] ],
+        "time": "5 m",
+        "using": [ [ "nail_any_adhesive", 1 ], [ "vehicle_repair_small_wood", 4 ] ]
+      }
+    },
+    "breaks_into": [ { "item": "splinter", "count": [ 3, 5 ] }, { "item": "string_36", "count": [ 10, 15 ] } ],
+    "damage_reduction": { "all": 6 }
+  }
+]

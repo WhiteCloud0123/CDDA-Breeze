@@ -1,0 +1,91 @@
+[
+  {
+    "abstract": "balloon",
+    "type": "vehicle_part",
+    "location": "anywhere",
+    "color": "light_blue",
+    "looks_like": "inflatable_airbag",
+    "flags": [ "PROTRUSION", "EXTENDABLE", "BALLOON", "SHOCK_IMMUNE" ],
+    "variants": [ { "symbols": "|", "symbols_broken": "O" } ],
+    "description": "A balloon that provides lift, but requires aircraft propellers for horizontal momentum."
+  },
+  {
+    "id": "airship_balloon",
+    "copy-from": "balloon",
+    "type": "vehicle_part",
+    "name": "飞艇气囊",
+    "item": "airship_balloon_item",
+    "height": 30,
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 2 ] ], "time": "60 m", "using": [ [ "rope_natural_short", 1 ] ] },
+      "removal": { "skills": [ [ "mechanics", 2 ] ], "time": "60 m", "using": [  ] },
+      "repair": { "skills": [ [ "mechanics", 3 ] ], "time": "60 m", "using": [ [ "adhesive", 1 ], [ "plastics", 1 ] ] }
+    },
+    "durability": 60,
+    "damage_modifier": 80,
+    "//": "Todo: should explode if damaged or destroyed by bullets, fire, or electric damage.",
+    "breaks_into": [ { "item": "plastic_chunk", "count": [ 10, 20 ] } ],
+    "flags": [ "BALLOON", "SHOCK_IMMUNE" ],
+    "damage_reduction": { "bash": 10 }
+  },
+  {
+    "id": "airship_balloon_external",
+    "copy-from": "airship_balloon",
+    "type": "vehicle_part",
+    "name": "外置飞艇气囊",
+    "location": "structure",
+    "extend": { "flags": [ "EXTENDABLE", "AISLE", "ROOF", "NOCOLLIDE", "NOCOLLIDEBELOW" ] }
+  },
+  {
+    "abstract": "propeller_rotors",
+    "type": "vehicle_part",
+    "location": "structure",
+    "color": "light_blue",
+    "looks_like": "small_helicopter_rotor",
+    "broken_color": "light_gray",
+    "variants": [ { "symbols": "X", "symbols_broken": "O" } ],
+    "flags": [ "PROPELLER", "PROTRUSION", "SHOCK_RESISTANT" ],
+    "description": "一组机翼形螺旋桨旋翼，当高速旋转时，它们通过水平动量产生推力。"
+  },
+  {
+    "id": "propeller_metal",
+    "copy-from": "propeller_rotors",
+    "type": "vehicle_part",
+    "name": "飞机螺旋桨",
+    "item": "metal_propeller_item",
+    "propeller_diameter": 3,
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 6 ] ], "time": "2 h", "using": [ [ "welding_standard", 20 ] ] },
+      "removal": { "skills": [ [ "mechanics", 6 ] ], "time": "2 h", "using": [ [ "vehicle_weld_removal", 4 ] ] },
+      "repair": { "skills": [ [ "mechanics", 7 ] ], "time": "2 h", "using": [ [ "welding_standard", 10 ], [ "steel_tiny", 1 ] ] }
+    },
+    "durability": 100,
+    "damage_modifier": 80,
+    "breaks_into": [ { "item": "scrap", "count": [ 8, 15 ] }, { "item": "steel_chunk", "count": [ 2, 8 ] } ],
+    "damage_reduction": { "all": 22 }
+  },
+  {
+    "id": "propeller_wood",
+    "copy-from": "propeller_rotors",
+    "type": "vehicle_part",
+    "name": "木制飞机螺旋桨",
+    "item": "wood_propeller_item",
+    "propeller_diameter": 2,
+    "requirements": {
+      "install": { "skills": [ [ "mechanics", 5 ] ], "time": "2 h", "using": [ [ "vehicle_nail_install", 20 ] ] },
+      "removal": { "skills": [ [ "mechanics", 5 ] ], "time": "2 h", "using": [ [ "vehicle_nail_removal", 1 ] ] },
+      "repair": {
+        "skills": [ [ "mechanics", 6 ] ],
+        "time": "2 h",
+        "using": [ [ "nail_any_adhesive", 10 ], [ "wood_structural_small", 1 ] ]
+      }
+    },
+    "durability": 75,
+    "damage_modifier": 80,
+    "breaks_into": [ { "item": "scrap", "count": [ 8, 15 ] }, { "item": "splinter", "count": [ 5, 10 ] } ],
+    "damage_reduction": { "all": 15 },
+    "extend": { "flags": [ "FOLDABLE" ] },
+    "folded_volume": "20 L",
+    "color": "brown"
+  }
+]

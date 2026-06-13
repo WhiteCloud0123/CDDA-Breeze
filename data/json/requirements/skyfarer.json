@@ -1,0 +1,48 @@
+[
+  {
+    "id": "nail_any_adhesive",
+    "type": "requirement",
+    "components": [ [ [ "nail", 1 ], [ "adhesive", 1, "LIST" ] ] ]
+  },
+  {
+    "id": "steel_tiny",
+    "type": "requirement",
+    "components": [ [ [ "steel_chunk", 1 ], [ "scrap", 5 ] ] ]
+  },
+  {
+    "id": "wood_structural_small",
+    "type": "requirement",
+    "components": [ [ [ "2x4", 1 ], [ "stick", 1 ] ] ]
+  },
+  {
+    "id": "vehicle_repair_small_wood",
+    "type": "requirement",
+    "components": [ [ [ "splinter", 1 ] ] ]
+  },
+  {
+    "id": "wood_structural",
+    "type": "requirement",
+    "components": [ [ [ "stick_long", 1 ], [ "wood_structural_small", 2, "LIST" ] ] ]
+  },
+  {
+    "id": "adhesive_proper",
+    "type": "requirement",
+    "components": [ [ [ "glue_strong", 1 ], [ "glue_weak", 15 ] ] ]
+  },
+  {
+    "id": "nail_glue",
+    "type": "requirement",
+    "components": [ [ [ "nail", 1 ], [ "adhesive_proper", 1, "LIST" ] ] ]
+  },
+  {
+    "id": "fabric_hides_proper",
+    "type": "requirement",
+    "components": [ [ [ "leather", 1 ], [ "fur", 1 ] ] ]
+  },
+  {
+    "id": "blacksmithing_intermediate",
+    "type": "requirement",
+    "qualities": [ { "id": "ANVIL", "level": 2 }, { "id": "HAMMER", "level": 3 }, { "id": "CHISEL", "level": 3 } ],
+    "tools": [ [ [ "forge", 20 ], [ "oxy_torch", 20 ] ] ]
+  }
+]
