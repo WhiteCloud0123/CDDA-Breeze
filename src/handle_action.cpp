@@ -2450,13 +2450,13 @@ static bool check_ladder_path_obstacles(const tripoint_bub_ms& start, int dist, 
 
         // 检查生物（中途和目标点，不包括起点）
         if (creatures.creature_at(pt, false)) {
-            add_msg(m_warning, _("绳梯路径上有生物阻挡！"));
+            add_msg(m_warning, "绳梯路径上有生物阻挡！");
             return true;
         }
 
         // 检查不可通过地形（中途和目标点，不包括起点）
         if (here.impassable_ter_furn(pt.raw())) {
-            add_msg(m_warning, _("绳梯路径上有无法通过的地形！"));
+            add_msg(m_warning, "绳梯路径上有无法通过的地形！");
             return true;
         }
 
@@ -2464,7 +2464,7 @@ static bool check_ladder_path_obstacles(const tripoint_bub_ms& start, int dist, 
         if (!is_destination) {
             const optional_vpart_position vp = here.veh_at(pt);
             if (vp && vp->part_with_feature(VPFLAG_BOARDABLE, true)) {
-                add_msg(m_warning, _("绳梯路径上有载具部件阻挡！"));
+                add_msg(m_warning, "绳梯路径上有载具部件阻挡！");
                 return true;
             }
         }
@@ -2624,6 +2624,13 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             m->remove_value("command_dirty");
             player_character.moves = 0;
         }else if (player_character.in_vehicle) {
+            if (has_vehicle_control(player_character)) {
+                const optional_vpart_position vp = get_map().veh_at(player_character.pos());
+                if (vp && vp->vehicle().is_rotorcraft()) {
+                    pldrive(tripoint_below);
+                    break;
+                }
+            }
             auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), false);
             if (found) {
                 const optional_vpart_position vp = here.veh_at(rope_pos);
@@ -2646,13 +2653,6 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                         vertical_move(-dist, true);
                         break;
                     }
-                }
-            }
-
-            if (has_vehicle_control(player_character)) {
-                const optional_vpart_position vp = get_map().veh_at(player_character.pos());
-                if (vp && vp->vehicle().is_rotorcraft()) {
-                    pldrive(tripoint_below);
                 }
             }
         }
