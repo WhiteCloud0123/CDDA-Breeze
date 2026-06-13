@@ -716,7 +716,7 @@ class map
                               bool dead_passenger = false );
         // Remove passenger from vehicle at p.
         void unboard_vehicle( const tripoint &p, bool dead_passenger = false );
-        bool has_rope_at(tripoint_bub_ms pt) const;
+        std::pair<bool, tripoint_bub_ms> has_rope_at(tripoint_bub_ms pt, bool find_up) const;
         std::pair<vehicle*, int> get_rope_at(const tripoint_bub_ms& pt) const;
         // Change vehicle coordinates and move vehicle's driver along.
         // WARNING: not checking collisions!

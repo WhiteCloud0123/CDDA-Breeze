@@ -2650,15 +2650,39 @@ int map::climb_difficulty( const tripoint &p ) const
     return std::max( 0, best_difficulty - blocks_movement );
 }
 
-bool map::has_rope_at(tripoint_bub_ms pt) const
+std::pair<bool, tripoint_bub_ms> map::has_rope_at( tripoint_bub_ms pt, bool find_up ) const
 {
-    if (cached_veh_rope.count(pt) > 0) {
-        const auto& veh_pair = get_rope_at(pt);
-        vehicle* veh = veh_pair.first;
-        int veh_part = veh_pair.second;
-        return veh->part(veh_part).info().ladder_length() >= veh->pos_bub().z() - pt.z();
+    std::vector<tripoint_bub_ms> candidates;
+
+    for( const auto &entry : cached_veh_rope ) {
+        const tripoint_bub_ms &pos = entry.first;
+        if( pos.xy() != pt.xy() ) {
+            continue;
+        }
+        if( find_up && pos.z() > pt.z() ) {
+            candidates.push_back( pos );
+        } else if( !find_up && pos.z() <= pt.z() ) {
+            candidates.push_back( pos );
+        }
     }
-    return false;
+
+    if( candidates.empty() ) {
+        return { false, tripoint_bub_ms( 0, 0, 0 ) };
+    }
+
+    if( find_up ) {
+        std::sort( candidates.begin(), candidates.end(),
+        []( const tripoint_bub_ms &a, const tripoint_bub_ms &b ) {
+            return a.z() < b.z();
+        } );
+    } else {
+        std::sort( candidates.begin(), candidates.end(),
+        []( const tripoint_bub_ms &a, const tripoint_bub_ms &b ) {
+            return a.z() > b.z();
+        } );
+    }
+
+    return { true, candidates.front() };
 }
 
 std::pair<vehicle*, int> map::get_rope_at(const tripoint_bub_ms& pt) const

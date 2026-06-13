@@ -2581,29 +2581,32 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             m->set_dest(goal);
             m->remove_value("command_dirty");
             player_character.moves = 0;
-        }else if (player_character.in_vehicle && here.has_rope_at(player_character.pos_bub())) {
-            here.unboard_vehicle(player_character.pos());
-            const optional_vpart_position vp = here.veh_at(player_character.pos_bub());
-            if (vp.has_value()) {
-                const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
-                if (idx != -1) {
-                    const vpart_info& info = vp->vehicle().part(idx).info();
-                    int dist = 1;
-                    tripoint_bub_ms below = player_character.pos_bub();
-                    below.z()--;
-                    while (here.ter(below).id().str() == "t_open_air" && dist < info.ladder_length()) {
+        }else if (player_character.in_vehicle) {
+            auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), false);
+            if (found) {
+                here.unboard_vehicle(player_character.pos());
+                const optional_vpart_position vp = here.veh_at(rope_pos);
+                if (vp.has_value()) {
+                    const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
+                    if (idx != -1) {
+                        const vpart_info& info = vp->vehicle().part(idx).info();
+                        int dist = 1;
+                        tripoint_bub_ms below = player_character.pos_bub();
                         below.z()--;
-                        dist++;
+                        while (here.ter(below).id().str() == "t_open_air" && dist < info.ladder_length()) {
+                            below.z()--;
+                            dist++;
+                        }
+                        vertical_move(-dist, true);
+                        break;
                     }
-                    vertical_move(-dist, true);
-                    break;
                 }
             }
         }
         else if (!player_character.in_vehicle) {
             // Check for vehicle rope ladder above before climbing down other ways
-            if (here.has_rope_at(player_character.pos_bub())) {
-                const optional_vpart_position vp = here.veh_at(player_character.pos_bub());
+            if (auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), false); found) {
+                const optional_vpart_position vp = here.veh_at(rope_pos);
                 if (vp.has_value()) {
                     const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
                     if (idx != -1) {
@@ -2647,8 +2650,8 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             m->remove_value("command_dirty");
             player_character.moves = 0;
         }
-        else if (here.has_rope_at(player_character.pos_bub())) {
-            const auto& veh_pair = here.get_rope_at(player_character.pos_bub());
+        else if (auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), true); found) {
+            const auto& veh_pair = here.get_rope_at(rope_pos);
             vehicle* veh = veh_pair.first;
             int veh_part = veh_pair.second;
             tripoint_bub_ms above = player_character.pos_bub();
