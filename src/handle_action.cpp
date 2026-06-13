@@ -751,7 +751,7 @@ static void pldrive(const tripoint& p)
         }
     }
     if (p.z != 0) {
-        if (!player_character.has_proficiency(proficiency_prof_helicopter_pilot)) {
+        if (!veh->is_airship() && !player_character.has_proficiency(proficiency_prof_helicopter_pilot)) {
             player_character.add_msg_if_player(m_info, _("You have no idea how to make the vehicle fly."));
             return;
         }
