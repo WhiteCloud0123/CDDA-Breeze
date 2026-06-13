@@ -2,10 +2,7 @@
     {
         "id": "launcher_ballista",
         "copy-from": "launcher_base",
-        "type": "ITEM",
-        "subtypes": [
-            "GUN"
-        ],
+        "type": "GUN",
         "name": {
             "str": "弩炮"
         },

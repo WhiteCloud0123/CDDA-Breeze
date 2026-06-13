@@ -1,6 +1,6 @@
 [
   {
-    "type": "ITEM",
+    "type": "GENERIC",
     "id": "airship_balloon_item",
     "symbol": "o",
     "color": "light_gray",
@@ -19,7 +19,7 @@
   },
   {
     "id": "metal_propeller_item",
-    "type": "ITEM",
+    "type": "GENERIC",
     "category": "veh_parts",
     "name": { "str": "飞机螺旋桨" },
     "description": "一个来自飞机的钢制螺旋桨和整流罩。当安装到载具上时，发动机功率将为任何已安装的机翼提供升力，使其能够起飞。",
@@ -34,7 +34,7 @@
   },
   {
     "id": "wood_propeller_item",
-    "type": "ITEM",
+    "type": "GENERIC",
     "category": "veh_parts",
     "name": { "str": "木制飞机螺旋桨" },
     "description": "一个来自飞机的木制螺旋桨和整流罩。当安装到载具上时，发动机功率将为任何已安装的机翼提供升力，使其能够起飞。",
@@ -49,8 +49,7 @@
   },
   {
     "id": "c_hydrogen_gas",
-    "type": "ITEM",
-    "subtypes": [ "AMMO" ],
+    "type": "AMMO",
     "name": { "str_sp": "氢气" },
     "category": "chems",
     "description": "一种轻质、易燃的压缩气体，可用作燃料。生产它需要大量能源，尤其是在没有大灾变前的工业体系的情况下更是如此。虽然能量密度相当高，但体积效率并不高。",
@@ -66,11 +65,11 @@
     "dispersion": 120,
     "phase": "liquid",
     "ammo_type": "c_hydrogen",
-    "material": [ "hydrogen" ],
+    "material": [ "hydrogen_cell" ],
     "effects": [ "INCENDIARY" ]
   },
   {
-    "type": "ITEM",
+    "type": "GENERIC",
     "id": "sail_large_item",
     "copy-from": "sail",
     "name": { "str": "大型帆装" },

@@ -4263,14 +4263,12 @@ double vehicle::total_balloon_lift() const
 
 bool vehicle::has_sufficient_balloonlift() const
 {
-    // 牛顿与牛顿的比较 - 将千克转换为牛顿。
     return total_balloon_lift() >= to_kilogram(total_mass()) * 9.8;
 }
 
 bool vehicle::is_airship() const
 {
-    // 轻于空气的飞行器依靠气囊漂浮，并通过螺旋桨操控方向。
-    return !balloons.empty() && player_in_control(get_player_character()) && has_sufficient_balloonlift();
+    return !balloons.empty() && has_sufficient_balloonlift();
 }
 
 bool vehicle::is_rotorcraft() const
@@ -4281,19 +4279,6 @@ bool vehicle::is_rotorcraft() const
     
     return (!rotors.empty() && player_in_control( get_player_character() ) && 
            has_sufficient_rotorlift()) || is_airship();
-}
-
-bool vehicle::is_airship() const
-{
-    if (is_AUTOPILOT_fly == true) {
-
-        return !rotors.empty() && has_sufficient_rotorlift();
-
-    }
-
-
-    return !rotors.empty() && player_in_control(get_player_character()) &&
-        has_sufficient_rotorlift();
 }
 
 bool vehicle::is_flyable() const

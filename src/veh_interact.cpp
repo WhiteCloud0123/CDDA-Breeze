@@ -2721,8 +2721,14 @@ void veh_interact::display_stats() const
         }
         if (!veh->rotors.empty()) {
             fold_and_print(w_stats, point(x[i], y[i]), w[i], c_light_gray,
-                _("升力： <color_light_blue>%.0f</color> N"),
+                _("升力【螺旋桨】： <color_light_blue>%.0f</color> N"),
                 veh->lift_thrust_of_rotorcraft(true));
+            i += 1;
+        }
+        if (!veh->balloons.empty()) {
+            fold_and_print(w_stats, point(x[i], y[i]), w[i], c_light_gray,
+                _("升力【气囊】： <color_light_blue>%.0f</color> N"),
+                veh->total_balloon_lift());
             i += 1;
         }
     }

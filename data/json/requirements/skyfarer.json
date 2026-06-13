@@ -27,7 +27,7 @@
   {
     "id": "adhesive_proper",
     "type": "requirement",
-    "components": [ [ [ "glue_strong", 1 ], [ "glue_weak", 15 ] ] ]
+    "components": [ [ [ "superglue", 1 ], [ "bone_glue", 15 ] ] ]
   },
   {
     "id": "nail_glue",

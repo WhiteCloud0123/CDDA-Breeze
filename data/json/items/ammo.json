@@ -1550,10 +1550,7 @@
     "ammo_type": "red_pen_ink"
   },
   {
-    "type": "ITEM",
-    "subtypes": [
-        "AMMO"
-    ],
+    "type": "AMMO",
     "id": "ammo_ballista_wood",
     "symbol": "=",
     "color": "brown",
@@ -1586,10 +1583,7 @@
     ]
 },
 {
-    "type": "ITEM",
-    "subtypes": [
-        "AMMO"
-    ],
+    "type": "AMMO",
     "id": "ammo_ballista_iron",
     "copy-from": "ammo_ballista_wood",
     "color": "light_gray",
@@ -1620,10 +1614,38 @@
     ]
 },
 {
-    "type": "ITEM",
-    "subtypes": [
-        "AMMO"
+    "type": "AMMO",
+    "id": "bolt_ballista_steel",
+    "copy-from": "ammo_ballista_iron",
+    "color": "light_gray",
+    "looks_like": "javelin_iron",
+    "name": {
+        "str": "钢头弩炮箭矢"
+    },
+    "description": "一根粗重的木质射弹，尖端装有精钢箭头。发射后完好无损的几率很高。",
+    "material": [
+        "wood",
+        "steel"
     ],
+    "weight": "850 g",
+    "melee_damage": {
+        "bash": 10
+    },
+    "dispersion": 200,
+    "damage": {
+        "damage_type": "stab",
+        "amount": 30,
+        "armor_penetration": 15
+    },
+    "range": 18,
+    "effects": [
+        "NEVER_MISFIRES",
+        "NON_FOULING",
+        "RECOVER_60"
+    ]
+},
+{
+    "type": "AMMO",
     "id": "sling_bullet",
     "symbol": "*",
     "color": "light_gray",

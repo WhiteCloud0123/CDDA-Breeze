@@ -784,5 +784,11 @@
     "id": "turpentine",
     "name": "turpentine",
     "default": "chem_turpentine"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "c_hydrogen",
+    "name": "氢气",
+    "default": "c_hydrogen_gas"
   }
 ]

@@ -6,7 +6,7 @@
     "name": { "str": "大型帆装" },
     "description": "适合游艇或单桅帆船使用的船帆和索具，其规模大约在一个单人能够合理操控的范围内。",
     "durability": 150,
-    "power": "4000 W",
+    "power": 4000,
     "item": "sail_large_item",
     "requirements": {
       "install": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "vehicle_nail_install", 30 ] ] },
