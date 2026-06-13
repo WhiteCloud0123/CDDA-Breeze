@@ -40,6 +40,8 @@
 #include "translations.h"
 #include "units.h"
 #include "viewer.h"
+#include "veh_type.h"
+#include "vehicle.h"
 
 static const bionic_id bio_shock_absorber( "bio_shock_absorber" );
 
@@ -1199,7 +1201,20 @@ bool trapfunc::ledge( const tripoint &p, Creature *c, item * )
     if( c->has_effect_with_flag( json_flag_LEVITATION ) ) {
         return false;
     }
-
+    if (auto ovp = get_map().veh_at(c->pos())) {
+        vehicle& veh = ovp->vehicle();
+        point mount = ovp->mount();
+        for (int part_idx : veh.parts_at_relative(mount, true)) {
+            const vehicle_part& part = veh.part(part_idx);
+            if (part.removed) {
+                continue;
+            }
+            const vpart_info& info = part.info();
+            if (info.has_flag(VPFLAG_BOARDABLE)) {
+                return false;
+            }
+        }
+    }
     map &here = get_map();
 
     int height = 0;
