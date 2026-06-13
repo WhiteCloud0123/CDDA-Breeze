@@ -446,6 +446,10 @@ void map::add_vehicle_to_cache( vehicle *veh )
         if( inbounds( p ) ) {
             ch.set_veh_exists_at( p, true );
         }
+        int part = veh->part_with_feature(static_cast<int>(vpr.part_index()), VPFLAG_LADDER, true);
+        if (part != -1) {
+            cached_veh_rope[tripoint_bub_ms(p)] = std::make_pair(veh, part);
+        }
     }
 }
 
@@ -463,6 +467,7 @@ void map::clear_vehicle_point_from_cache( vehicle *veh, const tripoint &pt )
         }
         ch->clear_veh_from_veh_cached_parts( pt, veh );
     }
+    cached_veh_rope.erase(tripoint_bub_ms(pt));
 }
 
 void map::clear_vehicle_level_caches( )
@@ -473,6 +478,7 @@ void map::clear_vehicle_level_caches( )
             ch->clear_vehicle_cache();
         }
     }
+    cached_veh_rope.clear();
 }
 
 void map::remove_vehicle_from_cache( vehicle *veh, int zmin, int zmax )
@@ -2642,6 +2648,46 @@ int map::climb_difficulty( const tripoint &p ) const
 
     // TODO: Make this more sensible - check opposite sides, not just movement blocker count
     return std::max( 0, best_difficulty - blocks_movement );
+}
+
+std::pair<bool, tripoint_bub_ms> map::has_rope_at( tripoint_bub_ms pt, bool find_up ) const
+{
+    std::vector<tripoint_bub_ms> candidates;
+
+    for( const auto &entry : cached_veh_rope ) {
+        const tripoint_bub_ms &pos = entry.first;
+        if( pos.xy() != pt.xy() ) {
+            continue;
+        }
+        if( find_up && pos.z() > pt.z() ) {
+            candidates.push_back( pos );
+        } else if( !find_up && pos.z() <= pt.z() ) {
+            candidates.push_back( pos );
+        }
+    }
+
+    if( candidates.empty() ) {
+        return { false, tripoint_bub_ms( 0, 0, 0 ) };
+    }
+
+    if( find_up ) {
+        std::sort( candidates.begin(), candidates.end(),
+        []( const tripoint_bub_ms &a, const tripoint_bub_ms &b ) {
+            return a.z() < b.z();
+        } );
+    } else {
+        std::sort( candidates.begin(), candidates.end(),
+        []( const tripoint_bub_ms &a, const tripoint_bub_ms &b ) {
+            return a.z() > b.z();
+        } );
+    }
+
+    return { true, candidates.front() };
+}
+
+std::pair<vehicle*, int> map::get_rope_at(const tripoint_bub_ms& pt) const
+{
+    return cached_veh_rope.at(pt);
 }
 
 bool map::has_floor( const tripoint &p ) const
@@ -10111,6 +10157,14 @@ void map::creature_on_trap( Creature &c, const bool may_avoid ) const
     const Character *const you = c.as_character();
     if( you != nullptr && you->in_vehicle ) {
         return;
+    }
+    // 即使并非正式处于车内，只要站在可支撑的载具部件上，
+    // 即表示该生物正立于载具之上，不应触发地形陷阱（例如挂在载具层 t_open_air 地形上的 tr_ledge）。
+    if( you != nullptr ) {
+        if( const std::optional<vpart_reference> vp = veh_at( c.pos() ).part_with_feature(
+                VPFLAG_BOARDABLE, true ) ) {
+            return;
+        }
     }
     maybe_trigger_trap( c.pos(), c, may_avoid );
 }

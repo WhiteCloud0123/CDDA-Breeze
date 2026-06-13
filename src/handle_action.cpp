@@ -2430,6 +2430,48 @@ static void do_deathcam_action(const action_id& act, avatar& player_character)
     }
 }
 
+// 检查绳梯路径上是否存在障碍物
+// 检查内容包括：生物（中途+目标点）、不可通过地形（中途+目标点）、可登车载具部件（仅中途）
+// 返回 true 表示存在障碍物阻止攀爬
+static bool check_ladder_path_obstacles(const tripoint_bub_ms& start, int dist, bool going_up) {
+    map& here = get_map();
+    creature_tracker& creatures = get_creature_tracker();
+
+    for (int i = 1; i <= dist; i++) {
+        tripoint_bub_ms pt = start;
+        if (going_up) {
+            pt.z() += i;
+        }
+        else {
+            pt.z() -= i;
+        }
+
+        bool is_destination = (i == dist);
+
+        // 检查生物（中途和目标点，不包括起点）
+        if (creatures.creature_at(pt, false)) {
+            add_msg(m_warning, "绳梯路径上有生物阻挡！");
+            return true;
+        }
+
+        // 检查不可通过地形（中途和目标点，不包括起点）
+        if (here.impassable_ter_furn(pt.raw())) {
+            add_msg(m_warning, "绳梯路径上有无法通过的地形！");
+            return true;
+        }
+
+        // 检查可登车的载具部件（仅中途，不包括目标点）
+        if (!is_destination) {
+            const optional_vpart_position vp = here.veh_at(pt);
+            if (vp && vp->part_with_feature(VPFLAG_BOARDABLE, true)) {
+                add_msg(m_warning, "绳梯路径上有载具部件阻挡！");
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool game::do_regular_action(action_id& act, avatar& player_character,
     const std::optional<tripoint>& mouse_target)
 {
@@ -2565,7 +2607,8 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             }
         }
         break;
-    case ACTION_MOVE_DOWN:
+    case ACTION_MOVE_DOWN: {
+        map& here = get_map();
         if (player_character.is_mounted() && get_option<bool>("骑乘状态可以上下楼") == false) {
             auto* mon = player_character.mounted_creature.get();
             if (!mon->has_flag(MF_RIDEABLE_MECH)) {
@@ -2580,8 +2623,63 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             m->set_dest(goal);
             m->remove_value("command_dirty");
             player_character.moves = 0;
+        }else if (player_character.in_vehicle) {
+            if (has_vehicle_control(player_character)) {
+                const optional_vpart_position vp = get_map().veh_at(player_character.pos());
+                if (vp && vp->vehicle().is_rotorcraft()) {
+                    pldrive(tripoint_below);
+                    break;
+                }
+            }
+            auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), false);
+            if (found) {
+                const optional_vpart_position vp = here.veh_at(rope_pos);
+                if (vp.has_value()) {
+                    const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
+                    if (idx != -1) {
+                        const vpart_info& info = vp->vehicle().part(idx).info();
+                        int dist = 1;
+                        tripoint_bub_ms below = player_character.pos_bub();
+                        below.z()--;
+                        while (here.ter(below).id().str() == "t_open_air" && dist < info.ladder_length()) {
+                            below.z()--;
+                            dist++;
+                        }
+                        // 先检查绳梯路径上的障碍物，确认安全后再离开载具
+                        if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
+                            break;
+                        }
+                        here.unboard_vehicle(player_character.pos());
+                        vertical_move(-dist, true);
+                        break;
+                    }
+                }
+            }
         }
         else if (!player_character.in_vehicle) {
+            // Check for vehicle rope ladder above before climbing down other ways
+            if (auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), false); found) {
+                const optional_vpart_position vp = here.veh_at(rope_pos);
+                if (vp.has_value()) {
+                    const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
+                    if (idx != -1) {
+                        const vpart_info& info = vp->vehicle().part(idx).info();
+                        int dist = 1;
+                        tripoint_bub_ms below = player_character.pos_bub();
+                        below.z()--;
+                        while (here.ter(below).id().str() == "t_open_air" && dist < info.ladder_length()) {
+                            below.z()--;
+                            dist++;
+                        }
+                        // 检查绳梯路径上的障碍物
+                        if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
+                            break;
+                        }
+                        vertical_move(-dist, true);
+                        break;
+                    }
+                }
+            }
             vertical_move(-1, false);
         }
         else if (has_vehicle_control(player_character)) {
@@ -2591,8 +2689,9 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             }
         }
         break;
-
-    case ACTION_MOVE_UP:
+    }
+    case ACTION_MOVE_UP: {
+        map& here = get_map();
         if (player_character.is_mounted() && get_option<bool>("骑乘状态可以上下楼") == false) {
             auto* mon = player_character.mounted_creature.get();
             if (!mon->has_flag(MF_RIDEABLE_MECH)) {
@@ -2608,6 +2707,32 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             m->remove_value("command_dirty");
             player_character.moves = 0;
         }
+        else if (auto [found, rope_pos] = here.has_rope_at(player_character.pos_bub(), true); found) {
+            const auto& veh_pair = here.get_rope_at(rope_pos);
+            vehicle* veh = veh_pair.first;
+            int veh_part = veh_pair.second;
+            tripoint_bub_ms above = player_character.pos_bub();
+            const int ladder_len = veh->part(veh_part).info().ladder_length();
+            above.z()++;
+            if (here.ter(above).id().str() != "t_open_air") {
+                vertical_move(1, false);
+            }
+            else {
+                int dist = 1;
+                while (here.ter(above).id().str() == "t_open_air" &&
+                    !here.veh_at(tripoint_bub_ms(player_character.pos_bub().xy(), above.z())) &&
+                    dist < ladder_len) {
+                    above.z()++;
+                    dist++;
+                }
+                // 检查绳梯路径上的障碍物
+                if (check_ladder_path_obstacles(player_character.pos_bub(), dist, true)) {
+                    break;
+                }
+                vertical_move(dist, true);
+            }
+            break;
+        }
         else if (!player_character.in_vehicle) {
             vertical_move(1, false);
         }
@@ -2618,7 +2743,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             }
         }
         break;
-
+    }
     case ACTION_OPEN:
         if (in_shell) {
             add_msg(m_info, _("You can't open things while you're in your shell."));

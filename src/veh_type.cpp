@@ -95,6 +95,7 @@ static const std::unordered_map<std::string, vpart_bitflags> vpart_bitflag_map =
     { "ROTOR_SIMPLE", VPFLAG_ROTOR_SIMPLE },
     { "BALLOON", VPFLAG_BALLOON },
     { "PROPELLER", VPFLAG_PROPELLER },
+    { "LADDER", VPFLAG_LADDER },
     { "FLOATS", VPFLAG_FLOATS },
     { "DOME_LIGHT", VPFLAG_DOME_LIGHT },
     { "AISLE_LIGHT", VPFLAG_AISLE_LIGHT },
@@ -330,6 +331,17 @@ void vpart_info::load_balloon(std::optional<vpslot_balloon>& balloon_ptr, const 
     assign(jo, "height", balloon_info.height);
     balloon_ptr = balloon_info;
     cata_assert(balloon_ptr);
+}
+
+void vpart_info::load_ladder(std::optional<vpslot_ladder>& ladder_ptr, const JsonObject& jo)
+{
+    vpslot_ladder ladder_info{};
+    if (ladder_ptr) {
+        ladder_info = *ladder_ptr;
+    }
+    assign(jo, "length", ladder_info.length);
+    ladder_ptr = ladder_info;
+    cata_assert(ladder_ptr);
 }
 
 void vpart_info::load_toolkit(std::optional<vpslot_toolkit>& tkptr, const JsonObject& jo)

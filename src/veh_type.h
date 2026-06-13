@@ -89,6 +89,7 @@ enum vpart_bitflags : int {
     VPFLAG_AUTONOMOUS_CONTROL,
     VPFLAG_BALLOON,
     VPFLAG_PROPELLER,
+    VPFLAG_LADDER,
     NUM_VPFLAGS
 };
 /* Flag info:
@@ -140,6 +141,11 @@ struct vpslot_balloon {
     // 气艇的有效升力“高度” / 体积，用于计算以千克为单位的升力。
     float height = 0.0f;
 };
+
+struct vpslot_ladder {
+    int length = 0;
+};
+
 struct vpslot_workbench {
     // Base multiplier applied for crafting here
     float multiplier = 1.0f;
@@ -258,6 +264,7 @@ class vpart_info
         static void load_rotor( std::optional<vpslot_rotor> &roptr, const JsonObject &jo );
         static void load_propeller(std::optional<vpslot_propeller>& propeller_ptr, const JsonObject& jo);
         static void load_balloon(std::optional<vpslot_balloon>& balloon_ptr, const JsonObject& jo);
+        static void load_ladder(std::optional<vpslot_ladder>& ladder_ptr, const JsonObject& jo);
         static void load_toolkit(std::optional<vpslot_toolkit>& tkptr, const JsonObject& jo);
         static void load( const JsonObject &jo, const std::string &src );
         static void finalize();
@@ -282,6 +289,11 @@ class vpart_info
         bool has_flag( const vpart_bitflags flag ) const {
             return bitflags.test( flag );
         }
+
+        int ladder_length() const {
+            return has_flag("LADDER") ? ladder_info->length : 0;
+        }
+
         void set_flag( const std::string &flag );
 
 
@@ -393,6 +405,7 @@ class vpart_info
 
         std::optional<vpslot_propeller> propeller_info;
         std::optional<vpslot_balloon> balloon_info;
+        std::optional<vpslot_ladder> ladder_info;
         
         /* map of standard variant names to symbols */
         std::map<std::string, int> symbols;
