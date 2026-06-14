@@ -2640,7 +2640,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                         const vpart_info& info = vp->vehicle().part(idx).info();
                         int dist = 0;
                         tripoint_bub_ms below = player_character.pos_bub();
-                        while (dist < info.ladder_length()) {
+                        while (dist < info.ladder_length()-1) {
                             below.z()--;
                             dist++;
                             if (here.ter(below).id().str() != "t_open_air") {
@@ -2650,9 +2650,19 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                         if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
                             break;
                         }
+                        bool confirm_unsupported = false;
+                        if (here.ter(below).id().str() == "t_open_air") {
+                            const optional_vpart_position vp_dest = here.veh_at(below);
+                            if (!vp_dest || !vp_dest->part_with_feature(VPFLAG_BOARDABLE, true)) {
+                                if (!query_yn(_("目标地点没有支撑物，确定要前往吗？"))) {
+                                    break;
+                                }
+                                confirm_unsupported = true;
+                            }
+                        }
                         here.unboard_vehicle(player_character.pos());
                         for (int i = 0; i < dist; i++) {
-                            vertical_move(-1, true, false, false);
+                            vertical_move(-1, true, false, confirm_unsupported && i == dist - 1);
                         }
                         break;
                     }
@@ -2669,7 +2679,7 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                         const vpart_info& info = vp->vehicle().part(idx).info();
                         int dist = 0;
                         tripoint_bub_ms below = player_character.pos_bub();
-                        while (dist < info.ladder_length()) {
+                        while (dist < info.ladder_length()-1) {
                             below.z()--;
                             dist++;
                             if (here.ter(below).id().str() != "t_open_air") {
@@ -2679,8 +2689,18 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                         if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
                             break;
                         }
+                        bool confirm_unsupported = false;
+                        if (here.ter(below).id().str() == "t_open_air") {
+                            const optional_vpart_position vp_dest = here.veh_at(below);
+                            if (!vp_dest || !vp_dest->part_with_feature(VPFLAG_BOARDABLE, true)) {
+                                if (!query_yn(_("目标地点没有支撑物，确定要前往吗？"))) {
+                                    break;
+                                }
+                                confirm_unsupported = true;
+                            }
+                        }
                         for (int i = 0; i < dist; i++) {
-                            vertical_move(-1, true, false, false);
+                            vertical_move(-1, true, false, confirm_unsupported && i == dist - 1);
                         }
                         break;
                     }
