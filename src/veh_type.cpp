@@ -602,6 +602,10 @@ void vpart_info::load( const JsonObject &jo, const std::string &src )
         load_workbench( def.workbench_info, jo );
     }
 
+    if (def.has_flag("LADDER")) {
+        load_ladder(def.ladder_info, jo);
+    }
+
     if (def.has_flag("VEH_TOOLS")) {
         load_toolkit(def.toolkit_info, jo);
     }

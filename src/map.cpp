@@ -2659,6 +2659,13 @@ std::pair<bool, tripoint_bub_ms> map::has_rope_at( tripoint_bub_ms pt, bool find
         if( pos.xy() != pt.xy() ) {
             continue;
         }
+        // 检查绳梯长度是否足够覆盖从 pt 到 pos 的垂直距离
+        const vehicle *veh = entry.second.first;
+        const int part = entry.second.second;
+        const int ladder_len = veh->part( part ).info().ladder_length();
+        if( std::abs( pos.z() - pt.z() ) + 1 > ladder_len ) {
+            continue;
+        }
         if( find_up && pos.z() > pt.z() ) {
             candidates.push_back( pos );
         } else if( !find_up && pos.z() <= pt.z() ) {

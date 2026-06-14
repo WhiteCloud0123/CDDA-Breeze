@@ -11818,7 +11818,7 @@ static std::optional<tripoint> find_empty_spot_nearby( const tripoint &pos )
     return std::nullopt;
 }
 
-void game::vertical_move( int movez, bool force, bool peeking )
+void game::vertical_move( int movez, bool force, bool peeking, bool check_traps )
 {
     if( u.is_mounted() ) {
         monster *mons = u.mounted_creature.get();
@@ -12100,7 +12100,7 @@ void game::vertical_move( int movez, bool force, bool peeking )
 
     here.invalidate_map_cache( here.get_abs_sub().z() );
     // Upon force movement, traps can not be avoided.
-    if( !wall_cling )  {
+    if( check_traps && !wall_cling )  {
         here.creature_on_trap( u, !force );
     }
 
