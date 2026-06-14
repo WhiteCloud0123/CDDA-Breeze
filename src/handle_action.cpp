@@ -2638,19 +2638,22 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                     const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
                     if (idx != -1) {
                         const vpart_info& info = vp->vehicle().part(idx).info();
-                        int dist = 1;
+                        int dist = 0;
                         tripoint_bub_ms below = player_character.pos_bub();
-                        below.z()--;
-                        while (here.ter(below).id().str() == "t_open_air" && dist < info.ladder_length()) {
+                        while (dist < info.ladder_length()) {
                             below.z()--;
                             dist++;
+                            if (here.ter(below).id().str() != "t_open_air") {
+                                break;
+                            }
                         }
-                        // 先检查绳梯路径上的障碍物，确认安全后再离开载具
                         if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
                             break;
                         }
                         here.unboard_vehicle(player_character.pos());
-                        vertical_move(-dist, true);
+                        for (int i = 0; i < dist; i++) {
+                            vertical_move(-1, true, false, false);
+                        }
                         break;
                     }
                 }
@@ -2664,18 +2667,21 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                     const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
                     if (idx != -1) {
                         const vpart_info& info = vp->vehicle().part(idx).info();
-                        int dist = 1;
+                        int dist = 0;
                         tripoint_bub_ms below = player_character.pos_bub();
-                        below.z()--;
-                        while (here.ter(below).id().str() == "t_open_air" && dist < info.ladder_length()) {
+                        while (dist < info.ladder_length()) {
                             below.z()--;
                             dist++;
+                            if (here.ter(below).id().str() != "t_open_air") {
+                                break;
+                            }
                         }
-                        // 检查绳梯路径上的障碍物
                         if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
                             break;
                         }
-                        vertical_move(-dist, true);
+                        for (int i = 0; i < dist; i++) {
+                            vertical_move(-1, true, false, false);
+                        }
                         break;
                     }
                 }
@@ -2711,25 +2717,17 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             const auto& veh_pair = here.get_rope_at(rope_pos);
             vehicle* veh = veh_pair.first;
             int veh_part = veh_pair.second;
-            tripoint_bub_ms above = player_character.pos_bub();
+            tripoint_bub_ms pt = player_character.pos_bub();
             const int ladder_len = veh->part(veh_part).info().ladder_length();
-            above.z()++;
-            if (here.ter(above).id().str() != "t_open_air") {
-                vertical_move(1, false);
+            int dist = rope_pos.z() - pt.z();
+            if (dist >= ladder_len) {
+                dist = ladder_len - 1;
             }
-            else {
-                int dist = 1;
-                while (here.ter(above).id().str() == "t_open_air" &&
-                    !here.veh_at(tripoint_bub_ms(player_character.pos_bub().xy(), above.z())) &&
-                    dist < ladder_len) {
-                    above.z()++;
-                    dist++;
-                }
-                // 检查绳梯路径上的障碍物
-                if (check_ladder_path_obstacles(player_character.pos_bub(), dist, true)) {
-                    break;
-                }
-                vertical_move(dist, true);
+            if (check_ladder_path_obstacles(player_character.pos_bub(), dist, true)) {
+                break;
+            }
+            for (int i = 0; i < dist; i++) {
+                vertical_move(1, true, false, false);
             }
             break;
         }

@@ -311,7 +311,7 @@ class game
          * If force == true then they are falling.
          * If peeking == true, forbids some exotic movement options
          */
-        void vertical_move( int z, bool force, bool peeking = false );
+        void vertical_move( int z, bool force, bool peeking = false, bool check_traps = true );
         void start_hauling( const tripoint &pos );
         /** Returns the other end of the stairs (if any). May query, affect u etc.
         * @param pos Disable queries and msgs if not the same position as player.
