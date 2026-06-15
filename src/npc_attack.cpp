@@ -527,6 +527,10 @@ npc_attack_rating npc_attack_gun::evaluate_tripoint(
         return npc_attack_rating( std::nullopt, location );
     }
 
+    if( !source.sees( *critter ) ) {
+        return npc_attack_rating( std::nullopt, location );
+    }
+
     const bool avoids_friendly_fire = source.rules.has_flag( ally_rule::avoid_friendly_fire );
     const int distance_to_me = rl_dist( location, source.pos() );
 
