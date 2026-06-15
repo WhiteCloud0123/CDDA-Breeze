@@ -9,17 +9,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "merge-data": "node merge-json.mjs && node convert-po.mjs",
+    "convert-po": "node convert-po.mjs",
     "validate": "svelte-check && tsc --noEmit",
-    "test": "npm run test:watch -- --run",
-    "test:watch": "node fetch-fixtures.js && npm run lint && npm run validate && vitest --maxWorkers=4 src",
-    "test:latest": "node fetch-fixtures.js latest && npm run test",
-    "test:dump": "rm -rf _rendered && DUMP_PAGES=1 vitest --no-file-parallelism --run src/all",
-    "update-test-data": "node fetch-fixtures.js latest",
-    "transifex-push": "txjs-cli push dist",
     "lint": "prettier -c .",
-    "lint:fix": "prettier -w .",
-    "precommit": "lint-staged",
-    "prepare": "husky install"
+    "lint:fix": "prettier -w ."
   },
   "devDependencies": {
     "@fontsource/unifont": "^4.5.5",
@@ -55,5 +49,9 @@
     "vitest": "^4.1.8",
     "workbox-build": "^7.4.1",
     "workbox-window": "^7.4.1"
+  },
+  "dependencies": {
+    "@rolldown/binding-win32-x64-msvc": "^1.1.1",
+    "gettext-parser": "^9.0.2"
   }
 }

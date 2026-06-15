@@ -26,8 +26,9 @@ export default defineConfig({
       },
       includeAssets: ["favicon.png"],
       manifest: {
-        short_name: "Cataclysm Guide",
-        name: "The Hitchhiker's Guide to the Cataclysm",
+        short_name: "Breeze Guide",
+        name: "Breeze Guide",
+        description: "Cataclysm: Dark Days Ahead 游戏数据指南 — 搜索物品、怪物、家具等详细信息",
         icons: [
           {
             src: "icon-192.png",
@@ -46,26 +47,12 @@ export default defineConfig({
         display: "standalone",
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,png}"],
         navigateFallback: "index.html",
         runtimeCaching: [
           {
-            // latest/all.json updates regularly, so try the network first.
             urlPattern:
-              /^https:\/\/raw\.githubusercontent\.com\/.*\/latest\/all\.json$/,
-            handler: "NetworkFirst",
-          },
-          {
-            // the other all.json files are the same forever, so if we have
-            // them from the cache they are fine.
-            urlPattern:
-              /^https:\/\/raw\.githubusercontent\.com\/.*\/all\.json$/,
+              /\/data\/(all|zh_CN)\.json$/,
             handler: "CacheFirst",
-          },
-          {
-            // Use saved translations if possible, update in the background.
-            urlPattern: /^https:\/\/cds.svc.transifex.net\//,
-            handler: "StaleWhileRevalidate",
           },
         ],
         // Without this, a stale service worker can be alive for a long time,

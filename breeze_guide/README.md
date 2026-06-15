@@ -1,30 +1,13 @@
-# The Hitchhiker's Guide to the Cataclysm
+# Breeze Guide
 
-<img src="src/assets/dont_panic.png" width=300 align="right" />
+Breeze Guide 是丧尸生存 Roguelike 游戏 [Cataclysm: Dark Days Ahead](https://cataclysmdda.org/) 的游戏数据指南，已适配 [CDDA-Breeze](https://github.com/breeze-cdda/CDDA-Breeze) 分支。你可以搜索游戏中的物品、怪物、家具等，并查看它们的详细信息。数据来源于游戏本身的 JSON 文件。
 
-The Hitchhiker's Guide to the Cataclysm is a guide to the zombie survival roguelike game [Cataclysm: Dark Days Ahead](https://cataclysmdda.org/). You can search for things in the game, like items, or monsters, and find useful information about them. The data in the Guide comes directly from the JSON files in the game itself.
+指南将数据存储在本地，支持离线使用。只要访问过一次，无需联网即可正常工作。
 
-The Guide stores all its data locally and is offline-capable, so you can take it with you wherever you go. There's nothing to do to make the Guide work offline, just visit the page and it will work even without internet access, as long as you've visited it once before. It's also installable, so you can pop it out of your browser and use it like a regular app.
+## 数据
 
-_More popular than the Celestial Home Care Omnibus, better selling than Fifty-three More Things to do in Zero Gravity, and more controversial than Oolon Colluphid's trilogy of philosophical blockbusters Where God Went Wrong, Some More of God's Greatest Mistakes and Who is this God Person Anyway?_
+运行 `merge-json.mjs` 脚本可以将 `data/json/` 目录下的所有 JSON 文件合并为单个 `public/data/all.json` 文件。重新生成：
 
-[📕 **Open the Guide**](https://cdda-guide.nornagon.net)
-
-## Acknowledgements
-
-The Hitchhiker's Guide to the Cataclysm is maintained by [**@nornagon**](https://github.com/nornagon), with generous contributions from the following folks:
-
-- [**@hexagonrecursion**](https://github.com/hexagonrecursion)
-- [**@CalKerethi**](https://github.com/CalKerethi)
-- [**@hfox**](https://github.com/hfox)
-- [**@pizzasgood**](https://github.com/pizzasgood)
-- [**@GuardianDll**](https://github.com/GuardianDll)
-- [**@Hyperseeker**](https://github.com/Hyperseeker)
-
-Further, thanks to everyone who files bugs and feature requests in the issue tracker. You all help make the Guide what it is!
-
-## Translation
-
-The Guide is available in every language that Cataclysm supports. The game data will be presented using the translations from the game itself, but the Guide's UI is not yet translated into every language. You can help! Translations are [crowdsourced on Transifex](https://www.transifex.com/nornagon/the-hitchhikers-guide-to-the-cataclysm/). If you do: thanks so much for your help! 感謝! Gracias! Merci! Obrigado! Danke! 谢谢! 감사해요! Благодарность! ευχαριστώ! Terima kasih! !شكرًا Takk! Dziękuję! Спасибі! 🙇‍♂️
-
-[:globe_with_meridians: **Help translate the Guide!**](https://www.transifex.com/nornagon/the-hitchhikers-guide-to-the-cataclysm/)
+```
+node merge-json.mjs
+```

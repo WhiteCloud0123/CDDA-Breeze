@@ -1915,179 +1915,46 @@ export function breathabilityFromRating(br: BreathabilityRating): number {
   return 0;
 }
 
-const fetchJsonWithProgress = (
-  url: string,
-  progress: (receivedBytes: number, totalBytes: number) => void,
-): Promise<any> => {
-  // GoogleBot has a 15MB limit on the size of the response, so we need to
-  // serve it double-gzipped JSON.
-  if (/latest/.test(url) && /googlebot/i.test(navigator.userAgent))
-    return fetchGzippedJsonForGoogleBot(url);
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = (e) => {
-      if (xhr.response) resolve(xhr.response);
-      else reject(`Unknown error fetching JSON from ${url}`);
-    };
-    xhr.onprogress = (e) => {
-      if (e.lengthComputable) progress(e.loaded, e.total);
-    };
-    xhr.onerror = () => {
-      reject(`Error ${xhr.status} (${xhr.statusText}) fetching ${url}`);
-    };
-    xhr.onabort = () => {
-      reject(`Aborted while fetching ${url}`);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "json";
-    xhr.send();
-  });
-};
-
-async function fetchGzippedJsonForGoogleBot(url: string): Promise<any> {
-  const gzUrl = url.replace(/latest/, "latest.gz");
-  const res = await fetch(gzUrl, { mode: "cors" });
-  if (!res.ok)
-    throw new Error(`Error ${res.status} (${res.statusText}) fetching ${url}`);
-  if (!res.body)
-    throw new Error(`No body in response from ${url} (status ${res.status})`);
-
-  // Use DecompressionStream to decompress the gzipped response
-  const decompressionStream = new (globalThis as any).DecompressionStream(
-    "gzip",
-  );
-  const decompressedStream: ReadableStream<ArrayBuffer> =
-    res.body.pipeThrough(decompressionStream);
-
-  const text = await new Response(decompressedStream).text();
-  return JSON.parse(text);
-}
-
-// Sigh, the fetch spec has a bug: https://github.com/whatwg/fetch/issues/1358
-const fetchJsonWithIncorrectProgress = async (
-  url: string,
-  progress: (receivedBytes: number, totalBytes: number) => void,
-) => {
-  const res = await fetch(url, { mode: "cors" });
-  if (!res.ok)
-    throw new Error(`Error ${res.status} (${res.statusText}) fetching ${url}`);
-  if (!res.body)
-    throw new Error(`No body in response from ${url} (status ${res.status})`);
-  const reader = res.body.getReader();
-  const contentLength = +(res.headers.get("Content-Length") ?? 0);
-  let receivedBytes = 0;
-  progress(receivedBytes, contentLength);
-  const chunks: Uint8Array[] = [];
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done || !value) break;
-    chunks.push(value);
-    receivedBytes += value.length;
-    progress(receivedBytes, contentLength);
-  }
-  // Wait a tick to allow the 100% progress value to get through
-  await new Promise((resolve) => setTimeout(resolve));
-  const chunksAll = new Uint8Array(receivedBytes); // (4.1)
-  let position = 0;
-  for (const chunk of chunks) {
-    chunksAll.set(chunk, position); // (4.2)
-    position += chunk.length;
-  }
-  const result = new TextDecoder("utf-8").decode(chunksAll);
-  return JSON.parse(result);
-};
-
-const fetchJson = async (
-  version: string,
-  progress: (receivedBytes: number, totalBytes: number) => void,
-) => {
-  return fetchJsonWithProgress(
-    `https://raw.githubusercontent.com/nornagon/cdda-data/main/data/${version}/all.json`,
-    progress,
-  );
-};
-
-const fetchLocaleJson = async (
-  version: string,
-  locale: string,
-  progress: (receivedBytes: number, totalBytes: number) => void,
-) => {
-  return fetchJsonWithProgress(
-    `https://raw.githubusercontent.com/nornagon/cdda-data/main/data/${version}/lang/${locale}.json`,
-    progress,
-  );
-};
-
-async function retry<T>(promiseGenerator: () => Promise<T>) {
-  while (true) {
-    try {
-      return await promiseGenerator();
-    } catch (e) {
-      console.error(e);
-      await new Promise((r) => setTimeout(r, 2000));
-    }
-  }
-}
-
 const loadProgressStore = writable<[number, number] | null>(null);
 export const loadProgress = { subscribe: loadProgressStore.subscribe };
-let _hasSetVersion = false;
 const { subscribe, set } = writable<CddaData | null>(null);
 export const data = {
   subscribe,
-  async setVersion(version: string, locale: string | null) {
-    if (_hasSetVersion) throw new Error("can only set version once");
-    _hasSetVersion = true;
-    let totals = [0, 0, 0];
-    let receiveds = [0, 0, 0];
-    const updateProgress = () => {
-      const total = totals.reduce((a, b) => a + b, 0);
-      const received = receiveds.reduce((a, b) => a + b, 0);
-      loadProgressStore.set([received, total]);
-    };
-    const [dataJson, localeJson, pinyinNameJson] = await Promise.all([
-      retry(() =>
-        fetchJson(version, (receivedBytes, totalBytes) => {
-          totals[0] = totalBytes;
-          receiveds[0] = receivedBytes;
-          updateProgress();
-        }),
-      ),
-      locale &&
-        retry(() =>
-          fetchLocaleJson(version, locale, (receivedBytes, totalBytes) => {
-            totals[1] = totalBytes;
-            receiveds[1] = receivedBytes;
-            updateProgress();
-          }),
-        ),
-      locale?.startsWith("zh_") &&
-        retry(() =>
-          fetchLocaleJson(
-            version,
-            locale + "_pinyin",
-            (receivedBytes, totalBytes) => {
-              totals[2] = totalBytes;
-              receiveds[2] = receivedBytes;
-              updateProgress();
-            },
-          ),
-        ),
-    ]);
-    if (locale && localeJson) {
-      if (pinyinNameJson) pinyinNameJson[""] = localeJson[""];
-      i18n.loadJSON(localeJson);
-      i18n.setLocale(locale);
-      if (pinyinNameJson) {
-        i18n.loadJSON(pinyinNameJson, "pinyin");
+  async load() {
+    loadProgressStore.set([0, 1]);
+    try {
+      const [dataRes, localeRes] = await Promise.all([
+        fetch("/data/all.json"),
+        fetch("/data/zh_CN.json").catch(() => null),
+      ]);
+      if (!dataRes.ok)
+        throw new Error(`Error ${dataRes.status} fetching data/all.json`);
+      const [dataJson, localeJson] = await Promise.all([
+        dataRes.json(),
+        localeRes?.ok ? localeRes.json() : null,
+      ]);
+      loadProgressStore.set([1, 1]);
+      const cddaData = new CddaData(
+        dataJson.data,
+        dataJson.build_number,
+        dataJson.release,
+      );
+      // Apply translations BEFORE setting data, so components render with Chinese
+      if (localeJson) {
+        i18n.loadJSON(localeJson);
+        i18n.setLocale("zh_CN");
+        // Log a test lookup so user can verify in browser console
+        console.log(
+          `[i18n] loaded ${Object.keys(localeJson).length} translations, locale=${i18n.getLocale()}`,
+        );
+      } else {
+        console.warn("[i18n] zh_CN.json not available, showing English");
       }
+      set(cddaData);
+    } catch (e) {
+      console.error("Failed to load data:", e);
+      loadProgressStore.set(null);
     }
-    const cddaData = new CddaData(
-      dataJson.data,
-      dataJson.build_number,
-      dataJson.release,
-    );
-    set(cddaData);
   },
 };
 

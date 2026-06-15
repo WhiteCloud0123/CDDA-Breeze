@@ -1,7 +1,6 @@
 <script lang="ts">
 import Thing from "./Thing.svelte";
 import { CddaData, data, loadProgress, mapType, singularName } from "./data";
-import { tileData } from "./tile-data";
 import SearchResults from "./SearchResults.svelte";
 import Catalog from "./Catalog.svelte";
 import dontPanic from "./assets/dont_panic.png";
@@ -31,92 +30,7 @@ $: if (search !== renderedSearch) {
 
 onDestroy(updateRenderedSearch.cancel);
 
-let builds:
-  | {
-      build_number: string;
-      prerelease: boolean;
-      created_at: string;
-      langs?: string[];
-    }[]
-  | null = null;
-
-fetch("https://raw.githubusercontent.com/nornagon/cdda-data/main/builds.json")
-  .then((d) => d.json())
-  .then((b) => {
-    builds = b;
-  })
-  .catch((e) => {
-    console.error(e);
-  });
-
-const url = new URL(location.href);
-const version = url.searchParams.get("v") ?? "latest";
-const locale = url.searchParams.get("lang");
-data.setVersion(version, locale);
-
-const tilesets = [
-  {
-    name: "AltiCa",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/Altica",
-  },
-  {
-    name: "BrownLikeBears",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/BrownLikeBears",
-  },
-  {
-    name: "Chibi_Ultica",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/ChibiUltica",
-  },
-  {
-    name: "Cuteclysm(Alpha)",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/Cuteclysm",
-  },
-  {
-    name: "Hollow Moon",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/HollowMoon",
-  },
-  {
-    name: "MSXotto+",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/MshockXotto%2B",
-  },
-  {
-    name: "NeoDays",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/NeoDaysTileset",
-  },
-  {
-    name: "RetroDays",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/RetroDaysTileset",
-  },
-  {
-    name: "UltiCa",
-    url: "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/{version}/gfx/UltimateCataclysm",
-  },
-];
-
-const normalizeTemplate = (t: string) => (t === "null" || !t ? "" : t);
-function loadTileset(): string {
-  try {
-    const templ = localStorage.getItem("cdda-guide:tileset");
-    if (!templ) return "";
-    return normalizeTemplate(templ);
-  } catch (e) {
-    return "";
-  }
-}
-function saveTileset(url: string) {
-  try {
-    if (!url) localStorage.removeItem("cdda-guide:tileset");
-    else localStorage.setItem("cdda-guide:tileset", normalizeTemplate(url));
-  } catch (e) {
-    /* swallow security errors, which can happen when in incognito mode */
-  }
-}
-let tilesetUrlTemplate = loadTileset();
-$: saveTileset(tilesetUrlTemplate);
-$: tilesetUrl = $data
-  ? (tilesetUrlTemplate?.replace("{version}", $data.build_number!) ?? null)
-  : null;
-$: tileData.setURL(tilesetUrl);
+data.load();
 
 function decodeQueryParam(p: string) {
   return decodeURIComponent(p.replace(/\+/g, " "));
@@ -147,11 +61,11 @@ $: if (item && item.id && $data && $data.byIdMaybe(item.type as any, item.id)) {
   const it = $data.byId(item.type as any, item.id);
   document.title = `${singularName(
     it,
-  )} - The Hitchhiker's Guide to the Cataclysm`;
+  )} - Breeze Guide`;
 } else if (item && !item.id && item.type) {
-  document.title = `${item.type} - The Hitchhiker's Guide to the Cataclysm`;
+  document.title = `${item.type} - Breeze Guide`;
 } else {
-  document.title = "The Hitchhiker's Guide to the Cataclysm";
+  document.title = "Breeze Guide";
 }
 
 load();
@@ -216,44 +130,6 @@ function maybeFocusSearch(e: KeyboardEvent) {
   }
 }
 
-function getLanguageName(code: string) {
-  // from src/options.cpp
-  return (
-    {
-      en: "English",
-      ar: "العربية",
-      cs: "Český Jazyk",
-      da: "Dansk",
-      de: "Deutsch",
-      el: "Ελληνικά",
-      es_AR: "Español (Argentina)",
-      es_ES: "Español (España)",
-      fr: "Français",
-      hu: "Magyar",
-      id: "Bahasa Indonesia",
-      is: "Íslenska",
-      it_IT: "Italiano",
-      ja: "日本語",
-      ko: "한국어",
-      nb: "Norsk",
-      nl: "Nederlands",
-      pl: "Polski",
-      pt_BR: "Português (Brasil)",
-      ru: "Русский",
-      sr: "Српски",
-      tr: "Türkçe",
-      uk_UA: "український",
-      zh_CN: "中文 (天朝)",
-      zh_TW: "中文 (台灣)",
-    }[code] ??
-    (Intl?.DisplayNames
-      ? new Intl.DisplayNames([code.replace(/_/, "-")], {
-          type: "language",
-        }).of(code.replace(/_/, "-"))
-      : code)
-  );
-}
-
 const randomableItemTypes = new Set<keyof SupportedTypesWithMapped>([
   "item",
   "monster",
@@ -294,33 +170,9 @@ function newRandomPage() {
   });
 }
 newRandomPage();
-
-// This is one character behind the actual search value, because
-// of the throttle, but eh, it's good enough.
-let currentHref = location.href;
-$: (item, search, (currentHref = location.href));
-
-function langHref(lang: string, href: string) {
-  const u = new URL(href);
-  u.searchParams.set("lang", lang);
-  return u.toString();
-}
 </script>
 
 <svelte:window on:click={maybeNavigate} on:keydown={maybeFocusSearch} />
-
-<svelte:head>
-  {#if builds}
-    {@const build_number =
-      version === "latest" ? builds[0].build_number : version}
-    {#each [...(builds.find((b) => b.build_number === build_number)?.langs ?? [])].sort( (a, b) => a.localeCompare(b), ) as lang}
-      <link
-        rel="alternate"
-        hreflang={lang}
-        href={langHref(lang, currentHref)} />
-    {/each}
-  {/if}
-</svelte:head>
 
 <header>
   <nav>
@@ -330,17 +182,15 @@ function langHref(lang: string, href: string) {
         <a
           href={import.meta.env.BASE_URL + location.search}
           on:click={() => (search = "")}
-          ><span class="wide">Hitchhiker's Guide to the Cataclysm</span><span
-            class="narrow">HHG</span
+          ><span class="wide">Breeze Guide</span><span
+            class="narrow">BG</span
           ></a>
       </strong>
     </div>
     <div class="search">
       <input
         style="margin: 0; width: 100%"
-        placeholder={t("Search...", {
-          _comment: "Placeholder text in the search box",
-        })}
+        placeholder={t("搜索...")}
         type="search"
         bind:value={search}
         on:input={clearItem}
@@ -360,7 +210,7 @@ function langHref(lang: string, href: string) {
       {/key}
     {:else}
       <span style="color: var(--cata-color-gray)">
-        <em>{t("Loading...")}</em>
+        <em>{t("加载中...")}</em>
         {#if $loadProgress}
           ({($loadProgress[0] / 1024 / 1024).toFixed(1)}/{(
             $loadProgress[1] /
@@ -377,7 +227,7 @@ function langHref(lang: string, href: string) {
       {/key}
     {:else}
       <span style="color: var(--cata-color-gray)">
-        <em>{t("Loading...")}</em>
+        <em>{t("加载中...")}</em>
         {#if $loadProgress}
           ({($loadProgress[0] / 1024 / 1024).toFixed(1)}/{(
             $loadProgress[1] /
@@ -393,29 +243,27 @@ function langHref(lang: string, href: string) {
       height="200"
       width="343"
       style="float:right"
-      alt="The words 'Don't Panic' in big friendly letters" />
+      alt="大大的友善字体写着'不要慌'" />
     <p>
       <InterpolatedTranslation
         str={t(
-          `The {hhg} is a guide to the zombie survival roguelike game {link_cdda}. You can
-search for things in the game, like items (e.g. a {link_flashlight}), furniture
-(e.g. a {link_table}), or monsters (e.g. a {link_zombie}), and find useful
-information about them. The data in the Guide comes directly from the JSON
-files in the game itself.`,
+          `{hhg} 是丧尸生存 Roguelike 游戏 {link_cdda} 的指南。你可以搜索游戏中的物品（如{link_flashlight}）、家具（如{link_table}）或怪物（如{link_zombie}），并查看它们的详细信息。数据来源于游戏本身的 JSON 文件。本指南已适配 {link_breeze} 分支。`,
           {
             hhg: "{hhg}",
             link_cdda: "{link_cdda}",
             link_flashlight: "{link_flashlight}",
             link_table: "{link_table}",
             link_zombie: "{link_zombie}",
+            link_breeze: "{link_breeze}",
           },
         )}
         slot0="hhg"
         slot1="link_cdda"
         slot2="link_flashlight"
         slot3="link_table"
-        slot4="link_zombie">
-        <strong slot="0">Hitchhiker's Guide to the Cataclysm</strong>
+        slot4="link_zombie"
+        slot5="link_breeze">
+        <strong slot="0">Breeze Guide</strong>
         <a slot="1" href="https://cataclysmdda.org/"
           >Cataclysm: Dark Days Ahead</a>
         <a
@@ -430,17 +278,18 @@ files in the game itself.`,
           slot="4"
           href="{import.meta.env.BASE_URL}monster/mon_zombie{location.search}"
           >{t("zombie", { _comment: "Monster name" })}</a>
+        <a
+          slot="5"
+          href="https://github.com/breeze-cdda/CDDA-Breeze"
+          >CDDA-Breeze</a>
       </InterpolatedTranslation>
     </p>
     <p>
-      {t(`The Guide stores all its data locally and is offline-capable, so you can
-take it with you wherever you go. There's nothing to do to make the Guide
-work offline, just visit the page and it will work even without internet
-access, as long as you've visited it once before.`)}
+      {t(`指南将数据存储在本地，支持离线使用。只要访问过一次，无需联网即可正常工作。`)}
       {#if deferredPrompt}
         <InterpolatedTranslation
           str={t(
-            `It's also {installable_button}, so you can pop it out of your browser and use it like a regular app.`,
+            `也可以将其{installable_button}，脱离浏览器像普通应用一样使用。`,
             { installable_button: "{installable_button}" },
           )}
           slot0="installable_button">
@@ -451,173 +300,73 @@ access, as long as you've visited it once before.`)}
               e.preventDefault();
               deferredPrompt.prompt();
             }}
-            >{t("installable", {
-              _context: "Front page",
-              _comment: "Meaning, install the Hitchhiker's Guide app itself.",
-            })}</button>
+            >{t("安装")}</button>
         </InterpolatedTranslation>
       {/if}
     </p>
     <p style="font-style: italic; color: var(--cata-color-gray)">
       {t(
-        `More popular than the Celestial Home Care Omnibus, better selling than
-Fifty-three More Things to do in Zero Gravity, and more controversial than
-Oolon Colluphid's trilogy of philosophical blockbusters Where God Went
-Wrong, Some More of God's Greatest Mistakes and Who is this God Person
-Anyway?`,
+        `比《天体家庭护理大全》更受欢迎，比《零重力下要做的五十三件事》更畅销，
+比乌伦·库鲁菲德的三部哲学巨著——《上帝哪里错了》、《上帝更多的大错》和
+《这个上帝到底是谁？》——更具争议性。`,
         {
           _comment:
-            "This is a quote from the Hitchhiker's Guide to the Galaxy, by Douglas Adams",
+            "This is a reference to the Hitchhiker's Guide to the Galaxy, by Douglas Adams",
         },
       )}
     </p>
     <p>
       <InterpolatedTranslation
         str={t(
-          `The Guide is developed on {link_github} by {link_nornagon}. If you notice any problems, please {link_file_an_issue}!`,
+          `指南开源在 {link_github}。如果发现任何问题，请{link_file_an_issue}！`,
           {
             link_github: "{link_github}",
-            link_nornagon: "{link_nornagon}",
             link_file_an_issue: "{link_file_an_issue}",
           },
         )}
         slot0="link_github"
-        slot1="link_nornagon"
-        slot2="link_file_an_issue">
-        <a slot="0" href="https://github.com/nornagon/cdda-guide">GitHub</a>
-        <a slot="1" href="https://www.nornagon.net">nornagon</a>
-        <a slot="2" href="https://github.com/nornagon/cdda-guide/issues"
-          >{t("file an issue")}</a>
+        slot1="link_file_an_issue">
+        <a slot="0" href="https://github.com/breeze-cdda/CDDA-Breeze">GitHub</a>
+        <a slot="1" href="https://github.com/breeze-cdda/CDDA-Breeze/issues"
+          >{t("提交 Issue")}</a>
       </InterpolatedTranslation>
     </p>
 
-    {#if locale}
-      <p style="font-weight: bold">
-        <InterpolatedTranslation
-          str={t(
-            `You can help translate the Guide into your language on {link_transifex}.`,
-            { link_transifex: "{link_transifex}" },
-          )}
-          slot0="link_transifex">
-          <a
-            slot="0"
-            href="https://www.transifex.com/nornagon/the-hitchhikers-guide-to-the-cataclysm/"
-            >Transifex</a>
-        </InterpolatedTranslation>
-      </p>
-    {/if}
-
-    <h2>{t("Catalogs")}</h2>
+    <h2>{t("目录")}</h2>
     <ul>
-      <li><a href="/item{location.search}">{t("Items")}</a></li>
-      <li><a href="/monster{location.search}">{t("Monsters")}</a></li>
-      <li><a href="/furniture{location.search}">{t("Furniture")}</a></li>
-      <li><a href="/terrain{location.search}">{t("Terrain")}</a></li>
-      <li><a href="/vehicle_part{location.search}">{t("Vehicle Parts")}</a></li>
-      <li><a href="/tool_quality{location.search}">{t("Qualities")}</a></li>
-      <li><a href="/mutation{location.search}">{t("Mutations")}</a></li>
-      <li><a href="/martial_art{location.search}">{t("Martial Arts")}</a></li>
-      <li><a href="/json_flag{location.search}">{t("Flags")}</a></li>
+      <li><a href="/item{location.search}">{t("物品")}</a></li>
+      <li><a href="/monster{location.search}">{t("怪物")}</a></li>
+      <li><a href="/furniture{location.search}">{t("家具")}</a></li>
+      <li><a href="/terrain{location.search}">{t("地形")}</a></li>
+      <li><a href="/vehicle_part{location.search}">{t("车辆部件")}</a></li>
+      <li><a href="/tool_quality{location.search}">{t("工具质量")}</a></li>
+      <li><a href="/mutation{location.search}">{t("变异")}</a></li>
+      <li><a href="/martial_art{location.search}">{t("武术")}</a></li>
+      <li><a href="/json_flag{location.search}">{t("标志")}</a></li>
       <li>
-        <a href="/achievement{location.search}">{t("Achievements")}</a> /
-        <a href="/conduct{location.search}">{t("Conducts")}</a>
+        <a href="/achievement{location.search}">{t("成就")}</a> /
+        <a href="/conduct{location.search}">{t("行为")}</a>
       </li>
-      <li><a href="/proficiency{location.search}">{t("Proficiencies")}</a></li>
+      <li><a href="/proficiency{location.search}">{t("专精")}</a></li>
     </ul>
 
     <InterpolatedTranslation
-      str={t(`Or visit a {link_random_page}.`, {
+      str={t(`或访问{link_random_page}。`, {
         link_random_page: "{link_random_page}",
       })}
       slot0="link_random_page">
       <a slot="0" href={randomPage} on:click={() => setTimeout(newRandomPage)}
-        >{t("random page")}</a>
+        >{t("随机页面")}</a>
     </InterpolatedTranslation>
   {/if}
 
   <p class="data-options">
-    {t("Version:")}
-    {#if $data || builds}
-      {#if builds}
-        <!-- svelte-ignore a11y-no-onchange -->
-        <select
-          value={$data?.build_number ??
-            (version === "latest" ? builds[0].build_number : version)}
-          on:change={(e) => {
-            const url = new URL(location.href);
-            const buildNumber = e.currentTarget.value;
-            if (buildNumber === builds?.[0].build_number)
-              url.searchParams.delete("v");
-            else url.searchParams.set("v", buildNumber);
-            location.href = url.toString();
-          }}>
-          <optgroup label="Stable">
-            {#each builds.filter((b) => !b.prerelease) as build}
-              <option value={build.build_number}>{build.build_number}</option>
-            {/each}
-          </optgroup>
-          <optgroup label="Experimental">
-            {#each builds.filter((b) => b.prerelease) as build, i}
-              <option value={build.build_number}
-                >{build.build_number}{#if i === 0}&nbsp;(latest){/if}</option>
-            {/each}
-          </optgroup>
-        </select>
-      {:else if $data}
-        <select disabled>
-          <option>{$data.build_number}</option>
-        </select>
-      {/if}
+    {t("版本:")}
+    {#if $data}
+      <strong>{$data.build_number}</strong>
     {:else}
       <em style="color: var(--cata-color-gray)">({t("Loading...")})</em>
     {/if}
-    <span style="white-space: nowrap">
-      {t("Tileset:")}
-      <!-- svelte-ignore a11y-no-onchange -->
-      <select
-        value={tilesetUrlTemplate}
-        on:change={(e) => {
-          tilesetUrlTemplate = e.currentTarget.value;
-        }}>
-        <option value="">None (ASCII)</option>
-        {#each tilesets as { name, url }}
-          <option value={url}>{name}</option>
-        {/each}
-      </select>
-    </span>
-    <span style="white-space: nowrap">
-      {t("Language:")}
-      {#if builds}
-        {@const build_number =
-          version === "latest" ? builds[0].build_number : version}
-        {@const build = builds.find((b) => b.build_number === build_number)}
-        {@const langs = build?.langs ?? []}
-        {@const validLangs = langs.filter((lang) => {
-          try {
-            getLanguageName(lang);
-            return true;
-          } catch {
-            return false;
-          }
-        })}
-        <select
-          value={locale || "en"}
-          on:change={(e) => {
-            const url = new URL(location.href);
-            const lang = e.currentTarget.value;
-            if (lang === "en") url.searchParams.delete("lang");
-            else url.searchParams.set("lang", lang);
-            location.href = url.toString();
-          }}>
-          <option value="en">English</option>
-          {#each validLangs.sort((a, b) => a.localeCompare(b)) as lang}
-            <option value={lang}>{getLanguageName(lang)}</option>
-          {/each}
-        </select>
-      {:else}
-        <select disabled><option>{t("Loading...")}</option></select>
-      {/if}
-    </span>
   </p>
 </main>
 
