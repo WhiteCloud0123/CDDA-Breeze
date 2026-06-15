@@ -1,0 +1,5 @@
+/_test/
+/dist/
+/dev-dist/
+/generate-color-css.js
+/public/global.css

@@ -1,0 +1,56 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Run Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "55 */12 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+
+      - name: Fetch Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: |
+          echo "GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME"
+          if [ "$GITHUB_EVENT_NAME" == "schedule" ]; then
+            yarn test:latest
+          else
+            yarn test
+          fi
+
+      - name: Build
+        env:
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
+        run: yarn build
+
+      - name: Upload Translation Strings
+        env: # Or as an environment variable
+          TRANSIFEX_SECRET: ${{ secrets.TRANSIFEX_SECRET }}
+          TRANSIFEX_TOKEN: "1/1d8c1f9e14b4c21d70dd3f6fccdd0ab16b691105"
+        run: yarn transifex-push
+
+      - name: Deploy 🚀
+        if: github.event_name == 'push'
+        uses: cloudflare/pages-action@v1
+        with:
+          accountId: 38542b72de6483a07c984652797f04e1
+          projectName: cdda-guide
+          directory: dist
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

@@ -1,0 +1,271 @@
+<script lang="ts">
+import { t } from "@transifex/native";
+
+import { getContext } from "svelte";
+
+import { byName, CddaData, singular, singularName } from "../data";
+
+import type { Mutation } from "../types";
+import MutationColor from "./MutationColor.svelte";
+import MutationList from "./MutationList.svelte";
+import ThingLink from "./ThingLink.svelte";
+
+export let item: Mutation;
+
+let data = getContext<CddaData>("data");
+const _context = "Mutation";
+
+const normalizeStringList = (list: string | string[] | undefined) =>
+  list ? (Array.isArray(list) ? list : [list]) : [];
+
+const has = (list: string | string[] | undefined, id: string) =>
+  list ? (Array.isArray(list) ? list.includes(id) : list === id) : false;
+
+const postThresholdMutations = data
+  .byType("mutation")
+  .filter((m) => has(m.threshreq, item.id))
+  .sort(byName);
+
+const requiredBy = data
+  .byType("mutation")
+  .filter((m) => has(m.prereqs, item.id) || has(m.prereqs2, item.id))
+  .sort(byName);
+
+const canceledByMutations = data
+  .byType("mutation")
+  .filter((m) => has(m.cancels, item.id))
+  .sort(byName);
+
+const canceledByBionics = data
+  .byType("bionic")
+  .filter((b) => has(b.canceled_mutations, item.id))
+  .sort(byName);
+
+const conflictsWithBionics = data
+  .byType("bionic")
+  .filter((b) => has(b.mutation_conflicts, item.id))
+  .sort(byName);
+</script>
+
+<h1>
+  {item.threshold ? t("Threshold Mutation") : t("Mutation")}: {singularName(
+    item,
+  )}
+</h1>
+<section>
+  <dl>
+    <dt>{t("Points", { _context })}</dt>
+    <dd><MutationColor mutation={item}>{item.points}</MutationColor></dd>
+    {#if item.category}
+      <dt>{t("Category", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each normalizeStringList(item.category) as category_id}
+            <li><ThingLink type="mutation_category" id={category_id} /></li>
+          {/each}
+        </ul>
+      </dd>
+    {:else if item.threshold}
+      <dt>{t("Category", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each data
+            .byType("mutation_category")
+            .filter((mc) => mc.threshold_mut === item.id) as category}
+            <li><ThingLink type="mutation_category" id={category.id} /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    <dt>{t("Purifiable", { _context })}</dt>
+    <dd>{(item.purifiable ?? true) ? t("Yes") : t("No")}</dd>
+    <dt>{t("Visibility", { _context })}</dt>
+    <dd>{item.visibility ?? 0}</dd>
+    <dt>{t("Ugliness", { _context })}</dt>
+    <dd>{item.ugliness ?? 0}</dd>
+    {#if item.encumbrance_always?.length}
+      <dt>{t("Encumbrance", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each item.encumbrance_always as [part, encumbrance]}
+            <li><ThingLink type="body_part" id={part} /> ({encumbrance})</li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if item.encumbrance_covered?.length}
+      <dt>{t("Encumbrance (covered)", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each item.encumbrance_covered as [part, encumbrance]}
+            <li><ThingLink type="body_part" id={part} /> ({encumbrance})</li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if item.restricts_gear?.length}
+      <dt
+        title={t(
+          "Gear worn on this body part must be large enough to accommodate abnormally large mutated anatomy.",
+        )}>
+        {t("Restricts Gear", { _context })}
+      </dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each item.restricts_gear as part}
+            <li><ThingLink type="body_part" id={part} /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if item.craft_skill_bonus?.length}
+      <dt>{t("Crafting Skill Modifier", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each item.craft_skill_bonus as [skill, bonus]}
+            <li>
+              <ThingLink type="skill" id={skill} /> ({bonus > 0
+                ? "+" + bonus
+                : bonus})
+            </li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    <dt title={t("You can't have two mutations that share a type.")}>
+      {t("{n, plural, =1 {Type} other {Types}}", {
+        n: normalizeStringList(item.types).length ?? 0,
+        _context,
+      })}
+    </dt>
+    <dd>
+      {#if item.types}
+        <ul class="comma-separated">
+          {#each normalizeStringList(item.types) as type_id}
+            <li><ThingLink type="mutation_type" id={type_id} /></li>
+          {/each}
+        </ul>
+      {:else}
+        <em>{t("none")}</em>
+      {/if}
+    </dd>
+    <dt>{t("Prerequisites", { _context })}</dt>
+    <dd>
+      {#if item.prereqs}
+        <ul>
+          <li>
+            <ul class="comma-separated or">
+              {#each normalizeStringList(item.prereqs) as prereq_id}
+                <li><ThingLink type="mutation" id={prereq_id} /></li>
+              {/each}
+            </ul>
+          </li>
+          {#if item.prereqs2}
+            <li>
+              <ul class="comma-separated or">
+                {#each normalizeStringList(item.prereqs2) as prereq_id}
+                  <li><ThingLink type="mutation" id={prereq_id} /></li>
+                {/each}
+              </ul>
+            </li>
+          {/if}
+        </ul>
+      {:else}
+        <em>{t("none")}</em>
+      {/if}
+    </dd>
+    {#if item.threshreq}
+      <dt>{t("Threshold Requirement", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated or">
+          {#each normalizeStringList(item.threshreq) as prereq_id}
+            <li><ThingLink type="mutation" id={prereq_id} /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if item.leads_to}
+      <dt>{t("Leads To", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each normalizeStringList(item.leads_to) as id}
+            <li><ThingLink {id} type="mutation" /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if item.changes_to?.length}
+      <dt>{t("Changes To", { _context })}</dt>
+      <dd>
+        <MutationList
+          mutations={normalizeStringList(item.changes_to).map((id) =>
+            data.byId("mutation", id),
+          )} />
+      </dd>
+    {/if}
+    {#if item.cancels?.length}
+      <dt>{t("Cancels", { _context })}</dt>
+      <dd>
+        <MutationList
+          mutations={normalizeStringList(item.cancels).map((id) =>
+            data.byId("mutation", id),
+          )} />
+      </dd>
+    {/if}
+    {#if canceledByMutations.length}
+      <dt>{t("Canceled By", { _context })}</dt>
+      <dd>
+        <MutationList mutations={canceledByMutations} />
+      </dd>
+    {/if}
+    {#if conflictsWithBionics.length}
+      <dt>{t("Incompatible With", { _context })}</dt>
+      <dd>
+        <ul>
+          {#each conflictsWithBionics as { id }}
+            <li><ThingLink {id} type="bionic" /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if canceledByBionics.length}
+      <dt>{t("Canceled By Bionics", { _context })}</dt>
+      <dd>
+        <ul>
+          {#each canceledByBionics as { id }}
+            <li><ThingLink {id} type="bionic" /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+    {#if item.integrated_armor}
+      <dt>{t("Integrated Armor", { _context })}</dt>
+      <dd>
+        <ul class="comma-separated">
+          {#each item.integrated_armor as id}
+            <li><ThingLink {id} type="item" /></li>
+          {/each}
+        </ul>
+      </dd>
+    {/if}
+  </dl>
+  <p style="color: var(--cata-color-gray)">{singular(item.description)}</p>
+</section>
+
+{#if item.threshold && postThresholdMutations.length}
+  <section>
+    <h1>{t("Post-Threshold Mutations", { _context })}</h1>
+    <MutationList mutations={postThresholdMutations} />
+  </section>
+{/if}
+
+{#if requiredBy.length}
+  <section>
+    <h1>{t("Required By", { _context })}</h1>
+    <ul>
+      {#each requiredBy as m}
+        <li><ThingLink id={m.id} type="mutation" /></li>
+      {/each}
+    </ul>
+  </section>
+{/if}
