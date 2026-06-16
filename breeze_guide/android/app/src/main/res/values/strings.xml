@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Breeze Guide</string>
-    <string name="title_activity_main">Breeze Guide</string>
+    <string name="app_name">漫游指南-Breeze</string>
+    <string name="title_activity_main">漫游指南-Breeze</string>
     <string name="package_name">com.breeze.guide</string>
     <string name="custom_url_scheme">com.breeze.guide</string>
 </resources>
