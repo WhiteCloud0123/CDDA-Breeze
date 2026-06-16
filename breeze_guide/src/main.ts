@@ -14,7 +14,10 @@ if (location.hostname !== "localhost")
     }),
   });
 
-registerSW({});
+// Only register service worker in browser (not in Capacitor native app)
+if (!(window as any).Capacitor?.isNativePlatform?.()) {
+  registerSW({});
+}
 
 if (location.hash) {
   history.replaceState(

@@ -10,6 +10,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+
   server: {
     port: 3000,
   },
@@ -55,8 +56,6 @@ export default defineConfig({
             handler: "CacheFirst",
           },
         ],
-        // Without this, a stale service worker can be alive for a long time,
-        // and get out of date with the server.
         skipWaiting: true,
       },
     }),
