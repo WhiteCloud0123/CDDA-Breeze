@@ -51,7 +51,7 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern:
-              /\/data\/(all|zh_CN)\.json$/,
+              /\/data\/(all|zh_CN)\.json(\?.*)?$/,
             handler: "CacheFirst",
           },
         ],

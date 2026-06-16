@@ -51,7 +51,7 @@ function terrainOrFurniture(id: string) {
     <dt>{t("Required Skills")}</dt>
     <dd>
       {#each construction.required_skills ?? [] as [id, level], i}
-        <ThingLink type="skill" {id} /> ({level}){#if i + 2 === construction.required_skills?.length}{" and "}{:else if i + 1 !== construction.required_skills?.length}{", "}{/if}
+        <ThingLink type="skill" {id} /> ({level}){#if i + 2 === construction.required_skills?.length}{t(" and ", { _context })}{:else if i + 1 !== construction.required_skills?.length}{t(", ", { _context })}{/if}
       {:else}
         {#if construction.skill}
           <ThingLink type="skill" id={construction.skill} /> ({construction.difficulty ??

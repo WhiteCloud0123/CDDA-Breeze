@@ -31,25 +31,30 @@ try {
   const messages = {};
   const translations = parsed.translations;
 
+  // The separator gettext.js uses between msgctxt and msgid
+  const CTXT_SEP = "\u0004";
+
   // Add header
   messages[""] = {
     domain: "messages",
     language: "zh_CN",
     "plural-forms":
-      parsed.headers["plural-forms"] || "nplurals=2; plural=(n!=1);",
+      parsed.headers["Plural-Forms"] || "nplurals=2; plural=(n!=1);",
   };
 
   let translatedCount = 0;
   let untranslatedCount = 0;
 
-  for (const [, msgs] of Object.entries(translations)) {
+  for (const [context, msgs] of Object.entries(translations)) {
     for (const [key, val] of Object.entries(msgs)) {
       if (key === "") continue;
+      // gettext.js uses "context\u0004msgid" as the lookup key when context exists
+      const jsonKey = context ? context + CTXT_SEP + key : key;
       // Only include entries that have actual translations
       const hasTranslation = val.msgstr && val.msgstr.some((s) => s && s.length > 0);
       if (hasTranslation) {
         // gettext.js expects singular translations as strings, plural as arrays
-        messages[key] = val.msgstr.length === 1 ? val.msgstr[0] : val.msgstr;
+        messages[jsonKey] = val.msgstr.length === 1 ? val.msgstr[0] : val.msgstr;
         translatedCount++;
       } else {
         untranslatedCount++;

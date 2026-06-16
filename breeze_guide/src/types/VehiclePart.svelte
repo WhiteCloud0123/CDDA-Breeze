@@ -8,11 +8,13 @@ import {
   asMinutes,
   CddaData,
   getVehiclePartIdAndVariant,
+  i18n,
   parseDuration,
   showProbability,
   singular,
   singularName,
 } from "../data";
+import InterpolatedTranslation from "../InterpolatedTranslation.svelte";
 import LimitedList from "../LimitedList.svelte";
 
 import type { ItemGroupData, VehiclePart } from "../types";
@@ -95,8 +97,8 @@ vehiclesContainingPart.sort((a, b) =>
     <dt>{t("Location")}</dt>
     <dd>
       {item.flags?.includes("APPLIANCE")
-        ? "structure"
-        : (item.location ?? "none")}
+        ? t("structure", { _context })
+        : (item.location ?? t("none", { _context }))}
     </dd>
     <dt>{t("Weight")}</dt>
     <dd>{asKilograms(data.byId("item", item.item).weight ?? 0)}</dd>
@@ -119,12 +121,12 @@ vehiclesContainingPart.sort((a, b) =>
     <dd>{item.durability ?? 0}</dd>
     {#if item.flags?.includes("WHEEL")}
       {#if item.wheel_type}
-        <dt>Wheel Type</dt>
+        <dt>{t("Wheel Type", { _context })}</dt>
         <dd>{item.wheel_type}</dd>
       {/if}
-      <dt>Contact Area</dt>
+      <dt>{t("Contact Area", { _context })}</dt>
       <dd>{item.contact_area ?? 1} cm²</dd>
-      <dt>Rolling Resistance</dt>
+      <dt>{t("Rolling Resistance", { _context })}</dt>
       <dd>{item.rolling_resistance ?? 1}</dd>
     {/if}
     {#if item.size}
@@ -143,9 +145,19 @@ vehiclesContainingPart.sort((a, b) =>
             {@const id = Array.isArray(quality) ? quality[0] : quality.id}
             {@const level = Array.isArray(quality) ? quality[1] : quality.level}
             <li>
-              Has level <strong
-                >{level ?? 1}
-                <ThingLink type="tool_quality" {id} /></strong> quality.
+              <InterpolatedTranslation
+              str={i18n
+                .gettext(
+                  "Level <info>%1$d %2$s</info> quality",
+                  "{level}",
+                  "{quality}",
+                )
+                .replace(/\$[ds]|<\/?info[^>]*>/g, "")}
+              slot0="level"
+              slot1="quality">
+              <span slot="0">{level ?? 1}</span>
+              <ThingLink slot="1" type="tool_quality" {id} />
+            </InterpolatedTranslation>
             </li>
           {/each}
         </ul>
@@ -174,7 +186,7 @@ vehiclesContainingPart.sort((a, b) =>
       <dd>
         {item.power}
         {#if item.muscle_power_factor}
-          + (str &minus; 8) &times; {item.muscle_power_factor}
+          {t("+ (str \u2212 8) \u00d7", { _context })} {item.muscle_power_factor}
         {/if}
       </dd>
     {/if}
@@ -240,7 +252,7 @@ vehiclesContainingPart.sort((a, b) =>
       <dt>{t("Skills Required")}</dt>
       <dd>
         {#each item.requirements?.install?.skills ?? [] as [skill, level], i}
-          <ThingLink type="skill" id={skill} /> ({level}){#if i + 2 === item.requirements?.install?.skills?.length}{" and "}{:else if i + 1 !== item.requirements?.install?.skills?.length}{", "}{/if}
+          <ThingLink type="skill" id={skill} /> ({level}){#if i + 2 === item.requirements?.install?.skills?.length}{t(" and ")}{:else if i + 1 !== item.requirements?.install?.skills?.length}{t(", ")}{/if}
         {:else}
           {t("none")}
         {/each}
@@ -265,9 +277,9 @@ vehiclesContainingPart.sort((a, b) =>
       <dt>{t("Skills Required")}</dt>
       <dd>
         {#each item.requirements?.removal?.skills ?? [] as [skill, level], i}
-          <ThingLink type="skill" id={skill} /> ({level}){#if i + 2 === item.requirements?.removal?.skills?.length}{" and "}{:else if i + 1 !== item.requirements?.removal?.skills?.length}{", "}{/if}
+          <ThingLink type="skill" id={skill} /> ({level}){#if i + 2 === item.requirements?.removal?.skills?.length}{t(" and ")}{:else if i + 1 !== item.requirements?.removal?.skills?.length}{t(", ")}{/if}
         {:else}
-          none
+          {t("none")}
         {/each}
       </dd>
       <dt title="Time required goes down with better skills">
@@ -295,7 +307,7 @@ vehiclesContainingPart.sort((a, b) =>
       <dt>{t("Skills Required")}</dt>
       <dd>
         {#each item.requirements.repair?.skills ?? [] as [skill, level], i}
-          <ThingLink type="skill" id={skill} /> ({level}){#if i + 2 === item.requirements?.repair?.skills?.length}{" and "}{:else if i + 1 !== item.requirements?.repair?.skills?.length}{", "}{/if}
+          <ThingLink type="skill" id={skill} /> ({level}){#if i + 2 === item.requirements?.repair?.skills?.length}{t(" and ")}{:else if i + 1 !== item.requirements?.repair?.skills?.length}{t(", ")}{/if}
         {:else}
           {t("none")}
         {/each}

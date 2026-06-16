@@ -1,6 +1,6 @@
 <script lang="ts">
 import Thing from "./Thing.svelte";
-import { CddaData, data, loadProgress, mapType, singularName } from "./data";
+import { CddaData, data, loadProgress, localeVersion, mapType, singularName } from "./data";
 import SearchResults from "./SearchResults.svelte";
 import Catalog from "./Catalog.svelte";
 import dontPanic from "./assets/dont_panic.png";
@@ -199,6 +199,7 @@ newRandomPage();
   </nav>
 </header>
 <main>
+  {#key $localeVersion}
   {#if item}
     {#if $data}
       {#key item}
@@ -368,6 +369,7 @@ newRandomPage();
       <em style="color: var(--cata-color-gray)">({t("Loading...")})</em>
     {/if}
   </p>
+  {/key}
 </main>
 
 <style>

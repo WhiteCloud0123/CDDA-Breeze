@@ -105,6 +105,13 @@ export function translate(
   domain?: string,
 ): string {
   const sg = getMsgId(t);
+  // For singular (n === 1), use gettext directly to avoid msgid_plural
+  // type mismatch — our JSON stores singular translations as strings,
+  // but dcnpgettext with a msgid_plural requires an array.
+  if (n === 1) {
+    const tx = i18n.gettext(sg);
+    return tx || sg;
+  }
   const pl = needsPlural ? getMsgIdPlural(t) : "";
   return (
     i18n.dcnpgettext(domain, undefined, sg, pl, n) ||
@@ -1918,39 +1925,52 @@ export function breathabilityFromRating(br: BreathabilityRating): number {
 const loadProgressStore = writable<[number, number] | null>(null);
 export const loadProgress = { subscribe: loadProgressStore.subscribe };
 const { subscribe, set } = writable<CddaData | null>(null);
+
+/** Forces re-render after translations load asynchronously */
+export const localeVersion = writable(0);
+
 export const data = {
   subscribe,
   async load() {
     loadProgressStore.set([0, 1]);
     try {
-      const [dataRes, localeRes] = await Promise.all([
-        fetch("/data/all.json"),
-        fetch("/data/zh_CN.json").catch(() => null),
-      ]);
+      // First fetch all.json to get data + version
+      const dataRes = await fetch("/data/all.json");
       if (!dataRes.ok)
         throw new Error(`Error ${dataRes.status} fetching data/all.json`);
-      const [dataJson, localeJson] = await Promise.all([
-        dataRes.json(),
-        localeRes?.ok ? localeRes.json() : null,
-      ]);
-      loadProgressStore.set([1, 1]);
+      const dataJson = await dataRes.json();
       const cddaData = new CddaData(
         dataJson.data,
         dataJson.build_number,
         dataJson.release,
       );
-      // Apply translations BEFORE setting data, so components render with Chinese
-      if (localeJson) {
-        i18n.loadJSON(localeJson);
-        i18n.setLocale("zh_CN");
-        // Log a test lookup so user can verify in browser console
-        console.log(
-          `[i18n] loaded ${Object.keys(localeJson).length} translations, locale=${i18n.getLocale()}`,
-        );
-      } else {
-        console.warn("[i18n] zh_CN.json not available, showing English");
-      }
+
+      // Set data immediately so the page renders (even without translations)
       set(cddaData);
+      loadProgressStore.set(null);
+
+      // Then fetch translations asynchronously in background
+      try {
+        const localeRes = await fetch(
+          `/data/zh_CN.json?v=${encodeURIComponent(dataJson.build_number ?? "1")}`,
+        );
+        if (localeRes.ok) {
+          const localeJson = await localeRes.json();
+          i18n.loadJSON(localeJson);
+          i18n.setLocale("zh_CN");
+          // Force all {#key $localeVersion} blocks to re-render with Chinese text
+          localeVersion.update((n) => n + 1);
+          console.log(
+            `[i18n] loaded ${Object.keys(localeJson).length} translations, locale=${i18n.getLocale()}`,
+          );
+        } else {
+          console.warn(
+            `[i18n] zh_CN.json returned ${localeRes.status}, showing English`,
+          );
+        }
+      } catch (localeErr) {
+        console.error("[i18n] Failed to load translations, showing English:", localeErr);
+      }
     } catch (e) {
       console.error("Failed to load data:", e);
       loadProgressStore.set(null);

@@ -73,7 +73,7 @@ harvestBySeasonList.sort(
         >{:else}+{item.move_cost_mod * 50}{/if}
     </dd>
     <dt>{t("Strength Required to Drag", { _context })}</dt>
-    <dd>{item.required_str >= 0 ? item.required_str : "not movable"}</dd>
+    <dd>{item.required_str >= 0 ? item.required_str : t("not movable", { _context })}</dd>
     <dt>{t("Coverage", { _context })}</dt>
     <dd>{item.coverage ?? 0}%</dd>
     {#if item.comfort}

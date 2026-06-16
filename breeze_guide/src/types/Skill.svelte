@@ -68,7 +68,7 @@ practiceRecipes.sort(
     <h1>{t("Books", { _context: "Skill" })}</h1>
     <dl>
       {#each booksByLevelList as [level, books]}
-        <dt style="font-variant: tabular-nums">Level {level}</dt>
+        <dt style="font-variant: tabular-nums">{t("Level {level}", { level })}</dt>
         <dd>
           <ul>
             {#each books as book}

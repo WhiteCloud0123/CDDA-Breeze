@@ -283,7 +283,7 @@ function normalizeStackVolume(item: Item): (string | number) | undefined {
     <div>
       <dl>
         {#if item.variants?.length}
-          <dt>AKA</dt>
+          <dt>{t("AKA", { _context })}</dt>
           <dd>
             <ul class="comma-separated">
               {#each item.variants as va}
@@ -326,10 +326,11 @@ function normalizeStackVolume(item: Item): (string | number) | undefined {
             <ul class="no-bullets">
               {#each ammo.map( (id) => ({ id, max_charges: maxCharges(id) }), ) as { id: ammo_id, max_charges }}
                 <li>
-                  {max_charges}
-                  {isItemSubtype("GUN", item)
-                    ? "round"
-                    : "charge"}{max_charges === 1 ? "" : "s"} of
+                  {#if isItemSubtype("GUN", item)}
+                    {t("{n} {n, plural, =1 {round} other {rounds}} of", { n: max_charges, _context })}
+                  {:else}
+                    {t("{n} {n, plural, =1 {charge} other {charges}} of", { n: max_charges, _context })}
+                  {/if}
                   <ThingLink type="ammunition_type" id={ammo_id} />
                 </li>
               {/each}
@@ -568,9 +569,9 @@ function normalizeStackVolume(item: Item): (string | number) | undefined {
 {/if}
 {#if isItemSubtype("ENGINE", item) && item.displacement}
   <section>
-    <h1>Engine</h1>
+    <h1>{t("Engine", { _context })}</h1>
     <dl>
-      <dt>Displacement</dt>
+      <dt>{t("Displacement", { _context })}</dt>
       <dd>{item.displacement} cc</dd>
     </dl>
   </section>
@@ -647,7 +648,8 @@ function normalizeStackVolume(item: Item): (string | number) | undefined {
             <ul>
               {#each [...Object.entries(pocket.ammo_restriction)] as [id, count]}
                 <li>
-                  {count} round{count === 1 ? "" : "s"} of <ThingLink
+                  {t("{n} {n, plural, =1 {round} other {rounds}} of", { n: count, _context: "Ammo Restriction" })}
+                  <ThingLink
                     {id}
                     type="ammunition_type" />
                 </li>

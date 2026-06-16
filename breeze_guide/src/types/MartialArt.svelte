@@ -13,15 +13,15 @@ const data = getContext<CddaData>("data");
 
 function learnDifficultyAsText(difficulty: number): string {
   if (difficulty <= 2) {
-    return "easy";
+    return i18n.__("easy");
   } else if (difficulty <= 4) {
-    return "moderately hard";
+    return i18n.__("moderately hard");
   } else if (difficulty <= 6) {
-    return "hard";
+    return i18n.__("hard");
   } else if (difficulty <= 8) {
-    return "very hard";
+    return i18n.__("very hard");
   } else {
-    return "extremely hard";
+    return i18n.__("extremely hard");
   }
 }
 

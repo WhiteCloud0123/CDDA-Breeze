@@ -19,7 +19,7 @@ const unlocks = data
 </script>
 
 <h1>
-  {item.type === "achievement" ? "Achievement" : "Conduct"}: {singularName(
+  {item.type === "achievement" ? t("Achievement", { _context }) : t("Conduct", { _context })}: {singularName(
     item,
   )}
 </h1>
@@ -52,7 +52,7 @@ const unlocks = data
     {#if item.time_constraint}
       <dt>{t("Time Constraint", { _context })}</dt>
       <dd>
-        Time since <strong>{item.time_constraint.since}</strong> is
+        {t("Time since", { _context })} <strong>{item.time_constraint.since}</strong> {t("is", { _context: "Time constraint" })}
         <strong
           >{item.time_constraint.is}
           {item.time_constraint.target ?? ""}</strong>
@@ -71,7 +71,7 @@ const unlocks = data
                 >{stat.description
                   ? plural(stat.description)
                   : stat.id}</strong>
-              is <strong>{req.is} {req.target ?? ""}</strong>
+              {t("is", { _context: "Requirement" })} <strong>{req.is} {req.target ?? ""}</strong>
             {/if}
           </li>
         {/each}

@@ -44,7 +44,7 @@ const containingBionics = data
             <!-- prettier-ignore -->
             <li>
               {singularName(data.byId("body_part", bp_id))} ({slots}
-              {slots === 1 ? "slot" : "slots"})</li>{/each}
+              {t("{slots, plural, =1 {slot} other {slots}}", { slots })})</li>{/each}
         </ul>
       {:else}
         <em>{t("none")}</em>
@@ -122,7 +122,7 @@ const containingBionics = data
     {/if}
     {#if item.time}
       <dt>{t("Charge Time", { _context })}</dt>
-      <dd>{item.time} turn{item.time !== 1 ? "s" : ""}</dd>
+      <dd>{item.time} {t("{time, plural, =1 {turn} other {turns}}", { time: item.time })}</dd>
     {/if}
     {#if item.capacity}
       <dt>{t("Capacity", { _context })}</dt>

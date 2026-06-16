@@ -159,7 +159,7 @@ const batchTimeSavings = formatBatchTimeSavings(recipe.batch_time_factors);
       <dt>{t("Other Skills", { _context })}</dt>
       <dd>
         {#each skillsRequired as [skill, level], i}
-          <ThingLink type="skill" id={skill} /> ({level}){#if i === skillsRequired.length - 2}{" and "}{:else if i !== skillsRequired.length - 1}{", "}{/if}
+          <ThingLink type="skill" id={skill} /> ({level}){#if i === skillsRequired.length - 2}{t(" and ")}{:else if i !== skillsRequired.length - 1}{", "}{/if}
         {:else}
           {t("none")}
         {/each}
