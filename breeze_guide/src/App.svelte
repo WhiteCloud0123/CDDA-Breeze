@@ -248,45 +248,35 @@ newRandomPage();
     <p>
       <InterpolatedTranslation
         str={t(
-          `{hhg} 是丧尸生存 Roguelike 游戏 {link_cdda} 的指南。你可以搜索游戏中的物品（如{link_flashlight}）、家具（如{link_table}）或怪物（如{link_zombie}），并查看它们的详细信息。数据来源于游戏本身的 JSON 文件。本指南已适配 {link_breeze} 分支。`,
+          `{hhg} 是 CDDA-Breeze 的指南。你可以搜索游戏中的物品（如{link_flashlight}）、家具（如{link_table}）或怪物（如{link_zombie}），并查看它们的详细信息。数据来源于游戏本身的 JSON 文件。`,
           {
             hhg: "{hhg}",
-            link_cdda: "{link_cdda}",
             link_flashlight: "{link_flashlight}",
             link_table: "{link_table}",
             link_zombie: "{link_zombie}",
-            link_breeze: "{link_breeze}",
           },
         )}
         slot0="hhg"
-        slot1="link_cdda"
-        slot2="link_flashlight"
-        slot3="link_table"
-        slot4="link_zombie"
-        slot5="link_breeze">
+        slot1="link_flashlight"
+        slot2="link_table"
+        slot3="link_zombie">
         <strong slot="0">Breeze Guide</strong>
-        <a slot="1" href="https://cataclysmdda.org/"
-          >Cataclysm: Dark Days Ahead</a>
         <a
-          slot="2"
+          slot="1"
           href="{import.meta.env.BASE_URL}item/flashlight{location.search}"
           >{t("flashlight", { _comment: "Item name" })}</a>
         <a
-          slot="3"
+          slot="2"
           href="{import.meta.env.BASE_URL}furniture/f_table{location.search}"
           >{t("table", { _comment: "Furniture" })}</a>
         <a
-          slot="4"
+          slot="3"
           href="{import.meta.env.BASE_URL}monster/mon_zombie{location.search}"
           >{t("zombie", { _comment: "Monster name" })}</a>
-        <a
-          slot="5"
-          href="https://github.com/breeze-cdda/CDDA-Breeze"
-          >CDDA-Breeze</a>
       </InterpolatedTranslation>
     </p>
     <p>
-      {t(`指南将数据存储在本地，支持离线使用。只要访问过一次，无需联网即可正常工作。`)}
+      {t(`数据存储在本地，支持离线使用。`)}
       {#if deferredPrompt}
         <InterpolatedTranslation
           str={t(
@@ -304,33 +294,6 @@ newRandomPage();
             >{t("安装")}</button>
         </InterpolatedTranslation>
       {/if}
-    </p>
-    <p style="font-style: italic; color: var(--cata-color-gray)">
-      {t(
-        `比《天体家庭护理大全》更受欢迎，比《零重力下要做的五十三件事》更畅销，
-比乌伦·库鲁菲德的三部哲学巨著——《上帝哪里错了》、《上帝更多的大错》和
-《这个上帝到底是谁？》——更具争议性。`,
-        {
-          _comment:
-            "This is a reference to the Hitchhiker's Guide to the Galaxy, by Douglas Adams",
-        },
-      )}
-    </p>
-    <p>
-      <InterpolatedTranslation
-        str={t(
-          `指南开源在 {link_github}。如果发现任何问题，请{link_file_an_issue}！`,
-          {
-            link_github: "{link_github}",
-            link_file_an_issue: "{link_file_an_issue}",
-          },
-        )}
-        slot0="link_github"
-        slot1="link_file_an_issue">
-        <a slot="0" href="https://github.com/breeze-cdda/CDDA-Breeze">GitHub</a>
-        <a slot="1" href="https://github.com/breeze-cdda/CDDA-Breeze/issues"
-          >{t("提交 Issue")}</a>
-      </InterpolatedTranslation>
     </p>
 
     <h2>{t("目录")}</h2>
