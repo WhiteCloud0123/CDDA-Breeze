@@ -20,6 +20,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 import android.net.Uri;
 import android.os.Build;
@@ -40,6 +41,7 @@ import android.view.MotionEvent;
 import android.view.PointerIcon;
 import android.view.Surface;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowInsets;
@@ -50,14 +52,22 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import android.preference.PreferenceManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -146,6 +156,31 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private View buttonManageLayout;
     private Semaphore semaphore = new Semaphore(0, true);
     private boolean deleteButtonMode = false;
+
+    // Default button style
+    private static final float DEFAULT_TEXT_SIZE = 14f;
+    private static final int DEFAULT_TEXT_COLOR = 0xFFFFFFFF;
+    private static final int DEFAULT_BG_COLOR = 0x00000000;
+
+    // Preset colors for the color picker
+    private static final int[] PRESET_COLORS = {
+        0x00000000, // transparent
+        0xFFFFFFFF, // white
+        0xFF000000, // black
+        0xFF607D8B, // blue gray
+        0xFFF44336, // red
+        0xFFE91E63, // pink
+        0xFF9C27B0, // purple
+        0xFF3F51B5, // indigo
+        0xFF2196F3, // blue
+        0xFF00BCD4, // cyan
+        0xFF4CAF50, // green
+        0xFFFFEB3B, // yellow
+        0xFFFF9800, // orange
+        0xFF795548, // brown
+        0xFF9E9E9E, // gray
+    };
+
     private void showButtonManageLayout() {
         deleteButtonMode = false;
         buttonManageLayout = getLayoutInflater().inflate(R.layout.button_manage, null);
@@ -165,7 +200,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         final EditText input = new EditText(this);
         builder.setView(input);
-        builder.setMessage("支持单个字符、两个字符的“键盘“、三个字符的“tab“");
+        builder.setMessage("支持单个字符（含emoji）、两个字符的“键盘“、三个字符的“tab“");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -183,12 +218,15 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     }
 
     private boolean isValidText(String text) {
-        if (text.length() == 1) {
-            return true;
-        }else if(text.length()==2&&text.equals("键盘")){
-            return true;
+        if (text == null || text.isEmpty()) {
+            return false;
         }
-        else if (text.length() == 3 && text.equals("tab")) {
+        int codePoints = text.codePointCount(0, text.length());
+        if (codePoints == 1) {
+            return true;
+        } else if (text.equals("键盘")) {
+            return true;
+        } else if (text.equals("tab")) {
             return true;
         }
         return false;
@@ -204,13 +242,13 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     private void showButtonManageMenu() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("按键管理菜单");
-        
+
         String[] menuItems = {
             "新增按钮",
             deleteButtonMode ? "关闭删除模式" : "开启删除模式",
             "退出管理面板"
         };
-        
+
         builder.setItems(menuItems, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -220,7 +258,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                         break;
                     case 1: // 开启/关闭删除模式
                         deleteButtonMode = !deleteButtonMode;
-                        Toaster.show(deleteButtonMode ? "删除按钮模式，点击按钮即可删除" : "新建按钮模式");
+                        Toaster.show(deleteButtonMode
+                            ? "删除模式：点击按钮即可删除"
+                            : "编辑模式：拖动移动，长按编辑属性");
                         break;
                     case 2: // 退出管理面板
                         showSaveDialog();
@@ -228,7 +268,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 }
             }
         });
-        
+
         builder.show();
     }
 
@@ -242,27 +282,96 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         ));
         newButton.setX(container.getWidth() / 2f - newButton.getWidth() / 2f);
         newButton.setY(container.getHeight() / 2f - newButton.getHeight() / 2f);
-        newButton.setAllCaps(false);
-        newButton.setBackgroundColor(0);
-        newButton.setAlpha(0.5f);
 
+        JSONObject data = createDefaultButtonData(text);
+        try {
+            data.put("x", newButton.getX());
+            data.put("y", newButton.getY());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        newButton.setTag(data);
+        applyButtonStyle(newButton, data);
+        attachDragListener(newButton, true);
+
+        buttons.add(newButton);
+        container.addView(newButton);
+    }
+
+    private JSONObject createDefaultButtonData(String text) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("text", text);
+            data.put("textSize", DEFAULT_TEXT_SIZE);
+            data.put("textColor", DEFAULT_TEXT_COLOR);
+            data.put("bgColor", DEFAULT_BG_COLOR);
+            data.put("rapidFire", false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    private void applyButtonStyle(Button button, JSONObject data) {
+        button.setAllCaps(false);
+        try {
+            float textSize = (float) data.optDouble("textSize", DEFAULT_TEXT_SIZE);
+            button.setTextSize(textSize);
+            int textColor = data.optInt("textColor", DEFAULT_TEXT_COLOR);
+            button.setTextColor(textColor);
+            int bgColor = data.optInt("bgColor", DEFAULT_BG_COLOR);
+            button.setBackgroundColor(bgColor);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void attachDragListener(final Button newButton, boolean editable) {
+        final int touchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
         newButton.setOnTouchListener(new View.OnTouchListener() {
-            float dX, dY;
+            float dX, dY, startRawX, startRawY;
+            boolean hasMoved, longPressTriggered;
+            Handler longPressHandler = new Handler();
+            Runnable longPressRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (!hasMoved && !deleteButtonMode) {
+                        longPressTriggered = true;
+                        showButtonPropertiesDialog(newButton);
+                    }
+                }
+            };
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        if(deleteButtonMode) {
+                        if (deleteButtonMode) {
                             buttons.remove(newButton);
                             container.removeView(newButton);
-                            break;
+                            return true;
                         }
+                        hasMoved = false;
+                        longPressTriggered = false;
+                        startRawX = event.getRawX();
+                        startRawY = event.getRawY();
                         dX = v.getX() - event.getRawX();
                         dY = v.getY() - event.getRawY();
+                        if (editable) {
+                            longPressHandler.postDelayed(longPressRunnable, 500);
+                        }
                         break;
 
                     case MotionEvent.ACTION_MOVE:
+                        if (longPressTriggered) {
+                            return true;
+                        }
+                        if (Math.abs(event.getRawX() - startRawX) > touchSlop ||
+                            Math.abs(event.getRawY() - startRawY) > touchSlop) {
+                            hasMoved = true;
+                            longPressHandler.removeCallbacks(longPressRunnable);
+                        }
                         v.animate()
                             .x(event.getRawX() + dX)
                             .y(event.getRawY() + dY)
@@ -271,6 +380,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                         break;
 
                     case MotionEvent.ACTION_UP:
+                        longPressHandler.removeCallbacks(longPressRunnable);
+                        break;
+
+                    case MotionEvent.ACTION_CANCEL:
+                        longPressHandler.removeCallbacks(longPressRunnable);
                         break;
 
                     default:
@@ -279,8 +393,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 return true;
             }
         });
-        buttons.add(newButton);
-        container.addView(newButton);
     }
 
     private void showDeleteDialog(final Button button) {
@@ -325,36 +437,71 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         SharedPreferences sharedPreferences = getSharedPreferences("button", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
-        Set<String> buttonData = new HashSet<>();
+        JSONArray jsonArray = new JSONArray();
         for (View button : buttons) {
-            float x = button.getX();
-            float y = button.getY();
-            String text = ((Button) button).getText().toString();
-            buttonData.add(text + "|" + x + "|" + y);
+            JSONObject data = (JSONObject) button.getTag();
+            if (data == null) {
+                continue;
+            }
+            try {
+                data.put("text", ((Button) button).getText().toString());
+                data.put("x", button.getX());
+                data.put("y", button.getY());
+                jsonArray.put(data);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-
-        editor.putStringSet("buttons", buttonData);
+        editor.putString("buttons", jsonArray.toString());
         editor.commit();
     }
 
     private void loadButtonsData(boolean isDraggable) {
         SharedPreferences sharedPreferences = getSharedPreferences("button", MODE_PRIVATE);
-        Set<String> buttonData = sharedPreferences.getStringSet("buttons", new HashSet<String>());
+        String saved = sharedPreferences.getString("buttons", null);
 
+        // Try JSON format first (new version)
+        if (saved != null && !saved.isEmpty() && saved.startsWith("[")) {
+            try {
+                JSONArray jsonArray = new JSONArray(saved);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject data = jsonArray.getJSONObject(i);
+                    createNewButtonFromData(data, isDraggable);
+                }
+                return;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Fallback: old pipe-delimited format (text|x|y) stored as StringSet.
+        // Note: SharedPreferences is type-specific, so getString returns null
+        // for data written via putStringSet; we must read it via getStringSet.
+        Set<String> buttonData = sharedPreferences.getStringSet("buttons", new HashSet<String>());
         for (String data : buttonData) {
             String[] parts = data.split("\\|");
             if (parts.length == 3) {
                 String text = parts[0];
                 float x = Float.parseFloat(parts[1]);
                 float y = Float.parseFloat(parts[2]);
-                createNewButtonFromData(text, x, y, isDraggable);
+                JSONObject jsonData = createDefaultButtonData(text);
+                try {
+                    jsonData.put("x", x);
+                    jsonData.put("y", y);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                createNewButtonFromData(jsonData, isDraggable);
             }
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void createNewButtonFromData(String text, float x, float y, boolean isDraggable) {
+    private void createNewButtonFromData(JSONObject data, boolean isDraggable) {
         final Button newButton = new Button(this);
+        String text = data.optString("text", "");
+        float x = (float) data.optDouble("x", 0);
+        float y = (float) data.optDouble("y", 0);
         newButton.setText(text);
         newButton.setLayoutParams(new FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -362,58 +509,14 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         ));
         newButton.setX(x);
         newButton.setY(y);
-        newButton.setAllCaps(false);
-        newButton.setBackgroundColor(0);
-        newButton.setAlpha(0.5f);
+        newButton.setTag(data);
+        applyButtonStyle(newButton, data);
+
         if (isDraggable) {
-            newButton.setOnTouchListener(new View.OnTouchListener() {
-                float dX, dY;
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            if(deleteButtonMode) {
-                                buttons.remove(newButton);
-                                container.removeView(newButton);
-                                break;
-                            }
-                            dX = v.getX() - event.getRawX();
-                            dY = v.getY() - event.getRawY();
-                            break;
-
-                        case MotionEvent.ACTION_MOVE:
-                            v.animate()
-                                .x(event.getRawX() + dX)
-                                .y(event.getRawY() + dY)
-                                .setDuration(0)
-                                .start();
-                            break;
-
-                        case MotionEvent.ACTION_UP:
-                            break;
-
-                        default:
-                            return false;
-                    }
-                    return true;
-                }
-            });
+            attachDragListener(newButton, true);
         } else {
-            newButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (newButton.getText().toString().equals("tab")) {
-                        dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
-                    } else if(newButton.getText().toString().equals("键盘")) {
-                        dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-                        dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-                    }
-                    else {
-                        nativeButtonClick(newButton.getText().toString());
-                    }
-                }
-            });
+            final boolean rapidFire = data.optBoolean("rapidFire", false);
+            attachPlayListener(newButton, rapidFire);
         }
 
         if (isDraggable) {
@@ -423,6 +526,245 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             mLayout.addView(newButton);
             mainButtons.add(newButton);
         }
+    }
+
+    private void performButtonClick(Button button) {
+        String text = button.getText().toString();
+        if (text.equals("tab")) {
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
+        } else if (text.equals("键盘")) {
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+        } else {
+            nativeButtonClick(text);
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void attachPlayListener(final Button button,
+                                    final boolean rapidFire) {
+        final Handler handler = new Handler();
+        final Runnable[] rapidFireRef = new Runnable[1];
+        final boolean[] firing = {false};
+
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        firing[0] = true;
+                        performButtonClick(button);
+                        if (rapidFire) {
+                            rapidFireRef[0] = new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (firing[0]) {
+                                        performButtonClick(button);
+                                        handler.postDelayed(this, 80);
+                                    }
+                                }
+                            };
+                            handler.postDelayed(rapidFireRef[0], 200);
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        firing[0] = false;
+                        if (rapidFireRef[0] != null) {
+                            handler.removeCallbacks(rapidFireRef[0]);
+                            rapidFireRef[0] = null;
+                        }
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void showButtonPropertiesDialog(final Button button) {
+        final JSONObject data = (JSONObject) button.getTag();
+        if (data == null) {
+            return;
+        }
+
+        final float[] textSize = { (float) data.optDouble("textSize", DEFAULT_TEXT_SIZE) };
+        final int[] textColor = { data.optInt("textColor", DEFAULT_TEXT_COLOR) };
+        final int[] bgColor = { data.optInt("bgColor", DEFAULT_BG_COLOR) };
+        final boolean[] rapidFire = { data.optBoolean("rapidFire", false) };
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        int padding = (int) (20 * getResources().getDisplayMetrics().density);
+        layout.setPadding(padding, padding, padding, padding);
+
+        // --- Text size ---
+        TextView sizeLabel = new TextView(this);
+        sizeLabel.setText("文字大小");
+        layout.addView(sizeLabel);
+
+        LinearLayout sizeRow = new LinearLayout(this);
+        sizeRow.setOrientation(LinearLayout.HORIZONTAL);
+        sizeRow.setGravity(Gravity.CENTER_VERTICAL);
+
+        final SeekBar sizeSeekBar = new SeekBar(this);
+        sizeSeekBar.setMax(40); // 8-48 range
+        sizeSeekBar.setProgress((int) textSize[0] - 8);
+        sizeSeekBar.setLayoutParams(new LinearLayout.LayoutParams(
+            0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        final TextView sizeValue = new TextView(this);
+        sizeValue.setText(String.valueOf((int) textSize[0]));
+        sizeValue.setMinWidth(60);
+        sizeValue.setGravity(Gravity.CENTER);
+
+        sizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textSize[0] = progress + 8;
+                sizeValue.setText(String.valueOf(progress + 8));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        sizeRow.addView(sizeSeekBar);
+        sizeRow.addView(sizeValue);
+        layout.addView(sizeRow);
+
+        // --- Text color ---
+        TextView textColorLabel = new TextView(this);
+        textColorLabel.setText("文字颜色");
+        layout.addView(textColorLabel);
+
+        final View[] textColorSwatches = new View[PRESET_COLORS.length];
+        HorizontalScrollView textColorScroll = createColorPicker(
+            textColor[0], textColorSwatches, new int[1], new ColorSelectedCallback() {
+                @Override
+                public void onColorSelected(int color) {
+                    textColor[0] = color;
+                    button.setTextColor(color);
+                }
+            });
+        layout.addView(textColorScroll);
+
+        // --- Background color ---
+        TextView bgColorLabel = new TextView(this);
+        bgColorLabel.setText("背景颜色");
+        layout.addView(bgColorLabel);
+
+        final View[] bgColorSwatches = new View[PRESET_COLORS.length];
+        HorizontalScrollView bgColorScroll = createColorPicker(
+            bgColor[0], bgColorSwatches, new int[1], new ColorSelectedCallback() {
+                @Override
+                public void onColorSelected(int color) {
+                    bgColor[0] = color;
+                    button.setBackgroundColor(color);
+                }
+            });
+        layout.addView(bgColorScroll);
+
+        // --- Rapid fire ---
+        final CheckBox rapidFireCheck = new CheckBox(this);
+        rapidFireCheck.setText("连发模式（按住持续触发）");
+        rapidFireCheck.setChecked(rapidFire[0]);
+        rapidFireCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                rapidFire[0] = isChecked;
+            }
+        });
+        layout.addView(rapidFireCheck);
+
+        new AlertDialog.Builder(this)
+            .setTitle("按钮属性")
+            .setView(layout)
+            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        data.put("textSize", textSize[0]);
+                        data.put("textColor", textColor[0]);
+                        data.put("bgColor", bgColor[0]);
+                        data.put("rapidFire", rapidFire[0]);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    applyButtonStyle(button, data);
+                }
+            })
+            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Restore original style
+                    applyButtonStyle(button, data);
+                }
+            })
+            .show();
+    }
+
+    private interface ColorSelectedCallback {
+        void onColorSelected(int color);
+    }
+
+    private HorizontalScrollView createColorPicker(int currentColor,
+                                                    View[] swatchesOut,
+                                                    int[] selectedHolder,
+                                                    ColorSelectedCallback callback) {
+        selectedHolder[0] = -1;
+        HorizontalScrollView scroll = new HorizontalScrollView(this);
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        int swatchSize = (int) (36 * getResources().getDisplayMetrics().density);
+        int margin = (int) (4 * getResources().getDisplayMetrics().density);
+
+        for (int i = 0; i < PRESET_COLORS.length; i++) {
+            final int color = PRESET_COLORS[i];
+            final View swatch = new View(this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(swatchSize, swatchSize);
+            lp.setMargins(margin, margin, margin, margin);
+            swatch.setLayoutParams(lp);
+
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.setColor(color);
+            if (color == currentColor) {
+                drawable.setStroke(4, 0xFF000000);
+                selectedHolder[0] = i;
+            }
+            swatch.setBackground(drawable);
+
+            final int idx = i;
+            swatch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Reset previous selection border
+                    if (selectedHolder[0] >= 0 && swatchesOut[selectedHolder[0]] != null) {
+                        GradientDrawable prevDrawable = new GradientDrawable();
+                        prevDrawable.setColor(PRESET_COLORS[selectedHolder[0]]);
+                        swatchesOut[selectedHolder[0]].setBackground(prevDrawable);
+                    }
+                    // Highlight new selection
+                    GradientDrawable newDrawable = new GradientDrawable();
+                    newDrawable.setColor(color);
+                    newDrawable.setStroke(4, 0xFF000000);
+                    swatch.setBackground(newDrawable);
+                    selectedHolder[0] = idx;
+                    callback.onColorSelected(color);
+                }
+            });
+
+            swatchesOut[i] = swatch;
+            row.addView(swatch);
+        }
+
+        scroll.setBackgroundColor(0xFFEEEEEE);
+        scroll.addView(row);
+        return scroll;
     }
 
     private void removeButtonManageLayout() {
