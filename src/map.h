@@ -718,6 +718,9 @@ class map
         void unboard_vehicle( const tripoint &p, bool dead_passenger = false );
         std::pair<bool, tripoint_bub_ms> has_rope_at(tripoint_bub_ms pt, bool find_up) const;
         std::pair<vehicle*, int> get_rope_at(const tripoint_bub_ms& pt) const;
+        // 查询是否有载具绳梯从上方垂达该格（用于渲染垂挂可视化）
+        // 仅检查静态障碍（不可通过地形、可登车载具部件）
+        std::optional<tripoint_bub_ms> rope_ladder_hanging_at( const tripoint_bub_ms &pt ) const;
         // Change vehicle coordinates and move vehicle's driver along.
         // WARNING: not checking collisions!
         // optionally: include a list of parts to displace instead of the entire vehicle

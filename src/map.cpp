@@ -2692,6 +2692,55 @@ std::pair<bool, tripoint_bub_ms> map::has_rope_at( tripoint_bub_ms pt, bool find
     return { true, candidates.front() };
 }
 
+std::optional<tripoint_bub_ms> map::rope_ladder_hanging_at( const tripoint_bub_ms &pt ) const
+{
+    // 查找 xy 相同、位于 pt 上方、且绳梯长度足以垂达 pt 的载具绳梯
+    std::vector<tripoint_bub_ms> candidates;
+    for( const auto &entry : cached_veh_rope ) {
+        const tripoint_bub_ms &pos = entry.first;
+        if( pos.xy() != pt.xy() || pos.z() <= pt.z() ) {
+            continue;
+        }
+        const vehicle *veh = entry.second.first;
+        const int part = entry.second.second;
+        const int ladder_len = veh->part( part ).info().ladder_length();
+        if( pos.z() - pt.z() + 1 > ladder_len ) {
+            continue;
+        }
+        candidates.push_back( pos );
+    }
+    if( candidates.empty() ) {
+        return std::nullopt;
+    }
+    // 选 z 最小（最接近 pt）的绳梯
+    std::sort( candidates.begin(), candidates.end(),
+    []( const tripoint_bub_ms &a, const tripoint_bub_ms &b ) {
+        return a.z() < b.z();
+    } );
+    const tripoint_bub_ms &rope_top = candidates.front();
+    const int dist = rope_top.z() - pt.z();
+
+    // 静态障碍检查（参考 check_ladder_path_obstacles，但不查生物以避免渲染闪烁）
+    // 从绳梯顶部往下到 pt（含 pt），中途有不可通过地形或可登车载具部件则被阻挡
+    for( int i = 1; i <= dist; i++ ) {
+        tripoint_bub_ms check_pt = rope_top;
+        check_pt.z() -= i;
+        const bool is_destination = ( i == dist );
+        // 不可通过地形（中途+目标点）
+        if( impassable_ter_furn( check_pt.raw() ) ) {
+            return std::nullopt;
+        }
+        // 可登车载具部件（仅中途，不含目标点）
+        if( !is_destination ) {
+            const optional_vpart_position vp = veh_at( check_pt );
+            if( vp && vp->part_with_feature( VPFLAG_BOARDABLE, true ) ) {
+                return std::nullopt;
+            }
+        }
+    }
+    return rope_top;
+}
+
 std::pair<vehicle*, int> map::get_rope_at(const tripoint_bub_ms& pt) const
 {
     return cached_veh_rope.at(pt);
