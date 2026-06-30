@@ -499,7 +499,8 @@ JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
     ( void )jcls;
     const char *c_str = env->GetStringUTFChars( text, 0 );
     const std::string text_s(c_str);
-    cache_extra_button_input = input_event( text_s[0], input_event_t::keyboard_char );
+    const uint32_t ch = UTF8_getch( text_s );
+    cache_extra_button_input = input_event( ch, input_event_t::keyboard_char );
     is_extra_button_click = true;
     env->ReleaseStringUTFChars(text,c_str);
 }
