@@ -521,6 +521,9 @@ class cata_tiles
                               const std::array<bool, 5> &invisible );
         bool draw_vpart_below( const tripoint &p, lit_level ll, int &height_3d,
                                const std::array<bool, 5> &invisible );
+        // 渲染从上方垂达该格的载具绳梯（垂挂可视化）
+        bool draw_rope_ladder_hanging( const tripoint &p, lit_level ll, int &height_3d,
+                                       const std::array<bool, 5> &invisible );
         bool draw_critter_at( const tripoint &p, lit_level ll, int &height_3d,
                               const std::array<bool, 5> &invisible );
         bool draw_critter_at_below( const tripoint &p, lit_level ll, int &height_3d,
@@ -783,21 +786,23 @@ class cata_tiles
         pimpl<pixel_minimap> minimap;
 
         // List all layers for a single z-level
-        const std::array<decltype(&cata_tiles::draw_furniture), 11> drawing_layers = { {
+        const std::array<decltype(&cata_tiles::draw_furniture), 12> drawing_layers = { {
                 &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,
                 &cata_tiles::draw_field_or_item,
                 &cata_tiles::draw_vpart_no_roof,&cata_tiles::draw_vpart_roof,
+                &cata_tiles::draw_rope_ladder_hanging,
                 &cata_tiles::draw_critter_at, &cata_tiles::draw_zone_mark,
                 &cata_tiles::draw_zombie_revival_indicators
             }
         };
 
         // Legacy code to use when vertical vision range is 0
-        const std::array<decltype(&cata_tiles::draw_furniture), 14> drawing_layers_legacy = { {
+        const std::array<decltype(&cata_tiles::draw_furniture), 15> drawing_layers_legacy = { {
                 &cata_tiles::draw_terrain, &cata_tiles::draw_furniture, &cata_tiles::draw_graffiti, &cata_tiles::draw_trap, &cata_tiles::draw_part_con,
                 &cata_tiles::draw_field_or_item,&cata_tiles::draw_vpart_below,
                 &cata_tiles::draw_critter_at_below, &cata_tiles::draw_terrain_below,
                 &cata_tiles::draw_vpart_no_roof, &cata_tiles::draw_vpart_roof,
+                &cata_tiles::draw_rope_ladder_hanging,
                 &cata_tiles::draw_critter_at, &cata_tiles::draw_zone_mark,
                 &cata_tiles::draw_zombie_revival_indicators
             }

@@ -3620,6 +3620,25 @@ bool cata_tiles::draw_vpart_below( const tripoint &p, const lit_level /*ll*/, in
     return draw_vpart_no_roof( pbelow, lit_level::LOW, height_3d_below, below_invisible );
 }
 
+bool cata_tiles::draw_rope_ladder_hanging( const tripoint &p, const lit_level ll,
+        int &height_3d, const std::array<bool, 5> &invisible )
+{
+    // 当前格不可见时不绘制（未探索区域不显示绳梯）
+    if( invisible[0] ) {
+        return false;
+    }
+    map &here = get_map();
+    const std::optional<tripoint_bub_ms> rope_top =
+        here.rope_ladder_hanging_at( tripoint_bub_ms( p ) );
+    if( !rope_top ) {
+        return false;
+    }
+    // 用 f_rope_up 瓦片（向上绳索，符号 <）表现头顶垂挂的绳梯，
+    // 沿用当前格光照，使其与地面协调
+    return draw_from_id_string( "f_rope_up", TILE_CATEGORY::FURNITURE, empty_string, p,
+                                0, 0, ll, nv_goggles_activated, height_3d );
+}
+
 bool cata_tiles::draw_vpart_no_roof( const tripoint &p, lit_level ll, int &height_3d,
                                      const std::array<bool, 5> &invisible )
 {
