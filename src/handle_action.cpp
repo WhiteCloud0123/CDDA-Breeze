@@ -2472,6 +2472,62 @@ static bool check_ladder_path_obstacles(const tripoint_bub_ms& start, int dist, 
     return false;
 }
 
+// 向下攀爬绳梯的路径与着陆点计算
+// 逐层向下寻找第一个"可着陆点"作为目标：
+//   - 地形非空气且可通过 → 可着陆
+//   - 地形为空气但有可登车且可通过的载具部件 → 可着陆（踩到载具甲板）
+// 中途遇生物或不可通过地形则阻挡。返回 nullopt 表示被阻挡（已输出警告）。
+struct ladder_descent_result {
+    int dist;               // 向下移动的层数
+    bool dest_open_air;     // 目标格地形是否为空气
+    bool dest_has_support;  // 目标格是否有可登车部件支撑
+};
+static std::optional<ladder_descent_result> check_ladder_descent(
+    const tripoint_bub_ms& start, int ladder_len )
+{
+    map& here = get_map();
+    creature_tracker& creatures = get_creature_tracker();
+    const int max_dist = ladder_len - 1;
+    if( max_dist <= 0 ) {
+        return ladder_descent_result{ 0, false, false };
+    }
+    for( int i = 1; i <= max_dist; i++ ) {
+        tripoint_bub_ms pt = start;
+        pt.z() -= i;
+        const bool is_last = ( i == max_dist );
+
+        // 生物阻挡（中途+目标点）
+        if( creatures.creature_at( pt, false ) ) {
+            add_msg(m_warning, "绳梯路径上有生物阻挡！");
+            return std::nullopt;
+        }
+
+        const bool open_air = here.ter( pt ).id().str() == "t_open_air";
+        if( !open_air ) {
+            // 非空气地形：不可通过则阻挡，可通过则为着陆点
+            if( here.impassable_ter_furn( pt.raw() ) ) {
+                add_msg(m_warning, "绳梯路径上有无法通过的地形！");
+                return std::nullopt;
+            }
+            return ladder_descent_result{ i, false, false };
+        }
+
+        // 空气地形：检查是否有可登车且可通过的载具部件作为着陆点
+        const optional_vpart_position vp = here.veh_at( pt );
+        const bool boardable = vp && vp->part_with_feature( VPFLAG_BOARDABLE, true );
+        if( boardable && here.passable( pt ) ) {
+            return ladder_descent_result{ i, true, true };
+        }
+
+        // 空气且无可着陆部件：继续往下；若是最后一层则目标无支撑
+        if( is_last ) {
+            return ladder_descent_result{ i, true, boardable && here.passable( pt ) };
+        }
+    }
+    // 理论不可达
+    return ladder_descent_result{ max_dist, true, false };
+}
+
 bool game::do_regular_action(action_id& act, avatar& player_character,
     const std::optional<tripoint>& mouse_target)
 {
@@ -2638,31 +2694,24 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                     const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
                     if (idx != -1) {
                         const vpart_info& info = vp->vehicle().part(idx).info();
-                        int dist = 0;
-                        tripoint_bub_ms below = player_character.pos_bub();
-                        while (dist < info.ladder_length()-1) {
-                            below.z()--;
-                            dist++;
-                            if (here.ter(below).id().str() != "t_open_air") {
-                                break;
-                            }
-                        }
-                        if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
+                        auto result = check_ladder_descent(player_character.pos_bub(), info.ladder_length());
+                        if (!result) {
                             break;
                         }
                         bool confirm_unsupported = false;
-                        if (here.ter(below).id().str() == "t_open_air") {
-                            const optional_vpart_position vp_dest = here.veh_at(below);
-                            if (!vp_dest || !vp_dest->part_with_feature(VPFLAG_BOARDABLE, true)) {
-                                if (!query_yn(_("目标地点没有支撑物，确定要前往吗？"))) {
-                                    break;
-                                }
-                                confirm_unsupported = true;
+                        if (result->dest_open_air && !result->dest_has_support) {
+                            if (!query_yn(_("目标地点没有支撑物，确定要前往吗？"))) {
+                                break;
                             }
+                            confirm_unsupported = true;
                         }
                         here.unboard_vehicle(player_character.pos());
-                        for (int i = 0; i < dist; i++) {
-                            vertical_move(-1, true, false, confirm_unsupported && i == dist - 1);
+                        for (int i = 0; i < result->dist; i++) {
+                            vertical_move(-1, true, false, confirm_unsupported && i == result->dist - 1);
+                        }
+                        // 登上目标载具（如到达B载具甲板）
+                        if (here.veh_at(player_character.pos()).part_with_feature(VPFLAG_BOARDABLE, true)) {
+                            here.board_vehicle(player_character.pos(), &player_character);
                         }
                         break;
                     }
@@ -2677,30 +2726,23 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
                     const int idx = vp->vehicle().part_with_feature(vp->part_index(), VPFLAG_LADDER, true);
                     if (idx != -1) {
                         const vpart_info& info = vp->vehicle().part(idx).info();
-                        int dist = 0;
-                        tripoint_bub_ms below = player_character.pos_bub();
-                        while (dist < info.ladder_length()-1) {
-                            below.z()--;
-                            dist++;
-                            if (here.ter(below).id().str() != "t_open_air") {
-                                break;
-                            }
-                        }
-                        if (check_ladder_path_obstacles(player_character.pos_bub(), dist, false)) {
+                        auto result = check_ladder_descent(player_character.pos_bub(), info.ladder_length());
+                        if (!result) {
                             break;
                         }
                         bool confirm_unsupported = false;
-                        if (here.ter(below).id().str() == "t_open_air") {
-                            const optional_vpart_position vp_dest = here.veh_at(below);
-                            if (!vp_dest || !vp_dest->part_with_feature(VPFLAG_BOARDABLE, true)) {
-                                if (!query_yn(_("目标地点没有支撑物，确定要前往吗？"))) {
-                                    break;
-                                }
-                                confirm_unsupported = true;
+                        if (result->dest_open_air && !result->dest_has_support) {
+                            if (!query_yn(_("目标地点没有支撑物，确定要前往吗？"))) {
+                                break;
                             }
+                            confirm_unsupported = true;
                         }
-                        for (int i = 0; i < dist; i++) {
-                            vertical_move(-1, true, false, confirm_unsupported && i == dist - 1);
+                        for (int i = 0; i < result->dist; i++) {
+                            vertical_move(-1, true, false, confirm_unsupported && i == result->dist - 1);
+                        }
+                        // 登上目标载具（如到达B载具甲板）
+                        if (here.veh_at(player_character.pos()).part_with_feature(VPFLAG_BOARDABLE, true)) {
+                            here.board_vehicle(player_character.pos(), &player_character);
                         }
                         break;
                     }
@@ -2746,8 +2788,16 @@ bool game::do_regular_action(action_id& act, avatar& player_character,
             if (check_ladder_path_obstacles(player_character.pos_bub(), dist, true)) {
                 break;
             }
+            // 离开当前载具（如在B载具上爬上到A载具）
+            if (player_character.in_vehicle) {
+                here.unboard_vehicle(player_character.pos());
+            }
             for (int i = 0; i < dist; i++) {
                 vertical_move(1, true, false, false);
+            }
+            // 登上目标载具（如到达A载具甲板）
+            if (here.veh_at(player_character.pos()).part_with_feature(VPFLAG_BOARDABLE, true)) {
+                here.board_vehicle(player_character.pos(), &player_character);
             }
             break;
         }
