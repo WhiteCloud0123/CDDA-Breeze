@@ -200,7 +200,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         final EditText input = new EditText(this);
         builder.setView(input);
-        builder.setMessage("输入按钮文字，支持任意字符和emoji\n特殊功能：键盘、tab");
+        builder.setMessage("支持单个字符（含emoji）、两个字符的“键盘“、三个字符的“tab“");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
