@@ -172,12 +172,18 @@ struct value_constraint {
     std::vector<cata_variant> equals_any_;
     std::optional<string_id<event_statistic>> equals_statistic_;
 
-    bool permits( const cata_variant &v, stats_tracker &stats ) const {
+    std::optional<cata_variant> precompute( stats_tracker &stats ) const {
+        if( equals_statistic_ ) {
+            return stats.value_of( *equals_statistic_ );
+        }
+        return std::nullopt;
+    }
+
+    bool permits( const cata_variant &v, const std::optional<cata_variant> &precomputed ) const {
         if( std::find( equals_any_.begin(), equals_any_.end(), v ) != equals_any_.end() ) {
             return true;
         }
-        // NOLINTNEXTLINE(readability-simplify-boolean-expr)
-        if( equals_statistic_ && stats.value_of( *equals_statistic_ ) == v ) {
+        if( precomputed && *precomputed == v ) {
             return true;
         }
         return false;
@@ -438,7 +444,7 @@ struct event_transformation_impl : public event_transformation::impl {
     using EventVector = std::vector<cata::event::data_type>;
 
     EventVector match_and_transform( const cata::event::data_type &input_data,
-                                     stats_tracker &stats ) const {
+                                     const std::vector<std::optional<cata_variant>> &precomputed_constraints ) const {
         EventVector result = { input_data };
         for( const std::pair<std::string, new_field> &p : new_fields_ ) {
             EventVector before_this_pass = std::move( result );
@@ -450,11 +456,11 @@ struct event_transformation_impl : public event_transformation::impl {
         }
 
         auto violates_constraints = [&]( const cata::event::data_type & data ) {
-            for( const std::pair<std::string, value_constraint> &p : constraints_ ) {
-                const std::string &field = p.first;
-                const value_constraint &constraint = p.second;
+            for( size_t i = 0; i < constraints_.size(); ++i ) {
+                const std::string &field = constraints_[i].first;
+                const value_constraint &constraint = constraints_[i].second;
                 const auto it = data.find( field );
-                if( it == data.end() || !constraint.permits( it->second, stats ) ) {
+                if( it == data.end() || !constraint.permits( it->second, precomputed_constraints[i] ) ) {
                     return true;
                 }
             }
@@ -473,13 +479,23 @@ struct event_transformation_impl : public event_transformation::impl {
         return result;
     }
 
+    std::vector<std::optional<cata_variant>> precompute_constraints( stats_tracker &stats ) const {
+        std::vector<std::optional<cata_variant>> result;
+        result.reserve( constraints_.size() );
+        for( const std::pair<std::string, value_constraint> &p : constraints_ ) {
+            result.push_back( p.second.precompute( stats ) );
+        }
+        return result;
+    }
+
     event_multiset initialize( const event_multiset::summaries_type &input,
                                stats_tracker &stats ) const {
         event_multiset result;
+        std::vector<std::optional<cata_variant>> precomputed = precompute_constraints( stats );
 
         for( const std::pair<const cata::event::data_type, event_summary> &p : input ) {
             cata::event::data_type event_data = p.first;
-            EventVector transformed = match_and_transform( event_data, stats );
+            EventVector transformed = match_and_transform( event_data, precomputed );
             for( cata::event::data_type &d : transformed ) {
                 result.add( { d, p.second } );
             }
@@ -541,7 +557,9 @@ struct event_transformation_impl : public event_transformation::impl {
         }
 
         void event_added( const cata::event &e, stats_tracker &stats ) override {
-            EventVector transformed = transformation_->match_and_transform( e.data(), stats );
+            std::vector<std::optional<cata_variant>> precomputed =
+                transformation_->precompute_constraints( stats );
+            EventVector transformed = transformation_->match_and_transform( e.data(), precomputed );
             for( cata::event::data_type &d : transformed ) {
                 cata::event new_event( e.type(), e.time(), std::move( d ) );
                 data_.add( new_event );
