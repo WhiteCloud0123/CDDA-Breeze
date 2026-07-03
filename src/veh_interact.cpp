@@ -2510,8 +2510,13 @@ void veh_interact::display_veh()
     int win_cols = getmaxx(w_disp);
     int win_lines = getmaxy(w_disp);
     
-    int termx_pixels = projected_window_width() / TERMX;
-    int termy_pixels = projected_window_height() / TERMY;
+    // Use logical pixels (divide by scaling_factor) to match the renderer's
+    // logical size set in curses_drawwindow. Using physical pixels here would
+    // cause the SDL renderer to scale them a second time, shifting the vehicle
+    // tile rendering when scaling_factor > 1.
+    const int sf = get_scaling_factor();
+    int termx_pixels = projected_window_width() / TERMX / sf;
+    int termy_pixels = projected_window_height() / TERMY / sf;
 
     tilecontext->set_draw_scale(veh_interact_tile_zoom);
     werase(w_disp);
