@@ -1782,8 +1782,8 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                 }
             }
 
-            // 如果没有动态立绘且启用了AI生成，或者需要更新图片
-            if ((image == nullptr && get_option<bool>("AI生成NPC立绘")) || need_update) {
+            // 如果启用了AI生成，并且没有动态立绘或需要更新图片
+            if (get_option<bool>("AI生成NPC立绘") && (image == nullptr || need_update)) {
                 network::RequestId req_id = 0;
                 std::string waiting_msg;
                 
