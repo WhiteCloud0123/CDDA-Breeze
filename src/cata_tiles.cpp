@@ -1828,8 +1828,9 @@ void cata_tiles::draw( const point &dest, const tripoint &center, int width, int
             draw_line();
             void_line();
         }
-        if( do_draw_weather && !use_particle_system ) {
-            
+       if( do_draw_weather ) {
+            // The particle system does not currently render precipitation.
+　　　　     // Keep the tile-based weather overlay visible as a fallback.
             draw_weather_frame();
             
             void_weather();
