@@ -363,7 +363,11 @@ RequestId start_pollinations_request( const std::string &system_prompt,const std
         json_escape(model.empty() ? "openai" : model ) + 
         "\",\"stream\":false,\"temperature\":"+temperature+"}";
     
-    std::string url = "https://gen.pollinations.ai/v1/chat/completions";
+    std::string base_url = get_option<std::string>( "API地址" );
+    if( !base_url.empty() && base_url.back() == '/' ) {
+        base_url.pop_back();
+    }
+    std::string url = base_url + "/v1/chat/completions";
     
     // std::ofstream log_file( "pollinations_request_debug.txt", std::ios::out | std::ios::trunc );
     // if( log_file.is_open() ) {
@@ -461,7 +465,11 @@ RequestId start_pollinations_image_request( const std::string &prompt )
 
     std::string json_body = "{\"prompt\":\"" + json_escape( prompt ) + "\",\"model\":\"" + json_escape( model.empty() ? "flux" : model ) + "\",\"size\":\"381x522\",\"n\":1,\"response_format\":\"b64_json\"}";
 
-    std::string url = "https://gen.pollinations.ai/v1/images/generations";
+    std::string base_url = get_option<std::string>( "API地址" );
+    if( !base_url.empty() && base_url.back() == '/' ) {
+        base_url.pop_back();
+    }
+    std::string url = base_url + "/v1/images/generations";
 
     return start_post( url, json_body, headers );
 }
@@ -575,7 +583,11 @@ RequestId start_pollinations_image_edit_request( const std::string &prompt, cons
         headers["Authorization"] = "Bearer " + api_key;
     }
 
-    std::string url = "https://gen.pollinations.ai/v1/images/edits";
+    std::string base_url = get_option<std::string>( "API地址" );
+    if( !base_url.empty() && base_url.back() == '/' ) {
+        base_url.pop_back();
+    }
+    std::string url = base_url + "/v1/images/edits";
 
     return start_post( url, body, headers );
 }

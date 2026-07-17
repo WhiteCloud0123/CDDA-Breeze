@@ -2947,8 +2947,12 @@ void options_manager::add_options_ai() {
         ai_page_.items_.emplace_back();
         };
 
+    add("API地址", "ai", to_translation("API地址"),
+        to_translation("要调用的AI服务的API地址，需兼容OpenAI协议格式。例如 https://api.openai.com 或 https://gen.pollinations.ai"),
+        "https://gen.pollinations.ai", 100
+    );
     add("密钥", "ai", to_translation("密钥"),
-        to_translation("填入在 pollinations.ai 上创建的密钥。"),
+        to_translation("填入AI服务对应的API密钥。"),
         "", 50
     );
     add("文本模型名称", "ai", to_translation("文本模型名称"),
