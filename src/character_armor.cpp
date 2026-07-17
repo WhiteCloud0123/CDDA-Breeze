@@ -355,9 +355,11 @@ const weakpoint *Character::absorb_hit( const weakpoint_attack &, const bodypart
         post_absorbed_damage_enchantment_adjust( *this, elem );
         elem.amount = std::max( elem.amount, 0.0f );
     }
-    map &here = get_map();
-    for( item &remain : worn_remains ) {
-        here.add_item_or_charges( pos(), remain );
+    if( !is_hallucination() ) {
+        map &here = get_map();
+        for( item &remain : worn_remains ) {
+            here.add_item_or_charges( pos(), remain );
+        }
     }
     if( armor_destroyed ) {
         drop_invalid_inventory();
