@@ -5136,6 +5136,7 @@ bool game::spawn_hallucination( const tripoint &p )
         shared_ptr_fast<npc> tmp = make_shared_fast<npc>();
         tmp->normalize();
         tmp->randomize( NC_HALLU );
+        tmp->hallucination = true;
         tmp->spawn_at_precise( tripoint_abs_ms( get_map().getabs( p ) ) );
         if( !get_creature_tracker().creature_at( p, true ) ) {
             overmap_buffer.insert_npc( tmp );

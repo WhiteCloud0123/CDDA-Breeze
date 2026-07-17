@@ -7596,7 +7596,7 @@ void Character::apply_damage( Creature *source, bodypart_id hurt, int dam,
     get_event_bus().send<event_type::character_takes_damage>( getID(), dam_to_bodypart );
 
     if( !weapon.is_null() && !can_wield( weapon ).success() &&
-        can_drop( weapon ).success() ) {
+        can_drop( weapon ).success() && !is_hallucination() ) {
         add_msg_if_player( _( "You are no longer able to wield your %s and drop it!" ),
                            weapon.display_name() );
         put_into_vehicle_or_drop( *this, item_drop_reason::tumbling, { weapon } );
