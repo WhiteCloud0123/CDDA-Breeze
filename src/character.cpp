@@ -9513,7 +9513,9 @@ std::vector<Creature *> Character::get_targetable_creatures( const int range, bo
                 }
             }
         }
-        bool in_range = std::round( rl_dist_exact( pos(), critter.pos() ) ) <= range;
+        const float exact_distance = rl_dist_exact( pos(), critter.pos() );
+        const bool in_range = ( melee ? static_cast<int>( exact_distance ) :
+                                static_cast<int>( std::round( exact_distance ) ) ) <= range;
         // TODO: get rid of fake npcs (pos() check)
         bool valid_target = this != &critter && pos() != critter.pos() && attitude_to( critter ) != Creature::Attitude::FRIENDLY;
         return valid_target && in_range && can_see;

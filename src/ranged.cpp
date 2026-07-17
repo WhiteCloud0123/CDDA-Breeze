@@ -3050,7 +3050,11 @@ void target_ui::update_status()
 
 int target_ui::dist_fn( const tripoint &p )
 {
-    return static_cast<int>( std::round( rl_dist_exact( src, p ) ) );
+    const float distance = rl_dist_exact( src, p );
+    if( mode == TargetMode::Reach ) {
+        return static_cast<int>( distance );
+    }
+    return static_cast<int>( std::round( distance ) );
 }
 
 void target_ui::set_last_target()
