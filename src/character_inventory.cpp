@@ -507,6 +507,9 @@ ret_val<void> Character::can_drop( const item &it ) const
 
 void Character::drop_invalid_inventory()
 {
+    if( is_hallucination() ) {
+        return;
+    }
     if( cache_inventory_is_valid ) {
         return;
     }

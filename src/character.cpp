@@ -11403,6 +11403,9 @@ void Character::on_worn_item_transform( const item &old_it, const item &new_it )
 
 void Character::leak_items()
 {
+    if( is_hallucination() ) {
+        return;
+    }
     veque::veque<item_location> removed_items;
     if( weapon.is_container() ) {
         if( weapon.leak( get_map(), this, pos() ) ) {
