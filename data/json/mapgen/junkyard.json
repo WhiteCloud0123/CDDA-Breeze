@@ -92,7 +92,8 @@
         "                                                ",
         "                                                "
       ],
-      "palettes": [ "roof_palette" ]
+      "palettes": [ "roof_palette" ],
+      "place_vehicles": [ { "vehicle": "personal_aircraft_large", "x": 34, "y": 8, "chance": 15, "rotation": 180, "fuel": 0, "status": -1 } ]
     }
   },
   {
