@@ -85,7 +85,8 @@ bool air_conditioner_has_clear_direction( const tripoint &p )
     return false;
 }
 
-static units::angle choose_air_conditioner_direction( const tripoint &p, Character &who )
+static std::optional<units::angle> choose_air_conditioner_direction( const tripoint &p,
+        Character &who )
 {
     if( !who.is_avatar() ) {
         for( const units::angle &direction : { 0_degrees, 90_degrees, 180_degrees, 270_degrees } ) {
@@ -101,10 +102,11 @@ static units::angle choose_air_conditioner_direction( const tripoint &p, Charact
 
     units::angle direction = 0_degrees;
     while( true ) {
-        popup( _( "按空格键关闭提示，然后选择新空调的制冷侧并按回车键确认。" ) );
+        popup( _( "按空格键关闭提示，然后选择新空调的制冷侧并按回车键确认；按Esc取消安装。" ) );
         const std::optional<tripoint> chosen = g->look_around();
         if( !chosen ) {
-            continue;
+            who.view_offset = old_view_offset;
+            return std::nullopt;
         }
 
         const point delta = ( *chosen - p ).xy();
@@ -122,7 +124,7 @@ static units::angle choose_air_conditioner_direction( const tripoint &p, Charact
     return direction;
 }
 
-units::angle appliance_install_direction( const tripoint &p, Character &who,
+std::optional<units::angle> appliance_install_direction( const tripoint &p, Character &who,
         const vpart_id &vpart )
 {
     if( vpart->has_flag( VPFLAG_WALL_MOUNTED ) && !vpart->appliance_modes.empty() ) {

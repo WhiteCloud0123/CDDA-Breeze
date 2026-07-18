@@ -1,7 +1,5 @@
 #include "iexamine_actors.h"
 
-#include <optional>
-
 #include "avatar.h"
 #include "effect_on_condition.h"
 #include "game.h"
@@ -25,13 +23,11 @@ void appliance_convert_examine_actor::load( const JsonObject &jo )
     mandatory( jo, false, "item", appliance_item );
 }
 
-void appliance_convert_examine_actor::call( Character &who, const tripoint &examp ) const
+void appliance_convert_examine_actor::call( Character &, const tripoint &examp ) const
 {
     if( !query_yn( _( "Connect %s to grid?" ), item::nname( appliance_item ) ) ) {
         return;
     }
-    const vpart_id vpart = vpart_appliance_from_item( appliance_item );
-    const units::angle direction = appliance_install_direction( examp, who, vpart );
     map &here = get_map();
     if( furn_set ) {
         here.furn_set( examp, *furn_set );
@@ -40,7 +36,7 @@ void appliance_convert_examine_actor::call( Character &who, const tripoint &exam
         here.ter_set( examp, *ter_set );
     }
 
-    place_appliance( examp, vpart, std::nullopt, direction );
+    place_appliance( examp, vpart_appliance_from_item( appliance_item ) );
 }
 
 void appliance_convert_examine_actor::finalize() const

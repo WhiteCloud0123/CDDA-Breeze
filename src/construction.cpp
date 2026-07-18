@@ -1553,9 +1553,15 @@ void construct::done_appliance( const tripoint_bub_ms &p, Character &player_char
     const item base = components.front();
     const vpart_id &vpart = vpart_appliance_from_item( base.typeId() );
 
-    const units::angle direction = appliance_install_direction( p.raw(), player_character, vpart );
+    const std::optional<units::angle> direction = appliance_install_direction( p.raw(),
+            player_character, vpart );
+    if( !direction ) {
+        here.add_item_or_charges( p, base );
+        add_msg( m_info, _( "你取消了%s的安装，并将其放回地面。" ), base.tname() );
+        return;
+    }
     // TODO: fix point types
-    place_appliance( p.raw(), vpart, base, direction );
+    place_appliance( p.raw(), vpart, base, *direction );
 }
 
 void construct::done_deconstruct( const tripoint_bub_ms &p, Character &player_character )
