@@ -774,6 +774,7 @@ class npc : public Character
         void randomize_from_faction( faction *fac );
         void apply_ownership_to_inv();
         void learn_ma_styles_from_traits();
+        void select_best_martial_art( bool announce = true );
         // Faction version number
         int get_faction_ver() const;
         void set_faction_ver( int new_version );
@@ -1440,6 +1441,8 @@ class npc_template
         npc guy;
         translation name_unique;
         translation name_suffix;
+        std::vector<matype_id> martial_arts;
+        std::optional<matype_id> selected_martial_art;
         enum class gender : int {
             random,
             male,

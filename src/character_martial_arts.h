@@ -9,9 +9,9 @@
 #include "type_id.h"
 
 class Character;
+class avatar;
 class JsonObject;
 class JsonOut;
-class avatar;
 class item;
 
 class character_martial_arts
@@ -34,6 +34,7 @@ class character_martial_arts
         void selected_style_check();
         /** Creates the UI and handles player input for picking martial arts styles */
         bool pick_style( const avatar &you );
+        bool pick_style( Character &you );
 
         bool knows_selected_style() const;
         bool selected_strictly_melee() const;
@@ -106,6 +107,12 @@ class character_martial_arts
 
         std::string enumerate_known_styles( const itype_id &weap ) const;
         std::string selected_style_name( const Character &owner ) const;
+        const std::vector<matype_id> &known_styles() const {
+            return ma_styles;
+        }
+        const matype_id &selected_style() const {
+            return style_selected;
+        }
 };
 
 #endif // CATA_SRC_CHARACTER_MARTIAL_ARTS_H
