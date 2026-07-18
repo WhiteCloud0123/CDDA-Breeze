@@ -148,6 +148,13 @@ static const item_category_id item_category_food( "food" );
 static const item_category_id item_category_maps( "maps" );
 static const item_category_id item_category_spare_parts( "spare_parts" );
 static const item_category_id item_category_tools( "tools" );
+static const item_category_id item_category_veh_parts( "veh_parts" );
+
+static bool vehicle_part_degradation_enabled( const item &it )
+{
+    return it.get_category_shallow().get_id() != item_category_veh_parts ||
+           get_option<bool>( "VEHICLE_PART_DEGRADATION" );
+}
 static const item_category_id item_category_weapons( "weapons" );
 
 static const itype_id itype_barrel_small( "barrel_small" );
@@ -797,6 +804,9 @@ item &item::ammo_unset()
 
 int item::damage() const
 {
+    if( vehicle_part_degradation_enabled( *this ) ) {
+        return std::max( damage_, min_damage() + degradation_ );
+    }
     return damage_;
 }
 
@@ -807,14 +817,17 @@ int item::degradation() const
 
 void item::rand_degradation()
 {
+    if( !vehicle_part_degradation_enabled( *this ) ) {
+        return;
+    }
     degradation_ = damage() <= 0 ? 0 : rng( 0, damage() );
-    degradation_ = type->degrade_increments() > 0 ? degradation_ * (50.f / static_cast<float>
-        (type->degrade_increments())) : 0;
+    degradation_ = type->degrade_increments() > 0 ? degradation_ * ( 50.f / static_cast<float>
+                   ( type->degrade_increments() ) ) : 0;
 }
 
 int item::damage_level( int dmg ) const
 {
-    dmg = dmg == INT_MIN ? damage_ : dmg;
+    dmg = dmg == INT_MIN ? damage() : dmg;
     if( dmg == 0 ) {
         return 0;
     } else if( max_damage() <= 1 ) {
@@ -837,13 +850,18 @@ float item::damage_scaling( bool to_self ) const
 
 int item::damage_floor( bool allow_negative ) const
 {
-    return std::max( min_damage() + degradation(), allow_negative ? min_damage() : 0 );
+    const int effective_degradation = vehicle_part_degradation_enabled( *this ) ? degradation_ : 0;
+    return std::max( min_damage() + effective_degradation, allow_negative ? min_damage() : 0 );
 }
 
 item &item::set_damage( int qty )
 {
     damage_ = std::max( std::min( qty, max_damage() ), min_damage() );
-    degradation_ = std::max( std::min( damage_ - min_damage(), degradation_ ), 0 );
+    if( vehicle_part_degradation_enabled( *this ) ) {
+        degradation_ = std::max( std::min( damage_ - min_damage(), degradation_ ), 0 );
+    } else {
+        degradation_ = std::max( std::min( degradation_, max_damage() ), 0 );
+    }
     on_damage_changed();
     return *this;
 }
@@ -7612,6 +7630,9 @@ std::string item::dirt_symbol() const
 
 std::string item::degradation_symbol() const
 {
+    if( !vehicle_part_degradation_enabled( *this ) ) {
+        return "";
+    }
     const int inc = max_damage() / 5;
     const int dgr_lvl = degradation() / ( inc > 0 ? inc : 1 );
     std::string dgr_symbol;
@@ -7645,7 +7666,9 @@ std::string item::tname( unsigned int quantity, bool with_prefix, unsigned int t
     // for portions of string that have <color_ etc in them, this aims to truncate the whole string correctly
     unsigned int truncate_override = 0;
 
-    if( ( damage() != 0 || ( degradation() > 0 && degradation() >= max_damage() / 5 ) ||
+    if( ( damage() != 0 ||
+          ( vehicle_part_degradation_enabled( *this ) && degradation() > 0 &&
+            degradation() >= max_damage() / 5 ) ||
           ( get_option<bool>( "ITEM_HEALTH_BAR" ) && is_armor() ) ) && !is_null() && with_prefix ) {
         damtext = durability_indicator();
         if( get_option<bool>( "ITEM_HEALTH_BAR" ) ) {
@@ -10406,7 +10429,8 @@ bool item::mod_damage( int qty, damage_type dt )
     }
 
     bool destroy = false;
-    int dmg_lvl = get_dmg_lvl_internal( damage_, min_damage(), max_damage() );
+    const int current_damage = damage();
+    int dmg_lvl = get_dmg_lvl_internal( current_damage, min_damage(), max_damage() );
 
     if( count_by_charges() ) {
         charges -= std::min( type->stack_size * qty / itype::damage_scale, charges );
@@ -10418,15 +10442,16 @@ bool item::mod_damage( int qty, damage_type dt )
     }
 
     if( !count_by_charges() ) {
-        destroy |= damage_ + qty > max_damage();
+        destroy |= current_damage + qty > max_damage();
 
-        damage_ = std::max( std::min( damage_ + qty, max_damage() ), min_damage() + degradation_ );
+        damage_ = std::max( std::min( current_damage + qty, max_damage() ), damage_floor( false ) );
     }
 
     if( qty > 0 && !destroy ) {
-        int degrade = std::max( get_dmg_lvl_internal( damage_, min_damage(), max_damage() ) - dmg_lvl, 0 );
+        int degrade = std::max( get_dmg_lvl_internal( damage(), min_damage(), max_damage() ) -
+                                dmg_lvl, 0 );
         int incr = type->degrade_increments();
-        if( incr > 0 ) {
+        if( incr > 0 && vehicle_part_degradation_enabled( *this ) ) {
             degradation_ += degrade * ( max_damage() - min_damage() ) / incr;
         }
     }
