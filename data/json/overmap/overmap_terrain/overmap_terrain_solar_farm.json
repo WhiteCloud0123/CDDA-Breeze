@@ -1,0 +1,13 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "solar_farm",
+    "name": "太阳能电站",
+    "sym": "#",
+    "color": "i_yellow",
+    "see_cost": 5,
+    "flags": [
+      "SOURCE_ELECTRONICS"
+    ]
+  }
+]
