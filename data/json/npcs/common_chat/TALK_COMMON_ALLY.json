@@ -334,6 +334,7 @@
     "responses": [
       { "text": "Change your engagement rules…", "topic": "TALK_COMBAT_ENGAGEMENT" },
       { "text": "Change your aiming rules…", "topic": "TALK_AIM_RULES" },
+      { "text": "选择你应该使用的武术……", "topic": "TALK_COMBAT_COMMANDS", "effect": "pick_style" },
       {
         "text": "Change your bionic power reserve rules…",
         "topic": "TALK_CBM_RESERVE_RULES",

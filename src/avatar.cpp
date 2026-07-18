@@ -1762,7 +1762,12 @@ void avatar::add_pain_msg( int val, const bodypart_id &bp ) const
     }
 }
 
-bool character_martial_arts::pick_style( const avatar &you ) // Style selection menu
+bool character_martial_arts::pick_style( const avatar &you )
+{
+    return pick_style( static_cast<Character &>( const_cast<avatar &>( you ) ) );
+}
+
+bool character_martial_arts::pick_style( Character &you ) // Style selection menu
 {
     enum style_selection {
         KEEP_HANDS_FREE = 0,
@@ -1804,9 +1809,11 @@ bool character_martial_arts::pick_style( const avatar &you ) // Style selection 
     kmenu.input_category = "MELEE_STYLE_PICKER";
     kmenu.additional_actions.emplace_back( "SHOW_DESCRIPTION", translation() );
     kmenu.desc_enabled = true;
-    kmenu.addentry_desc( KEEP_HANDS_FREE, true, 'h',
-                         keep_hands_free ? _( "Keep hands free (on)" ) : _( "Keep hands free (off)" ),
-                         _( "When this is enabled, player won't wield things unless explicitly told to." ) );
+    if( you.is_avatar() ) {
+        kmenu.addentry_desc( KEEP_HANDS_FREE, true, 'h',
+                             keep_hands_free ? _( "Keep hands free (on)" ) : _( "Keep hands free (off)" ),
+                             _( "When this is enabled, player won't wield things unless explicitly told to." ) );
+    }
 
     kmenu.selected = STYLE_OFFSET;
 
@@ -1834,12 +1841,11 @@ bool character_martial_arts::pick_style( const avatar &you ) // Style selection 
     if( selection >= STYLE_OFFSET ) {
         // If the currect style is selected, do not change styles
 
-        avatar &u = const_cast<avatar &>( you );
-        style_selected->remove_all_buffs( u );
-        style_selected = selectable_styles[selection - STYLE_OFFSET];
-        ma_static_effects( u );
+        clear_all_effects( you );
+        set_style( selectable_styles[selection - STYLE_OFFSET], true );
+        ma_static_effects( you );
         martialart_use_message( you );
-    } else if( selection == KEEP_HANDS_FREE ) {
+    } else if( selection == KEEP_HANDS_FREE && you.is_avatar() ) {
         keep_hands_free = !keep_hands_free;
     } else {
         return false;

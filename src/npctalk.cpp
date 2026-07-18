@@ -5381,6 +5381,7 @@ void talk_effect_t<T>::parse_string_effect( const std::string &effect_id, const 
             WRAP( npc_die ),
             WRAP( npc_thankful ),
             WRAP( clear_overrides ),
+            WRAP( pick_style ),
             WRAP( do_disassembly ),
             WRAP( nothing ),
             WRAP( edit_ai_prompt ),

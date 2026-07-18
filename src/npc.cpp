@@ -305,6 +305,18 @@ void npc_template::load( const JsonObject &jsobj )
     guy.name.clear();
     jsobj.read( "name_unique", tem.name_unique );
     jsobj.read( "name_suffix", tem.name_suffix );
+    if( jsobj.has_array( "martial_arts" ) ) {
+        for( const std::string style : jsobj.get_array( "martial_arts" ) ) {
+            tem.martial_arts.emplace_back( style );
+        }
+    }
+    if( jsobj.has_string( "martial_art" ) ) {
+        tem.selected_martial_art = matype_id( jsobj.get_string( "martial_art" ) );
+        if( std::find( tem.martial_arts.begin(), tem.martial_arts.end(),
+                       *tem.selected_martial_art ) == tem.martial_arts.end() ) {
+            tem.martial_arts.push_back( *tem.selected_martial_art );
+        }
+    }
     if( jsobj.has_string( "gender" ) ) {
         if( jsobj.get_string( "gender" ) == "male" ) {
             tem.gender_override = gender::male;
@@ -614,6 +626,15 @@ void npc_template::check_consistency()
         if( !guy.myclass.is_valid() ) {
             debugmsg( "Invalid NPC class %s", guy.myclass.c_str() );
         }
+        for( const matype_id &style : e.second.martial_arts ) {
+            if( !style.is_valid() ) {
+                debugmsg( "NPC模板%s包含无效的武术%s", e.first.c_str(), style.c_str() );
+            }
+        }
+        if( e.second.selected_martial_art && !e.second.selected_martial_art->is_valid() ) {
+            debugmsg( "NPC模板%s指定了无效的默认武术%s", e.first.c_str(),
+                      e.second.selected_martial_art->c_str() );
+        }
         std::string first_topic = guy.chatbin.first_topic;
         if( const json_talk_topic *topic = get_talk_topic( first_topic ) ) {
             cata::flat_set<std::string> reachable_topics =
@@ -766,6 +787,19 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
         add_new_mission( mission::reserve_new( miss_id, getID() ) );
     }
     death_eocs = tguy.death_eocs;
+
+    for( const matype_id &style : tem.martial_arts ) {
+        if( style.is_valid() ) {
+            martial_arts_data->add_martialart( style );
+        }
+    }
+    if( tem.selected_martial_art && tem.selected_martial_art->is_valid() ) {
+        martial_arts_data->clear_all_effects( *this );
+        martial_arts_data->set_style( *tem.selected_martial_art );
+        martial_arts_data->ma_static_effects( *this );
+    } else {
+        select_best_martial_art( false );
+    }
     
     // 从模板复制 ai_prompt_from_npc_json
     ai_prompt_from_npc_json = tguy.ai_prompt_from_npc_json;
@@ -921,6 +955,7 @@ void npc::randomize( const npc_class_id &type )
     }
     // Add martial arts
     learn_ma_styles_from_traits();
+    select_best_martial_art( false );
     // Add spells for magiclysm mod
     for( std::pair<spell_id, int> spell_pair : type->_starting_spells ) {
         this->magic->learn_spell( spell_pair.first, *this, true );
@@ -948,6 +983,44 @@ void npc::learn_ma_styles_from_traits()
                 }
             }
         }
+    }
+}
+
+void npc::select_best_martial_art( bool announce )
+{
+    item_location wielded = get_wielded_item();
+    item &weapon = wielded ? *wielded : null_item_reference();
+    const bool can_use_gun = !is_player_ally() || rules.has_flag( ally_rule::use_guns );
+    const bool use_silent = is_player_ally() && rules.has_flag( ally_rule::use_silent );
+
+    const matype_id starting_style = martial_arts_data->selected_style();
+    matype_id best_style = starting_style;
+    martial_arts_data->clear_all_effects( *this );
+    martial_arts_data->set_style( starting_style );
+    martial_arts_data->ma_static_effects( *this );
+    cached_info.erase( "weapon_value" );
+    double best_value = evaluate_weapon( weapon, can_use_gun, use_silent );
+
+    for( const matype_id &style : martial_arts_data->known_styles() ) {
+        martial_arts_data->clear_all_effects( *this );
+        martial_arts_data->set_style( style );
+        martial_arts_data->ma_static_effects( *this );
+        cached_info.erase( "weapon_value" );
+        const double style_value = evaluate_weapon( weapon, can_use_gun, use_silent );
+        if( style_value > best_value ) {
+            best_value = style_value;
+            best_style = style;
+        }
+    }
+
+    martial_arts_data->clear_all_effects( *this );
+    martial_arts_data->set_style( best_style );
+    martial_arts_data->ma_static_effects( *this );
+    cached_info.erase( "weapon_value" );
+
+    if( announce && starting_style != best_style ) {
+        add_msg_if_player_sees( *this, m_info, _( "%1$s改用%2$s！" ),
+                                disp_name(), martial_arts_data->selected_style_name( *this ) );
     }
 }
 
@@ -1562,6 +1635,8 @@ bool npc::wield( item &it )
     if( to_wield.is_null() ) {
         set_wielded_item( item() );
         get_event_bus().send<event_type::character_wields_item>( getID(), item().typeId() );
+        select_best_martial_art();
+        invalidate_range_cache();
         return true;
     }
 
@@ -1578,6 +1653,7 @@ bool npc::wield( item &it )
     if( get_player_view().sees( pos() ) ) {
         add_msg_if_npc( m_info, _( "<npcname> wields a %s." ),  weapon->tname() );
     }
+    select_best_martial_art();
     invalidate_range_cache();
     return true;
 }
