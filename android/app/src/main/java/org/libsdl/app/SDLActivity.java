@@ -1048,20 +1048,16 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         View decorView = getWindow().getDecorView();
         decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            // Track the previous IME visibility state and debounce focus-lost
-            // notifications. onApplyWindowInsets fires many times during the IME
-            // show animation. The InsetsController's show(ime(), fromIme=true)
-            // can briefly make the IME insets visible mid-animation, and when the
-            // show is subsequently cancelled the insets revert to not-visible.
-            // Without debouncing, this transient visible->not-visible transition
-            // triggers onNativeKeyboardFocusLost() -> SDL_StopTextInput() ->
-            // hideSoftInputFromWindow(), which creates a pending hide request
-            // that causes the next showSoftInput() to be immediately cancelled,
-            // resulting in a rapid show/hide jitter loop.
+            // 跟踪 IME 的前一次可见状态，并对"焦点丢失"通知做防抖。
+            // onApplyWindowInsets 在 IME 显示动画期间会多次回调。InsetsController 的
+            // show(ime(), fromIme=true) 会在动画中途短暂地让 IME insets 变为可见，
+            // 当显示随后被取消时 insets 又恢复为不可见。如果不做防抖，这个瞬时的
+            // 可见->不可见转换会触发 onNativeKeyboardFocusLost() -> SDL_StopTextInput()
+            // -> hideSoftInputFromWindow()，产生一个 pending hide 请求，导致下一次
+            // showSoftInput() 立即被取消，形成快速的 show/hide 抖动循环。
             //
-            // The 500ms debounce filters out these transient changes while still
-            // detecting genuine user-initiated keyboard dismissal (the IME stays
-            // hidden for well over 500ms in that case).
+            // 500ms 防抖可以过滤掉这些瞬时变化，同时仍能检测到真正的用户主动关闭键盘
+            // （那种情况下 IME 会持续隐藏远超 500ms）。
             private boolean imeWasVisible = false;
             private final Runnable imeHideNotifier = new Runnable() {
                 @Override
@@ -1074,12 +1070,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
                 boolean imeVisible = insets.isVisible(WindowInsets.Type.ime());
                 if (imeVisible) {
-                    // IME is visible — cancel any pending focus-lost notification.
+                    // IME 可见 - 取消任何待处理的"焦点丢失"通知
                     commandHandler.removeCallbacks(imeHideNotifier);
                 } else if (imeWasVisible) {
-                    // IME transitioned from visible to not-visible.
-                    // Wait 500ms before notifying, in case the IME becomes
-                    // visible again (transient cancellation during show animation).
+                    // IME 从可见变为不可见。延迟 500ms 再通知，以防 IME 再次变为可见
+                    // （显示动画中的瞬时取消）
                     commandHandler.removeCallbacks(imeHideNotifier);
                     commandHandler.postDelayed(imeHideNotifier, 500);
                 }
@@ -1088,13 +1083,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             }
         });
 
-        // On Android 13+ (API 33+) the system may route the back gesture/button
-        // through OnBackInvokedDispatcher instead of dispatchKeyEvent()/onBackPressed().
-        // Only forward the back signal to native here and perform NO keyboard
-        // operations in Java. The native layer owns the decision (show/hide the
-        // soft keyboard or run a game back action) based on the full game state,
-        // which decouples us from the IME's own OnBackInvokedCallback and avoids
-        // the show/hide/show/hide jitter seen on Android 15 3-button navigation.
+        // 在 Android 13+（API 33+）上，系统可能通过 OnBackInvokedDispatcher
+        // 而非 dispatchKeyEvent()/onBackPressed() 来路由返回手势/按键。
+        // 这里只把返回信号转发给 native 层，在 Java 层不做任何键盘操作。
+        // native 层根据完整的游戏状态决定行为（显示/隐藏软键盘或执行游戏返回操作），
+        // 这使 Java 层与 IME 自身的 OnBackInvokedCallback 解耦，避免了 Android 15
+        // 三键导航下 show/hide/show/hide 抖动。
         if (Build.VERSION.SDK_INT >= 33 /* Android 13.0 (T) */) {
             OnBackInvokedDispatcher dispatcher = getOnBackInvokedDispatcher();
             if (dispatcher != null) {
@@ -1612,10 +1606,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     public static native void nativeResume();
 
-    // Called from OnBackInvokedCallback (Android 13+) to forward the back
-    // gesture/button to the native layer. The native layer decides whether to
-    // toggle the on-screen keyboard or perform a game back action, keeping the
-    // Java layer decoupled from the IME's own OnBackInvokedCallback.
+    // 由 OnBackInvokedCallback（Android 13+）调用，将返回手势/按键转发给 native 层。
+    // native 层决定是切换软键盘显示还是执行游戏返回操作，使 Java 层与 IME 自身的
+    // OnBackInvokedCallback 解耦。
     public static native void nativeSendBackEvent();
 
     public static native void nativeFocusChanged(boolean hasFocus);

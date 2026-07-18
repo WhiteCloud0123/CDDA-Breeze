@@ -505,19 +505,15 @@ JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
     env->ReleaseStringUTFChars(text,c_str);
 }
 
-// Called from the Java OnBackInvokedCallback (Android 13+) to forward the back
-// gesture/button to the native layer. The Java layer performs NO keyboard
-// operations, keeping it decoupled from the IME's own OnBackInvokedCallback
-// (which would otherwise race with us and cause show/hide/show/hide jitter on
-// Android 15 3-button navigation).
+// 由 Java 的 OnBackInvokedCallback（Android 13+）调用，将返回手势/按键转发给
+// native 层。Java 层不做任何键盘操作，与 IME 自身的 OnBackInvokedCallback 解耦
+// （否则两者会竞争并导致 Android 15 三键导航下 show/hide/show/hide 抖动）。
 //
-// We synthesize a SDLK_AC_BACK key down/up pair and push them onto the SDL event
-// queue. SDL_PushEvent is thread-safe, so this is safe to call from the Java UI
-// thread; the events are processed on the native thread by the existing
-// SDL_KEYDOWN/SDL_KEYUP handlers in CheckMessages(), which already toggle the
-// on-screen keyboard based on SDL_IsTextInputActive() and drive the quick-shortcut
-// long-press behaviour. This reuses the exact same decision logic that the
-// Android <=12 dispatchKeyEvent() path uses, so behaviour stays consistent.
+// 我们合成一对 SDLK_AC_BACK 的 KEYDOWN/KEYUP 事件并推入 SDL 事件队列。
+// SDL_PushEvent 是线程安全的，因此从 Java UI 线程调用是安全的；事件会在 native
+// 线程上由 CheckMessages() 中已有的 SDL_KEYDOWN/SDL_KEYUP 处理逻辑处理，这些
+// 逻辑已经负责切换软键盘显示并驱动快捷键长按行为。这复用了与 Android <=12
+// dispatchKeyEvent() 路径完全相同的决策逻辑，因此行为保持一致。
 JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeSendBackEvent(
         JNIEnv *env, jclass jcls) {
     ( void )env;
@@ -2734,29 +2730,26 @@ static bool window_focus = false;
 static bool text_input_active_when_regaining_focus = false;
 #endif
 
-// Native's own view of whether the on-screen soft keyboard is currently shown.
-// This is deliberately kept SEPARATE from SDL's internal text_input_active flag
-// (queried via SDL_IsTextInputActive()). On Android 15 the IME's own
-// OnBackInvokedCallback hides the keyboard, which triggers onNativeKeyboardFocusLost
-// -> SDL_StopTextInput() inside libSDL2.so, flipping SDL's flag to false behind our
-// back. If the SDLK_AC_BACK KEYUP handler then read SDL_IsTextInputActive(), it would
-// see false and re-show the keyboard right after the IME hid it (show/hide jitter).
-// g_keyboard_visible is only updated by our StartTextInput()/StopTextInput() wrappers,
-// so it reflects OUR intent and is immune to the IME's interference.
+// native 层自己对软键盘是否显示的判断。
+// 这个变量刻意与 SDL 内部的 text_input_active 标志（通过 SDL_IsTextInputActive() 查询）
+// 分开维护。在 Android 15 上，IME 自身的 OnBackInvokedCallback 隐藏键盘时会触发
+// onNativeKeyboardFocusLost -> libSDL2.so 内部的 SDL_StopTextInput()，在我们不知情的
+// 情况下把 SDL 的标志翻转为 false。如果 SDLK_AC_BACK KEYUP 处理逻辑读取
+// SDL_IsTextInputActive()，就会看到 false 并在 IME 刚隐藏键盘后立即重新显示
+// （show/hide 抖动）。g_keyboard_visible 只由我们的 StartTextInput()/StopTextInput()
+// 包装器更新，反映的是我们自己的意图，不受 IME 干扰。
 static bool g_keyboard_visible = false;
 
 void StartTextInput()
 {
-    // Use g_keyboard_visible instead of SDL_IsTextInputActive() for the early
-    // return. On Android 15, onNativeKeyboardFocusLost() (fired from Java's
-    // onApplyWindowInsetsListener) calls SDL_StopTextInput() inside libSDL2.so,
-    // flipping SDL's text_input_active flag to false behind our back. If we
-    // checked SDL_IsTextInputActive() here, we would see false and proceed to
-    // call SDL_StartTextInput() -> showSoftInput() again, interrupting the
-    // ongoing IME show animation and creating a rapid show/hide jitter loop.
-    // g_keyboard_visible tracks OUR intent and is only updated by our
-    // StartTextInput()/StopTextInput() wrappers, so it is immune to the IME's
-    // interference.
+    // 用 g_keyboard_visible 而非 SDL_IsTextInputActive() 做早返回判断。
+    // 在 Android 15 上，onNativeKeyboardFocusLost()（由 Java 的
+    // onApplyWindowInsetsListener 触发）会调用 libSDL2.so 内部的 SDL_StopTextInput()，
+    // 在我们不知情的情况下把 SDL 的 text_input_active 标志翻转为 false。如果我们检查
+    // SDL_IsTextInputActive()，就会看到 false 并继续调用 SDL_StartTextInput() ->
+    // showSoftInput()，打断正在进行的 IME 显示动画，形成快速的 show/hide 抖动循环。
+    // g_keyboard_visible 追踪的是我们自己的意图，只由 StartTextInput()/StopTextInput()
+    // 包装器更新，不受 IME 干扰。
     if( g_keyboard_visible ) {
         return;
     }
@@ -2802,28 +2795,24 @@ static void CheckMessages()
 
     uint32_t ticks = SDL_GetTicks();
 
-    // Sync g_keyboard_visible with SDL's internal text_input_active flag.
-    // onNativeKeyboardFocusLost() (fired from Java's onApplyWindowInsetsListener
-    // when the IME transitions from visible to not-visible, debounced 500ms)
-    // calls SDL_StopTextInput() inside libSDL2.so, which clears SDL's
-    // text_input_active flag without going through our StopTextInput() wrapper.
-    // We detect this divergence and update g_keyboard_visible to reflect the
-    // actual keyboard state, so the back-button handler works correctly.
+    // 将 g_keyboard_visible 与 SDL 内部的 text_input_active 标志同步。
+    // onNativeKeyboardFocusLost()（由 Java 的 onApplyWindowInsetsListener 在 IME 从
+    // 可见变为不可见时触发，经 500ms 防抖）会调用 libSDL2.so 内部的 SDL_StopTextInput()，
+    // 在不经过我们 StopTextInput() 包装器的情况下清除 SDL 的 text_input_active 标志。
+    // 我们检测这种不一致并更新 g_keyboard_visible 以反映实际的键盘状态，
+    // 确保返回键处理逻辑能正确工作。
     if( g_keyboard_visible && SDL_IsTextInputActive() == SDL_FALSE ) {
         g_keyboard_visible = false;
     }
 
-    // NOTE: The previous "force text input when hardware keyboard is available"
-    // code was removed. It caused the soft keyboard to be always shown on
-    // devices/emulators with a hardware keyboard, because it called
-    // StartTextInput() (which calls SDL_StartTextInput() -> showSoftInput())
-    // every frame whenever g_keyboard_visible was false. When the user pressed
-    // back to hide the keyboard, it would reappear on the next frame.
-    // On Android, hardware keyboard key events are always processed as
-    // keyboard_char mode (see the #if !defined(__ANDROID__) guard in the
-    // SDL_KEYDOWN handler below), so the hardware keyboard still works for
-    // game controls without text input mode being active. The user can toggle
-    // the soft keyboard via the back button when they need to type text.
+    // 注意：此前"硬件键盘可用时强制文本输入"的代码已被移除。
+    // 该代码会在有硬件键盘的设备/模拟器上导致软键盘始终显示，因为它在
+    // g_keyboard_visible 为 false 时每帧都调用 StartTextInput()
+    // （进而调用 SDL_StartTextInput() -> showSoftInput()）。用户按返回键隐藏键盘后，
+    // 下一帧键盘又会重新出现。在 Android 上，硬件键盘按键事件始终以 keyboard_char
+    // 模式处理（见下方 SDL_KEYDOWN 处理中的 #if !defined(__ANDROID__) 守卫），
+    // 因此即使不激活文本输入模式，硬件键盘仍可用于游戏控制。用户需要输入文字时
+    // 可以通过返回键切换软键盘。
 
     // Make sure the SDL surface view is visible, otherwise the "Z" loading screen is visible.
     if( needs_sdl_surface_visibility_refresh ) {
@@ -3251,12 +3240,12 @@ static void CheckMessages()
                 if( ev.key.keysym.sym == SDLK_AC_BACK ) {
                     if( ticks - ac_back_down_time <= static_cast<uint32_t>
                         (android_initial_delay) ) {
-                        // Use our own g_keyboard_visible instead of SDL_IsTextInputActive().
-                        // On Android 15 the IME's OnBackInvokedCallback hides the keyboard
-                        // and (via onNativeKeyboardFocusLost) flips SDL's internal flag to
-                        // false before we get here. Reading SDL_IsTextInputActive() would
-                        // therefore re-show the keyboard right after the IME hid it.
-                        // g_keyboard_visible tracks our own intent and is immune to that.
+                        // 使用我们自己的 g_keyboard_visible 而非 SDL_IsTextInputActive()。
+                        // 在 Android 15 上，IME 的 OnBackInvokedCallback 隐藏键盘时会
+                        // （通过 onNativeKeyboardFocusLost）在我们处理之前就把 SDL 的
+                        // 内部标志翻转为 false。如果读取 SDL_IsTextInputActive() 就会
+                        // 在 IME 刚隐藏键盘后立即重新显示。
+                        // g_keyboard_visible 追踪的是我们自己的意图，不受此影响。
                         if( g_keyboard_visible ) {
                             StopTextInput();
                         } else {
