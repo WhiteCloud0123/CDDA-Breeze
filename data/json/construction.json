@@ -7206,5 +7206,51 @@
     "pre_special": "check_empty",
     "post_special": "done_appliance",
     "activity_level": "NO_EXERCISE"
+  },
+  {
+    "type": "construction",
+    "id": "app_split_air_conditioner",
+    "group": "place_split_air_conditioner",
+    "category": "APPLIANCE",
+    "required_skills": [
+      [
+        "electronics",
+        3
+      ],
+      [
+        "mechanics",
+        3
+      ]
+    ],
+    "time": "60 m",
+    "components": [
+      [
+        [
+          "split_air_conditioner",
+          1
+        ]
+      ]
+    ],
+    "pre_flags": {
+      "flag": "WALL",
+      "force_terrain": true
+    },
+    "post_special": "done_appliance",
+    "activity_level": "BRISK_EXERCISE",
+    "qualities": [
+      [
+        {
+          "id": "SCREW",
+          "level": 1
+        }
+      ],
+      [
+        {
+          "id": "WRENCH",
+          "level": 1
+        }
+      ]
+    ],
+    "pre_special": "check_air_conditioner_wall"
   }
 ]

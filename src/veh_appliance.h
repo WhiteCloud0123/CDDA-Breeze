@@ -4,14 +4,20 @@
 
 #include "input.h"
 #include "player_activity.h"
+#include "units.h"
 
+class Character;
 class vehicle;
 class ui_adaptor;
 struct point;
 
 vpart_id vpart_appliance_from_item( const itype_id &item_id );
+bool air_conditioner_has_clear_direction( const tripoint &p );
+std::optional<units::angle> appliance_install_direction( const tripoint &p, Character &who,
+        const vpart_id &vpart );
 void place_appliance( const tripoint &p, const vpart_id &vpart,
-                      const std::optional<item> &base = std::nullopt );
+                      const std::optional<item> &base = std::nullopt,
+                      units::angle direction = 0_degrees );
 
 /**
  * Appliance interaction UI. Works similarly to veh_interact, but has
@@ -140,6 +146,7 @@ class veh_app_interact
          * any used cable items on the ground.
         */
         void unplug();
+        void set_appliance_mode();
 
         void set_conveyor_belt_direction();
 

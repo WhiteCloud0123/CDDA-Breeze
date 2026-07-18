@@ -1,7 +1,12 @@
+#include <cstdlib>
+
+#include "character.h"
 #include "game.h"
 #include "handle_liquid.h"
 #include "inventory.h"
 #include "itype.h"
+#include "line.h"
+#include "map.h"
 #include "map_iterator.h"
 #include "messages.h"
 #include "output.h"
@@ -51,7 +56,85 @@ vpart_id vpart_appliance_from_item( const itype_id &item_id )
     return vpart_ap_standing_lamp;
 }
 
-void place_appliance( const tripoint &p, const vpart_id &vpart, const std::optional<item> &base )
+static units::angle cardinal_direction_from_delta( const point &delta )
+{
+    if( std::abs( delta.x ) >= std::abs( delta.y ) ) {
+        return delta.x >= 0 ? 0_degrees : 180_degrees;
+    }
+    return delta.y >= 0 ? 90_degrees : 270_degrees;
+}
+
+static bool air_conditioner_direction_is_clear( const tripoint &p,
+        const units::angle &direction )
+{
+    tileray facing( direction );
+    facing.advance();
+    map &here = get_map();
+    const tripoint cold_pos = p + tripoint( facing.dx(), facing.dy(), 0 );
+    const tripoint hot_pos = p - tripoint( facing.dx(), facing.dy(), 0 );
+    return !here.impassable( cold_pos ) && !here.impassable( hot_pos );
+}
+
+bool air_conditioner_has_clear_direction( const tripoint &p )
+{
+    for( const units::angle &direction : { 0_degrees, 90_degrees, 180_degrees, 270_degrees } ) {
+        if( air_conditioner_direction_is_clear( p, direction ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static std::optional<units::angle> choose_air_conditioner_direction( const tripoint &p,
+        Character &who )
+{
+    if( !who.is_avatar() ) {
+        for( const units::angle &direction : { 0_degrees, 90_degrees, 180_degrees, 270_degrees } ) {
+            if( air_conditioner_direction_is_clear( p, direction ) ) {
+                return direction;
+            }
+        }
+        return 0_degrees;
+    }
+
+    const tripoint old_view_offset = who.view_offset;
+    who.view_offset = p - who.pos();
+
+    units::angle direction = 0_degrees;
+    while( true ) {
+        popup( _( "按空格键关闭提示，然后选择新空调的制冷侧并按回车键确认；按Esc取消安装。" ) );
+        const std::optional<tripoint> chosen = g->look_around();
+        if( !chosen ) {
+            who.view_offset = old_view_offset;
+            return std::nullopt;
+        }
+
+        const point delta = ( *chosen - p ).xy();
+        if( delta == point_zero ) {
+            continue;
+        }
+        direction = cardinal_direction_from_delta( delta );
+        if( air_conditioner_direction_is_clear( p, direction ) ) {
+            break;
+        }
+        popup( _( "所选方向的制冷侧和废热侧都必须留有一格可通行空间。" ) );
+    }
+
+    who.view_offset = old_view_offset;
+    return direction;
+}
+
+std::optional<units::angle> appliance_install_direction( const tripoint &p, Character &who,
+        const vpart_id &vpart )
+{
+    if( vpart->has_flag( VPFLAG_WALL_MOUNTED ) && !vpart->appliance_modes.empty() ) {
+        return choose_air_conditioner_direction( p, who );
+    }
+    return 0_degrees;
+}
+
+void place_appliance( const tripoint &p, const vpart_id &vpart, const std::optional<item> &base,
+                      units::angle direction )
 {
     map &here = get_map();
     vehicle *veh = here.add_vehicle( vehicle_prototype_none, p, 0_degrees, 0, 0 );
@@ -70,6 +153,9 @@ void place_appliance( const tripoint &p, const vpart_id &vpart, const std::optio
         veh->install_part( point_zero, vpart );
     }
     veh->name = vpart->name();
+    veh->face.init( direction );
+    veh->turn_dir = direction;
+    veh->precalc_mounts( 0, direction, point_zero );
 
     // Update the vehicle cache immediately,
     // or the appliance will be invisible for the first couple of turns.
@@ -693,6 +779,37 @@ void veh_app_interact::unplug()
     act.values.push_back( veh->index_of_part( &vp ) );
 }
 
+void veh_app_interact::set_appliance_mode()
+{
+    const int part_index = veh->part_at( a_point );
+    vehicle_part &pt = veh->part( part_index >= 0 ? part_index : 0 );
+    const std::vector<appliance_mode_data> &modes = pt.info().appliance_modes;
+    if( modes.empty() ) {
+        return;
+    }
+    if( pt.enabled ) {
+        popup( _( "切换运行模式前，请先关闭这台家电。" ) );
+        return;
+    }
+
+    uilist menu;
+    menu.text = _( "选择运行模式" );
+    const int current = std::clamp( static_cast<int>( pt.get_base().get_var( "appliance_mode", 0.0 ) ),
+                                    0, static_cast<int>( modes.size() ) - 1 );
+    for( size_t i = 0; i < modes.size(); ++i ) {
+        const appliance_mode_data &mode = modes[i];
+        menu.addentry( static_cast<int>( i ), true, MENU_AUTOASSIGN,
+                       string_format( "%s%s", mode.name.translated(),
+                                      static_cast<int>( i ) == current ? _( " （当前）" ) : "" ) );
+    }
+    menu.query();
+    if( menu.ret >= 0 && static_cast<size_t>( menu.ret ) < modes.size() ) {
+        pt.get_base().set_var( "appliance_mode", menu.ret );
+
+        add_msg( _( "你将%s设为%s模式。" ), veh->name, modes[menu.ret].name.translated() );
+    }
+}
+
 void veh_app_interact::populate_app_actions()
 {
     const std::string ctxt_letters = ctxt.get_available_single_char_hotkeys();
@@ -738,6 +855,19 @@ void veh_app_interact::populate_app_actions()
     imenu.addentry( -1, can_unplug(), ctxt.keys_bound_to( "UNPLUG" ).front(),
                     ctxt.get_action_name( "UNPLUG" ) );
 
+    const int mode_part_index = veh->part_at( a_point );
+    vehicle_part &mode_part = veh->part( mode_part_index >= 0 ? mode_part_index : 0 );
+    if( !mode_part.info().appliance_modes.empty() ) {
+        const int selected = std::clamp(
+                                 static_cast<int>( mode_part.get_base().get_var( "appliance_mode", 0.0 ) ), 0,
+                                 static_cast<int>( mode_part.info().appliance_modes.size() ) - 1 );
+        app_actions.emplace_back( [this]() {
+            set_appliance_mode();
+        } );
+        imenu.addentry( -1, !mode_part.enabled, 'M',
+                        string_format( _( "切换运行模式：%s" ),
+                                       mode_part.info().appliance_modes[selected].name.translated() ) );
+    }
 
 
     if (veh->is_appliance() && veh->part(0).info().has_flag("CLASSIFIED_DEVICE")) {

@@ -3302,5 +3302,193 @@
       "removal": { "skills": [ [ "mechanics", 4 ] ], "time": "60 m", "using": [ [ "vehicle_weld_removal", 1 ] ] }
     },
     "flags": [ "OBSTACLE", "HALF_BOARD","AUTONOMOUS_CONTROL"]
+  },
+  {
+    "type": "vehicle_part",
+    "id": "ap_split_air_conditioner",
+    "name": {
+      "str": "分体式空调"
+    },
+    "symbol": "A",
+    "looks_like": "f_air_conditioner",
+    "categories": [
+      "utility"
+    ],
+    "color": "light_cyan",
+    "broken_symbol": "#",
+    "broken_color": "dark_gray",
+    "damage_modifier": 80,
+    "durability": 180,
+    "description": "固定在墙上的分体式空调。正面排出的冷气会向密闭房间逐步扩散，背面排出废热。开启后持续运行，舒适、冷藏、冷冻模式分别固定消耗250瓦、375瓦、500瓦电力；切换模式前需要先关闭空调。",
+    "epower": -250,
+    "item": "split_air_conditioner",
+    "location": "structure",
+    "requirements": {
+      "install": {
+        "skills": [
+          [
+            "mechanics",
+            3
+          ],
+          [
+            "electronics",
+            3
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ],
+          [
+            "soldering_standard",
+            5
+          ]
+        ]
+      },
+      "removal": {
+        "skills": [
+          [
+            "mechanics",
+            2
+          ],
+          [
+            "electronics",
+            2
+          ]
+        ],
+        "time": "30 m",
+        "using": [
+          [
+            "vehicle_wrench_2",
+            1
+          ]
+        ]
+      },
+      "repair": {
+        "skills": [
+          [
+            "mechanics",
+            4
+          ],
+          [
+            "electronics",
+            4
+          ]
+        ],
+        "time": "60 m",
+        "using": [
+          [
+            "repair_welding_standard",
+            1
+          ],
+          [
+            "soldering_standard",
+            8
+          ]
+        ]
+      }
+    },
+    "flags": [
+      "APPLIANCE",
+      "WALL_MOUNTED",
+      "ENABLED_DRAINS_EPOWER",
+      "CTRL_ELECTRONIC",
+      "COOLER"
+    ],
+    "appliance_modes": [
+      {
+        "id": "comfort",
+        "name": "舒适",
+        "lower_temperature_c": 21,
+        "upper_temperature_c": 24,
+        "active_power_w": 600,
+        "idle_power_w": 2,
+        "cold_field": "fd_aircon_cold_comfort",
+        "hot_field": "fd_aircon_waste_heat",
+        "epower": -250,
+        "cold_field_qty": 3,
+        "hot_field_qty": 3
+      },
+      {
+        "id": "refrigeration",
+        "name": "冷藏",
+        "lower_temperature_c": 2,
+        "upper_temperature_c": 5,
+        "active_power_w": 600,
+        "idle_power_w": 2,
+        "cold_field": "fd_aircon_cold_refrigeration",
+        "hot_field": "fd_aircon_waste_heat",
+        "epower": -375,
+        "cold_field_qty": 7,
+        "hot_field_qty": 5
+      },
+      {
+        "id": "freezing",
+        "name": "冷冻",
+        "lower_temperature_c": -18,
+        "upper_temperature_c": -12,
+        "active_power_w": 600,
+        "idle_power_w": 2,
+        "cold_field": "fd_aircon_cold_freezing",
+        "hot_field": "fd_aircon_waste_heat",
+        "epower": -500,
+        "cold_field_qty": 12,
+        "hot_field_qty": 7
+      }
+    ],
+    "breaks_into": [
+      {
+        "item": "sheet_metal",
+        "count": [
+          2,
+          5
+        ]
+      },
+      {
+        "item": "scrap",
+        "count": [
+          4,
+          8
+        ]
+      },
+      {
+        "item": "cu_pipe",
+        "count": [
+          2,
+          5
+        ]
+      },
+      {
+        "item": "cable",
+        "charges": [
+          4,
+          12
+        ]
+      },
+      {
+        "item": "hose",
+        "count": [
+          1,
+          2
+        ]
+      },
+      {
+        "item": "thermostat",
+        "count": 1
+      },
+      {
+        "item": "refrigerant_tank",
+        "count": 1
+      },
+      {
+        "item": "motor_small",
+        "count": 1
+      }
+    ],
+    "damage_reduction": {
+      "all": 20
+    }
   }
 ]

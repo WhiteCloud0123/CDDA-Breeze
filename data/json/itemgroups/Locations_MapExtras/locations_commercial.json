@@ -1758,7 +1758,8 @@
       [ "dehydrator", 30 ],
       [ "vac_sealer", 45 ],
       [ "forge", 5 ],
-      [ "atomic_coffeepot", 2 ]
+      [ "atomic_coffeepot", 2 ],
+      [ "split_air_conditioner", 4 ]
     ]
   },
   {

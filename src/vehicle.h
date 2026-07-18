@@ -527,6 +527,7 @@ struct vehicle_part {
         void serialize( JsonOut &json ) const;
         void deserialize( const JsonObject &data );
 
+        item &get_base();
         const item &get_base() const;
         void set_base( const item &new_base );
         /**

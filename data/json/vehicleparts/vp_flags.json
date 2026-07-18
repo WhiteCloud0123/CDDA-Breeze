@@ -696,5 +696,10 @@
     "id": "LADDER",
     "type": "json_flag",
     "info": "该部件为梯子，可让您从载具上爬下。"
+  },
+  {
+    "id": "WALL_MOUNTED",
+    "type": "json_flag",
+    "info": "该部件固定在墙上，不能直接拖动。"
   }
 ]

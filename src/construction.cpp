@@ -153,6 +153,7 @@ static bool check_no_trap( const tripoint_bub_ms & );
 static bool check_ramp_low( const tripoint_bub_ms & );
 static bool check_ramp_high( const tripoint_bub_ms & );
 static bool check_no_wiring( const tripoint_bub_ms & );
+static bool check_air_conditioner_wall( const tripoint_bub_ms & );
 
 // Special actions to be run post-terrain-mod
 static void done_nothing( const tripoint_bub_ms &, Character & ) {}
@@ -1337,6 +1338,15 @@ bool construct::check_no_wiring( const tripoint_bub_ms &p )
     return !veh_target.has_tag( flag_WIRING );
 }
 
+bool construct::check_air_conditioner_wall( const tripoint_bub_ms &p )
+{
+    if( get_map().veh_at( p ) ) {
+        return false;
+    }
+
+    return air_conditioner_has_clear_direction( p.raw() );
+}
+
 void construct::done_trunk_plank( const tripoint_bub_ms &/*p*/, Character &/*who*/ )
 {
     int num_logs = rng( 2, 3 );
@@ -1523,7 +1533,7 @@ void construct::done_wiring( const tripoint_bub_ms &p, Character &/*who*/ )
     }
 }
 
-void construct::done_appliance( const tripoint_bub_ms &p, Character & )
+void construct::done_appliance( const tripoint_bub_ms &p, Character &player_character )
 {
     map &here = get_map();
     partial_con *pc = here.partial_con_at( p );
@@ -1543,8 +1553,15 @@ void construct::done_appliance( const tripoint_bub_ms &p, Character & )
     const item base = components.front();
     const vpart_id &vpart = vpart_appliance_from_item( base.typeId() );
 
+    const std::optional<units::angle> direction = appliance_install_direction( p.raw(),
+            player_character, vpart );
+    if( !direction ) {
+        here.add_item_or_charges( p, base );
+        add_msg( m_info, _( "你取消了%s的安装，并将其放回地面。" ), base.tname() );
+        return;
+    }
     // TODO: fix point types
-    place_appliance( p.raw(), vpart, base );
+    place_appliance( p.raw(), vpart, base, *direction );
 }
 
 void construct::done_deconstruct( const tripoint_bub_ms &p, Character &player_character )
@@ -2014,7 +2031,8 @@ void load_construction( const JsonObject &jo )
             { "check_no_trap", construct::check_no_trap },
             { "check_ramp_low", construct::check_ramp_low },
             { "check_ramp_high", construct::check_ramp_high },
-            { "check_no_wiring", construct::check_no_wiring }
+            { "check_no_wiring", construct::check_no_wiring },
+            { "check_air_conditioner_wall", construct::check_air_conditioner_wall }
         }
     };
     static const std::map<std::string, void( * )( const tripoint_bub_ms &, Character & )>

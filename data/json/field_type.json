@@ -1648,5 +1648,109 @@
     "display_items": true,
     "phase": "solid",
     "looks_like": "t_dirtmound"
+  },
+  {
+    "id": "fd_aircon_cold_comfort",
+    "type": "field_type",
+    "intensity_levels": [
+      {
+        "name": "舒适冷风",
+        "sym": "&",
+        "convection_temperature_mod": -4
+      },
+      {
+        "color": "blue",
+        "convection_temperature_mod": -8
+      },
+      {
+        "color": "cyan",
+        "convection_temperature_mod": -12
+      }
+    ],
+    "priority": -1,
+    "display_field": false,
+    "decay_amount_factor": 5,
+    "percent_spread": 10,
+    "outdoor_age_speedup": "100 minutes",
+    "half_life": "50 minutes",
+    "phase": "gas"
+  },
+  {
+    "id": "fd_aircon_cold_refrigeration",
+    "type": "field_type",
+    "intensity_levels": [
+      {
+        "name": "冷藏冷风",
+        "sym": "&",
+        "convection_temperature_mod": -12
+      },
+      {
+        "color": "blue",
+        "convection_temperature_mod": -24
+      },
+      {
+        "color": "cyan",
+        "convection_temperature_mod": -36
+      }
+    ],
+    "priority": -1,
+    "display_field": false,
+    "decay_amount_factor": 5,
+    "percent_spread": 12,
+    "outdoor_age_speedup": "100 minutes",
+    "half_life": "55 minutes",
+    "phase": "gas"
+  },
+  {
+    "id": "fd_aircon_cold_freezing",
+    "type": "field_type",
+    "intensity_levels": [
+      {
+        "name": "冷冻冷风",
+        "sym": "&",
+        "convection_temperature_mod": -30
+      },
+      {
+        "color": "blue",
+        "convection_temperature_mod": -50
+      },
+      {
+        "color": "cyan",
+        "convection_temperature_mod": -70
+      }
+    ],
+    "priority": -1,
+    "display_field": false,
+    "decay_amount_factor": 5,
+    "percent_spread": 15,
+    "outdoor_age_speedup": "100 minutes",
+    "half_life": "60 minutes",
+    "phase": "gas"
+  },
+  {
+    "id": "fd_aircon_waste_heat",
+    "type": "field_type",
+    "intensity_levels": [
+      {
+        "name": "空调废热",
+        "sym": "&",
+        "convection_temperature_mod": 12
+      },
+      {
+        "color": "yellow",
+        "convection_temperature_mod": 30
+      },
+      {
+        "color": "light_red",
+        "convection_temperature_mod": 55
+      }
+    ],
+    "priority": -1,
+    "display_field": false,
+    "decay_amount_factor": 5,
+    "percent_spread": 10,
+    "outdoor_age_speedup": "100 minutes",
+    "half_life": "50 minutes",
+    "phase": "gas"
   }
 ]
