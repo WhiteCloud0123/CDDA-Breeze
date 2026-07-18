@@ -355,5 +355,23 @@
     "price_postapoc": 10000,
     "symbol": "T",
     "color": "white"
+  },
+  {
+    "type": "GENERIC",
+    "id": "split_air_conditioner",
+    "looks_like": "f_air_conditioner",
+    "symbol": "A",
+    "color": "light_cyan",
+    "name": {
+      "str": "分体式空调"
+    },
+    "description": "一套完整的分体式空调，室内外换热器被整合成可安装在墙上的整机。将其安装到墙面并接入电网后，可选择舒适、冷藏或冷冻模式。",
+    "longest_side": "110 cm",
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "volume": "220 L",
+    "weight": "55 kg"
   }
 ]

@@ -90,6 +90,7 @@ enum vpart_bitflags : int {
     VPFLAG_BALLOON,
     VPFLAG_PROPELLER,
     VPFLAG_LADDER,
+    VPFLAG_WALL_MOUNTED,
     NUM_VPFLAGS
 };
 /* Flag info:
@@ -144,6 +145,21 @@ struct vpslot_balloon {
 
 struct vpslot_ladder {
     int length = 0;
+};
+
+struct appliance_mode_data {
+    std::string id;
+    translation name;
+    /** CDDA-Breeze：墙挂空调固定模式功耗 */
+    int epower = 0;
+    int cold_field_qty = 3;
+    int hot_field_qty = 3;
+    int lower_temperature_c = 21;
+    int upper_temperature_c = 24;
+    int active_power_w = 600;
+    int idle_power_w = 2;
+    field_type_str_id cold_field;
+    field_type_str_id hot_field;
 };
 
 struct vpslot_workbench {
@@ -406,6 +422,7 @@ class vpart_info
         std::optional<vpslot_propeller> propeller_info;
         std::optional<vpslot_balloon> balloon_info;
         std::optional<vpslot_ladder> ladder_info;
+        std::vector<appliance_mode_data> appliance_modes;
         
         /* map of standard variant names to symbols */
         std::map<std::string, int> symbols;

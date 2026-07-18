@@ -87,6 +87,7 @@
 static const std::string part_location_structure( "structure" );
 static const std::string part_location_center( "center" );
 static const std::string part_location_onroof( "on_roof" );
+static const std::string var_appliance_mode( "appliance_mode" );
 
 static const activity_id ACT_VEHICLE( "ACT_VEHICLE" );
 
@@ -1114,7 +1115,16 @@ int vehicle::part_vpower_w( const int index, const bool at_full_hp ) const
 // for motor consumption see @ref vpart_info::energy_consumption instead
 int vehicle::part_epower_w( const int index ) const
 {
-    int e = part_info( index ).epower;
+    const vehicle_part &pt = parts[index];
+    const vpart_info &info = part_info( index );
+    int e = info.epower;
+    if( !info.appliance_modes.empty() ) {
+        const size_t mode_index = static_cast<size_t>( std::clamp(
+                                      static_cast<int>( pt.base.get_var( var_appliance_mode, 0.0 ) ),
+                                      0, static_cast<int>( info.appliance_modes.size() ) - 1 ) );
+        // CDDA-Breeze：墙挂空调固定模式功耗
+        e = info.appliance_modes[mode_index].epower;
+    }
     if( e < 0 ) {
         return e; // Consumers always draw full power, even if broken
     }
@@ -4814,7 +4824,7 @@ int vehicle::total_accessory_epower_w() const
     for( int part : accessories ) {
         const vehicle_part &vp = parts[part];
         if( vp.enabled ) {
-            epower += vp.info().epower;
+            epower += part_epower_w( part );
         }
     }
     return epower;
@@ -5177,7 +5187,7 @@ void vehicle::power_parts()
 
         for( const vpart_reference &vp : get_enabled_parts( VPFLAG_ENABLED_DRAINS_EPOWER ) ) {
             vehicle_part &pt = vp.part();
-            if( pt.info().epower < 0 ) {
+            if( part_epower_w( static_cast<int>( vp.part_index() ) ) < 0 ) {
                 pt.enabled = false;
             }
         }
@@ -5195,6 +5205,28 @@ void vehicle::power_parts()
             }
         }
         noise_and_smoke( 0, 1_turns ); // refreshes this->vehicle_noise
+    }
+
+    if( calendar::once_every( 5_turns ) ) {
+        map &here = get_map();
+        for( const int part_index : accessories ) {
+            vehicle_part &pt = parts[part_index];
+            const vpart_info &info = pt.info();
+            if( !pt.enabled || info.appliance_modes.empty() || pt.is_unavailable() ) {
+                continue;
+            }
+
+            const int selected = std::clamp( static_cast<int>( pt.base.get_var( var_appliance_mode, 0.0 ) ),
+                                             0, static_cast<int>( info.appliance_modes.size() ) - 1 );
+            const appliance_mode_data &mode = info.appliance_modes[selected];
+            tileray facing( face.dir() + pt.direction );
+            facing.advance();
+            const tripoint unit_pos = global_part_pos3( part_index );
+            const tripoint cold_pos = unit_pos + tripoint( facing.dx(), facing.dy(), 0 );
+            const tripoint hot_pos = unit_pos - tripoint( facing.dx(), facing.dy(), 0 );
+            here.propagate_field( cold_pos, mode.cold_field.id(), mode.cold_field_qty, 3 );
+            here.propagate_field( hot_pos, mode.hot_field.id(), mode.hot_field_qty, 3 );
+        }
     }
 }
 
