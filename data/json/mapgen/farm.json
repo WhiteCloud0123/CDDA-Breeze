@@ -242,7 +242,8 @@
         "                                                "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_shingle_flat_roof", ",": "t_metal_flat_roof" }
+      "terrain": { ".": "t_shingle_flat_roof", ",": "t_metal_flat_roof" },
+      "place_vehicles": [ { "vehicle": "personal_aircraft_large", "x": 14, "y": 10, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {

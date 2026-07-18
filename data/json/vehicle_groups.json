@@ -932,6 +932,21 @@
   },
   {
     "type": "vehicle_group",
+    "id": "personal_aircraft_small",
+    "vehicles": [ [ "aircanoe", 60 ], [ "airboat", 40 ] ]
+  },
+  {
+    "type": "vehicle_group",
+    "id": "personal_aircraft_large",
+    "vehicles": [ [ "airship", 100 ] ]
+  },
+  {
+    "type": "vehicle_group",
+    "id": "personal_aircraft_airport",
+    "vehicles": [ [ "aircanoe", 45 ], [ "airboat", 35 ], [ "airship", 20 ] ]
+  },
+  {
+    "type": "vehicle_group",
     "id": "cars_only",
     "vehicles": [
       [ "4x4_car", 200 ],

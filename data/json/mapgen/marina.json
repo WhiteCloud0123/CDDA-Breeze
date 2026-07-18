@@ -227,7 +227,9 @@
         { "chance": 20, "fuel": 15, "vehicle": "boat_motor_single", "x": 113, "y": 52, "rotation": 270 },
         { "chance": 20, "fuel": 15, "vehicle": "boat_motor_single", "x": 61, "y": 9, "rotation": 90 },
         { "chance": 20, "fuel": 15, "vehicle": "boat_motor_single", "x": 69, "y": 9, "rotation": 90 },
-        { "chance": 20, "fuel": 15, "vehicle": "boat_motor_single", "x": 75, "y": 9, "rotation": 90 }
+        { "chance": 20, "fuel": 15, "vehicle": "boat_motor_single", "x": 75, "y": 9, "rotation": 90 },
+        { "vehicle": "personal_aircraft_large", "x": 80, "y": 78, "chance": 15, "rotation": 180, "fuel": 0, "status": -1 },
+        { "vehicle": "airboat", "x": 60, "y": 89, "chance": 15, "rotation": 270, "fuel": 0, "status": -1 }
       ],
       "place_monsters": [
         { "monster": "GROUP_HOUSE", "x": [ 0, 23 ], "y": [ 53, 71 ], "density": 0.037 },

@@ -70,7 +70,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "aircanoe", "x": 12, "y": 14, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {
@@ -159,7 +160,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "aircanoe", "x": 12, "y": 9, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {
@@ -235,7 +237,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "airboat", "x": 12, "y": 14, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {
@@ -308,7 +311,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "aircanoe", "x": 15, "y": 9, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {
@@ -381,7 +385,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "aircanoe", "x": 8, "y": 10, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {
@@ -525,7 +530,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "aircanoe", "x": 13, "y": 11, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {
@@ -774,7 +780,8 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "terrain": { ".": "t_tar_flat_roof" }
+      "terrain": { ".": "t_tar_flat_roof" },
+      "place_vehicles": [ { "vehicle": "airboat", "x": 13, "y": 13, "chance": 15, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {

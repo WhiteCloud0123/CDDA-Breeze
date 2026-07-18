@@ -33,7 +33,8 @@
         ".cccccccccccccccccccccccccccccccccccccccccccccccc_d____________________...........................____________________..ccccccccccccccccccccccc.",
         "................................................c_d____________________..........................._b________________b_.........................."
       ],
-      "terrain": { ".": "t_region_groundcover_urban", "_": "t_pavement", "b": "t_pavement_y", "c": "t_chainfence", "d": "t_conveyor" }
+      "terrain": { ".": "t_region_groundcover_urban", "_": "t_pavement", "b": "t_pavement_y", "c": "t_chainfence", "d": "t_conveyor" },
+      "place_vehicles": [ { "vehicle": "personal_aircraft_airport", "x": 85, "y": 12, "chance": 25, "rotation": 0, "fuel": 0, "status": -1 } ]
     }
   },
   {

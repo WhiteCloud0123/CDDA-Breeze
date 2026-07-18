@@ -553,7 +553,8 @@
         "/%fss_,___________,_ssf/",
         "/%fss_,___________,_ssf/"
       ],
-      "palettes": [ "airport_palette" ]
+      "palettes": [ "airport_palette" ],
+      "place_vehicles": [ { "vehicle": "personal_aircraft_airport", "x": 12, "y": 14, "chance": 25, "rotation": 90, "fuel": 0, "status": -1 } ]
     }
   },
   {
