@@ -63,6 +63,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
+
 import android.preference.PreferenceManager;
 
 import org.json.JSONArray;
@@ -1045,14 +1048,67 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         View decorView = getWindow().getDecorView();
         decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                if (!insets.isVisible(WindowInsets.Type.ime())) {
+            // Track the previous IME visibility state and debounce focus-lost
+            // notifications. onApplyWindowInsets fires many times during the IME
+            // show animation. The InsetsController's show(ime(), fromIme=true)
+            // can briefly make the IME insets visible mid-animation, and when the
+            // show is subsequently cancelled the insets revert to not-visible.
+            // Without debouncing, this transient visible->not-visible transition
+            // triggers onNativeKeyboardFocusLost() -> SDL_StopTextInput() ->
+            // hideSoftInputFromWindow(), which creates a pending hide request
+            // that causes the next showSoftInput() to be immediately cancelled,
+            // resulting in a rapid show/hide jitter loop.
+            //
+            // The 500ms debounce filters out these transient changes while still
+            // detecting genuine user-initiated keyboard dismissal (the IME stays
+            // hidden for well over 500ms in that case).
+            private boolean imeWasVisible = false;
+            private final Runnable imeHideNotifier = new Runnable() {
+                @Override
+                public void run() {
                     SDLActivity.onNativeKeyboardFocusLost();
                 }
+            };
+
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                boolean imeVisible = insets.isVisible(WindowInsets.Type.ime());
+                if (imeVisible) {
+                    // IME is visible — cancel any pending focus-lost notification.
+                    commandHandler.removeCallbacks(imeHideNotifier);
+                } else if (imeWasVisible) {
+                    // IME transitioned from visible to not-visible.
+                    // Wait 500ms before notifying, in case the IME becomes
+                    // visible again (transient cancellation during show animation).
+                    commandHandler.removeCallbacks(imeHideNotifier);
+                    commandHandler.postDelayed(imeHideNotifier, 500);
+                }
+                imeWasVisible = imeVisible;
                 return insets;
             }
         });
+
+        // On Android 13+ (API 33+) the system may route the back gesture/button
+        // through OnBackInvokedDispatcher instead of dispatchKeyEvent()/onBackPressed().
+        // Only forward the back signal to native here and perform NO keyboard
+        // operations in Java. The native layer owns the decision (show/hide the
+        // soft keyboard or run a game back action) based on the full game state,
+        // which decouples us from the IME's own OnBackInvokedCallback and avoids
+        // the show/hide/show/hide jitter seen on Android 15 3-button navigation.
+        if (Build.VERSION.SDK_INT >= 33 /* Android 13.0 (T) */) {
+            OnBackInvokedDispatcher dispatcher = getOnBackInvokedDispatcher();
+            if (dispatcher != null) {
+                dispatcher.registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_OVERLAY,
+                    new OnBackInvokedCallback() {
+                        @Override
+                        public void onBackInvoked() {
+                            SDLActivity.nativeSendBackEvent();
+                        }
+                    }
+                );
+            }
+        }
 
     }
 
@@ -1555,6 +1611,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public static native void nativePause();
 
     public static native void nativeResume();
+
+    // Called from OnBackInvokedCallback (Android 13+) to forward the back
+    // gesture/button to the native layer. The native layer decides whether to
+    // toggle the on-screen keyboard or perform a game back action, keeping the
+    // Java layer decoupled from the IME's own OnBackInvokedCallback.
+    public static native void nativeSendBackEvent();
 
     public static native void nativeFocusChanged(boolean hasFocus);
 

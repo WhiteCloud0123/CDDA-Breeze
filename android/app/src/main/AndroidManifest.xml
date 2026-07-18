@@ -59,6 +59,7 @@
                   android:keepScreenOn="true"
                   android:screenOrientation="userLandscape"
                   android:configChanges="keyboardHidden|keyboard|orientation|screenSize|navigation"
+                  android:enableOnBackInvokedCallback="true"
                   >
         </activity>
     </application>

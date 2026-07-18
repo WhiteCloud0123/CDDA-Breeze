@@ -505,6 +505,37 @@ JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeButtonClick(
     env->ReleaseStringUTFChars(text,c_str);
 }
 
+// Called from the Java OnBackInvokedCallback (Android 13+) to forward the back
+// gesture/button to the native layer. The Java layer performs NO keyboard
+// operations, keeping it decoupled from the IME's own OnBackInvokedCallback
+// (which would otherwise race with us and cause show/hide/show/hide jitter on
+// Android 15 3-button navigation).
+//
+// We synthesize a SDLK_AC_BACK key down/up pair and push them onto the SDL event
+// queue. SDL_PushEvent is thread-safe, so this is safe to call from the Java UI
+// thread; the events are processed on the native thread by the existing
+// SDL_KEYDOWN/SDL_KEYUP handlers in CheckMessages(), which already toggle the
+// on-screen keyboard based on SDL_IsTextInputActive() and drive the quick-shortcut
+// long-press behaviour. This reuses the exact same decision logic that the
+// Android <=12 dispatchKeyEvent() path uses, so behaviour stays consistent.
+JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeSendBackEvent(
+        JNIEnv *env, jclass jcls) {
+    ( void )env;
+    ( void )jcls;
+    SDL_Event ev;
+    SDL_memset( &ev, 0, sizeof( ev ) );
+    ev.type = SDL_KEYDOWN;
+    ev.key.keysym.sym = SDLK_AC_BACK;
+    ev.key.state = SDL_PRESSED;
+    SDL_PushEvent( &ev );
+
+    SDL_memset( &ev, 0, sizeof( ev ) );
+    ev.type = SDL_KEYUP;
+    ev.key.keysym.sym = SDLK_AC_BACK;
+    ev.key.state = SDL_RELEASED;
+    SDL_PushEvent( &ev );
+}
+
 } // "C"
 
 SDL_Rect get_android_render_rect( float DisplayBufferWidth, float DisplayBufferHeight )
@@ -2703,14 +2734,35 @@ static bool window_focus = false;
 static bool text_input_active_when_regaining_focus = false;
 #endif
 
+// Native's own view of whether the on-screen soft keyboard is currently shown.
+// This is deliberately kept SEPARATE from SDL's internal text_input_active flag
+// (queried via SDL_IsTextInputActive()). On Android 15 the IME's own
+// OnBackInvokedCallback hides the keyboard, which triggers onNativeKeyboardFocusLost
+// -> SDL_StopTextInput() inside libSDL2.so, flipping SDL's flag to false behind our
+// back. If the SDLK_AC_BACK KEYUP handler then read SDL_IsTextInputActive(), it would
+// see false and re-show the keyboard right after the IME hid it (show/hide jitter).
+// g_keyboard_visible is only updated by our StartTextInput()/StopTextInput() wrappers,
+// so it reflects OUR intent and is immune to the IME's interference.
+static bool g_keyboard_visible = false;
+
 void StartTextInput()
 {
-    // prevent sending spurious empty SDL_TEXTEDITING events
-    if( SDL_IsTextInputActive() == SDL_TRUE ) {
+    // Use g_keyboard_visible instead of SDL_IsTextInputActive() for the early
+    // return. On Android 15, onNativeKeyboardFocusLost() (fired from Java's
+    // onApplyWindowInsetsListener) calls SDL_StopTextInput() inside libSDL2.so,
+    // flipping SDL's text_input_active flag to false behind our back. If we
+    // checked SDL_IsTextInputActive() here, we would see false and proceed to
+    // call SDL_StartTextInput() -> showSoftInput() again, interrupting the
+    // ongoing IME show animation and creating a rapid show/hide jitter loop.
+    // g_keyboard_visible tracks OUR intent and is only updated by our
+    // StartTextInput()/StopTextInput() wrappers, so it is immune to the IME's
+    // interference.
+    if( g_keyboard_visible ) {
         return;
     }
 #if defined(__ANDROID__)
     SDL_StartTextInput();
+    g_keyboard_visible = true;
 #else
     if( window_focus ) {
         SDL_StartTextInput();
@@ -2724,6 +2776,7 @@ void StopTextInput()
 {
 #if defined(__ANDROID__)
     SDL_StopTextInput();
+    g_keyboard_visible = false;
 #else
     if( window_focus ) {
         SDL_StopTextInput();
@@ -2749,10 +2802,28 @@ static void CheckMessages()
 
     uint32_t ticks = SDL_GetTicks();
 
-    // Force text input mode if hardware keyboard is available.
-    if( android_is_hardware_keyboard_available() && !SDL_IsTextInputActive() ) {
-        StartTextInput();
+    // Sync g_keyboard_visible with SDL's internal text_input_active flag.
+    // onNativeKeyboardFocusLost() (fired from Java's onApplyWindowInsetsListener
+    // when the IME transitions from visible to not-visible, debounced 500ms)
+    // calls SDL_StopTextInput() inside libSDL2.so, which clears SDL's
+    // text_input_active flag without going through our StopTextInput() wrapper.
+    // We detect this divergence and update g_keyboard_visible to reflect the
+    // actual keyboard state, so the back-button handler works correctly.
+    if( g_keyboard_visible && SDL_IsTextInputActive() == SDL_FALSE ) {
+        g_keyboard_visible = false;
     }
+
+    // NOTE: The previous "force text input when hardware keyboard is available"
+    // code was removed. It caused the soft keyboard to be always shown on
+    // devices/emulators with a hardware keyboard, because it called
+    // StartTextInput() (which calls SDL_StartTextInput() -> showSoftInput())
+    // every frame whenever g_keyboard_visible was false. When the user pressed
+    // back to hide the keyboard, it would reappear on the next frame.
+    // On Android, hardware keyboard key events are always processed as
+    // keyboard_char mode (see the #if !defined(__ANDROID__) guard in the
+    // SDL_KEYDOWN handler below), so the hardware keyboard still works for
+    // game controls without text input mode being active. The user can toggle
+    // the soft keyboard via the back button when they need to type text.
 
     // Make sure the SDL surface view is visible, otherwise the "Z" loading screen is visible.
     if( needs_sdl_surface_visibility_refresh ) {
@@ -3061,7 +3132,7 @@ static void CheckMessages()
                             g->quicksave();
                         }
                         if(SDL_IsTextInputActive()) {
-                            SDL_StopTextInput();
+                            StopTextInput();
                         }
                         break;
                     // SDL sends a window size changed event whenever the screen rotates orientation
@@ -3107,10 +3178,6 @@ static void CheckMessages()
                     case SDL_WINDOWEVENT_RESTORED:
 #if defined(__ANDROID__)
                         needs_sdl_surface_visibility_refresh = true;
-                        if( android_is_hardware_keyboard_available() ) {
-                            StopTextInput();
-                            StartTextInput();
-                        }
 #endif
                         break;
                     case SDL_WINDOWEVENT_RESIZED:
@@ -3184,7 +3251,13 @@ static void CheckMessages()
                 if( ev.key.keysym.sym == SDLK_AC_BACK ) {
                     if( ticks - ac_back_down_time <= static_cast<uint32_t>
                         (android_initial_delay) ) {
-                        if( SDL_IsTextInputActive() ) {
+                        // Use our own g_keyboard_visible instead of SDL_IsTextInputActive().
+                        // On Android 15 the IME's OnBackInvokedCallback hides the keyboard
+                        // and (via onNativeKeyboardFocusLost) flips SDL's internal flag to
+                        // false before we get here. Reading SDL_IsTextInputActive() would
+                        // therefore re-show the keyboard right after the IME hid it.
+                        // g_keyboard_visible tracks our own intent and is immune to that.
+                        if( g_keyboard_visible ) {
                             StopTextInput();
                         } else {
                             StartTextInput();
