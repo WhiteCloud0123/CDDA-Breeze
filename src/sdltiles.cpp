@@ -469,16 +469,6 @@ void draw_virtual_joystick();
 
 static bool quick_shortcuts_enabled = true;
 
-// native 层自己对软键盘是否显示的判断。
-// 这个变量刻意与 SDL 内部的 text_input_active 标志（通过 SDL_IsTextInputActive() 查询）
-// 分开维护。在 Android 15 上，IME 自身的 OnBackInvokedCallback 隐藏键盘时会触发
-// onNativeKeyboardFocusLost -> libSDL2.so 内部的 SDL_StopTextInput()，在我们不知情的
-// 情况下把 SDL 的标志翻转为 false。如果 SDLK_AC_BACK KEYUP 处理逻辑读取
-// SDL_IsTextInputActive()，就会看到 false 并在 IME 刚隐藏键盘后立即重新显示
-// （show/hide 抖动）。g_keyboard_visible 只由我们的 StartTextInput()/StopTextInput()
-// 包装器更新，反映的是我们自己的意图，不受 IME 干扰。
-static bool g_keyboard_visible = false;
-
 // For previewing the terminal size with a transparent rectangle overlay when user is adjusting it in the settings
 static int preview_terminal_width = -1;
 static int preview_terminal_height = -1;
@@ -2739,6 +2729,18 @@ void android_vibrate()
     }
 }
 #endif
+
+// native 层自己对软键盘是否显示的判断。
+// 这个变量刻意与 SDL 内部的 text_input_active 标志（通过 SDL_IsTextInputActive() 查询）
+// 分开维护。在 Android 15 上，IME 自身的 OnBackInvokedCallback 隐藏键盘时会触发
+// onNativeKeyboardFocusLost -> libSDL2.so 内部的 SDL_StopTextInput()，在我们不知情的
+// 情况下把 SDL 的标志翻转为 false。如果 SDLK_AC_BACK KEYUP 处理逻辑读取
+// SDL_IsTextInputActive()，就会看到 false 并在 IME 刚隐藏键盘后立即重新显示
+// （show/hide 抖动）。g_keyboard_visible 只由 StartTextInput()/StopTextInput()
+// 包装器更新，反映的是我们自己的意图，不受 IME 干扰。
+// 该变量定义在全局作用域（而非 #if defined(__ANDROID__) 块内），因为 StartTextInput()
+// 和 StopTextInput() 是跨平台函数，在非 Android 构建（如 MSVC）中也需要能访问它。
+static bool g_keyboard_visible = false;
 
 #if !defined(__ANDROID__)
 static bool window_focus = false;
