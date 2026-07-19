@@ -8,7 +8,7 @@
   { "type": "faction_camp_label", "overmap_terrain": "robofachq_surface_entrance", "name": "Hub 01" },
   { "type": "faction_camp_label", "overmap_terrain": "isolated_house_farm_gunsmith", "name": "科迪与杰伊" },
   { "type": "faction_camp_label", "overmap_terrain": "horse_farm_isherwood_6", "name": "伊舍伍德马场" },
-  { "type": "faction_camp_label", "overmap_terrain": "farm_isherwood_2", "name": "伊舍伍德山庄" },
+  { "type": "faction_camp_label", "overmap_terrain": "farm_isherwood_2", "name": "伊舍伍德家族" },
   { "type": "faction_camp_label", "overmap_terrain": "dairy_farm_isherwood_SW", "name": "伊舍伍德农场" },
   { "type": "faction_camp_label", "overmap_terrain": "campus_media_0_0_0", "name": "大图书馆" },
   { "type": "faction_camp_label", "overmap_terrain": "chemical_lab_ocu", "name": "化学家" },
