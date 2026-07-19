@@ -63,6 +63,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
+
 import android.preference.PreferenceManager;
 
 import org.json.JSONArray;
@@ -1045,14 +1048,61 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         View decorView = getWindow().getDecorView();
         decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                if (!insets.isVisible(WindowInsets.Type.ime())) {
+            // 跟踪 IME 的前一次可见状态，并对"焦点丢失"通知做防抖。
+            // onApplyWindowInsets 在 IME 显示动画期间会多次回调。InsetsController 的
+            // show(ime(), fromIme=true) 会在动画中途短暂地让 IME insets 变为可见，
+            // 当显示随后被取消时 insets 又恢复为不可见。如果不做防抖，这个瞬时的
+            // 可见->不可见转换会触发 onNativeKeyboardFocusLost() -> SDL_StopTextInput()
+            // -> hideSoftInputFromWindow()，产生一个 pending hide 请求，导致下一次
+            // showSoftInput() 立即被取消，形成快速的 show/hide 抖动循环。
+            //
+            // 500ms 防抖可以过滤掉这些瞬时变化，同时仍能检测到真正的用户主动关闭键盘
+            // （那种情况下 IME 会持续隐藏远超 500ms）。
+            private boolean imeWasVisible = false;
+            private final Runnable imeHideNotifier = new Runnable() {
+                @Override
+                public void run() {
                     SDLActivity.onNativeKeyboardFocusLost();
                 }
+            };
+
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                boolean imeVisible = insets.isVisible(WindowInsets.Type.ime());
+                if (imeVisible) {
+                    // IME 可见 - 取消任何待处理的"焦点丢失"通知
+                    commandHandler.removeCallbacks(imeHideNotifier);
+                } else if (imeWasVisible) {
+                    // IME 从可见变为不可见。延迟 500ms 再通知，以防 IME 再次变为可见
+                    // （显示动画中的瞬时取消）
+                    commandHandler.removeCallbacks(imeHideNotifier);
+                    commandHandler.postDelayed(imeHideNotifier, 500);
+                }
+                imeWasVisible = imeVisible;
                 return insets;
             }
         });
+
+        // 在 Android 13+（API 33+）上，系统可能通过 OnBackInvokedDispatcher
+        // 而非 dispatchKeyEvent()/onBackPressed() 来路由返回手势/按键。
+        // 这里只把返回信号转发给 native 层，在 Java 层不做任何键盘操作。
+        // native 层根据完整的游戏状态决定行为（显示/隐藏软键盘或执行游戏返回操作），
+        // 这使 Java 层与 IME 自身的 OnBackInvokedCallback 解耦，避免了 Android 15
+        // 三键导航下 show/hide/show/hide 抖动。
+        if (Build.VERSION.SDK_INT >= 33 /* Android 13.0 (T) */) {
+            OnBackInvokedDispatcher dispatcher = getOnBackInvokedDispatcher();
+            if (dispatcher != null) {
+                dispatcher.registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_OVERLAY,
+                    new OnBackInvokedCallback() {
+                        @Override
+                        public void onBackInvoked() {
+                            SDLActivity.nativeSendBackEvent();
+                        }
+                    }
+                );
+            }
+        }
 
     }
 
@@ -1555,6 +1605,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public static native void nativePause();
 
     public static native void nativeResume();
+
+    // 由 OnBackInvokedCallback（Android 13+）调用，将返回手势/按键转发给 native 层。
+    // native 层决定是切换软键盘显示还是执行游戏返回操作，使 Java 层与 IME 自身的
+    // OnBackInvokedCallback 解耦。
+    public static native void nativeSendBackEvent();
 
     public static native void nativeFocusChanged(boolean hasFocus);
 
