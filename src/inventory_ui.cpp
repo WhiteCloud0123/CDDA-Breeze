@@ -3723,13 +3723,14 @@ bool pickup_selector::wield( int &count )
     }
     int charges = std::min( it->charges, count );
 
-    if( u.can_wield( *it ).success() ) {
+    const ret_val<void> wield_result = u.can_wield( *it );
+    if( wield_result.success() ) {
         remove_from_to_use( it );
         add_reopen_activity();
         u.assign_activity( player_activity( wield_activity_actor( it, charges ) ) );
         return true;
     } else {
-        popup_getkey( _( "You can't wield the %s." ), it->display_name() );
+        popup_getkey( "%s", wield_result.c_str() );
     }
 
     return false;
