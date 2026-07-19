@@ -469,6 +469,16 @@ void draw_virtual_joystick();
 
 static bool quick_shortcuts_enabled = true;
 
+// native 层自己对软键盘是否显示的判断。
+// 这个变量刻意与 SDL 内部的 text_input_active 标志（通过 SDL_IsTextInputActive() 查询）
+// 分开维护。在 Android 15 上，IME 自身的 OnBackInvokedCallback 隐藏键盘时会触发
+// onNativeKeyboardFocusLost -> libSDL2.so 内部的 SDL_StopTextInput()，在我们不知情的
+// 情况下把 SDL 的标志翻转为 false。如果 SDLK_AC_BACK KEYUP 处理逻辑读取
+// SDL_IsTextInputActive()，就会看到 false 并在 IME 刚隐藏键盘后立即重新显示
+// （show/hide 抖动）。g_keyboard_visible 只由我们的 StartTextInput()/StopTextInput()
+// 包装器更新，反映的是我们自己的意图，不受 IME 干扰。
+static bool g_keyboard_visible = false;
+
 // For previewing the terminal size with a transparent rectangle overlay when user is adjusting it in the settings
 static int preview_terminal_width = -1;
 static int preview_terminal_height = -1;
@@ -2347,15 +2357,20 @@ void draw_terminal_size_preview()
     }
 }
 
-// Draw quick shortcuts on top of the game view
+// 在游戏画面上绘制快捷按键栏
+// 当软键盘显示时跳过绘制，避免与 IME 遮挡重叠；其余情况（包括启动、蓝牙键盘
+// 连接但软键盘隐藏、用户按返回键隐藏软键盘后）都显示快捷按键栏。
+// 这里使用 g_keyboard_visible（native 维护的意图状态）而非 SDL_IsTextInputActive()，
+// 因为 SDL 内部的 text_input_active 标志会被 IME 的 OnBackInvokedCallback 异步
+// 修改，导致启动时或键盘隐藏后快捷键栏意外不显示。
 void draw_quick_shortcuts()
 {
 
     if( !quick_shortcuts_enabled ||
-        SDL_IsTextInputActive() ||
+        g_keyboard_visible ||
         (android_hide_holds && !is_quick_shortcut_touch && finger_down_time > 0 &&
           SDL_GetTicks() - finger_down_time >= static_cast<uint32_t>(
-              android_initial_delay) ) ) { // player is swipe + holding in a direction
+              android_initial_delay) ) ) { // 玩家正在滑动并按住某个方向
         return;
     }
 
@@ -2729,16 +2744,6 @@ void android_vibrate()
 static bool window_focus = false;
 static bool text_input_active_when_regaining_focus = false;
 #endif
-
-// native 层自己对软键盘是否显示的判断。
-// 这个变量刻意与 SDL 内部的 text_input_active 标志（通过 SDL_IsTextInputActive() 查询）
-// 分开维护。在 Android 15 上，IME 自身的 OnBackInvokedCallback 隐藏键盘时会触发
-// onNativeKeyboardFocusLost -> libSDL2.so 内部的 SDL_StopTextInput()，在我们不知情的
-// 情况下把 SDL 的标志翻转为 false。如果 SDLK_AC_BACK KEYUP 处理逻辑读取
-// SDL_IsTextInputActive()，就会看到 false 并在 IME 刚隐藏键盘后立即重新显示
-// （show/hide 抖动）。g_keyboard_visible 只由我们的 StartTextInput()/StopTextInput()
-// 包装器更新，反映的是我们自己的意图，不受 IME 干扰。
-static bool g_keyboard_visible = false;
 
 void StartTextInput()
 {
