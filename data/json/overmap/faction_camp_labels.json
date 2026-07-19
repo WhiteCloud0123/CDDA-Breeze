@@ -1,7 +1,6 @@
 [
   { "type": "faction_camp_label", "overmap_terrain": "evac_center_13", "name": "难民中心" },
   { "type": "faction_camp_label", "overmap_terrain": "exodii_base_x1y2z0", "name": "流亡族" },
-  { "type": "faction_camp_label", "overmap_terrain": "hive", "name": "？？？" },
   { "type": "faction_camp_label", "overmap_terrain": "cabin_lapin", "name": "拉宾" },
   { "type": "faction_camp_label", "overmap_terrain": "prison_island_1_6", "name": "越狱囚犯" },
   { "type": "faction_camp_label", "overmap_terrain": "godco_5", "name": "新英格兰教会社区" },
