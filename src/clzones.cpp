@@ -828,10 +828,11 @@ bool zone_manager::has_near( const zone_type_id &type, const tripoint_abs_ms &wh
 {
     const auto &point_set = get_point_set( type, fac );
     for( const tripoint_abs_ms &point : point_set ) {
-        if( point.z() == where.z() ) {
-            if( square_dist( point, where ) <= range ) {
-                return true;
-            }
+        // Static zones can be reached through stairs and ramps, so include
+        // nearby zones on other z-levels.  Vehicle zones remain restricted to
+        // the current z-level because their cached positions are level-local.
+        if( square_dist( point, where ) <= range ) {
+            return true;
         }
     }
 
@@ -931,12 +932,10 @@ std::unordered_set<tripoint_abs_ms> zone_manager::get_near( const zone_type_id &
     std::unordered_set<tripoint_abs_ms> near_point_set;
 
     for( const tripoint_abs_ms &point : point_set ) {
-        if( point.z() == where.z() ) {
-            if( square_dist( point, where ) <= range ) {
-                if( ( type != zone_type_LOOT_CUSTOM && type != zone_type_LOOT_ITEM_GROUP ) ||
-                    ( it != nullptr && custom_loot_has( point, it, type, fac ) ) ) {
-                    near_point_set.insert( point );
-                }
+        if( square_dist( point, where ) <= range ) {
+            if( ( type != zone_type_LOOT_CUSTOM && type != zone_type_LOOT_ITEM_GROUP ) ||
+                ( it != nullptr && custom_loot_has( point, it, type, fac ) ) ) {
+                near_point_set.insert( point );
             }
         }
     }
