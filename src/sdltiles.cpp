@@ -32,6 +32,7 @@
 #endif
 
 #include "avatar.h"
+#include "basecamp.h"
 #include "cached_options.h"
 #include "cata_assert.h"
 #include "cata_scope_helpers.h"
@@ -1171,7 +1172,7 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
 
         // the tiles on the overmap are overmap tiles, so we need to use
         // coordinate conversions to make sure we're in the right place.
-        const int radius = project_to<coords::sm>( tripoint_abs_omt( std::min( max_col, max_row ),
+        const int radius = project_to<coords::sm>( tripoint_abs_omt( std::max( max_col, max_row ),
                            0, 0 ) ).x() / 2;
 
         for( const city_reference &city : overmap_buffer.get_cities_near(
@@ -1186,7 +1187,9 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                  project_to<coords::sm>( center_abs_omt ), radius ) ) {
             const tripoint_abs_omt camp_center = project_to<coords::omt>( camp.abs_sm_pos );
             if( overmap_buffer.seen( camp_center ) && overmap_area.contains( camp_center.raw() ) ) {
-                label_bg( camp.abs_sm_pos, camp.camp->name );
+                const std::string camp_name = camp.camp->camp_name().empty() ?
+                                              _( "Faction Camp" ) : camp.camp->camp_name();
+                label_bg( camp.abs_sm_pos, camp_name );
             }
         }
     }

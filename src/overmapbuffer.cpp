@@ -1454,14 +1454,13 @@ std::vector<camp_reference> overmapbuffer::get_camps_near( const tripoint_abs_sm
     std::vector<camp_reference> result;
     for( overmap *om : get_overmaps_near( location, radius ) ) {
         result.reserve( result.size() + om->camps.size() );
-        std::transform( om->camps.begin(), om->camps.end(), std::back_inserter( result ),
-        [&]( basecamp & element ) {
-            const tripoint_abs_omt camp_pt = element.camp_omt_pos();
-            const tripoint_abs_sm camp_sm = project_to<coords::sm>( camp_pt );
+        for( basecamp &camp : om->camps ) {
+            const tripoint_abs_sm camp_sm = project_to<coords::sm>( camp.camp_omt_pos() );
             const int distance = rl_dist( camp_sm, location );
-
-            return camp_reference{ &element, camp_sm, distance };
-        } );
+            if( distance <= radius ) {
+                result.push_back( camp_reference{ &camp, camp_sm, distance } );
+            }
+        }
     }
     std::sort( result.begin(), result.end(), []( const camp_reference & lhs,
     const camp_reference & rhs ) {
