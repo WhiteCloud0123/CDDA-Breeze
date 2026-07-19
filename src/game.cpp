@@ -6871,8 +6871,9 @@ void game::zones_manager()
         mgr.cache_avatar_location();
     }
 
-    // get zones on the same z-level, with distance between player and
-    // zone center point <= 50 or all zones, if show_all_zones is true
+    // Show nearby zones on every z-level.  This keeps the manager UI in
+    // sync with cross-z loot sorting; distant zones are still hidden unless
+    // SHOW_ALL_ZONES is enabled.
     auto get_zones = [&]() {
         std::vector<zone_manager::ref_zone_data> zones;
         if( show_all_zones ) {
@@ -6881,8 +6882,7 @@ void game::zones_manager()
             const tripoint_abs_ms u_abs_pos = u.get_location();
             for( zone_manager::ref_zone_data &ref : mgr.get_zones( zones_faction ) ) {
                 const tripoint_abs_ms &zone_abs_pos = ref.get().get_center_point();
-                if( u_abs_pos.z() == zone_abs_pos.z() &&
-                    rl_dist( u_abs_pos, zone_abs_pos ) <= 50 ) {
+                if( rl_dist( u_abs_pos, zone_abs_pos ) <= MAX_VIEW_DISTANCE ) {
                     zones.emplace_back( ref );
                 }
             }

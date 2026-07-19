@@ -2329,6 +2329,12 @@ void activity_on_turn_move_loot( player_activity &act, Character &you )
         bool unload_molle = false;
         bool unload_always = false;
 
+        // A legacy loot-sort turn may inspect the same destination for many
+        // items.  Cache cross-z reachability for this turn so enabling
+        // multi-level zones does not run A* once per item.
+        std::set<tripoint_abs_ms> reachable_cross_z_destinations;
+        std::set<tripoint_abs_ms> unreachable_cross_z_destinations;
+
         std::vector<zone_data const *> const zones = mgr.get_zones_at( src, zone_type_zone_unload_all,
                 _fac_id( you ) );
 
@@ -2471,6 +2477,33 @@ void activity_on_turn_move_loot( player_activity &act, Character &you )
                 const tripoint_bub_ms dest_loc = here.bub_from_abs( dest );
                 vehicle *dest_veh;
                 int dest_part;
+
+                // The legacy sorter transfers items directly after charging a
+                // movement cost.  Before allowing that transfer between
+                // z-levels, verify that the character could actually reach the
+                // destination through stairs or ramps.  This prevents items
+                // from passing through sealed floors merely because two zones
+                // share nearby x/y coordinates.
+                if( dest.z() != src.z() ) {
+                    if( unreachable_cross_z_destinations.count( dest ) > 0 ) {
+                        continue;
+                    }
+                    if( reachable_cross_z_destinations.count( dest ) == 0 ) {
+                        std::vector<tripoint_bub_ms> route;
+                        if( here.passable( dest_loc ) ) {
+                            route = here.route( you.pos_bub(), dest_loc,
+                                                you.get_pathfinding_settings(),
+                                                you.get_path_avoid() );
+                        } else {
+                            route = route_adjacent( you, dest_loc );
+                        }
+                        if( route.empty() ) {
+                            unreachable_cross_z_destinations.insert( dest );
+                            continue;
+                        }
+                        reachable_cross_z_destinations.insert( dest );
+                    }
+                }
 
                 //Check destination for cargo part
                 if( const std::optional<vpart_reference> vp =
