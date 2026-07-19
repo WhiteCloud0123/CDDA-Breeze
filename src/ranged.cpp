@@ -3928,21 +3928,10 @@ bool gunmode_checks_common( avatar &you, const map &m, std::vector<std::string> 
         result = false;
     }
 
-    // Check that passed gun mode is valid and we are able to use it.  This check is
-    // intentionally silent because callers may probe several modes before finding one
-    // that can fire.  Any useful failure reason is queued and only shown if all modes fail.
-    if( !gmode ) {
-        messages.push_back( _( "The selected firing mode is invalid." ) );
-        result = false;
-    } else if( !you.can_use( *gmode, item(), false ) ) {
-        if( !you.meets_requirements( *gmode ) ) {
-            messages.push_back( string_format( _( "You need at least %1$s to use this %2$s." ),
-                                               you.enumerate_unmet_requirements( *gmode ),
-                                               gmode->tname() ) );
-        } else {
-            messages.push_back( string_format( _( "You can't currently fire your %s." ),
-                                               gmode->tname() ) );
-        }
+    // Check that passed gun mode is valid and we are able to use it
+    if( !( gmode && you.can_use( *gmode ) ) ) {
+        messages.push_back( string_format( _( "You can't currently fire your %s." ),
+                                           gmode->tname() ) );
         result = false;
     }
 

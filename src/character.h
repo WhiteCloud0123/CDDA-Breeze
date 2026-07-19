@@ -2079,12 +2079,11 @@ class Character : public Creature, public visitable
 
         /**
          * Checks if character stats and skills meet minimum requirements for the item.
-         * Optionally prints an appropriate message if requirements are not met.
+         * Prints an appropriate message if requirements not met.
          * @param it Item we are checking
          * @param context optionally override effective item when checking contextual skills
-         * @param show_message if false, perform the check without writing failure messages
          */
-        bool can_use( const item &it, const item &context = item(), bool show_message = true ) const;
+        bool can_use( const item &it, const item &context = item() ) const;
         /**
          * Check character capable of wearing an item.
          * @param it Thing to be worn
