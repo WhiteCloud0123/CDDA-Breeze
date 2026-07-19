@@ -1,0 +1,18 @@
+[
+  { "type": "faction_camp_label", "overmap_terrain": "evac_center_13", "name": "难民中心" },
+  { "type": "faction_camp_label", "overmap_terrain": "exodii_base_x1y2z0", "name": "流亡族" },
+  { "type": "faction_camp_label", "overmap_terrain": "hive", "name": "？？？" },
+  { "type": "faction_camp_label", "overmap_terrain": "cabin_lapin", "name": "拉宾" },
+  { "type": "faction_camp_label", "overmap_terrain": "prison_island_1_6", "name": "越狱囚犯" },
+  { "type": "faction_camp_label", "overmap_terrain": "godco_5", "name": "新英格兰教会社区" },
+  { "type": "faction_camp_label", "overmap_terrain": "ranch_camp_67", "name": "塔科马公社" },
+  { "type": "faction_camp_label", "overmap_terrain": "robofachq_surface_entrance", "name": "Hub 01" },
+  { "type": "faction_camp_label", "overmap_terrain": "isolated_house_farm_gunsmith", "name": "科迪与杰伊" },
+  { "type": "faction_camp_label", "overmap_terrain": "horse_farm_isherwood_6", "name": "伊舍伍德马场" },
+  { "type": "faction_camp_label", "overmap_terrain": "farm_isherwood_2", "name": "伊舍伍德山庄" },
+  { "type": "faction_camp_label", "overmap_terrain": "dairy_farm_isherwood_SW", "name": "伊舍伍德农场" },
+  { "type": "faction_camp_label", "overmap_terrain": "campus_media_0_0_0", "name": "大图书馆" },
+  { "type": "faction_camp_label", "overmap_terrain": "chemical_lab_ocu", "name": "化学家" },
+  { "type": "faction_camp_label", "overmap_terrain": "smallscrapyard_ocu", "name": "废品商" },
+  { "type": "faction_camp_label", "overmap_terrain": "lumbermill_1_1_ocu", "name": "幸存者伐木场" }
+]

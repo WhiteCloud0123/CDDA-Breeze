@@ -1448,6 +1448,31 @@ std::vector<radio_tower_reference> overmapbuffer::find_all_radio_stations()
     return result;
 }
 
+std::vector<faction_camp_reference> overmapbuffer::get_faction_camps_near(
+    const tripoint_abs_omt &location, int x_radius, int y_radius )
+{
+    std::vector<faction_camp_reference> result;
+    if( location.z() != 0 ) {
+        return result;
+    }
+
+    result.reserve( 16 );
+    for( int y = -y_radius; y <= y_radius; ++y ) {
+        for( int x = -x_radius; x <= x_radius; ++x ) {
+            const tripoint_abs_omt pos( location.xy() + point( x, y ), location.z() );
+            const oter_id &terrain = ter_existing( pos );
+            if( !terrain ) {
+                continue;
+            }
+            const translation *name = overmap::faction_camp_name( terrain->get_type_id() );
+            if( name != nullptr ) {
+                result.push_back( faction_camp_reference{ pos, name->translated() } );
+            }
+        }
+    }
+    return result;
+}
+
 std::vector<camp_reference> overmapbuffer::get_camps_near( const tripoint_abs_sm &location,
         int radius )
 {

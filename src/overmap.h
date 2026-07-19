@@ -595,6 +595,9 @@ class overmap
         void save_monster_groups( JsonOut &jo ) const;
     public:
         static void load_obsolete_terrains( const JsonObject &jo );
+        static void load_faction_camp_label( const JsonObject &jo );
+        static void reset_faction_camp_labels();
+        static const translation *faction_camp_name( const oter_type_str_id &terrain );
 };
 
 bool is_river( const oter_id &ter );

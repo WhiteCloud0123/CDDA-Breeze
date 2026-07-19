@@ -1192,6 +1192,14 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                 label_bg( camp.abs_sm_pos, camp_name );
             }
         }
+
+        for( const faction_camp_reference &camp : overmap_buffer.get_faction_camps_near(
+                 center_abs_omt, max_col / 2 + 1, max_row / 2 + 1 ) ) {
+            if( overmap_buffer.seen( camp.abs_omt_pos ) &&
+                overmap_area.contains( camp.abs_omt_pos.raw() ) ) {
+                label_bg( project_to<coords::sm>( camp.abs_omt_pos ), camp.name );
+            }
+        }
     }
 
     std::vector<std::pair<nc_color, std::string>> notes_window_text;

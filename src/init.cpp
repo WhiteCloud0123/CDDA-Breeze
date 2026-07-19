@@ -398,6 +398,7 @@ void DynamicDataLoader::initialize()
     add( "martial_art", &load_martial_art );
     add( "effect_type", &load_effect_type );
     add( "obsolete_terrain", &overmap::load_obsolete_terrains );
+    add( "faction_camp_label", &overmap::load_faction_camp_label );
     add( "overmap_terrain", &overmap_terrains::load );
     add( "construction_category", &construction_categories::load );
     add( "construction_group", &construction_groups::load );
@@ -590,6 +591,7 @@ void DynamicDataLoader::unload_data()
     city::reset();
     overmap_specials::reset();
     overmap_special_migration::reset();
+    overmap::reset_faction_camp_labels();
     overmap_terrains::reset();
     profession::reset();
     proficiency::reset();

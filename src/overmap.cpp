@@ -8,6 +8,7 @@
 #include <cstring>
 #include <exception>
 #include <istream>
+#include <map>
 #include <memory>
 #include <numeric>
 #include <ostream>
@@ -92,6 +93,8 @@ static const oter_str_id oter_lab_escape_cells( "lab_escape_cells" );
 static const oter_str_id oter_lab_escape_entrance( "lab_escape_entrance" );
 static const oter_str_id oter_lab_train_depot( "lab_train_depot" );
 static const oter_str_id oter_open_air( "open_air" );
+
+static std::map<oter_type_str_id, translation> faction_camp_labels;
 static const oter_str_id oter_river_c_not_ne( "river_c_not_ne" );
 static const oter_str_id oter_river_c_not_nw( "river_c_not_nw" );
 static const oter_str_id oter_river_c_not_se( "river_c_not_se" );
@@ -1061,6 +1064,26 @@ bool oter_t::is_hardcoded() const
     };
 
     return hardcoded_mapgen.find( get_mapgen_id() ) != hardcoded_mapgen.end();
+}
+
+void overmap::load_faction_camp_label( const JsonObject &jo )
+{
+    oter_type_str_id terrain;
+    translation name;
+    jo.read( "overmap_terrain", terrain );
+    jo.read( "name", name );
+    faction_camp_labels.insert_or_assign( terrain, name );
+}
+
+void overmap::reset_faction_camp_labels()
+{
+    faction_camp_labels.clear();
+}
+
+const translation *overmap::faction_camp_name( const oter_type_str_id &terrain )
+{
+    const auto iter = faction_camp_labels.find( terrain );
+    return iter == faction_camp_labels.end() ? nullptr : &iter->second;
 }
 
 void overmap_terrains::load( const JsonObject &jo, const std::string &src )

@@ -357,6 +357,37 @@ static void draw_camp_labels( const catacurses::window &w, const tripoint_abs_om
     }
 }
 
+static void draw_faction_camp_labels( const catacurses::window &w,
+        const tripoint_abs_omt &center )
+{
+    const int win_x_max = getmaxx( w );
+    const int win_y_max = getmaxy( w );
+    const point screen_center_pos( win_x_max / 2, win_y_max / 2 );
+
+    for( const faction_camp_reference &element : overmap_buffer.get_faction_camps_near(
+             center, win_x_max / 2 + 1, win_y_max / 2 + 1 ) ) {
+        const point screen_pos( ( element.abs_omt_pos.xy() - center.xy() ).raw() +
+                                screen_center_pos );
+        const int text_width = utf8_width( element.name, true );
+        const int text_x_min = screen_pos.x - text_width / 2;
+        const int text_x_max = text_x_min + text_width;
+        const int text_y = screen_pos.y;
+
+        if( text_x_min < 0 || text_x_max > win_x_max || text_y < 0 || text_y > win_y_max ) {
+            continue;
+        }
+        if( screen_center_pos.x >= text_x_min - 1 && screen_center_pos.x <= text_x_max &&
+            screen_center_pos.y >= text_y - 1 && screen_center_pos.y <= text_y + 1 ) {
+            continue;
+        }
+        if( !overmap_buffer.seen( element.abs_omt_pos ) ) {
+            continue;
+        }
+
+        mvwprintz( w, point( text_x_min, text_y ), i_yellow, element.name );
+    }
+}
+
 class map_notes_callback : public uilist_callback
 {
     private:
@@ -884,6 +915,7 @@ static void draw_ascii(
     if( center.z() == 0 && uistate.overmap_show_city_labels ) {
         draw_city_labels( w, center );
         draw_camp_labels( w, center );
+        draw_faction_camp_labels( w, center );
     }
 
     half_open_rectangle<point_abs_omt> screen_bounds(
