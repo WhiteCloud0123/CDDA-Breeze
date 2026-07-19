@@ -8,6 +8,7 @@
 #include <memory>
 #include <new>
 #include <set>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
@@ -102,6 +103,11 @@ struct camp_reference {
     }
 
     int get_distance_from_bounds() const;
+};
+
+struct faction_camp_reference {
+    tripoint_abs_omt abs_omt_pos;
+    std::string name;
 };
 
 struct overmap_with_local_coords {
@@ -479,6 +485,8 @@ class overmapbuffer
          */
         std::vector<radio_tower_reference> find_all_radio_stations();
         std::vector<camp_reference> get_camps_near( const tripoint_abs_sm &location, int radius );
+        std::vector<faction_camp_reference> get_faction_camps_near(
+            const tripoint_abs_omt &location, int x_radius, int y_radius );
         /**
          * Find all cities within the specified @ref radius.
          * Result is sorted by proximity to @ref location in ascending order.
