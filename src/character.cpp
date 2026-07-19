@@ -3004,11 +3004,13 @@ bool Character::can_pickWeight_partial( const item &it, bool safe ) const
     return can_pickWeight( copy, safe );
 }
 
-bool Character::can_use( const item &it, const item &context ) const
+bool Character::can_use( const item &it, const item &context, bool show_message ) const
 {
     if( has_effect( effect_incorporeal ) ) {
-        add_msg_player_or_npc( m_bad, _( "You can't use anything while incorporeal." ),
-                               _( "<npcname> can't use anything while incorporeal." ) );
+        if( show_message ) {
+            add_msg_player_or_npc( m_bad, _( "You can't use anything while incorporeal." ),
+                                   _( "<npcname> can't use anything while incorporeal." ) );
+        }
         return false;
     }
     const item &ctx = !context.is_null() ? context : it;
@@ -3016,16 +3018,18 @@ bool Character::can_use( const item &it, const item &context ) const
     if( !meets_requirements( it, ctx ) ) {
         const std::string unmet( enumerate_unmet_requirements( it, ctx ) );
 
-        if( &it == &ctx ) {
-            //~ %1$s - list of unmet requirements, %2$s - item name.
-            add_msg_player_or_npc( m_bad, _( "You need at least %1$s to use this %2$s." ),
-                                   _( "<npcname> needs at least %1$s to use this %2$s." ),
-                                   unmet, it.tname() );
-        } else {
-            //~ %1$s - list of unmet requirements, %2$s - item name, %3$s - indirect item name.
-            add_msg_player_or_npc( m_bad, _( "You need at least %1$s to use this %2$s with your %3$s." ),
-                                   _( "<npcname> needs at least %1$s to use this %2$s with their %3$s." ),
-                                   unmet, it.tname(), ctx.tname() );
+        if( show_message ) {
+            if( &it == &ctx ) {
+                //~ %1$s - list of unmet requirements, %2$s - item name.
+                add_msg_player_or_npc( m_bad, _( "You need at least %1$s to use this %2$s." ),
+                                       _( "<npcname> needs at least %1$s to use this %2$s." ),
+                                       unmet, it.tname() );
+            } else {
+                //~ %1$s - list of unmet requirements, %2$s - item name, %3$s - indirect item name.
+                add_msg_player_or_npc( m_bad, _( "You need at least %1$s to use this %2$s with your %3$s." ),
+                                       _( "<npcname> needs at least %1$s to use this %2$s with their %3$s." ),
+                                       unmet, it.tname(), ctx.tname() );
+            }
         }
 
         return false;
