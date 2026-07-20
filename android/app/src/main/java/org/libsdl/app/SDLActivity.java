@@ -1097,6 +1097,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                     new OnBackInvokedCallback() {
                         @Override
                         public void onBackInvoked() {
+                            if (buttonManageLayout != null) {
+                                showButtonManageMenu();
+                                return;
+                            }
                             SDLActivity.nativeSendBackEvent();
                         }
                     }
