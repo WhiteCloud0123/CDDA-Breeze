@@ -3,6 +3,9 @@
 #define CATA_SRC_CRAFTING_H
 
 #include <list>
+#include <optional>
+
+#include "point.h"
 
 class Character;
 class item;
@@ -25,4 +28,9 @@ void remove_ammo( item &dis_item, Character &p );
 void remove_ammo( std::list<item> &dis_items, Character &p );
 
 void drop_or_handle( const item &newit, Character &p );
+
+// Resolve an explicitly selected workplace, or the best nearby workbench for automatic mode.
+// Marked crafting spots are preferred over ordinary workbenches.
+std::optional<tripoint> resolve_crafting_workplace(
+    const Character &crafter, const std::optional<tripoint> &selected_workplace );
 #endif // CATA_SRC_CRAFTING_H

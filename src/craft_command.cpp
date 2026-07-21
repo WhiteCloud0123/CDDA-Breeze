@@ -114,8 +114,21 @@ void craft_command::execute( bool only_cache_comps )
     }
 
     bool need_selections = true;
+    const tripoint origin = loc ? *loc : crafter->pos();
     inventory map_inv;
-    map_inv.form_from_map( crafter->pos(), PICKUP_RANGE, crafter );
+    map_inv.form_from_map( origin, PICKUP_RANGE, crafter );
+    const inventory &crafting_inv = crafter->crafting_inventory( origin, PICKUP_RANGE, true );
+
+    const auto can_make_at_workplace = [&]( recipe_filter_flags filter_flags,
+                                            craft_flags craft_flag ) {
+        if( !crafter->has_recipe( rec, crafting_inv, crafter->get_crafting_helpers() ) ||
+            !rec->character_has_required_proficiencies( *crafter ) ) {
+            return false;
+        }
+        return rec->deduped_requirements().can_make_with_inventory(
+                   crafting_inv, rec->get_component_filter( filter_flags ), batch_size,
+                   craft_flag );
+    };
 
     if( has_cached_selections() ) {
         std::vector<comp_selection<item_comp>> missing_items = check_item_components_missing( map_inv );
@@ -130,8 +143,8 @@ void craft_command::execute( bool only_cache_comps )
     }
 
     if( need_selections ) {
-        if( !crafter->can_make( rec, batch_size ) ) {
-            if( crafter->can_start_craft( rec, recipe_filter_flags::none, batch_size ) ) {
+        if( !can_make_at_workplace( recipe_filter_flags::none, craft_flags::none ) ) {
+            if( can_make_at_workplace( recipe_filter_flags::none, craft_flags::start_only ) ) {
                 if( !query_yn( _( "You don't have enough charges to complete the %s.\n"
                                   "Start crafting anyway?" ), rec->result_name() ) ) {
                     return;
@@ -147,7 +160,7 @@ void craft_command::execute( bool only_cache_comps )
 
         flags = recipe_filter_flags::no_rotten;
 
-        if( !crafter->can_start_craft( rec, flags, batch_size ) ) {
+        if( !can_make_at_workplace( flags, craft_flags::start_only ) ) {
             if( !query_yn( _( "This craft will use rotten components.\n"
                               "Start crafting anyway?" ) ) ) {
                 return;
@@ -156,7 +169,7 @@ void craft_command::execute( bool only_cache_comps )
         }
 
         flags |= recipe_filter_flags::no_favorite;
-        if( !crafter->can_start_craft( rec, flags, batch_size ) ) {
+        if( !can_make_at_workplace( flags, craft_flags::start_only ) ) {
             if( !query_yn( _( "This craft will use favorited components.\n"
                               "Start crafting anyway?" ) ) ) {
                 return;
@@ -199,7 +212,7 @@ void craft_command::execute( bool only_cache_comps )
         return;
     }
 
-    crafter->start_craft( *this, loc );
+    crafter->start_craft( *this, loc, queued );
     crafter->last_batch = batch_size;
     crafter->lastrecipe = rec->ident();
 
@@ -250,6 +263,7 @@ bool craft_command::continue_prompt_liquids( const std::function<bool( const ite
         bool no_prompt )
 {
     map &m = get_map();
+    const tripoint origin = loc ? *loc : crafter->pos();
     for( const auto &it : item_selections ) {
         const std::vector<pocket_data> it_pkt = it.comp.type->pockets;
         if( ( item::count_by_charges( it.comp.type ) && it.comp.count > 0 ) ||
@@ -284,10 +298,9 @@ bool craft_command::continue_prompt_liquids( const std::function<bool( const ite
         int real_count = ( it.comp.count > 0 ) ? it.comp.count * batch_size : std::abs( it.comp.count );
         for( int i = 0; i < 2 && real_count > 0; i++ ) {
             if( it.use_from & usage_from::map ) {
-                const tripoint &loc = crafter->pos();
                 for( int radius = 0; radius <= PICKUP_RANGE && real_count > 0; radius++ ) {
-                    for( const tripoint &p : m.points_in_radius( loc, radius ) ) {
-                        if( rl_dist( loc, p ) >= radius ) {
+                    for( const tripoint &p : m.points_in_radius( origin, radius ) ) {
+                        if( rl_dist( origin, p ) >= radius ) {
                             // "Simulate" consuming items and put them back
                             // not very efficient but should be rare enough not to matter
                             std::list<item> tmp = m.use_amount_square( p, it.comp.type, real_count,
@@ -340,7 +353,7 @@ bool craft_command::continue_prompt_liquids( const std::function<bool( const ite
 }
 
 static std::list<item> sane_consume_items( const comp_selection<item_comp> &it, Character *crafter,
-        int batch, const std::function<bool( const item & )> &filter )
+        int batch, const std::function<bool( const item & )> &filter, const tripoint &origin )
 {
     map &m = get_map();
     const std::vector<pocket_data> it_pkt = it.comp.type->pockets;
@@ -348,7 +361,7 @@ static std::list<item> sane_consume_items( const comp_selection<item_comp> &it, 
     !std::any_of( it_pkt.begin(), it_pkt.end(), []( const pocket_data & p ) {
     return p.type == item_pocket::pocket_type::CONTAINER && p.watertight;
 } ) ) {
-        return crafter->consume_items( it, batch, filter );
+        return crafter->consume_items( m, it, batch, filter, origin, PICKUP_RANGE );
     }
 
     // Everything below only occurs for item components that are liquid containers
@@ -360,10 +373,9 @@ static std::list<item> sane_consume_items( const comp_selection<item_comp> &it, 
     std::list<item> ret;
     for( int i = 0; i < 2 && real_count > 0; i++ ) {
         if( it.use_from & usage_from::map ) {
-            const tripoint &loc = crafter->pos();
             for( int radius = 0; radius <= PICKUP_RANGE && real_count > 0; radius++ ) {
-                for( const tripoint &p : m.points_in_radius( loc, radius ) ) {
-                    if( rl_dist( loc, p ) >= radius ) {
+                for( const tripoint &p : m.points_in_radius( origin, radius ) ) {
+                    if( rl_dist( origin, p ) >= radius ) {
                         std::list<item> tmp = m.use_amount_square( p, it.comp.type, real_count,
                                               i == 0 ? empty_filter : filter );
                         ret.insert( ret.end(), tmp.begin(), tmp.end() );
@@ -425,8 +437,9 @@ item craft_command::create_in_progress_craft()
         return item();
     }
 
+    const tripoint origin = loc ? *loc : crafter->pos();
     inventory map_inv;
-    map_inv.form_from_map( crafter->pos(), PICKUP_RANGE, crafter );
+    map_inv.form_from_map( origin, PICKUP_RANGE, crafter );
 
     if( !check_item_components_missing( map_inv ).empty() ) {
         debugmsg( "Aborting crafting: couldn't find cached components" );
@@ -442,7 +455,7 @@ item craft_command::create_in_progress_craft()
     }
 
     for( const auto &it : item_selections ) {
-        std::list<item> tmp = sane_consume_items( it, crafter, batch_size, filter );
+        std::list<item> tmp = sane_consume_items( it, crafter, batch_size, filter, origin );
         for( item &tmp_it : tmp ) {
             if( safe_to_unload_comp( tmp_it ) ) {
                 item_location tmp_loc( *crafter, &tmp_it );
@@ -474,7 +487,7 @@ item craft_command::create_in_progress_craft()
     new_craft.set_cached_tool_selections( tool_selections );
     new_craft.set_tools_to_continue( true );
     // Pass true to indicate that we are starting the craft and the remainder should be consumed as well
-    crafter->craft_consume_tools( new_craft, 1, true );
+    crafter->craft_consume_tools( new_craft, 1, true, loc );
     new_craft.set_next_failure_point( *crafter );
 
     return new_craft;

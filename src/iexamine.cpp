@@ -133,8 +133,11 @@ static const efftype_id effect_teleglow( "teleglow" );
 static const efftype_id effect_tetanus( "tetanus" );
 static const efftype_id effect_weak_antibiotic( "weak_antibiotic" );
 
+static const field_type_str_id fd_crafting_spot( "fd_crafting_spot" );
+
 static const furn_str_id furn_f_diesel_tank( "f_diesel_tank" );
 static const furn_str_id furn_f_gas_tank( "f_gas_tank" );
+static const furn_str_id furn_f_ground_crafting_spot( "f_ground_crafting_spot" );
 static const furn_str_id furn_f_metal_smoking_rack( "f_metal_smoking_rack" );
 static const furn_str_id furn_f_metal_smoking_rack_active( "f_metal_smoking_rack_active" );
 static const furn_str_id furn_f_rope_up( "f_rope_up" );
@@ -6519,7 +6522,9 @@ void iexamine::open_safe( Character &, const tripoint &examp )
 
 void iexamine::workbench( Character &you, const tripoint &examp )
 {
-    if( get_option<bool>( "WORKBENCH_ALL_OPTIONS" ) ) {
+    if( get_option<bool>( "WORKBENCH_ALL_OPTIONS" ) ||
+        get_map().furn( examp ) == furn_f_ground_crafting_spot ||
+        get_map().get_field( examp, fd_crafting_spot ) != nullptr ) {
         workbench_internal( you, examp, std::nullopt );
     } else {
         if( !get_map().i_at( examp ).empty() ) {
@@ -6573,7 +6578,8 @@ void iexamine::workbench_internal( Character &you, const tripoint &examp,
         start_long_craft,
         work_on_craft,
         get_items,
-        undeploy
+        undeploy,
+        remove_crafting_spot
     };
 
     amenu.text = string_format( pgettext( "furniture", "What to do at the %s?" ), name );
@@ -6586,6 +6592,10 @@ void iexamine::workbench_internal( Character &you, const tripoint &examp,
     }
     if( is_undeployable ) {
         amenu.addentry( undeploy,     true,            't', _( "Take down the %s" ), name );
+    }
+    if( here.furn( examp ) == furn_f_ground_crafting_spot ||
+        here.get_field( examp, fd_crafting_spot ) != nullptr ) {
+        amenu.addentry( remove_crafting_spot, true, 'd', _( "移除制造点" ) );
     }
 
     amenu.query();
@@ -6672,6 +6682,15 @@ void iexamine::workbench_internal( Character &you, const tripoint &examp,
         }
         case undeploy: {
             deployed_furniture( you, examp );
+            break;
+        }
+        case remove_crafting_spot: {
+            if( here.get_field( examp, fd_crafting_spot ) != nullptr ) {
+                here.remove_field( examp, fd_crafting_spot );
+            } else if( here.furn( examp ) == furn_f_ground_crafting_spot ) {
+                here.furn_set( examp, f_null );
+            }
+            you.add_msg_if_player( m_info, _( "你移除了制造点。" ) );
             break;
         }
     }

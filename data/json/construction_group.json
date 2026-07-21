@@ -1042,7 +1042,7 @@
   {
     "type": "construction_group",
     "id": "make_crafting_spot",
-    "name": "Make crafting spot"
+    "name": "标记制造点"
   },
   {
     "type": "construction_group",
