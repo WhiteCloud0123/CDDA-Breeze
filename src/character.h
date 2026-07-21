@@ -3070,7 +3070,7 @@ class Character : public Creature, public visitable
 
         // ---- CRAFTING ----
         void make_craft_with_command( const recipe_id &id_to_make, int batch_size, bool is_long,
-                                      const std::optional<tripoint> &loc );
+                                      const std::optional<tripoint> &loc, bool queued = false );
         pimpl<craft_command> last_craft;
 
         recipe_id lastrecipe;
@@ -3166,8 +3166,12 @@ class Character : public Creature, public visitable
                          const std::optional<tripoint> &loc = std::nullopt );
         void make_all_craft( const recipe_id &id, int batch_size,
                              const std::optional<tripoint> &loc );
+        /** Add a recipe to an NPC manufacturing queue without closing the crafting menu. */
+        bool queue_craft( const recipe_id &id, int batch_size,
+                          const std::optional<tripoint> &loc );
         /** consume components and create an active, in progress craft containing them */
-        void start_craft( craft_command &command, const std::optional<tripoint> &loc );
+        void start_craft( craft_command &command, const std::optional<tripoint> &loc,
+                          bool queued = false );
         /**
          * Calculate a value representing the success of the player at crafting the given recipe,
          * taking player skill, recipe difficulty, npc helpers, and player mutations into account.
@@ -3188,6 +3192,11 @@ class Character : public Creature, public visitable
         bool can_continue_craft( item &craft, const requirement_data &continue_reqs );
         /** Returns nearby NPCs ready and willing to help with crafting. */
         std::vector<npc *> get_crafting_helpers() const;
+        /**
+         * Returns this character and nearby allied NPCs whose recipe knowledge
+         * can be selected from the normal crafting menu.
+         */
+        std::vector<Character *> get_crafting_group() const;
         int get_num_crafting_helpers( int max ) const;
         /**
          * Handle skill gain for player and followers during crafting.
@@ -3248,7 +3257,8 @@ class Character : public Creature, public visitable
             return i;
         } );
         /** Consume tools for the next multiplier * 5% progress of the craft */
-        bool craft_consume_tools( item &craft, int multiplier, bool start_craft );
+        bool craft_consume_tools( item &craft, int multiplier, bool start_craft,
+                                  const std::optional<tripoint> &workplace = std::nullopt );
         void consume_tools( const comp_selection<tool_comp> &tool, int batch );
         void consume_tools( map &m, const comp_selection<tool_comp> &tool, int batch,
                             const tripoint &origin = tripoint_zero, int radius = PICKUP_RANGE,

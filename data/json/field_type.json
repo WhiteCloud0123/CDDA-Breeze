@@ -1752,5 +1752,14 @@
     "outdoor_age_speedup": "100 minutes",
     "half_life": "50 minutes",
     "phase": "gas"
+  },
+  {
+    "id": "fd_crafting_spot",
+    "type": "field_type",
+    "intensity_levels": [ { "name": "制造点标记", "sym": "*", "color": "light_cyan", "dangerous": false } ],
+    "priority": 10,
+    "phase": "solid",
+    "display_field": true,
+    "display_items": true
   }
 ]

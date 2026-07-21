@@ -104,6 +104,8 @@ static const string_id<struct furn_t> furn_f_fake_bench_hands( "f_fake_bench_han
 
 static const string_id<struct furn_t> furn_f_ground_crafting_spot( "f_ground_crafting_spot" );
 
+static const field_type_str_id fd_crafting_spot( "fd_crafting_spot" );
+
 static const trait_id trait_BURROW( "BURROW" );
 static const trait_id trait_BURROWLARGE( "BURROWLARGE" );
 static const trait_id trait_DEBUG_CNF( "DEBUG_CNF" );
@@ -114,11 +116,250 @@ static const std::string flag_BLIND_HARD( "BLIND_HARD" );
 static const std::string flag_FULL_MAGAZINE( "FULL_MAGAZINE" );
 static const std::string flag_NO_RESIZE( "NO_RESIZE" );
 static const std::string flag_UNCRAFT_LIQUIDS_CONTAINED( "UNCRAFT_LIQUIDS_CONTAINED" );
+static const std::string var_craft_queue_order( "craft_queue_order" );
 
 class basecamp;
 
-static bool crafting_allowed( const Character &p, const recipe &rec )
+static float workbench_multiplier_at( map &here, const tripoint &loc )
 {
+    if( const std::optional<vpart_reference> vp = here.veh_at( loc ).part_with_feature(
+                "WORKBENCH", true ) ) {
+        if( const std::optional<vpslot_workbench> &wb = vp->part().info().get_workbench_info() ) {
+            return wb->multiplier;
+        }
+        return 0.0f;
+    }
+    if( here.has_furn( loc ) && here.furn( loc ).obj().workbench ) {
+        return here.furn( loc ).obj().workbench->multiplier;
+    }
+    return 0.0f;
+}
+
+std::optional<tripoint> resolve_crafting_workplace(
+    const Character &crafter, const std::optional<tripoint> &selected_workplace )
+{
+    if( selected_workplace ) {
+        return selected_workplace;
+    }
+
+    map &here = get_map();
+    std::optional<tripoint> best_marked;
+    std::optional<tripoint> best_regular;
+    float best_marked_multiplier = -1.0f;
+    float best_regular_multiplier = -1.0f;
+
+    // Automatic selection only examines the nine tiles around the crafter.  Callers resolve this
+    // once when the crafter or selected workplace changes and reuse the returned location.
+    for( const tripoint &loc : here.points_in_radius( crafter.pos(), 1 ) ) {
+        if( here.dangerous_field_at( loc ) ) {
+            continue;
+        }
+        const float multiplier = workbench_multiplier_at( here, loc );
+        if( multiplier <= 0.0f ) {
+            continue;
+        }
+        const bool marked = here.furn( loc ) == furn_f_ground_crafting_spot ||
+                            here.get_field( loc, fd_crafting_spot ) != nullptr;
+        if( marked ) {
+            if( multiplier > best_marked_multiplier ) {
+                best_marked_multiplier = multiplier;
+                best_marked = loc;
+            }
+        } else if( multiplier > best_regular_multiplier ) {
+            best_regular_multiplier = multiplier;
+            best_regular = loc;
+        }
+    }
+
+    return best_marked ? best_marked : best_regular;
+}
+
+static const inventory &crafting_inventory_at( Character &crafter,
+        const std::optional<tripoint> &workplace )
+{
+    const std::optional<tripoint> effective = resolve_crafting_workplace( crafter, workplace );
+    return effective ? crafter.crafting_inventory( *effective, PICKUP_RANGE, true ) :
+           crafter.crafting_inventory();
+}
+
+static bool has_safe_crafting_position( const tripoint &workplace )
+{
+    map &here = get_map();
+    for( const tripoint &adj : here.points_in_radius( workplace, 1 ) ) {
+        if( adj.z == workplace.z && here.passable( adj ) && !here.dangerous_field_at( adj ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool npc_can_reach_crafting_position( const Character &crafter, const tripoint &workplace )
+{
+    if( crafter.posz() != workplace.z ) {
+        return false;
+    }
+    if( square_dist( crafter.pos(), workplace ) <= 1 ) {
+        return true;
+    }
+
+    map &here = get_map();
+    for( const tripoint &adj : here.points_in_radius( workplace, 1 ) ) {
+        if( !here.passable( adj ) || here.dangerous_field_at( adj ) ) {
+            continue;
+        }
+        if( !here.route( crafter.pos(), adj, crafter.get_pathfinding_settings() ).empty() ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool craft_is_assigned_to( const item &craft, const npc &who )
+{
+    if( !craft.is_craft() ) {
+        return false;
+    }
+    const std::string crafter_id = craft.get_var( "crafter_id", "" );
+    return ( !crafter_id.empty() && crafter_id == std::to_string( who.getID().get_value() ) ) ||
+           craft.get_var( "crafter", "" ) == who.name;
+}
+
+static std::optional<tripoint> npc_crafting_queue_location( const npc &who )
+{
+    map &here = get_map();
+    const auto location_from = [&]( const player_activity & act ) -> std::optional<tripoint> {
+        if( act.id() == ACT_MULTIPLE_CRAFT && act.placement != player_activity::invalid_place ) {
+            return here.bub_from_abs( act.placement ).raw();
+        }
+        return std::nullopt;
+    };
+
+    if( const std::optional<tripoint> current = location_from( who.activity ) ) {
+        return current;
+    }
+    for( const player_activity &queued_activity : who.backlog ) {
+        if( const std::optional<tripoint> queued = location_from( queued_activity ) ) {
+            return queued;
+        }
+    }
+    return std::nullopt;
+}
+
+static int next_crafting_queue_order( const npc &who, const tripoint &anchor )
+{
+    map &here = get_map();
+    int result = 0;
+    const auto include = [&]( const item & candidate ) {
+        if( craft_is_assigned_to( candidate, who ) ) {
+            result = std::max( result, static_cast<int>( candidate.get_var( var_craft_queue_order, 0 ) ) );
+        }
+    };
+
+    // Workbench placement may overflow by one or two tiles.  Keep the scan tiny and only inspect
+    // items already assigned to this NPC, so adding an entry remains effectively constant cost.
+    for( const tripoint &pt : here.points_in_radius( anchor, 2 ) ) {
+        for( const item &candidate : here.i_at( pt ) ) {
+            include( candidate );
+        }
+        if( const optional_vpart_position vp = here.veh_at( pt ) ) {
+            const int cargo_part = vp->vehicle().part_with_feature( vp->part_index(), "CARGO", false );
+            if( cargo_part >= 0 ) {
+                for( const item &candidate : vp->vehicle().get_items( cargo_part ) ) {
+                    include( candidate );
+                }
+            }
+        }
+    }
+    return result + 1;
+}
+
+static std::string crafting_failure_reason( Character &crafter, const recipe &rec,
+        int batch_size, const std::optional<tripoint> &workplace, bool allow_queue_append = false )
+{
+    const std::optional<tripoint> effective_workplace = resolve_crafting_workplace(
+                crafter, workplace );
+
+    if( rec.category == "CC_BUILDING" ) {
+        return _( "大地图地形建造配方尚未实现。" );
+    }
+
+    if( crafter.in_sleep_state() ) {
+        return crafter.is_avatar() ? _( "你正在睡觉，无法制作。" ) :
+               string_format( _( "%s正在睡觉，无法制作。" ), crafter.get_name() );
+    }
+    if( const npc *guy = crafter.as_npc(); guy != nullptr &&
+        ( guy->has_activity() || !crafter.activity.is_null() ) ) {
+        const std::optional<tripoint> queue_location = npc_crafting_queue_location( *guy );
+        const tripoint desired_location = effective_workplace ? *effective_workplace : crafter.pos();
+        const bool appending_same_queue = allow_queue_append && queue_location &&
+                                          *queue_location == desired_location;
+        if( !appending_same_queue ) {
+            return string_format( _( "%s正在忙碌，无法开始新的制作。" ), crafter.get_name() );
+        }
+    }
+
+    if( effective_workplace ) {
+        map &here = get_map();
+        if( here.dangerous_field_at( *effective_workplace ) ) {
+            return _( "所选工作地点存在危险，无法开始制作。" );
+        }
+        if( !has_safe_crafting_position( *effective_workplace ) ) {
+            return _( "所选工作地点附近没有可以安全站立的位置。" );
+        }
+        if( crafter.is_avatar() && square_dist( crafter.pos(), *effective_workplace ) > 1 ) {
+            return _( "你必须先走到所选工作地点旁边才能开始制作。" );
+        }
+        if( crafter.is_npc() &&
+            !npc_can_reach_crafting_position( crafter, *effective_workplace ) ) {
+            return string_format( _( "%s无法到达所选工作地点。" ), crafter.get_name() );
+        }
+    }
+
+    const inventory &inv = crafting_inventory_at( crafter, effective_workplace );
+    if( !crafter.has_recipe( &rec, inv, crafter.get_crafting_helpers() ) ) {
+        return string_format( _( "%s不知道这个配方，也没有可用的配方资料。" ),
+                              crafter.is_avatar() ? _( "你" ) : crafter.get_name() );
+    }
+    if( rec.is_practice() && ( rec.skill_used.is_null() ||
+                               crafter.get_skill_level( rec.skill_used ) <
+                               rec.get_difficulty( crafter ) ) ) {
+        return _( "当前制作者的技能不足，无法进行这项练习。" );
+    }
+    if( !rec.character_has_required_proficiencies( crafter ) ) {
+        return _( "当前制作者缺少这项制作要求的熟练度。" );
+    }
+
+    std::string npc_reason;
+    if( crafter.is_npc() && !rec.npc_can_craft( npc_reason ) ) {
+        return npc_reason;
+    }
+    if( crafter.morale_crafting_speed_multiplier( rec ) <= 0.0f ) {
+        return crafter.is_avatar() ? _( "你的士气太低，无法制作这件物品。" ) :
+               string_format( _( "%s的士气太低，无法制作这件物品。" ), crafter.get_name() );
+    }
+    if( crafter.lighting_craft_speed_multiplier( rec,
+            effective_workplace ? *effective_workplace : tripoint_zero ) <= 0.0f ) {
+        return effective_workplace ? _( "所选工作地点光照不足，无法制作。" ) :
+               _( "当前制作者所在位置光照不足，无法制作。" );
+    }
+
+    const auto filter = rec.get_component_filter( recipe_filter_flags::none );
+    if( !rec.deduped_requirements().can_make_with_inventory( inv, filter, batch_size,
+            craft_flags::start_only ) ) {
+        const requirement_data &simple = rec.simple_requirements();
+        simple.can_make_with_inventory( inv, filter, batch_size, craft_flags::start_only );
+        const std::string missing = simple.list_missing();
+        return missing.empty() ? _( "所选制作者在工作地点附近缺少必要的工具或材料。" ) :
+               string_format( _( "所选制作者无法开始制作：\n%s" ), missing );
+    }
+    return std::string();
+}
+
+static bool crafting_allowed( const Character &p, const recipe &rec,
+                              const std::optional<tripoint> &workplace )
+{
+    const std::optional<tripoint> effective_workplace = resolve_crafting_workplace( p, workplace );
+
     if( p.morale_crafting_speed_multiplier( rec ) <= 0.0f ) {
         if (p.is_avatar()) {
             add_msg(m_info, _("Your morale is too low to craft such a difficult thing…"));
@@ -131,7 +372,8 @@ static bool crafting_allowed( const Character &p, const recipe &rec )
         return false;
     }
 
-    if( p.lighting_craft_speed_multiplier( rec ) <= 0.0f ) {
+    if( p.lighting_craft_speed_multiplier( rec,
+            effective_workplace ? *effective_workplace : tripoint_zero ) <= 0.0f ) {
         if (p.is_avatar()) {
             add_msg(m_info, _("You can't see to craft!"));
         }
@@ -146,14 +388,15 @@ static bool crafting_allowed( const Character &p, const recipe &rec )
         add_msg( m_info, _( "Overmap terrain building recipes are not implemented yet!" ) );
         return false;
     }
+
     return true;
 }
 
-float Character::lighting_craft_speed_multiplier(const recipe& rec, const tripoint& p) const
+float Character::lighting_craft_speed_multiplier( const recipe &rec, const tripoint &p ) const
 {
-    // negative is bright, 0 is just bright enough, positive is dark, +7.0f is pitch black
-    // 待定 此处有问题，如果完全按照原版移植 使用fine_detail_vision_mod( p )计算会出现光线太暗
-    float darkness = fine_detail_vision_mod() - 4.0f;
+    // Negative is bright, 0 is just bright enough, positive is dark, +7.0f is pitch black.
+    const tripoint light_position = p == tripoint_min ? tripoint_zero : p;
+    float darkness = fine_detail_vision_mod( light_position ) - 4.0f;
     
     if( darkness <= 0.0f ) {
         return 1.0f; // it's bright, go for it
@@ -317,22 +560,30 @@ float Character::crafting_speed_multiplier( const item &craft,
                               get_limb_score( limb_score_manip );
 
     if( light_multi <= 0.0f ) {
-        add_msg_if_player( m_bad, _( "You can no longer see well enough to keep crafting." ) );
+        add_msg_player_or_npc( m_bad,
+                               _( "你已经看不清，无法继续制造。" ),
+                               _( "<npcname>已经看不清，无法继续制造。" ) );
         return 0.0f;
     }
     if( bench_multi <= 0.1f || ( bench_multi <= 0.33f && total_multi <= 0.2f ) ) {
-        add_msg_if_player( m_bad, _( "The %s is too large and/or heavy to work on.  You may want to"
-                                     " use a workbench or a lifting tool" ), craft.tname() );
+        add_msg_player_or_npc( m_bad,
+                               _( "%s过于沉重或庞大，当前工作台无法继续加工。" ),
+                               _( "%s过于沉重或庞大，<npcname>无法在当前工作台继续加工。" ),
+                               craft.tname() );
         return 0.0f;
     }
     if( morale_multi <= 0.2f || ( morale_multi <= 0.33f && total_multi <= 0.2f ) ) {
-        add_msg_if_player( m_bad, _( "Your morale is too low to continue crafting." ) );
+        add_msg_player_or_npc( m_bad,
+                               _( "你的士气过低，无法继续制造。" ),
+                               _( "<npcname>的士气过低，停止了制造。" ) );
         return 0.0f;
     }
 
     // If we're working below 20% speed, just give up
     if( total_multi <= 0.2f ) {
-        add_msg_if_player( m_bad, _( "You are too frustrated to continue and just give up." ) );
+        add_msg_player_or_npc( m_bad,
+                               _( "你过于沮丧，只能停止制造。" ),
+                               _( "<npcname>过于沮丧，停止了制造。" ) );
         return 0.0f;
     }
 
@@ -361,15 +612,19 @@ bool Character::has_morale_to_craft() const
 void Character::craft( const std::optional<tripoint> &loc, const recipe_id &goto_recipe )
 {
     int batch_size = 0;
-    const recipe* rec = select_crafting_recipe(batch_size, goto_recipe, *this);
+    const crafting_selection selected = select_crafter_and_crafting_recipe( batch_size, goto_recipe,
+                                        *this, loc );
+    Character *crafter = selected.crafter;
+    const recipe *rec = selected.rec;
     if( rec ) {
-        std::string reason;
-        if (is_npc() && !rec->npc_can_craft(reason)) {
-            add_msg(m_info, reason);
+        const std::string reason = crafting_failure_reason( *crafter, *rec, batch_size,
+                                   selected.workplace );
+        if( !reason.empty() ) {
+            popup( reason, PF_NONE );
             return;
         }
-        if( crafting_allowed( *this, *rec ) ) {
-            make_craft( rec->ident(), batch_size, loc );
+        if( crafting_allowed( *crafter, *rec, selected.workplace ) ) {
+            crafter->make_craft( rec->ident(), batch_size, selected.workplace );
         }
     }
 }
@@ -386,10 +641,19 @@ void Character::recraft( const std::optional<tripoint> &loc )
 void Character::long_craft( const std::optional<tripoint> &loc, const recipe_id &goto_recipe )
 {
     int batch_size = 0;
-    const recipe* rec = select_crafting_recipe(batch_size, goto_recipe, *this);
+    const crafting_selection selected = select_crafter_and_crafting_recipe( batch_size, goto_recipe,
+                                        *this, loc );
+    Character *crafter = selected.crafter;
+    const recipe *rec = selected.rec;
     if( rec ) {
-        if( crafting_allowed( *this, *rec ) ) {
-            make_all_craft( rec->ident(), batch_size, loc );
+        const std::string reason = crafting_failure_reason( *crafter, *rec, batch_size,
+                                   selected.workplace );
+        if( !reason.empty() ) {
+            popup( reason, PF_NONE );
+            return;
+        }
+        if( crafting_allowed( *crafter, *rec, selected.workplace ) ) {
+            crafter->make_all_craft( rec->ident(), batch_size, selected.workplace );
         }
     }
 }
@@ -397,7 +661,7 @@ void Character::long_craft( const std::optional<tripoint> &loc, const recipe_id 
 bool Character::making_would_work( const recipe_id &id_to_make, int batch_size ) const
 {
     const recipe &making = *id_to_make;
-    if( !( making && crafting_allowed( *this, making ) ) ) {
+    if( !( making && crafting_allowed( *this, making, std::nullopt ) ) ) {
         return false;
     }
 
@@ -728,8 +992,44 @@ void Character::make_all_craft( const recipe_id &id_to_make, int batch_size,
     make_craft_with_command( id_to_make, batch_size, true, loc );
 }
 
+bool Character::queue_craft( const recipe_id &id_to_make, int batch_size,
+                             const std::optional<tripoint> &loc )
+{
+    npc *npc_crafter = as_npc();
+    if( npc_crafter == nullptr ) {
+        popup( _( "制造清单目前只用于附近的NPC盟友。" ), PF_NONE );
+        return false;
+    }
+
+    const recipe &recipe_to_make = *id_to_make;
+    if( !recipe_to_make ) {
+        return false;
+    }
+
+    // Once a queue has started, all new entries use its existing anchor.  This keeps automatic
+    // workplace selection from drifting if another bench later becomes preferable.
+    const std::optional<tripoint> queue_location = npc_crafting_queue_location( *npc_crafter );
+    const std::optional<tripoint> effective_workplace = queue_location ? queue_location :
+            resolve_crafting_workplace( *this, loc );
+    const tripoint anchor = effective_workplace ? *effective_workplace : pos();
+    const int order_before = next_crafting_queue_order( *npc_crafter, anchor );
+
+    const std::string reason = crafting_failure_reason( *this, recipe_to_make, batch_size,
+                               effective_workplace, true );
+    if( !reason.empty() ) {
+        popup( reason, PF_NONE );
+        return false;
+    }
+    if( !crafting_allowed( *this, recipe_to_make, effective_workplace ) ) {
+        return false;
+    }
+
+    make_craft_with_command( id_to_make, batch_size, false, effective_workplace, true );
+    return next_crafting_queue_order( *npc_crafter, anchor ) > order_before;
+}
+
 void Character::make_craft_with_command( const recipe_id &id_to_make, int batch_size, bool is_long,
-        const std::optional<tripoint> &loc )
+        const std::optional<tripoint> &loc, bool queued )
 {
     const recipe &recipe_to_make = *id_to_make;
 
@@ -737,7 +1037,8 @@ void Character::make_craft_with_command( const recipe_id &id_to_make, int batch_
         return;
     }
 
-    *last_craft = craft_command( &recipe_to_make, batch_size, is_long, this, loc );
+    const std::optional<tripoint> effective_workplace = resolve_crafting_workplace( *this, loc );
+    *last_craft = craft_command( &recipe_to_make, batch_size, is_long, this, effective_workplace, queued );
     last_craft->execute();
 }
 
@@ -873,30 +1174,8 @@ static item_location place_craft_or_disassembly(
 {
     item_location craft_in_world;
 
-    // Check if we are standing next to a workbench. If so, just use that.
-    float best_bench_multi = 0.0f;
     map &here = get_map();
-    for( const tripoint &adj : here.points_in_radius( ch.pos(), 1 ) ) {
-        if( here.dangerous_field_at( adj ) ) {
-            continue;
-        }
-        if( const cata::value_ptr<furn_workbench_info> &wb = here.furn( adj ).obj().workbench ) {
-            if( wb->multiplier > best_bench_multi ) {
-                best_bench_multi = wb->multiplier;
-                target = adj;
-            }
-        } else if( const std::optional<vpart_reference> vp = here.veh_at(
-                       adj ).part_with_feature( "WORKBENCH", true ) ) {
-            if( const std::optional<vpslot_workbench> &wb_info = vp->part().info().get_workbench_info() ) {
-                if( wb_info->multiplier > best_bench_multi ) {
-                    best_bench_multi = wb_info->multiplier;
-                    target = adj;
-                }
-            } else {
-                debugmsg( "part '%s' with WORKBENCH flag has no workbench info", vp->part().name() );
-            }
-        }
-    }
+    target = resolve_crafting_workplace( ch, target );
 
     // Crafting without a workbench
     if( !target ) {
@@ -969,7 +1248,7 @@ static item_location place_craft_or_disassembly(
     return craft_in_world;
 }
 
-void Character::start_craft( craft_command &command, const std::optional<tripoint> &loc )
+void Character::start_craft( craft_command &command, const std::optional<tripoint> &loc, bool queued )
 {
     if( command.empty() ) {
         debugmsg( "Attempted to start craft with empty command" );
@@ -990,26 +1269,52 @@ void Character::start_craft( craft_command &command, const std::optional<tripoin
         calc_encumbrance();
     }
 
-    item_location craft_in_world = place_craft_or_disassembly( *this, craft, loc );
+    npc *npc_crafter = as_npc();
+    const std::optional<tripoint> existing_queue_location = npc_crafter ?
+            npc_crafting_queue_location( *npc_crafter ) : std::nullopt;
+    const std::optional<tripoint> queue_location = npc_crafter ?
+            std::optional<tripoint>( existing_queue_location ? *existing_queue_location :
+                                     ( loc ? *loc : pos() ) ) : loc;
+
+    // NPC queue entries are physical in-progress crafts on the selected workplace.  Keeping them
+    // out of the NPC inventory prevents newly made clothing and containers from being worn while
+    // another queued recipe is started.
+    item_location craft_in_world = place_craft_or_disassembly( *this, craft, queue_location );
 
     if( !craft_in_world ) {
         return;
     }
-    
-    if (is_avatar()) {
-        assign_activity(player_activity(craft_activity_actor(craft_in_world, command.is_long())));
-    }
-    else {
-        // set flag to craft
-        craft_in_world.get_item()->set_var("crafter", name);
-        craft_in_world.get_item()->set_var("crafter_id", id.get_value());
-        assign_activity(ACT_MULTIPLE_CRAFT);
+
+    bool appended_to_queue = false;
+    if( is_avatar() ) {
+        assign_activity( player_activity( craft_activity_actor( craft_in_world, command.is_long() ) ) );
+    } else {
+        cata_assert( npc_crafter != nullptr );
+        item *queued_craft = craft_in_world.get_item();
+        queued_craft->set_var( "crafter", name );
+        queued_craft->set_var( "crafter_id", id.get_value() );
+        queued_craft->set_var( var_craft_queue_order,
+                               next_crafting_queue_order( *npc_crafter, *queue_location ) );
+
+        appended_to_queue = existing_queue_location.has_value();
+        if( !appended_to_queue ) {
+            player_activity npc_crafting( ACT_MULTIPLE_CRAFT );
+            npc_crafting.placement = get_map().getglobal( *queue_location );
+            assign_activity( npc_crafting );
+        }
     }
 
-    add_msg_player_or_npc(
-        pgettext( "in progress craft", "You start working on the %s." ),
-        pgettext( "in progress craft", "<npcname> starts working on the %s." ),
-        craft.tname() );
+    if( appended_to_queue || queued ) {
+        add_msg_player_or_npc(
+            _( "你把%s加入了制造清单。" ),
+            _( "<npcname>把%s加入了制造清单。" ),
+            craft.tname() );
+    } else {
+        add_msg_player_or_npc(
+            pgettext( "in progress craft", "You start working on the %s." ),
+            pgettext( "in progress craft", "<npcname> starts working on the %s." ),
+            craft.tname() );
+    }
 }
 
 bool Character::craft_skill_gain( const item &craft, const int &num_practice_ticks )
@@ -1593,19 +1898,28 @@ bool Character::can_continue_craft( item &craft, const requirement_data &continu
                 popup(buffer, PF_NONE);
             }
             else {
-                add_msg_if_npc(_("<npcname> don't have the required components to continue crafting!"));
+                add_msg_if_npc( _( "<npcname>缺少继续制作所需的材料。" ) );
             }
             return false;
         }
 
-        std::string buffer = _( "Consume the missing components and continue crafting?" );
-        buffer += "\n";
-        buffer += continue_reqs.list_all();
-        if( !query_yn( buffer ) ) {
-            return false;
+        const bool automatic_npc_craft = is_npc();
+        if( !automatic_npc_craft ) {
+            std::string buffer = _( "Consume the missing components and continue crafting?" );
+            buffer += "\n";
+            buffer += continue_reqs.list_all();
+            if( !query_yn( buffer ) ) {
+                return false;
+            }
         }
 
         if( !continue_reqs.can_make_with_inventory( crafting_inventory(), no_rotten_filter, batch_size ) ) {
+            if( automatic_npc_craft ) {
+                add_msg_if_player_sees( pos(), m_bad,
+                                        _( "%s附近只有腐烂材料，自动制造不会使用这些材料。" ),
+                                        get_name() );
+                return false;
+            }
             if( !query_yn( _( "Some components required to continue are rotten.\n"
                               "Continue crafting anyway?" ) ) ) {
                 return false;
@@ -1615,6 +1929,12 @@ bool Character::can_continue_craft( item &craft, const requirement_data &continu
 
         if( !continue_reqs.can_make_with_inventory( crafting_inventory(), no_favorite_filter,
                 batch_size ) ) {
+            if( automatic_npc_craft ) {
+                add_msg_if_player_sees( pos(), m_bad,
+                                        _( "%s附近只有收藏材料，自动制造不会使用这些材料。" ),
+                                        get_name() );
+                return false;
+            }
             if( !query_yn( _( "Some components required to continue are favorite.\n"
                               "Continue crafting anyway?" ) ) ) {
                 return false;
@@ -1650,6 +1970,10 @@ bool Character::can_continue_craft( item &craft, const requirement_data &continu
         for( const auto &it : item_selections ) {
             craft.components.splice( craft.components.end(), consume_items( it, batch_size, filter ) );
         }
+        if( automatic_npc_craft ) {
+            add_msg_if_player_sees( pos(), m_info,
+                                    _( "%s补充了缺失材料并继续制作。" ), get_name() );
+        }
     }
 
     if( !craft.has_tools_to_continue() ) {
@@ -1684,7 +2008,7 @@ bool Character::can_continue_craft( item &craft, const requirement_data &continu
                 popup(buffer, PF_NONE);
             }
             else {
-                add_msg_if_npc(_("<npcname> don't have the necessary tools to continue crafting!"));
+                add_msg_if_npc( _( "<npcname>缺少继续制作所需的工具。" ) );
             }
             return false;
         }
@@ -1862,6 +2186,9 @@ comp_selection<item_comp> Character::select_item_component( const std::vector<it
         } else if( !map_has.empty() ) {
             selected.use_from = usage_from::map;
             selected.comp = map_has[0].first;
+        } else if( !mixed.empty() ) {
+            selected.use_from = usage_from::both;
+            selected.comp = mixed[0].first;
         } else {
             debugmsg( "Attempted a recipe with no available components!" );
             selected.use_from = usage_from::cancel;
@@ -2241,7 +2568,8 @@ Character::select_tool_component( const std::vector<tool_comp> &tools, int batch
     return selected;
 }
 
-bool Character::craft_consume_tools( item &craft, int multiplier, bool start_craft )
+bool Character::craft_consume_tools( item &craft, int multiplier, bool start_craft,
+                                     const std::optional<tripoint> &workplace )
 {
     if( !craft.is_craft() ) {
         debugmsg( "craft_consume_tools() called on non-craft '%s.' Aborting.", craft.tname() );
@@ -2278,8 +2606,9 @@ bool Character::craft_consume_tools( item &craft, int multiplier, bool start_cra
     const std::vector<comp_selection<tool_comp>> &cached_tool_selections =
                 craft.get_cached_tool_selections();
 
+    const tripoint origin = workplace ? *workplace : pos();
     inventory map_inv;
-    map_inv.form_from_map( pos(), PICKUP_RANGE, this );
+    map_inv.form_from_map( origin, PICKUP_RANGE, this );
 
     for( const comp_selection<tool_comp> &tool_sel : cached_tool_selections ) {
         itype_id type = tool_sel.comp.type;
@@ -2307,7 +2636,8 @@ bool Character::craft_consume_tools( item &craft, int multiplier, bool start_cra
                     }
                     break;
                 case usage_from::both:
-                    if( !crafting_inventory().has_charges( type, count ) ) {
+                    if( !crafting_inventory( origin, PICKUP_RANGE, true ).has_charges(
+                            type, count ) ) {
                         add_msg_player_or_npc(
                             _( "You have insufficient %s charges and can't continue crafting." ),
                             _( "<npcname> has insufficient %s charges and can't continue crafting." ),
@@ -2335,7 +2665,7 @@ bool Character::craft_consume_tools( item &craft, int multiplier, bool start_cra
     for( const comp_selection<tool_comp> &tool : cached_tool_selections ) {
         comp_selection<tool_comp> to_consume = tool;
         to_consume.comp.count = calc_charges( to_consume.comp.count );
-        consume_tools( to_consume, 1 );
+        consume_tools( get_map(), to_consume, 1, origin, PICKUP_RANGE );
     }
     return true;
 }
@@ -2356,7 +2686,10 @@ void Character::consume_tools( map &m, const comp_selection<tool_comp> &tool, in
     const itype *tmp = item::find_type( tool.comp.type );
     int quantity = tool.comp.count * batch * tmp->charge_factor();
     if( tool.use_from == usage_from::both ) {
-        use_charges( tool.comp.type, quantity, radius );
+        m.use_charges( origin, radius, tool.comp.type, quantity, return_true<item>, bcp );
+        if( quantity > 0 ) {
+            use_charges( tool.comp.type, quantity );
+        }
     } else if( tool.use_from == usage_from::player ) {
         use_charges( tool.comp.type, quantity );
     } else if( tool.use_from == usage_from::map ) {
@@ -2973,6 +3306,26 @@ std::vector<npc *> Character::get_crafting_helpers() const
                rl_dist( guy.pos(), pos() ) < PICKUP_RANGE &&
                get_map().clear_path( pos(), guy.pos(), PICKUP_RANGE, 1, 100 );
     } );
+}
+
+std::vector<Character *> Character::get_crafting_group() const
+{
+    std::vector<Character *> result;
+    result.push_back( const_cast<Character *>( this ) );
+
+    // NPC dialogue crafting deliberately remains a one-NPC command.  The
+    // group selector is intended for the normal menu opened by the avatar.
+    if( !is_avatar() ) {
+        return result;
+    }
+
+    std::vector<npc *> allies = g->get_npcs_if( [this]( const npc &guy ) {
+        return guy.is_ally( *this ) &&
+               rl_dist( guy.pos(), pos() ) < PICKUP_RANGE &&
+               get_map().clear_path( pos(), guy.pos(), PICKUP_RANGE, 1, 100 );
+    } );
+    result.insert( result.end(), allies.begin(), allies.end() );
+    return result;
 }
 
 static bool is_anyone_crafting(const item_location& itm, const Character* you = nullptr)
