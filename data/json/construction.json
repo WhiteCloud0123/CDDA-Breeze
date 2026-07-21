@@ -31,11 +31,11 @@
     "category": "OTHER",
     "required_skills": [  ],
     "time": "0 m",
-    "pre_note": "Mark a spot for crafting.  Crafting tasks next to this tile will automatically use this location instead of attempting to craft in your hands, with the usual crafting speed penalty for working on the ground.  Does not prevent using a proper workbench, if available.  Deconstruct or smash to remove.",
-    "pre_special": "check_empty",
+    "pre_note": "标记一个制造地点。可以标记空地或固定家具工作台，标记后的工作台会在自动选择时优先采用。空地制造仍按地面工作速度计算，调查制造点可以立即移除标记。",
+    "pre_special": "check_crafting_spot",
     "post_flags": [ "keep_items" ],
-    "dark_craftable": true,
-    "post_terrain": "f_ground_crafting_spot"
+    "post_special": "done_crafting_spot",
+    "dark_craftable": true
   },
   {
     "type": "construction",

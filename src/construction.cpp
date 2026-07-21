@@ -20,6 +20,7 @@
 #include "construction_category.h"
 #include "construction_group.h"
 #include "coordinates.h"
+#include "creature_tracker.h"
 #include "cursesdef.h"
 #include "debug.h"
 #include "enums.h"
@@ -78,6 +79,9 @@ static const flag_id json_flag_PIT( "PIT" );
 static const furn_str_id furn_f_console( "f_console" );
 static const furn_str_id furn_f_console_broken( "f_console_broken" );
 static const furn_str_id furn_f_machinery_electronic( "f_machinery_electronic" );
+static const furn_str_id furn_f_ground_crafting_spot( "f_ground_crafting_spot" );
+
+static const field_type_str_id fd_crafting_spot( "fd_crafting_spot" );
 
 static const item_group_id Item_spawn_data_allclothes( "allclothes" );
 static const item_group_id Item_spawn_data_grave( "grave" );
@@ -137,6 +141,7 @@ static bool check_nothing( const tripoint_bub_ms & )
 static bool check_channel( const tripoint_bub_ms & ); // tile has adjacent flowing water
 static bool check_empty_lite( const tripoint_bub_ms & );
 static bool check_empty( const tripoint_bub_ms & ); // tile is empty
+static bool check_crafting_spot( const tripoint_bub_ms & );
 static bool check_support( const tripoint_bub_ms & ); // at least two orthogonal supports
 static bool check_support_below( const tripoint_bub_ms
                                  & ); // at least two orthogonal supports at the level below
@@ -163,6 +168,7 @@ static void done_vehicle( const tripoint_bub_ms &, Character & );
 static void done_appliance( const tripoint_bub_ms &, Character & );
 static void done_wiring( const tripoint_bub_ms &, Character & );
 static void done_deconstruct( const tripoint_bub_ms &, Character & );
+static void done_crafting_spot( const tripoint_bub_ms &, Character & );
 static void done_digormine_stair( const tripoint_bub_ms &, bool, Character & );
 static void done_dig_grave( const tripoint_bub_ms &p, Character & );
 static void done_dig_grave_nospawn( const tripoint_bub_ms &p, Character & );
@@ -1204,6 +1210,25 @@ bool construct::check_empty( const tripoint_bub_ms &p )
              here.i_at( p ).empty() && !here.veh_at( p ) );
 }
 
+bool construct::check_crafting_spot( const tripoint_bub_ms &p )
+{
+    map &here = get_map();
+    if( get_creature_tracker().creature_at( p ) != nullptr || !here.tr_at( p ).is_null() ||
+        here.get_field( p, fd_crafting_spot ) != nullptr ||
+        here.furn( p ) == furn_f_ground_crafting_spot ) {
+        return false;
+    }
+
+    // A field marker can coexist with a fixed furniture workbench.  Vehicle workbenches are
+    // deliberately excluded because map fields do not move with the vehicle.
+    if( here.has_furn( p ) && here.furn( p ).obj().workbench && !here.veh_at( p ) ) {
+        return true;
+    }
+
+    return here.has_flag( ter_furn_flag::TFLAG_FLAT, p ) && !here.has_furn( p ) &&
+           !here.veh_at( p );
+}
+
 static std::array<tripoint_bub_ms, 4> get_orthogonal_neighbors( const tripoint_bub_ms &p )
 {
     return {{
@@ -1562,6 +1587,18 @@ void construct::done_appliance( const tripoint_bub_ms &p, Character &player_char
     }
     // TODO: fix point types
     place_appliance( p.raw(), vpart, base, *direction );
+}
+
+void construct::done_crafting_spot( const tripoint_bub_ms &p, Character &who )
+{
+    map &here = get_map();
+    if( here.has_furn( p ) && here.furn( p ).obj().workbench ) {
+        here.add_field( p, fd_crafting_spot, 1 );
+        who.add_msg_if_player( m_info, _( "你在%s上标记了制造点。" ), here.furnname( p ) );
+    } else {
+        here.furn_set( p, furn_f_ground_crafting_spot );
+        who.add_msg_if_player( m_info, _( "你标记了一个地面制造点。" ) );
+    }
 }
 
 void construct::done_deconstruct( const tripoint_bub_ms &p, Character &player_character )
@@ -2018,6 +2055,7 @@ void load_construction( const JsonObject &jo )
             { "", construct::check_nothing },
             { "check_channel", construct::check_channel },
             { "check_empty", construct::check_empty },
+            { "check_crafting_spot", construct::check_crafting_spot },
             { "check_empty_lite", construct::check_empty_lite },
             { "check_support", construct::check_support },
             { "check_support_below", construct::check_support_below },
@@ -2044,6 +2082,7 @@ void load_construction( const JsonObject &jo )
             { "done_appliance", construct::done_appliance },
             { "done_wiring", construct::done_wiring },
             { "done_deconstruct", construct::done_deconstruct },
+            { "done_crafting_spot", construct::done_crafting_spot },
             { "done_dig_grave", construct::done_dig_grave },
             { "done_dig_grave_nospawn", construct::done_dig_grave_nospawn },
             { "done_dig_stair", construct::done_dig_stair },

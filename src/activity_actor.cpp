@@ -3163,7 +3163,7 @@ void craft_activity_actor::do_turn( player_activity &act, Character &crafter )
     }
 
     if( five_percent_steps > 0 ) {
-        if( !crafter.craft_consume_tools( craft, five_percent_steps, false ) ) {
+        if( !crafter.craft_consume_tools( craft, five_percent_steps, false, location ) ) {
             // So we don't skip over any tool comsuption
             craft.item_counter -= craft.item_counter % 500'000 + 1;
             craft.erase_var("crafter");
