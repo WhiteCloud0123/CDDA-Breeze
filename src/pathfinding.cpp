@@ -475,7 +475,7 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
             if( found && rope_pos.z() > cur.z ) {
                 const auto rope_pair = get_rope_at( rope_pos );
                 const int ladder_len = rope_pair.first->part( rope_pair.second ).info().ladder_length();
-                // 玩家逻辑：最大上升层数为 ladder_len - 1
+                // 最大上升层数为 ladder_len - 1
                 const int dist = std::min( rope_pos.z() - cur.z, ladder_len - 1 );
                 if( dist > 0 ) {
                     tripoint dest( cur.xy(), cur.z + dist );
@@ -610,8 +610,8 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
             }
 
             ret.push_back( cur );
-            // Jumps are acceptable on z-level changes
-            // This is because stairs (and vehicle rope ladders) teleport the player/NPC too
+            // 在Z轴高度变化时，跳跃是可以接受的
+            // 这是因为楼梯、载具的绳梯，同样会使玩家/NPC发生传送
             if( rl_dist( cur, par ) > 1 && !connected_by_vehicle_rope( cur, par ) ) {
                 debugmsg( "Jump in our route!  %d:%d:%d->%d:%d:%d",
                           cur.x, cur.y, cur.z, par.x, par.y, par.z );
