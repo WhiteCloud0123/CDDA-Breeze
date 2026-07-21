@@ -511,20 +511,6 @@ void handle_weather_effects( const weather_type_id &w )
     get_weather().lightning_active = false;
 }
 
-static std::string to_string( const weekdays &d )
-{
-    static const std::array<std::string, 7> weekday_names = {{
-            translate_marker( "Sunday" ), translate_marker( "Monday" )
-            translate_marker( "Tuesday" ), translate_marker( "Wednesday" )
-            translate_marker( "Thursday" ), translate_marker( "Friday" )
-            translate_marker( "Saturday" )
-        }
-    };
-    static_assert( static_cast<int>( weekdays::SUNDAY ) == 0,
-                   "weekday_names array is out of sync with weekdays enumeration values" );
-    return _( weekday_names[ static_cast<int>( d ) ] );
-}
-
 static std::string print_time_just_hour( const time_point &p )
 {
     const int hour = to_hours<int>( time_past_midnight( p ) );

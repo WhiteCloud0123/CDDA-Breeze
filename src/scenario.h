@@ -63,7 +63,11 @@ class scenario
         season_type _start_season = SPRING;
         bool _is_random_year = false;
         int _start_year = 1;
+
+        time_point _default_start_of_cataclysm;
+        time_point _default_start_of_game;
         time_point _start_of_cataclysm;
+        time_point _start_of_game;
 
         vproto_id _starting_vehicle = vproto_id::NULL_ID();
 
@@ -112,6 +116,10 @@ class scenario
         season_type start_season() const;
         int start_year() const;
 
+        void normalize_calendar() const;
+        void reset_calendar() const;
+        void change_start_of_cataclysm( const time_point &t ) const;
+        void change_start_of_game( const time_point &t ) const;
         time_point start_of_cataclysm() const;
         time_point start_of_game() const;
 

@@ -2953,6 +2953,72 @@ static struct {
     }
 } scenario_sorter;
 
+static time_point select_scenario_time( const time_point &initial, const std::string &title )
+{
+    time_point selected = initial;
+    const time_point maximum_time = time_point::from_turn( INT_MAX / 2 );
+    const auto set_time_part = [&]( const int initial_value, const int minimum, const int maximum,
+                                    const time_duration &factor, const char *const prompt ) {
+        string_input_popup pop;
+        int new_value = pop
+                        .title( prompt )
+                        .width( 20 )
+                        .text( std::to_string( initial_value ) )
+                        .only_digits( true )
+                        .query_int();
+        if( pop.canceled() ) {
+            return;
+        }
+        new_value = std::clamp( new_value, minimum, maximum );
+        selected = std::max( calendar::turn_zero,
+                             std::min( maximum_time,
+                                       selected + ( new_value - initial_value ) * factor ) );
+    };
+    const auto year_number = []( const time_point & p ) {
+        return calendar::years_since_cataclysm( p ) + 1;
+    };
+
+    uilist menu;
+    do {
+        const int previous_selection = menu.ret;
+        menu.reset();
+        menu.text = title;
+        menu.addentry( 0, true, 'y', "%s: %d", _( "year" ), year_number( selected ) );
+        menu.addentry( 1, !calendar::eternal_season(), 's', "%s: %s", _( "season" ),
+                       calendar::name_season( season_of_year( selected ) ) );
+        menu.addentry( 2, true, 'd', "%s: %d", _( "day" ),
+                       day_of_season<int>( selected ) + 1 );
+        menu.addentry( 3, true, 'h', "%s: %d", _( "hour" ), hour_of_day<int>( selected ) );
+        menu.selected = previous_selection;
+        menu.query();
+
+        switch( menu.ret ) {
+            case 0:
+                set_time_part( year_number( selected ), 1,
+                               to_turns<int>( maximum_time - calendar::turn_zero ) /
+                               to_turns<int>( calendar::year_length() ) + 1,
+                               calendar::year_length(),
+                               _( "Set year to?" ) );
+                break;
+            case 1:
+                set_time_part( static_cast<int>( season_of_year( selected ) ), 0, 3,
+                               calendar::season_length(), _( "Set season to?  (0 = spring)" ) );
+                break;
+            case 2:
+                set_time_part( day_of_season<int>( selected ) + 1, 1,
+                               get_option<int>( "SEASON_LENGTH" ), 1_days, _( "Set days to?" ) );
+                break;
+            case 3:
+                set_time_part( hour_of_day<int>( selected ), 0, 23, 1_hours, _( "Set hour to?" ) );
+                break;
+            default:
+                break;
+        }
+    } while( menu.ret != UILIST_CANCEL );
+
+    return selected;
+}
+
 static std::string assemble_scenario_details( const avatar &u, const input_context &ctxt,
         const scenario *current_scenario )
 {
@@ -3012,7 +3078,16 @@ static std::string assemble_scenario_details( const avatar &u, const input_conte
     }
 
     assembled += "\n" + colorize( _( "Scenario calendar:" ), COL_HEADER ) + "\n";
-    if( current_scenario->custom_start_date() ) {
+    if( current_scenario == get_scenario() ) {
+        assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_CATACLYSM" ), c_light_green ) + " " +
+                     _( "Start of cataclysm:" ) + " " +
+                     to_string( current_scenario->start_of_cataclysm() ) + "\n";
+        assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_GAME" ), c_light_green ) + " " +
+                     _( "Start of game:" ) + " " + to_string( current_scenario->start_of_game() ) +
+                     "\n";
+        assembled += colorize( ctxt.get_desc( "RESET_CALENDAR" ), c_light_green ) + " " +
+                     _( "Reset scenario calendar" ) + "\n";
+    } else if( current_scenario->custom_start_date() ) {
         assembled += string_format( current_scenario->is_random_year() ?
                                     _( "Year:   Random" ) : _( "Year:   %s" ),
                                     current_scenario->start_year() ) + "\n";
@@ -3099,6 +3174,9 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "FILTER" );
     ctxt.register_action( "RESET_FILTER" );
     ctxt.register_action( "RANDOMIZE" );
+    ctxt.register_action( "CHANGE_START_OF_CATACLYSM" );
+    ctxt.register_action( "CHANGE_START_OF_GAME" );
+    ctxt.register_action( "RESET_CALENDAR" );
 
     bool recalc_scens = true;
     int scens_length = 0;
@@ -3291,6 +3369,31 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
                 continue;
             }
             reset_scenario( u, sorted_scens[cur_id] );
+        } else if( action == "CHANGE_START_OF_CATACLYSM" ||
+                   action == "CHANGE_START_OF_GAME" || action == "RESET_CALENDAR" ) {
+            const scenario *scen = sorted_scens[cur_id];
+            const ret_val<void> can_pick = scen->can_pick();
+            if( !can_pick.success() ) {
+                popup( can_pick.str() );
+                continue;
+            }
+            if( scen->has_flag( "CITY_START" ) && !scenario_sorter.cities_enabled ) {
+                continue;
+            }
+            if( scen != get_scenario() ) {
+                reset_scenario( u, scen );
+            }
+            if( action == "CHANGE_START_OF_CATACLYSM" ) {
+                scen->change_start_of_cataclysm(
+                    select_scenario_time( scen->start_of_cataclysm(),
+                                          _( "Select cataclysm start date" ) ) );
+            } else if( action == "CHANGE_START_OF_GAME" ) {
+                scen->change_start_of_game(
+                    select_scenario_time( scen->start_of_game(), _( "Select game start date" ) ) );
+            } else {
+                scen->reset_calendar();
+            }
+            details_recalc = true;
         } else if( action == "CHANGE_GENDER" ) {
             u.male = !u.male;
             recalc_scens = true;

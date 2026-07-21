@@ -1658,6 +1658,10 @@ void options_manager::add_options_interface()
     },
     "12h" );
 
+    add( "SHOW_MONTHS", "interface", to_translation( "Show day/month" ),
+         to_translation( "Show day/month instead of season in time displays." ),
+         true );
+
     add_empty_line();
 
     add( "SHOW_GUN_VARIANTS", "interface", to_translation( "Show gun brand names" ),

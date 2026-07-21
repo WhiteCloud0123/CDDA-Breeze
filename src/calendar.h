@@ -134,6 +134,12 @@ float season_from_default_ratio();
 /** Returns the translated name of the season (with first letter being uppercase). */
 std::string name_season( season_type s );
 
+/** Offset from the first day of spring to January 1 in the display calendar. */
+time_duration turn_zero_offset();
+
+/** Number of January 1 boundaries crossed since the Cataclysm year began. */
+int years_since_cataclysm( time_point turn );
+
 extern time_point start_of_cataclysm;
 extern time_point start_of_game;
 extern time_point turn;
@@ -640,6 +646,27 @@ enum class weekdays : int {
 };
 
 weekdays day_of_week( const time_point &p );
+std::string to_string( const weekdays &d );
+
+enum class month : int {
+    JANUARY = 0,
+    FEBRUARY,
+    MARCH,
+    APRIL,
+    MAY,
+    JUNE,
+    JULY,
+    AUGUST,
+    SEPTEMBER,
+    OCTOBER,
+    NOVEMBER,
+    DECEMBER,
+    UNKNOWN
+};
+
+/** Converts an in-game time point to its month and day in the 364-day calendar. */
+std::pair<month, int> month_and_day( time_point turn );
+std::string to_string( month m );
 
 // To support the eternal season option we create a strong typedef of timepoint
 // which is a season_effective_time.  This converts a regular time to a time

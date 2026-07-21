@@ -1590,6 +1590,27 @@
   },
   {
     "type": "keybinding",
+    "id": "CHANGE_START_OF_CATACLYSM",
+    "category": "NEW_CHAR_SCENARIOS",
+    "name": "Change cataclysm start date",
+    "bindings": [ { "input_method": "keyboard_char", "key": "#" }, { "input_method": "keyboard_code", "key": "3", "mod": [ "shift" ] } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "CHANGE_START_OF_GAME",
+    "category": "NEW_CHAR_SCENARIOS",
+    "name": "Change game start date",
+    "bindings": [ { "input_method": "keyboard_char", "key": "&" }, { "input_method": "keyboard_code", "key": "7", "mod": [ "shift" ] } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "RESET_CALENDAR",
+    "category": "NEW_CHAR_SCENARIOS",
+    "name": "Reset scenario calendar",
+    "bindings": [ { "input_method": "keyboard_char", "key": "~" }, { "input_method": "keyboard_code", "key": "`", "mod": [ "shift" ] } ]
+  },
+  {
+    "type": "keybinding",
     "id": "SCROLL_SKILL_INFO_UP",
     "category": "NEW_CHAR_SKILLS",
     "name": "Scroll description up",
