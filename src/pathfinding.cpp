@@ -473,12 +473,17 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
         if( cur.z < max.z ) {
             auto [found, rope_pos] = has_rope_at( tripoint_bub_ms( cur ), true );
             if( found && rope_pos.z() > cur.z ) {
-                tripoint dest = rope_pos.raw();
-                if( inbounds( dest ) ) {
-                    const int dist = rope_pos.z() - cur.z;
-                    pf.add_point( layer.gscore[parent_index] + 2 * dist,
-                                  layer.score[parent_index] + 2 * dist + 2 * rl_dist( dest, t ),
-                                  cur, dest );
+                const auto rope_pair = get_rope_at( rope_pos );
+                const int ladder_len = rope_pair.first->part( rope_pair.second ).info().ladder_length();
+                // 玩家逻辑：最大上升层数为 ladder_len - 1
+                const int dist = std::min( rope_pos.z() - cur.z, ladder_len - 1 );
+                if( dist > 0 ) {
+                    tripoint dest( cur.xy(), cur.z + dist );
+                    if( inbounds( dest ) ) {
+                        pf.add_point( layer.gscore[parent_index] + 2 * dist,
+                                      layer.score[parent_index] + 2 * dist + 2 * rl_dist( dest, t ),
+                                      cur, dest );
+                    }
                 }
             }
         }
@@ -572,6 +577,29 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
     if( done ) {
         ret.reserve( rl_dist( f, t ) * 2 );
         tripoint cur = t;
+        // 检查两个同 xy 坐标点之间是否由载具绳梯连接
+        auto connected_by_vehicle_rope = [&]( const tripoint & from, const tripoint & to ) -> bool {
+            if( from.xy() != to.xy() ) {
+                return false;
+            }
+            const int low_z = std::min( from.z, to.z );
+            const int high_z = std::max( from.z, to.z );
+            for( const auto &entry : cached_veh_rope ) {
+                const tripoint_bub_ms &rope_top = entry.first;
+                if( rope_top.xy().raw() != from.xy() ) {
+                    continue;
+                }
+                const vehicle *veh = entry.second.first;
+                const int part = entry.second.second;
+                const int ladder_len = veh->part( part ).info().ladder_length();
+                // 绳梯顶部必须在高点或更高，且长度覆盖从 low_z 到 rope_top.z() 的区间
+                if( rope_top.z() >= high_z && rope_top.z() - low_z + 1 <= ladder_len ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         // Just to limit max distance, in case something weird happens
         for( int fdist = max_length; fdist != 0; fdist-- ) {
             const int cur_index = flat_index( cur.xy() );
@@ -582,9 +610,9 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
             }
 
             ret.push_back( cur );
-            // Jumps are acceptable on 1 z-level changes
-            // This is because stairs teleport the player too
-            if( rl_dist( cur, par ) > 1 && std::abs( cur.z - par.z ) != 1 ) {
+            // Jumps are acceptable on z-level changes
+            // This is because stairs (and vehicle rope ladders) teleport the player/NPC too
+            if( rl_dist( cur, par ) > 1 && !connected_by_vehicle_rope( cur, par ) ) {
                 debugmsg( "Jump in our route!  %d:%d:%d->%d:%d:%d",
                           cur.x, cur.y, cur.z, par.x, par.y, par.z );
                 return ret;
