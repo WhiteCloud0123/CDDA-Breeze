@@ -415,8 +415,76 @@ std::vector<tripoint> map::route( const tripoint &f, const tripoint &t,
             }
         }
 
-        if( !( cur_special & PF_UPDOWN ) || !settings.allow_climb_stairs ) {
+        if( !settings.allow_climb_stairs ) {
             // The part below is only for z-level pathing
+            continue;
+        }
+
+        // 载具绳梯（飞艇等）的 z-level 转换
+        // 载具绳梯存储在 cached_veh_rope 中，不设置 PF_UPDOWN 标志，
+        // 因此需要独立于地形楼梯逻辑处理，放在 continue 之前避免被跳过。
+        // 绳梯的中间层通常是空气（t_open_air），NPC 踩上去会坠落，
+        // 所以路径必须直接连接绳梯两端可站立的位置，而不是逐层经过空气。
+        // 向下：cur 在绳梯上，找到第一个可着陆点（非空气地形或有 BOARDABLE 载具）
+        if( cur.z > min.z ) {
+            tripoint_bub_ms cur_bub( cur );
+            for( const auto &entry : cached_veh_rope ) {
+                const tripoint_bub_ms &rope_top = entry.first;
+                if( rope_top.xy() != cur_bub.xy() ) {
+                    continue;
+                }
+                if( rope_top.z() < cur_bub.z() ) {
+                    continue;  // 绳梯顶部在 cur 下方，不覆盖 cur
+                }
+                const vehicle *veh = entry.second.first;
+                const int part = entry.second.second;
+                const int ladder_len = veh->part( part ).info().ladder_length();
+                if( rope_top.z() - cur_bub.z() + 1 > ladder_len ) {
+                    continue;  // 绳梯长度不足，不覆盖 cur
+                }
+                // 从 cur 正下方开始逐层找可着陆点
+                for( int i = 1; i <= ladder_len - 1; i++ ) {
+                    tripoint dest( cur.xy(), cur.z - i );
+                    if( dest.z < min.z ) {
+                        break;
+                    }
+                    if( !has_flag( ter_furn_flag::TFLAG_NO_FLOOR, dest ) ) {
+                        // 非空气地形：可通过才可着陆
+                        if( !impassable_ter_furn( dest ) ) {
+                            pf.add_point( layer.gscore[parent_index] + 2 * i,
+                                          layer.score[parent_index] + 2 * i + 2 * rl_dist( dest, t ),
+                                          cur, dest );
+                        }
+                        break;
+                    }
+                    // 空气地形：检查是否有可登车且可通过的载具部件作为着陆点
+                    const optional_vpart_position vp = veh_at( dest );
+                    if( vp && vp->part_with_feature( VPFLAG_BOARDABLE, true ) && passable( dest ) ) {
+                        pf.add_point( layer.gscore[parent_index] + 2 * i,
+                                      layer.score[parent_index] + 2 * i + 2 * rl_dist( dest, t ),
+                                      cur, dest );
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        // 向上：cur 在绳梯下方，直接连到绳梯顶部（可站立的载具甲板）
+        if( cur.z < max.z ) {
+            auto [found, rope_pos] = has_rope_at( tripoint_bub_ms( cur ), true );
+            if( found && rope_pos.z() > cur.z ) {
+                tripoint dest = rope_pos.raw();
+                if( inbounds( dest ) ) {
+                    const int dist = rope_pos.z() - cur.z;
+                    pf.add_point( layer.gscore[parent_index] + 2 * dist,
+                                  layer.score[parent_index] + 2 * dist + 2 * rl_dist( dest, t ),
+                                  cur, dest );
+                }
+            }
+        }
+
+        if( !( cur_special & PF_UPDOWN ) ) {
+            // 没有地形楼梯/坡道标志，跳过下方地形 z-level 转换逻辑
             continue;
         }
 
