@@ -869,7 +869,8 @@ time_duration calendar::turn_zero_offset()
 
 int calendar::years_since_cataclysm( time_point turn )
 {
-    return to_turn<int>( ( turn + turn_zero_offset() ) / calendar::year_length() );
+    const time_duration elapsed = turn - calendar::turn_zero + turn_zero_offset();
+    return to_turns<int>( elapsed ) / to_turns<int>( calendar::year_length() );
 }
 
 std::pair<month, int> month_and_day( time_point turn )
