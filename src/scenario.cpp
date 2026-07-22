@@ -493,16 +493,17 @@ void scenario::rerandomize() const
         hack->_start_day = rng( 0, get_option<int>( "SEASON_LENGTH" ) - 1 );
     }
 
-    // Initial day is the time of the Cataclysm. Limit it to occur on the first year.
-    hack->_default_start_of_cataclysm = calendar::turn_zero;
-    if( get_option<int>( "INITIAL_DAY" )  == -1 ) {
-        hack->_default_start_of_cataclysm +=
-            1_days * rng( 0, get_option<int>( "SEASON_LENGTH" ) * 4 - 1 );
-    } else {
-        hack->_default_start_of_cataclysm +=
-            1_days * std::min( get_option<int>( "INITIAL_DAY" ),
-                               get_option<int>( "SEASON_LENGTH" ) * 4 );
-    }
+    // INITIAL_DAY is the ordinary game-start day.  As in CCB, the Cataclysm begins
+    // five days earlier, so the default day 60 becomes May 15 / May 20.
+    const int days_in_year = get_option<int>( "SEASON_LENGTH" ) * 4;
+    const int configured_day = get_option<int>( "INITIAL_DAY" );
+    const int game_start_day = configured_day == -1 ?
+                               rng( 0, days_in_year - 1 ) :
+                               std::min( configured_day, days_in_year );
+    const int cataclysm_start_day = std::max( 0, game_start_day - 5 );
+
+    hack->_default_start_of_cataclysm = calendar::turn_zero
+                                        + 1_days * cataclysm_start_day;
 
     if( custom_start_date() ) {
         hack->_default_start_of_game = calendar::turn_zero
@@ -515,7 +516,8 @@ void scenario::rerandomize() const
             hack->_default_start_of_game += calendar::year_length();
         }
     } else {
-        hack->_default_start_of_game = hack->_default_start_of_cataclysm
+        hack->_default_start_of_game = calendar::turn_zero
+                                       + 1_days * game_start_day
                                        + 1_hours * get_option<int>( "INITIAL_TIME" )
                                        + 1_days * get_option<int>( "SPAWN_DELAY" );
     }
