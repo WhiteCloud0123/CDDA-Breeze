@@ -2818,8 +2818,12 @@ void overmap_special::load( const JsonObject &jo, const std::string &src )
     }
     switch( subtype_ ) {
         case overmap_special_subtype::fixed: {
-            shared_ptr_fast<fixed_overmap_special_data> fixed_data =
-                make_shared_fast<fixed_overmap_special_data>();
+            // Preserve inherited map data when loading an overmap_special with copy-from.
+            const fixed_overmap_special_data *existing =
+                std::dynamic_pointer_cast<const fixed_overmap_special_data>( data_ ).get();
+            shared_ptr_fast<fixed_overmap_special_data> fixed_data = existing ?
+                    make_shared_fast<fixed_overmap_special_data>( *existing ) :
+                    make_shared_fast<fixed_overmap_special_data>();
             mandatory( jo, was_loaded, "overmaps", fixed_data->terrains );
             if( is_special ) {
                 optional( jo, was_loaded, "connections", fixed_data->connections );
@@ -2828,9 +2832,15 @@ void overmap_special::load( const JsonObject &jo, const std::string &src )
             break;
         }
         case overmap_special_subtype::mutable_: {
-            shared_ptr_fast<mutable_overmap_special_data> mutable_data =
-                make_shared_fast<mutable_overmap_special_data>( id );
-            std::vector<overmap_special_locations> check_for_locations_merged_data;
+            // Preserve inherited mutable special data, then load fields supplied by the child.
+            const mutable_overmap_special_data *existing =
+                std::dynamic_pointer_cast<const mutable_overmap_special_data>( data_ ).get();
+            shared_ptr_fast<mutable_overmap_special_data> mutable_data = existing ?
+                    make_shared_fast<mutable_overmap_special_data>( *existing ) :
+                    make_shared_fast<mutable_overmap_special_data>( id );
+            mutable_data->parent_id = id;
+            std::vector<overmap_special_locations> check_for_locations_merged_data =
+                mutable_data->check_for_locations;
             optional( jo, was_loaded, "check_for_locations", check_for_locations_merged_data );
             if( jo.has_array( "check_for_locations_area" ) ) {
                 JsonArray jar = jo.get_array( "check_for_locations_area" );

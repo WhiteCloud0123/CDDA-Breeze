@@ -108,7 +108,9 @@ MATERIAL
 MONSTER
 MONSTER_FACTION
 mutation
+overmap_special
 overmap_terrain
+city_building
 recipe
 terrain
 TOOL
