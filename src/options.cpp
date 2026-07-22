@@ -2168,6 +2168,12 @@ void options_manager::add_options_graphics()
          true, COPT_CURSES_HIDE
        );
 
+    add( "USE_CHARACTER_PREVIEW", "graphics", to_translation( "角色创建贴图预览" ),
+         to_translation( "在角色创建的职业、特性和描述界面显示角色贴图。"
+                         "可用 z、Z 缩放，按 c 显示或隐藏职业服装。" ),
+         true, COPT_CURSES_HIDE
+       );
+
     add( "TILES", "graphics", to_translation( "Choose tileset" ),
          to_translation( "Choose the tileset you want to use." ),
          build_tilesets_list(), "MshockXottoplus", COPT_CURSES_HIDE
@@ -2189,6 +2195,7 @@ void options_manager::add_options_graphics()
        ); // populate the options dynamically
 
     get_option( "TILES" ).setPrerequisite( "USE_TILES" );
+    get_option( "USE_CHARACTER_PREVIEW" ).setPrerequisite( "USE_TILES" );
     get_option( "USE_DISTANT_TILES" ).setPrerequisite( "USE_TILES" );
     get_option( "DISTANT_TILES" ).setPrerequisite( "USE_DISTANT_TILES" );
     get_option( "SWAP_ZOOM" ).setPrerequisite( "USE_DISTANT_TILES" );

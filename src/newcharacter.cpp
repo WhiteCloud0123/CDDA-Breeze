@@ -22,6 +22,11 @@
 #include "cata_utility.h"
 #include "catacharset.h"
 #include "calendar_ui.h"
+#if defined( TILES )
+#include "character_preview.h"
+#include "cata_tiles.h"
+#include "sdltiles.h"
+#endif
 #include "character.h"
 #include "character_martial_arts.h"
 #include "color.h"
@@ -84,6 +89,39 @@ static const trait_id trait_SMELLY( "SMELLY" );
 static const trait_id trait_WEAKSCENT( "WEAKSCENT" );
 static const trait_id trait_XS( "XS" );
 static const trait_id trait_XXXL( "XXXL" );
+
+#if defined( TILES )
+static bool character_preview_is_enabled()
+{
+    return get_option<bool>( "USE_CHARACTER_PREVIEW" ) && get_option<bool>( "USE_TILES" ) &&
+           tilecontext && tilecontext->is_valid();
+}
+
+static void register_character_preview_actions( input_context &ctxt )
+{
+    ctxt.register_action( "zoom_in" );
+    ctxt.register_action( "zoom_out" );
+    ctxt.register_action( "TOGGLE_CHARACTER_PREVIEW_CLOTHES" );
+}
+
+static bool handle_character_preview_action( character_preview_window &preview,
+        const std::string &action )
+{
+    if( action == "zoom_in" ) {
+        preview.zoom_in();
+        return true;
+    }
+    if( action == "zoom_out" ) {
+        preview.zoom_out();
+        return true;
+    }
+    if( action == "TOGGLE_CHARACTER_PREVIEW_CLOTHES" ) {
+        preview.toggle_clothes();
+        return true;
+    }
+    return false;
+}
+#endif
 
 // Responsive screen behavior for small terminal sizes
 static bool isWide = false;
@@ -952,6 +990,11 @@ void set_points( tab_manager &tabs, avatar &u, pool_type &pool )
     ui_adaptor ui;
     catacurses::window w;
     catacurses::window w_description;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
     const auto init_windows = [&]( ui_adaptor & ui ) {
         w = catacurses::newwin( TERMY, TERMX, point_zero );
         w_description = catacurses::newwin( TERMY - 10, TERMX - 35, point( 31, 5 ) );
@@ -1396,6 +1439,22 @@ void set_traits( tab_manager &tabs, avatar &u, pool_type pool )
         w_description = catacurses::newwin( 3, TERMX - 2, point( 1, TERMY - 4 ) );
         ui.position_from_window( w );
         page_width = std::min( ( TERMX - 4 ) / used_pages, 38 );
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            const int int_page_width = static_cast<int>( page_width );
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - int_page_width * 3 - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 5, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       int_page_width * 3 + 5 );
+        }
+#endif
         iContentHeight = TERMY - 9;
 
         pos_calc();
@@ -1418,6 +1477,11 @@ void set_traits( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "FILTER" );
     ctxt.register_action( "RESET_FILTER" );
     ctxt.register_action( "SORT" );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     ui.on_redraw( [&]( const ui_adaptor & ) {
         werase( w );
@@ -1545,6 +1609,11 @@ void set_traits( tab_manager &tabs, avatar &u, pool_type pool )
 
         wnoutrefresh( w );
         wnoutrefresh( w_description );
+#if defined( TILES )
+        if( use_character_preview ) {
+            character_preview.display();
+        }
+#endif
     } );
 
     do {
@@ -1604,6 +1673,12 @@ void set_traits( tab_manager &tabs, avatar &u, pool_type pool )
 
         ui_manager::redraw();
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         std::array< int, 3> cur_sb_pos = iStartPos;
         bool scrollbar_handled = false;
         for( int i = 0; i < static_cast<int>( trait_sbs.size() ); ++i ) {
@@ -1953,10 +2028,33 @@ void set_profession( tab_manager &tabs, avatar &u, pool_type pool )
     bool details_recalc = true;
     const int iHeaderHeight = 5;
     scrollbar list_sb;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
     const auto init_windows = [&]( ui_adaptor & ui ) {
         iContentHeight = TERMY - iHeaderHeight - 1;
         w = catacurses::newwin( TERMY, TERMX, point_zero );
-        w_details_pane = catacurses::newwin( iContentHeight, TERMX / 2 - 1, point( TERMX / 2,
+        int details_width = TERMX / 2 - 1;
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            const int page_width = TERMX / 2 - 1;
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - page_width - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 5, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       page_width + 5 );
+            details_width = std::max( 20, details_width - character_preview.width() - 1 );
+        }
+#endif
+        w_details_pane = catacurses::newwin( iContentHeight, details_width, point( TERMX / 2,
                                              iHeaderHeight ) );
         details_recalc =  true;
         ui.position_from_window( w );
@@ -1980,6 +2078,11 @@ void set_profession( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "FILTER" );
     ctxt.register_action( "RESET_FILTER" );
     ctxt.register_action( "RANDOMIZE" );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     bool recalc_profs = true;
     int profs_length = 0;
@@ -2065,6 +2168,16 @@ void set_profession( tab_manager &tabs, avatar &u, pool_type pool )
 
         wnoutrefresh( w );
         details.draw( c_light_gray );
+#if defined( TILES )
+        if( use_character_preview ) {
+            const profession *previous_profession = u.prof;
+            if( cur_id_is_valid ) {
+                u.prof = &sorted_profs[cur_id].obj();
+            }
+            character_preview.display();
+            u.prof = previous_profession;
+        }
+#endif
     } );
 
     do {
@@ -2106,6 +2219,12 @@ void set_profession( tab_manager &tabs, avatar &u, pool_type pool )
 
         ui_manager::redraw();
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         const int recmax = profs_length;
         const int scroll_rate = recmax > 20 ? 10 : 2;
         const int id_for_curr_description = cur_id;
@@ -3451,6 +3570,11 @@ void set_description( tab_manager &tabs, avatar &you, const bool allow_reroll,
     catacurses::window w_height;
     catacurses::window w_age;
     catacurses::window w_blood;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &you );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
     const auto init_windows = [&]( ui_adaptor & ui ) {
         const int freeWidth = TERMX - FULL_SCREEN_WIDTH;
         isWide = ( TERMX > FULL_SCREEN_WIDTH && freeWidth > 15 );
@@ -3499,6 +3623,22 @@ void set_description( tab_manager &tabs, avatar &you, const bool allow_reroll,
             w_guide = catacurses::newwin( 2, TERMX - 3, point( 2, TERMY - 3 ) );
             ui.position_from_window( w );
         }
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            constexpr int page_width = 38;
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - page_width * 3 - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 10, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       page_width * 3 + 5 );
+        }
+#endif
     };
     init_windows( ui );
     ui.on_screen_resize( init_windows );
@@ -3522,6 +3662,11 @@ void set_description( tab_manager &tabs, avatar &you, const bool allow_reroll,
     }
     ctxt.register_action( "CHOOSE_LOCATION" );
     ctxt.register_action( "CONFIRM" );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     uilist select_location;
     select_location.text = _( "Select a starting location." );
@@ -3920,6 +4065,11 @@ void set_description( tab_manager &tabs, avatar &you, const bool allow_reroll,
             }
         }
         wnoutrefresh( w_hobbies );
+#if defined( TILES )
+        if( use_character_preview ) {
+            character_preview.display();
+        }
+#endif
     } );
 
     int min_allowed_age = 16;
@@ -3931,6 +4081,12 @@ void set_description( tab_manager &tabs, avatar &you, const bool allow_reroll,
     do {
         ui_manager::redraw();
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         if( action == "NEXT_TAB" ) {
             if( pool == pool_type::ONE_POOL ) {
                 if( points_used_total( you ) > point_pool_total() ) {
