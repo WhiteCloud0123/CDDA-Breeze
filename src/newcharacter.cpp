@@ -990,11 +990,6 @@ void set_points( tab_manager &tabs, avatar &u, pool_type &pool )
     ui_adaptor ui;
     catacurses::window w;
     catacurses::window w_description;
-#if defined( TILES )
-    character_preview_window character_preview;
-    character_preview.init( &u );
-    const bool use_character_preview = character_preview_is_enabled();
-#endif
     const auto init_windows = [&]( ui_adaptor & ui ) {
         w = catacurses::newwin( TERMY, TERMX, point_zero );
         w_description = catacurses::newwin( TERMY - 10, TERMX - 35, point( 31, 5 ) );
@@ -1434,6 +1429,11 @@ void set_traits( tab_manager &tabs, avatar &u, pool_type pool )
     ui_adaptor ui;
     catacurses::window w;
     catacurses::window w_description;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
     const auto init_windows = [&]( ui_adaptor & ui ) {
         w = catacurses::newwin( TERMY, TERMX, point_zero );
         w_description = catacurses::newwin( 3, TERMX - 2, point( 1, TERMY - 4 ) );
