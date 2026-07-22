@@ -887,9 +887,7 @@ std::pair<month, int> month_and_day( time_point turn )
         }
     };
 
-    const time_duration since_new_year =
-        ( turn - calendar::turn_zero + calendar::turn_zero_offset() ) % calendar::year_length();
-    int day = to_days<int>( since_new_year );
+    int day = to_days<int>( time_past_new_year( turn ) );
     int month_index = ( day / 91 ) * 3;
     day %= 91;
     if( day < 31 ) {

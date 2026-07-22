@@ -2957,37 +2957,78 @@ static time_point select_scenario_time( const time_point &initial, const std::st
 {
     time_point selected = initial;
     const time_point maximum_time = time_point::from_turn( INT_MAX / 2 );
-    const auto set_time_part = [&]( const int initial_value, const int minimum, const int maximum,
-                                    const time_duration &factor, const char *const prompt ) {
+    const auto query_number = []( const int initial_value, const int minimum, const int maximum,
+                                  const char *const prompt ) -> std::optional<int> {
         string_input_popup pop;
         int new_value = pop
                         .title( prompt )
-                        .width( 20 )
+                        .width( 24 )
                         .text( std::to_string( initial_value ) )
                         .only_digits( true )
                         .query_int();
         if( pop.canceled() ) {
+            return std::nullopt;
+        }
+        return std::clamp( new_value, minimum, maximum );
+    };
+    const auto clamp_time = [&]( const time_point & value ) {
+        return std::max( calendar::turn_zero, std::min( maximum_time, value ) );
+    };
+    const auto set_time_part = [&]( const int initial_value, const int minimum, const int maximum,
+                                    const time_duration &factor, const char *const prompt ) {
+        const std::optional<int> new_value =
+            query_number( initial_value, minimum, maximum, prompt );
+        if( !new_value ) {
             return;
         }
-        new_value = std::clamp( new_value, minimum, maximum );
-        selected = std::max( calendar::turn_zero,
-                             std::min( maximum_time,
-                                       selected + ( new_value - initial_value ) * factor ) );
+        selected = clamp_time( selected + ( *new_value - initial_value ) * factor );
     };
     const auto year_number = []( const time_point & p ) {
         return calendar::years_since_cataclysm( p ) + 1;
+    };
+    const auto month_length = []( const int month_index ) {
+        return month_index == static_cast<int>( month::JANUARY ) ||
+               month_index == static_cast<int>( month::APRIL ) ||
+               month_index == static_cast<int>( month::JULY ) ||
+               month_index == static_cast<int>( month::OCTOBER ) ? 31 : 30;
+    };
+    const auto month_start_day = [&]( const int month_index ) {
+        int result = 0;
+        for( int i = 0; i < month_index; ++i ) {
+            result += month_length( i );
+        }
+        return result;
+    };
+    const auto set_month_day = [&]( const int month_index, const int day_of_month ) {
+        const int current_day = to_days<int>( time_past_new_year( selected ) );
+        const int target_day = month_start_day( month_index ) +
+                               std::clamp( day_of_month, 1, month_length( month_index ) ) - 1;
+        selected = clamp_time( selected + ( target_day - current_day ) * 1_days );
     };
 
     uilist menu;
     do {
         const int previous_selection = menu.ret;
+        const bool show_months = get_option<bool>( "SHOW_MONTHS" ) &&
+                                 calendar::year_length() == 364_days;
+        const std::pair<month, int> month_day = show_months ?
+                                                month_and_day( selected ) :
+                                                std::make_pair( month::UNKNOWN, 0 );
+
         menu.reset();
-        menu.text = title;
+        menu.text = title + "\n" + to_string( selected );
         menu.addentry( 0, true, 'y', "%s: %d", _( "year" ), year_number( selected ) );
-        menu.addentry( 1, !calendar::eternal_season(), 's', "%s: %s", _( "season" ),
-                       calendar::name_season( season_of_year( selected ) ) );
-        menu.addentry( 2, true, 'd', "%s: %d", _( "day" ),
-                       day_of_season<int>( selected ) + 1 );
+        if( show_months ) {
+            menu.addentry( 1, true, 'm', "%s: %s", _( "month" ),
+                           to_string( month_day.first ) );
+            menu.addentry( 2, true, 'd', "%s: %d", _( "day of month" ),
+                           month_day.second );
+        } else {
+            menu.addentry( 1, !calendar::eternal_season(), 's', "%s: %s", _( "season" ),
+                           calendar::name_season( season_of_year( selected ) ) );
+            menu.addentry( 2, true, 'd', "%s: %d", _( "day" ),
+                           day_of_season<int>( selected ) + 1 );
+        }
         menu.addentry( 3, true, 'h', "%s: %d", _( "hour" ), hour_of_day<int>( selected ) );
         menu.selected = previous_selection;
         menu.query();
@@ -3001,15 +3042,39 @@ static time_point select_scenario_time( const time_point &initial, const std::st
                                _( "Set year to?" ) );
                 break;
             case 1:
-                set_time_part( static_cast<int>( season_of_year( selected ) ), 0, 3,
-                               calendar::season_length(), _( "Set season to?  (0 = spring)" ) );
+                if( show_months ) {
+                    const int current_month = static_cast<int>( month_day.first ) + 1;
+                    const std::optional<int> new_month =
+                        query_number( current_month, 1, 12,
+                                      _( "Set month to?  (1 = January)" ) );
+                    if( new_month ) {
+                        set_month_day( *new_month - 1,
+                                       std::min( month_day.second, month_length( *new_month - 1 ) ) );
+                    }
+                } else {
+                    set_time_part( static_cast<int>( season_of_year( selected ) ), 0, 3,
+                                   calendar::season_length(),
+                                   _( "Set season to?  (0 = spring)" ) );
+                }
                 break;
             case 2:
-                set_time_part( day_of_season<int>( selected ) + 1, 1,
-                               get_option<int>( "SEASON_LENGTH" ), 1_days, _( "Set days to?" ) );
+                if( show_months ) {
+                    const int current_month = static_cast<int>( month_day.first );
+                    const std::optional<int> new_day =
+                        query_number( month_day.second, 1, month_length( current_month ),
+                                      _( "Set day of month to?" ) );
+                    if( new_day ) {
+                        set_month_day( current_month, *new_day );
+                    }
+                } else {
+                    set_time_part( day_of_season<int>( selected ) + 1, 1,
+                                   get_option<int>( "SEASON_LENGTH" ), 1_days,
+                                   _( "Set days to?" ) );
+                }
                 break;
             case 3:
-                set_time_part( hour_of_day<int>( selected ), 0, 23, 1_hours, _( "Set hour to?" ) );
+                set_time_part( hour_of_day<int>( selected ), 0, 23, 1_hours,
+                               _( "Set hour to?" ) );
                 break;
             default:
                 break;
@@ -3078,29 +3143,14 @@ static std::string assemble_scenario_details( const avatar &u, const input_conte
     }
 
     assembled += "\n" + colorize( _( "Scenario calendar:" ), COL_HEADER ) + "\n";
-    if( current_scenario == get_scenario() ) {
-        assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_CATACLYSM" ), c_light_green ) + " " +
-                     _( "Start of cataclysm:" ) + " " +
-                     to_string( current_scenario->start_of_cataclysm() ) + "\n";
-        assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_GAME" ), c_light_green ) + " " +
-                     _( "Start of game:" ) + " " + to_string( current_scenario->start_of_game() ) +
-                     "\n";
-        assembled += colorize( ctxt.get_desc( "RESET_CALENDAR" ), c_light_green ) + " " +
-                     _( "Reset scenario calendar" ) + "\n";
-    } else if( current_scenario->custom_start_date() ) {
-        assembled += string_format( current_scenario->is_random_year() ?
-                                    _( "Year:   Random" ) : _( "Year:   %s" ),
-                                    current_scenario->start_year() ) + "\n";
-        assembled += string_format( _( "Season: %s" ),
-                                    calendar::name_season( current_scenario->start_season() ) ) + "\n";
-        assembled += string_format( current_scenario->is_random_day() ? _( "Day:    Random" ) :
-                                    _( "Day:    %d" ), current_scenario->start_day() ) + "\n";
-        assembled += string_format( current_scenario->is_random_hour() ? _( "Hour:   Random" ) :
-                                    _( "Hour:   %d" ), current_scenario->start_hour() ) + "\n";
-    } else {
-        assembled += _( "Default" );
-        assembled += "\n";
-    }
+    assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_CATACLYSM" ), c_light_green ) + " " +
+                 _( "Start of cataclysm:" ) + " " +
+                 to_string( current_scenario->start_of_cataclysm() ) + "\n";
+    assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_GAME" ), c_light_green ) + " " +
+                 _( "Start of game:" ) + " " + to_string( current_scenario->start_of_game() ) +
+                 "\n";
+    assembled += colorize( ctxt.get_desc( "RESET_CALENDAR" ), c_light_green ) + " " +
+                 _( "Reset scenario calendar" ) + "\n";
 
     if( !current_scenario->missions().empty() ) {
         assembled += "\n" + colorize( _( "Scenario missions:" ), COL_HEADER ) + "\n";
@@ -3276,6 +3326,7 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
                 if( !lcmatch( scen.gender_appropriate_name( u.male ), filterstring ) ) {
                     continue;
                 }
+                scen.ensure_calendar();
                 sorted_scens.push_back( &scen );
             }
             if( sorted_scens.empty() ) {

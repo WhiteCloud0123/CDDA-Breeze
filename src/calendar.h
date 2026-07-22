@@ -554,6 +554,13 @@ inline time_duration time_past_midnight( const time_point &p )
 
 inline time_duration time_past_new_year( const time_point &p )
 {
+    return ( p - calendar::turn_zero + calendar::turn_zero_offset() ) %
+           calendar::year_length();
+}
+
+/** Time elapsed since the spring-based seasonal cycle began. */
+inline time_duration time_past_season_year( const time_point &p )
+{
     return ( p - calendar::turn_zero ) % calendar::year_length();
 }
 

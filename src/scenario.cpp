@@ -521,6 +521,7 @@ void scenario::rerandomize() const
     }
 
     hack->reset_calendar();
+    hack->_calendar_initialized = true;
 }
 
 bool scenario::is_random_hour() const
@@ -556,6 +557,13 @@ season_type scenario::start_season() const
 int scenario::start_year() const
 {
     return _start_year;
+}
+
+void scenario::ensure_calendar() const
+{
+    if( !_calendar_initialized ) {
+        rerandomize();
+    }
 }
 
 void scenario::normalize_calendar() const
