@@ -1,87 +1,108 @@
-name: "Experimental Release"
-concurrency: release
+name: "发布微风（自动同步版本）"
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "no"
-    paths:
-      - '.github/workflows/release.yml'
-      - 'android/**'
-      - 'build-data/**'
-      - 'cataclysm-launcher'
-      - 'data/**'
-      - 'doc/**'
-      - 'gfx/**'
-      - 'lang/po/*.po'
-      - 'LICENSE*'
-      - 'Makefile'
-      - 'README*'
-      - 'src/**'
+    inputs:
+      version:
+        description: "本次发布版本号，例如 12.1 或 12.1.1"
+        required: true
+        type: string
+      publish:
+        description: "正式发布到 Releases。首次测试请不要勾选"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ZSTD_CLEVEL: 17
 
 jobs:
-  release:
-    name: Create Release
+  prepare:
+    name: 准备发布
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      timestamp: ${{ steps.get-timestamp.outputs.time }}
-      release_already_exists: ${{ steps.tag_check.outputs.exists }}
+      version: ${{ steps.meta.outputs.version }}
+      version_code: ${{ steps.meta.outputs.version_code }}
+      timestamp: ${{ steps.meta.outputs.timestamp }}
+      tag_name: ${{ steps.meta.outputs.tag_name }}
+      release_name: ${{ steps.meta.outputs.release_name }}
     steps:
-      - name: Get build timestamp
-        id: get-timestamp
-        uses: nanzm/get-time-action@v1.1
+      - name: 检出源码
+        uses: actions/checkout@v4
         with:
-          timeZone: 0
-          format: 'YYYY-MM-DD-HHmm'
-      - name: Generate environmental variables
-        id: generate_env_vars
-        run: |
-          echo "tag_name=cdda-breeze-${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
-          echo "release_name=CDDA-Breeze ${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
-      - name: Check if there is existing git tag
-        id: tag_check
-        uses: mukunku/tag-exists-action@v1.0.0
-        with:
-          tag: ${{ steps.generate_env_vars.outputs.tag_name }}  
+          fetch-depth: 0
+
+      - name: 校验并生成发布信息
+        id: meta
+        shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v2
-      - name: Push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.5
-        if: ${{ steps.tag_check.outputs.exists == 'false' }}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{ steps.generate_env_vars.outputs.tag_name }}
-          tag_prefix: ""
-      - name: "Generate release notes"
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            /repos/WhiteCloud0123/CDDA-Breeze/releases/generate-notes \
-            -f tag_name='${{ steps.generate_env_vars.outputs.tag_name }}' \
-            -f target_commitish='main' \
-            -q .body > CHANGELOG.md
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        if: ${{ steps.tag_check.outputs.exists == 'false' }}
+          set -euo pipefail
+
+          if [[ "${{ inputs.publish }}" == "true" && "${GITHUB_REF}" != "refs/heads/main" ]]; then
+            echo "正式发布只能从 main 分支运行，当前为 ${GITHUB_REF_NAME}。" >&2
+            exit 1
+          fi
+
+          VERSION="${INPUT_VERSION//[[:space:]]/}"
+          if [[ ! "${VERSION}" =~ ^[0-9]+(\.[0-9]+){1,2}([.-][0-9A-Za-z]+)*$ ]]; then
+            echo "版本号格式不正确：${INPUT_VERSION}。示例：12.1、12.1.1、12.1-rc1。" >&2
+            exit 1
+          fi
+
+          TIMESTAMP="$(date -u '+%Y-%m-%d-%H%M')"
+          VERSION_CODE="$((120000 + GITHUB_RUN_NUMBER))"
+          TAG_NAME="cdda-breeze-${VERSION}-${TIMESTAMP}"
+          RELEASE_NAME="CDDA-Breeze ${VERSION} (${TIMESTAMP})"
+
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "version_code=${VERSION_CODE}" >> "${GITHUB_OUTPUT}"
+          echo "timestamp=${TIMESTAMP}" >> "${GITHUB_OUTPUT}"
+          echo "tag_name=${TAG_NAME}" >> "${GITHUB_OUTPUT}"
+          echo "release_name=${RELEASE_NAME}" >> "${GITHUB_OUTPUT}"
+
+          echo "发布版本：${VERSION}"
+          echo "Android versionCode：${VERSION_CODE}"
+          echo "发布标签：${TAG_NAME}"
+
+      - name: 检查标签是否重复
+        if: ${{ inputs.publish }}
+        shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.generate_env_vars.outputs.tag_name }}
-          release_name: ${{ steps.generate_env_vars.outputs.release_name }}
-          body_path: ./CHANGELOG.md
-          draft: false
-          prerelease: false
+          TAG_NAME: ${{ steps.meta.outputs.tag_name }}
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG_NAME}" >/dev/null 2>&1; then
+            echo "标签 ${TAG_NAME} 已存在，请稍后重新运行。" >&2
+            exit 1
+          fi
+
+      - name: 创建草稿发布
+        if: ${{ inputs.publish }}
+        shell: bash
+        env:
+          TAG_NAME: ${{ steps.meta.outputs.tag_name }}
+          RELEASE_NAME: ${{ steps.meta.outputs.release_name }}
+        run: |
+          set -euo pipefail
+          gh release create "${TAG_NAME}" \
+            --draft \
+            --generate-notes \
+            --target "${GITHUB_SHA}" \
+            --title "${RELEASE_NAME}"
+
   builds:
-    needs: release
-    if: ${{ needs.release.outputs.release_already_exists == 'false' }}
+    name: ${{ matrix.name }}
+    needs: prepare
     strategy:
       fail-fast: false
       matrix:
@@ -92,51 +113,55 @@ jobs:
             os: windows-2022
             mxe: none
             ext: zip
-            content: application/zip
-          - name: Android x64
+          - name: Android arm64
+            artifact: android-arm64
             os: ubuntu-latest
             mxe: none
             android: arm64
-            artifact: android-x64
             ext: apk
-            content: application/apk
-    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
-    env:
-        ZSTD_CLEVEL: 17
     steps:
-      - uses: actions/checkout@v2
-      - name: Get soundpack
-        if: matrix.sound == 1
+      - name: 检出源码
+        uses: actions/checkout@v4
+
+      - name: 注入本次发布版本号
+        shell: bash
+        env:
+          BREEZE_VERSION: ${{ needs.prepare.outputs.version }}
         run: |
-          git clone --depth=1 --shallow-submodules --recurse-submodules https://github.com/Fris0uman/CDDA-Soundpacks '${{ github.workspace }}/CDDA-Soundpacks'
-          mv '${{ github.workspace }}/CDDA-Soundpacks/sound/CC-Sounds' '${{ github.workspace }}/data/sound'
+          set -euo pipefail
+          cat > src/version.h <<EOF
+          // NOLINT(cata-header-guard)
+          #define VERSION "CDDA-Breeze-${BREEZE_VERSION}"
+          EOF
+          cat src/version.h
+
       - name: Install dependencies (windows msvc) (0/4)
         if: runner.os == 'Windows'
         uses: lukka/get-cmake@latest
         with:
-        # 4.0.0 has issues compiling old packages in vcpkg
+          # 4.0.0 has issues compiling old packages in vcpkg
           cmakeVersion: 3.31.6
+
       - name: Install dependencies (windows msvc) (1/4)
         if: runner.os == 'Windows'
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v2
+
       - name: Install dependencies (windows msvc) (2/4)
         if: runner.os == 'Windows'
         uses: lukka/run-vcpkg@v11
         id: runvcpkg
         env:
           VCPKG_BINARY_SOURCES: clear
-        with:        
+        with:
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          # We have to use at least this version of vcpkg to include fixes for yasm-tool's
-          # availability only as an x86 host tool. Keep it in sync with the builtin-baseline
-          # field in vcpkg.json. Caching happens as a post-action which runs at the end of
-          # the whole workflow, after vcpkg install happens during msbuild run.
           vcpkgGitCommitId: "9dd12f8d791f6fa4e396adbebc714d51cbee2143"
+
       - name: Install dependencies (windows msvc) (3/4)
         if: runner.os == 'Windows'
         run: |
           vcpkg integrate install --vcpkg-root '${{ runner.workspace }}\b\vcpkg'
+
       - name: Cache vcpkg installed packages
         if: runner.os == 'Windows'
         uses: actions/cache@v4
@@ -144,6 +169,7 @@ jobs:
         with:
           path: msvc-full-features/vcpkg_installed/
           key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/${{ matrix.arch }}-windows-static.cmake') }}-9dd12f8d791f6fa4e396adbebc714d51cbee2143
+
       - name: Install dependencies (windows msvc) (4/4)
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
@@ -152,113 +178,118 @@ jobs:
           install: >-
             gettext
             make
-      - name: Install dependencies (windows mxe)
-        if: matrix.mxe != 'none'
-        run: |
-          sudo apt install gettext
-      - name: Install MXE
-        if: matrix.mxe != 'none'
-        run: |
-          curl -L -o mxe-${{ matrix.mxe }}.tar.xz https://github.com/BrettDong/MXE-GCC/releases/download/mxe-gcc-11.2/mxe-${{ matrix.mxe }}.tar.xz
-          curl -L -o mxe-${{ matrix.mxe }}.tar.xz.sha256 https://github.com/BrettDong/MXE-GCC/releases/download/mxe-gcc-11.2/mxe-${{ matrix.mxe }}.tar.xz.sha256
-          shasum -a 256 -c ./mxe-${{ matrix.mxe }}.tar.xz.sha256
-          sudo tar xJf mxe-${{ matrix.mxe }}.tar.xz -C /opt
-          curl -L -o libbacktrace-${{ matrix.mxe }}-w64-mingw32.tar.gz https://github.com/Qrox/libbacktrace/releases/download/2020-01-03/libbacktrace-${{ matrix.mxe }}-w64-mingw32.tar.gz
-          shasum -a 256 -c ./build-scripts/libbacktrace-${{ matrix.mxe }}-w64-mingw32-sha256
-          sudo tar -xzf libbacktrace-${{ matrix.mxe }}-w64-mingw32.tar.gz --exclude=LICENSE -C /opt/mxe/usr/${{ matrix.mxe }}-w64-mingw32.static.gcc11
-      - name: Install dependencies (Linux)
-        if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none' 
+
+      - name: Setup JDK 11 (android)
+        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Setup Build and Dependencies (android)
+        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         run: |
           sudo apt-get update
-          sudo apt-get install libncursesw5-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev \
-            libsdl2-mixer-dev libpulse-dev ccache gettext parallel
-      - name: Install dependencies (mac)
-        if: runner.os == 'macOS'
-        run: |
-          HOMEBREW_NO_AUTO_UPDATE=yes HOMEBREW_NO_INSTALL_CLEANUP=yes brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer gettext ccache parallel
-          pip3 install mac_alias==2.2.0 dmgbuild==1.4.2 biplist
-      - name: Create VERSION.TXT
+          sudo apt-get install -y gettext
+
+      - name: 创建 VERSION.txt
         shell: bash
         run: |
-          cat >VERSION.txt <<EOL
+          cat > VERSION.txt <<EOF
+          version: ${{ needs.prepare.outputs.version }}
           build type: ${{ matrix.artifact }}
-          build number: ${{ needs.release.outputs.timestamp }}
+          build number: ${{ needs.prepare.outputs.timestamp }}
+          android version code: ${{ needs.prepare.outputs.version_code }}
           commit sha: ${{ github.sha }}
           commit url: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-          EOL
+          EOF
+
       - name: Compile translations (windows)
         if: runner.os == 'Windows'
         shell: msys2 {0}
         run: |
           lang/compile_mo.sh all
-      - name: Build CDDA (linux)
-        if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none'
-        run: |
-          make -j$((`nproc`+0)) TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 bindist
-          mv cataclysmdda-0.G.tar.gz cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.tar.gz
-      - name: Build CDDA (windows mxe)
-        if: matrix.mxe != 'none'
-        env:
-          PLATFORM: /opt/mxe/usr/bin/${{ matrix.mxe }}-w64-mingw32.static.gcc11-
-        run: |
-          make -j$((`nproc`+0)) CROSS="${PLATFORM}" TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=1 PCH=0 bindist
-          mv cataclysmdda-0.G.zip CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
+
       - name: Build CDDA (windows msvc)
         if: runner.os == 'Windows'
         env:
           VCPKG_OVERLAY_TRIPLETS: ${{ github.workspace }}\.github\vcpkg_triplets
           VCPKG_BINARY_SOURCES: clear
+          OUTPUT_FILE: CDDA-Breeze-${{ needs.prepare.outputs.version }}-${{ matrix.artifact }}-${{ needs.prepare.outputs.timestamp }}.zip
         run: |
           msbuild -m -p:Configuration=Release -p:Platform=${{ matrix.arch }} "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static" msvc-full-features\Cataclysm-vcpkg-static.sln
           .\build-scripts\windist.ps1
-          mv cataclysmdda-0.G.zip CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
-      - name: Build CDDA (osx)
-        if: runner.os == 'macOS'
-        run: |
-          make -j3 TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 USE_HOME_DIR=1 OSX_MIN=10.12 dmgdist
-          mv Cataclysm.dmg cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.dmg
-      - name: Set up JDK 11 (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'   
-      - name: Setup Build and Dependencies (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
-        run: |
-          sudo apt-get update
-          sudo apt-get install gettext          
+          Move-Item cataclysmdda-0.G.zip $env:OUTPUT_FILE
+
       - name: Build CDDA (android)
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         working-directory: ./android
-        run: | 
-          cp -r ${{ github.workspace }}/data ${{ github.workspace }}/android/app/src/main/assets
-          cp -r ${{ github.workspace }}/gfx ${{ github.workspace }}/android/app/src/main/assets
-         
-          echo -e "keyPassword=${{ secrets.KEY_01 }}\nkeyAlias=a\nstorePassword=123456\nstoreFile=${{ github.workspace }}/android/a.keystore" > keystore.properties
-          export UPSTREAM_BUILD_NUMBER="$((11581 + ${{ github.run_number }}))"
-          chmod +x gradlew
-          if [ ${{ matrix.android }} = arm64 ]
-          then
-               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_32=false assembleRelease
-               mv ./app/build/outputs/apk/stable/release/*.apk ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk
-          elif [ ${{ matrix.android }} = arm32 ]
-          then
-               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_64=false assembleRelease
-               mv ./app/build/outputs/apk/stable/release/*.apk ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk 
-          elif [ ${{ matrix.android }} = bundle ]
-          then
-               ./gradlew -Pj=$((`nproc`+0)) bundleExperimentalRelease
-               mv ./app/build/outputs/bundle/experimentalRelease/*.aab ../CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.aab     
-          fi
-      - name: Upload release asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BREEZE_VERSION: ${{ needs.prepare.outputs.version }}
+          UPSTREAM_BUILD_NUMBER: ${{ needs.prepare.outputs.version_code }}
+          OUTPUT_FILE: CDDA-Breeze-${{ needs.prepare.outputs.version }}-${{ matrix.artifact }}-${{ needs.prepare.outputs.timestamp }}.apk
+        run: |
+          set -euo pipefail
+          cp -r "${{ github.workspace }}/data" "${{ github.workspace }}/android/app/src/main/assets"
+          cp -r "${{ github.workspace }}/gfx" "${{ github.workspace }}/android/app/src/main/assets"
+
+          printf 'keyPassword=%s\nkeyAlias=a\nstorePassword=123456\nstoreFile=%s\n' \
+            '${{ secrets.KEY_01 }}' \
+            '${{ github.workspace }}/android/a.keystore' > keystore.properties
+
+          chmod +x gradlew
+          ./gradlew \
+            -Pj="$(nproc)" \
+            -Pabi_arm_32=false \
+            -Poverride_version="CDDA-Breeze-${BREEZE_VERSION}" \
+            -Poverride_versionCode="${UPSTREAM_BUILD_NUMBER}" \
+            assembleRelease
+
+          mv ./app/build/outputs/apk/stable/release/*.apk "../${OUTPUT_FILE}"
+
+      - name: 保存构建文件到Actions
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ needs.release.outputs.upload_url }} 
-          asset_path: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
-          asset_name: CDDA-Breeze-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
-          asset_content_type: ${{ matrix.content }}
-    
+          name: CDDA-Breeze-${{ needs.prepare.outputs.version }}-${{ matrix.artifact }}-${{ needs.prepare.outputs.timestamp }}
+          path: CDDA-Breeze-${{ needs.prepare.outputs.version }}-${{ matrix.artifact }}-${{ needs.prepare.outputs.timestamp }}.${{ matrix.ext }}
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: 上传正式发布文件
+        if: ${{ inputs.publish }}
+        shell: bash
+        env:
+          TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
+          ASSET_PATH: CDDA-Breeze-${{ needs.prepare.outputs.version }}-${{ matrix.artifact }}-${{ needs.prepare.outputs.timestamp }}.${{ matrix.ext }}
+        run: |
+          set -euo pipefail
+          test -f "${ASSET_PATH}"
+          gh release upload "${TAG_NAME}" "${ASSET_PATH}" --clobber
+
+  finalize:
+    name: 发布正式版本
+    needs:
+      - prepare
+      - builds
+    if: ${{ inputs.publish }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 将草稿发布公开
+        env:
+          TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
+        run: |
+          gh release edit "${TAG_NAME}" --draft=false
+
+  cleanup:
+    name: 清理失败的草稿发布
+    needs:
+      - prepare
+      - builds
+    if: ${{ always() && inputs.publish && needs.prepare.result == 'success' && needs.builds.result != 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 删除失败的草稿和标签
+        env:
+          TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
+        run: |
+          gh release delete "${TAG_NAME}" --yes --cleanup-tag || true
