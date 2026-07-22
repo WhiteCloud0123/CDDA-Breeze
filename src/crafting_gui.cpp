@@ -484,6 +484,9 @@ static std::vector<crafting_workplace> collect_crafting_workplaces(
 
     std::stable_sort( result.begin() + 1, result.end(), [&]( const crafting_workplace &lhs,
     const crafting_workplace & rhs ) {
+        if( lhs.selectable != rhs.selectable ) {
+            return lhs.selectable;
+        }
         if( lhs.marked != rhs.marked ) {
             return lhs.marked;
         }
@@ -2886,7 +2889,7 @@ static bool choose_crafting_settings( const std::vector<Character *> &crafting_g
             }
             menu.set_selected( crafter_selected_row );
         } else if( page == settings_page::workplace ) {
-            menu.set_column_weights( { 24, 10, 22, 18, 26 } );
+            menu.set_column_weights( { 24, 10, 10, 14, 42 } );
             const std::string crafter_name = selected_crafter.is_avatar() ? _( "你" ) :
                                              selected_crafter.get_name();
             menu.set_header( { _( "工作地点" ), _( "可制作" ), _( "缺少" ),
