@@ -64,11 +64,14 @@ static weather_gen_common get_common_data( const tripoint &location, const time_
     const double year_fraction( time_past_new_year( t.t ) /
                                 calendar::year_length() ); // [0,1)
 
-    result.cyf = std::cos( tau * ( year_fraction + .125 ) ); // [-1, 1]
-    // We add one-eighth to line up `cyf` so that 1 is at
-    // midwinter and -1 at midsummer. (Cataclsym DDA years
-    // start when spring starts. Gregorian years start when
-    // winter starts.)
+    // The public calendar now starts on January 1, while seasons still begin on March 21.
+    // Keep the temperature curve aligned with the actual middle of winter and summer.
+    const double days_year_start_to_midwinter =
+        to_days<double>( ( calendar::season_length() / 2 ) -
+                         ( calendar::season_length() - calendar::turn_zero_offset() ) );
+    const double offset = days_year_start_to_midwinter /
+                          to_days<double>( calendar::year_length() );
+    result.cyf = std::cos( tau * ( year_fraction - offset ) ); // [-1, 1]
     result.season = season_of_year( t.t );
 
     return result;
@@ -257,7 +260,7 @@ units::temperature weather_generator::get_water_temperature() const
 
     season_effective_time t( calendar::turn );
     int season_length = to_days<int>( calendar::season_length() );
-    int day = to_days<int>( time_past_new_year( t.t ) );
+    int day = to_days<int>( time_past_season_year( t.t ) );
     int hour = hour_of_day<int>( t.t );
 
     float water_temperature = 0;
@@ -294,8 +297,7 @@ void weather_generator::test_weather( unsigned seed ) const
             w_point w = get_weather( tripoint_zero, i, seed );
             weather_type_id conditions = get_weather_conditions( w );
 
-            int year = to_turns<int>( i - calendar::turn_zero ) / to_turns<int>
-                       ( calendar::year_length() ) + 1;
+            const int year = calendar::years_since_cataclysm( i ) + 1;
             const int hour = hour_of_day<int>( i );
             const int minute = minute_of_hour<int>( i );
             int day;

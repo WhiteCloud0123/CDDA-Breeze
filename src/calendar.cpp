@@ -17,6 +17,7 @@
 #include "options.h"
 #include "rng.h"
 #include "string_formatter.h"
+#include "translation.h"
 #include "translations.h"
 #include "units.h"
 #include "units_utility.h"
@@ -686,6 +687,20 @@ weekdays day_of_week( const time_point &p )
     return static_cast<weekdays>( result % 7 );
 }
 
+std::string to_string( const weekdays &d )
+{
+    static const std::array<std::string, 7> weekday_names = {{
+            translate_marker( "Sunday" ), translate_marker( "Monday" ),
+            translate_marker( "Tuesday" ), translate_marker( "Wednesday" ),
+            translate_marker( "Thursday" ), translate_marker( "Friday" ),
+            translate_marker( "Saturday" )
+        }
+    };
+    static_assert( static_cast<int>( weekdays::SUNDAY ) == 0,
+                   "weekday_names array is out of sync with weekdays enumeration values" );
+    return _( weekday_names[static_cast<int>( d )] );
+}
+
 bool calendar::eternal_season()
 {
     return is_eternal_season;
@@ -819,19 +834,91 @@ season_type season_of_year( const time_point &p )
 
 std::string to_string( const time_point &p )
 {
-    const int year = to_turns<int>( p - calendar::turn_zero ) / to_turns<int>
-                     ( calendar::year_length() ) + 1;
+    const int year = calendar::years_since_cataclysm( p ) + 1;
     const std::string time = to_string_time_of_day( p );
-    if( calendar::eternal_season() ) {
+    if( get_option<bool>( "SHOW_MONTHS" ) && calendar::year_length() == 364_days ) {
+        const std::pair<month, int> month_day = month_and_day( p );
+
+        //~ 1 is the year, 2 is the month, 3 is the day, 4 is the time of the day in its usual format
+        return string_format( _( "Year %1$d, %2$s %3$d %4$s" ), year, to_string( month_day.first ),
+                              month_day.second, time );
+    } else if( calendar::eternal_season() ) {
         const int day = to_days<int>( time_past_new_year( p ) );
         //~ 1 is the year, 2 is the day (of the *year*), 3 is the time of the day in its usual format
         return string_format( _( "Year %1$d, day %2$d %3$s" ), year, day, time );
-    } else {
-        const int day = day_of_season<int>( p ) + 1;
-        //~ 1 is the year, 2 is the season name, 3 is the day (of the season), 4 is the time of the day in its usual format
-        return string_format( _( "Year %1$d, %2$s, day %3$d %4$s" ), year,
-                              calendar::name_season( season_of_year( p ) ), day, time );
     }
+
+    const int day = day_of_season<int>( p ) + 1;
+    //~ 1 is the year, 2 is the season name, 3 is the day (of the season), 4 is the time of the day in its usual format
+    return string_format( _( "Year %1$d, %2$s, day %3$d %4$s" ), year,
+                          calendar::name_season( season_of_year( p ) ), day, time );
+}
+
+time_duration calendar::turn_zero_offset()
+{
+    // Turn zero is March 21.  The display calendar starts on January 1.
+    const time_duration winter_at_start = 31_days + 30_days + 20_days;
+    if( calendar::year_length() == 364_days ) {
+        return winter_at_start;
+    }
+
+    // Keep the same point in winter for custom season lengths.
+    const double fraction = to_days<double>( winter_at_start ) / 91.0;
+    return fraction * calendar::season_length();
+}
+
+int calendar::years_since_cataclysm( time_point turn )
+{
+    const time_duration elapsed = turn - calendar::turn_zero + turn_zero_offset();
+    return to_turns<int>( elapsed ) / to_turns<int>( calendar::year_length() );
+}
+
+std::pair<month, int> month_and_day( time_point turn )
+{
+    if( calendar::year_length() != 364_days ) {
+        return std::make_pair( month::UNKNOWN, to_days<int>( time_past_new_year( turn ) ) );
+    }
+
+    // The 364-day display calendar uses 31 days for Jan/Apr/Jul/Oct and 30 for the rest.
+    static const std::array<month, 12> months = {{
+            month::JANUARY, month::FEBRUARY, month::MARCH, month::APRIL, month::MAY, month::JUNE,
+            month::JULY, month::AUGUST, month::SEPTEMBER, month::OCTOBER, month::NOVEMBER,
+            month::DECEMBER
+        }
+    };
+
+    int day = to_days<int>( time_past_new_year( turn ) );
+    int month_index = ( day / 91 ) * 3;
+    day %= 91;
+    if( day < 31 ) {
+        ++day;
+    } else if( day < 61 ) {
+        ++month_index;
+        day -= 30;
+    } else {
+        month_index += 2;
+        day -= 60;
+    }
+    return std::make_pair( months[month_index], day );
+}
+
+std::string to_string( month m )
+{
+    static const std::array<translation, 12> months = {{
+            to_translation( "month", "Jan" ), to_translation( "month", "Feb" ),
+            to_translation( "month", "Mar" ), to_translation( "month", "Apr" ),
+            to_translation( "month", "May" ), to_translation( "month", "Jun" ),
+            to_translation( "month", "Jul" ), to_translation( "month", "Aug" ),
+            to_translation( "month", "Sep" ), to_translation( "month", "Oct" ),
+            to_translation( "month", "Nov" ), to_translation( "month", "Dec" )
+        }
+    };
+
+    static_assert( static_cast<month>( 0 ) == month::JANUARY, "month enum out of phase" );
+    if( m == month::UNKNOWN ) {
+        return _( "Cataclysm" );
+    }
+    return months[static_cast<int>( m )].translated();
 }
 
 std::string get_diary_time_since_str( const time_duration &turn_diff, time_accuracy acc )
@@ -880,22 +967,23 @@ std::string get_diary_time_since_str( const time_duration &turn_diff, time_accur
 
 std::string get_diary_time_str( const time_point &turn, time_accuracy acc )
 {
-    const int year = to_turns<int>( turn - calendar::turn_zero ) /
-                     to_turns<int>( calendar::year_length() ) + 1;
+    const int year = calendar::years_since_cataclysm( turn ) + 1;
     const int day = day_of_season<int>( turn ) + 1;
     switch( acc ) {
         case time_accuracy::FULL:
             return to_string( turn );
         case time_accuracy::PARTIAL:
-            // partial accuracy, able to see the sky
-            //~ Time of year:
-            //~ $1 = year since Cataclysm
-            //~ $2 = season
-            //~ $3 = day of season
-            //~ $4 = approximate time of day
+            if( get_option<bool>( "SHOW_MONTHS" ) && calendar::year_length() == 364_days ) {
+                const std::pair<month, int> month_day = month_and_day( turn );
+                //~ Time of year: $1 = year, $2 = month, $3 = day of month, $4 = approximate time
+                return string_format( _( "Year %1$d, %2$s day %3$d, %4$s" ), year,
+                                      to_string( month_day.first ), month_day.second,
+                                      display::time_approx( turn ) );
+            }
+            //~ Time of year: $1 = year, $2 = season, $3 = day of season, $4 = approximate time
             return string_format( _( "Year %1$d, %2$s, day %3$d, %4$s" ), year,
-                                  calendar::name_season( season_of_year( turn ) ),
-                                  day, display::time_approx( turn ) );
+                                  calendar::name_season( season_of_year( turn ) ), day,
+                                  display::time_approx( turn ) );
         default:
             DebugLog( DebugLevel::D_WARNING, DebugClass::D_GAME )
                     << "Unknown time_accuracy " << io::enum_to_string<time_accuracy>( acc );
