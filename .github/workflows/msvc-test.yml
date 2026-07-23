@@ -1,4 +1,4 @@
-name: "Windows MSVC Test"
+name: "Windows & Android Test"
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: msvc-test-${{ github.ref }}
+  group: platform-test-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -80,12 +80,67 @@ jobs:
         run: |
           msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static" msvc-full-features\Cataclysm-vcpkg-static.sln
           .\build-scripts\windist.ps1
-          Move-Item cataclysmdda-0.G.zip "CDDA-Breeze-windows-tiles-x64-msvc-test-${{ github.run_number }}.zip"
+          Expand-Archive -LiteralPath cataclysmdda-0.G.zip -DestinationPath windows-test-build -Force
 
       - name: Upload temporary Windows build
         uses: actions/upload-artifact@v4
         with:
           name: CDDA-Breeze-windows-msvc-test-${{ github.run_number }}
-          path: CDDA-Breeze-windows-tiles-x64-msvc-test-${{ github.run_number }}.zip
+          path: windows-test-build
+          if-no-files-found: error
+          retention-days: 7
+  android:
+    name: Android arm64
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Install Android build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
+
+      - name: Create VERSION.txt
+        run: |
+          cat > VERSION.txt <<EOF
+          build type: android-arm64-test
+          workflow run: ${{ github.run_number }}
+          branch: ${{ github.ref_name }}
+          commit sha: ${{ github.sha }}
+          commit url: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+          EOF
+
+      - name: Compile translations
+        run: lang/compile_mo.sh all
+
+      - name: Build Android arm64 test APK
+        working-directory: ./android
+        run: |
+          set -euo pipefail
+          cp -r "${{ github.workspace }}/data" "${{ github.workspace }}/android/app/src/main/assets"
+          cp -r "${{ github.workspace }}/gfx" "${{ github.workspace }}/android/app/src/main/assets"
+          chmod +x gradlew
+          ./gradlew \
+            -Pj="$(nproc)" \
+            -Pabi_arm_32=false \
+            -Poverride_version="CDDA-Breeze-test-${{ github.run_number }}" \
+            -Poverride_versionCode="${{ github.run_number }}" \
+            assembleDebug
+          cp ./app/build/outputs/apk/stable/debug/*.apk \
+            "${{ github.workspace }}/CDDA-Breeze-android-arm64-test-${{ github.run_number }}.apk"
+
+      - name: Upload temporary Android build
+        uses: actions/upload-artifact@v4
+        with:
+          name: CDDA-Breeze-android-arm64-test-${{ github.run_number }}
+          path: CDDA-Breeze-android-arm64-test-${{ github.run_number }}.apk
           if-no-files-found: error
           retention-days: 7
