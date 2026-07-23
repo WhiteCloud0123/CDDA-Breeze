@@ -2718,6 +2718,12 @@
   },
   {
     "type": "keybinding",
+    "name": "切换角色预览服装",
+    "id": "TOGGLE_CHARACTER_PREVIEW_CLOTHES",
+    "bindings": [ { "input_method": "keyboard_any", "key": "c" } ]
+  },
+  {
+    "type": "keybinding",
     "name": "Toggle debug mode",
     "category": "DEFAULTMODE",
     "id": "debug_mode"
