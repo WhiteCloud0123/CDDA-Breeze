@@ -13203,7 +13203,7 @@ const scenario *get_scenario()
 }
 void set_scenario( const scenario *new_scenario )
 {
-    new_scenario->rerandomize();
+    new_scenario->ensure_calendar();
     g->scen = new_scenario;
 }
 

@@ -1,7 +1,6 @@
 #include "avatar.h" // IWYU pragma: associated
 
 #include <algorithm>
-#include <climits>
 #include <cstdlib>
 #include <functional>
 #include <initializer_list>
@@ -22,6 +21,7 @@
 #include "bionics.h"
 #include "cata_utility.h"
 #include "catacharset.h"
+#include "calendar_ui.h"
 #include "character.h"
 #include "character_martial_arts.h"
 #include "color.h"
@@ -660,6 +660,9 @@ bool avatar::create( character_type type, const std::string &tempname )
     set_wielded_item( item() );
 
     prof = profession::generic();
+    for( const scenario &scen : scenario::get_all() ) {
+        scen.rerandomize();
+    }
     set_scenario( scenario::generic() );
 
     const bool interactive = type != character_type::NOW &&
@@ -2953,6 +2956,7 @@ static struct {
     }
 } scenario_sorter;
 
+
 static std::string assemble_scenario_details( const avatar &u, const input_context &ctxt,
         const scenario *current_scenario )
 {
@@ -3012,20 +3016,14 @@ static std::string assemble_scenario_details( const avatar &u, const input_conte
     }
 
     assembled += "\n" + colorize( _( "Scenario calendar:" ), COL_HEADER ) + "\n";
-    if( current_scenario->custom_start_date() ) {
-        assembled += string_format( current_scenario->is_random_year() ?
-                                    _( "Year:   Random" ) : _( "Year:   %s" ),
-                                    current_scenario->start_year() ) + "\n";
-        assembled += string_format( _( "Season: %s" ),
-                                    calendar::name_season( current_scenario->start_season() ) ) + "\n";
-        assembled += string_format( current_scenario->is_random_day() ? _( "Day:    Random" ) :
-                                    _( "Day:    %d" ), current_scenario->start_day() ) + "\n";
-        assembled += string_format( current_scenario->is_random_hour() ? _( "Hour:   Random" ) :
-                                    _( "Hour:   %d" ), current_scenario->start_hour() ) + "\n";
-    } else {
-        assembled += _( "Default" );
-        assembled += "\n";
-    }
+    assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_CATACLYSM" ), c_light_green ) + " " +
+                 _( "Start of cataclysm:" ) + " " +
+                 to_string( current_scenario->start_of_cataclysm() ) + "\n";
+    assembled += colorize( ctxt.get_desc( "CHANGE_START_OF_GAME" ), c_light_green ) + " " +
+                 _( "Start of game:" ) + " " + to_string( current_scenario->start_of_game() ) +
+                 "\n";
+    assembled += colorize( ctxt.get_desc( "RESET_CALENDAR" ), c_light_green ) + " " +
+                 _( "Reset scenario calendar" ) + "\n";
 
     if( !current_scenario->missions().empty() ) {
         assembled += "\n" + colorize( _( "Scenario missions:" ), COL_HEADER ) + "\n";
@@ -3099,6 +3097,9 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "FILTER" );
     ctxt.register_action( "RESET_FILTER" );
     ctxt.register_action( "RANDOMIZE" );
+    ctxt.register_action( "CHANGE_START_OF_CATACLYSM" );
+    ctxt.register_action( "CHANGE_START_OF_GAME" );
+    ctxt.register_action( "RESET_CALENDAR" );
 
     bool recalc_scens = true;
     int scens_length = 0;
@@ -3198,6 +3199,7 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
                 if( !lcmatch( scen.gender_appropriate_name( u.male ), filterstring ) ) {
                     continue;
                 }
+                scen.ensure_calendar();
                 sorted_scens.push_back( &scen );
             }
             if( sorted_scens.empty() ) {
@@ -3291,6 +3293,34 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
                 continue;
             }
             reset_scenario( u, sorted_scens[cur_id] );
+        } else if( action == "CHANGE_START_OF_CATACLYSM" ||
+                   action == "CHANGE_START_OF_GAME" || action == "RESET_CALENDAR" ) {
+            const scenario *scen = sorted_scens[cur_id];
+            const ret_val<void> can_pick = scen->can_pick();
+            if( !can_pick.success() ) {
+                popup( can_pick.str() );
+                continue;
+            }
+            if( scen->has_flag( "CITY_START" ) && !scenario_sorter.cities_enabled ) {
+                continue;
+            }
+            if( scen != get_scenario() ) {
+                reset_scenario( u, scen );
+            }
+            if( action == "CHANGE_START_OF_CATACLYSM" ) {
+                scen->change_start_of_cataclysm(
+                    calendar_ui::select_time_point( scen->start_of_cataclysm(),
+                                                    _( "Select cataclysm start date" ),
+                                                    calendar_ui::granularity::hour ) );
+            } else if( action == "CHANGE_START_OF_GAME" ) {
+                scen->change_start_of_game(
+                    calendar_ui::select_time_point( scen->start_of_game(),
+                                                    _( "Select game start date" ),
+                                                    calendar_ui::granularity::hour ) );
+            } else {
+                scen->reset_calendar();
+            }
+            details_recalc = true;
         } else if( action == "CHANGE_GENDER" ) {
             u.male = !u.male;
             recalc_scens = true;

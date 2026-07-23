@@ -8879,10 +8879,10 @@ void map::produce_sap( const tripoint &p, const time_duration &time_since_last_a
         const time_duration late_winter_start = 3.75f * calendar::season_length();
 
         const time_point last_actualize = calendar::turn - time_since_last_actualize;
-        const time_duration last_actualize_tof = time_past_new_year( last_actualize );
+        const time_duration last_actualize_tof = time_past_season_year( last_actualize );
         bool last_producing = last_actualize_tof >= late_winter_start ||
                               last_actualize_tof < early_spring_end;
-        const time_duration current_tof = time_past_new_year( calendar::turn );
+        const time_duration current_tof = time_past_season_year( calendar::turn );
         bool current_producing = current_tof >= late_winter_start ||
                                  current_tof < early_spring_end;
 
