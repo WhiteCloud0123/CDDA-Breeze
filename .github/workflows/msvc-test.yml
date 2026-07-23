@@ -119,7 +119,7 @@ jobs:
           EOF
 
       - name: Compile translations
-        run: lang/compile_mo.sh all
+        run: sh lang/compile_mo.sh all
 
       - name: Build Android arm64 test APK
         working-directory: ./android
