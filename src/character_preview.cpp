@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <list>
 #include <map>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -49,6 +50,21 @@ bool is_clothing_overlay( const std::string &id )
     return id.rfind( "worn_", 0 ) == 0 || id.rfind( "wielded_", 0 ) == 0;
 }
 
+void add_profession_bionic_overlay( const bionic_id &bio, std::set<bionic_id> &visited,
+                                    std::multimap<int, std::pair<std::string, std::string>> &overlays )
+{
+    if( !bio.is_valid() || !visited.insert( bio ).second ) {
+        return;
+    }
+
+    const std::string overlay_id = bio.str();
+    overlays.emplace( get_overlay_order_of_mutation( overlay_id ),
+                      std::make_pair( "mutation_" + overlay_id, "" ) );
+    for( const bionic_id &included : bio->included_bionics ) {
+        add_profession_bionic_overlay( included, visited, overlays );
+    }
+}
+
 class char_preview_adapter : public cata_tiles
 {
   public:
@@ -79,24 +95,18 @@ class char_preview_adapter : public cata_tiles
             }
         }
 
+        // 角色创建早期的临时角色尚未建立完整身体；不要通过 add_bionic() 构造职业义体预览。
         std::multimap<int, std::pair<std::string, std::string>> profession_bionics;
+        std::set<bionic_id> visited_bionics;
         if( ch.prof != nullptr ) {
-            avatar profession_bionic_holder;
             for( const bionic_id &bio : ch.prof->CBMs() ) {
-                profession_bionic_holder.add_bionic( bio );
-            }
-            for( int i = 0; i < profession_bionic_holder.num_bionics(); ++i ) {
-                const bionic &bio = profession_bionic_holder.bionic_at_index( i );
-                if( !bio.show_sprite ) {
-                    continue;
-                }
-                const std::string overlay_id = bio.id.str();
-                profession_bionics.emplace( get_overlay_order_of_mutation( overlay_id ),
-                                             std::make_pair( "mutation_" + overlay_id, "" ) );
+                add_profession_bionic_overlay( bio, visited_bionics, profession_bionics );
             }
         }
         for( const auto &entry : profession_bionics ) {
-            overlays.push_back( entry.second );
+            if( std::find( overlays.begin(), overlays.end(), entry.second ) == overlays.end() ) {
+                overlays.push_back( entry.second );
+            }
         }
 
         if( with_clothing && ch.prof != nullptr ) {
@@ -149,18 +159,21 @@ void character_preview_window::prepare( const int nlines, const int ncols,
         return;
     }
 
+    // 页面切换不应因文本区大小不同而改变同一角色的预览尺寸。
+    static_cast<void>( nlines );
+    static_cast<void>( ncols );
     zoom = default_zoom;
     tilecontext->set_draw_scale( zoom );
     termx_pixels = termx_to_pixel_value();
     termy_pixels = termy_to_pixel_value();
     hide_below_ncols = hide_below;
 
-    const int desired_width = std::max( 1, ncols ) * termx_pixels;
-    const int desired_height = std::max( 1, nlines ) * termy_pixels;
     int tile_width = tilecontext->get_tile_width();
     int tile_height = tilecontext->get_tile_height();
 
-    while( zoom > min_zoom && ( desired_width < tile_width || desired_height < tile_height ) ) {
+    while( zoom > min_zoom &&
+           ( tile_width + 4 * termx_pixels > projected_window_width() ||
+             tile_height + 3 * termy_pixels > projected_window_height() ) ) {
         zoom /= 2;
         tilecontext->set_draw_scale( zoom );
         tile_width = tilecontext->get_tile_width();
