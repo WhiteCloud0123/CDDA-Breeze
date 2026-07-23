@@ -1,0 +1,91 @@
+name: "Windows MSVC Test"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: msvc-test-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ZSTD_CLEVEL: 17
+  VCPKG_BINARY_SOURCES: clear
+
+jobs:
+  msvc:
+    name: Windows Tiles x64 MSVC
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v4
+
+      - name: Install CMake
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: 3.31.6
+
+      - name: Install MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Configure vcpkg
+        uses: lukka/run-vcpkg@v11
+        id: runvcpkg
+        with:
+          vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
+          vcpkgGitCommitId: "9dd12f8d791f6fa4e396adbebc714d51cbee2143"
+
+      - name: Integrate vcpkg
+        run: |
+          vcpkg integrate install --vcpkg-root '${{ runner.workspace }}\b\vcpkg'
+
+      - name: Cache vcpkg installed packages
+        uses: actions/cache@v4
+        id: cache-vcpkg
+        with:
+          path: msvc-full-features/vcpkg_installed/
+          key: vcpkg-${{ hashFiles('msvc-full-features/vcpkg.json') }}-${{ hashFiles('.github/vcpkg_triplets/x64-windows-static.cmake') }}-9dd12f8d791f6fa4e396adbebc714d51cbee2143
+
+      - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: mingw64
+          install: >-
+            gettext
+            make
+
+      - name: Create VERSION.txt
+        shell: bash
+        run: |
+          cat >VERSION.txt <<EOL
+          build type: windows-tiles-x64-msvc-test
+          workflow run: ${{ github.run_number }}
+          branch: ${{ github.ref_name }}
+          commit sha: ${{ github.sha }}
+          commit url: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+          EOL
+
+      - name: Compile translations
+        shell: msys2 {0}
+        run: |
+          lang/compile_mo.sh all
+
+      - name: Build Windows Tiles x64 MSVC
+        env:
+          VCPKG_OVERLAY_TRIPLETS: ${{ github.workspace }}\.github\vcpkg_triplets
+          VCPKG_BINARY_SOURCES: clear
+        run: |
+          msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static" msvc-full-features\Cataclysm-vcpkg-static.sln
+          .\build-scripts\windist.ps1
+          Move-Item cataclysmdda-0.G.zip "CDDA-Breeze-windows-tiles-x64-msvc-test-${{ github.run_number }}.zip"
+
+      - name: Upload temporary Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: CDDA-Breeze-windows-msvc-test-${{ github.run_number }}
+          path: CDDA-Breeze-windows-tiles-x64-msvc-test-${{ github.run_number }}.zip
+          if-no-files-found: error
+          retention-days: 7
