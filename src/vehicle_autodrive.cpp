@@ -147,10 +147,7 @@ static constexpr int TURNING_INCREMENT = 15;
 static constexpr int NUM_ORIENTATIONS = 360 / TURNING_INCREMENT;
 // min and max speed in tiles/s
 static constexpr int MIN_SPEED_TPS = 1;
-// 常规寻路保持低速，确保弯道、城市道路和狭窄区域稳定。
-static constexpr int MAX_CAUTIOUS_SPEED_TPS = 3;
-// 当已计算路径直到下一过图块都不需要转向时，允许高速直行。
-static constexpr int MAX_GREEDY_SPEED_TPS = 10;
+static constexpr int MAX_SPEED_TPS = 9;
 static constexpr int VMIPH_PER_TPS = static_cast<int>( vehicles::vmiph_per_tile );
 
 /**
@@ -301,10 +298,8 @@ struct auto_navigation_data {
     bool land_ok;
     bool water_ok;
     bool air_ok;
-    // the maximum speed to consider driving at when using A*, in tiles/s
-    int max_cautious_speed_tps = 0;
-    // the maximum speed to consider when following a verified straight path, in tiles/s
-    int max_greedy_speed_tps = 0;
+    // the maximum speed to consider driving at, in tiles/s
+    int max_speed_tps;
     // max acceleration
     std::vector<int> acceleration;
     // max amount of steering actions per turn
@@ -385,7 +380,6 @@ class vehicle::autodrive_controller
         const vehicle &driven_veh;
         const Character &driver;
         auto_navigation_data data;
-        bool in_greedy_mode = false;
 
         void compute_coordinates();
         bool check_drivable(const tripoint_bub_ms& pt) const;
@@ -396,7 +390,6 @@ class vehicle::autodrive_controller
         void compute_valid_positions();
         void compute_goal_zone();
         void precompute_data();
-        bool check_greedy_mode() const;
         scored_address compute_node_score( const node_address &addr, const navigation_node &node ) const;
         void compute_next_nodes( const node_address &addr, const navigation_node &node,
                                  int target_speed_tps,
@@ -927,11 +920,9 @@ void vehicle::autodrive_controller::precompute_data()
         data.land_ok = driven_veh.valid_wheel_config();
         data.water_ok = driven_veh.can_float();
         data.air_ok = driven_veh.has_sufficient_rotorlift();
-        const int safe_speed_tps = driven_veh.safe_velocity() / VMIPH_PER_TPS;
-        data.max_cautious_speed_tps = std::min( MAX_CAUTIOUS_SPEED_TPS, safe_speed_tps );
-        data.max_greedy_speed_tps = std::min( MAX_GREEDY_SPEED_TPS, safe_speed_tps );
-        data.acceleration.resize( data.max_cautious_speed_tps );
-        for( int speed_tps = 0; speed_tps < data.max_cautious_speed_tps; speed_tps++ ) {
+        data.max_speed_tps = std::min( MAX_SPEED_TPS, driven_veh.safe_velocity() / VMIPH_PER_TPS );
+        data.acceleration.resize( data.max_speed_tps );
+        for( int speed_tps = 0; speed_tps < data.max_speed_tps; speed_tps++ ) {
             data.acceleration[speed_tps] = driven_veh.acceleration( true, speed_tps * VMIPH_PER_TPS );
         }
         // TODO: compute from driver's skill and speed stat
@@ -948,7 +939,6 @@ void vehicle::autodrive_controller::precompute_data()
         compute_valid_positions();
         compute_goal_zone();
         data.path.clear();
-        in_greedy_mode = false;
     }
 }
 
@@ -1013,7 +1003,7 @@ const
     int next_speed = target_speed;
     int num_tiles_to_move = std::abs( target_speed_tps );
     if( target_speed_tps > 1 && node.speed < target_speed ) {
-        const int cur_tps = std::min( std::max( node.speed / VMIPH_PER_TPS, 0 ), data.max_cautious_speed_tps - 1 );
+        const int cur_tps = std::min( std::max( node.speed / VMIPH_PER_TPS, 0 ), data.max_speed_tps - 1 );
         next_speed = std::min( std::max<int>( node.speed, 0 ) + data.acceleration[cur_tps], target_speed );
         num_tiles_to_move = next_speed / VMIPH_PER_TPS;
     }
@@ -1138,14 +1128,8 @@ void vehicle::autodrive_controller::check_safe_speed()
     // However, sometimes the vehicle's safe speed may drop (e.g. amphibious vehicle entering
     // water), so this extra check is needed to adjust our max speed.
     int safe_speed_tps = driven_veh.safe_velocity() / VMIPH_PER_TPS;
-    if( data.max_cautious_speed_tps > safe_speed_tps ) {
-        data.max_cautious_speed_tps = safe_speed_tps;
-    }
-    if( data.max_greedy_speed_tps > safe_speed_tps ) {
-        data.max_greedy_speed_tps = safe_speed_tps;
-    }
-    if( data.max_greedy_speed_tps <= data.max_cautious_speed_tps ) {
-        in_greedy_mode = false;
+    if( data.max_speed_tps > safe_speed_tps ) {
+        data.max_speed_tps = safe_speed_tps;
     }
 }
 
@@ -1219,87 +1203,31 @@ collision_check_result vehicle::autodrive_controller::check_collision_zone( orie
 
 void vehicle::autodrive_controller::reduce_speed()
 {
-    data.max_cautious_speed_tps = MIN_SPEED_TPS;
-    in_greedy_mode = false;
-}
-
-bool vehicle::autodrive_controller::check_greedy_mode() const
-{
-    // 飞行中的载具沿用原有自动驾驶速度和避障方式。
-    if( driven_veh.is_rotorcraft() && driven_veh.is_flying_in_air() ) {
-        return false;
-    }
-    // 接近目的地时保持低速，避免冲过终点。
-    if( driver.omt_path.size() <= 2 ) {
-        return false;
-    }
-    if( data.max_greedy_speed_tps <= data.max_cautious_speed_tps ) {
-        return false;
-    }
-    // 只有直到下一过图块的整段路径都无需转向，才允许高速直行。
-    for( const navigation_step &step : data.path ) {
-        if( step.steering_dir != to_orientation( driven_veh.turn_dir ) ) {
-            return false;
-        }
-    }
-    return !data.path.empty();
+    data.max_speed_tps = MIN_SPEED_TPS;
 }
 
 std::optional<navigation_step> vehicle::autodrive_controller::compute_next_step()
 {
     precompute_data();
     const tripoint_abs_ms veh_pos = driven_veh.global_square_location();
-    const bool had_cached_path = !data.path.empty();
-    const bool two_steps = data.path.size() > 2;
-    const navigation_step first_step = two_steps ? data.path.back() : navigation_step();
-    const navigation_step second_step = two_steps ? data.path.at( data.path.size() - 2 ) :
-                                        navigation_step();
-    bool maintain_speed = false;
-    // If vehicle did not move as far as planned and direction is the same
-    // then it is still accelerating. If the vehicle moved more than expected
-    // then we likely underestimated the acceleration when planning the path.
-    // If either of these happen, we should maintain speed but compute a new path.
-    if( !in_greedy_mode ) {
-        if( two_steps &&
-            square_dist( first_step.pos.xy().raw(), second_step.pos.xy().raw() ) !=
-            square_dist( first_step.pos.xy().raw(), veh_pos.xy().raw() ) &&
-            first_step.steering_dir == second_step.steering_dir ) {
-            maintain_speed = true;
-            data.path.clear();
-        } else {
-            while( !data.path.empty() && data.path.back().pos != veh_pos ) {
-                data.path.pop_back();
-            }
-        }
-        if( !data.path.empty() &&
-            data.path.back().target_speed_tps > data.max_cautious_speed_tps ) {
-            data.path.clear();
-            maintain_speed = false;
-        }
+
+    while( !data.path.empty() && data.path.back().pos != veh_pos ) {
+        data.path.pop_back();
+    }
+    if( !data.path.empty() && data.path.back().target_speed_tps > data.max_speed_tps ) {
+        data.path.clear();
     }
     if( data.path.empty() ) {
-        // if we're just starting out or we've gone off-course use the lowest speed
-        if( ( had_cached_path && !maintain_speed ) || driven_veh.velocity == 0 ) {
-            data.max_cautious_speed_tps = MIN_SPEED_TPS;
-        }
-        auto new_path = compute_path( data.max_cautious_speed_tps );
-        while( !new_path && data.max_cautious_speed_tps > MIN_SPEED_TPS ) {
-            // high speed didn't work, try a lower speed
-            data.max_cautious_speed_tps /= 2;
-            new_path = compute_path( data.max_cautious_speed_tps );
+        auto new_path = compute_path( data.max_speed_tps );
+        while( !new_path && data.max_speed_tps > MIN_SPEED_TPS ) {
+            // high speed did not work, try a lower speed
+            data.max_speed_tps /= 2;
+            new_path = compute_path( data.max_speed_tps );
         }
         if( !new_path ) {
             return std::nullopt;
         }
         data.path.swap( *new_path );
-        in_greedy_mode = check_greedy_mode();
-    }
-    if( in_greedy_mode ) {
-        navigation_step greedy_step;
-        greedy_step.pos = driven_veh.global_square_location();
-        greedy_step.steering_dir = to_orientation( driven_veh.turn_dir );
-        greedy_step.target_speed_tps = data.max_greedy_speed_tps;
-        return greedy_step;
     }
     return data.path.back();
 }
