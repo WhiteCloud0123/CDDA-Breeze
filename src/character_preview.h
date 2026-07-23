@@ -50,7 +50,9 @@ struct character_preview_window {
   private:
     static constexpr int min_zoom = 32;
     static constexpr int max_zoom = 128;
-    static constexpr int default_zoom = 128;
+    // 微风的贴图缩放单位比 CBN 当前界面更大，128 会让预览占据过多空间。
+    // 默认使用 64，仍可用缩放按键切换到 32 或 128。
+    static constexpr int default_zoom = 64;
 
     point pos = point_zero;
     int termx_pixels = 0;

@@ -3786,7 +3786,7 @@ void set_description( tab_manager &tabs, avatar &you, const bool allow_reroll,
                                                 preview_ncols_min );
             const character_preview_window::orientation preview_position = {
                 character_preview_window::TOP_RIGHT,
-                character_preview_window::margin{ 0, 2, 10, 0 }
+                character_preview_window::margin{ 0, 2, 5, 0 }
             };
             character_preview.prepare( preview_nlines, preview_ncols, preview_position,
                                        page_width * 3 + 5 );
