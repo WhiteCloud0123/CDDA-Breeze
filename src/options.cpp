@@ -2169,7 +2169,7 @@ void options_manager::add_options_graphics()
        );
 
     add( "USE_CHARACTER_PREVIEW", "graphics", to_translation( "角色创建贴图预览" ),
-         to_translation( "在角色创建的职业、特性和描述界面显示角色贴图。"
+         to_translation( "在角色创建的场景、职业、背景、属性、特性、技能和描述界面显示角色贴图。"
                          "可用 z、Z 缩放，按 c 显示或隐藏职业服装。" ),
          true, COPT_CURSES_HIDE
        );

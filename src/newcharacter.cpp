@@ -1114,14 +1114,40 @@ void set_stats( tab_manager &tabs, avatar &u, pool_type pool )
     ui_adaptor ui;
     catacurses::window w;
     catacurses::window w_description;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
     const auto init_windows = [&]( ui_adaptor & ui ) {
         w = catacurses::newwin( TERMY, TERMX, point_zero );
-        w_description = catacurses::newwin( 8, TERMX - iSecondColumn - 1,
-                                            point( iSecondColumn, 5 ) );
+        int description_width = TERMX - iSecondColumn - 1;
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - iSecondColumn - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 5, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       iSecondColumn + 21 );
+            description_width = std::max( 20, description_width - character_preview.width() - 1 );
+        }
+#endif
+        w_description = catacurses::newwin( 8, description_width, point( iSecondColumn, 5 ) );
         ui.position_from_window( w );
     };
     init_windows( ui );
     ui.on_screen_resize( init_windows );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     u.reset();
 
@@ -1238,11 +1264,22 @@ void set_stats( tab_manager &tabs, avatar &u, pool_type pool )
 
         wnoutrefresh( w );
         wnoutrefresh( w_description );
+#if defined( TILES )
+        if( use_character_preview ) {
+            character_preview.display();
+        }
+#endif
     } );
 
     do {
         ui_manager::redraw();
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         if( tabs.handle_input( action, ctxt ) ) {
             break; // Tab has changed or user has quit the screen
         } else if( action == "DOWN" ) {
@@ -2434,11 +2471,34 @@ void set_hobbies( tab_manager &tabs, avatar &u, pool_type pool )
     bool details_recalc = true;
     const int iHeaderHeight = 5;
     scrollbar list_sb;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
 
     const auto init_windows = [&]( ui_adaptor & ui ) {
         iContentHeight = TERMY - iHeaderHeight - 1;
         w = catacurses::newwin( TERMY, TERMX, point_zero );
-        w_details_pane = catacurses::newwin( iContentHeight, TERMX / 2 - 1, point( TERMX / 2,
+        int details_width = TERMX / 2 - 1;
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            const int page_width = TERMX / 2 - 1;
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - page_width - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 5, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       page_width + 5 );
+            details_width = std::max( 20, details_width - character_preview.width() - 1 );
+        }
+#endif
+        w_details_pane = catacurses::newwin( iContentHeight, details_width, point( TERMX / 2,
                                              iHeaderHeight ) );
         details_recalc = true;
         ui.position_from_window( w );
@@ -2462,6 +2522,11 @@ void set_hobbies( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "FILTER" );
     ctxt.register_action( "RESET_FILTER" );
     ctxt.register_action( "RANDOMIZE" );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     bool recalc_hobbies = true;
     int profs_length = 0;
@@ -2537,6 +2602,11 @@ void set_hobbies( tab_manager &tabs, avatar &u, pool_type pool )
 
         wnoutrefresh( w );
         details.draw( c_light_gray );
+#if defined( TILES )
+        if( use_character_preview ) {
+            character_preview.display();
+        }
+#endif
     } );
 
     do {
@@ -2569,6 +2639,12 @@ void set_hobbies( tab_manager &tabs, avatar &u, pool_type pool )
         ui_manager::redraw();
         const int id_for_curr_description = cur_id;
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         const int recmax = profs_length;
         const int scroll_rate = recmax > 20 ? 10 : 2;
         int scrollbar_pos = iStartPos;
@@ -2780,6 +2856,11 @@ void set_skills( tab_manager &tabs, avatar &u, pool_type pool )
     int iContentHeight = 0;
     const int iHeaderHeight = 5;
     scrollbar list_sb;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
     input_context ctxt( "NEW_CHAR_SKILLS" );
     details.set_up_navigation( ctxt, scrolling_key_scheme::angle_bracket_scroll );
     list_sb.set_draggable( ctxt );
@@ -2792,6 +2873,11 @@ void set_skills( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "NEXT_TAB" );
     ctxt.register_action( "HELP_KEYBINDINGS" );
     ctxt.register_action( "QUIT" );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     const auto init_windows = [&]( ui_adaptor & ui ) {
         keybinding_hint = foldstring( string_format(
@@ -2807,7 +2893,25 @@ void set_skills( tab_manager &tabs, avatar &u, pool_type pool )
         iContentHeight = TERMY - static_cast<int>( keybinding_hint.size() ) - iHeaderHeight - 1;
         w = catacurses::newwin( TERMY, TERMX, point_zero );
         w_list = catacurses::newwin( iContentHeight, 35, point( 1, iHeaderHeight ) );
-        w_details_pane = catacurses::newwin( iContentHeight, TERMX - 35, point( 31, 5 ) );
+        int details_width = TERMX - 35;
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            constexpr int list_width = 35;
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - list_width - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 5, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       list_width + 25 );
+            details_width = std::max( 20, details_width - character_preview.width() - 1 );
+        }
+#endif
+        w_details_pane = catacurses::newwin( iContentHeight, details_width, point( 31, 5 ) );
         details_recalc = true;
         w_keybindings = catacurses::newwin( static_cast<int>( keybinding_hint.size() ), TERMX - 2, point( 1,
                                             iHeaderHeight + iContentHeight ) );
@@ -2975,11 +3079,22 @@ void set_skills( tab_manager &tabs, avatar &u, pool_type pool )
         wnoutrefresh( w_list );
         wnoutrefresh( w_keybindings );
         details.draw( c_light_gray );
+#if defined( TILES )
+        if( use_character_preview ) {
+            character_preview.display();
+        }
+#endif
     } );
 
     do {
         ui_manager::redraw();
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         const int pos_for_curr_description = cur_pos;
         int scrollbar_pos = cur_offset;
 
@@ -3187,13 +3302,35 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
     bool details_recalc = true;
     const int iHeaderHeight = 5;
     scrollbar list_sb;
+#if defined( TILES )
+    character_preview_window character_preview;
+    character_preview.init( &u );
+    const bool use_character_preview = character_preview_is_enabled();
+#endif
 
     const auto init_windows = [&]( ui_adaptor & ui ) {
         iContentHeight = TERMY - iHeaderHeight - 1;
         w = catacurses::newwin( TERMY, TERMX, point_zero );
         const int second_column_w = TERMX / 2 - 1;
+        int details_width = second_column_w;
+#if defined( TILES )
+        if( use_character_preview ) {
+            constexpr int preview_nlines_min = 7;
+            constexpr int preview_ncols_min = 10;
+            const int preview_nlines = std::max( ( TERMY - 9 ) / 3, preview_nlines_min );
+            const int preview_ncols = std::max( ( TERMX - second_column_w - 4 ) / 3 - 5,
+                                                preview_ncols_min );
+            const character_preview_window::orientation preview_position = {
+                character_preview_window::TOP_RIGHT,
+                character_preview_window::margin{ 0, 2, 5, 0 }
+            };
+            character_preview.prepare( preview_nlines, preview_ncols, preview_position,
+                                       second_column_w + 5 );
+            details_width = std::max( 20, details_width - character_preview.width() - 1 );
+        }
+#endif
         point origin = point( second_column_w + 1, iHeaderHeight );
-        w_details_pane = catacurses::newwin( iContentHeight, second_column_w, origin );
+        w_details_pane = catacurses::newwin( iContentHeight, details_width, origin );
         details_recalc = true;
         ui.position_from_window( w );
     };
@@ -3219,6 +3356,11 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
     ctxt.register_action( "CHANGE_START_OF_CATACLYSM" );
     ctxt.register_action( "CHANGE_START_OF_GAME" );
     ctxt.register_action( "RESET_CALENDAR" );
+#if defined( TILES )
+    if( use_character_preview ) {
+        register_character_preview_actions( ctxt );
+    }
+#endif
 
     bool recalc_scens = true;
     int scens_length = 0;
@@ -3305,6 +3447,11 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
 
         wnoutrefresh( w );
         details.draw( c_light_gray );
+#if defined( TILES )
+        if( use_character_preview ) {
+            character_preview.display();
+        }
+#endif
     } );
 
     do {
@@ -3355,6 +3502,12 @@ void set_scenario( tab_manager &tabs, avatar &u, pool_type pool )
 
         ui_manager::redraw();
         const std::string action = ctxt.handle_input();
+#if defined( TILES )
+        if( use_character_preview &&
+            handle_character_preview_action( character_preview, action ) ) {
+            continue;
+        }
+#endif
         const int scroll_rate = scens_length > 20 ? 5 : 2;
         const int id_for_curr_description = cur_id;
         int scrollbar_pos = iStartPos;
