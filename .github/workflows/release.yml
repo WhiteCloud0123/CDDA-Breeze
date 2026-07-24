@@ -185,12 +185,38 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+          cache: 'gradle'
 
       - name: Setup Build and Dependencies (android)
         if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
         run: |
           sudo apt-get update
           sudo apt-get install -y gettext
+
+      - name: Resolve Android Gradle dependencies
+        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
+        working-directory: ./android
+        env:
+          GRADLE_OPTS: >-
+            -Dorg.gradle.internal.http.connectionTimeout=120000
+            -Dorg.gradle.internal.http.socketTimeout=120000
+        run: |
+          set -euo pipefail
+          chmod +x gradlew
+
+          for attempt in 1 2 3; do
+            if ./gradlew --no-daemon help; then
+              exit 0
+            fi
+
+            if [[ "${attempt}" -eq 3 ]]; then
+              echo "Android Gradle dependencies could not be resolved after ${attempt} attempts." >&2
+              exit 1
+            fi
+
+            echo "Gradle dependency resolution attempt ${attempt} failed; retrying..." >&2
+            sleep "$((attempt * 15))"
+          done
 
       - name: 创建 VERSION.txt
         shell: bash
@@ -228,6 +254,9 @@ jobs:
           BREEZE_VERSION: ${{ needs.prepare.outputs.version }}
           UPSTREAM_BUILD_NUMBER: ${{ needs.prepare.outputs.version_code }}
           OUTPUT_FILE: CDDA-Breeze-${{ needs.prepare.outputs.version }}-${{ matrix.artifact }}-${{ needs.prepare.outputs.timestamp }}.apk
+          GRADLE_OPTS: >-
+            -Dorg.gradle.internal.http.connectionTimeout=120000
+            -Dorg.gradle.internal.http.socketTimeout=120000
         run: |
           set -euo pipefail
           cp -r "${{ github.workspace }}/data" "${{ github.workspace }}/android/app/src/main/assets"
@@ -238,7 +267,7 @@ jobs:
             '${{ github.workspace }}/android/a.keystore' > keystore.properties
 
           chmod +x gradlew
-          ./gradlew \
+          ./gradlew --no-daemon \
             -Pj="$(nproc)" \
             -Pabi_arm_32=false \
             -Poverride_version="CDDA-Breeze-${BREEZE_VERSION}" \
@@ -292,4 +321,15 @@ jobs:
         env:
           TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
         run: |
-          gh release delete "${TAG_NAME}" --yes --cleanup-tag || true
+          set -euo pipefail
+
+          RELEASE_ID="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/releases?per_page=100" --jq ".[] | select(.draft == true and .tag_name == \"${TAG_NAME}\") | .id" | head -n 1)"
+          if [[ -n "${RELEASE_ID}" ]]; then
+            echo "Deleting failed draft release ${RELEASE_ID} (${TAG_NAME})."
+            gh api --method DELETE "repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}"
+          fi
+
+          if gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${TAG_NAME}" >/dev/null 2>&1; then
+            echo "Deleting failed release tag ${TAG_NAME}."
+            gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG_NAME}"
+          fi
