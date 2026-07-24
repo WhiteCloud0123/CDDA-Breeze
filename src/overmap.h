@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <array>
+#include <bitset>
 #include <climits>
 #include <cstdlib>
 #include <functional>
@@ -12,6 +13,7 @@
 #include <map>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 #include <string_view>
@@ -31,6 +33,7 @@
 #include "overmap_types.h" // IWYU pragma: keep
 #include "point.h"
 #include "rng.h"
+#include "simple_pathfinding.h"
 #include "type_id.h"
 
 class JsonArray;
@@ -224,6 +227,135 @@ struct hash<pos_dir<Tripoint>> {
 };
 } // namespace std
 
+constexpr int HIGHWAY_MAX_CONNECTIONS = 4;
+
+// a point on an overmap_feature_grid that has base point `grid_pos` and its realized offset `offset_pos`
+class overmap_feature_grid_node
+{
+        //grid point; used to bound any given overmap
+        point_abs_om grid_pos = point_abs_om::invalid;
+        //offset position from grid_pos; effectively where the feature is placed
+        point_abs_om offset_pos = point_abs_om::invalid;
+        //existing N/E/S/W adjacent features for this node on grid
+        std::array<point_abs_om, HIGHWAY_MAX_CONNECTIONS> adjacent_features =
+        { point_abs_om::invalid, point_abs_om::invalid, point_abs_om::invalid, point_abs_om::invalid };
+    public:
+        overmap_feature_grid_node() = default;
+        explicit overmap_feature_grid_node( point_abs_om grid_pos ) : grid_pos( grid_pos ) {};
+        point_abs_om get_grid_pos() const {
+            return grid_pos;
+        }
+        point_abs_om get_offset_pos() const {
+            return offset_pos;
+        }
+        void set_offset_pos( const point_abs_om &pos ) {
+            offset_pos = pos;
+        }
+        point_abs_om get_adjacent_pos( int dir ) {
+            return adjacent_features[dir];
+        }
+        void set_adjacent_pos( const point_abs_om &pos, int dir ) {
+            adjacent_features[dir] = pos;
+        }
+        void serialize( JsonOut &out ) const;
+        void deserialize( const JsonObject &obj );
+};
+
+/**
+* For overmap features that spawn in grids independent of terrain/specials/etc.
+* The structure is a grid of overmap points centered on `grid_origin`
+* separated by row/column_separation, where the points can vary in row/column
+* no more than `max_offset_variance`.
+*
+* This is a base class and should be extended.
+*/
+class overmap_feature_grid
+{
+
+    protected:
+        std::map<std::string, overmap_feature_grid_node> feature_grid;
+        point_abs_om grid_origin = point_abs_om::invalid;
+        int row_separation = 0; // NOLINT(cata-serialize)
+        int column_separation = 0; // NOLINT(cata-serialize)
+        int max_offset_variance = 0; // NOLINT(cata-serialize)
+    public:
+        overmap_feature_grid() = default;
+        virtual ~overmap_feature_grid() = default;
+        void set_grid_origin( const point_abs_om &p );
+        point_abs_om get_grid_origin() const;
+        // given an overmap point, finds and generates cardinal-adjacent feature points
+        std::vector<overmap_feature_grid_node> find_grid_adjacent_features( const point_abs_om
+                &generated_om_pos );
+        void generate_feature_point( const point_abs_om &generated_om_pos );
+        //DO NOT USE; for legacy loading only
+        void set_feature_grid( const std::map<std::string, overmap_feature_grid_node> &grid ) {
+            feature_grid = grid;
+        }
+        bool feature_point_exists( const point_abs_om &intersection_om ) const;
+        overmap_feature_grid_node get_feature_point(
+            const point_abs_om &p ) const {
+            return feature_grid.at( p.to_string_writable() );
+        }
+        void set_feature_point( const point_abs_om &p,
+                                const overmap_feature_grid_node &intersection ) {
+            feature_grid[p.to_string_writable()] = intersection;
+        }
+        //resets origin, clears all feature points
+        void clear();
+        void serialize( JsonOut &out ) const;
+        void deserialize( const JsonObject &obj );
+        /**
+        * given an overmap point, finds and generates the feature grid points boxing it in,
+        * aligning to the top-left-most point; this point is always last in the returned list
+        * NOTE: this function can be generalized if necessary
+        */
+        std::vector<point_abs_om> find_feature_point_bounds( const point_abs_om &generated_om_pos );
+        //set offset_pos for the given node
+        virtual void generate_offset( overmap_feature_grid_node &node ) = 0;
+};
+
+class highway_intersection_grid : public overmap_feature_grid
+{
+    public:
+        // cannot be placed in constructor because options are loaded after overmapbuffer
+        void set_options();
+        void generate_offset( overmap_feature_grid_node &node ) override;
+    private:
+        std::unordered_map<point_abs_om, bool> om_has_lake_cache;
+};
+
+/*
+* Contains pre - generated data for where and in what direction highway
+* segments/specials get placed on the scale of one overmap.
+* also contains whether the piece of highway is a segment or a special,
+* and (if applicable) if the segment is a ramp or not
+*/
+struct intrahighway_node {
+    pf::directed_node<tripoint_om_omt> path_node =
+        pf::directed_node<tripoint_om_omt>( tripoint_om_omt::invalid, om_direction::type::invalid );
+    overmap_special_id placed_special = overmap_special_id::NULL_ID();
+    bool is_segment = true;
+    bool is_ramp = false;
+    bool is_interchange = false;
+    //whether to flip ramp direction
+    bool ramp_down = false;
+    explicit intrahighway_node( tripoint_om_omt pos, om_direction::type dir,
+                                overmap_special_id placed_spec, bool is_seg = true ) {
+        path_node = pf::directed_node<tripoint_om_omt>( pos, dir );
+        placed_special = placed_spec;
+        is_segment = is_seg;
+    }
+
+    //highways segments are locked to N/E in placement
+    om_direction::type get_effective_dir() const {
+        return is_segment ?
+               om_direction::type( static_cast<int>( path_node.dir ) % 2 ) :
+               om_direction::type( static_cast<int>( path_node.dir ) );
+    }
+};
+
+using Highway_path = std::vector<intrahighway_node>;
+
 class overmap
 {
     public:
@@ -315,6 +447,10 @@ class overmap
         static bool inbounds( const point_om_omt &p, int clearance = 0 ) {
             return inbounds( tripoint_om_omt( p, 0 ), clearance );
         }
+        static bool omt_lake_noise_threshold( const point_abs_omt &origin,
+                const point_om_omt &offset, double noise_threshold );
+        static bool guess_has_lake( const point_abs_om &p, double noise_threshold,
+                                    int max_tile_count );
         /**
          * Dummy value, used to indicate that a point returned by a function is invalid.
          */
@@ -391,6 +527,15 @@ class overmap
         // overmap::seen and overmap::explored
         bool nullbool = false; // NOLINT(cata-serialize)
         point_abs_om loc; // NOLINT(cata-serialize)
+
+        std::array<tripoint_om_omt, HIGHWAY_MAX_CONNECTIONS> highway_connections = {
+            tripoint_om_omt::invalid, tripoint_om_omt::invalid,
+            tripoint_om_omt::invalid, tripoint_om_omt::invalid
+        };
+
+        // Ordinary-road OMTs that crossed a reserved highway while this overmap was generated.
+        // This is transient generation state: finalize_highways() consumes it before saving.
+        std::unordered_set<tripoint_om_omt> highway_road_crossings; // NOLINT(cata-serialize)
 
         std::array<map_layer, OVERMAP_LAYERS> layer;
         std::unordered_map<tripoint_abs_omt, scent_trace> scents;
@@ -488,6 +633,36 @@ class overmap
         void place_roads( const overmap *north, const overmap *east, const overmap *south,
                           const overmap *west );
 
+        std::vector<Highway_path> place_highways( const std::vector<const overmap *> &neighbor_overmaps );
+        Highway_path place_highway_line( const tripoint_om_omt &sp1, const tripoint_om_omt &sp2,
+                                         const om_direction::type &draw_direction, int base_z );
+        void place_highway_lines_with_bends( Highway_path &highway_path,
+                                             const std::vector<std::pair<tripoint_om_omt, om_direction::type>> &bend_points,
+                                             const tripoint_om_omt &start_point, const tripoint_om_omt &end_point,
+                                             om_direction::type direction, int base_z );
+        Highway_path place_highway_reserved_path( const tripoint_om_omt &p1,
+                const tripoint_om_omt &p2, int dir1, int dir2, int base_z );
+        void place_highway_interchanges( std::vector<Highway_path> &highway_path );
+        tripoint_om_omt find_highway_intersection_point( const overmap_special_id &special,
+                const tripoint_om_omt &center, const om_direction::type &dir, int border ) const;
+        bool check_intersection_inbounds( const overmap_special_id &special,
+                                          const tripoint_om_omt &center, int border ) const;
+        void highway_handle_special_z( Highway_path &highway_path, int base_z );
+        std::pair<bool, std::bitset<HIGHWAY_MAX_CONNECTIONS>> highway_handle_oceans();
+        bool highway_select_end_points( const std::vector<const overmap *> &neighbor_overmaps,
+                                        std::array<tripoint_om_omt, HIGHWAY_MAX_CONNECTIONS> &end_points,
+                                        std::bitset<HIGHWAY_MAX_CONNECTIONS> &neighbor_connections,
+                                        const std::bitset<HIGHWAY_MAX_CONNECTIONS> &ocean_neighbors, int base_z );
+        void highway_handle_ramps( Highway_path &path, int base_z );
+        void place_highway_supported_special( const overmap_special_id &special,
+                                              const tripoint_om_omt &placement,
+                                              const om_direction::type &dir );
+        void finalize_highways( std::vector<Highway_path> &paths );
+        bool highway_intersection_exists( const point_abs_om &intersection_om ) const;
+        std::optional<std::bitset<HIGHWAY_MAX_CONNECTIONS>> is_highway_overmap() const;
+        std::pair<std::vector<tripoint_om_omt>, om_direction::type>
+        get_highway_segment_points( const pf::directed_node<tripoint_om_omt> &node ) const;
+
         void populate_connections_out_from_neighbors( const overmap *north, const overmap *east,
                 const overmap *south, const overmap *west );
 
@@ -510,6 +685,7 @@ class overmap
         void calculate_forestosity();
 
         void place_cities();
+        void build_cities();
         void place_building( const tripoint_om_omt &p, om_direction::type dir, const city &town );
 
         void build_city_street( const overmap_connection &connection, const point_om_omt &p, int cs,
@@ -544,6 +720,12 @@ class overmap
         void chip_rock( const tripoint_om_omt &p );
 
         void polish_river();
+        std::vector<tripoint_om_omt> get_neighbor_border( const point_rel_om &direction, int z,
+                int distance_corner = 0 );
+        std::vector<tripoint_om_omt> get_border( const point_rel_om &direction, int z,
+                                                 int distance_corner = 0 );
+        std::vector<tripoint_om_omt> get_border( om_direction::type direction, int z,
+                                                 int distance_corner = 0 );
         void good_river( const tripoint_om_omt &p );
 
         om_direction::type random_special_rotation( const overmap_special &special,

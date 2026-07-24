@@ -147,7 +147,7 @@ static constexpr int TURNING_INCREMENT = 15;
 static constexpr int NUM_ORIENTATIONS = 360 / TURNING_INCREMENT;
 // min and max speed in tiles/s
 static constexpr int MIN_SPEED_TPS = 1;
-static constexpr int MAX_SPEED_TPS = 3;
+static constexpr int MAX_SPEED_TPS = 9;
 static constexpr int VMIPH_PER_TPS = static_cast<int>( vehicles::vmiph_per_tile );
 
 /**
@@ -705,6 +705,24 @@ bool vehicle::autodrive_controller::check_drivable(const tripoint_bub_ms& pt) co
         return &ovp->vehicle() == &driven_veh;
     }
 
+    // Keep a one-tile clearance around other vehicles.  Exact-part collision
+    // checks are too optimistic for a turning multi-tile vehicle and can let a
+    // corner, mirror or rear section clip parked traffic even when the pivot path
+    // itself is clear.  The wide highway carriageways normally provide enough
+    // room to route around this buffer; on a narrow blocked road autodrive will
+    // stop rather than scrape through.
+    for( int dx = -1; dx <= 1; ++dx ) {
+        for( int dy = -1; dy <= 1; ++dy ) {
+            if( dx == 0 && dy == 0 ) {
+                continue;
+            }
+            const optional_vpart_position nearby = here.veh_at( pt + tripoint( dx, dy, 0 ) );
+            if( nearby && &nearby->vehicle() != &driven_veh ) {
+                return false;
+            }
+        }
+    }
+
     const tripoint_abs_ms pt_abs( here.getabs( pt ) );
     const tripoint_abs_omt pt_omt = project_to<coords::omt>( pt_abs );
     // only check visibility for the current OMT, we'll check other OMTs when
@@ -919,7 +937,7 @@ void vehicle::autodrive_controller::precompute_data()
         // initialize car and driver properties
         data.land_ok = driven_veh.valid_wheel_config();
         data.water_ok = driven_veh.can_float();
-        data.air_ok = driven_veh.has_sufficient_rotorlift();
+        data.air_ok = driven_veh.has_sufficient_rotorlift() || driven_veh.is_airship();
         data.max_speed_tps = std::min( MAX_SPEED_TPS, driven_veh.safe_velocity() / VMIPH_PER_TPS );
         data.acceleration.resize( data.max_speed_tps );
         for( int speed_tps = 0; speed_tps < data.max_speed_tps; speed_tps++ ) {
@@ -1210,39 +1228,17 @@ std::optional<navigation_step> vehicle::autodrive_controller::compute_next_step(
 {
     precompute_data();
     const tripoint_abs_ms veh_pos = driven_veh.global_square_location();
-    const bool had_cached_path = !data.path.empty();
-    const bool two_steps = data.path.size() > 2;
-    const navigation_step first_step = two_steps ? data.path.back() : navigation_step();
-    const navigation_step second_step = two_steps ? data.path.at( data.path.size() - 2 ) :
-                                        navigation_step();
-    bool maintain_speed = false;
-    // If vehicle did not move as far as planned and direction is the same
-    // then it is still accelerating. If the vehicle moved more than expected
-    // then we likely underestimated the acceleration when planning the path.
-    // If either of these happen, we should maintain speed but compute a new path.
-    if (two_steps && square_dist(first_step.pos.xy().raw(), second_step.pos.xy().raw()) !=
-        square_dist( first_step.pos.xy().raw(), veh_pos.xy().raw() ) &&
-        first_step.steering_dir == second_step.steering_dir ) {
+
+    while( !data.path.empty() && data.path.back().pos != veh_pos ) {
         data.path.pop_back();
-        maintain_speed = true;
-        data.path.clear();
-    } else {
-        while( !data.path.empty() && data.path.back().pos != veh_pos ) {
-            data.path.pop_back();
-        }
     }
     if( !data.path.empty() && data.path.back().target_speed_tps > data.max_speed_tps ) {
         data.path.clear();
-        maintain_speed = false;
     }
     if( data.path.empty() ) {
-        // if we're just starting out or we've gone off-course use the lowest speed
-        if( ( had_cached_path && !maintain_speed ) || driven_veh.velocity == 0 ) {
-            data.max_speed_tps = MIN_SPEED_TPS;
-        }
         auto new_path = compute_path( data.max_speed_tps );
         while( !new_path && data.max_speed_tps > MIN_SPEED_TPS ) {
-            // high speed didn't work, try a lower speed
+            // high speed did not work, try a lower speed
             data.max_speed_tps /= 2;
             new_path = compute_path( data.max_speed_tps );
         }
@@ -1350,8 +1346,19 @@ autodrive_result vehicle::do_autodrive( Character &driver )
     const tripoint_abs_ms veh_pos = global_square_location();
     const tripoint_abs_omt veh_omt = project_to<coords::omt>( veh_pos );
     std::vector<tripoint_abs_omt> &omt_path = driver.omt_path;
-    while (!omt_path.empty() && veh_omt.xy() == omt_path.back().xy()) {
-        omt_path.pop_back();
+    // Find the last route OMT already reached by the vehicle.  At OMT corners,
+    // on ramps, or at higher speed the vehicle can skip one route entry; only
+    // checking omt_path.back() then makes autodrive target the wrong road.
+    const auto veh_on_path = std::find_if( omt_path.rbegin(), omt_path.rend(),
+    [xy = veh_omt.xy()]( const tripoint_abs_omt & path_point ) {
+        return path_point.xy() == xy;
+    } );
+    if( veh_on_path != omt_path.rend() ) {
+        omt_path.erase( ( veh_on_path + 1 ).base(), omt_path.end() );
+        // Remove duplicate XY entries used by routes that cross multiple z-levels.
+        while( !omt_path.empty() && veh_omt.xy() == omt_path.back().xy() ) {
+            omt_path.pop_back();
+        }
     }
     if( omt_path.empty() ) {
         stop_autodriving( false );

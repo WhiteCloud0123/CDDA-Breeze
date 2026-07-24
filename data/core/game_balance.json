@@ -432,5 +432,26 @@
     "info": "Sets eternal weather.  Possible values are 'normal', 'clear', 'cloudy', 'light_drizzle', 'drizzle', 'rain', 'rainstorm', 'thunder', 'lightning', 'flurries', 'snowing', 'snowstorm', 'early_portal_storm', 'portal_storm'.  'normal' clears all eternal weather overrides and sets normal weather pattern.  Requires restart of the game after changing value to take effect.",
     "stype": "string_input",
     "value": "normal"
+  },
+  {
+    "type": "EXTERNAL_OPTION",
+    "name": "HIGHWAY_GRID_ROW_SEPARATION",
+    "info": "东西向高速公路之间相隔的大地图区块数。",
+    "stype": "int",
+    "value": 8
+  },
+  {
+    "type": "EXTERNAL_OPTION",
+    "name": "HIGHWAY_GRID_COLUMN_SEPARATION",
+    "info": "南北向高速公路之间相隔的大地图区块数。",
+    "stype": "int",
+    "value": 10
+  },
+  {
+    "type": "EXTERNAL_OPTION",
+    "name": "HIGHWAY_GRID_VARIANCE",
+    "info": "高速公路交汇点偏离规则网格位置的最大大地图区块数。",
+    "stype": "int",
+    "value": 2
   }
 ]

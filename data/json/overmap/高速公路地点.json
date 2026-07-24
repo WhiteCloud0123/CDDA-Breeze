@@ -1,0 +1,16 @@
+[
+  {
+    "type": "overmap_location",
+    "id": "highway",
+    "terrains": [
+      "hw_reserved"
+    ]
+  },
+  {
+    "type": "overmap_location",
+    "id": "highway_water",
+    "terrains": [
+      "hw_reserved_water"
+    ]
+  }
+]

@@ -641,6 +641,8 @@ void overmap::unserialize( const JsonObject &jsobj )
                 }
                 cities.push_back( new_city );
             }
+        } else if( name == "highway_connections" ) {
+            om_member.read( highway_connections );
         } else if( name == "connections_out" ) {
             om_member.read( connections_out );
         } else if( name == "roads_out" ) {
@@ -1279,6 +1281,9 @@ void overmap::serialize( std::ostream &fout ) const
     json.end_array();
     fout << std::endl;
 
+    json.member( "highway_connections", highway_connections );
+    fout << std::endl;
+
     json.member( "connections_out", connections_out );
     fout << std::endl;
 
@@ -1521,6 +1526,8 @@ void game::unserialize_master( const JsonValue &jv )
             timed_event_manager::unserialize_all( jsin );
         } else if( name == "placed_unique_specials" ) {
             overmap_buffer.deserialize_placed_unique_specials( jsin );
+        } else if( name == "overmap_highway_intersection_grid" ) {
+            jsin.read( overmap_buffer.highway_intersections );
         }
     }
 }
@@ -1640,6 +1647,7 @@ void game::serialize_master( std::ostream &fout )
         mission::serialize_all( json );
         json.member( "placed_unique_specials" );
         overmap_buffer.serialize_placed_unique_specials( json );
+        json.member( "overmap_highway_intersection_grid", overmap_buffer.highway_intersections );
 
         json.member( "timed_events" );
         timed_event_manager::serialize_all( json );

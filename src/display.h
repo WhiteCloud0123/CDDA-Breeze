@@ -85,14 +85,18 @@ namespace display
 std::string get_moon();
 // Current moon phase as ascii-art, ex. "(   )", "(  ))"
 std::string get_moon_graphic();
-// Current date, in terms of day within season, ex. "Summer, day 17"
+// Current date, including weekday when calendar months are enabled
 std::string date_string();
+// Compact current date without weekday, for narrow sidebars
+std::string date_string_short();
 // Approximate time of day on the given turn, ex. "Early morning", "Around dusk"
 std::string time_approx( const time_point &turn );
 // Current approximate time of day, ex. "Early morning", "Around dusk"
 std::string time_approx();
 // Exact time if character has a watch, approx time if aboveground, "???" if unknown/underground
 std::string time_string( const Character &u );
+// Compact exact time without AM/PM, retaining seconds and the same fallback behavior as time_string
+std::string time_string_short( const Character &u );
 // Sundial representing the current time of day
 std::string sundial_text_color( const Character &u, int width = 0 );
 // Sundial representing the current time of day, exact time if player has a watch, "???" if unknown/underground

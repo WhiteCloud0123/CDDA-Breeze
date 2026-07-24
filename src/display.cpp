@@ -274,6 +274,20 @@ std::string display::date_string()
                           month_day.second );
 }
 
+std::string display::date_string_short()
+{
+    if( calendar::year_length() != 364_days || !get_option<bool>( "SHOW_MONTHS" ) ) {
+        const std::string season = calendar::name_season( season_of_year( calendar::turn ) );
+        const int day_num = day_of_season<int>( calendar::turn ) + 1;
+        //~ 1 is the season, 2 is the day of the season
+        return string_format( _( "%1$s day %2$d" ), season, day_num );
+    }
+
+    const std::pair<month, int> month_day = month_and_day( calendar::turn );
+    //~ 1 is the month, 2 is the day of the month
+    return string_format( _( "%1$s %2$d" ), to_string( month_day.first ), month_day.second );
+}
+
 std::string display::time_string( const Character &u )
 {
     // Return exact time if character has a watch, or approximate time if can see the sky
@@ -285,6 +299,29 @@ std::string display::time_string( const Character &u )
         // NOLINTNEXTLINE(cata-text-style): the question mark does not end a sentence
         return _( "???" );
     }
+}
+
+std::string display::time_string_short( const Character &u )
+{
+    if( !u.has_watch() ) {
+        if( is_creature_outside( u ) ) {
+            return display::time_approx();
+        }
+        // NOLINTNEXTLINE(cata-text-style): the question mark does not end a sentence
+        return _( "???" );
+    }
+
+    const int hour = hour_of_day<int>( calendar::turn );
+    const int minute = minute_of_hour<int>( calendar::turn );
+    const int second = to_seconds<int>( time_past_midnight( calendar::turn ) ) % 60;
+    const std::string format_type = get_option<std::string>( "24_HOUR" );
+
+    if( format_type == "military" ) {
+        return string_format( "%02d%02d.%02d", hour, minute, second );
+    }
+
+    //~ hour:minute:second (compact time display without AM/PM)
+    return string_format( _( "%02d:%02d:%02d" ), hour, minute, second );
 }
 
 std::string display::sundial_time_text_color( const Character &u, int width )

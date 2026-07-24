@@ -33,6 +33,7 @@
 #include "overmap.h"
 #include "overmap_connection.h"
 #include "overmap_types.h"
+#include "output.h"
 #include "path_info.h"
 #include "point.h"
 #include "rng.h"
@@ -47,6 +48,7 @@ static const oter_type_str_id oter_type_bridge( "bridge" );
 static const oter_type_str_id oter_type_bridge_road( "bridge_road" );
 static const oter_type_str_id oter_type_bridgehead_ground( "bridgehead_ground" );
 static const oter_type_str_id oter_type_bridgehead_ramp( "bridgehead_ramp" );
+static const oter_type_str_id oter_type_highway_road_bridge( "hw_road_bridge" );
 static const oter_type_str_id oter_type_deep_rock( "deep_rock" );
 static const oter_type_str_id oter_type_empty_rock( "empty_rock" );
 static const oter_type_str_id oter_type_evac_center_1( "evac_center_1" );
@@ -274,6 +276,7 @@ void overmapbuffer::clear()
     overmaps.clear();
     known_non_existing.clear();
     placed_unique_specials.clear();
+    highway_intersections.clear();
     last_requested_overmap = nullptr;
 }
 
@@ -876,6 +879,7 @@ bool overmapbuffer::reveal( const tripoint_abs_omt &center, int radius,
 overmap_path_params overmap_path_params::for_player()
 {
     overmap_path_params ret;
+    ret.highway_cost = 10;
     ret.road_cost = 10;
     ret.dirt_road_cost = 10;
     ret.field_cost = 15;
@@ -901,6 +905,9 @@ overmap_path_params overmap_path_params::for_land_vehicle( float offroad_coeff, 
 {
     const bool can_offroad = offroad_coeff >= 0.05;
     overmap_path_params ret;
+    // Match modern CDDA/CCB routing preference: highways are the preferred
+    // long-distance vehicle route, while ordinary roads remain fully usable.
+    ret.highway_cost = 4;
     ret.road_cost = 10;
     ret.field_cost = can_offroad ? std::lround( 15 / std::min( 1.0f, offroad_coeff ) ) : -1;
     ret.dirt_road_cost = ret.field_cost;
@@ -961,7 +968,9 @@ static int get_terrain_cost( const tripoint_abs_omt &omt_pos, const overmap_path
                                      oter_type == oter_type_evac_center_23 ||
                                      oter_type == oter_type_evac_center_24 ||
                                      oter_type == oter_type_evac_center_25;
-    if( ( oter_type == oter_type_road ) || refugee_center_road ||
+    if( oter->is_highway() && oter->is_road() ) {
+        return params.highway_cost;
+    } else if( ( oter_type == oter_type_road ) || refugee_center_road ||
         ( oter_type == oter_type_bridge_road ) ||
         ( oter_type == oter_type_bridgehead_ground ) ||
         ( oter_type == oter_type_bridgehead_ramp ) ||
@@ -1005,8 +1014,116 @@ static int get_terrain_cost( const tripoint_abs_omt &omt_pos, const overmap_path
 static bool is_ramp( const tripoint_abs_omt &omt_pos )
 {
     const oter_id &oter = overmap_buffer.ter_existing( omt_pos );
-    return ( oter->get_type_id() == oter_type_bridgehead_ground ) ||
-           ( oter->get_type_id() == oter_type_bridgehead_ramp );
+    if( ( oter->get_type_id() == oter_type_bridgehead_ground ) ||
+        ( oter->get_type_id() == oter_type_bridgehead_ramp ) ||
+        oter->has_flag( oter_flags::known_up ) ||
+        oter->has_flag( oter_flags::known_down ) ) {
+        return true;
+    }
+
+    // A highway road-overpass uses an ordinary highway OMT at ground level and
+    // hw_road_bridge directly above it.  Its actual mapgen contains the ramps,
+    // so overmap routing must also permit the matching z transition.
+    const tripoint_abs_omt above = omt_pos + tripoint_rel_omt( 0, 0, 1 );
+    const tripoint_abs_omt below = omt_pos + tripoint_rel_omt( 0, 0, -1 );
+    if( oter->is_highway() && oter->is_road() ) {
+        const oter_id &above_oter = overmap_buffer.ter_existing( above );
+        if( above_oter->get_type_id() == oter_type_highway_road_bridge ) {
+            return true;
+        }
+    }
+    if( oter->get_type_id() == oter_type_highway_road_bridge ) {
+        const oter_id &below_oter = overmap_buffer.ter_existing( below );
+        return below_oter->is_highway() && below_oter->is_road();
+    }
+    return false;
+}
+
+static bool highway_oter_connects_toward( const oter_id &oter,
+        const om_direction::type toward )
+{
+    if( !oter->is_highway() || !oter->is_road() ) {
+        return true;
+    }
+
+    if( oter->is_linear() ) {
+        return static_cast<bool>( oter->get_line() & ( 1 << static_cast<int>( toward ) ) );
+    }
+
+    // Rotated box-drawing symbols describe the useful edge connections for
+    // highway straights, bends, tees and four-way pieces.  Using the displayed
+    // symbol here is more accurate than relying only on get_dir(): a bend has a
+    // single special rotation, but physically connects two perpendicular edges.
+    const uint32_t sym = oter->get_uint32_symbol();
+    switch( sym ) {
+        case LINE_XOXO_UNICODE: // north/south
+            return toward == om_direction::type::north || toward == om_direction::type::south;
+        case LINE_OXOX_UNICODE: // east/west
+            return toward == om_direction::type::east || toward == om_direction::type::west;
+        case LINE_OXXO_UNICODE: // east/south (upper-left corner)
+            return toward == om_direction::type::east || toward == om_direction::type::south;
+        case LINE_OOXX_UNICODE: // west/south (upper-right corner)
+            return toward == om_direction::type::west || toward == om_direction::type::south;
+        case LINE_XXOO_UNICODE: // east/north (lower-left corner)
+            return toward == om_direction::type::east || toward == om_direction::type::north;
+        case LINE_XOOX_UNICODE: // west/north (lower-right corner)
+            return toward == om_direction::type::west || toward == om_direction::type::north;
+        case LINE_XXXO_UNICODE: // north/east/south
+            return toward != om_direction::type::west;
+        case LINE_XOXX_UNICODE: // north/west/south
+            return toward != om_direction::type::east;
+        case LINE_OXXX_UNICODE: // east/west/south
+            return toward != om_direction::type::north;
+        case LINE_XXOX_UNICODE: // east/west/north
+            return toward != om_direction::type::south;
+        case LINE_XXXX_UNICODE:
+            return true;
+        default:
+            break;
+    }
+
+    // Slanted and large interchange pieces use non-box symbols.  Keep those
+    // available, while ordinary rotatable highway tiles still use their axis.
+    if( oter->is_highway_special() ) {
+        return true;
+    }
+    return !oter->is_rotatable() || om_direction::are_parallel( oter->get_dir(), toward );
+}
+
+static bool overmap_transition_allowed( const tripoint_abs_omt &from,
+                                        const tripoint_abs_omt &to )
+{
+    if( from.z() != to.z() ) {
+        return true;
+    }
+
+    const oter_id &from_oter = overmap_buffer.ter_existing( from );
+    const oter_id &to_oter = overmap_buffer.ter_existing( to );
+    if( !from_oter->is_highway() || !from_oter->is_road() ||
+        !to_oter->is_highway() || !to_oter->is_road() ) {
+        return true;
+    }
+
+    const tripoint_rel_omt delta = to - from;
+    om_direction::type move_dir = om_direction::type::invalid;
+    if( delta.x() > 0 ) {
+        move_dir = om_direction::type::east;
+    } else if( delta.x() < 0 ) {
+        move_dir = om_direction::type::west;
+    } else if( delta.y() > 0 ) {
+        move_dir = om_direction::type::south;
+    } else if( delta.y() < 0 ) {
+        move_dir = om_direction::type::north;
+    }
+    if( move_dir == om_direction::type::invalid ) {
+        return true;
+    }
+
+    // Require both OMTs to expose a road edge toward one another.  This keeps
+    // routes on the current carriageway, but still permits real corners and
+    // interchange pieces instead of treating every bend like a median jump.
+    return highway_oter_connects_toward( from_oter, move_dir ) &&
+           highway_oter_connects_toward( to_oter, om_direction::opposite( move_dir ) );
 }
 
 std::vector<tripoint_abs_omt> overmapbuffer::get_travel_path(
@@ -1026,7 +1143,7 @@ std::vector<tripoint_abs_omt> overmapbuffer::get_travel_path(
 
     constexpr int radius = 4 * OMAPX; // radius of search in OMTs = 4 overmaps
     const pf::simple_path<tripoint_abs_omt> path = pf::find_overmap_path( src, dest, radius, estimate,
-            g->display_om_pathfinding_progress );
+            g->display_om_pathfinding_progress, std::nullopt, overmap_transition_allowed );
     return path.points;
 }
 
@@ -1862,4 +1979,99 @@ bool overmapbuffer::place_special( const overmap_special_id &special_id,
 
     // If we got this far, we've failed to make the placement.
     return false;
+}
+
+
+void overmap_feature_grid::clear()
+{
+    grid_origin = point_abs_om::invalid;
+    feature_grid.clear();
+}
+
+void overmap_feature_grid::set_grid_origin( const point_abs_om &p )
+{
+    grid_origin = p;
+}
+
+point_abs_om overmap_feature_grid::get_grid_origin() const
+{
+    return grid_origin;
+}
+
+std::vector<overmap_feature_grid_node>
+overmap_feature_grid::find_grid_adjacent_features( const point_abs_om &generated_om_pos )
+{
+    std::vector<overmap_feature_grid_node> adjacent_features;
+    for( const point &cardinal : four_adjacent_offsets ) {
+        const point_abs_om p( generated_om_pos.x() + cardinal.x * column_separation,
+                              generated_om_pos.y() + cardinal.y * row_separation );
+        if( !feature_point_exists( p ) ) {
+            generate_feature_point( p );
+        }
+        adjacent_features.emplace_back( get_feature_point( p ) );
+    }
+    overmap_feature_grid_node this_feature = get_feature_point( generated_om_pos );
+    for( int i = 0; i < static_cast<int>( four_adjacent_offsets.size() ); i++ ) {
+        if( this_feature.get_adjacent_pos( i ).is_invalid() ) {
+            this_feature.set_adjacent_pos( adjacent_features[i].get_grid_pos(), i );
+        }
+    }
+    set_feature_point( generated_om_pos, this_feature );
+    return adjacent_features;
+}
+
+void overmap_feature_grid::serialize( JsonOut &out ) const
+{
+    out.start_object();
+    out.member( "overmap_highway_offset", grid_origin );
+    out.member( "overmap_highway_intersections", feature_grid );
+    out.end_object();
+}
+
+void overmap_feature_grid::deserialize( const JsonObject &obj )
+{
+    obj.read( "overmap_highway_offset", grid_origin );
+    obj.read( "overmap_highway_intersections", feature_grid );
+}
+
+bool overmap_feature_grid::feature_point_exists( const point_abs_om &intersection_om ) const
+{
+    return feature_grid.find( intersection_om.to_string_writable() ) != feature_grid.end();
+}
+
+void overmap_feature_grid::generate_feature_point( const point_abs_om &generated_om_pos )
+{
+    if( !feature_point_exists( generated_om_pos ) ) {
+        overmap_feature_grid_node new_intersection( generated_om_pos );
+        generate_offset( new_intersection );
+        feature_grid.insert( { generated_om_pos.to_string_writable(), new_intersection } );
+    }
+}
+
+std::vector<point_abs_om> overmap_feature_grid::find_feature_point_bounds(
+    const point_abs_om &generated_om_pos )
+{
+    const point_abs_om center = grid_origin;
+    const point_rel_om diff = generated_om_pos - center;
+    const double col_diff = diff.x() / static_cast<double>( column_separation );
+    const double row_diff = diff.y() / static_cast<double>( row_separation );
+    const int colsign = std::copysign( 1.0, col_diff );
+    const int rowsign = std::copysign( 1.0, row_diff );
+    const bool col_aligned = diff.x() % column_separation == 0;
+    const bool row_aligned = diff.y() % row_separation == 0;
+    const int col = static_cast<int>( col_diff ) + ( colsign == -1 && !col_aligned ? -1 : 0 );
+    const int row = static_cast<int>( row_diff ) + ( rowsign == -1 && !row_aligned ? -1 : 0 );
+    const point_abs_om top_left( center.x() + col * column_separation,
+                                 center.y() + row * row_separation );
+    std::vector<point_abs_om> bounds = {
+        top_left + point_rel_om( column_separation, row_separation ),
+        top_left + point_rel_om( 0, row_separation ),
+        top_left + point_rel_om( column_separation, 0 ), top_left
+    };
+    for( const point_abs_om &p : bounds ) {
+        if( !feature_point_exists( p ) ) {
+            generate_feature_point( p );
+        }
+    }
+    return bounds;
 }

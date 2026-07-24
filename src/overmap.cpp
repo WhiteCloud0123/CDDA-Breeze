@@ -782,6 +782,10 @@ std::string enum_to_string<oter_flags>( oter_flags data )
         case oter_flags::ocean_shore: return "OCEAN_SHORE";
         case oter_flags::ravine: return "RAVINE";
         case oter_flags::ravine_edge: return "RAVINE_EDGE";
+        case oter_flags::road: return "ROAD";
+        case oter_flags::highway: return "HIGHWAY";
+        case oter_flags::highway_reserved: return "HIGHWAY_RESERVED";
+        case oter_flags::highway_special: return "HIGHWAY_SPECIAL";
         case oter_flags::generic_loot: return "GENERIC_LOOT";
         case oter_flags::risk_high: return "RISK_HIGH";
         case oter_flags::risk_low: return "RISK_LOW";
@@ -3463,8 +3467,25 @@ void overmap::generate( const overmap *north, const overmap *east,
     if( get_option<bool>( "OVERMAP_PLACE_RAVINES" ) ) {
         place_ravines();
     }
+
+    // Polish rivers before highways so bridge predecessors retain the final river terrain.
+    polish_river();
+    const std::vector<const overmap *> neighbor_overmaps = { north, east, south, west };
+    const bool highways_enabled = settings->overmap_highway.enabled;
+    std::vector<Highway_path> highway_paths;
+    highway_road_crossings.clear();
+    if( highways_enabled ) {
+        highway_paths = place_highways( neighbor_overmaps );
+    }
+
     if( get_option<bool>( "OVERMAP_PLACE_CITIES" ) ) {
         place_cities();
+        if( highways_enabled ) {
+            place_highway_interchanges( highway_paths );
+        }
+        build_cities();
+    } else if( highways_enabled ) {
+        place_highway_interchanges( highway_paths );
     }
     if( get_option<bool>( "OVERMAP_PLACE_FOREST_TRAILS" ) ) {
         place_forest_trails();
@@ -3479,6 +3500,9 @@ void overmap::generate( const overmap *north, const overmap *east,
         place_forest_trailheads();
     }
 
+    if( highways_enabled ) {
+        finalize_highways( highway_paths );
+    }
     polish_river();
 
     // TODO: there is no reason we can't generate the sublevels in one pass
@@ -5013,6 +5037,59 @@ void overmap::place_rivers( const overmap *north, const overmap *east, const ove
     }
 }
 
+bool overmap::omt_lake_noise_threshold( const point_abs_omt &origin,
+        const point_om_omt &offset, const double noise_threshold )
+{
+    const om_noise::om_noise_layer_lake noise_func( origin, g->get_seed() );
+    const bool local_bounds = offset.x() > -5 && offset.y() > -5 &&
+                              offset.x() < OMAPX + 5 && offset.y() < OMAPY + 5;
+    return local_bounds && noise_func.noise_at( offset ) > noise_threshold;
+}
+
+bool overmap::guess_has_lake( const point_abs_om &p, const double noise_threshold,
+                              int max_tile_count )
+{
+    const point_abs_omt origin = project_to<coords::omt>( p );
+    int lake_tiles = 0;
+    for( int i = 0; i < OMAPX && lake_tiles < max_tile_count; i++ ) {
+        for( int j = 0; j < OMAPY; j++ ) {
+            if( omt_lake_noise_threshold( origin, point_om_omt( i, j ), noise_threshold ) &&
+                ++lake_tiles >= max_tile_count ) {
+                break;
+            }
+        }
+    }
+    return lake_tiles >= max_tile_count;
+}
+
+std::vector<tripoint_om_omt> overmap::get_neighbor_border( const point_rel_om &direction,
+        int z, int distance_corner )
+{
+    const int x_edge = OMAPX - 1;
+    const int y_edge = OMAPY - 1;
+    const tripoint_om_omt edges( direction.x() >= 0 ? 0 : x_edge,
+                                 direction.y() >= 0 ? 0 : y_edge, 0 );
+    const bool iterx = direction.x() == 0;
+    const int corner_upper = iterx ? x_edge - distance_corner : y_edge - distance_corner;
+    return iterx ? line_to( tripoint_om_omt( distance_corner, edges.y(), z ),
+                            tripoint_om_omt( corner_upper, edges.y(), z ) ) :
+           line_to( tripoint_om_omt( edges.x(), distance_corner, z ),
+                    tripoint_om_omt( edges.x(), corner_upper, z ) );
+}
+
+std::vector<tripoint_om_omt> overmap::get_border( const point_rel_om &direction, int z,
+        int distance_corner )
+{
+    return get_neighbor_border( point_rel_om( -direction.x(), -direction.y() ), z, distance_corner );
+}
+
+std::vector<tripoint_om_omt> overmap::get_border( const om_direction::type direction, int z,
+        int distance_corner )
+{
+    return get_border( point_rel_om( four_adjacent_offsets[static_cast<int>( direction )] ), z,
+                       distance_corner );
+}
+
 void overmap::place_swamps()
 {
     // Buffer our river terrains by a variable radius and increment a counter for the location each
@@ -5386,8 +5463,6 @@ void overmap::place_cities()
                                      omts_per_city );
     }
 
-    const overmap_connection &local_road( *overmap_connection_local_road );
-
     // if there is only a single free tile, the probability of NOT finding it after MAX_PLACEMENT_ATTEMPTS attempts
     // is (1 - 1/(OMAPX * OMAPY))^MAX_PLACEMENT_ATTEMPTS ≈ 36% for the OMAPX=OMAPY=180 and MAX_PLACEMENT_ATTEMPTS=OMAPX * OMAPY
     const int MAX_PLACEMENT_ATTEMPTS = 50;//OMAPX * OMAPY;
@@ -5433,13 +5508,19 @@ void overmap::place_cities()
         }
         if( placement_attempts == 0 ) {
             cities.push_back( tmp );
-            const om_direction::type start_dir = om_direction::random();
-            om_direction::type cur_dir = start_dir;
-
-            do {
-                build_city_street( local_road, tmp.pos, tmp.size, cur_dir, tmp );
-            } while( ( cur_dir = om_direction::turn_right( cur_dir ) ) != start_dir );
         }
+    }
+}
+
+void overmap::build_cities()
+{
+    const overmap_connection &local_road( *overmap_connection_local_road );
+    for( const city &town : cities ) {
+        const om_direction::type start_dir = om_direction::random();
+        om_direction::type cur_dir = start_dir;
+        do {
+            build_city_street( local_road, town.pos, town.size, cur_dir, town );
+        } while( ( cur_dir = om_direction::turn_right( cur_dir ) ) != start_dir );
     }
 }
 
@@ -5857,6 +5938,12 @@ pf::directed_path<point_om_omt> overmap::lay_out_connection(
             }
         }
 
+        // Highways may only be crossed at a right angle by ordinary road connections.
+        if( subtype->is_perpendicular_crossing() && id->is_rotatable() &&
+            om_direction::are_parallel( cur.dir, id->get_dir() ) ) {
+            return pf::node_score::rejected;
+        }
+
         if( existing_connection && id->is_rotatable() && cur.dir != om_direction::type::invalid &&
             !om_direction::are_parallel( id->get_dir(), cur.dir ) ) {
             return pf::node_score::rejected; // Can't intersect.
@@ -5922,6 +6009,7 @@ pf::directed_path<point_om_omt> overmap::lay_out_street( const overmap_connectio
         const oter_id &ter_id = ter( pos );
 
         if( ter_id->is_river() || ter_id->is_ravine() || ter_id->is_ravine_edge() ||
+            ter_id->is_highway() || ter_id->is_highway_reserved() ||
             !connection.pick_subtype_for( ter_id ) ) {
             break;
         }
@@ -5983,6 +6071,13 @@ void overmap::build_connection(
         const oter_id &ter_id = ter( pos );
         const om_direction::type new_dir = node.dir;
         const overmap_connection::subtype *subtype = connection.pick_subtype_for( ter_id );
+
+        if( subtype && subtype->is_perpendicular_crossing() && ter_id->is_highway_reserved() ) {
+            // Remember the exact ordinary-road crossing before build_connection replaces the
+            // reserved highway terrain.  Looking for a road after all specials are placed is
+            // unreliable and was the source of frequent unbridged, truncated roads.
+            highway_road_crossings.insert( pos );
+        }
 
         if( !subtype ) {
             debugmsg( "No suitable subtype of connection \"%s\" found for \"%s\".", connection.id.c_str(),
