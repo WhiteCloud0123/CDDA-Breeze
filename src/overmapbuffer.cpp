@@ -877,6 +877,7 @@ bool overmapbuffer::reveal( const tripoint_abs_omt &center, int radius,
 overmap_path_params overmap_path_params::for_player()
 {
     overmap_path_params ret;
+    ret.highway_cost = 10;
     ret.road_cost = 10;
     ret.dirt_road_cost = 10;
     ret.field_cost = 15;
@@ -902,6 +903,9 @@ overmap_path_params overmap_path_params::for_land_vehicle( float offroad_coeff, 
 {
     const bool can_offroad = offroad_coeff >= 0.05;
     overmap_path_params ret;
+    // Match modern CDDA/CCB routing preference: highways are the preferred
+    // long-distance vehicle route, while ordinary roads remain fully usable.
+    ret.highway_cost = 4;
     ret.road_cost = 10;
     ret.field_cost = can_offroad ? std::lround( 15 / std::min( 1.0f, offroad_coeff ) ) : -1;
     ret.dirt_road_cost = ret.field_cost;
@@ -962,7 +966,9 @@ static int get_terrain_cost( const tripoint_abs_omt &omt_pos, const overmap_path
                                      oter_type == oter_type_evac_center_23 ||
                                      oter_type == oter_type_evac_center_24 ||
                                      oter_type == oter_type_evac_center_25;
-    if( ( oter_type == oter_type_road ) || refugee_center_road ||
+    if( oter->is_highway() && oter->is_road() ) {
+        return params.highway_cost;
+    } else if( ( oter_type == oter_type_road ) || refugee_center_road ||
         ( oter_type == oter_type_bridge_road ) ||
         ( oter_type == oter_type_bridgehead_ground ) ||
         ( oter_type == oter_type_bridgehead_ramp ) ||
@@ -1007,7 +1013,9 @@ static bool is_ramp( const tripoint_abs_omt &omt_pos )
 {
     const oter_id &oter = overmap_buffer.ter_existing( omt_pos );
     return ( oter->get_type_id() == oter_type_bridgehead_ground ) ||
-           ( oter->get_type_id() == oter_type_bridgehead_ramp );
+           ( oter->get_type_id() == oter_type_bridgehead_ramp ) ||
+           oter->has_flag( oter_flags::known_up ) ||
+           oter->has_flag( oter_flags::known_down );
 }
 
 std::vector<tripoint_abs_omt> overmapbuffer::get_travel_path(

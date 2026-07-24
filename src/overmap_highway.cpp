@@ -955,13 +955,56 @@ void overmap::finalize_highways( std::vector<Highway_path> &paths )
     // Segment of flat highway with a road bridge
     const overmap_special_id &segment_road_bridge = highway_settings.segment_road_bridge;
 
-    // Replace roads that travelled over reserved highway segments
+    // Replace ordinary roads that travelled over reserved highway segments.
+    // A highway segment is two OMTs wide, while path_node.pos only names its anchor OMT.
+    // Checking only that anchor misses crossings on the second carriageway and leaves a
+    // visually and functionally truncated ordinary road.  Inspect both occupied OMTs,
+    // and also repair a pair of facing road approaches if the reserved cells themselves
+    // were not converted by the connection builder.
     auto handle_road_bridges = [this, &segment_road_bridge]( Highway_path & path ) {
-        const int range = path.size();
-        for( int i = 0; i < range; i++ ) {
-            //only one of two points should ever need to be checked for roads specifically
-            if( ter( path[i].path_node.pos )->is_road() ) {
-                path[i].placed_special = segment_road_bridge;
+        const auto road_connects_toward = [this]( const tripoint_om_omt &p,
+        const om_direction::type toward ) {
+            if( !inbounds( p ) ) {
+                return false;
+            }
+            const oter_id &oter = ter( p );
+            if( !oter->is_road() || oter->is_highway() ) {
+                return false;
+            }
+            if( oter->is_linear() ) {
+                return static_cast<bool>( oter->get_line() & ( 1 << static_cast<int>( toward ) ) );
+            }
+            if( oter->is_rotatable() ) {
+                return om_direction::are_parallel( oter->get_dir(), toward );
+            }
+            return true;
+        };
+
+        for( intrahighway_node &node : path ) {
+            if( !node.is_segment || node.is_ramp || node.path_node.pos.z() != RIVER_Z ) {
+                continue;
+            }
+
+            const auto segment = get_highway_segment_points( node.path_node );
+            const std::vector<tripoint_om_omt> &segment_points = segment.first;
+            const om_direction::type across = om_direction::turn_right( segment.second );
+
+            const bool ordinary_road_inside = std::any_of(
+                    segment_points.begin(), segment_points.end(), [this]( const tripoint_om_omt &p ) {
+                const oter_id &oter = ter( p );
+                return oter->is_road() && !oter->is_highway();
+            } );
+
+            const tripoint_om_omt first_approach =
+                segment_points.front() + om_direction::displace( om_direction::opposite( across ) );
+            const tripoint_om_omt second_approach =
+                segment_points.back() + om_direction::displace( across );
+            const bool facing_road_approaches =
+                road_connects_toward( first_approach, across ) &&
+                road_connects_toward( second_approach, om_direction::opposite( across ) );
+
+            if( ordinary_road_inside || facing_road_approaches ) {
+                node.placed_special = segment_road_bridge;
             }
         }
     };

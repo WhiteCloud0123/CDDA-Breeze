@@ -103,7 +103,12 @@
   {
     "type": "overmap_terrain",
     "abstract": "generic_highway_road",
-    "copy-from": "generic_highway"
+    "copy-from": "generic_highway",
+    "extend": {
+      "flags": [
+        "ROAD"
+      ]
+    }
   },
   {
     "type": "overmap_terrain",

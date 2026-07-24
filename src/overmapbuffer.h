@@ -40,6 +40,7 @@ struct radio_tower;
 struct regional_settings;
 
 struct overmap_path_params {
+    int highway_cost = -1;
     int road_cost = -1;
     int field_cost = -1;
     int dirt_road_cost = -1;
