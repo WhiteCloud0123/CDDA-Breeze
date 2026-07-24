@@ -705,6 +705,24 @@ bool vehicle::autodrive_controller::check_drivable(const tripoint_bub_ms& pt) co
         return &ovp->vehicle() == &driven_veh;
     }
 
+    // Keep a one-tile clearance around other vehicles.  Exact-part collision
+    // checks are too optimistic for a turning multi-tile vehicle and can let a
+    // corner, mirror or rear section clip parked traffic even when the pivot path
+    // itself is clear.  The wide highway carriageways normally provide enough
+    // room to route around this buffer; on a narrow blocked road autodrive will
+    // stop rather than scrape through.
+    for( int dx = -1; dx <= 1; ++dx ) {
+        for( int dy = -1; dy <= 1; ++dy ) {
+            if( dx == 0 && dy == 0 ) {
+                continue;
+            }
+            const optional_vpart_position nearby = here.veh_at( pt + tripoint( dx, dy, 0 ) );
+            if( nearby && &nearby->vehicle() != &driven_veh ) {
+                return false;
+            }
+        }
+    }
+
     const tripoint_abs_ms pt_abs( here.getabs( pt ) );
     const tripoint_abs_omt pt_omt = project_to<coords::omt>( pt_abs );
     // only check visibility for the current OMT, we'll check other OMTs when

@@ -2217,7 +2217,11 @@ units::angle map::shake_vehicle( vehicle &veh, const int velocity_before,
                                                "the power of the impact!" ),
                                             _( "<npcname> is hurled from the %s's seat by "
                                                "the power of the impact!" ), veh.name );
-                unboard_vehicle( part_pos );
+                // Use the exact occupied part captured before collision damage.
+                // Looking the seat up again by coordinates can select a different
+                // boardable part (or none after the seat breaks), leaving a stale
+                // passenger flag and producing "passenger not found" debug errors.
+                unboard_vehicle( vpart_reference( veh, ps ), psg );
             } else {
                 add_msg_if_player_sees( part_pos, m_bad,
                                         _( "The %s is hurled from %s's by the power of the impact!" ),

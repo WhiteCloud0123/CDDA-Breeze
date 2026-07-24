@@ -33,6 +33,7 @@
 #include "overmap.h"
 #include "overmap_connection.h"
 #include "overmap_types.h"
+#include "output.h"
 #include "path_info.h"
 #include "point.h"
 #include "rng.h"
@@ -47,7 +48,6 @@ static const oter_type_str_id oter_type_bridge( "bridge" );
 static const oter_type_str_id oter_type_bridge_road( "bridge_road" );
 static const oter_type_str_id oter_type_bridgehead_ground( "bridgehead_ground" );
 static const oter_type_str_id oter_type_bridgehead_ramp( "bridgehead_ramp" );
-static const oter_type_str_id oter_type_highway_road( "hw_road" );
 static const oter_type_str_id oter_type_highway_road_bridge( "hw_road_bridge" );
 static const oter_type_str_id oter_type_deep_rock( "deep_rock" );
 static const oter_type_str_id oter_type_empty_rock( "empty_rock" );
@@ -1039,6 +1039,57 @@ static bool is_ramp( const tripoint_abs_omt &omt_pos )
     return false;
 }
 
+static bool highway_oter_connects_toward( const oter_id &oter,
+        const om_direction::type toward )
+{
+    if( !oter->is_highway() || !oter->is_road() ) {
+        return true;
+    }
+
+    if( oter->is_linear() ) {
+        return static_cast<bool>( oter->get_line() & ( 1 << static_cast<int>( toward ) ) );
+    }
+
+    // Rotated box-drawing symbols describe the useful edge connections for
+    // highway straights, bends, tees and four-way pieces.  Using the displayed
+    // symbol here is more accurate than relying only on get_dir(): a bend has a
+    // single special rotation, but physically connects two perpendicular edges.
+    const uint32_t sym = oter->get_uint32_symbol();
+    switch( sym ) {
+        case LINE_XOXO_UNICODE: // north/south
+            return toward == om_direction::type::north || toward == om_direction::type::south;
+        case LINE_OXOX_UNICODE: // east/west
+            return toward == om_direction::type::east || toward == om_direction::type::west;
+        case LINE_OXXO_UNICODE: // east/south (upper-left corner)
+            return toward == om_direction::type::east || toward == om_direction::type::south;
+        case LINE_OOXX_UNICODE: // west/south (upper-right corner)
+            return toward == om_direction::type::west || toward == om_direction::type::south;
+        case LINE_XXOO_UNICODE: // east/north (lower-left corner)
+            return toward == om_direction::type::east || toward == om_direction::type::north;
+        case LINE_XOOX_UNICODE: // west/north (lower-right corner)
+            return toward == om_direction::type::west || toward == om_direction::type::north;
+        case LINE_XXXO_UNICODE: // north/east/south
+            return toward != om_direction::type::west;
+        case LINE_XOXX_UNICODE: // north/west/south
+            return toward != om_direction::type::east;
+        case LINE_OXXX_UNICODE: // east/west/south
+            return toward != om_direction::type::north;
+        case LINE_XXOX_UNICODE: // east/west/north
+            return toward != om_direction::type::south;
+        case LINE_XXXX_UNICODE:
+            return true;
+        default:
+            break;
+    }
+
+    // Slanted and large interchange pieces use non-box symbols.  Keep those
+    // available, while ordinary rotatable highway tiles still use their axis.
+    if( oter->is_highway_special() ) {
+        return true;
+    }
+    return !oter->is_rotatable() || om_direction::are_parallel( oter->get_dir(), toward );
+}
+
 static bool overmap_transition_allowed( const tripoint_abs_omt &from,
                                         const tripoint_abs_omt &to )
 {
@@ -1048,11 +1099,8 @@ static bool overmap_transition_allowed( const tripoint_abs_omt &from,
 
     const oter_id &from_oter = overmap_buffer.ter_existing( from );
     const oter_id &to_oter = overmap_buffer.ter_existing( to );
-    const auto simple_highway_lane = []( const oter_id & oter ) {
-        return oter->get_type_id() == oter_type_highway_road && oter->is_rotatable();
-    };
-
-    if( !simple_highway_lane( from_oter ) || !simple_highway_lane( to_oter ) ) {
+    if( !from_oter->is_highway() || !from_oter->is_road() ||
+        !to_oter->is_highway() || !to_oter->is_road() ) {
         return true;
     }
 
@@ -1071,14 +1119,11 @@ static bool overmap_transition_allowed( const tripoint_abs_omt &from,
         return true;
     }
 
-    // Two side-by-side highway OMTs with parallel road directions are separated
-    // by a median barrier.  Do not let the overmap route jump laterally between
-    // them.  When the directions differ we are at a legitimate highway bend and
-    // the transition must remain available.
-    if( !om_direction::are_parallel( from_oter->get_dir(), to_oter->get_dir() ) ) {
-        return true;
-    }
-    return om_direction::are_parallel( from_oter->get_dir(), move_dir );
+    // Require both OMTs to expose a road edge toward one another.  This keeps
+    // routes on the current carriageway, but still permits real corners and
+    // interchange pieces instead of treating every bend like a median jump.
+    return highway_oter_connects_toward( from_oter, move_dir ) &&
+           highway_oter_connects_toward( to_oter, om_direction::opposite( move_dir ) );
 }
 
 std::vector<tripoint_abs_omt> overmapbuffer::get_travel_path(
