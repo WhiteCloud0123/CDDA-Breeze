@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <type_traits>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "all_enum_values.h"
 #include "calendar.h"
@@ -3352,14 +3353,94 @@ class jmapgen_nested : public jmapgen_piece
                 }
         };
 
+        class neighbor_flag_check
+        {
+            private:
+                std::unordered_map<direction, cata::flat_set<oter_flags>> neighbors;
+            public:
+                explicit neighbor_flag_check( const JsonObject &jsi ) {
+                    for( direction dir : all_enum_values<direction>() ) {
+                        cata::flat_set<oter_flags> dir_neighbors;
+                        const std::string location = io::enum_to_string( dir );
+                        optional( jsi, false, location, dir_neighbors );
+                        if( !dir_neighbors.empty() ) {
+                            neighbors[dir] = std::move( dir_neighbors );
+                        }
+                    }
+                }
+
+                bool test( const mapgendata &dat ) const {
+                    for( const auto &entry : neighbors ) {
+                        bool matches = false;
+                        for( const oter_flags flag : entry.second ) {
+                            matches = matches || dat.neighbor_at( entry.first )->has_flag( flag );
+                        }
+                        if( !matches ) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+        };
+
+        class neighbor_flag_any_check
+        {
+            private:
+                std::unordered_map<direction, cata::flat_set<oter_flags>> neighbors;
+            public:
+                explicit neighbor_flag_any_check( const JsonObject &jsi ) {
+                    for( direction dir : all_enum_values<direction>() ) {
+                        cata::flat_set<oter_flags> dir_neighbors;
+                        const std::string location = io::enum_to_string( dir );
+                        optional( jsi, false, location, dir_neighbors );
+                        if( !dir_neighbors.empty() ) {
+                            neighbors[dir] = std::move( dir_neighbors );
+                        }
+                    }
+                }
+
+                bool test( const mapgendata &dat ) const {
+                    for( const auto &entry : neighbors ) {
+                        for( const oter_flags flag : entry.second ) {
+                            if( dat.neighbor_at( entry.first )->has_flag( flag ) ) {
+                                return true;
+                            }
+                        }
+                    }
+                    return neighbors.empty();
+                }
+        };
+
+        class correct_z_level_check
+        {
+            private:
+                std::unordered_set<int> required_z;
+            public:
+                explicit correct_z_level_check( const JsonArray &jarr ) {
+                    for( const JsonValue entry : jarr ) {
+                        required_z.emplace( entry.get_int() );
+                    }
+                }
+
+                bool test( const mapgendata &dat ) const {
+                    return required_z.empty() || required_z.count( dat.zlevel() ) != 0;
+                }
+        };
+
     public:
         weighted_int_list<mapgen_value<nested_mapgen_id>> entries;
         weighted_int_list<mapgen_value<nested_mapgen_id>> else_entries;
         neighbor_oter_check neighbor_oters;
         neighbor_join_check neighbor_joins;
+        neighbor_flag_check neighbor_flags;
+        neighbor_flag_any_check neighbor_flags_any;
+        correct_z_level_check correct_z_level;
         jmapgen_nested( const JsonObject &jsi, const std::string &/*context*/ )
             : neighbor_oters( jsi.get_object( "neighbors" ) )
-            , neighbor_joins( jsi.get_object( "joins" ) ) {
+            , neighbor_joins( jsi.get_object( "joins" ) )
+            , neighbor_flags( jsi.get_object( "flags" ) )
+            , neighbor_flags_any( jsi.get_object( "flags_any" ) )
+            , correct_z_level( jsi.get_array( "check_z" ) ) {
             if( jsi.has_member( "chunks" ) ) {
                 load_weighted_list( jsi.get_member( "chunks" ), entries, 100 );
             }
@@ -3399,7 +3480,9 @@ class jmapgen_nested : public jmapgen_piece
         }
         const weighted_int_list<mapgen_value<nested_mapgen_id>> &get_entries(
         const mapgendata &dat ) const {
-            if( neighbor_oters.test( dat ) && neighbor_joins.test( dat ) ) {
+            if( neighbor_oters.test( dat ) && neighbor_joins.test( dat ) &&
+                neighbor_flags.test( dat ) && neighbor_flags_any.test( dat ) &&
+                correct_z_level.test( dat ) ) {
                 return entries;
             } else {
                 return else_entries;

@@ -1328,8 +1328,19 @@ autodrive_result vehicle::do_autodrive( Character &driver )
     const tripoint_abs_ms veh_pos = global_square_location();
     const tripoint_abs_omt veh_omt = project_to<coords::omt>( veh_pos );
     std::vector<tripoint_abs_omt> &omt_path = driver.omt_path;
-    while (!omt_path.empty() && veh_omt.xy() == omt_path.back().xy()) {
-        omt_path.pop_back();
+    // Find the last route OMT already reached by the vehicle.  At OMT corners,
+    // on ramps, or at higher speed the vehicle can skip one route entry; only
+    // checking omt_path.back() then makes autodrive target the wrong road.
+    const auto veh_on_path = std::find_if( omt_path.rbegin(), omt_path.rend(),
+    [xy = veh_omt.xy()]( const tripoint_abs_omt & path_point ) {
+        return path_point.xy() == xy;
+    } );
+    if( veh_on_path != omt_path.rend() ) {
+        omt_path.erase( ( veh_on_path + 1 ).base(), omt_path.end() );
+        // Remove duplicate XY entries used by routes that cross multiple z-levels.
+        while( !omt_path.empty() && veh_omt.xy() == omt_path.back().xy() ) {
+            omt_path.pop_back();
+        }
     }
     if( omt_path.empty() ) {
         stop_autodriving( false );

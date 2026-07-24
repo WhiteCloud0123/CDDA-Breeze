@@ -1,0 +1,30 @@
+[
+  {
+    "type": "item_group",
+    "id": "SUS_trash_highway_shoulder",
+    "//": "高速公路地图只依赖这个入口ID。采用微风已有垃圾组构成等价路肩垃圾，避免为少量垃圾连带移植整套现代SUS物品生态。",
+    "subtype": "distribution",
+    "items": [
+      {
+        "group": "trash_forest",
+        "prob": 50
+      },
+      {
+        "item": "rubber_tire_chunk",
+        "prob": 200
+      },
+      {
+        "group": "trash",
+        "prob": 50
+      },
+      {
+        "item": "plastic_chunk",
+        "prob": 50
+      },
+      {
+        "item": "cardboard",
+        "prob": 25
+      }
+    ]
+  }
+]

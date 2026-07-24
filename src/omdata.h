@@ -186,6 +186,10 @@ enum class oter_flags : int {
     ocean_shore,
     ravine,
     ravine_edge,
+    road,
+    highway,
+    highway_reserved,
+    highway_special,
     generic_loot,
     risk_high,
     risk_low,
@@ -406,6 +410,22 @@ struct oter_t {
 
         bool is_ravine_edge() const {
             return type->has_flag( oter_flags::ravine_edge );
+        }
+
+        bool is_road() const {
+            return type->has_flag( oter_flags::road );
+        }
+
+        bool is_highway() const {
+            return type->has_flag( oter_flags::highway );
+        }
+
+        bool is_highway_reserved() const {
+            return type->has_flag( oter_flags::highway_reserved );
+        }
+
+        bool is_highway_special() const {
+            return type->has_flag( oter_flags::highway_special );
         }
 
     private:

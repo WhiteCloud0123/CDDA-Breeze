@@ -19,6 +19,7 @@
 #include "json.h"
 #include "memory_fast.h"
 #include "omdata.h"
+#include "overmap.h"
 #include <optional>
 #include "overmap_types.h"
 #include "type_id.h"
@@ -39,6 +40,7 @@ struct radio_tower;
 struct regional_settings;
 
 struct overmap_path_params {
+    int highway_cost = -1;
     int road_cost = -1;
     int field_cost = -1;
     int dirt_road_cost = -1;
@@ -152,6 +154,8 @@ class overmapbuffer
 {
     public:
         overmapbuffer();
+
+        highway_intersection_grid highway_intersections;
 
         static cata_path terrain_filename( const point_abs_om & );
         static cata_path player_filename( const point_abs_om & );

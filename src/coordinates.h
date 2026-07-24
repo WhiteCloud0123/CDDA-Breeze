@@ -163,6 +163,19 @@ class coord_point
             return raw_.to_string_writable();
         }
 
+        static const coord_point invalid;
+        static const coord_point zero;
+        constexpr coord_point abs() const {
+            return coord_point( raw_.abs() );
+        }
+        constexpr bool is_invalid() const {
+            if constexpr( Point::dimension == 2 ) {
+                return raw_ == point_min;
+            } else {
+                return raw_ == tripoint_min;
+            }
+        }
+
         void serialize( JsonOut &jsout ) const {
             raw().serialize( jsout );
         }
@@ -226,6 +239,24 @@ class coord_point
     private:
         Point raw_;
 };
+
+template<typename Point, origin Origin, scale Scale>
+const coord_point<Point, Origin, Scale> coord_point<Point, Origin, Scale>::invalid = []() {
+    if constexpr( Point::dimension == 2 ) {
+        return coord_point<Point, Origin, Scale>( point_min );
+    } else {
+        return coord_point<Point, Origin, Scale>( tripoint_min );
+    }
+}();
+
+template<typename Point, origin Origin, scale Scale>
+const coord_point<Point, Origin, Scale> coord_point<Point, Origin, Scale>::zero = []() {
+    if constexpr( Point::dimension == 2 ) {
+        return coord_point<Point, Origin, Scale>( point_zero );
+    } else {
+        return coord_point<Point, Origin, Scale>( tripoint_zero );
+    }
+}();
 
 template<typename Point, origin Origin, scale Scale>
 constexpr inline bool operator==( const coord_point<Point, Origin, Scale> &l,
