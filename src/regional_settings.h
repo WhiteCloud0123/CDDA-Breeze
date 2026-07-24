@@ -33,6 +33,9 @@ class building_bin
         std::vector<std::string> all;
         void clear();
         void finalize();
+        const std::map<overmap_special_id, int> &get_all_buildings() const {
+            return unfinalized_buildings;
+        }
 };
 
 struct city_settings {
@@ -223,6 +226,35 @@ struct overmap_ravine_settings {
     overmap_ravine_settings() = default;
 };
 
+struct overmap_highway_settings {
+    int width_of_segments = 2;
+    double straightness_chance = 0.6;
+    oter_type_str_id reserved_terrain_id;
+    oter_type_str_id reserved_terrain_water_id;
+    overmap_special_id segment_flat;
+    overmap_special_id segment_ramp;
+    overmap_special_id segment_road_bridge;
+    overmap_special_id segment_bridge;
+    overmap_special_id segment_bridge_supports;
+    overmap_special_id segment_overpass;
+    overmap_special_id clockwise_slant;
+    overmap_special_id counterclockwise_slant;
+    overmap_special_id fallback_onramp;
+    overmap_special_id fallback_bend;
+    overmap_special_id fallback_three_way_intersection;
+    overmap_special_id fallback_four_way_intersection;
+    oter_type_str_id fallback_supports;
+    building_bin four_way_intersections;
+    building_bin three_way_intersections;
+    building_bin bends;
+    building_bin interchanges;
+    building_bin road_connections;
+    int longest_slant_length = 0;
+    int longest_bend_length = 0;
+    int HIGHWAY_MAX_DEVIANCE = 0;
+    void finalize();
+};
+
 struct map_extras {
     unsigned int chance;
     weighted_int_list<map_extra_id> values;
@@ -265,6 +297,7 @@ struct regional_settings {
     overmap_forest_settings overmap_forest;
     overmap_lake_settings overmap_lake;
     overmap_ocean_settings overmap_ocean;
+    overmap_highway_settings overmap_highway;
     overmap_ravine_settings overmap_ravine;
     region_terrain_and_furniture_settings region_terrain_and_furniture;
 

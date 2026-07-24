@@ -274,6 +274,7 @@ void overmapbuffer::clear()
     overmaps.clear();
     known_non_existing.clear();
     placed_unique_specials.clear();
+    highway_intersections.clear();
     last_requested_overmap = nullptr;
 }
 
@@ -1862,4 +1863,99 @@ bool overmapbuffer::place_special( const overmap_special_id &special_id,
 
     // If we got this far, we've failed to make the placement.
     return false;
+}
+
+
+void overmap_feature_grid::clear()
+{
+    grid_origin = point_abs_om::invalid;
+    feature_grid.clear();
+}
+
+void overmap_feature_grid::set_grid_origin( const point_abs_om &p )
+{
+    grid_origin = p;
+}
+
+point_abs_om overmap_feature_grid::get_grid_origin() const
+{
+    return grid_origin;
+}
+
+std::vector<overmap_feature_grid_node>
+overmap_feature_grid::find_grid_adjacent_features( const point_abs_om &generated_om_pos )
+{
+    std::vector<overmap_feature_grid_node> adjacent_features;
+    for( const point &cardinal : four_adjacent_offsets ) {
+        const point_abs_om p( generated_om_pos.x() + cardinal.x * column_separation,
+                              generated_om_pos.y() + cardinal.y * row_separation );
+        if( !feature_point_exists( p ) ) {
+            generate_feature_point( p );
+        }
+        adjacent_features.emplace_back( get_feature_point( p ) );
+    }
+    overmap_feature_grid_node this_feature = get_feature_point( generated_om_pos );
+    for( int i = 0; i < static_cast<int>( four_adjacent_offsets.size() ); i++ ) {
+        if( this_feature.get_adjacent_pos( i ).is_invalid() ) {
+            this_feature.set_adjacent_pos( adjacent_features[i].get_grid_pos(), i );
+        }
+    }
+    set_feature_point( generated_om_pos, this_feature );
+    return adjacent_features;
+}
+
+void overmap_feature_grid::serialize( JsonOut &out ) const
+{
+    out.start_object();
+    out.member( "overmap_highway_offset", grid_origin );
+    out.member( "overmap_highway_intersections", feature_grid );
+    out.end_object();
+}
+
+void overmap_feature_grid::deserialize( const JsonObject &obj )
+{
+    obj.read( "overmap_highway_offset", grid_origin );
+    obj.read( "overmap_highway_intersections", feature_grid );
+}
+
+bool overmap_feature_grid::feature_point_exists( const point_abs_om &intersection_om ) const
+{
+    return feature_grid.find( intersection_om.to_string_writable() ) != feature_grid.end();
+}
+
+void overmap_feature_grid::generate_feature_point( const point_abs_om &generated_om_pos )
+{
+    if( !feature_point_exists( generated_om_pos ) ) {
+        overmap_feature_grid_node new_intersection( generated_om_pos );
+        generate_offset( new_intersection );
+        feature_grid.insert( { generated_om_pos.to_string_writable(), new_intersection } );
+    }
+}
+
+std::vector<point_abs_om> overmap_feature_grid::find_feature_point_bounds(
+    const point_abs_om &generated_om_pos )
+{
+    const point_abs_om center = grid_origin;
+    const point_rel_om diff = generated_om_pos - center;
+    const double col_diff = diff.x() / static_cast<double>( column_separation );
+    const double row_diff = diff.y() / static_cast<double>( row_separation );
+    const int colsign = std::copysign( 1.0, col_diff );
+    const int rowsign = std::copysign( 1.0, row_diff );
+    const bool col_aligned = diff.x() % column_separation == 0;
+    const bool row_aligned = diff.y() % row_separation == 0;
+    const int col = static_cast<int>( col_diff ) + ( colsign == -1 && !col_aligned ? -1 : 0 );
+    const int row = static_cast<int>( row_diff ) + ( rowsign == -1 && !row_aligned ? -1 : 0 );
+    const point_abs_om top_left( center.x() + col * column_separation,
+                                 center.y() + row * row_separation );
+    std::vector<point_abs_om> bounds = {
+        top_left + point_rel_om( column_separation, row_separation ),
+        top_left + point_rel_om( 0, row_separation ),
+        top_left + point_rel_om( column_separation, 0 ), top_left
+    };
+    for( const point_abs_om &p : bounds ) {
+        if( !feature_point_exists( p ) ) {
+            generate_feature_point( p );
+        }
+    }
+    return bounds;
 }

@@ -424,6 +424,71 @@ static void load_overmap_ocean_settings(const JsonObject& jo,
 
 
 
+static void load_overmap_highway_settings( const JsonObject &jo,
+        overmap_highway_settings &settings, const bool strict, const bool overlay )
+{
+    if( !jo.has_object( "overmap_highway_settings" ) ) {
+        if( strict ) {
+            jo.throw_error( "\"overmap_highway_settings\": { … } required for default" );
+        }
+        return;
+    }
+    JsonObject hjo = jo.get_object( "overmap_highway_settings" );
+    read_and_set_or_throw<int>( hjo, "width_of_segments", settings.width_of_segments, !overlay );
+    read_and_set_or_throw<double>( hjo, "straightness_chance", settings.straightness_chance,
+                                   !overlay );
+    read_and_set_or_throw<oter_type_str_id>( hjo, "reserved_terrain_id",
+            settings.reserved_terrain_id, !overlay );
+    read_and_set_or_throw<oter_type_str_id>( hjo, "reserved_terrain_water_id",
+            settings.reserved_terrain_water_id, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "segment_ramp_special", settings.segment_ramp,
+            !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "fallback_onramp_special",
+            settings.fallback_onramp, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "fallback_four_way_intersection_special",
+            settings.fallback_four_way_intersection, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "fallback_three_way_intersection_special",
+            settings.fallback_three_way_intersection, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "fallback_bend_special",
+            settings.fallback_bend, !overlay );
+    read_and_set_or_throw<oter_type_str_id>( hjo, "fallback_supports", settings.fallback_supports,
+            !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "clockwise_slant_special",
+            settings.clockwise_slant, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "counterclockwise_slant_special",
+            settings.counterclockwise_slant, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "segment_flat_special", settings.segment_flat,
+            !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "segment_road_bridge_special",
+            settings.segment_road_bridge, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "segment_bridge_special", settings.segment_bridge,
+            !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "segment_bridge_supports_special",
+            settings.segment_bridge_supports, !overlay );
+    read_and_set_or_throw<overmap_special_id>( hjo, "segment_overpass_special",
+            settings.segment_overpass, !overlay );
+
+    auto load_bin = [&hjo, overlay]( const char *name, building_bin &bin ) {
+        if( !hjo.has_array( name ) ) {
+            if( !overlay ) {
+                hjo.throw_error( std::string( name ) + " required" );
+            }
+            return;
+        }
+        if( overlay ) {
+            bin.clear();
+        }
+        for( JsonArray entry : hjo.get_array( name ) ) {
+            bin.add( overmap_special_id( entry.get_string( 0 ) ), entry.get_int( 1 ) );
+        }
+    };
+    load_bin( "four_way_intersections", settings.four_way_intersections );
+    load_bin( "three_way_intersections", settings.three_way_intersections );
+    load_bin( "bends", settings.bends );
+    load_bin( "interchanges", settings.interchanges );
+    load_bin( "road_connections", settings.road_connections );
+}
+
 static void load_region_terrain_and_furniture_settings( const JsonObject &jo,
         region_terrain_and_furniture_settings &region_terrain_and_furniture_settings,
         const bool strict, const bool overlay )
@@ -638,6 +703,8 @@ void load_region_settings( const JsonObject &jo )
 
     load_overmap_ocean_settings(jo, new_region.overmap_ocean, strict, false);
 
+    load_overmap_highway_settings( jo, new_region.overmap_highway, strict, false );
+
     load_overmap_ravine_settings( jo, new_region.overmap_ravine, strict, false );
 
     load_region_terrain_and_furniture_settings( jo, new_region.region_terrain_and_furniture, strict,
@@ -830,6 +897,8 @@ void apply_region_overlay( const JsonObject &jo, regional_settings &region )
     load_overmap_forest_settings( jo, region.overmap_forest, false, true );
 
     load_overmap_lake_settings( jo, region.overmap_lake, false, true );
+
+    load_overmap_highway_settings( jo, region.overmap_highway, false, true );
 
     load_overmap_ravine_settings( jo, region.overmap_ravine, false, true );
 
@@ -1138,9 +1207,36 @@ void regional_settings::finalize()
         forest_composition.finalize();
         forest_trail.finalize();
         overmap_lake.finalize();
+        overmap_highway.finalize();
         region_terrain_and_furniture.finalize();
         get_options().add_value( "DEFAULT_REGION", id, no_translation( id ) );
     }
+}
+
+void overmap_highway_settings::finalize()
+{
+    auto find_longest_special = []( const building_bin &bin ) {
+        int longest_length = 0;
+        for( const auto &weighted_pair : bin.get_all_buildings() ) {
+            const overmap_special_id &special = weighted_pair.first;
+            if( special.is_valid() ) {
+                longest_length = std::max( longest_length, special->longest_side() );
+            }
+        }
+        return longest_length;
+    };
+
+    four_way_intersections.finalize();
+    three_way_intersections.finalize();
+    bends.finalize();
+    road_connections.finalize();
+    interchanges.finalize();
+    longest_bend_length = find_longest_special( bends );
+    if( clockwise_slant.is_valid() && counterclockwise_slant.is_valid() ) {
+        longest_slant_length = std::max( clockwise_slant->longest_side(),
+                                        counterclockwise_slant->longest_side() );
+    }
+    HIGHWAY_MAX_DEVIANCE = ( longest_bend_length + 1 ) * 2;
 }
 
 void city_settings::finalize()

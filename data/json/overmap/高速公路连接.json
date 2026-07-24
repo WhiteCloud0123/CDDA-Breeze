@@ -1,0 +1,17 @@
+[
+  {
+    "type": "overmap_connection",
+    "id": "highway_road_connection",
+    "//": "高速公路备用匝道向外连接普通道路，已有道路只能沿原方向接入，避免连接线自交。",
+    "subtypes": [
+      { "terrain": "road", "locations": [ "road" ], "basic_cost": 0, "flags": [ "ORTHOGONAL" ] },
+      { "terrain": "road", "locations": [ "field" ], "basic_cost": 5 },
+      { "terrain": "road", "locations": [ "forest_without_trail" ], "basic_cost": 20 },
+      { "terrain": "road", "locations": [ "forest_trail" ], "basic_cost": 25 },
+      { "terrain": "road", "locations": [ "swamp" ], "basic_cost": 40 },
+      { "terrain": "road_nesw_manhole", "locations": [] },
+      { "terrain": "bridge", "locations": [ "water" ], "basic_cost": 120, "flags": [ "ORTHOGONAL" ] },
+      { "terrain": "bridgehead_ground", "locations": [ "water" ], "basic_cost": 120, "flags": [ "ORTHOGONAL" ] }
+    ]
+  }
+]
