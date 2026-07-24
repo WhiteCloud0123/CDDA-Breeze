@@ -436,21 +436,21 @@
   {
     "type": "EXTERNAL_OPTION",
     "name": "HIGHWAY_GRID_ROW_SEPARATION",
-    "//": "东西向高速公路之间相隔的大地图区块数。",
+    "info": "东西向高速公路之间相隔的大地图区块数。",
     "stype": "int",
     "value": 8
   },
   {
     "type": "EXTERNAL_OPTION",
     "name": "HIGHWAY_GRID_COLUMN_SEPARATION",
-    "//": "南北向高速公路之间相隔的大地图区块数。",
+    "info": "南北向高速公路之间相隔的大地图区块数。",
     "stype": "int",
     "value": 10
   },
   {
     "type": "EXTERNAL_OPTION",
     "name": "HIGHWAY_GRID_VARIANCE",
-    "//": "高速公路交汇点偏离规则网格位置的最大大地图区块数。",
+    "info": "高速公路交汇点偏离规则网格位置的最大大地图区块数。",
     "stype": "int",
     "value": 2
   }
