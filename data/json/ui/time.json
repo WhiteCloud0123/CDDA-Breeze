@@ -31,6 +31,19 @@
     "flags": [ "W_LABEL_NONE" ]
   },
   {
+    "id": "time_desc_short_label",
+    "type": "widget",
+    "label": "Time",
+    "style": "text",
+    "var": "time_text_short"
+  },
+  {
+    "id": "time_desc_short_no_label",
+    "type": "widget",
+    "copy-from": "time_desc_short_label",
+    "flags": [ "W_LABEL_NONE" ]
+  },
+  {
     "id": "sundial_label_text",
     "type": "widget",
     "style": "text",

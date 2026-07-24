@@ -55,7 +55,8 @@ enum class widget_var : int {
     carry_weight_text,   // Weight carried, relative to capacity, in %
     compass_text,   // Compass / visible threats by cardinal direction
     compass_legend_text, // Names of visible creatures that appear on the compass
-    date_text,      // Current date, in terms of day within season
+    date_text,      // Current date, including weekday when available
+    date_text_short, // Compact current date without weekday
     env_temp_text,  // Environment temperature, if character has thermometer
     mood_text,      // Mood as a text emote, color string
     move_count_mode_text, // Movement counter and mode letter like "50(R)", color string
@@ -71,6 +72,7 @@ enum class widget_var : int {
     sundial_text,   // Sundial representing the time of day
     sundial_time_text,   // Current time - exact if character has a watch, sundial otherwise
     time_text,      // Current time - exact if character has a watch, approximate otherwise
+    time_text_short, // Compact current time without AM/PM, retaining seconds when exact
     veh_azimuth_text, // Azimuth or heading in degrees, string
     veh_cruise_text, // Current/target cruising speed in vehicle, color string
     veh_fuel_text,  // Current/total fuel for active vehicle engine, color string
