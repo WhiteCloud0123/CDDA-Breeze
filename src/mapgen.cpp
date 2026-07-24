@@ -4890,7 +4890,7 @@ void mapgen_function_json::generate( mapgendata &md )
         // submap generation and later leaves an uninitialized map grid.  Treat a
         // null recorded predecessor exactly like a missing predecessor and use
         // the JSON fallback instead.
-        if( md.has_predecessor() && md.last_predecessor() != ot_null ) {
+        if( md.has_predecessor() && !md.last_predecessor().id().is_null() ) {
             mapgendata predecessor_md( md, md.last_predecessor() );
             predecessor_md.pop_last_predecessor();
             do_predecessor_mapgen( predecessor_md );
