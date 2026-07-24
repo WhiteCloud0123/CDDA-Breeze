@@ -11,5 +11,18 @@
     "type": "widget",
     "copy-from": "date_desc_label",
     "flags": [ "W_LABEL_NONE" ]
+  },
+  {
+    "id": "date_desc_short_label",
+    "type": "widget",
+    "label": "Date",
+    "style": "text",
+    "var": "date_text_short"
+  },
+  {
+    "id": "date_desc_short_no_label",
+    "type": "widget",
+    "copy-from": "date_desc_short_label",
+    "flags": [ "W_LABEL_NONE" ]
   }
 ]

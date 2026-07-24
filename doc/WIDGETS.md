@@ -1058,7 +1058,8 @@ Some vars refer to text descriptors. These must use style "text". Examples:
 | `bp_outer_armor_text`    | Item name and damage bars of armor/clothing worn on the given "bodypart"
 | `compass_legend_text`    | (_multiline_) A list of creatures visible by the player, corresponding to compass symbols
 | `compass_text`           | A compass direction (ex: NE), displaying visible creatures in that direction
-| `date_text`              | Current day within season, like "Summer, day 15"
+| `date_text`              | Current sidebar date; includes the weekday unless the player enables "Hide weekday" in sidebar options
+| `date_text_short`        | Compatibility alias for `date_text`; it follows the same sidebar weekday setting
 | `env_temp_text`          | Environment temperature, if thermometer is available
 | `mood_text`              | Avatar mood represented as an emoticon face
 | `move_mode_letter`       | Movement mode - "W": walking, "R": running, "C": crouching, "P": prone
@@ -1073,6 +1074,7 @@ Some vars refer to text descriptors. These must use style "text". Examples:
 | `style_text`             | Name of current martial arts style
 | `sundial_text`           | Current position of the Sun/Moon in the sky
 | `time_text`              | Current time - exact if clock is available, approximate otherwise
+| `time_text_short`        | Compact current time without AM/PM and with seconds when exact; same approximate fallback as `time_text`
 | `veh_azimuth_text`       | Heading of vehicle in degrees
 | `veh_cruise_text`        | Target and actual cruising velocity, positive or negative
 | `veh_fuel_text`          | Percentage of fuel remaining for current vehicle engine
