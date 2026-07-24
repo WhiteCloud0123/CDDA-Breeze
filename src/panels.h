@@ -138,6 +138,7 @@ class panel_manager
         widget *get_current_sidebar();
         widget *get_sidebar( const std::string &name );
         std::string get_current_layout_id() const;
+        bool get_hide_weekday() const;
         int get_width_right() const;
         int get_width_left() const;
 
@@ -157,6 +158,7 @@ class panel_manager
         int width_right = 0; // NOLINT(cata-serialize)
         int width_left = 0; // NOLINT(cata-serialize)
         std::string current_layout_id;
+        bool hide_weekday = false;
         std::map<std::string, panel_layout> layouts;
 
         friend widget;

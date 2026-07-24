@@ -8,6 +8,7 @@
 #include "json.h"
 #include "output.h"
 #include "overmapbuffer.h"
+#include "panels.h"
 
 const static flag_id json_flag_W_DISABLED_BY_DEFAULT( "W_DISABLED_BY_DEFAULT" );
 const static flag_id json_flag_W_DISABLED_WHEN_EMPTY( "W_DISABLED_WHEN_EMPTY" );
@@ -1115,10 +1116,9 @@ std::string widget::color_text_function_string( const avatar &ava, unsigned int 
             desc = display::carry_weight_text_color( ava );
             break;
         case widget_var::date_text:
-            desc.first = display::date_string();
-            break;
         case widget_var::date_text_short:
-            desc.first = display::date_string_short();
+            desc.first = panel_manager::get_manager().get_hide_weekday() ?
+                         display::date_string_short() : display::date_string();
             break;
         case widget_var::env_temp_text:
             desc.first = display::get_temp( ava );

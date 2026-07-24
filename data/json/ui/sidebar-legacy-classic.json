@@ -162,7 +162,7 @@
     "label": "Date/Time",
     "style": "layout",
     "arrange": "columns",
-    "widgets": [ "date_desc_short_label", "time_desc_short_label" ],
+    "widgets": [ "date_desc_label", "time_desc_short_label" ],
     "flags": [ "W_LABEL_NONE" ]
   },
   {

@@ -1058,8 +1058,8 @@ Some vars refer to text descriptors. These must use style "text". Examples:
 | `bp_outer_armor_text`    | Item name and damage bars of armor/clothing worn on the given "bodypart"
 | `compass_legend_text`    | (_multiline_) A list of creatures visible by the player, corresponding to compass symbols
 | `compass_text`           | A compass direction (ex: NE), displaying visible creatures in that direction
-| `date_text`              | Current date, including weekday when calendar months are enabled
-| `date_text_short`        | Compact current date without weekday, intended for narrow sidebars
+| `date_text`              | Current sidebar date; includes the weekday unless the player enables "Hide weekday" in sidebar options
+| `date_text_short`        | Compatibility alias for `date_text`; it follows the same sidebar weekday setting
 | `env_temp_text`          | Environment temperature, if thermometer is available
 | `mood_text`              | Avatar mood represented as an emoticon face
 | `move_mode_letter`       | Movement mode - "W": walking, "R": running, "C": crouching, "P": prone
