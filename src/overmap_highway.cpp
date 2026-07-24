@@ -773,11 +773,12 @@ std::vector<Highway_path> overmap::place_highways(
     }
 
     highway_grid.set_options();
-    // guaranteed intersection close to (but not at) avatar start location
+    // Anchor the global grid to the first overmap actually generated.  CDDA normally starts
+    // near 0,0, but Breeze scenarios and pregenerated starts are not required to do so.
+    // The realized intersection is still offset by HIGHWAY_GRID_VARIANCE, so this does not
+    // force a cloverleaf directly onto the player's starting overmap.
     if( highway_grid.get_grid_origin().is_invalid() ) {
-        //this only happens exactly once, upon generation of the first overmap
-        //TODO: there should be an intersection around the avatar's start location, not 0,0
-        highway_grid.set_grid_origin( point_abs_om::zero );
+        highway_grid.set_grid_origin( pos() );
         highway_grid.generate_feature_point( highway_grid.get_grid_origin() );
     }
 

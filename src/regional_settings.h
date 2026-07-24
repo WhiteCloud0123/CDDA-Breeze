@@ -227,6 +227,8 @@ struct overmap_ravine_settings {
 };
 
 struct overmap_highway_settings {
+    // Regions that do not define overmap_highway_settings must not try to finalize or generate highways.
+    bool enabled = false;
     int width_of_segments = 2;
     double straightness_chance = 0.6;
     oter_type_str_id reserved_terrain_id;

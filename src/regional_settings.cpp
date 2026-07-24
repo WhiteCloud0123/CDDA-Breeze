@@ -434,6 +434,16 @@ static void load_overmap_highway_settings( const JsonObject &jo,
         return;
     }
     JsonObject hjo = jo.get_object( "overmap_highway_settings" );
+    // The old regional-settings framework stores this structure by value.  Without an
+    // explicit presence bit, auxiliary regions that omit highway settings would still
+    // finalize five empty building bins and later try to generate with invalid IDs.
+    // Treat the object as the opt-in marker, with an explicit escape hatch for regions
+    // such as test maps or non-Earth worlds.
+    settings.enabled = true;
+    hjo.read( "enabled", settings.enabled );
+    if( !settings.enabled ) {
+        return;
+    }
     read_and_set_or_throw<int>( hjo, "width_of_segments", settings.width_of_segments, !overlay );
     read_and_set_or_throw<double>( hjo, "straightness_chance", settings.straightness_chance,
                                    !overlay );
@@ -1215,6 +1225,10 @@ void regional_settings::finalize()
 
 void overmap_highway_settings::finalize()
 {
+    if( !enabled ) {
+        return;
+    }
+
     auto find_longest_special = []( const building_bin &bin ) {
         int longest_length = 0;
         for( const auto &weighted_pair : bin.get_all_buildings() ) {

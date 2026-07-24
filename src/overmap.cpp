@@ -3471,13 +3471,19 @@ void overmap::generate( const overmap *north, const overmap *east,
     // Polish rivers before highways so bridge predecessors retain the final river terrain.
     polish_river();
     const std::vector<const overmap *> neighbor_overmaps = { north, east, south, west };
-    std::vector<Highway_path> highway_paths = place_highways( neighbor_overmaps );
+    const bool highways_enabled = settings->overmap_highway.enabled;
+    std::vector<Highway_path> highway_paths;
+    if( highways_enabled ) {
+        highway_paths = place_highways( neighbor_overmaps );
+    }
 
     if( get_option<bool>( "OVERMAP_PLACE_CITIES" ) ) {
         place_cities();
-        place_highway_interchanges( highway_paths );
+        if( highways_enabled ) {
+            place_highway_interchanges( highway_paths );
+        }
         build_cities();
-    } else {
+    } else if( highways_enabled ) {
         place_highway_interchanges( highway_paths );
     }
     if( get_option<bool>( "OVERMAP_PLACE_FOREST_TRAILS" ) ) {
@@ -3493,7 +3499,9 @@ void overmap::generate( const overmap *north, const overmap *east,
         place_forest_trailheads();
     }
 
-    finalize_highways( highway_paths );
+    if( highways_enabled ) {
+        finalize_highways( highway_paths );
+    }
     polish_river();
 
     // TODO: there is no reason we can't generate the sublevels in one pass

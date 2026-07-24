@@ -339,6 +339,7 @@
       "ocean_start_south": 0
     },
     "overmap_highway_settings": {
+      "enabled": true,
       "width_of_segments": 2,
       "straightness_chance": 0.6,
       "reserved_terrain_id": "hw_reserved",
