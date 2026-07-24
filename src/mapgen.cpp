@@ -4884,7 +4884,13 @@ void mapgen_function_json::generate( mapgendata &md )
         mapgendata predecessor_md( md, predecessor_mapgen );
         do_predecessor_mapgen( predecessor_md );
     } else if( expects_predecessor() ) {
-        if( md.has_predecessor() ) {
+        // Some multi-z overmap specials can record a null predecessor when a
+        // raised highway piece replaces an as-yet unmaterialized OMT.  Passing
+        // that null terrain into get_mapgen_id() yields an empty key, aborts the
+        // submap generation and later leaves an uninitialized map grid.  Treat a
+        // null recorded predecessor exactly like a missing predecessor and use
+        // the JSON fallback instead.
+        if( md.has_predecessor() && md.last_predecessor() != ot_null ) {
             mapgendata predecessor_md( md, md.last_predecessor() );
             predecessor_md.pop_last_predecessor();
             do_predecessor_mapgen( predecessor_md );
