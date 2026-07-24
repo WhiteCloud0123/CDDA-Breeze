@@ -533,6 +533,10 @@ class overmap
             tripoint_om_omt::invalid, tripoint_om_omt::invalid
         };
 
+        // Ordinary-road OMTs that crossed a reserved highway while this overmap was generated.
+        // This is transient generation state: finalize_highways() consumes it before saving.
+        std::unordered_set<tripoint_om_omt> highway_road_crossings; // NOLINT(cata-serialize)
+
         std::array<map_layer, OVERMAP_LAYERS> layer;
         std::unordered_map<tripoint_abs_omt, scent_trace> scents;
 

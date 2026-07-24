@@ -47,6 +47,8 @@ static const oter_type_str_id oter_type_bridge( "bridge" );
 static const oter_type_str_id oter_type_bridge_road( "bridge_road" );
 static const oter_type_str_id oter_type_bridgehead_ground( "bridgehead_ground" );
 static const oter_type_str_id oter_type_bridgehead_ramp( "bridgehead_ramp" );
+static const oter_type_str_id oter_type_highway_road( "hw_road" );
+static const oter_type_str_id oter_type_highway_road_bridge( "hw_road_bridge" );
 static const oter_type_str_id oter_type_deep_rock( "deep_rock" );
 static const oter_type_str_id oter_type_empty_rock( "empty_rock" );
 static const oter_type_str_id oter_type_evac_center_1( "evac_center_1" );
@@ -1012,10 +1014,71 @@ static int get_terrain_cost( const tripoint_abs_omt &omt_pos, const overmap_path
 static bool is_ramp( const tripoint_abs_omt &omt_pos )
 {
     const oter_id &oter = overmap_buffer.ter_existing( omt_pos );
-    return ( oter->get_type_id() == oter_type_bridgehead_ground ) ||
-           ( oter->get_type_id() == oter_type_bridgehead_ramp ) ||
-           oter->has_flag( oter_flags::known_up ) ||
-           oter->has_flag( oter_flags::known_down );
+    if( ( oter->get_type_id() == oter_type_bridgehead_ground ) ||
+        ( oter->get_type_id() == oter_type_bridgehead_ramp ) ||
+        oter->has_flag( oter_flags::known_up ) ||
+        oter->has_flag( oter_flags::known_down ) ) {
+        return true;
+    }
+
+    // A highway road-overpass uses an ordinary highway OMT at ground level and
+    // hw_road_bridge directly above it.  Its actual mapgen contains the ramps,
+    // so overmap routing must also permit the matching z transition.
+    const tripoint_abs_omt above = omt_pos + tripoint_rel_omt( 0, 0, 1 );
+    const tripoint_abs_omt below = omt_pos + tripoint_rel_omt( 0, 0, -1 );
+    if( oter->is_highway() && oter->is_road() ) {
+        const oter_id &above_oter = overmap_buffer.ter_existing( above );
+        if( above_oter->get_type_id() == oter_type_highway_road_bridge ) {
+            return true;
+        }
+    }
+    if( oter->get_type_id() == oter_type_highway_road_bridge ) {
+        const oter_id &below_oter = overmap_buffer.ter_existing( below );
+        return below_oter->is_highway() && below_oter->is_road();
+    }
+    return false;
+}
+
+static bool overmap_transition_allowed( const tripoint_abs_omt &from,
+                                        const tripoint_abs_omt &to )
+{
+    if( from.z() != to.z() ) {
+        return true;
+    }
+
+    const oter_id &from_oter = overmap_buffer.ter_existing( from );
+    const oter_id &to_oter = overmap_buffer.ter_existing( to );
+    const auto simple_highway_lane = []( const oter_id & oter ) {
+        return oter->get_type_id() == oter_type_highway_road && oter->is_rotatable();
+    };
+
+    if( !simple_highway_lane( from_oter ) || !simple_highway_lane( to_oter ) ) {
+        return true;
+    }
+
+    const tripoint_rel_omt delta = to - from;
+    om_direction::type move_dir = om_direction::type::invalid;
+    if( delta.x() > 0 ) {
+        move_dir = om_direction::type::east;
+    } else if( delta.x() < 0 ) {
+        move_dir = om_direction::type::west;
+    } else if( delta.y() > 0 ) {
+        move_dir = om_direction::type::south;
+    } else if( delta.y() < 0 ) {
+        move_dir = om_direction::type::north;
+    }
+    if( move_dir == om_direction::type::invalid ) {
+        return true;
+    }
+
+    // Two side-by-side highway OMTs with parallel road directions are separated
+    // by a median barrier.  Do not let the overmap route jump laterally between
+    // them.  When the directions differ we are at a legitimate highway bend and
+    // the transition must remain available.
+    if( !om_direction::are_parallel( from_oter->get_dir(), to_oter->get_dir() ) ) {
+        return true;
+    }
+    return om_direction::are_parallel( from_oter->get_dir(), move_dir );
 }
 
 std::vector<tripoint_abs_omt> overmapbuffer::get_travel_path(
@@ -1035,7 +1098,7 @@ std::vector<tripoint_abs_omt> overmapbuffer::get_travel_path(
 
     constexpr int radius = 4 * OMAPX; // radius of search in OMTs = 4 overmaps
     const pf::simple_path<tripoint_abs_omt> path = pf::find_overmap_path( src, dest, radius, estimate,
-            g->display_om_pathfinding_progress );
+            g->display_om_pathfinding_progress, std::nullopt, overmap_transition_allowed );
     return path.points;
 }
 

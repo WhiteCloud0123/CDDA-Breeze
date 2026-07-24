@@ -989,6 +989,11 @@ void overmap::finalize_highways( std::vector<Highway_path> &paths )
             const std::vector<tripoint_om_omt> &segment_points = segment.first;
             const om_direction::type across = om_direction::turn_right( segment.second );
 
+            const bool recorded_road_crossing = std::any_of(
+                    segment_points.begin(), segment_points.end(), [this]( const tripoint_om_omt &p ) {
+                return highway_road_crossings.find( p ) != highway_road_crossings.end();
+            } );
+
             const bool ordinary_road_inside = std::any_of(
                     segment_points.begin(), segment_points.end(), [this]( const tripoint_om_omt &p ) {
                 const oter_id &oter = ter( p );
@@ -1003,7 +1008,7 @@ void overmap::finalize_highways( std::vector<Highway_path> &paths )
                 road_connects_toward( first_approach, across ) &&
                 road_connects_toward( second_approach, om_direction::opposite( across ) );
 
-            if( ordinary_road_inside || facing_road_approaches ) {
+            if( recorded_road_crossing || ordinary_road_inside || facing_road_approaches ) {
                 node.placed_special = segment_road_bridge;
             }
         }
@@ -1031,6 +1036,7 @@ void overmap::finalize_highways( std::vector<Highway_path> &paths )
             }
         }
     }
+    highway_road_crossings.clear();
 }
 
 std::optional<std::bitset<HIGHWAY_MAX_CONNECTIONS>> overmap::is_highway_overmap() const

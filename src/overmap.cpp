@@ -3473,6 +3473,7 @@ void overmap::generate( const overmap *north, const overmap *east,
     const std::vector<const overmap *> neighbor_overmaps = { north, east, south, west };
     const bool highways_enabled = settings->overmap_highway.enabled;
     std::vector<Highway_path> highway_paths;
+    highway_road_crossings.clear();
     if( highways_enabled ) {
         highway_paths = place_highways( neighbor_overmaps );
     }
@@ -6070,6 +6071,13 @@ void overmap::build_connection(
         const oter_id &ter_id = ter( pos );
         const om_direction::type new_dir = node.dir;
         const overmap_connection::subtype *subtype = connection.pick_subtype_for( ter_id );
+
+        if( subtype && subtype->is_perpendicular_crossing() && ter_id->is_highway_reserved() ) {
+            // Remember the exact ordinary-road crossing before build_connection replaces the
+            // reserved highway terrain.  Looking for a road after all specials are placed is
+            // unreliable and was the source of frequent unbridged, truncated roads.
+            highway_road_crossings.insert( pos );
+        }
 
         if( !subtype ) {
             debugmsg( "No suitable subtype of connection \"%s\" found for \"%s\".", connection.id.c_str(),
