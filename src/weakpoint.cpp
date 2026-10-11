@@ -9,6 +9,7 @@
 #include "calendar.h"
 #include "character.h"
 #include "creature.h"
+#include "d20_roll.h"
 #include "damage.h"
 #include "debug.h"
 #include "effect_source.h"
@@ -24,6 +25,9 @@
 static const limb_score_id limb_score_reaction( "reaction" );
 static const limb_score_id limb_score_vision( "vision" );
 
+static const proficiency_id proficiency_prof_bow_basic( "prof_bow_basic" );
+static const proficiency_id proficiency_prof_bow_expert( "prof_bow_expert" );
+static const proficiency_id proficiency_prof_bow_master( "prof_bow_master" );
 static const skill_id skill_cutting( "cutting" );
 static const skill_id skill_gun( "gun" );
 static const skill_id skill_melee( "melee" );
@@ -87,7 +91,20 @@ float Character::ranged_weakpoint_skill( const item &weapon ) const
 {
     float skill = ( get_skill_level( skill_gun ) + get_skill_level( weapon.gun_skill() ) ) / 2.0;
     float stat = ( get_dex() - 8 ) / 8.0 + ( get_per() - 8 ) / 8.0;
-    return ( skill + stat ) * get_limb_score( limb_score_vision );
+    // 弓术专长让弓弩更容易找到护甲缝隙，每项 +1
+    float prof = 0.0f;
+    if( weapon.is_bow_or_crossbow() ) {
+        if( has_proficiency( proficiency_prof_bow_basic ) ) {
+            prof += 1.0f;
+        }
+        if( has_proficiency( proficiency_prof_bow_expert ) ) {
+            prof += 1.0f;
+        }
+        if( has_proficiency( proficiency_prof_bow_master ) ) {
+            prof += 1.0f;
+        }
+    }
+    return ( skill + stat ) * get_limb_score( limb_score_vision ) + prof;
 }
 
 float Character::throw_weakpoint_skill() const
@@ -392,6 +409,22 @@ void weakpoint_attack::compute_wp_skill()
     }
     // Combine attacker skill and proficiency boni.
     wp_skill = attacker_skill + proficiency_skill;
+    // 优势与劣势同样影响弱点命中：优势 +2、劣势 −2。
+    // 仅对“能获得优势投骰”的攻击生效（玩家用弓弩射击或投掷），与 ranged.cpp 里 advantage_roll 的资格一致，
+    // 避免普通枪械、NPC 攻击或近战仅凭可见性白拿加成。
+    const bool advantage_eligible = chr_att != nullptr && chr_att->is_avatar() &&
+                                    type == attack_type::PROJECTILE &&
+                                    ( is_thrown ||
+                                      ( weapon != nullptr && weapon->is_bow_or_crossbow() ) );
+    if( advantage_eligible && target != nullptr ) {
+        const bool unseen = !target->sees( *chr_att );
+        const d20_roll_state roll_state = get_d20_roll_state( *chr_att, *target, unseen );
+        if( roll_state == d20_roll_state::advantage ) {
+            wp_skill += 2.0f;
+        } else if( roll_state == d20_roll_state::disadvantage ) {
+            wp_skill -= 2.0f;
+        }
+    }
 }
 
 weakpoint::weakpoint() : coverage_mult( 1.0f ), difficulty( -100.0f )

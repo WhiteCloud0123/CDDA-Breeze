@@ -164318,6 +164318,28 @@ msgid ""
 "weight, making it much easier to draw."
 msgstr "一把威力大的弓，带有偏心滑轮组和额外的弓弦，能够射出高速弓箭，力量普通的人就能够有效的使用它。当前滑轮组设置在低力度水平，很容易拉开。"
 
+#. ~ "menu_text" action message of gun "compound hunting bow"
+#. ~ "menu_text" action message of gun "compound hunting bow (low)"
+#: data/json/items/ranged/archery.json
+msgid "Tighten Limbs"
+msgstr "拉紧弓臂"
+
+#. ~ "msg" action message of gun "compound hunting bow"
+#. ~ "msg" action message of gun "compound hunting bow (low)"
+#: data/json/items/ranged/archery.json
+msgid "You tighten the limbs, increasing the strength of the bow."
+msgstr "你拉紧弓臂，增强了弓的强度。"
+
+#. ~ "menu_text" action message of gun "compound hunting bow (high)"
+#: data/json/items/ranged/archery.json
+msgid "Loosen Limbs"
+msgstr "放松弓臂"
+
+#. ~ "msg" action message of gun "compound hunting bow (high)"
+#: data/json/items/ranged/archery.json
+msgid "You loosen the limbs, decreasing the strength of the bow."
+msgstr "你放松弓臂，降低了弓的强度。"
+
 #. ~ Name of a gun
 #: data/json/items/ranged/archery.json
 msgid "composite bow (heavy)"
@@ -164383,6 +164405,26 @@ msgid ""
 "A modern fiberglass bow that has been taken down for storage.  For use by "
 "those of somewhat above-average strength.  Use it to assemble it into shape."
 msgstr "一把现代玻璃纤维反曲弓，被拆卸便于储存。在较为强壮的射手手中十分好用。使用它来组装成型。"
+
+#. ~ "menu_text" action message of gun "takedown recurve bow"
+#: data/json/items/ranged/archery.json
+msgid "Disassemble it"
+msgstr "拆解它"
+
+#. ~ "msg" action message of gun "takedown recurve bow"
+#: data/json/items/ranged/archery.json
+msgid "You disassemble your bow."
+msgstr "你拆解了你的弓。"
+
+#. ~ "menu_text" action message of gun "takedown recurve bow (folded)"
+#: data/json/items/ranged/archery.json
+msgid "Assemble it"
+msgstr "组装它"
+
+#. ~ "msg" action message of gun "takedown recurve bow (folded)"
+#: data/json/items/ranged/archery.json
+msgid "You assemble your bow."
+msgstr "你组装了你的弓。"
 
 #. ~ Firing mode of gun "takedown recurve bow (folded)"
 #: data/json/items/ranged/archery.json
@@ -278815,7 +278857,7 @@ msgstr "弓术基础"
 msgid ""
 "You have grasped some basic understanding on archery, and find handling bows"
 " easier."
-msgstr "你已经掌握了射箭的一些基本知识，这让操作弓箭变得更容易。"
+msgstr "你已经掌握了射箭的一些基本知识，这让操作弓箭变得更容易。\n\n“挽弓当挽强，用箭当用长。”"
 
 #. ~ Proficiency name
 #: data/json/proficiencies/wilderness.json
@@ -278828,7 +278870,7 @@ msgid ""
 "After significant practice, you have become an expert in the movements used "
 "in drawing and firing a bow, and have strengthened those muscles "
 "considerably."
-msgstr "经过大量的练习，你已经成为拉弓射箭的专家，并且大大锻炼了相关肌肉群。"
+msgstr "经过大量的练习，你已经成为拉弓射箭的专家，并且大大锻炼了相关肌肉群。\n\n“仰手接飞猱，俯身散马蹄。”"
 
 #. ~ Proficiency name
 #: data/json/proficiencies/wilderness.json
@@ -278841,7 +278883,7 @@ msgid ""
 "You have drawn and fired a bow so many times, you probably have a bit of a "
 "twist in your spine from it.  You've developed what would once have been a "
 "world class understanding of the pose and motion of effective archery."
-msgstr "你已经拉了无数次弓，射了无数次箭，已经形成了脊椎反射。你对如何有效射箭的姿势和动作有了世界级的了解。"
+msgstr "你已经拉了无数次弓，射了无数次箭，已经形成了脊椎反射。你对如何有效射箭的姿势和动作有了世界级的了解。\n\n“会挽雕弓如满月，西北望，射天狼。”"
 
 #. ~ Proficiency name
 #: data/json/proficiencies/woodworking.json
@@ -436887,6 +436929,10 @@ msgstr "射程："
 #: src/item.cpp:2644 src/item.cpp:3172
 msgid "Range Multiplier: "
 msgstr "射程加成："
+
+#: src/item.cpp:3991
+msgid "Armor multiplier: "
+msgstr "护甲倍率："
 
 #: src/item.cpp:2648 src/item.cpp:2849
 msgid "Dispersion: "

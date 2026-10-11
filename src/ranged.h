@@ -39,7 +39,8 @@ trajectory mode_throw( avatar &you, item &relevant, bool blind_throwing );
 trajectory mode_throw_creature( avatar &you, const Creature &thrown_creature, int range );
 
 /** Throwing or shoving a grabbed furniture/vehicle object. */
-trajectory mode_throw_object( avatar &you, const tripoint &source, int range );
+trajectory mode_throw_object( avatar &you, const tripoint &source, int range,
+                              bool from_vehicle = false );
 
 /** Reach attacking */
 trajectory mode_reach( avatar &you, item_location weapon );

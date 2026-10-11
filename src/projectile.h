@@ -27,6 +27,8 @@ struct projectile {
         // Damage dealt by a single shot.
         damage_instance shot_impact;
         float critical_multiplier = 0.0f;
+        // 玩家用弓弩射出或投出的这一击：命中判定在弹道结算时按优势/劣势投两次
+        bool advantage_roll = false;
 
         std::set<std::string> proj_effects;
 

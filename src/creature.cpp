@@ -21,6 +21,7 @@
 #include "color.h"
 #include "creature_tracker.h"
 #include "cursesdef.h"
+#include "d20_roll.h"
 #include "damage.h"
 #include "debug.h"
 #include "effect.h"
@@ -777,6 +778,69 @@ void Creature::deal_melee_hit( Creature *source, int hit_spread, bool critical_h
     on_hit( source, bp_hit ); // trigger on-gethit events
     dealt_dam = deal_damage( source, bp_hit, d, attack_copy );
     dealt_dam.bp_hit = bp_hit;
+}
+
+d20_roll_state get_d20_roll_state( const Character &you, const Creature &target,
+                                   const bool unseen_bonus )
+{
+    const bool target_disadvantaged =
+        target.has_effect( effect_downed ) ||
+        target.has_effect( effect_stunned ) ||
+        target.has_effect( effect_blind ) ||
+        target.has_effect( effect_no_sight );
+    const bool player_disadvantaged =
+        you.has_effect( effect_downed ) ||
+        you.has_effect( effect_stunned ) ||
+        you.has_effect( effect_blind ) ||
+        you.has_effect( effect_no_sight ) ||
+        you.get_perceived_pain() >= 40;
+
+    // 优势与劣势都只按“有/无”计：多个优势只算一个，任意一个劣势即可抵消全部优势
+    const bool advantage_source = target_disadvantaged || unseen_bonus;
+    const bool disadvantage_source = player_disadvantaged;
+
+    if( advantage_source == disadvantage_source ) {
+        return d20_roll_state::normal;
+    }
+    return advantage_source ? d20_roll_state::advantage :
+           d20_roll_state::disadvantage;
+}
+
+std::vector<std::string> get_roll_advantage_reasons( const Character &/*you*/, const Creature &target,
+        const bool unseen_bonus )
+{
+    std::vector<std::string> reasons;
+    if( unseen_bonus ) {
+        reasons.emplace_back( _( "偷袭" ) );
+    }
+    if( target.has_effect( effect_downed ) ) {
+        reasons.emplace_back( _( "目标倒地" ) );
+    }
+    if( target.has_effect( effect_stunned ) ) {
+        reasons.emplace_back( _( "目标眩晕" ) );
+    }
+    if( target.has_effect( effect_blind ) || target.has_effect( effect_no_sight ) ) {
+        reasons.emplace_back( _( "目标失明" ) );
+    }
+    return reasons;
+}
+
+std::vector<std::string> get_roll_disadvantage_reasons( const Character &you )
+{
+    std::vector<std::string> reasons;
+    if( you.has_effect( effect_downed ) ) {
+        reasons.emplace_back( _( "倒地" ) );
+    }
+    if( you.has_effect( effect_stunned ) ) {
+        reasons.emplace_back( _( "眩晕" ) );
+    }
+    if( you.has_effect( effect_blind ) || you.has_effect( effect_no_sight ) ) {
+        reasons.emplace_back( _( "失明" ) );
+    }
+    if( you.get_perceived_pain() >= 40 ) {
+        reasons.emplace_back( _( "疼痛" ) );
+    }
+    return reasons;
 }
 
 double Creature::accuracy_projectile_attack( dealt_projectile_attack &attack ) const

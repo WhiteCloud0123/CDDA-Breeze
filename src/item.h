@@ -2544,6 +2544,8 @@ class item : public visitable
          * The skill used to operate the gun. Can be "null" if this is not a gun.
          */
         skill_id gun_skill() const;
+        /** 是否为弓或弩：使用射箭技能，或使用箭矢/弩箭弹药 */
+        bool is_bow_or_crossbow() const;
 
         /** Get the type of a ranged weapon (e.g. "rifle", "crossbow"), or empty string if non-gun */
         gun_type_type gun_type() const;

@@ -28,6 +28,11 @@ class dispersion_sources
         void add_spread( double new_spread ) {
             spread_sources.push_back( new_spread );
         }
+        // 丢弃缓存的投骰结果，使下一次 roll() 重新投掷。
+        // 优势/劣势需要同一发弹道投两次骰，必须先用本方法清掉缓存。
+        void reset_roll() {
+            prev_roll = -1.0;
+        }
         double roll() const;
         double max() const;
         double avg() const;

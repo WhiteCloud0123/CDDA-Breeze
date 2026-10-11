@@ -3986,6 +3986,13 @@ void item::ammo_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
         if( parts->test( iteminfo_parts::AMMO_DAMAGE_AP ) ) {
             info.emplace_back( "AMMO", space + _( "Armor-pierce: " ), get_ranged_pierce( ammo ) );
         }
+        if( !ammo.damage.empty() && ammo.damage.damage_units.front().res_mult != 1.0f &&
+            parts->test( iteminfo_parts::AMMO_DAMAGE_AP ) ) {
+            // 独立一行，故不加续行用的前导空格，与“伤害加成”“射程”等左对齐
+            info.emplace_back( "AMMO", _( "Armor multiplier: " ), "<num>",
+                               iteminfo::is_decimal | iteminfo::lower_is_better,
+                               ammo.damage.damage_units.front().res_mult );
+        }
         if( parts->test( iteminfo_parts::AMMO_DAMAGE_RANGE ) ) {
             info.emplace_back( "AMMO", _( "Range: " ), "<num>" + space,
                                iteminfo::no_newline, ammo.range );
@@ -11967,6 +11974,21 @@ skill_id item::gun_skill() const
     return type->gun->skill_used;
 }
 
+bool item::is_bow_or_crossbow() const
+{
+    static const skill_id skill_archery( "archery" );
+    static const ammotype ammo_arrow( "arrow" );
+    static const ammotype ammo_bolt( "bolt" );
+    if( !is_gun() ) {
+        return false;
+    }
+    if( gun_skill() == skill_archery ) {
+        return true;
+    }
+    const std::set<ammotype> types = ammo_types();
+    return types.count( ammo_arrow ) > 0 || types.count( ammo_bolt ) > 0;
+}
+
 gun_type_type item::gun_type() const
 {
     static skill_id skill_archery( "archery" );
@@ -12187,12 +12209,16 @@ int item::gun_range( const Character *p ) const
         return 0;
     }
 
-    // Reduce bow range until player has twice minimm required strength
+    // 拉弓类武器（STR_DRAW）：力量超出有效最低力量时增加射程，并设软上限
+    // 前 4 点每点 +1 格，其后每点 +0.5 格，总加成最多 +8 格
     if( has_flag( flag_STR_DRAW ) ) {
-        ret += std::max( 0.0, ( p->get_str() - get_min_str() ) * 0.5 );
+        const int surplus = std::max( 0, p->get_str() - get_min_str() );
+        const int full_bonus = std::min( surplus, 4 );
+        const int half_bonus = std::min( std::max( 0, surplus - 4 ), 8 ) / 2;
+        ret += full_bonus + half_bonus;
     }
 
-    return std::max( 0, ret );
+    return std::min( std::max( 0, ret ), RANGE_HARD_CAP );
 }
 
 units::energy item::energy_remaining() const

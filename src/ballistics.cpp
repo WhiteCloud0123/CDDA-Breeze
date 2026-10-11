@@ -13,6 +13,7 @@
 #include "character.h"
 #include "creature.h"
 #include "creature_tracker.h"
+#include "d20_roll.h"
 #include "damage.h"
 #include "debug.h"
 #include "dispersion.h"
@@ -214,6 +215,29 @@ dealt_projectile_attack projectile_attack( const projectile &proj_arg, const tri
                          target_critter->ranged_target_size() :
                          here.ranged_target_size( target_arg );
     projectile_attack_aim aim = projectile_attack_roll( dispersion, range, target_size );
+
+    // 玩家用弓弩射击或投掷：目标未发现射手时本次弹道判定占据优势，优势与劣势按“有/无”计并互相抵消
+    if( proj_arg.advantage_roll && origin != nullptr && target_critter != nullptr &&
+        target_critter != origin ) {
+        if( Character *const shooter = origin->as_character() ) {
+            const bool unseen = !target_critter->sees( *origin );
+            const d20_roll_state roll_state = get_d20_roll_state( *shooter, *target_critter, unseen );
+            if( roll_state != d20_roll_state::normal ) {
+                // 优势投两次取较好的一次，劣势取较差的一次。
+                // dispersion_sources 会缓存投骰结果，必须用清掉缓存的副本来取得真正的第二次投骰，
+                // 否则第二次 roll() 会直接返回第一次的结果，优势/劣势形同虚设。
+                dispersion_sources second_dispersion = dispersion;
+                second_dispersion.reset_roll();
+                const projectile_attack_aim second_aim =
+                    projectile_attack_roll( second_dispersion, range, target_size );
+                const bool want_better = roll_state == d20_roll_state::advantage;
+                if( want_better ? second_aim.missed_by < aim.missed_by :
+                    second_aim.missed_by > aim.missed_by ) {
+                    aim = second_aim;
+                }
+            }
+        }
+    }
 
     if( target_critter && target_critter->as_character() &&
         target_critter->as_character()->has_flag( json_flag_HARDTOHIT ) ) {

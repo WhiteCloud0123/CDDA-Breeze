@@ -31,6 +31,7 @@
 
 #include "creature_tracker.h"
 #include "cursesdef.h"
+#include "d20_roll.h"
 #include "damage.h"
 #include "debug.h"
 #include "dispersion.h"
@@ -490,6 +491,8 @@ class target_ui
         item *relevant = nullptr;
         // Source tile for grabbed creatures, furniture, and vehicles.
         tripoint throw_origin = tripoint_zero;
+        // 投掷来源是否为载具：载具投掷走载具碰撞结算、不经过 D20，因此不显示优势/劣势行
+        bool throw_from_vehicle = false;
         // Cached selection range from player's position
         int range = 0;
         // Cached current ammo to display
@@ -710,6 +713,7 @@ class target_ui
         void draw_controls_list( int text_y );
 
         void panel_cursor_info( int &text_y );
+        void panel_roll_state_info( int &text_y );
         void panel_gun_info( int &text_y );
         void panel_recoil( int &text_y );
         void panel_spell_info( int &text_y );
@@ -762,12 +766,13 @@ target_handler::trajectory target_handler::mode_throw_creature( avatar &you,
 }
 
 target_handler::trajectory target_handler::mode_throw_object( avatar &you,
-        const tripoint &source, int range )
+        const tripoint &source, int range, bool from_vehicle )
 {
     target_ui ui = target_ui();
     ui.you = &you;
     ui.mode = target_ui::TargetMode::ThrowObject;
     ui.throw_origin = source;
+    ui.throw_from_vehicle = from_vehicle;
     ui.range = range;
 
     restore_on_out_of_scope<tripoint> view_offset_prev( you.view_offset );
@@ -1192,6 +1197,8 @@ int Character::fire_gun( const tripoint &target, int shots, item &gun )
         weakpoint_attack wp_attack;
         wp_attack.weapon = &gun;
         projectile proj = make_gun_projectile( gun );
+        // 玩家用弓弩射出的一箭：命中判定在弹道结算时按优势/劣势投两次取较好或较差的一次
+        proj.advantage_roll = gun.is_bow_or_crossbow() && is_avatar();
         dispersion_sources dispersion = get_weapon_dispersion( gun );
         dispersion.add_range( recoil_total() );
         dispersion.add_spread( proj.shot_spread );
@@ -1656,6 +1663,8 @@ dealt_projectile_attack Character::throw_item( const tripoint &target, const ite
     // This should generally have values below ~20*sqrt(skill_lvl)
     const float final_xp_mult = range_factor * damage_factor;
 
+    // 玩家投出的一击同样按优势/劣势结算命中判定
+    proj.advantage_roll = is_avatar();
     weakpoint_attack wp_attack;
     wp_attack.weapon = &to_throw;
     wp_attack.is_thrown = true;
@@ -1948,6 +1957,20 @@ static std::vector<aim_type_prediction> calculate_ranged_chances(
         aim_types = you.get_aim_types( weapon );
     }
 
+    // 弓弩与投掷的优势/劣势会投两次取较好或较差的一次；命中率估算按等效散布折算
+    // （均匀分布下“两次取较好”的期望由 1/2 降到 1/3，取较差升到 2/3）
+    d20_roll_state roll_state = d20_roll_state::normal;
+    const bool roll_state_applies =
+        mode == target_ui::TargetMode::Throw || mode == target_ui::TargetMode::ThrowBlind ||
+        ( mode == target_ui::TargetMode::Fire && weapon.is_bow_or_crossbow() );
+    if( roll_state_applies ) {
+        Creature *const critter = get_creature_tracker().creature_at<Creature>( pos );
+        if( critter != nullptr && critter != &you ) {
+            const bool unseen = !critter->sees( you );
+            roll_state = get_d20_roll_state( you, *critter, unseen );
+        }
+    }
+
     for( const aim_type &aim_type : aim_types ) {
         const std::vector<input_event> keys = ctxt.keys_bound_to( aim_type.action.empty() ? "FIRE" :
                                               aim_type.action, /*maximum_modifier_count=*/1 );
@@ -1994,6 +2017,11 @@ static std::vector<aim_type_prediction> calculate_ranged_chances(
         dispersion_sources current_dispersion = dispersion;
         current_dispersion.add_range( aim_type.has_threshold ? aim_type.threshold :
                                       aim_to_selected.recoil );
+        if( roll_state == d20_roll_state::advantage ) {
+            current_dispersion.add_multiplier( 2.0 / 3.0 );
+        } else if( roll_state == d20_roll_state::disadvantage ) {
+            current_dispersion.add_multiplier( 4.0 / 3.0 );
+        }
 
         // this loop fills in the "confidence" values; the chances of great/good/graze outcomes
         prediction.confidence = confidence_estimate( target, current_dispersion );
@@ -3892,6 +3920,8 @@ void target_ui::draw_ui_window()
     int text_y = 1; // Skip top border
 
     panel_cursor_info( text_y );
+    // 弓弩与投掷的优势/劣势紧跟光标信息，填掉与射击模式之间原本的空行
+    panel_roll_state_info( text_y );
     text_y += compact ? 0 : 1;
 
     if( mode == TargetMode::Fire || mode == TargetMode::TurretManual ) {
@@ -4270,6 +4300,50 @@ void target_ui::panel_target_info( int &text_y, bool fill_with_blank_if_no_targe
         text_y += max_lines;
         // TODO: print info about tile?
     }
+}
+
+void target_ui::panel_roll_state_info( int &text_y )
+{
+    // 弓弩与投掷：显示本次命中判定的优势/劣势来源，始终占一行以免布局跳动
+    // 载具投掷走载具碰撞结算、不经过 D20，故不显示该行
+    const bool roll_state_mode =
+        mode == TargetMode::Throw || mode == TargetMode::ThrowBlind ||
+        ( mode == TargetMode::ThrowObject && !throw_from_vehicle ) ||
+        ( mode == TargetMode::Fire && relevant != nullptr && relevant->is_bow_or_crossbow() );
+    if( !roll_state_mode ) {
+        return;
+    }
+    std::string reasons_text;
+    nc_color reasons_color = c_light_gray;
+    if( dst_critter != nullptr ) {
+        const bool unseen = !dst_critter->sees( *you );
+        const std::vector<std::string> adv =
+            get_roll_advantage_reasons( *you, *dst_critter, unseen );
+        const std::vector<std::string> dis = get_roll_disadvantage_reasons( *you );
+        const auto join_reasons = []( const std::vector<std::string> &reasons ) {
+            std::string joined;
+            for( const std::string &reason : reasons ) {
+                if( !joined.empty() ) {
+                    joined += "、";
+                }
+                joined += reason;
+            }
+            return joined;
+        };
+        if( !adv.empty() && !dis.empty() ) {
+            reasons_text = _( "优势与劣势抵消" );
+        } else if( !adv.empty() ) {
+            reasons_text = string_format( _( "优势：%s" ), join_reasons( adv ) );
+            reasons_color = c_green;
+        } else if( !dis.empty() ) {
+            reasons_text = string_format( _( "劣势：%s" ), join_reasons( dis ) );
+            reasons_color = c_red;
+        }
+    }
+    if( !reasons_text.empty() ) {
+        mvwprintz( w_target, point( 1, text_y ), reasons_color, reasons_text );
+    }
+    text_y++;
 }
 
 void target_ui::panel_turret_list( int &text_y )

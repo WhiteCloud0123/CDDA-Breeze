@@ -75,6 +75,7 @@ projectile &projectile::operator=( const projectile &other )
     shot_impact = other.shot_impact;
     proj_effects = other.proj_effects;
     critical_multiplier = other.critical_multiplier;
+    advantage_roll = other.advantage_roll;
     set_drop( other.get_drop() );
     set_custom_explosion( other.get_custom_explosion() );
 
