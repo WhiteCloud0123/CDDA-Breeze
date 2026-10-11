@@ -413,7 +413,9 @@ void weakpoint_attack::compute_wp_skill()
     // 仅对“能获得优势投骰”的攻击生效（玩家用弓弩射击或投掷），与 ranged.cpp 里 advantage_roll 的资格一致，
     // 避免普通枪械、NPC 攻击或近战仅凭可见性白拿加成。
     const bool advantage_eligible = chr_att != nullptr && chr_att->is_avatar() &&
-                                    type == attack_type::PROJECTILE;
+                                    type == attack_type::PROJECTILE &&
+                                    ( is_thrown ||
+                                      ( weapon != nullptr && weapon->is_bow_or_crossbow() ) );
     if( advantage_eligible && target != nullptr ) {
         const bool unseen = !target->sees( *chr_att );
         const d20_roll_state roll_state = get_d20_roll_state( *chr_att, *target, unseen );
