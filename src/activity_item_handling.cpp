@@ -3999,8 +3999,7 @@ int get_auto_consume_moves( Character &you, const bool food )
     if( best_comestible ) {
         int consume_moves = 0;
         if( !best_comestible.held_by( you ) ) {
-            consume_moves += Pickup::cost_to_move_item( you, *best_comestible ) *
-                             std::max( rl_dist( pos, here.getlocal( best_comestible.position() ) ), 1 );
+            consume_moves += Pickup::cost_to_move_item( you, *best_comestible );
         }
         // Consume may delete the item (e.g. finishing the last charge), so capture
         // everything needed from it beforehand and never dereference it afterwards.
