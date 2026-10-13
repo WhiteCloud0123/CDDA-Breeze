@@ -905,7 +905,7 @@
       { "item": "usp45mag", "prob": 50, "ammo-item": "45_acp", "charges": [ 0, 12 ] },
       { "item": "usp45mag", "prob": 50, "ammo-item": "45_acp", "charges": [ 0, 12 ] },
       {
-        "collection": [
+        "distribution": [
           { "item": "shield_ballistic_large", "prob": 70, "damage": [ 1, 3 ] },
           { "group": "swat_shields", "prob": 30, "damage": [ 1, 3 ] }
         ]

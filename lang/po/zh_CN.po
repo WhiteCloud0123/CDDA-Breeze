@@ -282425,6 +282425,11 @@ msgstr "腿部"
 msgid "FEET"
 msgstr "脚部"
 
+#. ~ Crafting recipes subcategory of "ARMOR" cat.
+#: data/json/recipes/recipes.json
+msgid "SHIELD"
+msgstr "盾牌"
+
 #. ~ Crafting recipes category name
 #: data/json/recipes/recipes.json
 msgid "APPLIANCE"
