@@ -7862,6 +7862,7 @@ void vehicle::calc_mass_center( bool use_precalc ) const
     units::quantity<float, units::mass::unit_type> xf;
     units::quantity<float, units::mass::unit_type> yf;
     units::mass m_total = 0_gram;
+    std::set<const Creature *> counted_riders;
     for( const vpart_reference &vp : get_all_parts() ) {
         const size_t i = vp.part_index();
         if( vp.part().removed || vp.part().is_fake ) {
@@ -7886,8 +7887,12 @@ void vehicle::calc_mass_center( bool use_precalc ) const
             const Character *p = get_passenger( i );
             const monster *z = get_monster( i );
             // Sometimes flag is wrongly set, don't crash!
-            m_part += p != nullptr ? p->get_weight() : 0_gram;
-            m_part += z != nullptr ? z->get_weight() : 0_gram;
+            if( p != nullptr && counted_riders.insert( p ).second ) {
+                m_part += p->get_weight();
+            }
+            if( z != nullptr && counted_riders.insert( z ).second ) {
+                m_part += z->get_weight();
+            }
         }
         if( use_precalc ) {
             xf += vp.part().precalc[0].x * m_part;
