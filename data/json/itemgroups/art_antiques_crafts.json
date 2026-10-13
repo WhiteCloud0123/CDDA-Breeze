@@ -127,7 +127,9 @@
       { "item": "canteen_wood", "prob": 5 },
       { "item": "apron_leather", "prob": 1 },
       { "item": "pot_copper", "prob": 3 },
-      { "group": "tinware", "prob": 10 }
+      { "group": "tinware", "prob": 10 },
+      { "group": "medieval_shields", "prob": 40 },
+      { "group": "small_shields", "prob": 15 }
     ]
   },
   {
@@ -192,7 +194,11 @@
       { "item": "bronze_medal", "prob": 1 },
       { "item": "silver_medal", "prob": 1 },
       { "item": "gold_medal", "prob": 1 },
-      { "item": "bookstrap", "prob": 5 }
+      { "item": "bookstrap", "prob": 5 },
+      { "item": "shield_buckler", "prob": 3 },
+      { "item": "shield_targe_wooden", "prob": 12 },
+      { "item": "shield_scute", "prob": 3 },
+      { "item": "shield_bronze", "prob": 2 }
     ]
   },
   {
@@ -262,6 +268,27 @@
   },
   {
     "type": "item_group",
+    "id": "medieval_shields",
+    "//": "Historical shields an antiquarian, museum or collector would own.",
+    "subtype": "distribution",
+    "entries": [
+      [ "shield_wooden", 30 ],
+      [ "shield_wooden_large", 12 ],
+      [ "shield_leather", 20 ],
+      [ "shield_leather_large", 8 ],
+      [ "shield_banded", 18 ],
+      [ "shield_banded_large", 7 ],
+      [ "shield_spiked", 12 ],
+      [ "shield_spiked_large", 5 ]
+    ]
+  },
+  {
+    "id": "small_shields",
+    "type": "item_group",
+    "//": "Small duelling shields, for reuse in any antique or trade loot.",
+    "items": [ [ "shield_targe_wooden", 70 ], [ "shield_buckler", 30 ] ]
+  },
+  {
     "id": "woodcrafts",
     "items": [
       [ "holy_symbol_wood", 20 ],

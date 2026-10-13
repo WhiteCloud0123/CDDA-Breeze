@@ -30,7 +30,19 @@
       [ "suppressor", 25 ],
       [ "suppressor_compact", 20 ],
       [ "tac_fullhelmet", 5 ],
-      [ "tac_helmet", 10 ]
+      [ "tac_helmet", 10 ],
+      { "group": "swat_shields", "prob": 15 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "swat_shields",
+    "//": "Ballistic and riot shields issued to SWAT teams.",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "shield_ballistic", "prob": 45 },
+      { "item": "shield_ballistic_large", "prob": 25 },
+      { "item": "shield_riot", "prob": 30 }
     ]
   },
   {

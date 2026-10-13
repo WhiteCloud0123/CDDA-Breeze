@@ -1984,7 +1984,8 @@
           "wristwatch",
           "pants_cargo",
           "elbow_pads",
-          "knee_pads"
+          "knee_pads",
+          "shield_ballistic"
         ],
         "entries": [
           { "group": "swat_ballistic_vest_pristine" },
@@ -2034,7 +2035,8 @@
           "wristwatch",
           "pants_cargo",
           "elbow_pads",
-          "knee_pads"
+          "knee_pads",
+          "shield_ballistic_large"
         ],
         "entries": [
           { "group": "swat_ballistic_vest_pristine" },
@@ -2123,6 +2125,7 @@
           "helmet_riot",
           "badge_deputy",
           "wristwatch",
+          "shield_riot",
           "gasbomb"
         ],
         "entries": [
