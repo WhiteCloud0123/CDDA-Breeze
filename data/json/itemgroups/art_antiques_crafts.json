@@ -272,14 +272,14 @@
     "//": "Historical shields an antiquarian, museum or collector would own.",
     "subtype": "distribution",
     "entries": [
-      [ "shield_wooden", 30 ],
-      [ "shield_wooden_large", 12 ],
-      [ "shield_leather", 20 ],
-      [ "shield_leather_large", 8 ],
-      [ "shield_banded", 18 ],
-      [ "shield_banded_large", 7 ],
-      [ "shield_spiked", 12 ],
-      [ "shield_spiked_large", 5 ]
+      { "item": "shield_wooden", "prob": 30 },
+      { "item": "shield_wooden_large", "prob": 12 },
+      { "item": "shield_leather", "prob": 20 },
+      { "item": "shield_leather_large", "prob": 8 },
+      { "item": "shield_banded", "prob": 18 },
+      { "item": "shield_banded_large", "prob": 7 },
+      { "item": "shield_spiked", "prob": 12 },
+      { "item": "shield_spiked_large", "prob": 5 }
     ]
   },
   {
