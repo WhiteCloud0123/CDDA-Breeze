@@ -218,9 +218,11 @@ class game
         bool is_core_data_loaded() const;
 
         /**
-         *  Check if mods can be successfully loaded
-         *  @param opts check specific mods (or all if unspecified)
-         *  @return whether all mods were successfully loaded
+         *  Check if mods can be successfully loaded.  Called by the --check-mods
+         *  command line argument, which is used by CI to validate the game data.
+         *  @param opts check specific mods.  An empty list checks all loadable mods,
+         *              the sentinel id "__core__" checks the core data only.
+         *  @return whether all requested data was loaded and finalized successfully
          */
         bool check_mod_data( const std::vector<mod_id> &opts, loading_ui &ui );
 
