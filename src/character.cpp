@@ -77,6 +77,7 @@
 #include "mapdata.h"
 #include "material.h"
 #include "math_defines.h"
+#include "melee.h"
 #include "memorial_logger.h"
 #include "messages.h"
 #include "mission.h"
@@ -11180,6 +11181,169 @@ int Character::get_perceived_pain() const
     }
 
     return std::max( get_pain() - get_painkiller(), 0 );
+}
+
+namespace
+{
+
+/**
+ * 移植自 Bright Nights：判断命中部位是否在足部，盾牌不会低到能挡住这种位置。
+ */
+bool is_foot_hit( const bodypart_id &bp_hit )
+{
+    return bp_hit == body_part_foot_l || bp_hit == body_part_foot_r;
+}
+
+/**
+ * 移植自 Bright Nights：判断命中部位是否在腿部，挡腿的难度更高。
+ */
+bool is_leg_hit( const bodypart_id &bp_hit )
+{
+    return bp_hit == body_part_leg_l || bp_hit == body_part_leg_r;
+}
+
+/**
+ * 移植自 Bright Nights：判断该盾牌是否能保护给定部位。
+ *
+ * - 只有戴在身上并带 BLOCK_WHILE_WORN 旗标的物品才算盾牌。
+ * - 已经由衣物覆盖的部位不需要盾牌再挡一次。
+ * - 命中足部时盾牌够不到，直接排除。
+ */
+bool is_covered_by_shield( const bodypart_id &bp_hit, const item &shield )
+{
+    return shield.has_flag( flag_BLOCK_WHILE_WORN )
+           && !shield.covers( bp_hit )
+           && !is_foot_hit( bp_hit );
+}
+
+/**
+ * 移植自 Bright Nights 的 ShieldLevel：这里直接沿用微风已有的
+ * melee::blocking_ability() 档位（WBLOCK_3 = 10、WBLOCK_2 = 6、WBLOCK_1 = 4），
+ * 只有带格挡技巧的盾牌才能被动挡下远程攻击，0 表示不挡。
+ */
+int shield_level( const item &shield )
+{
+    return melee::blocking_ability( shield );
+}
+
+/**
+ * 移植自 Bright Nights 的 coverage_modifier_by_technic：按盾牌格挡档位调整
+ * 拦截概率，挡腿时概率更低；不带格挡技巧的护臂（BLOCK_WHILE_WORN 但没有
+ * WBLOCK 技巧）返回 0，即不会挡子弹。
+ */
+float coverage_modifier_by_technic( int level, bool leg_hit )
+{
+    switch( level ) {
+        case 10: // WBLOCK_3
+            return leg_hit ? 0.75f : 0.9f;
+        case 6:  // WBLOCK_2
+            return leg_hit ? 0.5f : 0.8f;
+        case 4:  // WBLOCK_1
+            return leg_hit ? 0.25f : 0.7f;
+        default:
+            return 0.0f;
+    }
+}
+
+/**
+ * 移植自 Bright Nights 的 get_shield_resist：按伤害类型取盾牌的对应抗性。
+ */
+int get_shield_resist( const item &shield, const damage_unit &damage )
+{
+    switch( damage.type ) {
+        case damage_type::BASH:
+            return shield.bash_resist();
+        case damage_type::CUT:
+            return shield.cut_resist();
+        case damage_type::STAB:
+            return shield.stab_resist();
+        case damage_type::BULLET:
+            return shield.bullet_resist();
+        case damage_type::HEAT:
+            return shield.fire_resist();
+        case damage_type::ACID:
+            return shield.acid_resist();
+        default:
+            return 0;
+    }
+}
+
+} // namespace
+
+float Character::get_block_amount( const item &shield, const damage_unit &unit )
+{
+    const int resist = get_shield_resist( shield, unit );
+
+    return std::max( 0.0f, ( resist - unit.res_pen ) * unit.res_mult );
+}
+
+bool Character::block_ranged_hit( Creature *source, bodypart_id &bp_hit, damage_instance &dam )
+{
+    // Having access to more than one shield is not normal in vanilla, for now keep it simple
+    //  and only give one chance to catch a bullet.
+    item_location shield = best_shield();
+
+    // Bail out early just in case, if blocking with bare hands.
+    if( !shield ) {
+        return false;
+    }
+
+    const int level = shield_level( *shield );
+    if( level == 0 || !is_covered_by_shield( bp_hit, *shield ) ) {
+        return false;
+    }
+    // Modify chance based on coverage and blocking ability, with lowered chance if hitting
+    //  the legs. Exclude armguards here.
+    const float technic_modifier = coverage_modifier_by_technic( level, is_leg_hit( bp_hit ) );
+    const float shield_coverage_modifier = shield->get_avg_coverage() * technic_modifier;
+
+    add_msg_debug( debugmode::DF_MELEE, "block_ranged_hit success rate: %i%%",
+                   static_cast<int>( shield_coverage_modifier ) );
+
+    // Now roll coverage to determine if we intercept the shot.
+    if( rng( 1, 100 ) > shield_coverage_modifier ) {
+        add_msg_debug( debugmode::DF_MELEE, "block_ranged_hit attempt failed" );
+        return false;
+    }
+
+    // 磨损有几率让盾牌直接损毁，之后 item_location 就失效了，
+    // 因此这里先读出盾牌名称、抗性并算好各类型伤害的拦截量，再处理磨损。
+    const std::string thing_blocked_with = shield->tname();
+    const resistances res = resistances( *shield );
+    std::vector<float> block_amounts;
+    block_amounts.reserve( dam.damage_units.size() );
+    int total_damage = 0;
+    for( const damage_unit &elem : dam.damage_units ) {
+        total_damage += elem.amount * elem.damage_multiplier;
+        block_amounts.push_back( get_block_amount( *shield, elem ) );
+    }
+
+    const float wear_modifier = ( source != nullptr && source->is_hallucination() ) ? 0.0f : 1.0f;
+    handle_melee_wear( shield, wear_modifier );
+
+    int blocked_damage = 0;
+    for( size_t i = 0; i < dam.damage_units.size() && i < block_amounts.size(); i++ ) {
+        damage_unit &elem = dam.damage_units[i];
+        // Go through all relevant damage types and reduce by armor value if one exists.
+        elem.amount -= block_amounts[i];
+        blocked_damage += block_amounts[i];
+        elem.res_pen = std::max( 0.0f, elem.res_pen - res.type_resist( elem.type ) );
+    }
+    blocked_damage = std::min( total_damage, blocked_damage );
+    add_msg_debug( debugmode::DF_MELEE, "expected base damage: %i", total_damage );
+
+    if( blocked_damage > 0 ) {
+        add_msg_player_or_npc(
+            _( "The shot hits your %s, absorbing %i damage." ),
+            _( "The shot hits <npcname>'s %s, absorbing %i damage." ),
+            thing_blocked_with, blocked_damage );
+    } else {
+        add_msg_player_or_npc(
+            _( "The shot hits your %s, but it punches right through!" ),
+            _( "The shot hits <npcname>'s %s, but it punches right through!" ),
+            thing_blocked_with );
+    }
+    return true;
 }
 
 float Character::fall_damage_mod() const

@@ -418,6 +418,16 @@ class Creature : public viewer
         virtual bool block_hit( Creature *source, bodypart_id &bp_hit,
                                 damage_instance &dam ) = 0;
 
+        // handles blocking an incoming projectile with a worn shield, before armor is applied.
+        // mutates &dam and returns true if the hit was blocked. Monsters never block this way.
+        virtual bool block_ranged_hit( Creature *source, bodypart_id &bp_hit,
+                                       damage_instance &dam ) {
+            ( void )source;
+            ( void )bp_hit;
+            ( void )dam;
+            return false;
+        }
+
         // handles armor absorption (including clothing damage etc)
         // of damage instance. returns name of weakpoint hit, if any. mutates &dam.
         virtual const weakpoint *absorb_hit( const weakpoint_attack &attack, const bodypart_id &bp,

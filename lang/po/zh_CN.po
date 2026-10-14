@@ -420158,6 +420158,26 @@ msgstr "你压迫伤口来止血……"
 msgid "<npcname> puts pressure on the bleeding wound…"
 msgstr "<npcname> 压迫伤口来止血……"
 
+#: src/character.cpp:11337
+#, c-format
+msgid "The shot hits your %s, absorbing %i damage."
+msgstr "射击击中了你的%s，吸收了%i点伤害。"
+
+#: src/character.cpp:11338
+#, c-format
+msgid "The shot hits <npcname>'s %s, absorbing %i damage."
+msgstr "射击击中了<npcname>的%s，吸收了%i点伤害。"
+
+#: src/character.cpp:11342
+#, c-format
+msgid "The shot hits your %s, but it punches right through!"
+msgstr "射击击中了你的%s，但被直接击穿了。"
+
+#: src/character.cpp:11343
+#, c-format
+msgid "The shot hits <npcname>'s %s, but it punches right through!"
+msgstr "射击击中了<npcname>的%s，但被直接击穿了。"
+
 #: src/character_ammo.cpp:124 src/veh_appliance.cpp:376
 #: src/veh_interact.cpp:1399
 #, c-format
