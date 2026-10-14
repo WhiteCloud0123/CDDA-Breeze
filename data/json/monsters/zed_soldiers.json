@@ -550,6 +550,6 @@
     "special_attacks": [ { "id": "slam" }, [ "scratch", 20 ] ],
     "on_death": { "spawn_mon": "mon_zombie_soldier" },
     "death_drops": "mon_zombie_soldier_shieldman_death_drops",
-    "delete": { "flags": [ "BLEED", "REVIVES" ], "categories": [ "CLASSIC" ] }
+    "delete": { "flags": [ "REVIVES" ], "categories": [ "CLASSIC" ] }
   }
 ]
