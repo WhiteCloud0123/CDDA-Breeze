@@ -168,8 +168,12 @@
         "collection": [ { "item": "rigid_kevlar_plate", "count": [ 1, 2 ] }, { "item": "steel_chunk", "count": [ 2, 6 ] } ],
         "prob": 60
       },
-      { "item": "shield_ballistic", "prob": 60, "damage": [ 2, 4 ] },
-      { "item": "shield_ballistic_large", "prob": 25, "damage": [ 2, 4 ] },
+      {
+        "distribution": [
+          { "item": "shield_ballistic", "prob": 70, "damage": [ 2, 4 ] },
+          { "item": "shield_ballistic_large", "prob": 30, "damage": [ 2, 4 ] }
+        ]
+      },
       { "item": "steel_plate", "prob": 25, "damage": [ 1, 4 ] }
     ]
   }

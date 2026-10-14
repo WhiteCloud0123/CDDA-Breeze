@@ -11283,6 +11283,14 @@ bool Character::block_ranged_hit( Creature *source, bodypart_id &bp_hit, damage_
     //  and only give one chance to catch a bullet.
     item_location shield = best_shield();
 
+    // best_shield() 也可能挑中手里拿着、没有 BLOCK_WHILE_WORN 的格挡武器（例如长剑与长矛），
+    // 那种武器挡不住远程攻击，此时退回身上真正能挡的那面盾牌。
+    if( !shield || !shield->has_flag( flag_BLOCK_WHILE_WORN ) ) {
+        if( item *worn_shield = worn.best_shield() ) {
+            shield = item_location( *this, worn_shield );
+        }
+    }
+
     // Bail out early just in case, if blocking with bare hands.
     if( !shield ) {
         return false;

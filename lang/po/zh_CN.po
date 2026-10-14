@@ -102444,7 +102444,7 @@ msgid ""
 "A small, round wooden shield designed more for swashbuckling than for "
 "fending off arrows.  It's small and light enough to not hinder the use of "
 "your hands."
-msgstr "一块小型木制圆盾，与其说是用来抵挡箭矢，不如说是为了跳帮接舷。它小巧轻便，不会妨碍双手的活动。"
+msgstr "一块小型木制圆盾，与其说是用来抵挡箭矢，不如说是为近身剑斗而生。它小巧轻便，不会妨碍双手的活动。"
 
 #. ~ Item name
 #: data/json/items/armor/storage.json
@@ -420171,12 +420171,12 @@ msgstr "射击击中了<npcname>的%s，吸收了%i点伤害。"
 #: src/character.cpp:11342
 #, c-format
 msgid "The shot hits your %s, but it punches right through!"
-msgstr "射击击中了你的%s，但被直接击穿了。"
+msgstr "射击击中了你的%s，但子弹直接穿透了。"
 
 #: src/character.cpp:11343
 #, c-format
 msgid "The shot hits <npcname>'s %s, but it punches right through!"
-msgstr "射击击中了<npcname>的%s，但被直接击穿了。"
+msgstr "射击击中了<npcname>的%s，但子弹直接穿透了。"
 
 #: src/character_ammo.cpp:124 src/veh_appliance.cpp:376
 #: src/veh_interact.cpp:1399

@@ -1011,6 +1011,11 @@ void mtype::load( const JsonObject &jo, const std::string &src )
     // 解析 "on_death" 对象，语法参照 CBN，支持 death_function、spawn_mon、spawn_mon_near。
     // death_function 与顶层同名成员一样是对象写法，直接复用 monster_death_effect::load。
     if( jo.has_object( "on_death" ) ) {
+        // copy-from 继承来的死亡回调应被本次定义替换，而不是叠加，与 special_attacks 等字段同规则
+        if( was_loaded ) {
+            on_death.clear();
+            on_death_spawns.clear();
+        }
         JsonObject od = jo.get_object( "on_death" );
 
         // on_death 里的 death_function 也是顶层同名成员那种对象写法，直接复用同一个加载函数。
@@ -1050,12 +1055,9 @@ void mtype::load( const JsonObject &jo, const std::string &src )
             }
         }
 
-        for( const std::pair<int, mtype_id> &spawn : mon_spawns ) {
-            if( !spawn.second.is_valid() ) {
-                debugmsg( "monster %s has unknown on_death spawn monster id: %s", id.c_str(),
-                          spawn.second.c_str() );
-            }
-        }
+        // 这里只记录，等到所有怪物定义都加载完再在 check_monster_definitions 里校验 id，
+        // 否则会误报那些在本文件之后才定义的怪物。
+        on_death_spawns = mon_spawns;
 
         // 生成函数：radius 取 0，也就是优先放在怪物自己倒下的那一格。
         // 调用时 monster::dead 已经置为 true，creature_tracker::find() 会跳过已死怪物，
@@ -1504,6 +1506,12 @@ void MonsterGenerator::check_monster_definitions() const
         if( !mon.fungalize_into.is_empty() && !mon.fungalize_into.is_valid() ) {
             debugmsg( "monster %s has unknown fungalize_into: %s", mon.id.c_str(),
                       mon.fungalize_into.c_str() );
+        }
+        for( const std::pair<int, mtype_id> &spawn : mon.on_death_spawns ) {
+            if( !spawn.second.is_valid() ) {
+                debugmsg( "monster %s has unknown on_death spawn monster id: %s", mon.id.c_str(),
+                          spawn.second.c_str() );
+            }
         }
         if( !mon.picture_id.is_empty() && !mon.picture_id.is_valid() ) {
             debugmsg( "monster %s has unknown ascii_picture: %s", mon.id.c_str(),
