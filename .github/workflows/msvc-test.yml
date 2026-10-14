@@ -150,6 +150,20 @@ jobs:
           print(f"快速语法检查通过，共检查 {checked} 个 JSON/Python/XML/Visual Studio 项目文件。")
           PY
 
+      - name: Validate JSON data semantics
+        shell: bash
+        env:
+          CHANGED_FILES: ${{ runner.temp }}/changed-files.txt
+        run: |
+          set -euo pipefail
+          # 语义检查只在改动文件上跑；如果改的是校验器本身，就全量跑一遍确认没有误报
+          if grep -qx 'build-scripts/validate_json_semantics.py' "${CHANGED_FILES}"; then
+            echo "校验器本身有改动，改为全量校验数据语义"
+            python build-scripts/validate_json_semantics.py
+          else
+            python build-scripts/validate_json_semantics.py --changed-files "${CHANGED_FILES}"
+          fi
+
       - name: Detect unresolved merge markers
         shell: bash
         env:
