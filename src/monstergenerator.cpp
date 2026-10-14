@@ -19,6 +19,7 @@
 #include "debug.h"
 #include "enum_conversions.h"
 #include "field_type.h"
+#include "game.h"
 #include "generic_factory.h"
 #include "item.h"
 #include "item_group.h"
@@ -1006,6 +1007,69 @@ void mtype::load( const JsonObject &jo, const std::string &src )
 
     optional( jo, was_loaded, "speed_description", speed_desc, speed_description_DEFAULT );
     optional( jo, was_loaded, "death_function", mdeath_effect );
+
+    // 解析 "on_death" 对象，语法参照 CBN，支持 death_function、spawn_mon、spawn_mon_near。
+    // death_function 与顶层同名成员一样是对象写法，直接复用 monster_death_effect::load。
+    if( jo.has_object( "on_death" ) ) {
+        JsonObject od = jo.get_object( "on_death" );
+
+        // on_death 里的 death_function 也是顶层同名成员那种对象写法，直接复用同一个加载函数。
+        // 微风一个怪物只有一份 monster_death_effect，所以它仍是「指定哪个字段就覆盖哪个字段」，
+        // 未指定的部分保留顶层 death_function（或默认值）的效果。
+        if( od.has_object( "death_function" ) ) {
+            JsonObject od_df = od.get_object( "death_function" );
+            od_df.allow_omitted_members();
+            mdeath_effect.load( od_df );
+            mdeath_effect.was_loaded = true;
+        } else if( od.has_array( "death_function" ) && !od.get_array( "death_function" ).empty() ) {
+            // CBN 的旧写法是函数名数组，微风没有对应的 dies 函数名表，无法照搬
+            od.throw_error_at( "death_function",
+                               "monster death function is only supported as an object" );
+        }
+
+        // on_death::spawn_mon 与 on_death::spawn_mon_near 收集到的生成请求
+        std::vector<std::pair<int, mtype_id>> mon_spawns;
+
+        if( od.has_string( "spawn_mon" ) ) {
+            mtype_id spawn_mon = mtype_id::NULL_ID();
+            assign( od, "spawn_mon", spawn_mon );
+
+            mon_spawns.emplace_back( 0, spawn_mon );
+        }
+
+        if( od.has_object( "spawn_mon_near" ) ) {
+            JsonObject od_smn = od.get_object( "spawn_mon_near" );
+            int dist = 0;
+            assign( od_smn, "distance", dist );
+
+            // 逐个读字符串再转成 mtype_id，而不是为读一个 id 数组去实例化模板读取器
+            if( od_smn.has_array( "ids" ) ) {
+                for( const std::string &mon_str : od_smn.get_string_array( "ids" ) ) {
+                    mon_spawns.emplace_back( dist, mtype_id( mon_str ) );
+                }
+            }
+        }
+
+        for( const std::pair<int, mtype_id> &spawn : mon_spawns ) {
+            if( !spawn.second.is_valid() ) {
+                debugmsg( "monster %s has unknown on_death spawn monster id: %s", id.c_str(),
+                          spawn.second.c_str() );
+            }
+        }
+
+        // 生成函数：radius 取 0，也就是优先放在怪物自己倒下的那一格。
+        // 调用时 monster::dead 已经置为 true，creature_tracker::find() 会跳过已死怪物，
+        // 所以自己原来占的格子对 can_place_monster 是空闲的，radius 0 可靠。
+        // place_critter_around 会从中心向外逐圈找空位，因此该格不可用时也不会白跑。
+        if( !mon_spawns.empty() ) {
+            on_death.emplace_back( [mon_spawns]( monster & z ) {
+                for( const std::pair<int, mtype_id> &spawn : mon_spawns ) {
+                    g->place_critter_around( spawn.second, z.pos(), spawn.first );
+                }
+            } );
+        }
+    }
+
     optional( jo, was_loaded, "melee_training_cap", melee_training_cap, MAX_SKILL );
 
     if( jo.has_array( "emit_fields" ) ) {

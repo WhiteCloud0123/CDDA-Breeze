@@ -3136,6 +3136,12 @@ void monster::die(Creature* nkiller)
         break;
     }
 
+    // 处理怪物 JSON 的 on_death 里其它死亡触发（例如额外生成怪物）。
+    // 放在尸体处理之后、物品掉落之前，与上游的先后顺序一致。
+    for (const auto& deathfunction : type->on_death) {
+        deathfunction(*this);
+    }
+
     if (death_drops) {
         // Drop items stored in optionals
         move_special_item_to_inv(tack_item);

@@ -4,6 +4,7 @@
 
 #include <iosfwd>
 #include <array>
+#include <functional>
 #include <map>
 #include <set>
 #include <string>
@@ -395,6 +396,8 @@ struct mtype {
         std::map<std::string, mtype_special_attack> special_attacks;
         std::vector<std::string> special_attacks_names; // names of attacks, in json load order
         monster_death_effect mdeath_effect;
+        // 死亡时额外触发的效果，由怪物 JSON 的 on_death 对象解析而来
+        std::vector<std::function<void( monster & )>> on_death;
         std::vector<std::string> chat_topics; // What it has to say.
         // This monster's special "defensive" move that may trigger when the monster is attacked.
         // Note that this can be anything, and is not necessarily beneficial to the monster

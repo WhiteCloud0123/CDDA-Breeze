@@ -29,9 +29,8 @@
     "id": "mon_zombie_cop_shieldman_death_drops",
     "type": "item_group",
     "subtype": "collection",
-    "//": "Keeps the officer's own gear, and adds what is left of the riot shield it was hiding behind.",
+    "//": "What is left of the riot shield it was hiding behind.  Its uniform and gear come from the ordinary police zombie it gets back up as, so they are not repeated here.",
     "entries": [
-      { "group": "mon_zombie_cop_death_drops", "prob": 100 },
       { "item": "plastic_chunk", "prob": 75, "count": [ 8, 14 ] },
       { "item": "shield_riot", "prob": 70, "damage": [ 2, 4 ] }
     ]
