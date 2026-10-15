@@ -17,7 +17,7 @@
     "sided": true,
     "material_thickness": 3,
     "techniques": [ "WBLOCK_2" ],
-    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 15 } ]
   },
   {
@@ -54,7 +54,7 @@
     "material_thickness": 4,
     "environmental_protection": 4,
     "techniques": [ "WBLOCK_3" ],
-    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 10 } ]
   },
   {
@@ -77,7 +77,7 @@
     "material_thickness": 5,
     "environmental_protection": 2,
     "techniques": [ "WBLOCK_2" ],
-    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 30 } ]
   },
   {
@@ -116,7 +116,7 @@
     "sided": true,
     "material_thickness": 4,
     "techniques": [ "WBLOCK_2" ],
-    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "STURDY", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "STURDY", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 16 } ]
   },
   {
@@ -152,7 +152,16 @@
     "sided": true,
     "material_thickness": 4,
     "techniques": [ "WBLOCK_2" ],
-    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "STURDY", "NONCONDUCTIVE", "POWERARMOR_COMPATIBLE" ],
+    "flags": [
+      "OVERSIZE",
+      "BELTED",
+      "RESTRICT_HANDS",
+      "BLOCK_WHILE_WORN",
+      "STURDY",
+      "NONCONDUCTIVE",
+      "POWERARMOR_COMPATIBLE",
+      "PADDED"
+    ],
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 20 } ]
   },
   {
@@ -219,7 +228,7 @@
     "material_thickness": 4,
     "techniques": [ "WBLOCK_2" ],
     "valid_mods": [ "steel_padded" ],
-    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 40 } ]
   },
   {
@@ -279,7 +288,7 @@
     "material_thickness": 3,
     "techniques": [ "WBLOCK_2" ],
     "valid_mods": [ "steel_padded" ],
-    "flags": [ "OVERSIZE", "BELTED", "ONLY_ONE", "BLOCK_WHILE_WORN", "STURDY", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "ONLY_ONE", "BLOCK_WHILE_WORN", "STURDY", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 50, "encumbrance": 10 } ]
   },
   {
@@ -304,7 +313,7 @@
     "weight": "3500 g",
     "price_postapoc": 1200,
     "cutting": 8,
-    "extend": { "flags": [ "STAB" ] }
+    "extend": { "flags": [ "STAB", "PADDED" ] }
   },
   {
     "id": "shield_spiked_large",
@@ -367,7 +376,7 @@
     "sided": true,
     "material_thickness": 3,
     "techniques": [ "WBLOCK_2" ],
-    "flags": [ "OVERSIZE", "BELTED", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE" ],
+    "flags": [ "OVERSIZE", "BELTED", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
     "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 55, "encumbrance": 10 } ]
   }
 ]
