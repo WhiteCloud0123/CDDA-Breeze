@@ -346,7 +346,10 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Windows 数据加载烟雾测试
+      # The startup smoke test alone cannot catch data that is valid JSON but crashes the
+      # game while loading, so --check-mods runs the real loading path (load_core_data,
+      # load_data_from_dir and DynamicDataLoader::finalize_loaded_data) and must fail loudly.
+      - name: Windows 数据加载校验
         shell: pwsh
         run: |
           $buildDir = Resolve-Path "windows-test-build"
@@ -355,26 +358,40 @@ jobs:
             throw "Smoke test executable is missing: $exe"
           }
 
-          $stdout = Join-Path $env:RUNNER_TEMP "breeze-jsonverify.stdout.log"
-          $stderr = Join-Path $env:RUNNER_TEMP "breeze-jsonverify.stderr.log"
-          $process = Start-Process -FilePath $exe -ArgumentList "--jsonverify" -WorkingDirectory $buildDir -NoNewWindow -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+          function Invoke-GameCheck {
+            param(
+              [string] $logName,
+              [string[]] $arguments,
+              [int] $timeoutMilliseconds
+            )
 
-          if( -not $process.WaitForExit(180000) ) {
-            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
-            throw "cataclysm-tiles.exe --jsonverify did not finish within 180 seconds."
+            $stdout = Join-Path $env:RUNNER_TEMP "breeze-$logName.stdout.log"
+            $stderr = Join-Path $env:RUNNER_TEMP "breeze-$logName.stderr.log"
+            $process = Start-Process -FilePath $exe -ArgumentList $arguments -WorkingDirectory $buildDir -NoNewWindow -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+
+            if( -not $process.WaitForExit($timeoutMilliseconds) ) {
+              Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+              throw "cataclysm-tiles.exe $($arguments -join ' ') did not finish within $($timeoutMilliseconds / 1000) seconds."
+            }
+
+            Write-Host "===== $logName stdout ====="
+            if( Test-Path -LiteralPath $stdout ) { Get-Content -LiteralPath $stdout }
+            Write-Host "===== $logName stderr ====="
+            if( Test-Path -LiteralPath $stderr ) { Get-Content -LiteralPath $stderr }
+
+            # Print the raw exit code, a failed run must be diagnosable from the step log alone.
+            Write-Host "cataclysm-tiles.exe $($arguments -join ' ') exit code: [$($process.ExitCode)]"
+
+            if( $process.ExitCode -ne 0 ) {
+              throw "cataclysm-tiles.exe $($arguments -join ' ') failed with exit code $($process.ExitCode)."
+            }
           }
 
-          $process.Refresh()
-          Write-Host "===== jsonverify stdout ====="
-          if( Test-Path -LiteralPath $stdout ) { Get-Content -LiteralPath $stdout }
-          Write-Host "===== jsonverify stderr ====="
-          if( Test-Path -LiteralPath $stderr ) { Get-Content -LiteralPath $stderr }
+          Invoke-GameCheck -logName "jsonverify" -arguments @( "--jsonverify" ) -timeoutMilliseconds 180000
+          Write-Host "Windows 可执行文件已成功启动。"
 
-          if( $process.ExitCode -ne 0 ) {
-            throw "cataclysm-tiles.exe --jsonverify failed with exit code $($process.ExitCode)."
-          }
-
-          Write-Host "Windows 可执行文件已成功启动并完成核心游戏数据加载验证。"
+          Invoke-GameCheck -logName "check-mods" -arguments @( "--check-mods" ) -timeoutMilliseconds 900000
+          Write-Host "核心游戏数据已通过完整加载校验。"
 
   android:
     name: Android arm64

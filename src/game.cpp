@@ -469,6 +469,18 @@ static void achievement_failed( const achievement *a, bool achievements_enabled 
     get_event_bus().send<event_type::player_fails_conduct>( a->id, achievements_enabled );
 }
 
+namespace
+{
+
+// Passing this inside the mod list of game::check_mod_data() means "check the core
+// data only".  Mods may legitimately be broken, so the headless data check must be
+// able to run without touching any mod, and this id is not used by any mod in the
+// repository (a mod using it would be reported as unknown by --check-mods).  Keep
+// this in sync with the --check-mods handling in main.cpp.
+const mod_id MOD_INFORMATION_core_only( "__core__" );
+
+}  // namespace
+
 // This is the main game set-up process.
 game::game() :
     liveview(*liveview_ptr),
@@ -526,11 +538,18 @@ bool game::check_mod_data( const std::vector<mod_id> &opts, loading_ui &ui )
 {
     dependency_tree &tree = world_generator->get_mod_manager().get_tree();
 
-    // deduplicated list of mods to check
+    // Deduplicated list of mods to check.  MOD_INFORMATION_core_only is not a real
+    // mod: it only asks for the core data to be checked, without loading any mod.
     std::set<mod_id> check( opts.begin(), opts.end() );
+    const bool core_data_only = check.count( MOD_INFORMATION_core_only ) > 0;
+    check.erase( MOD_INFORMATION_core_only );
 
-    // if no specific mods specified check all non-obsolete mods
-    if( check.empty() ) {
+    // Any failure to load or finalize the data has to be reported to the caller,
+    // otherwise a broken data set would still be reported as a success.
+    bool success = true;
+
+    // if no specific mods are specified check all non-obsolete mods
+    if( check.empty() && !core_data_only ) {
         for( const mod_id &e : world_generator->get_mod_manager().all_mods() ) {
             if( !e->obsolete ) {
                 check.emplace( e );
@@ -543,30 +562,31 @@ bool game::check_mod_data( const std::vector<mod_id> &opts, loading_ui &ui )
         world_generator->init();
         const std::vector<mod_id> mods_empty;
         WORLD *test_world = world_generator->make_new_world( mods_empty );
+        if( test_world == nullptr ) {
+            std::cerr << "Unable to create a test world for the core data check." << std::endl;
+            return false;
+        }
         world_generator->set_active_world( test_world );
 
-        // if no loadable mods then test core data only
+        // nothing to load on top of the core data: test the core data only
         try {
             load_core_data( ui );
             DynamicDataLoader::get_instance().finalize_loaded_data( ui );
         } catch( const std::exception &err ) {
             std::cerr << "Error loading data from json: " << err.what() << std::endl;
+            success = false;
         }
 
         std::string world_name = world_generator->active_world->world_name;
         world_generator->delete_world( world_name, true );
+        // delete_world() frees the world, so drop the now dangling active world pointer
+        world_generator->set_active_world( nullptr );
 
         MAPBUFFER.clear();
         overmap_buffer.clear();
     }
 
     for( const auto &e : check ) {
-        world_generator->set_active_world( nullptr );
-        world_generator->init();
-        const std::vector<mod_id> mods_empty;
-        WORLD *test_world = world_generator->make_new_world( mods_empty );
-        world_generator->set_active_world( test_world );
-
         if( !e.is_valid() ) {
             std::cerr << "Unknown mod: " << e.str() << std::endl;
             return false;
@@ -579,6 +599,16 @@ bool game::check_mod_data( const std::vector<mod_id> &opts, loading_ui &ui )
                       << tree.get_node( mod.ident )->s_errors() << std::endl;
             return false;
         }
+
+        world_generator->set_active_world( nullptr );
+        world_generator->init();
+        const std::vector<mod_id> mods_empty;
+        WORLD *test_world = world_generator->make_new_world( mods_empty );
+        if( test_world == nullptr ) {
+            std::cerr << "Unable to create a test world for mod " << mod.ident.str() << std::endl;
+            return false;
+        }
+        world_generator->set_active_world( test_world );
 
         std::cout << "Checking mod " << mod.name() << " [" << mod.ident.str() << "]" << std::endl;
 
@@ -595,15 +625,18 @@ bool game::check_mod_data( const std::vector<mod_id> &opts, loading_ui &ui )
             DynamicDataLoader::get_instance().finalize_loaded_data( ui );
         } catch( const std::exception &err ) {
             std::cerr << "Error loading data: " << err.what() << std::endl;
+            success = false;
         }
 
         std::string world_name = world_generator->active_world->world_name;
         world_generator->delete_world( world_name, true );
+        // delete_world() frees the world, so drop the now dangling active world pointer
+        world_generator->set_active_world( nullptr );
 
         MAPBUFFER.clear();
         overmap_buffer.clear();
     }
-    return true;
+    return success;
 }
 
 bool game::is_core_data_loaded() const
