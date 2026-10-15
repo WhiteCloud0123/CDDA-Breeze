@@ -546,7 +546,6 @@
     "armor_cut": 50,
     "armor_bullet": 60,
     "vision_day": 25,
-    "vision_night": 3,
     "special_attacks": [ { "id": "slam" }, [ "scratch", 20 ] ],
     "on_death": { "spawn_mon": "mon_zombie_soldier" },
     "death_drops": "mon_zombie_soldier_shieldman_death_drops",

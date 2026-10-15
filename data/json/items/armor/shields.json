@@ -163,7 +163,6 @@
     "description": "A large shield made of wood with leather reinforcement.  Sturdier and stronger than a basic wooden shield, and less encumbering than a metal one.",
     "weight": "5200 g",
     "volume": "5 L",
-    "price": 8000,
     "price_postapoc": 1000,
     "to_hit": -2,
     "bashing": 10,
@@ -303,7 +302,6 @@
     "name": { "str": "spiked shield" },
     "description": "A metal reinforced shield with spikes jutting out of it.  Can be used as a melee weapon if need be.",
     "weight": "3500 g",
-    "price": 10000,
     "price_postapoc": 1200,
     "cutting": 8,
     "extend": { "flags": [ "STAB" ] }
@@ -344,7 +342,6 @@
     "description": "A tall oval shield made from the hardened scales of large reptiles, stitched together and boiled to harden it into a single stiff panel, then mounted on a central wooden handgrip similar to shields historically associated with southeastern Africa.  Surprisingly light and durable.",
     "weight": "4 kg",
     "price": 7500,
-    "price_postapoc": 1000,
     "material": [ "chitin" ],
     "color": "green",
     "material_thickness": 5,
