@@ -56,6 +56,7 @@
 #include "translations.h"
 #include "type_id.h"
 #include "ui_manager.h"
+#include "worldfactory.h"
 
 #if defined(PREFIX)
 #   undef PREFIX
@@ -264,8 +265,37 @@ int main( int argc, const char *argv[] )
     MAP_SHARING::setDefaults();
 
     // Breeze currently keeps the legacy command-line documentation but no longer runs the
-    // original parser.  Keep --jsonverify working because CI and developers rely on it.
+    // original parser.  Keep the switches that CI and developers rely on working.
+    //
+    //  --jsonverify           smoke test: initialize the game and load the static data,
+    //                         without loading any JSON from the data directory.
+    //  --check-mods [ids...]  validate the game data by running the real loading code path
+    //                         (load_core_data / load_data_from_dir / finalize_loaded_data).
+    //                         Without ids only the core data is checked, "all" checks every
+    //                         loadable mod, and any other id is treated as a mod to check.
     const bool json_verify = std::count( argv, argv + argc, std::string( "--jsonverify" ) ) > 0;
+
+    std::vector<mod_id> check_mods;
+    bool check_mod_data = false;
+    // If the data check cannot be asked for the core data only the default would depend on
+    // every mod being loadable, which is not something CI can rely on.
+    bool check_core_data_only = true;
+    for( int i = 0; i < argc; ++i ) {
+        if( strcmp( argv[i], "--check-mods" ) != 0 ) {
+            continue;
+        }
+        check_mod_data = true;
+        for( int j = i + 1; j < argc && argv[j][0] != '-'; ++j ) {
+            const std::string mod_name = argv[j];
+            if( mod_name == "all" ) {
+                check_mods.clear();
+                check_core_data_only = false;
+            } else {
+                check_mods.emplace_back( mod_name );
+            }
+        }
+        break;
+    }
 
     if( !dir_exist( PATH_INFO::datadir() ) ) {
         printf( "Fatal: Can't find data directory \"%s\"\nPlease ensure the current working directory is correct or specify data directory with --datadir.  Perhaps you meant to start \"cataclysm-launcher\"?\n",
@@ -375,6 +405,29 @@ int main( int argc, const char *argv[] )
     try {
         g->load_static_data();
         if( json_verify ) {
+            exit_handler( 0 );
+        }
+        if( check_mod_data ) {
+            // Headless data check: run the same loading code path the game uses in
+            // game::setup(), then report the result through the exit code.
+            loading_ui ui( false );
+            // Tolerated data warnings must not stop the check: without this the first
+            // debugmsg() during loading would open a modal prompt (debug_error_prompt)
+            // that nobody can answer here, and the process would hang forever.
+            // The option only suppresses the prompt, the message still reaches the log.
+            // The process exits right after the check, so there is nothing to restore.
+            get_options().get_option( "不再弹出错误信息" ).setValue( "true" );
+            std::vector<mod_id> mods_to_check = check_mods;
+            if( check_core_data_only ) {
+                // Check the core data only, without loading any mod.
+                mods_to_check.emplace_back( "__core__" );
+            }
+            printf( "Checking %s...\n", check_core_data_only ? "core game data" : "mods" );
+            if( !g->check_mod_data( mods_to_check, ui ) ) {
+                std::cerr << "Data check failed." << std::endl;
+                // exit_handler() always exits with status 0, so report the failure directly.
+                return 1;
+            }
             exit_handler( 0 );
         }
     } catch( const std::exception &err ) {

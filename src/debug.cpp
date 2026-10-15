@@ -497,17 +497,19 @@ void realDebugmsg( const char *filename, const char *line, const char *funcname,
                    const std::string &text )
 {   
 
-    if (get_option<bool>("不再弹出错误信息")) {
-        return;
-    }
-
-
     cata_assert( filename != nullptr );
     cata_assert( line != nullptr );
     cata_assert( funcname != nullptr );
 
+    // The "不再弹出错误信息" option and the capture mode only silence the prompt,
+    // the message still has to reach the debug log below.
+    const bool suppress_prompt = get_option<bool>( "不再弹出错误信息" );
+
     if( capturing ) {
         captured += text;
+        if( suppress_prompt ) {
+            return;
+        }
     } else {
 
         if( !rep_folder.test( filename, line, funcname, text ) ) {
@@ -516,6 +518,10 @@ void realDebugmsg( const char *filename, const char *line, const char *funcname,
             rep_folder.set( filename, line, funcname, text );
         } else {
             rep_folder.increment_count();
+        }
+
+        if( suppress_prompt ) {
+            return;
         }
     }
 
