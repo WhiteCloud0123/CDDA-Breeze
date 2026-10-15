@@ -140,7 +140,7 @@
     "armor_bullet": 16,
     "armor_acid": 6,
     "special_attacks": [ { "id": "slam" }, [ "scratch", 15 ] ],
-    "on_death": { "spawn_mon": "mon_zombie_cop" },
+    "on_death": { "death_function": { "corpse_type": "NO_CORPSE" }, "spawn_mon": "mon_zombie_cop" },
     "death_drops": "mon_zombie_cop_shieldman_death_drops",
     "delete": { "flags": [ "REVIVES" ] }
   },

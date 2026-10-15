@@ -547,7 +547,7 @@
     "armor_bullet": 60,
     "vision_day": 25,
     "special_attacks": [ { "id": "slam" }, [ "scratch", 20 ] ],
-    "on_death": { "spawn_mon": "mon_zombie_soldier" },
+    "on_death": { "death_function": { "corpse_type": "NO_CORPSE" }, "spawn_mon": "mon_zombie_soldier" },
     "death_drops": "mon_zombie_soldier_shieldman_death_drops",
     "delete": { "flags": [ "REVIVES" ], "categories": [ "CLASSIC" ] }
   }

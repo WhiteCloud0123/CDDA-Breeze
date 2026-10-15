@@ -74,7 +74,7 @@
     "symbol": "[",
     "color": "green",
     "sided": true,
-    "material_thickness": 5,
+    "material_thickness": 5.2,
     "environmental_protection": 2,
     "techniques": [ "WBLOCK_2" ],
     "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
@@ -94,6 +94,7 @@
     "bashing": 16,
     "looks_like": "shield_riot",
     "techniques": [ "WBLOCK_3" ],
+    "material_thickness": 5.2,
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 40 } ]
   },
   {
@@ -241,7 +242,7 @@
     "price_postapoc": 1000,
     "material": [ "hc_steel" ],
     "color": "dark_gray",
-    "material_thickness": 6,
+    "material_thickness": 2.4,
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 45 } ]
   },
   {
@@ -253,7 +254,7 @@
     "weight": "16500 g",
     "material": [ "hc_steel", "ceramic" ],
     "color": "green",
-    "material_thickness": 8,
+    "material_thickness": 5,
     "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 50 } ]
   },
   {
