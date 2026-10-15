@@ -187500,6 +187500,11 @@ msgid ""
 "won't be able to smack this shield away like the others though."
 msgstr "穿着黑色制服，佩着银色徽章的重甲人员，曾经是精英警察部队的一员，如今已经发狂。一手握着沉重的防弹盾，另一手握着枪。看来你没法像对付其他持盾者那样把它的盾牌打飞。"
 
+#. ~ Description of special attack of monster "feral SWAT shieldbearer"
+#: data/json/monsters/feral_humans.json
+msgid "The feral SWAT shieldbearer fires their USP .45!"
+msgstr "疯人SWAT持盾者击发了它的 USP .45 手枪。"
+
 #. ~ Monster name
 #: data/json/monsters/fish.json
 msgid "alpha razorclaw"

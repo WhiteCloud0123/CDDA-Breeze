@@ -1059,14 +1059,15 @@ void mtype::load( const JsonObject &jo, const std::string &src )
         // 否则会误报那些在本文件之后才定义的怪物。
         on_death_spawns = mon_spawns;
 
-        // 生成函数：radius 取 0，也就是优先放在怪物自己倒下的那一格。
-        // 调用时 monster::dead 已经置为 true，creature_tracker::find() 会跳过已死怪物，
-        // 所以自己原来占的格子对 can_place_monster 是空闲的，radius 0 可靠。
-        // place_critter_around 会从中心向外逐圈找空位，因此该格不可用时也不会白跑。
+        // 生成函数：spawn_mon 至少按 radius 1 处理。怪物调用 on_death 时 dead 虽然已经置为
+        // true，但它仍在 creature_tracker 里（要等 die() 返回之后由 game::remove_dead() 移除），
+        // 因此自己倒下的那一格对 can_place_monster() 依然是占用状态，radius 0 只会去试中心格
+        // 并直接返回空指针，替代怪物根本不会出现。place_critter_around 从中心向外逐圈找空位，
+        // 给 1 就会把替代怪物放在离尸体最近的一格，spawn_mon_near 自定义的半径仍然照用。
         if( !mon_spawns.empty() ) {
             on_death.emplace_back( [mon_spawns]( monster & z ) {
                 for( const std::pair<int, mtype_id> &spawn : mon_spawns ) {
-                    g->place_critter_around( spawn.second, z.pos(), spawn.first );
+                    g->place_critter_around( spawn.second, z.pos(), std::max( 1, spawn.first ) );
                 }
             } );
         }
