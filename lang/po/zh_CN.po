@@ -102195,10 +102195,11 @@ msgstr[0] "防弹盾"
 #. ~ Description of "ballistic shield"
 #: data/json/items/armor/shields.json
 msgid ""
-"A heavy composite shield used by SWAT teams and other armed forces.  It can"
-" handle pistol bullets up to .40 S&W, but its heavy-duty nature means it's "
-"quite encumbering and doesn't cover the legs very well."
-msgstr "一块沉重的复合盾，供特警队及其他武装部队使用。能够挡住至 .40 S&W 的手枪子弹，但重型结构使其十分累赘，对腿部的防护也不太好。"
+"A heavy composite shield used by SWAT teams and other armed forces.  It will"
+" shrug off light pistol rounds, though a heavier load like .40 S&W can still"
+" punch through.  Its heavy-duty nature means it's quite encumbering and "
+"doesn't cover the legs very well."
+msgstr "一块沉重的复合盾，供特警队及其他武装部队使用。轻型手枪弹大多能挡住，但 .40 S&W 这类重弹仍会打穿。重型结构使其十分累赘，对腿部的防护也不太好。"
 
 #. ~ Item name
 #: data/json/items/armor/shields.json
@@ -102209,10 +102210,11 @@ msgstr[0] "大防弹盾"
 #. ~ Description of "large ballistic shield"
 #: data/json/items/armor/shields.json
 msgid ""
-"A tall composite shield used by SWAT teams and other armed forces, rated "
-"for pistol bullets up to .40 S&W.  Covers the body and legs quite well, but"
-" is much heavier and more encumbering than lighter models."
-msgstr "一块高大的复合盾，供特警队及其他武装部队使用，防护等级可挡至 .40 S&W 的手枪子弹。对身体和腿部的防护相当好，但比轻型型号沉重得多，也更累赘。"
+"A tall composite shield used by SWAT teams and other armed forces.  It stops"
+" light pistol rounds, though a heavier load like .40 S&W can still punch "
+"through.  Covers the body and legs quite well, but is much heavier and more "
+"encumbering than lighter models."
+msgstr "一块高大的复合盾，供特警队及其他武装部队使用。轻型手枪弹大多能挡住，但 .40 S&W 这类重弹仍会打穿。对身体和腿部的防护相当好，但比轻型型号沉重得多，也更累赘。"
 
 #. ~ Item name
 #: data/json/items/armor/shields.json
