@@ -18,7 +18,7 @@
     "material_thickness": 3,
     "techniques": [ "WBLOCK_2" ],
     "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 15 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 15, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_wooden_large",
@@ -33,7 +33,7 @@
     "to_hit": -2,
     "bashing": 10,
     "techniques": [ "WBLOCK_3" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 25 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 25, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_riot",
@@ -55,7 +55,7 @@
     "environmental_protection": 4,
     "techniques": [ "WBLOCK_3" ],
     "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 10 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 10, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_ballistic",
@@ -78,7 +78,7 @@
     "environmental_protection": 2,
     "techniques": [ "WBLOCK_2" ],
     "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 30 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 30, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_ballistic_large",
@@ -95,7 +95,7 @@
     "looks_like": "shield_riot",
     "techniques": [ "WBLOCK_3" ],
     "material_thickness": 5.2,
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 40 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 100, "encumbrance": 40, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_leather",
@@ -118,7 +118,7 @@
     "material_thickness": 4,
     "techniques": [ "WBLOCK_2" ],
     "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "STURDY", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 16 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 16, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_kevlar",
@@ -132,7 +132,7 @@
     "//": "Rigid kevlar so it's weighted more towards ballistic resistance, and so it can't be repaired by sewing.",
     "material": [ "wood", "kevlar_rigid" ],
     "color": "green",
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 18 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 18, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_banded",
@@ -163,7 +163,7 @@
       "POWERARMOR_COMPATIBLE",
       "PADDED"
     ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 20 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 20, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_leather_large",
@@ -178,7 +178,7 @@
     "bashing": 10,
     "looks_like": "shield_wooden_large",
     "techniques": [ "WBLOCK_3" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 26 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 26, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_kevlar_large",
@@ -192,7 +192,7 @@
     "price_postapoc": 1200,
     "looks_like": "shield_leather_large",
     "techniques": [ "WBLOCK_3" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 28 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 28, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_banded_large",
@@ -208,7 +208,7 @@
     "bashing": 10,
     "looks_like": "shield_wooden_large",
     "techniques": [ "WBLOCK_3" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 30 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 30, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_welded",
@@ -230,7 +230,7 @@
     "techniques": [ "WBLOCK_2" ],
     "valid_mods": [ "steel_padded" ],
     "flags": [ "OVERSIZE", "BELTED", "RESTRICT_HANDS", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 40 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 40, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_welded_hard",
@@ -243,7 +243,7 @@
     "material": [ "hc_steel" ],
     "color": "dark_gray",
     "material_thickness": 2.4,
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 45 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 45, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_welded_composite",
@@ -255,7 +255,7 @@
     "material": [ "hc_steel", "ceramic" ],
     "color": "green",
     "material_thickness": 5,
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 50 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 50, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_welded_superalloy",
@@ -268,7 +268,7 @@
     "//": "No pre-apoc price to modify since post-cata makeshift item",
     "material": [ "superalloy" ],
     "color": "light_cyan",
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 35 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 35, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_buckler",
@@ -290,7 +290,7 @@
     "techniques": [ "WBLOCK_2" ],
     "valid_mods": [ "steel_padded" ],
     "flags": [ "OVERSIZE", "BELTED", "ONLY_ONE", "BLOCK_WHILE_WORN", "STURDY", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 50, "encumbrance": 10 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 50, "encumbrance": 10, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_buckler_superalloy",
@@ -303,7 +303,7 @@
     "price_postapoc": 2000,
     "material": [ "superalloy" ],
     "color": "light_cyan",
-    "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 50, "encumbrance": 5 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 50, "encumbrance": 5, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_spiked",
@@ -330,7 +330,7 @@
     "cutting": 10,
     "looks_like": "shield_banded_large",
     "techniques": [ "WBLOCK_3" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 30 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 90, "encumbrance": 30, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_bronze",
@@ -356,7 +356,7 @@
     "color": "green",
     "material_thickness": 5,
     "environmental_protection": 4,
-    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 85, "encumbrance": 15 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r", "hand_l", "hand_r" ], "coverage": 85, "encumbrance": 15, "rigid_layer_only": true } ]
   },
   {
     "id": "shield_targe_wooden",
@@ -378,6 +378,6 @@
     "material_thickness": 3,
     "techniques": [ "WBLOCK_2" ],
     "flags": [ "OVERSIZE", "BELTED", "BLOCK_WHILE_WORN", "POWERARMOR_COMPATIBLE", "PADDED" ],
-    "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 55, "encumbrance": 10 } ]
+    "armor": [ { "covers": [ "arm_l", "arm_r" ], "coverage": 55, "encumbrance": 10, "rigid_layer_only": true } ]
   }
 ]
