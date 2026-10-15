@@ -379,6 +379,9 @@ jobs:
             Write-Host "===== $logName stderr ====="
             if( Test-Path -LiteralPath $stderr ) { Get-Content -LiteralPath $stderr }
 
+            # Print the raw exit code, a failed run must be diagnosable from the step log alone.
+            Write-Host "cataclysm-tiles.exe $($arguments -join ' ') exit code: [$($process.ExitCode)]"
+
             if( $process.ExitCode -ne 0 ) {
               throw "cataclysm-tiles.exe $($arguments -join ' ') failed with exit code $($process.ExitCode)."
             }

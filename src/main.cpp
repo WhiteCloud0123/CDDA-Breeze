@@ -411,6 +411,12 @@ int main( int argc, const char *argv[] )
             // Headless data check: run the same loading code path the game uses in
             // game::setup(), then report the result through the exit code.
             loading_ui ui( false );
+            // Tolerated data warnings must not stop the check: without this the first
+            // debugmsg() during loading would open a modal prompt (debug_error_prompt)
+            // that nobody can answer here, and the process would hang forever.
+            // The option only suppresses the prompt, the message still reaches the log.
+            // The process exits right after the check, so there is nothing to restore.
+            get_options().get_option( "不再弹出错误信息" ).setValue( "true" );
             std::vector<mod_id> mods_to_check = check_mods;
             if( check_core_data_only ) {
                 // Check the core data only, without loading any mod.
