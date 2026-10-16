@@ -2303,18 +2303,25 @@
         "condition": {
           "and": [
             {
-              "npc_has_var": "travel_liang_joined",
-              "type": "dialogue",
-              "context": "travel_liang",
-              "value": "yes"
-            },
-            {
               "not": {
                 "npc_has_var": "travel_liang_shield_gifted",
                 "type": "dialogue",
                 "context": "travel_liang",
                 "value": "yes"
               }
+            },
+            {
+              "or": [
+                {
+                  "npc_has_var": "travel_liang_joined",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                },
+                {
+                  "u_has_mission": "MISSION_TRAVEL_WITH_LIANG_TO_REFUGEE"
+                }
+              ]
             }
           ]
         }
@@ -3672,15 +3679,7 @@
     "responses": [
       {
         "text": "我已经处理好了。那就一起走。",
-        "topic": "TALK_TRAVEL_LIANG_SHIELD_HANDOVER",
-        "condition": {
-          "not": {
-            "npc_has_var": "travel_liang_shield_gifted",
-            "type": "dialogue",
-            "context": "travel_liang",
-            "value": "yes"
-          }
-        },
+        "topic": "TALK_DONE",
         "effect": [
           {
             "npc_lose_trait": "RETURN_TO_START_POS"
@@ -4515,6 +4514,19 @@
     "value": 0,
     "start": {
       "effect": [
+        {
+          "u_spawn_item": "shield_wooden"
+        },
+        {
+          "npc_add_var": "travel_liang_shield_gifted",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "u_message": "梁知遥把她自己钉的那面粗糙木盾交给你。绑带可以调，戴在前臂上并不影响握持单手武器。",
+          "type": "good"
+        },
         {
           "npc_lose_trait": "RETURN_TO_START_POS"
         },
