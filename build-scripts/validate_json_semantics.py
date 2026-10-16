@@ -209,11 +209,14 @@ def build_namespace_index(data_root):
     """Collect item and monster definitions so copy-from targets can be resolved.
 
     Several definitions may share an id: mods and patches use the
-    `{"id": X, "copy-from": X, "extend": ...}` pattern, so the list is kept and the
-    self-referencing entries are filtered out while resolving.
+    `{"id": X, "copy-from": X, "extend": ...}` pattern, so the id keeps a list of
+    (path, definition) pairs and the self-referencing entries are filtered out while
+    resolving.  The path is kept because the loader loads the core data before any mod, so
+    for a core definition the parent values always come from the core definition, never from
+    a mod that patches the same id afterwards.
     """
     index = {"item": {}, "monster": {}}
-    for path in data_root.rglob("*.json"):
+    for path in sorted(data_root.rglob("*.json")):
         try:
             document = load_json(path)
         except (OSError, json.JSONDecodeError):
@@ -222,7 +225,7 @@ def build_namespace_index(data_root):
             namespace = namespace_of(definition.get("type"))
             if namespace:
                 for identifier in definition_ids(definition):
-                    index[namespace].setdefault(identifier, []).append(definition)
+                    index[namespace].setdefault(identifier, []).append((path, definition))
     return index
 
 
@@ -436,10 +439,15 @@ def inherited_values(definition, index, namespace, depth=0, seen=None):
     if source in seen:
         return {}
     seen.add(source)
-    candidates = [entry for entry in index[namespace].get(source, [])
-                  if entry.get("copy-from") != source]
+    entries = index[namespace].get(source, [])
+    # Same order as the loader's own resolution: a core definition first (for a core child
+    # that is the one the loader finds), then any non-self copy-from, then anything left.
+    candidates = [entry for path, entry in entries
+                  if is_strict_source(path) and entry.get("copy-from") != source]
     if not candidates:
-        candidates = index[namespace].get(source, [])
+        candidates = [entry for _, entry in entries if entry.get("copy-from") != source]
+    if not candidates:
+        candidates = [entry for _, entry in entries]
     if not candidates:
         return {}
     parent = candidates[0]
