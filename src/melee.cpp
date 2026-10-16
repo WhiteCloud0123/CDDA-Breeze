@@ -2263,6 +2263,15 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
         if( arm_block || leg_block || nonstandard_block ) {
             // block_bonus for limb blocks will be added when the limb is decided
             block_score = get_arm_str() + unarmed_skill;
+        } else if( worn_shield && block_bonus > 2 ) {
+            // A shield strapped to the forearm can be raised without any martial art, so let
+            // a worn shield make the arm block on its own; the worn shield then contributes
+            // its blocking ability and takes the wear further down.  Only items with a real
+            // WBLOCK technique qualify (blocking ability above the bare BLOCK_WHILE_WORN
+            // value of 2), so arm guards, leg guards and other worn armour keep the
+            // martial-art gating they have always had.
+            arm_block = true;
+            block_score = get_arm_str() + unarmed_skill;
         } else {
             // We don't have a shield or a technique. How are we blocking?
             return false;
