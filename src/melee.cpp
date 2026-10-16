@@ -2223,6 +2223,11 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // a shield at all, so neither of them counts as one anywhere below.
     const bool real_shield = worn_shield && melee::blocking_ability( *shield ) > 2;
 
+    // The struck part, kept before any limb selection: the shield roll below models the shield
+    // blunting a hit that lands outside what it covers, so it has to know where the attack was
+    // going, not which limb ended up doing the blocking.
+    const bodypart_id struck_bp = bp_hit;
+
     // Melee skill and reaction score governs if you can react in time
     // Skill of 5 without relevant encumbrance guarantees a block attempt
     // A shield is the exception: raising it is not a fighting skill, so following Bright
@@ -2347,9 +2352,9 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // blocking ability above the bare flag value of 2 identifies - so arm guards, leg guards
     // and plain WBLOCK weapons are never affected.  Feet are excluded, as upstream.
     bool shield_roll = false;
-    if( real_shield && bp_hit != bodypart_id( "foot_l" ) && bp_hit != bodypart_id( "foot_r" ) ) {
+    if( real_shield && struck_bp != bodypart_id( "foot_l" ) && struck_bp != bodypart_id( "foot_r" ) ) {
         float shield_block_chance = shield->get_avg_coverage();
-        const bool leg_hit = bp_hit == bodypart_id( "leg_l" ) || bp_hit == bodypart_id( "leg_r" );
+        const bool leg_hit = struck_bp == bodypart_id( "leg_l" ) || struck_bp == bodypart_id( "leg_r" );
         if( shield->has_technique( WBLOCK_3 ) ) {
             shield_block_chance *= leg_hit ? 0.75f : 0.9f;
         } else if( shield->has_technique( WBLOCK_2 ) ) {
@@ -2385,9 +2390,9 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
             }
 
             float previous_amount = elem.amount;
-            // If the shield covers the hit part its own armour already applies; otherwise a
+            // If the shield covers the struck part its own armour already applies; otherwise a
             // successful shield roll lets the shield absorb part of the damage as well.
-            if( shield_roll && ( !shield->covers( bp_hit ) || !is_worn( *shield ) ) ) {
+            if( shield_roll && ( !shield->covers( struck_bp ) || !is_worn( *shield ) ) ) {
                 elem.amount -= get_block_amount( *shield, elem );
             }
             elem.amount *= physical_block_multiplier;
