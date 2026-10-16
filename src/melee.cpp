@@ -2217,15 +2217,19 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // Check if we are going to block with an item. This could
     // be worn equipment with the BLOCK_WHILE_WORN flag.
     const bool has_shield = !!shield;
-    bool worn_shield = has_shield && shield->has_flag( flag_BLOCK_WHILE_WORN );
+    const bool worn_shield = has_shield && shield->has_flag( flag_BLOCK_WHILE_WORN );
+    // A real shield: BLOCK_WHILE_WORN plus a blocking technique of its own.  Arm guards and
+    // leg guards only carry the flag (blocking ability 2), and a wielded WBLOCK weapon is not
+    // a shield at all, so neither of them counts as one anywhere below.
+    const bool real_shield = worn_shield && melee::blocking_ability( *shield ) > 2;
 
     // Melee skill and reaction score governs if you can react in time
     // Skill of 5 without relevant encumbrance guarantees a block attempt
     // A shield is the exception: raising it is not a fighting skill, so following Bright
     // Nights the reaction roll only gates blocking that relies on the body itself, and
-    // anyone carrying a shield gets a block attempt every turn.
+    // anyone carrying a real shield gets a block attempt every turn.
     int melee_skill = has_active_bionic( bio_cqb ) ? 5 : get_skill_level( skill_melee );
-    if( !has_shield &&
+    if( !real_shield &&
         !x_in_y( melee_skill * 20.0 * get_limb_score( limb_score_reaction ), 100 ) ) {
         add_msg_debug( debugmode::DF_MELEE, "Block roll failed" );
         return false;
@@ -2267,7 +2271,7 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
         if( arm_block || leg_block || nonstandard_block ) {
             // block_bonus for limb blocks will be added when the limb is decided
             block_score = get_arm_str() + unarmed_skill;
-        } else if( worn_shield && block_bonus > 2 ) {
+        } else if( real_shield ) {
             // A shield strapped to the forearm can be raised without any martial art, so let
             // a worn shield make the arm block on its own; the worn shield then contributes
             // its blocking ability and takes the wear further down.  Only items with a real
@@ -2343,8 +2347,7 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // blocking ability above the bare flag value of 2 identifies - so arm guards, leg guards
     // and plain WBLOCK weapons are never affected.  Feet are excluded, as upstream.
     bool shield_roll = false;
-    if( has_shield && block_bonus > 2 && shield->has_flag( flag_BLOCK_WHILE_WORN ) &&
-        bp_hit != bodypart_id( "foot_l" ) && bp_hit != bodypart_id( "foot_r" ) ) {
+    if( real_shield && bp_hit != bodypart_id( "foot_l" ) && bp_hit != bodypart_id( "foot_r" ) ) {
         float shield_block_chance = shield->get_avg_coverage();
         const bool leg_hit = bp_hit == bodypart_id( "leg_l" ) || bp_hit == bodypart_id( "leg_r" );
         if( shield->has_technique( WBLOCK_3 ) ) {
