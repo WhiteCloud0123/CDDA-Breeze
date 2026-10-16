@@ -1056,22 +1056,23 @@
     "path_settings": { "max_dist": 40, "allow_open_doors": true, "avoid_traps": true, "avoid_sharp": true },
     "harvest": "human",
     "dissect": "dissect_human_sample_single",
-    "starting_ammo": { "45_acp": 24 },
+    "starting_ammo": { "45_acp": 120 },
     "special_attacks": [
       [ "PARROT_AT_DANGER", 5 ],
       { "id": "slam" },
       {
         "type": "gun",
-        "cooldown": 8,
-        "move_cost": 150,
+        "cooldown": 6,
+        "move_cost": 5,
         "gun_type": "usp_45",
         "ammo_type": "45_acp",
         "fake_skills": [ [ "gun", 5 ], [ "pistol", 3 ] ],
         "fake_dex": 8,
         "fake_per": 10,
-        "ranges": [ [ 2, 16, "DEFAULT" ] ],
+        "ranges": [ [ 0, 16, "DEFAULT" ] ],
         "require_targeting_player": false,
-        "description": "The feral SWAT shieldbearer fires their USP .45!"
+        "description": "The feral SWAT shieldbearer fires their USP .45!",
+        "no_crits": true
       }
     ],
     "death_drops": "mon_feral_swat_boss_shieldman_death_drops",
