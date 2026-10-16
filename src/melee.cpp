@@ -2336,6 +2336,31 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // to nothing, at which point we're relying on attackers hitting enough to drain blocks.
     const float physical_block_multiplier = logarithmic_range( 0, 40, block_score );
 
+    // A shield can also blunt a hit that lands outside what it covers.  Bright Nights rolls
+    // the shield's average coverage, weighted by its blocking technique, plus the melee skill
+    // as a flat percentage, and then applies the shield's own resistances to that hit.  Only
+    // real shields qualify - BLOCK_WHILE_WORN together with a blocking technique, which the
+    // blocking ability above the bare flag value of 2 identifies - so arm guards, leg guards
+    // and plain WBLOCK weapons are never affected.  Feet are excluded, as upstream.
+    bool shield_roll = false;
+    if( has_shield && block_bonus > 2 && shield->has_flag( flag_BLOCK_WHILE_WORN ) &&
+        bp_hit != bodypart_id( "foot_l" ) && bp_hit != bodypart_id( "foot_r" ) ) {
+        float shield_block_chance = shield->get_avg_coverage();
+        const bool leg_hit = bp_hit == bodypart_id( "leg_l" ) || bp_hit == bodypart_id( "leg_r" );
+        if( shield->has_technique( WBLOCK_3 ) ) {
+            shield_block_chance *= leg_hit ? 0.75f : 0.9f;
+        } else if( shield->has_technique( WBLOCK_2 ) ) {
+            shield_block_chance *= leg_hit ? 0.5f : 0.8f;
+        } else if( shield->has_technique( WBLOCK_1 ) ) {
+            shield_block_chance *= leg_hit ? 0.25f : 0.7f;
+        }
+        // Melee skill adds directly, so a trained user can reach a guaranteed block.
+        shield_block_chance += melee_skill;
+        if( rng( 1, 100 ) <= shield_block_chance ) {
+            shield_roll = true;
+        }
+    }
+
     add_msg_debug( debugmode::DF_MELEE, "Physical block multiplier %.1f", physical_block_multiplier );
     float total_damage = 0.0f;
     float damage_blocked = 0.0f;
@@ -2357,6 +2382,11 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
             }
 
             float previous_amount = elem.amount;
+            // If the shield covers the hit part its own armour already applies; otherwise a
+            // successful shield roll lets the shield absorb part of the damage as well.
+            if( shield_roll && ( !shield->covers( bp_hit ) || !is_worn( *shield ) ) ) {
+                elem.amount -= get_block_amount( *shield, elem );
+            }
             elem.amount *= physical_block_multiplier;
             damage_blocked += previous_amount - elem.amount;
         }
