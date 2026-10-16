@@ -2211,10 +2211,22 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
         return false;
     }
 
+    // Extract this to make it easier to implement shields/multiwield later
+    item_location shield = best_shield();
+
+    // Check if we are going to block with an item. This could
+    // be worn equipment with the BLOCK_WHILE_WORN flag.
+    const bool has_shield = !!shield;
+    bool worn_shield = has_shield && shield->has_flag( flag_BLOCK_WHILE_WORN );
+
     // Melee skill and reaction score governs if you can react in time
     // Skill of 5 without relevant encumbrance guarantees a block attempt
+    // A shield is the exception: raising it is not a fighting skill, so following Bright
+    // Nights the reaction roll only gates blocking that relies on the body itself, and
+    // anyone carrying a shield gets a block attempt every turn.
     int melee_skill = has_active_bionic( bio_cqb ) ? 5 : get_skill_level( skill_melee );
-    if( !x_in_y( melee_skill * 20.0 * get_limb_score( limb_score_reaction ), 100 ) ) {
+    if( !has_shield &&
+        !x_in_y( melee_skill * 20.0 * get_limb_score( limb_score_reaction ), 100 ) ) {
         add_msg_debug( debugmode::DF_MELEE, "Block roll failed" );
         return false;
     }
@@ -2224,14 +2236,6 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // This bonus absorbs damage from incoming attacks before they land,
     // but it still counts as a block even if it absorbs all the damage.
     float total_phys_block = mabuff_block_bonus();
-
-    // Extract this to make it easier to implement shields/multiwield later
-    item_location shield = best_shield();
-
-    // Check if we are going to block with an item. This could
-    // be worn equipment with the BLOCK_WHILE_WORN flag.
-    const bool has_shield = !!shield;
-    bool worn_shield = has_shield && shield->has_flag( flag_BLOCK_WHILE_WORN );
 
     bool conductive_shield = false;
     bool unarmed = !is_armed();
@@ -2271,7 +2275,7 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
             // value of 2), so arm guards, leg guards and other worn armour keep the
             // martial-art gating they have always had.
             arm_block = true;
-            block_score = get_arm_str() + unarmed_skill;
+            block_score = get_arm_str() + melee_skill;
         } else {
             // We don't have a shield or a technique. How are we blocking?
             return false;
