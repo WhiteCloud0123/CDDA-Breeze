@@ -14122,7 +14122,8 @@
           "rotates": false
         },
         { "id": "mon_zombie_soldier_shieldman", "fg": 8942, "rotates": false },
-        { "id": "mon_feral_swat_boss_shieldman", "fg": 8943, "rotates": false }
+        { "id": "mon_feral_swat_boss_shieldman", "fg": 8943, "rotates": false },
+        { "id": "mon_zombie_cop_shieldman", "fg": 8944, "rotates": false }
       ]
     },
     {
