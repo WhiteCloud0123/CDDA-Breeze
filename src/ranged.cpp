@@ -3371,6 +3371,19 @@ tripoint target_ui::choose_initial_target()
         return cr->pos();
     }
 
+    // Try the closest hostile creature before settling for a neutral bystander: falling back to
+    // the closest creature meant a wandering trader standing next to a zombie could steal the
+    // initial aim.  Spells are excluded because many of them are meant to be cast on allies.
+    if( mode != TargetMode::Spell ) {
+        const auto hostile = std::find_if( targets.begin(), targets.end(),
+        [this]( const Creature * candidate ) {
+            return you->attitude_to( *candidate ) == Creature::Attitude::HOSTILE;
+        } );
+        if( hostile != targets.end() ) {
+            return ( *hostile )->pos();
+        }
+    }
+
     // Try closest creature
     if( !targets.empty() ) {
         return targets[0]->pos();
