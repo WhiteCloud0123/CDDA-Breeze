@@ -14026,6 +14026,107 @@
       ]
     },
     {
+      "file": "shields.png",
+      "//": "range 8898 to 8945",
+      "tiles": [
+        { "id": "shield_wooden", "fg": 8898, "rotates": false },
+        { "id": [ "overlay_worn_shield_wooden", "overlay_wielded_shield_wooden" ], "fg": 8899, "rotates": false },
+        { "id": "shield_wooden_large", "fg": 8900, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_wooden_large", "overlay_wielded_shield_wooden_large" ],
+          "fg": 8901,
+          "rotates": false
+        },
+        { "id": "shield_leather", "fg": 8902, "rotates": false },
+        { "id": [ "overlay_worn_shield_leather", "overlay_wielded_shield_leather" ], "fg": 8903, "rotates": false },
+        { "id": "shield_leather_large", "fg": 8904, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_leather_large", "overlay_wielded_shield_leather_large" ],
+          "fg": 8905,
+          "rotates": false
+        },
+        { "id": "shield_kevlar", "fg": 8906, "rotates": false },
+        { "id": [ "overlay_worn_shield_kevlar", "overlay_wielded_shield_kevlar" ], "fg": 8907, "rotates": false },
+        { "id": "shield_kevlar_large", "fg": 8908, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_kevlar_large", "overlay_wielded_shield_kevlar_large" ],
+          "fg": 8909,
+          "rotates": false
+        },
+        { "id": "shield_banded", "fg": 8910, "rotates": false },
+        { "id": [ "overlay_worn_shield_banded", "overlay_wielded_shield_banded" ], "fg": 8911, "rotates": false },
+        { "id": "shield_banded_large", "fg": 8912, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_banded_large", "overlay_wielded_shield_banded_large" ],
+          "fg": 8913,
+          "rotates": false
+        },
+        { "id": "shield_welded", "fg": 8914, "rotates": false },
+        { "id": [ "overlay_worn_shield_welded", "overlay_wielded_shield_welded" ], "fg": 8915, "rotates": false },
+        { "id": "shield_welded_hard", "fg": 8916, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_welded_hard", "overlay_wielded_shield_welded_hard" ],
+          "fg": 8917,
+          "rotates": false
+        },
+        { "id": "shield_welded_composite", "fg": 8918, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_welded_composite", "overlay_wielded_shield_welded_composite" ],
+          "fg": 8919,
+          "rotates": false
+        },
+        { "id": "shield_welded_superalloy", "fg": 8920, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_welded_superalloy", "overlay_wielded_shield_welded_superalloy" ],
+          "fg": 8921,
+          "rotates": false
+        },
+        { "id": "shield_buckler", "fg": 8922, "rotates": false },
+        { "id": [ "overlay_worn_shield_buckler", "overlay_wielded_shield_buckler" ], "fg": 8923, "rotates": false },
+        { "id": "shield_buckler_superalloy", "fg": 8924, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_buckler_superalloy", "overlay_wielded_shield_buckler_superalloy" ],
+          "fg": 8925,
+          "rotates": false
+        },
+        { "id": "shield_spiked", "fg": 8926, "rotates": false },
+        { "id": [ "overlay_worn_shield_spiked", "overlay_wielded_shield_spiked" ], "fg": 8927, "rotates": false },
+        { "id": "shield_spiked_large", "fg": 8928, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_spiked_large", "overlay_wielded_shield_spiked_large" ],
+          "fg": 8929,
+          "rotates": false
+        },
+        { "id": "shield_riot", "fg": 8930, "rotates": false },
+        { "id": [ "overlay_worn_shield_riot", "overlay_wielded_shield_riot" ], "fg": 8931, "rotates": false },
+        { "id": "shield_ballistic", "fg": 8932, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_ballistic", "overlay_wielded_shield_ballistic" ],
+          "fg": 8933,
+          "rotates": false
+        },
+        { "id": "shield_ballistic_large", "fg": 8934, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_ballistic_large", "overlay_wielded_shield_ballistic_large" ],
+          "fg": 8935,
+          "rotates": false
+        },
+        { "id": "shield_bronze", "fg": 8936, "rotates": false },
+        { "id": [ "overlay_worn_shield_bronze", "overlay_wielded_shield_bronze" ], "fg": 8937, "rotates": false },
+        { "id": "shield_scute", "fg": 8938, "rotates": false },
+        { "id": [ "overlay_worn_shield_scute", "overlay_wielded_shield_scute" ], "fg": 8939, "rotates": false },
+        { "id": "shield_targe_wooden", "fg": 8940, "rotates": false },
+        {
+          "id": [ "overlay_worn_shield_targe_wooden", "overlay_wielded_shield_targe_wooden" ],
+          "fg": 8941,
+          "rotates": false
+        },
+        { "id": "mon_zombie_soldier_shieldman", "fg": 8942, "rotates": false },
+        { "id": "mon_feral_swat_boss_shieldman", "fg": 8943, "rotates": false },
+        { "id": "mon_zombie_cop_shieldman", "fg": 8944, "rotates": false }
+      ]
+    },
+    {
       "file": "fallback.png",
       "tiles": [  ],
       "ascii": [

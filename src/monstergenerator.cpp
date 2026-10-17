@@ -19,6 +19,7 @@
 #include "debug.h"
 #include "enum_conversions.h"
 #include "field_type.h"
+#include "game.h"
 #include "generic_factory.h"
 #include "item.h"
 #include "item_group.h"
@@ -1006,6 +1007,72 @@ void mtype::load( const JsonObject &jo, const std::string &src )
 
     optional( jo, was_loaded, "speed_description", speed_desc, speed_description_DEFAULT );
     optional( jo, was_loaded, "death_function", mdeath_effect );
+
+    // 解析 "on_death" 对象，语法参照 CBN，支持 death_function、spawn_mon、spawn_mon_near。
+    // death_function 与顶层同名成员一样是对象写法，直接复用 monster_death_effect::load。
+    if( jo.has_object( "on_death" ) ) {
+        // copy-from 继承来的死亡回调应被本次定义替换，而不是叠加，与 special_attacks 等字段同规则
+        if( was_loaded ) {
+            on_death.clear();
+            on_death_spawns.clear();
+        }
+        JsonObject od = jo.get_object( "on_death" );
+
+        // on_death 里的 death_function 也是顶层同名成员那种对象写法，直接复用同一个加载函数。
+        // 微风一个怪物只有一份 monster_death_effect，所以它仍是「指定哪个字段就覆盖哪个字段」，
+        // 未指定的部分保留顶层 death_function（或默认值）的效果。
+        if( od.has_object( "death_function" ) ) {
+            JsonObject od_df = od.get_object( "death_function" );
+            od_df.allow_omitted_members();
+            mdeath_effect.load( od_df );
+            mdeath_effect.was_loaded = true;
+        } else if( od.has_array( "death_function" ) && !od.get_array( "death_function" ).empty() ) {
+            // CBN 的旧写法是函数名数组，微风没有对应的 dies 函数名表，无法照搬
+            od.throw_error_at( "death_function",
+                               "monster death function is only supported as an object" );
+        }
+
+        // on_death::spawn_mon 与 on_death::spawn_mon_near 收集到的生成请求
+        std::vector<std::pair<int, mtype_id>> mon_spawns;
+
+        if( od.has_string( "spawn_mon" ) ) {
+            mtype_id spawn_mon = mtype_id::NULL_ID();
+            assign( od, "spawn_mon", spawn_mon );
+
+            mon_spawns.emplace_back( 0, spawn_mon );
+        }
+
+        if( od.has_object( "spawn_mon_near" ) ) {
+            JsonObject od_smn = od.get_object( "spawn_mon_near" );
+            int dist = 0;
+            assign( od_smn, "distance", dist );
+
+            // 逐个读字符串再转成 mtype_id，而不是为读一个 id 数组去实例化模板读取器
+            if( od_smn.has_array( "ids" ) ) {
+                for( const std::string &mon_str : od_smn.get_string_array( "ids" ) ) {
+                    mon_spawns.emplace_back( dist, mtype_id( mon_str ) );
+                }
+            }
+        }
+
+        // 这里只记录，等到所有怪物定义都加载完再在 check_monster_definitions 里校验 id，
+        // 否则会误报那些在本文件之后才定义的怪物。
+        on_death_spawns = mon_spawns;
+
+        // 生成函数：spawn_mon 至少按 radius 1 处理。怪物调用 on_death 时 dead 虽然已经置为
+        // true，但它仍在 creature_tracker 里（要等 die() 返回之后由 game::remove_dead() 移除），
+        // 因此自己倒下的那一格对 can_place_monster() 依然是占用状态，radius 0 只会去试中心格
+        // 并直接返回空指针，替代怪物根本不会出现。place_critter_around 从中心向外逐圈找空位，
+        // 给 1 就会把替代怪物放在离尸体最近的一格，spawn_mon_near 自定义的半径仍然照用。
+        if( !mon_spawns.empty() ) {
+            on_death.emplace_back( [mon_spawns]( monster & z ) {
+                for( const std::pair<int, mtype_id> &spawn : mon_spawns ) {
+                    g->place_critter_around( spawn.second, z.pos(), std::max( 1, spawn.first ) );
+                }
+            } );
+        }
+    }
+
     optional( jo, was_loaded, "melee_training_cap", melee_training_cap, MAX_SKILL );
 
     if( jo.has_array( "emit_fields" ) ) {
@@ -1440,6 +1507,12 @@ void MonsterGenerator::check_monster_definitions() const
         if( !mon.fungalize_into.is_empty() && !mon.fungalize_into.is_valid() ) {
             debugmsg( "monster %s has unknown fungalize_into: %s", mon.id.c_str(),
                       mon.fungalize_into.c_str() );
+        }
+        for( const std::pair<int, mtype_id> &spawn : mon.on_death_spawns ) {
+            if( !spawn.second.is_valid() ) {
+                debugmsg( "monster %s has unknown on_death spawn monster id: %s", mon.id.c_str(),
+                          spawn.second.c_str() );
+            }
         }
         if( !mon.picture_id.is_empty() && !mon.picture_id.is_valid() ) {
             debugmsg( "monster %s has unknown ascii_picture: %s", mon.id.c_str(),

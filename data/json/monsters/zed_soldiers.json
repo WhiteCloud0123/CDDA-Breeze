@@ -530,5 +530,25 @@
     "armor_cut": 27,
     "harvest": "zombie",
     "special_attacks": [ [ "BIO_OP_BIOJUTSU", 15 ] ]
+  },
+  {
+    "id": "mon_zombie_soldier_shieldman",
+    "type": "MONSTER",
+    "name": { "str": "zombie shieldbearer" },
+    "description": "Wearing a military uniform, this zombie walks slowly as it hides its body behind a hefty shield.  Appearing no different from any other fallen soldier aside from its defenses, a good solid hit should either wreck its precious shield or knock it out of its grasp.",
+    "copy-from": "mon_zombie_soldier",
+    "looks_like": "mon_zombie_soldier",
+    "diff": 15,
+    "hp": 1,
+    "speed": 60,
+    "//": "Armor values match the ballistic shield it carries, plus what remains of the soldier's own gear.  It keeps the upstream convention of having 1 HP: the shield is the whole defense, so anything that gets past it fells the soldier, and it then gets back up as the ordinary soldier zombie hiding underneath.  The wrecked shield is left on the corpse.",
+    "armor_bash": 40,
+    "armor_cut": 50,
+    "armor_bullet": 60,
+    "vision_day": 25,
+    "special_attacks": [ { "id": "slam" }, [ "scratch", 20 ] ],
+    "on_death": { "death_function": { "corpse_type": "NO_CORPSE" }, "spawn_mon": "mon_zombie_soldier" },
+    "death_drops": "mon_zombie_soldier_shieldman_death_drops",
+    "delete": { "flags": [ "REVIVES" ], "categories": [ "CLASSIC" ] }
   }
 ]

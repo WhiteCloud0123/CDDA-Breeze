@@ -44,7 +44,15 @@
       { "distribution": [ { "group": "infantry_officer_gear" }, { "group": "infantry_medical_gear" } ], "prob": 25 },
       { "group": "wallets", "prob": 10 },
       { "group": "pocket_cigar", "prob": 15 },
-      { "group": "misc_smoking_legal", "prob": 30 }
+      { "group": "misc_smoking_legal", "prob": 30 },
+      {
+        "distribution": [
+          { "item": "shield_ballistic", "prob": 50, "damage": [ 1, 4 ] },
+          { "item": "shield_ballistic_large", "prob": 30, "damage": [ 1, 4 ] },
+          { "item": "shield_riot", "prob": 20, "damage": [ 1, 4 ] }
+        ],
+        "prob": 3
+      }
     ]
   },
   {
@@ -148,6 +156,25 @@
       { "group": "wallets", "prob": 10 },
       { "group": "pocket_cigar", "prob": 15 },
       { "group": "misc_smoking_legal", "prob": 30 }
+    ]
+  },
+  {
+    "id": "mon_zombie_soldier_shieldman_death_drops",
+    "type": "item_group",
+    "subtype": "collection",
+    "//": "What is left of the shield it was hiding behind.  Its uniform and gear come from the ordinary soldier zombie it gets back up as, so they are not repeated here.",
+    "entries": [
+      {
+        "collection": [ { "item": "rigid_kevlar_plate", "count": [ 1, 2 ] }, { "item": "steel_chunk", "count": [ 2, 6 ] } ],
+        "prob": 60
+      },
+      {
+        "distribution": [
+          { "item": "shield_ballistic", "prob": 70, "damage": [ 2, 4 ] },
+          { "item": "shield_ballistic_large", "prob": 30, "damage": [ 2, 4 ] }
+        ]
+      },
+      { "item": "steel_plate", "prob": 25, "damage": [ 1, 4 ] }
     ]
   }
 ]

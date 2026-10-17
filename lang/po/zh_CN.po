@@ -102147,6 +102147,308 @@ msgid "Holster spear"
 msgstr "收起长矛"
 
 #. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "wooden shield"
+msgid_plural "wooden shields"
+msgstr[0] "木盾"
+
+#. ~ Description of "wooden shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A crude wooden shield lacking any metal or leather reinforcement.  "
+"Tolerable weight but not very tough."
+msgstr "一块粗糙的木盾，没有金属或皮革加固。重量尚可，但不太结实。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "large wooden shield"
+msgid_plural "large wooden shields"
+msgstr[0] "大木盾"
+
+#. ~ Description of "large wooden shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A crude wooden tower shield lacking any metal or leather reinforcement.  "
+"Bulky, but offers a decent amount of protection."
+msgstr "一块粗糙的木制塔盾，没有金属或皮革加固。体积笨重，但能提供不错的防护。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "riot shield"
+msgid_plural "riot shields"
+msgstr[0] "防暴盾"
+
+#. ~ Description of "riot shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A large but fairly light plastic shield designed for riot police officers."
+"  Not too encumbering, but designed for fending off thrown rocks rather "
+"than bullets."
+msgstr "一块大而轻便的塑料盾，为防暴警察设计。累赘度不高，但设计初衷是抵挡投掷的石块，而非子弹。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "ballistic shield"
+msgid_plural "ballistic shields"
+msgstr[0] "防弹盾"
+
+#. ~ Description of "ballistic shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A heavy composite shield used by SWAT teams and other armed forces.  It will"
+" shrug off light pistol rounds, though a heavier load like .40 S&W can still"
+" punch through.  Its heavy-duty nature means it's quite encumbering and "
+"doesn't cover the legs very well."
+msgstr "一块沉重的复合盾，供特警队及其他武装部队使用。轻型手枪弹大多能挡住，但 .40 S&W 这类重弹仍会打穿。重型结构使其十分累赘，对腿部的防护也不太好。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "large ballistic shield"
+msgid_plural "large ballistic shields"
+msgstr[0] "大防弹盾"
+
+#. ~ Description of "large ballistic shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A tall composite shield used by SWAT teams and other armed forces.  It stops"
+" light pistol rounds, though a heavier load like .40 S&W can still punch "
+"through.  Covers the body and legs quite well, but is much heavier and more "
+"encumbering than lighter models."
+msgstr "一块高大的复合盾，供特警队及其他武装部队使用。轻型手枪弹大多能挡住，但 .40 S&W 这类重弹仍会打穿。对身体和腿部的防护相当好，但比轻型型号沉重得多，也更累赘。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "leather-reinforced shield"
+msgid_plural "leather-reinforced shields"
+msgstr[0] "皮革加固盾"
+
+#. ~ Description of "leather-reinforced shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A simple round shield made of wood with leather reinforcement.  Sturdier "
+"and stronger than a simple wooden shield, and less encumbering than a metal"
+" one."
+msgstr "一块简单的木制圆盾，用皮革加固。比单纯的木盾更坚固，也比金属盾轻便。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "kevlar-lined shield"
+msgid_plural "kevlar-lined shields"
+msgstr[0] "凯夫拉衬盾"
+
+#. ~ Description of "kevlar-lined shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A simple shield made of wood, faced with a layer of kevlar to improve "
+"ballistic resistance."
+msgstr "一块简单的木盾，表面衬有一层凯夫拉，用以提升防弹能力。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "banded shield"
+msgid_plural "banded shields"
+msgstr[0] "铁箍盾"
+
+#. ~ Description of "banded shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A simple round shield made of wood with bands of iron reinforcing it.  "
+"Stronger than a simple wooden shield, but also more encumbering."
+msgstr "一块简单的木制圆盾，用铁箍加固。比单纯的木盾更坚固，但也更累赘。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "large leather-reinforced shield"
+msgid_plural "large leather-reinforced shields"
+msgstr[0] "大皮革加固盾"
+
+#. ~ Description of "large leather-reinforced shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A large shield made of wood with leather reinforcement.  Sturdier and "
+"stronger than a basic wooden shield, and less encumbering than a metal one."
+msgstr "一块用皮革加固的大型木盾。比普通的木盾更坚固，也比金属盾轻便。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "large kevlar-lined shield"
+msgid_plural "large kevlar-lined shields"
+msgstr[0] "大凯夫拉衬盾"
+
+#. ~ Description of "large kevlar-lined shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A large shield made of wood, faced with a layer of kevlar to improve "
+"ballistic resistance."
+msgstr "一块大型木盾，表面衬有一层凯夫拉，用以提升防弹能力。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "large banded shield"
+msgid_plural "large banded shields"
+msgstr[0] "大铁箍盾"
+
+#. ~ Description of "large banded shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A large shield made of wood with iron bands reinforcing it.  Stronger than "
+"a simple wooden shield, but also more encumbering."
+msgstr "一块大型木盾，用铁箍加固。比单纯的木盾更坚固，但也更累赘。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "welded shield"
+msgid_plural "welded shields"
+msgstr[0] "焊接盾"
+
+#. ~ Description of "welded shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A shield made out of steel armor plating with handles welded on.  It's a "
+"lot heavier and less well-made compared to a proper medieval shield, but it"
+" certainly works."
+msgstr "一块用钢板焊上把手制成的盾。与正规的中世纪盾牌相比，它沉重得多，做工也粗糙，但确实管用。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "welded hard steel shield"
+msgid_plural "welded hard steel shields"
+msgstr[0] "焊接高碳钢盾"
+
+#. ~ Description of "welded hard steel shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A shield made out of hardened steel armor plating with handles welded on.  "
+"While incredibly heavy compared to a traditional shield, it's also quite "
+"protective."
+msgstr "一块用硬化高碳钢装甲板焊上把手制成的盾。虽然比传统盾牌沉重得多，防护力也相当出色。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "welded composite shield"
+msgid_plural "welded composite shields"
+msgstr[0] "焊接复合盾"
+
+#. ~ Description of "welded composite shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A shield made out of military grade vehicle armor with handles welded on.  "
+"Incredibly heavy but can also take a fair bit of punishment."
+msgstr "一块用军用级车辆装甲焊上把手制成的盾。沉重无比，但也很能扛打。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "welded superalloy shield"
+msgid_plural "welded superalloy shields"
+msgstr[0] "焊接超合金盾"
+
+#. ~ Description of "welded superalloy shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A shield made out of superalloy armor plating with handles welded on.  It's"
+" heavier and less well-made compared to a proper medieval shield, but it "
+"certainly works."
+msgstr "一块用超合金装甲板焊上把手制成的盾。与正规的中世纪盾牌相比，它更重，做工也更粗糙，但确实管用。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "buckler"
+msgid_plural "bucklers"
+msgstr[0] "小圆盾"
+
+#. ~ Description of "buckler"
+#: data/json/items/armor/shields.json
+msgid ""
+"A small metal shield historically used for dueling rather than protection "
+"from arrows.  It's small and light enough to not hinder the use of your "
+"hands."
+msgstr "一种小型金属盾，历史上多用于决斗，而非抵挡箭矢。它小巧轻便，不会妨碍双手的活动。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "superalloy buckler"
+msgid_plural "superalloy bucklers"
+msgstr[0] "超合金小圆盾"
+
+#. ~ Description of "superalloy buckler"
+#: data/json/items/armor/shields.json
+msgid ""
+"A small metal shield historically used for dueling rather than protection "
+"from arrows.  This one is made of modern superalloy instead of steel.  It's"
+" small and light enough to not hinder the use of your hands."
+msgstr "一种小型金属盾，历史上多用于决斗，而非抵挡箭矢。这一块用现代超合金制成，而非钢铁。它小巧轻便，不会妨碍双手的活动。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "spiked shield"
+msgid_plural "spiked shields"
+msgstr[0] "尖刺盾"
+
+#. ~ Description of "spiked shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A metal reinforced shield with spikes jutting out of it.  Can be used as a "
+"melee weapon if need be."
+msgstr "一块带铁刺的金属加固盾。必要时可以当作近战武器使用。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "large spiked shield"
+msgid_plural "large spiked shields"
+msgstr[0] "大尖刺盾"
+
+#. ~ Description of "large spiked shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A large metal reinforced shield with spikes jutting out of it.  Can be used"
+" as a melee weapon if need be."
+msgstr "一块带铁刺的大型金属加固盾。必要时可以当作近战武器使用。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "bronze shield"
+msgid_plural "bronze shields"
+msgstr[0] "青铜盾"
+
+#. ~ Description of "bronze shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A simple round shield made of wood, faced with a sheet of work-hardened "
+"bronze in the vein of a Greek hoplon.  Tougher against cutting weapons than"
+" iron-banded shields for the same encumbrance, but heavier and less "
+"protective against bashing weapons."
+msgstr "一块简单的木制圆盾，表面覆有一层加工硬化的青铜，形制近似古希腊的圆盾。在同等累赘度下，它比铁箍盾更能抵御劈砍，但更重，对钝击的防护也更差。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "scaleskin shield"
+msgid_plural "scaleskin shields"
+msgstr[0] "鳞盾"
+
+#. ~ Description of "scaleskin shield"
+#: data/json/items/armor/shields.json
+msgid ""
+"A tall oval shield made from the hardened scales of large reptiles, "
+"stitched together and boiled to harden it into a single stiff panel, then "
+"mounted on a central wooden handgrip similar to shields historically "
+"associated with southeastern Africa.  Surprisingly light and durable."
+msgstr "一块用大型爬行动物的硬化鳞片缝制而成的高大椭圆盾，经沸煮硬化成整块硬板，再装到中央的木制握把上，形制近似历史上东南非地区使用的盾牌。出乎意料地轻便耐用。"
+
+#. ~ Item name
+#: data/json/items/armor/shields.json
+msgid "wooden targe"
+msgid_plural "wooden targes"
+msgstr[0] "木质圆盾"
+
+#. ~ Description of "wooden targe"
+#: data/json/items/armor/shields.json
+msgid ""
+"A small, round wooden shield designed more for swashbuckling than for "
+"fending off arrows.  It's small and light enough to not hinder the use of "
+"your hands."
+msgstr "一块小型木制圆盾，与其说是用来抵挡箭矢，不如说是为近身剑斗而生。它小巧轻便，不会妨碍双手的活动。"
+
+#. ~ Item name
 #: data/json/items/armor/storage.json
 msgid "backpack"
 msgid_plural "backpacks"
@@ -187186,6 +187488,26 @@ msgid "The feral officer fires their M18!"
 msgstr "疯人海军军官击发了它的 M18 手枪！"
 
 #. ~ Monster name
+#: data/json/monsters/feral_humans.json
+msgid "feral SWAT shieldbearer"
+msgid_plural "feral SWAT shieldbearers"
+msgstr[0] "疯人SWAT持盾者"
+
+#. ~ Description of monster "feral SWAT shieldbearer"
+#: data/json/monsters/feral_humans.json
+msgid ""
+"Wearing a black uniform with heavy armor adorned with a silver badge, this "
+"person was a member of an elite police team turned feral.  They hold a heavy "
+"ballistic shield in one hand and a pistol in the other.  It looks like you "
+"won't be able to smack this shield away like the others though."
+msgstr "穿着黑色制服，佩着银色徽章的重甲人员，曾经是精英警察部队的一员，如今已经发狂。一手握着沉重的防弹盾，另一手握着枪。看来你没法像对付其他持盾者那样把它的盾牌打飞。"
+
+#. ~ Description of special attack of monster "feral SWAT shieldbearer"
+#: data/json/monsters/feral_humans.json
+msgid "The feral SWAT shieldbearer fires their USP .45!"
+msgstr "疯人SWAT持盾者击发了它的 USP .45 手枪。"
+
+#. ~ Monster name
 #: data/json/monsters/fish.json
 msgid "alpha razorclaw"
 msgid_plural "alpha razorclaws"
@@ -195263,6 +195585,22 @@ msgid ""
 msgstr "这只强壮的丧尸身上穿着残留的破烂保安制服。"
 
 #. ~ Monster name
+#: data/json/monsters/zed-classic.json
+msgid "zombie riot shieldbearer"
+msgid_plural "zombie riot shieldbearers"
+msgstr[0] "防暴盾丧尸"
+
+#. ~ Description of monster "zombie riot shieldbearer"
+#: data/json/monsters/zed-classic.json
+msgid ""
+"A human body covered by a weather-beaten and badly damaged police uniform.  "
+"It still holds a riot shield, which it hides behind as it slowly walks.  "
+"Appearing no different from any other fallen officer aside from its defenses, "
+"a good solid hit should either wreck its precious shield or knock it out of "
+"its grasp."
+msgstr "一具穿着饱经风霜，破损严重的警服的躯体。它仍然握着一面防暴盾，缓慢行走时把身体藏在盾后。除了防御力之外，它和任何倒下的警察没什么两样，一记结实的重击要么会打坏它宝贝的盾牌，要么会把盾牌从它手里打掉。"
+
+#. ~ Monster name
 #: data/json/monsters/zed-medical.json
 msgid "zombie medic"
 msgid_plural "zombie medics"
@@ -197477,6 +197815,21 @@ msgid ""
 "military gear and dangerous physical abilities.  Its malfunctioning "
 "equipment sends out occasional showers of sparks."
 msgstr "这只丧尸曾经是一名训练有素的士兵，现在仍然穿着厚重的军用装备，具备可怕的身体素质。它体内故障的生化插件偶尔会释放出一连串火花。"
+
+#. ~ Monster name
+#: data/json/monsters/zed_soldiers.json
+msgid "zombie shieldbearer"
+msgid_plural "zombie shieldbearers"
+msgstr[0] "持盾丧尸"
+
+#. ~ Description of monster "zombie shieldbearer"
+#: data/json/monsters/zed_soldiers.json
+msgid ""
+"Wearing a military uniform, this zombie walks slowly as it hides its body "
+"behind a hefty shield.  Appearing no different from any other fallen soldier "
+"aside from its defenses, a good solid hit should either wreck its precious "
+"shield or knock it out of its grasp."
+msgstr "穿着军装的丧尸，缓慢行走时把身体藏在厚重的盾牌后面。除了防御力之外，它和任何倒下的士兵没什么两样，一记结实的重击要么会打坏它宝贝的盾牌，要么会把盾牌从它手里打掉。"
 
 #. ~ Monster name
 #: data/json/monsters/zed_survivor.json
@@ -282078,6 +282431,11 @@ msgstr "腿部"
 #: data/json/recipes/recipes.json
 msgid "FEET"
 msgstr "脚部"
+
+#. ~ Crafting recipes subcategory of "ARMOR" cat.
+#: data/json/recipes/recipes.json
+msgid "SHIELD"
+msgstr "盾牌"
 
 #. ~ Crafting recipes category name
 #: data/json/recipes/recipes.json
@@ -419806,6 +420164,26 @@ msgstr "你压迫伤口来止血……"
 #: src/character.cpp:11698
 msgid "<npcname> puts pressure on the bleeding wound…"
 msgstr "<npcname> 压迫伤口来止血……"
+
+#: src/character.cpp:11337
+#, c-format
+msgid "The shot hits your %s, absorbing %i damage."
+msgstr "射击击中了你的%s，吸收了%i点伤害。"
+
+#: src/character.cpp:11338
+#, c-format
+msgid "The shot hits <npcname>'s %s, absorbing %i damage."
+msgstr "射击击中了<npcname>的%s，吸收了%i点伤害。"
+
+#: src/character.cpp:11342
+#, c-format
+msgid "The shot hits your %s, but it punches right through!"
+msgstr "射击击中了你的%s，但子弹直接穿透了。"
+
+#: src/character.cpp:11343
+#, c-format
+msgid "The shot hits <npcname>'s %s, but it punches right through!"
+msgstr "射击击中了<npcname>的%s，但子弹直接穿透了。"
 
 #: src/character_ammo.cpp:124 src/veh_appliance.cpp:376
 #: src/veh_interact.cpp:1399

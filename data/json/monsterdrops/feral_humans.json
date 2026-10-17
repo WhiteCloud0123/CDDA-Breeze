@@ -500,6 +500,23 @@
       },
       {
         "distribution": [
+          { "item": "shield_wooden", "prob": 15, "damage": [ 1, 4 ] },
+          { "item": "shield_wooden_large", "prob": 6, "damage": [ 1, 4 ] },
+          { "item": "shield_leather", "prob": 10, "damage": [ 1, 4 ] },
+          { "item": "shield_leather_large", "prob": 4, "damage": [ 1, 4 ] },
+          { "item": "shield_banded", "prob": 10, "damage": [ 1, 4 ] },
+          { "item": "shield_banded_large", "prob": 4, "damage": [ 1, 4 ] },
+          { "item": "shield_buckler", "prob": 6, "damage": [ 1, 4 ] },
+          { "item": "shield_bronze", "prob": 5, "damage": [ 1, 4 ] },
+          { "item": "shield_scute", "prob": 6, "damage": [ 1, 4 ] },
+          { "item": "shield_spiked", "prob": 6, "damage": [ 1, 4 ] },
+          { "item": "shield_spiked_large", "prob": 2, "damage": [ 1, 4 ] },
+          { "item": "shield_targe_wooden", "prob": 8, "damage": [ 1, 4 ] }
+        ],
+        "prob": 30
+      },
+      {
+        "distribution": [
           { "item": "boots_plate", "prob": 50, "damage": [ 1, 4 ] },
           { "item": "chainmail_feet", "prob": 30, "damage": [ 1, 4 ] },
           { "item": "boots_larmor", "prob": 20, "damage": [ 1, 4 ] }
@@ -821,6 +838,14 @@
       { "group": "military_standard_grenades", "count": [ 1, 3 ], "prob": 20 },
       { "group": "military_patrol_food" },
       { "item": "mask_gas", "prob": 5, "charges": [ 0, 100 ], "damage": [ 1, 4 ] },
+      {
+        "distribution": [
+          { "item": "shield_ballistic", "prob": 35, "damage": [ 1, 4 ] },
+          { "item": "shield_ballistic_large", "prob": 20, "damage": [ 1, 4 ] },
+          { "item": "shield_riot", "prob": 5, "damage": [ 1, 4 ] }
+        ],
+        "prob": 35
+      },
       { "item": "webbing_belt", "damage": [ 0, 4 ], "prob": 60 },
       { "item": "two_way_radio", "prob": 15, "charges": [ 0, 100 ], "damage": [ 1, 4 ] },
       { "item": "sheath", "prob": 80 },
@@ -856,6 +881,36 @@
       { "item": "m18", "prob": 100, "damage": [ 0, 4 ] },
       { "item": "p320mag_17rd_9x19mm", "prob": 50, "ammo-item": "9mm", "charges": [ 0, 14 ] },
       { "item": "p320mag_17rd_9x19mm", "prob": 50, "ammo-item": "9mm", "charges": [ 0, 17 ] }
+    ]
+  },
+  {
+    "id": "mon_feral_swat_boss_shieldman_death_drops",
+    "type": "item_group",
+    "subtype": "collection",
+    "magazine": 100,
+    "ammo": 20,
+    "entries": [
+      { "group": "swat_zombie_gear", "prob": 100, "damage": [ 0, 1 ] },
+      { "group": "swat_gloves", "prob": 30, "damage": [ 0, 2 ] },
+      { "group": "swat_helmet", "prob": 20, "damage": [ 0, 2 ] },
+      { "group": "swat_pants", "damage": [ 0, 2 ] },
+      { "group": "swat_shoes", "damage": [ 0, 2 ] },
+      { "group": "swat_torso", "damage": [ 0, 2 ] },
+      { "group": "underwear", "damage": [ 0, 4 ] },
+      { "group": "clothing_glasses", "prob": 5 },
+      { "group": "clothing_watch", "prob": 100 },
+      { "item": "badge_swat", "prob": 50 },
+      { "item": "cash_card", "prob": 50, "charges-min": 0, "charges-max": 50000 },
+      { "item": "usp_45", "prob": 100, "damage": [ 0, 2 ] },
+      { "item": "usp45mag", "prob": 50, "ammo-item": "45_acp", "charges": [ 0, 12 ] },
+      { "item": "usp45mag", "prob": 50, "ammo-item": "45_acp", "charges": [ 0, 12 ] },
+      {
+        "distribution": [
+          { "item": "shield_ballistic_large", "prob": 70, "damage": [ 1, 3 ] },
+          { "group": "swat_shields", "prob": 30, "damage": [ 1, 3 ] }
+        ]
+      },
+      { "item": "rigid_kevlar_plate", "prob": 50, "count": [ 1, 2 ] }
     ]
   },
   {

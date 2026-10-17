@@ -683,8 +683,8 @@
     },
     "bonus_per": {
       "rng": [
-        1,
-        1
+        2,
+        2
       ]
     },
     "worn_override": "TRAVEL_LIANG_WORN",
@@ -908,8 +908,8 @@
     },
     "bonus_per": {
       "rng": [
-        1,
-        1
+        2,
+        2
       ]
     },
     "worn_override": "TRAVEL_LIANG_WORN",

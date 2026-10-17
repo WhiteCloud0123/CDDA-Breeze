@@ -933,6 +933,14 @@ class Character : public Creature, public visitable
         // melee.cpp
         /** Checks for valid block abilities and reduces damage accordingly. Returns true if the player blocks */
         bool block_hit( Creature *source, bodypart_id &bp_hit, damage_instance &dam ) override;
+        // character.cpp
+        /** Returns how much damage the given shield can absorb from the given damage unit */
+        float get_block_amount( const item &shield, const damage_unit &unit );
+        /**
+         * Checks whether a worn or wielded shield passively intercepts an incoming
+         * projectile. Returns true if it did and mutates @p dam accordingly.
+         */
+        bool block_ranged_hit( Creature *source, bodypart_id &bp_hit, damage_instance &dam ) override;
         /** Returns the best item for blocking with */
         item_location best_shield();
         /** Calculates melee weapon wear-and-tear through use, returns true if item is destroyed. */

@@ -123,6 +123,28 @@
     "flags": [ "SEES", "HEARS", "STUMBLES", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON", "FILTHY" ]
   },
   {
+    "id": "mon_zombie_cop_shieldman",
+    "type": "MONSTER",
+    "name": { "str": "zombie riot shieldbearer" },
+    "description": "A human body covered by a weather-beaten and badly damaged police uniform.  It still holds a riot shield, which it hides behind as it slowly walks.  Appearing no different from any other fallen officer aside from its defenses, a good solid hit should either wreck its precious shield or knock it out of its grasp.",
+    "copy-from": "mon_zombie_cop",
+    "looks_like": "mon_zombie_cop",
+    "diff": 8,
+    "hp": 1,
+    "speed": 55,
+    "attack_cost": 115,
+    "//": "Armor values are a bit under double those of a riot shield, with extra stab so spears are less likely to force it to drop the shield.  It keeps the upstream convention of having 1 HP: the shield is the whole defense, so anything that gets past it fells the officer, and it then gets back up as the ordinary police zombie hiding underneath.  The wrecked shield is left on the corpse.",
+    "armor_bash": 16,
+    "armor_cut": 16,
+    "armor_stab": 20,
+    "armor_bullet": 16,
+    "armor_acid": 6,
+    "special_attacks": [ { "id": "slam" }, [ "scratch", 15 ] ],
+    "on_death": { "death_function": { "corpse_type": "NO_CORPSE" }, "spawn_mon": "mon_zombie_cop" },
+    "death_drops": "mon_zombie_cop_shieldman_death_drops",
+    "delete": { "flags": [ "REVIVES" ] }
+  },
+  {
     "id": "mon_zombie_crawler",
     "type": "MONSTER",
     "name": { "str": "crawling zombie" },

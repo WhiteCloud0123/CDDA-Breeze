@@ -216,7 +216,9 @@
       { "monster": "mon_zombie_rot", "weight": 20, "cost_multiplier": 2 },
       { "monster": "mon_zombie_crawler", "weight": 10, "cost_multiplier": 2 },
       { "monster": "mon_zombie_cop", "weight": 280, "cost_multiplier": 3 },
+      { "monster": "mon_zombie_cop_shieldman", "weight": 85, "cost_multiplier": 5 },
       { "monster": "mon_zombie_swat", "weight": 140, "cost_multiplier": 3 },
+      { "monster": "mon_feral_swat_boss_shieldman", "weight": 15, "cost_multiplier": 10, "starts": "20 days" },
       { "monster": "mon_zombie_medical", "weight": 10, "cost_multiplier": 2 },
       { "monster": "mon_zombie_hazmat", "weight": 10, "cost_multiplier": 2 },
       { "monster": "mon_zombie_fireman", "weight": 20, "cost_multiplier": 2 },
@@ -459,6 +461,7 @@
     "name": "GROUP_ZOMBIE_COP",
     "monsters": [
       { "monster": "mon_zombie_cop", "weight": 900, "cost_multiplier": 0 },
+      { "monster": "mon_zombie_cop_shieldman", "weight": 85, "cost_multiplier": 0 },
       { "monster": "mon_zombie_swat", "weight": 20, "cost_multiplier": 0 },
       { "monster": "mon_dog_zombie_cop", "weight": 50, "cost_multiplier": 2, "pack_size": [ 1, 2 ] }
     ]

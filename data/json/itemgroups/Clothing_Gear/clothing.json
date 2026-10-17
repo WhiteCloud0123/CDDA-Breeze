@@ -3302,7 +3302,15 @@
       { "item": "legguard_metal", "prob": 10, "damage": [ 2, 4 ] },
       { "item": "helmet_corinthian", "prob": 45, "damage": [ 2, 4 ] },
       { "item": "armor_cuirass", "prob": 25, "damage": [ 2, 4 ] },
-      { "item": "legguard_bronze", "prob": 20, "damage": [ 2, 4 ] }
+      { "item": "legguard_bronze", "prob": 20, "damage": [ 2, 4 ] },
+      { "item": "shield_wooden", "prob": 18, "damage": [ 2, 4 ] },
+      { "item": "shield_wooden_large", "prob": 8, "damage": [ 2, 4 ] },
+      { "item": "shield_leather", "prob": 7, "damage": [ 2, 4 ] },
+      { "item": "shield_leather_large", "prob": 4, "damage": [ 2, 4 ] },
+      { "item": "shield_banded", "prob": 7, "damage": [ 2, 4 ] },
+      { "item": "shield_banded_large", "prob": 4, "damage": [ 2, 4 ] },
+      { "item": "shield_spiked", "prob": 4, "damage": [ 2, 4 ] },
+      { "item": "shield_spiked_large", "prob": 2, "damage": [ 2, 4 ] }
     ]
   },
   {

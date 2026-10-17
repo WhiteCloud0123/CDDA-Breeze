@@ -2298,6 +2298,35 @@
         }
       },
       {
+        "text": "你钉的那面木盾还在吗？",
+        "topic": "TALK_TRAVEL_LIANG_SHIELD_HANDOVER",
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "travel_liang_shield_gifted",
+                "type": "dialogue",
+                "context": "travel_liang",
+                "value": "yes"
+              }
+            },
+            {
+              "or": [
+                {
+                  "npc_has_var": "travel_liang_joined",
+                  "type": "dialogue",
+                  "context": "travel_liang",
+                  "value": "yes"
+                },
+                {
+                  "u_has_mission": "MISSION_TRAVEL_WITH_LIANG_TO_REFUGEE"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
         "text": "先这样。",
         "topic": "TALK_DONE"
       }
@@ -3712,6 +3741,32 @@
   },
   {
     "type": "talk_topic",
+    "id": "TALK_TRAVEL_LIANG_SHIELD_HANDOVER",
+    "dynamic_line": "梁知遥把盾靠在背包边，低头把绑带又收紧了一格。\n\n“算不上礼物，我原本就打算等人真的答应一起走以后再拿出来。”\n\n她在休息的那一天开了临时工作单，从维修间领到几块准备换掉的旧门板。钉子敲弯了两根，布条是从撕开的旧床单上割下来的。\n\n“门板，钉子，布条。钉得不好看，前面挡一下还是够的。”\n\n“它戴在前臂上，不占手。被围住的时候，腿上和侧面挨的那几下最麻烦，有这个能便宜一点。”\n\n她顿了一下。\n\n“我算过重量，背着走没问题。你走前面，比挂在我胳膊上更有用。”",
+    "responses": [
+      {
+        "text": "那我就收下了。",
+        "topic": "TALK_DONE",
+        "effect": [
+          {
+            "u_spawn_item": "shield_wooden"
+          },
+          {
+            "npc_add_var": "travel_liang_shield_gifted",
+            "type": "dialogue",
+            "context": "travel_liang",
+            "value": "yes"
+          },
+          {
+            "u_message": "梁知遥把她自己钉的那面粗糙木盾交给你。绑带可以调，戴在前臂上并不影响握持单手武器。",
+            "type": "good"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
     "id": "TALK_TRAVEL_LIANG_COMPANION",
     "dynamic_line": {
       "npc_has_var": "travel_liang_archive_complete",
@@ -4459,6 +4514,19 @@
     "value": 0,
     "start": {
       "effect": [
+        {
+          "u_spawn_item": "shield_wooden"
+        },
+        {
+          "npc_add_var": "travel_liang_shield_gifted",
+          "type": "dialogue",
+          "context": "travel_liang",
+          "value": "yes"
+        },
+        {
+          "u_message": "梁知遥把她自己钉的那面粗糙木盾交给你。绑带可以调，戴在前臂上并不影响握持单手武器。",
+          "type": "good"
+        },
         {
           "npc_lose_trait": "RETURN_TO_START_POS"
         },

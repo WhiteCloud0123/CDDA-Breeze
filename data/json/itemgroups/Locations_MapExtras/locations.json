@@ -53,6 +53,8 @@
       { "group": "guns_swat", "prob": 20 },
       { "group": "mags_swat", "prob": 20 },
       { "group": "eod_armor", "prob": 20 },
+      { "group": "swat_shields", "prob": 20 },
+      { "item": "shield_riot", "prob": 12 },
       { "item": "survnote", "prob": 1 }
     ]
   },
@@ -1529,6 +1531,7 @@
       [ "armor_riot_arm", 15 ],
       [ "armor_riot_leg", 15 ],
       [ "armor_riot_torso", 5 ],
+      [ "shield_riot", 10 ],
       [ "gloves_tactical", 10 ],
       [ "emergency_book", 1 ]
     ]

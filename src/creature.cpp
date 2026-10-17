@@ -1199,6 +1199,14 @@ void Creature::deal_projectile_attack( Creature *source, dealt_projectile_attack
 
     impact.mult_damage( hit_selection.damage_mult );
 
+    // If we have a shield, it might passively block ranged impacts.
+    // 怪物不会走这条路（Creature 基类默认返回 false），未佩戴盾牌时同样直接返回 false。
+    // damage_mult 为 0 表示这一发只是擦过（下面会打出「没打中」的提示），
+    // 这种命中不该让盾牌磨损、也不该报告成打在盾牌上，因此跳过格挡。
+    if( hit_selection.damage_mult > 0.0 ) {
+        block_ranged_hit( source, hit_selection.bp_hit, impact );
+    }
+
     if( proj_effects.count( "NOGIB" ) > 0 ) {
         float dmg_ratio = static_cast<float>( impact.total_damage() ) / get_hp_max( hit_selection.bp_hit );
         if( dmg_ratio > 1.25f ) {

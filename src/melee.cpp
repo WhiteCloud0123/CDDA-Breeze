@@ -2211,10 +2211,31 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
         return false;
     }
 
+    // Extract this to make it easier to implement shields/multiwield later
+    item_location shield = best_shield();
+
+    // Check if we are going to block with an item. This could
+    // be worn equipment with the BLOCK_WHILE_WORN flag.
+    const bool has_shield = !!shield;
+    const bool worn_shield = has_shield && shield->has_flag( flag_BLOCK_WHILE_WORN );
+    // A real shield: BLOCK_WHILE_WORN plus a blocking technique of its own.  Arm guards and
+    // leg guards only carry the flag (blocking ability 2), and a wielded WBLOCK weapon is not
+    // a shield at all, so neither of them counts as one anywhere below.
+    const bool real_shield = worn_shield && melee::blocking_ability( *shield ) > 2;
+
+    // The struck part, kept before any limb selection: the shield roll below models the shield
+    // blunting a hit that lands outside what it covers, so it has to know where the attack was
+    // going, not which limb ended up doing the blocking.
+    const bodypart_id struck_bp = bp_hit;
+
     // Melee skill and reaction score governs if you can react in time
     // Skill of 5 without relevant encumbrance guarantees a block attempt
+    // A shield is the exception: raising it is not a fighting skill, so following Bright
+    // Nights the reaction roll only gates blocking that relies on the body itself, and
+    // anyone carrying a real shield gets a block attempt every turn.
     int melee_skill = has_active_bionic( bio_cqb ) ? 5 : get_skill_level( skill_melee );
-    if( !x_in_y( melee_skill * 20.0 * get_limb_score( limb_score_reaction ), 100 ) ) {
+    if( !real_shield &&
+        !x_in_y( melee_skill * 20.0 * get_limb_score( limb_score_reaction ), 100 ) ) {
         add_msg_debug( debugmode::DF_MELEE, "Block roll failed" );
         return false;
     }
@@ -2224,14 +2245,6 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // This bonus absorbs damage from incoming attacks before they land,
     // but it still counts as a block even if it absorbs all the damage.
     float total_phys_block = mabuff_block_bonus();
-
-    // Extract this to make it easier to implement shields/multiwield later
-    item_location shield = best_shield();
-
-    // Check if we are going to block with an item. This could
-    // be worn equipment with the BLOCK_WHILE_WORN flag.
-    const bool has_shield = !!shield;
-    bool worn_shield = has_shield && shield->has_flag( flag_BLOCK_WHILE_WORN );
 
     bool conductive_shield = false;
     bool unarmed = !is_armed();
@@ -2263,6 +2276,15 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
         if( arm_block || leg_block || nonstandard_block ) {
             // block_bonus for limb blocks will be added when the limb is decided
             block_score = get_arm_str() + unarmed_skill;
+        } else if( real_shield ) {
+            // A shield strapped to the forearm can be raised without any martial art, so let
+            // a worn shield make the arm block on its own; the worn shield then contributes
+            // its blocking ability and takes the wear further down.  Only items with a real
+            // WBLOCK technique qualify (blocking ability above the bare BLOCK_WHILE_WORN
+            // value of 2), so arm guards, leg guards and other worn armour keep the
+            // martial-art gating they have always had.
+            arm_block = true;
+            block_score = get_arm_str() + melee_skill;
         } else {
             // We don't have a shield or a technique. How are we blocking?
             return false;
@@ -2323,6 +2345,30 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
     // to nothing, at which point we're relying on attackers hitting enough to drain blocks.
     const float physical_block_multiplier = logarithmic_range( 0, 40, block_score );
 
+    // A shield can also blunt a hit that lands outside what it covers.  Bright Nights rolls
+    // the shield's average coverage, weighted by its blocking technique, plus the melee skill
+    // as a flat percentage, and then applies the shield's own resistances to that hit.  Only
+    // real shields qualify - BLOCK_WHILE_WORN together with a blocking technique, which the
+    // blocking ability above the bare flag value of 2 identifies - so arm guards, leg guards
+    // and plain WBLOCK weapons are never affected.  Feet are excluded, as upstream.
+    bool shield_roll = false;
+    if( real_shield && struck_bp != bodypart_id( "foot_l" ) && struck_bp != bodypart_id( "foot_r" ) ) {
+        float shield_block_chance = shield->get_avg_coverage();
+        const bool leg_hit = struck_bp == bodypart_id( "leg_l" ) || struck_bp == bodypart_id( "leg_r" );
+        if( shield->has_technique( WBLOCK_3 ) ) {
+            shield_block_chance *= leg_hit ? 0.75f : 0.9f;
+        } else if( shield->has_technique( WBLOCK_2 ) ) {
+            shield_block_chance *= leg_hit ? 0.5f : 0.8f;
+        } else if( shield->has_technique( WBLOCK_1 ) ) {
+            shield_block_chance *= leg_hit ? 0.25f : 0.7f;
+        }
+        // Melee skill adds directly, so a trained user can reach a guaranteed block.
+        shield_block_chance += melee_skill;
+        if( rng( 1, 100 ) <= shield_block_chance ) {
+            shield_roll = true;
+        }
+    }
+
     add_msg_debug( debugmode::DF_MELEE, "Physical block multiplier %.1f", physical_block_multiplier );
     float total_damage = 0.0f;
     float damage_blocked = 0.0f;
@@ -2344,6 +2390,11 @@ bool Character::block_hit( Creature *source, bodypart_id &bp_hit, damage_instanc
             }
 
             float previous_amount = elem.amount;
+            // If the shield covers the struck part its own armour already applies; otherwise a
+            // successful shield roll lets the shield absorb part of the damage as well.
+            if( shield_roll && ( !shield->covers( struck_bp ) || !is_worn( *shield ) ) ) {
+                elem.amount -= get_block_amount( *shield, elem );
+            }
             elem.amount *= physical_block_multiplier;
             damage_blocked += previous_amount - elem.amount;
         }

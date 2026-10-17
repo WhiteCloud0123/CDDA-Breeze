@@ -26,6 +26,16 @@
     ]
   },
   {
+    "id": "mon_zombie_cop_shieldman_death_drops",
+    "type": "item_group",
+    "subtype": "collection",
+    "//": "What is left of the riot shield it was hiding behind.  Its uniform and gear come from the ordinary police zombie it gets back up as, so they are not repeated here.",
+    "entries": [
+      { "item": "plastic_chunk", "prob": 75, "count": [ 8, 14 ] },
+      { "item": "shield_riot", "prob": 70, "damage": [ 2, 4 ] }
+    ]
+  },
+  {
     "type": "item_group",
     "id": "cop_items",
     "//": "combination of armor and tools",
@@ -40,6 +50,14 @@
       [ "armor_riot_leg", 5 ],
       [ "armor_riot_torso", 10 ],
       [ "kevlar", 100 ],
+      {
+        "distribution": [
+          { "item": "shield_riot", "prob": 75, "damage": [ 1, 4 ] },
+          { "item": "shield_ballistic", "prob": 15, "damage": [ 1, 4 ] },
+          { "item": "shield_ballistic_large", "prob": 10, "damage": [ 1, 4 ] }
+        ],
+        "prob": 30
+      },
       {
         "item": "level_3_vest",
         "variant": "police_armor_vest",
@@ -186,6 +204,7 @@
       { "group": "clothing_glasses", "prob": 5 },
       { "group": "clothing_watch", "prob": 10 },
       { "item": "badge_swat", "prob": 10 },
+      { "group": "swat_shields", "prob": 20, "damage": [ 1, 4 ] },
       { "group": "wallets", "damage": [ 1, 4 ], "prob": 50 }
     ]
   },
