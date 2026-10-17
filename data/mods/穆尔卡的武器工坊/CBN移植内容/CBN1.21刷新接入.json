@@ -1,0 +1,929 @@
+[
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_common",
+    "copy-from": "ammo_pistol_common",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "57mm_fmj",
+          "prob": 12,
+          "charges": [
+            1,
+            40
+          ]
+        },
+        {
+          "item": "46mm_fmj",
+          "prob": 10,
+          "charges": [
+            1,
+            40
+          ]
+        },
+        {
+          "item": "2P2H",
+          "prob": 12,
+          "charges": [
+            1,
+            30
+          ]
+        },
+        {
+          "item": "2P1R",
+          "prob": 12,
+          "charges": [
+            1,
+            30
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_rare",
+    "copy-from": "ammo_pistol_rare",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "3P1",
+          "prob": 10
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_milspec",
+    "copy-from": "ammo_pistol_milspec",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "2P2H",
+          "prob": 25
+        },
+        {
+          "item": "2P1R",
+          "prob": 25
+        },
+        {
+          "item": "3P1",
+          "prob": 25
+        },
+        {
+          "item": "3P2V",
+          "prob": 15
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_common",
+    "copy-from": "ammo_rifle_common",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 30,
+          "charges": [
+            1,
+            30
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_rare",
+    "copy-from": "ammo_rifle_rare",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 25
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_milspec",
+    "copy-from": "ammo_rifle_milspec",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 30
+        },
+        {
+          "item": "762_bp",
+          "prob": 15
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_obscure",
+    "copy-from": "ammo_rifle_obscure",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "762_bp",
+          "prob": 25
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_cop",
+    "copy-from": "ammo_cop",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 20,
+          "charges": [
+            1,
+            30
+          ]
+        },
+        {
+          "item": "46mm_fmj",
+          "prob": 15,
+          "charges": [
+            1,
+            40
+          ]
+        },
+        {
+          "item": "57mm_fmj",
+          "prob": 25,
+          "charges": [
+            1,
+            40
+          ]
+        },
+        {
+          "item": "3P1",
+          "prob": 12,
+          "charges": [
+            1,
+            30
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_swat",
+    "copy-from": "ammo_swat",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 8,
+          "charges": [
+            1,
+            30
+          ]
+        },
+        {
+          "item": "3P2V",
+          "prob": 5,
+          "charges": [
+            1,
+            30
+          ]
+        },
+        {
+          "item": "3P1",
+          "prob": 5,
+          "charges": [
+            1,
+            30
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_common_collection",
+    "copy-from": "ammo_pistol_common_collection",
+    "subtype": "collection",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "57mm_fmj",
+          "prob": 12
+        },
+        {
+          "item": "46mm_fmj",
+          "prob": 10
+        },
+        {
+          "item": "2P2H",
+          "prob": 12
+        },
+        {
+          "item": "2P1R",
+          "prob": 12
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_rare_collection",
+    "copy-from": "ammo_pistol_rare_collection",
+    "subtype": "collection",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "57mm_fmj",
+          "prob": 10
+        },
+        {
+          "item": "46mm_fmj",
+          "prob": 10
+        },
+        {
+          "item": "2P2H",
+          "prob": 10
+        },
+        {
+          "item": "3P1",
+          "prob": 10
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_common_collection",
+    "copy-from": "ammo_rifle_common_collection",
+    "subtype": "collection",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 25
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_rare_collection",
+    "copy-from": "ammo_rifle_rare_collection",
+    "subtype": "collection",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "entries": [
+        {
+          "item": "556_m855",
+          "prob": 25
+        },
+        {
+          "item": "762_bp",
+          "prob": 20
+        }
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_common",
+    "copy-from": "guns_smg_common",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "sd18c",
+          10
+        ],
+        [
+          "shiv62rc",
+          30
+        ],
+        [
+          "gacpc",
+          5
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_rare",
+    "copy-from": "guns_smg_rare",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "sd18c",
+          20
+        ],
+        [
+          "gacpc",
+          5
+        ],
+        [
+          "shiv62rc",
+          30
+        ],
+        [
+          "shiv62sv",
+          30
+        ],
+        [
+          "shiv62bp",
+          5
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_obscure",
+    "copy-from": "guns_smg_obscure",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "sd18c",
+          20
+        ],
+        [
+          "gacpc",
+          10
+        ],
+        [
+          "shiv62rc",
+          30
+        ],
+        [
+          "shiv62sv",
+          50
+        ],
+        [
+          "shiv62bp",
+          5
+        ],
+        [
+          "bastard_gun",
+          40
+        ],
+        [
+          "big_bastard_gun",
+          15
+        ],
+        [
+          "super_bastard_gun",
+          5
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_smg_milspec",
+    "copy-from": "guns_smg_milspec",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "sd18c",
+          20
+        ],
+        [
+          "gacpc",
+          10
+        ],
+        [
+          "shiv62rc",
+          20
+        ],
+        [
+          "shiv62sv",
+          25
+        ],
+        [
+          "shiv62bp",
+          12
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_pistol_common",
+    "copy-from": "guns_pistol_common",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "gacp",
+          12
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_pistol_obscure",
+    "copy-from": "guns_pistol_obscure",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "gacp",
+          10
+        ],
+        [
+          "gacpc",
+          10
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_common",
+    "copy-from": "guns_rifle_common",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "tak74",
+          8
+        ],
+        [
+          "ra_1_carbine",
+          4
+        ],
+        [
+          "ra_2_carbine",
+          2
+        ],
+        [
+          "var_60",
+          10
+        ],
+        [
+          "var_60_s",
+          5
+        ],
+        [
+          "var_72",
+          8
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_rare",
+    "copy-from": "guns_rifle_rare",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "tak74",
+          20
+        ],
+        [
+          "ra_1_carbine",
+          10
+        ],
+        [
+          "ra_2_carbine",
+          10
+        ],
+        [
+          "hcar",
+          10
+        ],
+        [
+          "var_60",
+          20
+        ],
+        [
+          "var_60_s",
+          20
+        ],
+        [
+          "var_72",
+          20
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_milspec",
+    "copy-from": "guns_rifle_milspec",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "ga290lbmg",
+          10
+        ],
+        [
+          "hcar",
+          20
+        ],
+        [
+          "z651",
+          10
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_rifle_obscure",
+    "copy-from": "guns_rifle_obscure",
+    "subtype": "distribution",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "hcar",
+          10
+        ],
+        [
+          "sparrow_airgun",
+          15
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_swat",
+    "copy-from": "guns_swat",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "ga290lbmg",
+          1
+        ],
+        [
+          "gacpc",
+          10
+        ],
+        [
+          "gacp",
+          30
+        ],
+        [
+          "shiv62rc",
+          5
+        ],
+        [
+          "shiv62sv",
+          30
+        ],
+        [
+          "shiv62bp",
+          10
+        ],
+        [
+          "z651",
+          1
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "guns_launcher_rocket",
+    "copy-from": "guns_launcher_rocket",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "clvp_launcher",
+          5
+        ],
+        [
+          "grkl_35",
+          40
+        ],
+        [
+          "grk_t1_heat_105",
+          30
+        ],
+        [
+          "grk_t1_hefg_105",
+          30
+        ],
+        [
+          "clvp_rkt_1",
+          10
+        ],
+        [
+          "clvp_rkt_2",
+          8
+        ],
+        [
+          "clvp_rkt_3",
+          4
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_milspec",
+    "copy-from": "mags_milspec",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "737_cta_200",
+          2
+        ],
+        [
+          "vb12_8",
+          8
+        ],
+        [
+          "var72_15",
+          5
+        ],
+        [
+          "62_cta_30",
+          5
+        ],
+        [
+          "62_cta_50",
+          4
+        ],
+        [
+          "62_cta_100",
+          3
+        ],
+        [
+          "62_cta_s_18",
+          5
+        ],
+        [
+          "62_cta_s_32",
+          5
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_cop",
+    "copy-from": "mags_cop",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "vb12_8",
+          5
+        ],
+        [
+          "var72_15",
+          5
+        ],
+        [
+          "62_cta_30",
+          5
+        ],
+        [
+          "62_cta_50",
+          3
+        ],
+        [
+          "62_cta_s_18",
+          5
+        ],
+        [
+          "62_cta_s_32",
+          4
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_swat",
+    "copy-from": "mags_swat",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "737_cta_200",
+          2
+        ],
+        [
+          "vb12_8",
+          10
+        ],
+        [
+          "var72_15",
+          7
+        ],
+        [
+          "62_cta_30",
+          7
+        ],
+        [
+          "62_cta_50",
+          4
+        ],
+        [
+          "62_cta_100",
+          3
+        ],
+        [
+          "62_cta_s_18",
+          7
+        ],
+        [
+          "62_cta_s_32",
+          6
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_rifle_rare",
+    "copy-from": "mags_rifle_rare",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "var72_15",
+          10
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_shotgun_common",
+    "copy-from": "mags_shotgun_common",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "vb12_8",
+          8
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "mags_obscure",
+    "copy-from": "mags_obscure",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "vb12_8",
+          5
+        ],
+        [
+          "var72_15",
+          5
+        ],
+        [
+          "bg_20",
+          8
+        ],
+        [
+          "bg_20_36",
+          3
+        ],
+        [
+          "bg_20_44",
+          3
+        ],
+        [
+          "bbg_30_9",
+          8
+        ],
+        [
+          "bbg_30_32",
+          3
+        ],
+        [
+          "bbg_30_380",
+          3
+        ],
+        [
+          "bbg_30_38super",
+          3
+        ],
+        [
+          "bbg_30_40",
+          3
+        ],
+        [
+          "bbg_30_45",
+          3
+        ],
+        [
+          "bbg_30_762",
+          3
+        ],
+        [
+          "bbg_30_918",
+          3
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "gunmod_rare",
+    "copy-from": "gunmod_rare",
+    "//": "CBN 1.2.1 新增内容接入，见 .dsh-work/murka_spawn_report.txt",
+    "extend": {
+      "items": [
+        [
+          "bbg_32",
+          8
+        ],
+        [
+          "bbg_380",
+          8
+        ],
+        [
+          "bbg_38super",
+          8
+        ],
+        [
+          "bbg_40",
+          8
+        ],
+        [
+          "bbg_45",
+          8
+        ],
+        [
+          "bbg_762",
+          8
+        ],
+        [
+          "bbg_918",
+          8
+        ],
+        [
+          "bg_36paper",
+          5
+        ],
+        [
+          "bg_44paper",
+          5
+        ],
+        [
+          "clvp_bcs",
+          5
+        ],
+        [
+          "grkl_scope",
+          8
+        ]
+      ]
+    }
+  }
+]

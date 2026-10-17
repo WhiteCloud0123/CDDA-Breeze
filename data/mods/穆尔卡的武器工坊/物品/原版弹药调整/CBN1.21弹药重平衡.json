@@ -3,6 +3,7 @@
     "id": "4570_sp",
     "copy-from": "4570_sp",
     "type": "AMMO",
+    "name": {"str_sp": ".45-70 SP"},
     "damage": {
       "damage_type": "bullet",
       "amount": 72,
@@ -32,6 +33,7 @@
     "id": "bp_46mm",
     "copy-from": "bp_46mm",
     "type": "AMMO",
+    "name": {"str_sp": "4.6x30mm, black powder"},
     "price": 150,
     "price_postapoc": 800,
     "damage": {
@@ -45,6 +47,7 @@
     "id": "bp_545",
     "copy-from": "bp_545",
     "type": "AMMO",
+    "name": {"str_sp": "5.45x39mm, black powder"},
     "price": 50,
     "price_postapoc": 450,
     "damage": {
@@ -58,6 +61,7 @@
     "id": "bp_545_ap",
     "copy-from": "bp_545_ap",
     "type": "AMMO",
+    "name": {"str_sp": "5.45x39mm AP, black powder"},
     "price": 175,
     "price_postapoc": 450,
     "damage": {
@@ -71,6 +75,7 @@
     "id": "bp_57mm",
     "copy-from": "bp_57mm",
     "type": "AMMO",
+    "name": {"str_sp": "5.7x28mm, black powder"},
     "price": 175,
     "price_postapoc": 800,
     "damage": {
@@ -84,6 +89,7 @@
     "id": "bp_762_25",
     "copy-from": "bp_762_25",
     "type": "AMMO",
+    "name": {"str_sp": "7.62x25mm FMJ, black powder"},
     "price": 75,
     "price_postapoc": 450,
     "damage": {
@@ -96,6 +102,7 @@
     "id": "bp_9x18mm",
     "copy-from": "bp_9x18mm",
     "type": "AMMO",
+    "name": {"str_sp": "9x18mm, black powder"},
     "price": 50,
     "price_postapoc": 500,
     "damage": {
@@ -108,6 +115,7 @@
     "id": "bp_9x18mmfmj",
     "copy-from": "bp_9x18mmfmj",
     "type": "AMMO",
+    "name": {"str_sp": "9x18mm FMJ, black powder"},
     "price": 100,
     "price_postapoc": 1550,
     "damage": {

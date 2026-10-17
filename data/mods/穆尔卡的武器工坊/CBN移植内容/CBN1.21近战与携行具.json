@@ -497,6 +497,7 @@
     "id": "bandolier_rifle",
     "copy-from": "bandolier_rifle",
     "type": "ARMOR",
+    "name": {"str": "rifle bandolier"},
     "pocket_data": [
       {
         "ammo_restriction": {
@@ -532,6 +533,7 @@
     "id": "bandolier_wrist",
     "copy-from": "bandolier_wrist",
     "type": "ARMOR",
+    "name": {"str": "wrist bandolier"},
     "pocket_data": [
       {
         "ammo_restriction": {
@@ -567,6 +569,7 @@
     "id": "torso_bandolier_shotgun",
     "copy-from": "torso_bandolier_shotgun",
     "type": "ARMOR",
+    "name": {"str": "torso shotgun bandolier"},
     "pocket_data": [
       {
         "ammo_restriction": {

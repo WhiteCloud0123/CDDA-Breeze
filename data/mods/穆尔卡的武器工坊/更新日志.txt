@@ -16,6 +16,8 @@ Breeze 1.2.1，2026-10-17，CBN 1.2.1同步
 
 修复既有缺陷。CBN1.19的AMMO_2080_HEHC与工具与投掷物里的爆炸效果沿用了CBN的damage、radius与fragment字段，而微风只读取power与distance_factor，实际威力为零；本次统一改为power与distance_factor。
 
+长度与名字。本体在longest_side缺失时按体积推算长度，15升的CLVP-1会显示24厘米、480毫升的GACP只有8厘米；本次为移植的枪械、配件、弹匣与近战武器共72条补上longest_side，数值参照模组既有90把枪的区间，并同时补上1.19那批漏掉的8把枪与2个弹匣。另外本体要求每个物品定义都显式写name，同id覆盖也不会继承，因此给原版枪械覆盖、弹带与9条重平衡弹药补上name，避免加载中断。
+
 Breeze 1.19，2026-08-30，CBN 1.1.9补充同步
 
 继续保持Breeze武器工坊版本1.19，同步穆尔卡CBN 1.1.9中新口径，新武器和弹药配方。新增K-27，K-28，GK-47，GK-47SU，GK-74，CLAW-9-S，GAVSK螺纹钢与GAVSL螺栓。PPS-43已由现有CCB 1.54.6线提供，本次不重复定义。新增20x80mm埋头弹体系，包含ZS1，ZP1，ZH2C，专用弹匣弹鼓与集成式消音器，并接入世界刷新，偏僻公路枪匠，贴图与otopack音效映射。同步CBN 1.1.9补充的7.37x40mm弹壳与5C2SB制作配方。5C3与5C1R已由现有CCB 1.54.6线提供，本次不重复定义。CBN旧式magazines字段转换为Breeze当前pocket_data弹匣井，移除当前main不存在的carbonmag_223引用。贴图使用独立CBN1.19图集，不覆盖现有CBN，0.G与I版图集。PC与Android继续共用data目录中的同一份模组数据。
