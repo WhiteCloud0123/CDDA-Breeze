@@ -179,6 +179,98 @@
       {
         "item": "gavsl",
         "prob": 4
+      },
+      {
+        "item": "bastard_gun",
+        "prob": 20
+      },
+      {
+        "item": "big_bastard_gun",
+        "prob": 15
+      },
+      {
+        "item": "super_bastard_gun",
+        "prob": 10
+      },
+      {
+        "item": "tak74",
+        "prob": 15
+      },
+      {
+        "item": "var_60",
+        "prob": 15
+      },
+      {
+        "item": "var_60_s",
+        "prob": 15
+      },
+      {
+        "item": "var_72",
+        "prob": 10
+      },
+      {
+        "item": "hcar",
+        "prob": 10
+      },
+      {
+        "item": "z651",
+        "prob": 8
+      },
+      {
+        "item": "ga290lbmg",
+        "prob": 8
+      },
+      {
+        "item": "shiv62bp",
+        "prob": 15
+      },
+      {
+        "item": "shiv62rc",
+        "prob": 15
+      },
+      {
+        "item": "shiv62sv",
+        "prob": 15
+      },
+      {
+        "item": "gacp",
+        "prob": 15
+      },
+      {
+        "item": "gacpc",
+        "prob": 15
+      },
+      {
+        "item": "sd18c",
+        "prob": 12
+      },
+      {
+        "item": "ra_1_carbine",
+        "prob": 12
+      },
+      {
+        "item": "ra_2_carbine",
+        "prob": 10
+      },
+      {
+        "item": "sparrow_airgun",
+        "prob": 8
+      },
+      {
+        "item": "clvp_launcher",
+        "prob": 5
+      },
+      {
+        "item": "grkl_35",
+        "prob": 5
+      },
+      {
+        "item": "gelx_4ul",
+        "prob": 3
+      },
+      {
+        "item": "gelx_4un",
+        "prob": 3
       }
     ]
   },
@@ -258,6 +350,82 @@
       {
         "item": "gavsk_20",
         "prob": 10
+      },
+      {
+        "item": "62_cta_30",
+        "prob": 10
+      },
+      {
+        "item": "62_cta_50",
+        "prob": 8
+      },
+      {
+        "item": "62_cta_100",
+        "prob": 5
+      },
+      {
+        "item": "62_cta_s_18",
+        "prob": 10
+      },
+      {
+        "item": "62_cta_s_32",
+        "prob": 8
+      },
+      {
+        "item": "737_cta_200",
+        "prob": 5
+      },
+      {
+        "item": "bg_20",
+        "prob": 12
+      },
+      {
+        "item": "bg_20_36",
+        "prob": 10
+      },
+      {
+        "item": "bg_20_44",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_9",
+        "prob": 12
+      },
+      {
+        "item": "bbg_30_32",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_380",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_38super",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_40",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_45",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_762",
+        "prob": 10
+      },
+      {
+        "item": "bbg_30_918",
+        "prob": 10
+      },
+      {
+        "item": "var72_15",
+        "prob": 10
+      },
+      {
+        "item": "vb12_8",
+        "prob": 10
       }
     ]
   },
@@ -321,6 +489,58 @@
       {
         "item": "ZP1",
         "prob": 30
+      },
+      {
+        "item": "3P1",
+        "prob": 20
+      },
+      {
+        "item": "3P2V",
+        "prob": 12
+      },
+      {
+        "item": "2P1R",
+        "prob": 15
+      },
+      {
+        "item": "2P2H",
+        "prob": 12
+      },
+      {
+        "item": "46mm_fmj",
+        "prob": 15
+      },
+      {
+        "item": "57mm_fmj",
+        "prob": 15
+      },
+      {
+        "item": "556_m855",
+        "prob": 20
+      },
+      {
+        "item": "762_bp",
+        "prob": 20
+      },
+      {
+        "item": "clvp_rkt_1",
+        "prob": 5
+      },
+      {
+        "item": "clvp_rkt_2",
+        "prob": 3
+      },
+      {
+        "item": "clvp_rkt_3",
+        "prob": 5
+      },
+      {
+        "item": "grk_t1_heat_105",
+        "prob": 5
+      },
+      {
+        "item": "grk_t1_hefg_105",
+        "prob": 5
       }
     ]
   },
@@ -373,6 +593,18 @@
       {
         "item": "da68sh_vest",
         "prob": 3
+      },
+      {
+        "item": "bandolier_rifle",
+        "prob": 15
+      },
+      {
+        "item": "bandolier_wrist",
+        "prob": 12
+      },
+      {
+        "item": "torso_bandolier_shotgun",
+        "prob": 12
       }
     ]
   },
@@ -401,6 +633,50 @@
       {
         "item": "mpx_40_bore",
         "prob": 15
+      },
+      {
+        "item": "bbg_32",
+        "prob": 10
+      },
+      {
+        "item": "bbg_380",
+        "prob": 10
+      },
+      {
+        "item": "bbg_38super",
+        "prob": 10
+      },
+      {
+        "item": "bbg_40",
+        "prob": 10
+      },
+      {
+        "item": "bbg_45",
+        "prob": 10
+      },
+      {
+        "item": "bbg_762",
+        "prob": 10
+      },
+      {
+        "item": "bbg_918",
+        "prob": 10
+      },
+      {
+        "item": "bg_36paper",
+        "prob": 8
+      },
+      {
+        "item": "bg_44paper",
+        "prob": 8
+      },
+      {
+        "item": "clvp_bcs",
+        "prob": 8
+      },
+      {
+        "item": "grkl_scope",
+        "prob": 8
       }
     ]
   },
