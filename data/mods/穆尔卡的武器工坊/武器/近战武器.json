@@ -6,13 +6,13 @@
     "name": {
       "str": "猎鹿人开山刀"
     },
-    "description": "一把结实的大砍刀，产自猎鹿人户外用品，刀身非常结实，砍断骨头什么的再轻松不过了。",
+    "description": "一把结实的大砍刀，产自猎鹿人户外用品，刀身非常结实，可以轻松的砍断粗树枝……或者骨头。",
     "repairs_like": "machete",
-    "weight": "650 g",
-    "volume": "1500 ml",
+    "weight": "538 g",
+    "volume": "1 L",
     "longest_side": "50 cm",
-    "price": 82000,
-    "price_postapoc": 7000,
+    "price": 22000,
+    "price_postapoc": 2200,
     "to_hit": {
       "grip": "solid",
       "length": "short",
@@ -20,7 +20,7 @@
       "balance": "neutral"
     },
     "material": [
-      "qt_steel",
+      "steel",
       "plastic"
     ],
     "symbol": "/",
@@ -40,19 +40,20 @@
       ]
     ],
     "techniques": [
-      "WBLOCK_1",
       "SWEEP",
-      "WIDE",
-      "BRUTAL"
+      "BRUTAL",
+      "WBLOCK_2"
     ],
     "flags": [
-      "SHEATH_SWORD"
+      "DURABLE_MELEE",
+      "SHEATH_SWORD",
+      "NONCONDUCTIVE"
     ],
     "weapon_category": [
       "BLADED_FARMING"
     ],
-    "bashing": 5,
-    "cutting": 28
+    "bashing": 8,
+    "cutting": 26
   },
   {
     "id": "knife_ck12",

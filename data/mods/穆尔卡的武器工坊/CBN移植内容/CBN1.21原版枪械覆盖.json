@@ -1,0 +1,26 @@
+[
+  {
+    "id": "fn57",
+    "copy-from": "fn57",
+    "type": "GUN",
+    "bashing": 8,
+    "to_hit": -1,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    }
+  },
+  {
+    "id": "sks",
+    "copy-from": "sks",
+    "type": "GUN",
+    "volume": "2100 ml"
+  },
+  {
+    "id": "draco",
+    "copy-from": "draco",
+    "type": "GUN",
+    "volume": "1300 ml",
+    "price_postapoc": 4000
+  }
+]

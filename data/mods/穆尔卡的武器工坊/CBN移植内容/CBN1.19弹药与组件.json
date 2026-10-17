@@ -288,16 +288,8 @@
     "id": "AMMO_2080_HEHC",
     "type": "ammo_effect",
     "explosion": {
-      "damage": 80,
-      "radius": 5,
-      "fragment": {
-        "impact": {
-          "damage_type": "bullet",
-          "amount": 30,
-          "armor_multiplier": 2
-        },
-        "range": 7
-      }
+      "power": 80,
+      "distance_factor": 5
     }
   }
 ]

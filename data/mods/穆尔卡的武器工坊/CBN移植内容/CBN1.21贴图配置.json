@@ -1,0 +1,415 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "Chibi_Ultica",
+      "MshockRealXotto",
+      "UltimateCataclysm",
+      "MshockXottoplus",
+      "UNDEAD_PEOPLE",
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE_LEGACY",
+      "UlticaShell",
+      "MshockXottoplus12",
+      "MSX++DEAD_PEOPLE",
+      "MXplus12_for_cosmetics",
+      "MSXotto+",
+      "MshockXotto+",
+      "UltimateCataclysmDemo",
+      "Ultica"
+    ],
+    "tiles-new": [
+      {
+        "file": "tiles_cbn121_weapons.png",
+        "tiles": [
+          {
+            "id": "overlay_wielded_bastard_gun",
+            "fg": 0
+          },
+          {
+            "id": "bastard_gun",
+            "fg": 0
+          },
+          {
+            "id": "overlay_wielded_big_bastard_gun",
+            "fg": 1
+          },
+          {
+            "id": "big_bastard_gun",
+            "fg": 1
+          },
+          {
+            "id": "overlay_wielded_super_bastard_gun",
+            "fg": 2
+          },
+          {
+            "id": "super_bastard_gun",
+            "fg": 2
+          },
+          {
+            "id": "overlay_wielded_clvp_launcher",
+            "fg": 3
+          },
+          {
+            "id": "clvp_launcher",
+            "fg": 3
+          },
+          {
+            "id": "overlay_wielded_ga290lbmg",
+            "fg": 4
+          },
+          {
+            "id": "ga290lbmg",
+            "fg": 4
+          },
+          {
+            "id": "overlay_wielded_gacp",
+            "fg": 5
+          },
+          {
+            "id": "gacp",
+            "fg": 5
+          },
+          {
+            "id": "overlay_wielded_gacpc",
+            "fg": 6
+          },
+          {
+            "id": "gacpc",
+            "fg": 6
+          },
+          {
+            "id": "overlay_wielded_gelx_4ul",
+            "fg": 7
+          },
+          {
+            "id": "gelx_4ul",
+            "fg": 7
+          },
+          {
+            "id": "overlay_wielded_gelx_4un",
+            "fg": 8
+          },
+          {
+            "id": "gelx_4un",
+            "fg": 8
+          },
+          {
+            "id": "overlay_wielded_grkl_35",
+            "fg": 9
+          },
+          {
+            "id": "grkl_35",
+            "fg": 9
+          },
+          {
+            "id": "overlay_wielded_hcar",
+            "fg": 10
+          },
+          {
+            "id": "hcar",
+            "fg": 10
+          },
+          {
+            "id": "overlay_wielded_ra_1_carbine",
+            "fg": 11
+          },
+          {
+            "id": "ra_1_carbine",
+            "fg": 11
+          },
+          {
+            "id": "overlay_wielded_ra_2_carbine",
+            "fg": 12
+          },
+          {
+            "id": "ra_2_carbine",
+            "fg": 12
+          },
+          {
+            "id": "overlay_wielded_sd18c",
+            "fg": 13
+          },
+          {
+            "id": "sd18c",
+            "fg": 13
+          },
+          {
+            "id": "overlay_wielded_shiv62bp",
+            "fg": 14
+          },
+          {
+            "id": "shiv62bp",
+            "fg": 14
+          },
+          {
+            "id": "overlay_wielded_shiv62rc",
+            "fg": 15
+          },
+          {
+            "id": "shiv62rc",
+            "fg": 15
+          },
+          {
+            "id": "overlay_wielded_shiv62sv",
+            "fg": 16
+          },
+          {
+            "id": "shiv62sv",
+            "fg": 16
+          },
+          {
+            "id": "overlay_wielded_sparrow_airgun",
+            "fg": 17
+          },
+          {
+            "id": "sparrow_airgun",
+            "fg": 17
+          },
+          {
+            "id": "overlay_wielded_tak74",
+            "fg": 18
+          },
+          {
+            "id": "tak74",
+            "fg": 18
+          },
+          {
+            "id": "overlay_wielded_var_60",
+            "fg": 19
+          },
+          {
+            "id": "var_60",
+            "fg": 19
+          },
+          {
+            "id": "overlay_wielded_var_60_s",
+            "fg": 20
+          },
+          {
+            "id": "var_60_s",
+            "fg": 20
+          },
+          {
+            "id": "overlay_wielded_var_72",
+            "fg": 21
+          },
+          {
+            "id": "var_72",
+            "fg": 21
+          },
+          {
+            "id": "overlay_wielded_z651",
+            "fg": 22
+          },
+          {
+            "id": "z651",
+            "fg": 22
+          },
+          {
+            "id": "bbg_32",
+            "fg": 23
+          },
+          {
+            "id": "bbg_380",
+            "fg": 24
+          },
+          {
+            "id": "bbg_38super",
+            "fg": 25
+          },
+          {
+            "id": "bbg_40",
+            "fg": 26
+          },
+          {
+            "id": "bbg_45",
+            "fg": 27
+          },
+          {
+            "id": "bbg_762",
+            "fg": 28
+          },
+          {
+            "id": "bbg_918",
+            "fg": 29
+          },
+          {
+            "id": "bg_36paper",
+            "fg": 30
+          },
+          {
+            "id": "bg_44paper",
+            "fg": 31
+          }
+        ]
+      },
+      {
+        "file": "tiles_cbn121_ammo.png",
+        "tiles": [
+          {
+            "id": "2P1R",
+            "fg": 0
+          },
+          {
+            "id": "2P2H",
+            "fg": 1
+          },
+          {
+            "id": "3P1",
+            "fg": 2
+          },
+          {
+            "id": "3P2V",
+            "fg": 3
+          },
+          {
+            "id": "clvp_rkt_1",
+            "fg": 4
+          },
+          {
+            "id": "clvp_rkt_2",
+            "fg": 5
+          },
+          {
+            "id": "clvp_rkt_3",
+            "fg": 6
+          },
+          {
+            "id": "grk_t1_heat_105",
+            "fg": 7
+          },
+          {
+            "id": "grk_t1_hefg_105",
+            "fg": 8
+          },
+          {
+            "id": "62_casing",
+            "fg": 9
+          },
+          {
+            "id": "62_cta_30",
+            "fg": 10
+          },
+          {
+            "id": "62_cta_50",
+            "fg": 11
+          },
+          {
+            "id": "62_cta_100",
+            "fg": 12
+          },
+          {
+            "id": "62_cta_s_18",
+            "fg": 13
+          },
+          {
+            "id": "62_cta_s_32",
+            "fg": 14
+          },
+          {
+            "id": "737_cta_200",
+            "fg": 15
+          },
+          {
+            "id": "bg_20",
+            "fg": 16
+          },
+          {
+            "id": "bg_20_36",
+            "fg": 17
+          },
+          {
+            "id": "bg_20_44",
+            "fg": 18
+          },
+          {
+            "id": "bbg_30_9",
+            "fg": 19
+          },
+          {
+            "id": "bbg_30_32",
+            "fg": 20
+          },
+          {
+            "id": "bbg_30_380",
+            "fg": 21
+          },
+          {
+            "id": "bbg_30_38super",
+            "fg": 22
+          },
+          {
+            "id": "bbg_30_40",
+            "fg": 23
+          },
+          {
+            "id": "bbg_30_45",
+            "fg": 24
+          },
+          {
+            "id": "bbg_30_762",
+            "fg": 25
+          },
+          {
+            "id": "bbg_30_918",
+            "fg": 26
+          },
+          {
+            "id": "var72_15",
+            "fg": 27
+          },
+          {
+            "id": "vb12_8",
+            "fg": 28
+          }
+        ]
+      },
+      {
+        "file": "tiles_cbn121_melee.png",
+        "tiles": [
+          {
+            "id": "beacher1_hammer",
+            "fg": 0
+          },
+          {
+            "id": "ck12",
+            "fg": 1
+          },
+          {
+            "id": "dh_machete",
+            "fg": 2
+          },
+          {
+            "id": "flint_tactical_axe",
+            "fg": 3
+          },
+          {
+            "id": "pioneer_knife",
+            "fg": 4
+          },
+          {
+            "id": "shiv_4",
+            "fg": 5
+          },
+          {
+            "id": "sps_3",
+            "fg": 6
+          },
+          {
+            "id": "tactical_chopper",
+            "fg": 7
+          },
+          {
+            "id": "tactical_claymore",
+            "fg": 8
+          },
+          {
+            "id": "tactical_ge",
+            "fg": 9
+          }
+        ]
+      }
+    ]
+  }
+]

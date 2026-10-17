@@ -1,0 +1,623 @@
+[
+  {
+    "type": "item_group",
+    "id": "weapons",
+    "copy-from": "weapons",
+    "extend": {
+      "items": [
+        [
+          "ck12",
+          5
+        ],
+        [
+          "sps_3",
+          1
+        ],
+        [
+          "shiv_4",
+          3
+        ],
+        [
+          "pioneer_knife",
+          5
+        ],
+        [
+          "flint_tactical_axe",
+          5
+        ],
+        [
+          "beacher1_hammer",
+          3
+        ],
+        [
+          "tactical_claymore",
+          1
+        ],
+        [
+          "tactical_chopper",
+          5
+        ],
+        [
+          "tactical_ge",
+          5
+        ],
+        [
+          "dh_machete",
+          10
+        ]
+      ]
+    }
+  },
+  {
+    "type": "item_group",
+    "id": "swat_gear",
+    "copy-from": "swat_gear",
+    "extend": {
+      "items": [
+        [
+          "ck12",
+          5
+        ],
+        [
+          "sps_3",
+          1
+        ],
+        [
+          "shiv_4",
+          3
+        ],
+        [
+          "pioneer_knife",
+          2
+        ],
+        [
+          "flint_tactical_axe",
+          3
+        ],
+        [
+          "beacher1_hammer",
+          2
+        ]
+      ]
+    },
+    "subtype": "distribution"
+  },
+  {
+    "type": "item_group",
+    "id": "rare",
+    "//": "Items that should have very low frequencies and or few locations.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "ch1_helmet",
+        "prob": 30
+      },
+      {
+        "item": "ch2_helmet",
+        "prob": 20
+      },
+      {
+        "item": "cu2_suit",
+        "prob": 50
+      },
+      {
+        "item": "da30l_vest",
+        "prob": 30
+      },
+      {
+        "item": "da32_vest",
+        "prob": 20
+      },
+      {
+        "item": "cornerstone_helmet",
+        "prob": 5
+      },
+      {
+        "item": "cornerstone_armor",
+        "prob": 5
+      },
+      {
+        "item": "ecu3_suit",
+        "prob": 20
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "nanofab_template_armor",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "cornerstone_helmet",
+        "prob": 10
+      },
+      {
+        "item": "cornerstone_armor",
+        "prob": 10
+      },
+      {
+        "item": "ecu3_suit",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "nanofab_template_combat",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "scgs_chimera",
+        "prob": 10
+      },
+      {
+        "item": "clvp_launcher",
+        "prob": 10
+      },
+      {
+        "item": "gelx_4ul",
+        "prob": 5
+      },
+      {
+        "item": "gelx_4un",
+        "prob": 5
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "foreign_armor",
+    "entries": [
+      {
+        "item": "fast_2",
+        "prob": 30
+      },
+      {
+        "item": "fast_1",
+        "prob": 50
+      },
+      {
+        "item": "maska",
+        "prob": 10
+      },
+      {
+        "item": "alytin",
+        "prob": 15
+      },
+      {
+        "item": "6b43",
+        "prob": 15
+      },
+      {
+        "item": "6b13",
+        "prob": 25
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "carried_guns_cop",
+    "entries": [
+      {
+        "item": "var_60",
+        "prob": 20
+      },
+      {
+        "item": "var_60_s",
+        "prob": 10
+      },
+      {
+        "item": "var_72",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_common_full",
+    "//": "Pistol ammo commonly owned by citizens and found in many locations, for vending machines.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "10mm_fmj",
+        "prob": 30
+      },
+      {
+        "item": "22_lr",
+        "prob": 40
+      },
+      {
+        "item": "22_ratshot",
+        "prob": 20
+      },
+      {
+        "item": "22_fmj",
+        "prob": 60
+      },
+      {
+        "item": "32_acp",
+        "prob": 25
+      },
+      {
+        "item": "357mag_fmj",
+        "prob": 10
+      },
+      {
+        "item": "357mag_jhp",
+        "prob": 10
+      },
+      {
+        "item": "357sig_fmj",
+        "prob": 45
+      },
+      {
+        "item": "357sig_jhp",
+        "prob": 45
+      },
+      {
+        "item": "38_fmj",
+        "prob": 30
+      },
+      {
+        "item": "38_special",
+        "prob": 30
+      },
+      {
+        "item": "380_FMJ",
+        "prob": 40
+      },
+      {
+        "item": "380_JHP",
+        "prob": 35
+      },
+      {
+        "item": "40fmj",
+        "prob": 25
+      },
+      {
+        "item": "40sw",
+        "prob": 30
+      },
+      {
+        "item": "410shot_000",
+        "prob": 5
+      },
+      {
+        "item": "44fmj",
+        "prob": 30
+      },
+      {
+        "item": "44magnum",
+        "prob": 35
+      },
+      {
+        "item": "45_acp",
+        "prob": 40
+      },
+      {
+        "item": "45_jhp",
+        "prob": 40
+      },
+      {
+        "item": "4570_low",
+        "prob": 15
+      },
+      {
+        "item": "4570_sp",
+        "prob": 5
+      },
+      {
+        "item": "45colt_jhp",
+        "prob": 20
+      },
+      {
+        "item": "9mm",
+        "prob": 125
+      },
+      {
+        "item": "9mmfmj",
+        "prob": 125
+      },
+      {
+        "item": "9mm_m39b",
+        "prob": 30
+      },
+      {
+        "item": "9mmP",
+        "prob": 40
+      },
+      {
+        "item": "9mmP2",
+        "prob": 30
+      },
+      {
+        "item": "57mm",
+        "prob": 30
+      },
+      {
+        "item": "46mm",
+        "prob": 20
+      },
+      {
+        "item": "762_25",
+        "prob": 40
+      },
+      {
+        "item": "762_25hot",
+        "prob": 30
+      },
+      {
+        "item": "9x18mm",
+        "prob": 30
+      },
+      {
+        "item": "9x18mmP2",
+        "prob": 30
+      },
+      {
+        "item": "57mm",
+        "prob": 20
+      },
+      {
+        "item": "57mm_fmj",
+        "prob": 30
+      },
+      {
+        "item": "46mm",
+        "prob": 10
+      },
+      {
+        "item": "46mm_fmj",
+        "prob": 20
+      },
+      {
+        "item": "2P2H",
+        "prob": 40
+      },
+      {
+        "item": "2P1R",
+        "prob": 40
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_pistol_rare_full",
+    "//": "Less common pistol ammo including that only used by police/paramilitary forces, for vending machines.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "380_p",
+        "prob": 75
+      },
+      {
+        "item": "45_super",
+        "prob": 80
+      },
+      {
+        "item": "4570_pen",
+        "prob": 20
+      },
+      {
+        "item": "9mmP",
+        "prob": 125
+      },
+      {
+        "item": "9mmP2",
+        "prob": 125
+      },
+      {
+        "item": "9mm_m39b",
+        "prob": 80
+      },
+      {
+        "item": "762_25",
+        "prob": 50
+      },
+      {
+        "item": "762_25hot",
+        "prob": 50
+      },
+      {
+        "item": "9x18mm",
+        "prob": 50
+      },
+      {
+        "item": "9x18mmP2",
+        "prob": 30
+      },
+      {
+        "item": "57mm",
+        "prob": 50
+      },
+      {
+        "item": "57mm_fmj",
+        "prob": 60
+      },
+      {
+        "item": "46mm",
+        "prob": 40
+      },
+      {
+        "item": "46mm_fmj",
+        "prob": 50
+      },
+      {
+        "item": "2P2H",
+        "prob": 70
+      },
+      {
+        "item": "2P2H",
+        "prob": 70
+      },
+      {
+        "item": "3P1",
+        "prob": 20
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_rifle_common_full",
+    "//": "Rifle ammo commonly owned by citizens and found in many locations, for vending machines.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "22_lr",
+        "prob": 70
+      },
+      {
+        "item": "22_ratshot",
+        "prob": 30
+      },
+      {
+        "item": "223",
+        "prob": 115
+      },
+      {
+        "item": "556_m193",
+        "prob": 100
+      },
+      {
+        "item": "556_m855",
+        "prob": 110
+      },
+      {
+        "item": "300_winmag",
+        "prob": 50
+      },
+      {
+        "item": "3006",
+        "prob": 115
+      },
+      {
+        "item": "308",
+        "prob": 75
+      },
+      {
+        "item": "4570_low",
+        "prob": 15
+      },
+      {
+        "item": "4570_sp",
+        "prob": 10
+      },
+      {
+        "item": "45colt_jhp",
+        "prob": 15
+      },
+      {
+        "item": "762_54R",
+        "prob": 40
+      },
+      {
+        "item": "76254_lps",
+        "prob": 20
+      },
+      {
+        "item": "762_m43",
+        "prob": 60
+      },
+      {
+        "item": "762_m87",
+        "prob": 50
+      },
+      {
+        "item": "939_fmj",
+        "prob": 30
+      },
+      {
+        "item": "545_7n6",
+        "prob": 60
+      },
+      {
+        "item": "545",
+        "prob": 60
+      },
+      {
+        "item": "5C1R",
+        "prob": 10
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_shotgun_common_full",
+    "//": "Shotgun ammo commonly owned by citizens and found in many locations, for vending machines.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "410shot_000",
+        "prob": 30
+      },
+      {
+        "item": "shot_00",
+        "prob": 110
+      },
+      {
+        "item": "shot_bird",
+        "prob": 70
+      },
+      {
+        "item": "shot_85mag",
+        "prob": 50
+      },
+      {
+        "item": "shot_paper_00",
+        "prob": 5
+      },
+      {
+        "item": "shot_paper_bird",
+        "prob": 3
+      },
+      {
+        "item": "shot_paper_slug",
+        "prob": 2
+      },
+      {
+        "item": "shot_slug",
+        "prob": 40
+      }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ammo_shotgun_rare_full",
+    "//": "Less common shotgun ammo including that only used by police/paramilitary forces, for vending machines.",
+    "subtype": "distribution",
+    "entries": [
+      {
+        "item": "shot_beanbag",
+        "prob": 30
+      },
+      {
+        "item": "shot_dragon",
+        "prob": 50
+      },
+      {
+        "item": "shot_flechette",
+        "prob": 120
+      },
+      {
+        "item": "shot_he",
+        "prob": 20
+      },
+      {
+        "item": "shot_paper_dragon",
+        "prob": 10
+      },
+      {
+        "item": "fsds12",
+        "prob": 20
+      },
+      {
+        "item": "23mm_slug",
+        "prob": 5
+      },
+      {
+        "item": "23mm_shot",
+        "prob": 10
+      }
+    ]
+  }
+]
