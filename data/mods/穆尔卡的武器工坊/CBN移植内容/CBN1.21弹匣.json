@@ -9,6 +9,7 @@
     "description": "一个“混蛋”冲锋枪的20发弹匣，看上去就是一块被锤子敲成长方体的铁皮，好做那倒确实是好做，但你绝对不要指望它能够正常使用。",
     "weight": "300 g",
     "volume": "250 ml",
+    "longest_side": "200 mm",
     "price": "100 cent",
     "price_postapoc": "50 cent",
     "material": [
@@ -44,6 +45,7 @@
     "description": "一个“混蛋”冲锋枪的20发弹匣，这一款是使用.36纸卷弹的版本，可靠性惨不忍睹。",
     "weight": "300 g",
     "volume": "250 ml",
+    "longest_side": "200 mm",
     "price": "100 cent",
     "price_postapoc": "50 cent",
     "material": [
@@ -79,6 +81,7 @@
     "description": "一个“混蛋”冲锋枪的20发弹匣，这一款是使用.44纸卷弹的版本，可靠性惨不忍睹。",
     "weight": "300 g",
     "volume": "250 ml",
+    "longest_side": "200 mm",
     "price": "100 cent",
     "price_postapoc": "50 cent",
     "material": [
@@ -114,6 +117,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，9x19mm口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -149,6 +153,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，.32 ACP口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -184,6 +189,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，.380 ACP口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -219,6 +225,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，.38 Super口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -254,6 +261,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，.40 S&W口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -289,6 +297,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，.45 ACP口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -324,6 +333,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，7.62x25mm口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -359,6 +369,7 @@
     "description": "一个“大混蛋”冲锋枪的30发弹匣，9x18mm口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
     "weight": "400 g",
     "volume": "300 ml",
+    "longest_side": "220 mm",
     "price": "200 cent",
     "price_postapoc": "100 cent",
     "material": [
@@ -394,6 +405,7 @@
     "description": "一个VAR-72的15发弹匣。",
     "weight": "400 g",
     "volume": "400 ml",
+    "longest_side": "250 mm",
     "price": "5 USD",
     "price_postapoc": "500 cent",
     "material": [
@@ -429,6 +441,7 @@
     "description": "一个VB-12的8发盒式弹匣。",
     "weight": "500 g",
     "volume": "500 ml",
+    "longest_side": "200 mm",
     "price": "5 USD",
     "price_postapoc": "200 cent",
     "material": [

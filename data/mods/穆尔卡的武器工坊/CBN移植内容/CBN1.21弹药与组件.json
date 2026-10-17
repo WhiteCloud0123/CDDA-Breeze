@@ -452,6 +452,7 @@
     "description": "一个6.2x30mm的30发弹匣，命名为2DL1。",
     "weight": "150 g",
     "volume": "250 ml",
+    "longest_side": "200 mm",
     "price": "15 USD",
     "price_postapoc": "500 cent",
     "material": [
@@ -487,6 +488,7 @@
     "description": "一个6.2x30mm的50发弹鼓，命名为2DH1。",
     "weight": "300 g",
     "volume": "500 ml",
+    "longest_side": "250 mm",
     "price": "25 USD",
     "price_postapoc": "2 USD",
     "material": [
@@ -522,6 +524,7 @@
     "description": "一个6.2x30mm的100发弹鼓，命名为2DH1T。",
     "weight": "500 g",
     "volume": "1000 ml",
+    "longest_side": "300 mm",
     "price": "45 USD",
     "price_postapoc": "3 USD",
     "material": [
@@ -557,6 +560,7 @@
     "description": "一个6.2x30mm的18发弹匣，命名为2CL1。",
     "weight": "100 g",
     "volume": "150 ml",
+    "longest_side": "150 mm",
     "price": "5 USD",
     "price_postapoc": "200 cent",
     "material": [
@@ -592,6 +596,7 @@
     "description": "一个6.2x30mm的32发弹匣，命名为2CL2。",
     "weight": "200 g",
     "volume": "250 ml",
+    "longest_side": "200 mm",
     "price": "10 USD",
     "price_postapoc": "300 cent",
     "material": [
@@ -627,6 +632,7 @@
     "description": "一个GA系列弹链机枪的200发弹箱，使用7.37mm埋头弹，内置不可散弹链。",
     "weight": "1000 g",
     "volume": "2000 ml",
+    "longest_side": "350 mm",
     "price": "100 USD",
     "price_postapoc": "5 USD",
     "material": [
