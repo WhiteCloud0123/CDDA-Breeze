@@ -1,0 +1,1904 @@
+[
+  {
+    "id": "bastard_gun",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str_sp": "“混蛋”自制冲锋枪"
+    },
+    "description": "“混蛋”冲锋枪是一款自制的冲锋枪，因为其极易制造的特点所以在大灾变之前经常出现在犯罪分子手中，这是一把粗糙到不能再粗糙的武器，它开火的时候会抖个不停，就好像马上会散架似的，而且你甚至可以从底部看见枪械的内部结构，握把可能是家具上砍下来的，击针，照门，准星，扳机都是钉子做的，偶尔还是歪的，枪管应该是水管做的，只有枪口处才有一段粗糙的膛线，没有保险，任何时候都有可能走火，而且这东西浑身上下就没有一块地方是焊接上去的，开枪的时候不散架就属于是个奇迹了，尽管如此也依旧有不少罪犯在制作它，毕竟你只需要一点机械方面的知识和一堆垃圾就能造出来一把全自动的……枪？但其实只要制造工艺到位的话它的性能其实也还算的过去。",
+    "weight": "860 g",
+    "volume": "700 ml",
+    "longest_side": "500 mm",
+    "price": "5 USD",
+    "price_postapoc": "1 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "skill": "smg",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 750,
+    "durability": 2,
+    "handling": 10,
+    "loudness": -2,
+    "blackpowder_tolerance": 95,
+    "bashing": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ],
+      [
+        "bore",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "bg_20"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "big_bastard_gun",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str_sp": "“大混蛋”自制冲锋枪"
+    },
+    "description": "“大混蛋”冲锋枪是“混蛋”的改进版本，作为一把在五金店就能生产的全自动冲锋枪，该武器经常被犯罪分子制造并使用，“大混蛋”在外观上有些前者的影子，改进的设计与制作工艺让它的性能足以媲美一些二战期间的冲锋枪，只要手艺够好，你可以通过更换部分零件以兼容其他口径，尽管性能算不上有多好，但它已经是一把做工相当精良的自制武器了。",
+    "weight": "1350 g",
+    "volume": "1000 ml",
+    "longest_side": "600 mm",
+    "price": "50 USD",
+    "price_postapoc": "10 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "skill": "smg",
+    "ammo": [
+      "9mm"
+    ],
+    "dispersion": 550,
+    "durability": 4,
+    "handling": 30,
+    "loudness": -2,
+    "blackpowder_tolerance": 80,
+    "bashing": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "magazine",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "bbg_30_9"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "super_bastard_gun",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str_sp": "“超级混蛋”自制冲锋枪"
+    },
+    "description": "“超级混蛋”冲锋枪是“混蛋”冲锋枪系列中的超级改进版，几乎每一处设计都被打磨到了手工制作能做到的极限，哪怕是专业人士估计也认不出来这是一把自制枪，如果稍微对“大混蛋”冲锋枪的配件进行些改动便可用于这把枪，“超级混蛋”拥有该系列武器中最好的性能，更远的射程，更好的精度与可靠性，只有那些经验丰富的枪匠才能制造出这把武器。",
+    "weight": "2820 g",
+    "volume": "1500 ml",
+    "longest_side": "700 mm",
+    "price": "100 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "skill": "smg",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 300,
+    "durability": 6,
+    "handling": 38,
+    "loudness": -2,
+    "range": 3,
+    "blackpowder_tolerance": 80,
+    "bashing": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "bore",
+        1
+      ],
+      [
+        "magazine",
+        1
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "bbg_30_9"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "clvp_launcher",
+    "copy-from": "launcher_base",
+    "type": "GUN",
+    "name": {
+      "str": "CLVP-1 多用途发射器"
+    },
+    "description": "这是一款产自CVA的实验型特殊武器，通过消耗UPS中的电量来发射多种用途的滑翔炸弹，发射时没有火光，噪音也很低，需要以倾斜角度发射，其自带的瞄准镜可以校准滑翔炸弹的落点，按理来说这是一种相当高效的武器，然而它的体积过大，重量也很重，高昂的价格与缓慢的弹速严重影响了它的综合性能，所以这东西并没有生产太多。",
+    "weight": "18500 g",
+    "volume": "15 L",
+    "longest_side": "1100 mm",
+    "price": "8000 USD",
+    "price_postapoc": "800 USD",
+    "to_hit": -1,
+    "material": [
+      "aluminum",
+      "steel"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "launcher",
+    "ammo": [
+      "clvp_rkt"
+    ],
+    "dispersion": 0,
+    "durability": 10,
+    "handling": 15,
+    "reload": 1000,
+    "loudness": 80,
+    "range": 150,
+    "clip_size": 1,
+    "ups_charges": 150,
+    "bashing": 12,
+    "default_mods": [
+      "clvp_bcs"
+    ],
+    "valid_mod_locations": [
+      [
+        "sling",
+        1
+      ],
+      [
+        "sights",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "clvp_rkt": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ga290lbmg",
+    "copy-from": "rifle_base",
+    "type": "GUN",
+    "name": {
+      "str": "GA-290LBMG 轻机枪"
+    },
+    "description": "GA-290LBMG是在汲取了一些GA-290LBMG的使用反馈后设计出的改进型机枪，GA-290LBMG使用弹链供弹，通常搭配200发的弹箱使用，有三个射速档位可以调节，散热经过改良，枪管更长，精度方面表现更好，无论是拿来短点射还是长时间扫射都很合适，不过它的重量和体积都比前者更高。",
+    "weight": "6000 g",
+    "volume": "4000 ml",
+    "longest_side": "1050 mm",
+    "price": "20000 USD",
+    "price_postapoc": "200 USD",
+    "to_hit": -4,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "skill": "rifle",
+    "ammo": [
+      "737_cta"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 80,
+    "durability": 10,
+    "handling": 45,
+    "reload": 400,
+    "loudness": -4,
+    "bashing": 18,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "低档位全自动",
+        2
+      ],
+      [
+        "AUTO2",
+        "中档位全自动",
+        3
+      ],
+      [
+        "AUTO3",
+        "高档位全自动",
+        4
+      ]
+    ],
+    "default_mods": [
+      "ga_stock_h",
+      "tac_gun_muzzle"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "737_cta_200"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gacp",
+    "copy-from": "pistol_base",
+    "type": "GUN",
+    "name": {
+      "str": "GACP 紧凑型手枪"
+    },
+    "description": "GACP是格克斯勒列装的新一代制式手枪，同时也是民用枪械领域其中的一位后起之秀，得益于独特的6.2x30mm弹药，GACP的精度表现相当优秀，针对人机功效做了不少优化，整体使用体验相当不错，除了它的握把有点大。",
+    "weight": "630 g",
+    "volume": "480 ml",
+    "longest_side": "180 mm",
+    "price": "1500 USD",
+    "price_postapoc": "15 USD",
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "62_cta"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 350,
+    "durability": 9,
+    "handling": 15,
+    "bashing": 8,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "magazine_well": "250 ml",
+        "item_restriction": [
+          "62_cta_s_18",
+          "62_cta_s_32"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gacpc",
+    "copy-from": "pistol_base",
+    "type": "GUN",
+    "name": {
+      "str": "GACP-C 卡宾手枪"
+    },
+    "description": "GACP-C是GACP的衍生型号，该型号可以全自动射击，整体长度更长，为了控制后坐力而安装了独特的手枪枪托，虽然定位有点尴尬但还是有用武之地的。",
+    "weight": "800 g",
+    "volume": "750 ml",
+    "longest_side": "300 mm",
+    "price": "2000 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -2,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "62_cta"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "dispersion": 320,
+    "durability": 9,
+    "handling": 25,
+    "bashing": 8,
+    "valid_mod_locations": [
+      [
+        "accessories",
+        2
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "magazine_well": "250 ml",
+        "item_restriction": [
+          "62_cta_s_18",
+          "62_cta_s_32"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gelx_4ul",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str": "GELX-4UL“缝衣针”电磁反器材狙击步枪"
+    },
+    "description": "GELX-4UL是由格克斯勒设计的终极单兵电磁武器，该武器目前还处于保密阶段，如果不是因为大灾变的话那它有可能成为新一代的装甲克星。\nGELX-4UL以GELX-3L为基础做了非常多的改动，使用了顶尖的技术与材料，极大优化了综合性能，还修复了GELX-3L所有的使用缺陷，整套下来不亚于重新设计了一把武器，但它也确实诠释了什么叫做精益求精。",
+    "weight": "8500 g",
+    "volume": "6800 ml",
+    "longest_side": "1400 mm",
+    "price": "1000000 USD",
+    "price_postapoc": "1000 USD",
+    "to_hit": -1,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "ammo": [
+      "em_bolt"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 162,
+      "armor_penetration": 170
+    },
+    "dispersion": 0,
+    "durability": 10,
+    "reload": 1200,
+    "loudness": 95,
+    "range": 180,
+    "clip_size": 25,
+    "ups_charges": 35,
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        2
+      ]
+    ],
+    "default_mods": [
+      "tac_h_scope"
+    ],
+    "valid_mod_locations": [
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "em_bolt": 25
+        }
+      }
+    ]
+  },
+  {
+    "id": "gelx_4un",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "GELX-4UN“丝线”电磁突击步枪"
+    },
+    "description": "GELX-4UN是与GELX-4UL同时出现的武器，可以说它就是4UL型号的缩短板，计划用于取代部分GELX-2N，性能方面更好，耗能更低，是目前最好的单兵电磁武器之一。",
+    "weight": "3500 g",
+    "volume": "2000 ml",
+    "longest_side": "850 mm",
+    "price": "500000 USD",
+    "price_postapoc": "500 USD",
+    "to_hit": -1,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "ammo": [
+      "nail"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 35,
+      "armor_penetration": 64
+    },
+    "dispersion": 100,
+    "durability": 10,
+    "reload": 500,
+    "loudness": 70,
+    "range": 40,
+    "clip_size": 50,
+    "ups_charges": 3,
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        4
+      ]
+    ],
+    "default_mods": [
+      "tac_holo"
+    ],
+    "valid_mod_locations": [
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "nail": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "grkl_35",
+    "copy-from": "launcher_base",
+    "type": "GUN",
+    "name": {
+      "str_sp": "GRKL-35 火箭筒"
+    },
+    "description": "GRKL-35 火箭筒是格科斯勒自主研制的第一款火箭筒，原理方面跟RPG-7非常相似，可以说它几乎就是RPG-7的现代化重制版，GRKL-35 火箭筒的综合性能相当优秀，精度高，重量轻，其使用的GRK-T1系列火箭弹相当简单粗暴，技术好的小作坊都能做，但它的威力却足以威胁到绝大多数主战坦克，可以说它除了体积比那些一次性火箭筒大之外几乎没有明显缺点，这也是为什么它今天仍在服役的原因。",
+    "weight": "5000 g",
+    "volume": "4500 ml",
+    "longest_side": "900 mm",
+    "price": "15000 USD",
+    "price_postapoc": "150 USD",
+    "to_hit": -3,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "color": "brown",
+    "ammo": [
+      "grk_t1_ammo"
+    ],
+    "dispersion": 200,
+    "durability": 10,
+    "handling": 15,
+    "reload": 600,
+    "clip_size": 1,
+    "bashing": 12,
+    "default_mods": [
+      "grkl_scope"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE",
+      "BACKBLAST",
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "grk_t1_ammo": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "hcar",
+    "copy-from": "rifle_base",
+    "type": "GUN",
+    "name": {
+      "str": "HCAR 重型战斗突击步枪"
+    },
+    "description": "HCAR是基于勃朗宁自动步枪而设计的现代改进版，可以按个人需求安装大量配件，减重设计再加上使用了更轻，更先进的材料使整体重量降低了约3千克，但对于一把步枪来说它还是很重。",
+    "weight": "5320 g",
+    "volume": "2200 ml",
+    "longest_side": "950 mm",
+    "price": "4700 USD",
+    "price_postapoc": "80 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "3006"
+    ],
+    "dispersion": 150,
+    "durability": 8,
+    "handling": 30,
+    "loudness": -4,
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "magazine_well": "100 ml",
+        "item_restriction": [
+          "m1918mag",
+          "m1918bigmag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ra_1_carbine",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str_sp": "皇家军械 RA-1 卡宾手枪"
+    },
+    "description": "RA-1 卡宾手枪是皇家军械的经典武器，外观来看它是一把装有手枪枪托的超大号手枪，虽然说它是手枪，但它用的弹药却是.30-06口径，这就挺奇怪的，从性能方面来看它其实还算不错，足够紧凑，10发的弹容量也够用，自带的枪托让后坐力没那么大，如果它的枪管可以长一点的话那它应该是一把不错的半自动步枪，但这违背了设计初衷。",
+    "weight": "2000 g",
+    "volume": "850 ml",
+    "longest_side": "300 mm",
+    "price": "1500 USD",
+    "price_postapoc": "15 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "skill": "pistol",
+    "ammo": [
+      "3006"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -4
+    },
+    "dispersion": 250,
+    "durability": 7,
+    "loudness": -4,
+    "clip_size": 10,
+    "bashing": 12,
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "3006_clip"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ra_2_carbine",
+    "copy-from": "rifle_semi",
+    "type": "GUN",
+    "name": {
+      "str_sp": "皇家军械 RA-2 单管步枪"
+    },
+    "description": "RA-2是一种中折式步枪，使用.50bmg弹药，结构极度简单，价格低廉，可靠耐用，是该口径武器中最适合新手使用的一款。",
+    "weight": "2500 g",
+    "volume": "1500 ml",
+    "longest_side": "1000 mm",
+    "price": "2000 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "brown",
+    "skill": "rifle",
+    "ammo": [
+      "50"
+    ],
+    "dispersion": 80,
+    "durability": 10,
+    "loudness": -4,
+    "clip_size": 1,
+    "bashing": 12,
+    "valid_mod_locations": [
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "RELOAD_ONE",
+      "RELOAD_EJECT",
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "50": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "sd18c",
+    "copy-from": "pistol_base",
+    "type": "GUN",
+    "name": {
+      "str": "SD-18C 卡宾手枪"
+    },
+    "description": "SD-18C是一种基于格洛克 18C自动手枪而设计的卡宾手枪，更换了更长的枪管，安装了手枪式枪托，激光瞄具与集成式消音器，安静又迅速，虽然性能比手枪更好但比起冲锋枪还是差点意思。",
+    "weight": "1030 g",
+    "volume": "900 ml",
+    "longest_side": "300 mm",
+    "price": "1000 USD",
+    "price_postapoc": "35 USD",
+    "to_hit": -2,
+    "material": [
+      "plastic",
+      "steel"
+    ],
+    "color": "dark_gray",
+    "ammo": [
+      "9mm"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 1
+    },
+    "dispersion": 350,
+    "durability": 7,
+    "handling": 40,
+    "bashing": 8,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi",
+        1
+      ],
+      [
+        "AUTO",
+        "auto",
+        6
+      ]
+    ],
+    "default_mods": [
+      "bcrf_sp_s",
+      "rail_laser_sight"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "magazine_well": "250 ml",
+        "item_restriction": [
+          "glock17_17",
+          "glock17_22",
+          "glock_drum_50rd",
+          "glock_drum_100rd",
+          "glockbigmag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shiv62bp",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str": "Shiv-62-BP10 无托冲锋枪"
+    },
+    "description": "Shiv项目是第一批使用6.2x30mm的武器，而Shiv-62-BP10则是该计划中的第一把武器，这是一款相当独特的无托冲锋枪，使用平衡后座原理，全自动射击时的后坐力极低，甚至单手使用也没问题，无托结构加上使用的6.2x30mm让它的精度表现相当优秀，可以在近距离爆发出相当恐怖的火力，但无托式带来的换弹问题与改装限制依旧存在，而且它的价格也有点小贵。",
+    "weight": "2230 g",
+    "volume": "1250 ml",
+    "longest_side": "600 mm",
+    "price": "5000 USD",
+    "price_postapoc": "50 USD",
+    "to_hit": -1,
+    "material": [
+      "superalloy",
+      "carbide"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "skill": "smg",
+    "ammo": [
+      "62_cta"
+    ],
+    "dispersion": 230,
+    "durability": 10,
+    "handling": 60,
+    "reload": 300,
+    "loudness": -2,
+    "bashing": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        3
+      ],
+      [
+        "AUTO",
+        "auto",
+        5
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "62_cta_30",
+          "62_cta_50",
+          "62_cta_100"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shiv62rc",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str": "Shiv-62-RC9 卡宾枪"
+    },
+    "description": "Shiv-62-RC9是Shiv项目中的一款卡宾枪，也是最便宜的一款，主要面向民用市场，性能可靠，价格实惠，而且获取它的门槛也不高。",
+    "weight": "2530 g",
+    "volume": "1500 ml",
+    "longest_side": "850 mm",
+    "price": "1500 USD",
+    "price_postapoc": "15 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "skill": "smg",
+    "ammo": [
+      "62_cta"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 2
+    },
+    "dispersion": 200,
+    "durability": 9,
+    "handling": 30,
+    "loudness": -2,
+    "bashing": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "62_cta_30",
+          "62_cta_50",
+          "62_cta_100"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shiv62sv",
+    "copy-from": "smg_base",
+    "type": "GUN",
+    "name": {
+      "str": "Shiv-62-SV7 冲锋枪"
+    },
+    "description": "Shiv-62-SV7是Shiv项目中的一款紧凑型冲锋枪，是一种更便宜，更紧凑的选择，其结构和操控方面类似于GA步枪，口碑很好，非常适合新手使用，尽管它为了缩小体积而不得不舍弃了一些东西……",
+    "weight": "1850 g",
+    "volume": "900 ml",
+    "longest_side": "550 mm",
+    "price": "3000 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "green",
+    "skill": "smg",
+    "ammo": [
+      "62_cta"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -2
+    },
+    "dispersion": 300,
+    "durability": 9,
+    "handling": 40,
+    "loudness": -2,
+    "bashing": 10,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ],
+      [
+        "BURST",
+        "2 rd.",
+        2
+      ],
+      [
+        "AUTO",
+        "auto",
+        3
+      ]
+    ],
+    "default_mods": [
+      "ga_stock2"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "underbarrel",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "62_cta_30",
+          "62_cta_50",
+          "62_cta_100"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sparrow_airgun",
+    "copy-from": "rifle_base",
+    "type": "GUN",
+    "name": {
+      "str": "“麻雀”自制高压气枪"
+    },
+    "description": "“麻雀”是一款由某位废土工匠制作的气动式步枪，它完美诠释了气动武器与暗杀的艺术，该枪使用常见的金属弹丸作为弹药，枪托上的金属罐可容纳40发弹丸，可以通过气罐中的高压气体将弹药发射出去，长枪管使其精度与枪口初速表现优秀，但充气方式是个加压手柄，给它充气可是个体力活。",
+    "weight": "3620 g",
+    "volume": "2850 ml",
+    "longest_side": "1100 mm",
+    "price": "3000 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "wood"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "ammo": [
+      "BB"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 22,
+      "armor_penetration": 12
+    },
+    "dispersion": 100,
+    "durability": 10,
+    "reload": 800,
+    "loudness": 70,
+    "range": 30,
+    "clip_size": 40,
+    "bashing": 8,
+    "faults": [],
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS",
+      "STR_RELOAD",
+      "NON_FOULING",
+      "NEEDS_NO_LUBE"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "BB": 40
+        }
+      }
+    ]
+  },
+  {
+    "id": "tak74",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "TAK-74 突击步枪"
+    },
+    "description": "在对俄罗斯进口武器禁令刚实行的那段时间5.45x39以及其口径枪械的价格大幅上涨，而这款廉价的AK替代品便是德尔梅维森枪械在那个时期而设计的产物，该枪大体结构是与AK比较相似，为了降低成本而导致该枪在测试阶段故障频发，多是抛壳与进弹故障，而当时留给他们的时间也不多，所以这把枪的弹匣就被设计成了安装在枪械顶部，这也让它与瞄具无缘。",
+    "weight": "3000 g",
+    "volume": "1900 ml",
+    "longest_side": "940 mm",
+    "price": "3000 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "light_gray",
+    "skill": "rifle",
+    "ammo": [
+      "545x39"
+    ],
+    "dispersion": 150,
+    "durability": 7,
+    "handling": 25,
+    "loudness": -4,
+    "blackpowder_tolerance": 40,
+    "barrel_volume": "250 ml",
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        2
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "flags": [
+      "NEVER_JAMS"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "ak74mag",
+          "rpk74mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "var_60",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "VAR-60 突击步枪"
+    },
+    "description": "VAR-60是阿纳森公司的一款半自动步枪，主要面向民用市场，使用5.56x45mm弹药，尺寸中等，性能可靠，以舒适性与性价比而闻名。",
+    "weight": "2820 g",
+    "volume": "1900 ml",
+    "longest_side": "900 mm",
+    "price": "2000 USD",
+    "price_postapoc": "20 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "yellow",
+    "skill": "rifle",
+    "ammo": [
+      "223"
+    ],
+    "dispersion": 170,
+    "durability": 8,
+    "handling": 25,
+    "loudness": -4,
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag40",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "var_60_s",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "VAR-60-S 短突击步枪"
+    },
+    "description": "VAR-60-S是VAR-60缩短后的版本，体积相当小，甚至比不少冲锋枪还要小，并且某种程度上来说这是把手枪……不过步枪弹并不适合这么短的枪管，无论是精度，初速，还是后坐力都要比VAR-60差很多。",
+    "weight": "1620 g",
+    "volume": "1000 ml",
+    "longest_side": "700 mm",
+    "price": "1000 USD",
+    "price_postapoc": "10 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "yellow",
+    "skill": "rifle",
+    "ammo": [
+      "223"
+    ],
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    },
+    "dispersion": 280,
+    "durability": 8,
+    "handling": 10,
+    "loudness": -4,
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag40",
+          "stanag50",
+          "stanag60",
+          "stanag60drum",
+          "stanag90",
+          "stanag100",
+          "stanag100drum",
+          "stanag150",
+          "survivor223mag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "var_72",
+    "copy-from": "rifle_auto",
+    "type": "GUN",
+    "name": {
+      "str": "VAR-72 精准射手步枪"
+    },
+    "description": "VAR-72是基于VAR平台而设计的一款精准射手步枪，使用威力强悍的.45-70弹药，可以在中距离快速击倒目标，虽然它的精度算不上多好，但是其强悍的威力足以弥补这一点。",
+    "weight": "3550 g",
+    "volume": "2300 ml",
+    "longest_side": "1050 mm",
+    "price": "3000 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -1,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "yellow",
+    "skill": "rifle",
+    "ammo": [
+      "4570"
+    ],
+    "dispersion": 100,
+    "durability": 8,
+    "loudness": -4,
+    "bashing": 12,
+    "modes": [
+      [
+        "DEFAULT",
+        "semi-auto",
+        1
+      ]
+    ],
+    "default_mods": [
+      "rifle_scope"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "var72_15"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "z651",
+    "copy-from": "rifle_base",
+    "type": "GUN",
+    "name": {
+      "str": "Z651 通用机枪"
+    },
+    "description": "Z651是泽尔纳防务设计的一款通用机枪，计划用于取代部分M240以及同口径的机枪，Z651在稳定性方面表现良好，非常适合用于长时间射击，射速可调为默认或者高档位，高档位的射速相当快，真的……甚至有点太快了，幸亏这把枪散热设计做的相当好，不然它的枪管绝对会变得比烤熟的土豆还烫手。",
+    "weight": "11500 g",
+    "volume": "3000 ml",
+    "longest_side": "1250 mm",
+    "price": "10000 USD",
+    "price_postapoc": "100 USD",
+    "to_hit": -4,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "(",
+    "color": "dark_gray",
+    "skill": "rifle",
+    "ammo": [
+      "308"
+    ],
+    "dispersion": 180,
+    "durability": 9,
+    "handling": 45,
+    "reload": 400,
+    "loudness": -4,
+    "bashing": 15,
+    "modes": [
+      [
+        "DEFAULT",
+        "默认档位全自动",
+        3
+      ],
+      [
+        "AUTO",
+        "高档位全自动",
+        6
+      ]
+    ],
+    "built_in_mods": [
+      "bipod"
+    ],
+    "valid_mod_locations": [
+      [
+        "accessories",
+        4
+      ],
+      [
+        "brass catcher",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "mechanism",
+        4
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [
+          "belt308"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,715 @@
+[
+  {
+    "type": "ammunition_type",
+    "id": "62_cta",
+    "name": "6.2x30mm 埋头弹",
+    "default": "3P1"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "clvp_rkt",
+    "name": "CLVP 弹射弹药",
+    "default": "clvp_rkt_1"
+  },
+  {
+    "type": "ammunition_type",
+    "id": "grk_t1_ammo",
+    "name": "GRK-T1 火箭弹",
+    "default": "grk_t1_heat_105"
+  },
+  {
+    "id": "62_casing",
+    "copy-from": "casing",
+    "type": "GENERIC",
+    "looks_like": "737_casing",
+    "material": [
+      "plastic"
+    ],
+    "name": {
+      "str": "6.2x30mm 埋头弹壳"
+    },
+    "description": "空的6.2x30mm埋头弹壳，弹壳上面还印着该子弹的参数。",
+    "weight": "2 g",
+    "volume": "3 ml"
+  },
+  {
+    "id": "3P1",
+    "looks_like": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "6.2x30mm 3P1 标准弹"
+    },
+    "description": "6.2x30mm是由格克斯勒设计并生产的一款手枪弹，是一种适用于个人防卫武器的高初速，高穿甲的手枪弹，因为现役的7.37x47mm口径武器不太适合作为个人防卫武器使用，而常规手枪弹的穿透性又不好，6.2x30mm倒是在两者之间取得了不错的平衡，这是一种基于7.37x47mm埋头弹而设计的弹药，结构相似度非常高，它比起普通手枪弹有着更平直的弹道，更高的初速以及穿透性，价格对比同类型弹药也比较实惠，缺点则是后坐力略大。",
+    "weight": "4 g",
+    "volume": "250 ml",
+    "price": "300 cent",
+    "price_postapoc": "15 USD",
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 40,
+    "stack_size": 60,
+    "ammo_type": "62_cta",
+    "casing": "62_casing",
+    "range": 22,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 37
+    },
+    "dispersion": 40,
+    "recoil": 600,
+    "speed": 720,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  },
+  {
+    "id": "3P2V",
+    "looks_like": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "6.2x30mm 3P2V 穿甲弹"
+    },
+    "description": "6.2x30mm的3P2V型弹药，专为击穿重型防弹衣而设计，3P2V是一种半被甲弹，弹芯外露，其材质是高强度碳化钨，可以有效击穿绝大多数防弹衣，甚至可以击穿一些轻型装甲车，足以刷新你对手枪弹穿透性的看法，美中不足的是它对软组织的杀伤性略有不足。",
+    "weight": "4 g",
+    "volume": "250 ml",
+    "price": "800 cent",
+    "price_postapoc": "20 USD",
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 40,
+    "stack_size": 60,
+    "ammo_type": "62_cta",
+    "casing": "62_casing",
+    "range": 22,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 25,
+      "armor_penetration": 53
+    },
+    "dispersion": 40,
+    "recoil": 600,
+    "speed": 740,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  },
+  {
+    "id": "2P1R",
+    "looks_like": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "6.2x30mm 2P1R 全包覆被甲弹"
+    },
+    "description": "6.2x30mm的2P1R型弹药，是一种面向民用市场的全包覆被甲弹，虽然穿透性比2P1更差但仍然远优于绝大多数手枪弹。",
+    "weight": "4 g",
+    "volume": "250 ml",
+    "price": "200 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 40,
+    "stack_size": 60,
+    "ammo_type": "62_cta",
+    "casing": "62_casing",
+    "range": 22,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 32,
+      "armor_penetration": 22
+    },
+    "dispersion": 40,
+    "recoil": 600,
+    "speed": 720,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  },
+  {
+    "id": "2P2H",
+    "looks_like": "5C3",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "6.2x30mm 2P2H 风帽空尖弹"
+    },
+    "description": "6.2x30mm的2P2H型弹药，是一种面向民用市场的风帽空尖弹，弹头采用经典的空尖弹设计并装有聚合物风帽，高初速可以让子弹在命中目标时瞬间扩张，对软组织的杀伤性相当可观。",
+    "weight": "4 g",
+    "volume": "250 ml",
+    "price": "200 cent",
+    "price_postapoc": "10 USD",
+    "material": [
+      "plastic",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "green",
+    "count": 40,
+    "stack_size": 60,
+    "ammo_type": "62_cta",
+    "casing": "62_casing",
+    "range": 22,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 40,
+      "armor_penetration": 12
+    },
+    "dispersion": 40,
+    "recoil": 600,
+    "speed": 720,
+    "effects": [
+      "COOKOFF",
+      "NEVER_MISFIRES"
+    ]
+  },
+  {
+    "id": "46mm_fmj",
+    "copy-from": "46mm",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "4.6x30mm FMJ 弹"
+    },
+    "description": "一款标准的4.6x30mm弹药，是该口径中比较常见一款弹药，通常用于民用或执法。\n\n“Ei！”",
+    "weight": "5 g",
+    "volume": "250 ml",
+    "price": "3 USD",
+    "price_postapoc": "8 USD",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "count": 40,
+    "stack_size": 80,
+    "ammo_type": "46",
+    "casing": "46mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 26,
+      "armor_penetration": 25
+    },
+    "dispersion": 40,
+    "recoil": 300,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "57mm_fmj",
+    "copy-from": "57mm",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "5.7x28mm FMJ 弹"
+    },
+    "description": "一款标准的5.7x28mm弹药，是该口径中比较常见一款弹药，通常用于民用或执法。",
+    "weight": "6 g",
+    "volume": "250 ml",
+    "price": "350 cent",
+    "price_postapoc": "6 USD",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "symbol": "=",
+    "color": "dark_gray",
+    "ammo_type": "57",
+    "casing": "57mm_casing",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 20
+    },
+    "dispersion": 40,
+    "recoil": 350,
+    "effects": [
+      "COOKOFF"
+    ]
+  },
+  {
+    "id": "556_m855",
+    "copy-from": "223",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "5.56x45mm NATO M855 弹"
+    },
+    "description": "M855于1980年代设计，是美军为对标比利时FN SS109弹药而推出的 5.56x45mm NATO 制式弹。其核心设计亮点是在弹头内部嵌入了一枚钢制穿甲芯，使其相比早期的 M193拥有更强的穿透能力，能够击穿基础及部分中等级别的防弹护具，同时对钢材目标也有更好的侵彻效果。",
+    "price": "290 cent",
+    "price_postapoc": "9 USD",
+    "loudness": 160,
+    "speed": 930,
+    "//": "Balanced as AP, 7/8 damage, arpen 6/7 of that value.",
+    "relative": {
+      "damage": {
+        "damage_type": "bullet",
+        "amount": -2,
+        "armor_penetration": 8
+      }
+    },
+    "extend": {
+      "effects": [
+        "NEVER_MISFIRES"
+      ]
+    }
+  },
+  {
+    "id": "762_bp",
+    "looks_like": "762_m43",
+    "copy-from": "762_m43",
+    "type": "AMMO",
+    "name": {
+      "str_sp": "7.62x39mm BP 弹"
+    },
+    "description": "7.62×39mm BP 弹是苏联/俄罗斯为7.62×39mm口径武器研发的一种穿甲弹，GRAU编号为7N23，BP弹的开发始于1980年代至1990年代，采用工具钢作为弹芯材料，是苏联/俄罗斯在常规7.62×39mm弹药中首次使用工具钢的弹种，该弹于2002年正式被俄罗斯军方列装。",
+    "price": "320 cent",
+    "price_postapoc": "12 USD",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 48,
+      "armor_penetration": 36
+    }
+  },
+  {
+    "type": "AMMO",
+    "id": "clvp_rkt_1",
+    "price": "1800 USD",
+    "name": {
+      "str_sp": "CED-1 电磁弹射破障弹"
+    },
+    "symbol": "*",
+    "color": "light_gray",
+    "description": "一款用于CLVP 多用途发射器的滑翔炸弹，内部装填了大量的高爆炸药，常用于拆除建筑。",
+    "material": "plastic",
+    "volume": "5 L",
+    "weight": "8000 g",
+    "bashing": 5,
+    "ammo_type": "clvp_rkt",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 10
+    },
+    "stack_size": 1,
+    "loudness": 0,
+    "speed": 100,
+    "effects": [
+      "CLVP_HE_BOOM",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES"
+    ]
+  },
+  {
+    "type": "AMMO",
+    "id": "clvp_rkt_2",
+    "looks_like": "clvp_rkt_1",
+    "price": "1800 USD",
+    "name": {
+      "str_sp": "NKD-1 电磁弹射微型核弹"
+    },
+    "symbol": "*",
+    "color": "light_gray",
+    "description": "“我现在成了死神，世界的毁灭者”\n\nN-1是用于CLVP 多用途发射器的一款弹头，由普通的微型核弹改装而来，体积更小，重量更轻。",
+    "material": "plastic",
+    "volume": "5 L",
+    "weight": "10000 g",
+    "bashing": 5,
+    "ammo_type": "clvp_rkt",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 10
+    },
+    "stack_size": 1,
+    "loudness": 0,
+    "speed": 100,
+    "effects": [
+      "CLVP_NUKE_BOOM",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES"
+    ]
+  },
+  {
+    "type": "AMMO",
+    "id": "clvp_rkt_3",
+    "looks_like": "clvp_rkt_1",
+    "price": "1800 USD",
+    "name": {
+      "str_sp": "WND-1 电磁弹射白磷弹"
+    },
+    "symbol": "*",
+    "color": "light_gray",
+    "description": "一款用于CLVP 多用途发射器的滑翔炸弹，内部装填了大量的白磷。",
+    "material": "plastic",
+    "volume": "5 L",
+    "weight": "8000 g",
+    "bashing": 5,
+    "ammo_type": "clvp_rkt",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30,
+      "armor_penetration": 10
+    },
+    "stack_size": 1,
+    "loudness": 0,
+    "speed": 100,
+    "effects": [
+      "CLVP_FLAM_BOOM",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES"
+    ]
+  },
+  {
+    "type": "AMMO",
+    "id": "grk_t1_heat_105",
+    "price": "500 USD",
+    "price_postapoc": "20 USD",
+    "name": {
+      "str_sp": "GRK-T1-HEAT-105mm 破甲火箭弹"
+    },
+    "symbol": "=",
+    "color": "green",
+    "description": "一发用于GRKL-35 火箭筒的破甲弹，结构简单，价格便宜，得益于大口径和高装药，它可以击穿绝大多数主战坦克。",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "volume": "2150 ml",
+    "weight": "2300 g",
+    "bashing": 1,
+    "ammo_type": "grk_t1_ammo",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 800,
+      "armor_multiplier": 800
+    },
+    "range": 80,
+    "recoil": 3000,
+    "loudness": 110,
+    "speed": 300,
+    "effects": [
+      "AMMO_GRKL_T1_HEAT",
+      "TRAIL",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES"
+    ]
+  },
+  {
+    "type": "AMMO",
+    "id": "grk_t1_hefg_105",
+    "price": "500 USD",
+    "price_postapoc": "20 USD",
+    "name": {
+      "str_sp": "GRK-T1-HEFG-105mm 高爆破片火箭弹"
+    },
+    "symbol": "=",
+    "color": "green",
+    "description": "一发用于GRKL-35 火箭筒的高爆破片火箭弹，适用于攻击软目标以及轻型车辆，毁伤效果极佳。",
+    "material": [
+      "steel",
+      "powder"
+    ],
+    "volume": "2050 ml",
+    "weight": "2200 g",
+    "bashing": 1,
+    "ammo_type": "grk_t1_ammo",
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 300,
+      "armor_multiplier": 300
+    },
+    "range": 80,
+    "recoil": 3000,
+    "loudness": 110,
+    "speed": 300,
+    "effects": [
+      "AMMO_GRKL_T1_HEFG",
+      "TRAIL",
+      "NEVER_MISFIRES",
+      "NO_PENETRATE_OBSTACLES"
+    ]
+  },
+  {
+    "id": "62_cta_30",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "CONTRACT-6.2 30发弹匣"
+    },
+    "description": "一个6.2x30mm的30发弹匣，命名为2DL1。",
+    "weight": "150 g",
+    "volume": "250 ml",
+    "longest_side": "200 mm",
+    "price": "15 USD",
+    "price_postapoc": "500 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "reliability": 10,
+    "reload_time": 50,
+    "ammo_type": [
+      "62_cta"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "62_cta": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "62_cta_50",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "CONTRACT-6.2 50发弹鼓"
+    },
+    "description": "一个6.2x30mm的50发弹鼓，命名为2DH1。",
+    "weight": "300 g",
+    "volume": "500 ml",
+    "longest_side": "250 mm",
+    "price": "25 USD",
+    "price_postapoc": "2 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "reliability": 10,
+    "reload_time": 100,
+    "ammo_type": [
+      "62_cta"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "62_cta": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "62_cta_100",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "CONTRACT-6.2 100发弹鼓"
+    },
+    "description": "一个6.2x30mm的100发弹鼓，命名为2DH1T。",
+    "weight": "500 g",
+    "volume": "1000 ml",
+    "longest_side": "300 mm",
+    "price": "45 USD",
+    "price_postapoc": "3 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "reliability": 8,
+    "reload_time": 200,
+    "ammo_type": [
+      "62_cta"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "62_cta": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "62_cta_s_18",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "ASSISTER-6.2 18发弹匣"
+    },
+    "description": "一个6.2x30mm的18发弹匣，命名为2CL1。",
+    "weight": "100 g",
+    "volume": "150 ml",
+    "longest_side": "150 mm",
+    "price": "5 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "reliability": 10,
+    "reload_time": 50,
+    "ammo_type": [
+      "62_cta"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "62_cta": 18
+        }
+      }
+    ]
+  },
+  {
+    "id": "62_cta_s_32",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "ASSISTER-6.2 32发弹匣"
+    },
+    "description": "一个6.2x30mm的32发弹匣，命名为2CL2。",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "longest_side": "200 mm",
+    "price": "10 USD",
+    "price_postapoc": "300 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "reliability": 10,
+    "reload_time": 50,
+    "ammo_type": [
+      "62_cta"
+    ],
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "62_cta": 32
+        }
+      }
+    ]
+  },
+  {
+    "id": "737_cta_200",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "UNIVERSAL 200发弹箱"
+    },
+    "description": "一个GA系列弹链机枪的200发弹箱，使用7.37mm埋头弹，内置不可散弹链。",
+    "weight": "1000 g",
+    "volume": "2000 ml",
+    "longest_side": "350 mm",
+    "price": "100 USD",
+    "price_postapoc": "5 USD",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "green",
+    "ammo_type": [
+      "737_cta"
+    ],
+    "reliability": 10,
+    "reload_time": 300,
+    "flags": [
+      "MAG_BULKY"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "737_cta": 200
+        }
+      }
+    ]
+  },
+  {
+    "id": "AMMO_GRKL_T1_HEAT",
+    "type": "ammo_effect",
+    "explosion": {
+      "power": 300,
+      "distance_factor": 3
+    }
+  },
+  {
+    "id": "AMMO_GRKL_T1_HEFG",
+    "type": "ammo_effect",
+    "explosion": {
+      "power": 120,
+      "distance_factor": 8
+    }
+  },
+  {
+    "id": "CLVP_HE_BOOM",
+    "type": "ammo_effect",
+    "explosion": {
+      "power": 500,
+      "distance_factor": 10
+    }
+  },
+  {
+    "id": "CLVP_NUKE_BOOM",
+    "type": "ammo_effect",
+    "aoe": {
+      "field_type": "fd_nuke_gas",
+      "intensity_min": 3,
+      "intensity_max": 3,
+      "radius": 15,
+      "size": 1,
+      "check_passable": true,
+      "check_sees": true,
+      "check_sees_radius": 3
+    },
+    "explosion": {
+      "power": 2000,
+      "distance_factor": 15
+    }
+  },
+  {
+    "id": "CLVP_FLAM_BOOM",
+    "type": "ammo_effect",
+    "aoe": {
+      "field_type": "fd_fire",
+      "intensity_min": 1,
+      "intensity_max": 2,
+      "radius": 10,
+      "size": 1,
+      "chance": 50
+    }
+  }
+]

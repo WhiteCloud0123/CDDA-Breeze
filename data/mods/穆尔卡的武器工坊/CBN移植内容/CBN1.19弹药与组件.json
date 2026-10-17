@@ -143,6 +143,7 @@
     "description": "一个GAVSK的10发弹匣，可以装填10发20x80mm埋头弹。",
     "weight": "500 g",
     "volume": "500 ml",
+    "longest_side": "250 mm",
     "price": "50 USD",
     "price_postapoc": "500 cent",
     "material": "steel",
@@ -176,6 +177,7 @@
     "description": "一个GAVSK的20发弹鼓，可以装填20发20x80mm埋头弹。",
     "weight": "1200 g",
     "volume": "1000 ml",
+    "longest_side": "300 mm",
     "price": "100 USD",
     "price_postapoc": "1 USD",
     "material": "steel",
@@ -288,16 +290,8 @@
     "id": "AMMO_2080_HEHC",
     "type": "ammo_effect",
     "explosion": {
-      "damage": 80,
-      "radius": 5,
-      "fragment": {
-        "impact": {
-          "damage_type": "bullet",
-          "amount": 30,
-          "armor_multiplier": 2
-        },
-        "range": 7
-      }
+      "power": 80,
+      "distance_factor": 5
     }
   }
 ]

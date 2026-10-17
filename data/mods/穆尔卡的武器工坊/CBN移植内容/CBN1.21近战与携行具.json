@@ -1,0 +1,586 @@
+[
+  {
+    "id": "ck12",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "CK-12 格斗匕首"
+    },
+    "description": "CVA公司的一款格斗匕首，便宜，轻便，迅速，非常适合近身格斗，比普通的战术匕首更致命。",
+    "weight": "300 g",
+    "volume": "450 ml",
+    "longest_side": "300 mm",
+    "price": 10000,
+    "price_postapoc": 1000,
+    "to_hit": 1,
+    "bashing": 4,
+    "cutting": 20,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "dark_gray",
+    "techniques": [
+      "RAPID",
+      "WBLOCK_1"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        19
+      ]
+    ],
+    "thrown_damage": [
+      {
+        "damage_type": "stab",
+        "amount": 10
+      }
+    ],
+    "flags": [
+      "STAB",
+      "DURABLE_MELEE",
+      "SHEATH_KNIFE",
+      "NONCONDUCTIVE"
+    ]
+  },
+  {
+    "id": "sps_3",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "SPS-3 战斗工兵铲"
+    },
+    "description": "格科斯勒工业生产的战术工兵铲，铲刃由超合金锻造，极难出现损坏，铲头边缘有极其锋利的刀刃，两端还有用来凿击的尖头，除此以外还有很多乱七八糟的小功能，虽然它名义上是把铲子但它的铲刃是平的，就像一片刀片，不适合作为一把铲子使用，但却适合当成砍刀用，坚固又锋利的刀刃可以撕裂对方的护甲并留下可怕的创口。",
+    "weight": "700 g",
+    "volume": "800 ml",
+    "longest_side": "700 mm",
+    "price": 35000,
+    "price_postapoc": 3500,
+    "to_hit": 2,
+    "bashing": 8,
+    "cutting": 35,
+    "material": [
+      "superalloy",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "green",
+    "techniques": [
+      "RAPID",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_2"
+    ],
+    "qualities": [
+      [
+        "DIG",
+        2
+      ],
+      [
+        "CUT",
+        2
+      ],
+      [
+        "PRY",
+        2
+      ],
+      [
+        "AXE",
+        2
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "SAW_M",
+        1
+      ],
+      [
+        "SAW_W",
+        1
+      ],
+      [
+        "BUTCHER",
+        5
+      ]
+    ],
+    "flags": [
+      "STAB",
+      "UNBREAKABLE_MELEE",
+      "BELT_CLIP",
+      "SHEATH_SWORD",
+      "NONCONDUCTIVE"
+    ]
+  },
+  {
+    "id": "tactical_ge",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "战术戈"
+    },
+    "description": "这是一把猎鹿人户外用品设计的长柄武器，原型是中国古代一种名为戈的冷兵器，有点像是一种刀片更小的镰刀，高强度，高韧性的碳纤维手柄再加上锋利的刀刃让它成为了一种相当高效的武器。",
+    "weight": "980 g",
+    "volume": "1200 ml",
+    "longest_side": "1500 mm",
+    "price": 26000,
+    "price_postapoc": 3000,
+    "to_hit": 2,
+    "bashing": 6,
+    "cutting": 28,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "techniques": [
+      "WIDE",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_2"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        -10
+      ]
+    ],
+    "flags": [
+      "STAB",
+      "DURABLE_MELEE",
+      "NONCONDUCTIVE",
+      "POLEARM",
+      "SHEATH_SPEAR",
+      "REACH_ATTACK"
+    ]
+  },
+  {
+    "id": "flint_tactical_axe",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "“燧石”战术斧"
+    },
+    "description": "“燧石”战术斧是猎鹿人户外用品的一款单手斧，是近代最受欢迎的战术斧之一，无论是拿来砍树还是撬门都很合适，并且相当耐用。\n“该产品无点火功能”",
+    "weight": "1100 g",
+    "volume": "1000 ml",
+    "longest_side": "600 mm",
+    "price": 25000,
+    "price_postapoc": 2500,
+    "to_hit": 1,
+    "bashing": 15,
+    "cutting": 30,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "light_gray",
+    "use_action": [
+      "CROWBAR"
+    ],
+    "techniques": [
+      "RAPID",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_1"
+    ],
+    "qualities": [
+      [
+        "AXE",
+        2
+      ],
+      [
+        "CUT",
+        1
+      ],
+      [
+        "PRY",
+        2
+      ],
+      [
+        "BUTCHER",
+        10
+      ]
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "NONCONDUCTIVE",
+      "BELT_CLIP"
+    ]
+  },
+  {
+    "id": "beacher1_hammer",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "Breacher-1 破门锤"
+    },
+    "description": "遇到了一些烦人的门吗？那么就试试这款猎鹿人户外用品为特警设计的小锤子吧，这把锤子由高强度金属锻造而成，耐用性高得可怕，锤头看起来像是一些松肉锤，可用于拆除常见的木门，锤头后方有一个类似撬棍的尖头，可以用来撬开绝大多数你能找到的门，你也可以拿它砸一些“活物”，毕竟被这东西砸一下可不是断几根肋骨那么简单。\n“支持三十年内保修”",
+    "weight": "1500 g",
+    "volume": "1000 ml",
+    "longest_side": "700 mm",
+    "price": 100000,
+    "price_postapoc": 6000,
+    "to_hit": 2,
+    "bashing": 45,
+    "cutting": 10,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "dark_gray",
+    "use_action": [
+      "HAMMER",
+      "CROWBAR"
+    ],
+    "techniques": [
+      "DEF_DISARM",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_1"
+    ],
+    "qualities": [
+      [
+        "HAMMER",
+        2
+      ],
+      [
+        "PRY",
+        4
+      ]
+    ],
+    "flags": [
+      "STAB",
+      "UNBREAKABLE_MELEE",
+      "NONCONDUCTIVE",
+      "BELT_CLIP"
+    ]
+  },
+  {
+    "id": "pioneer_knife",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "“先锋队员”格斗匕首"
+    },
+    "description": "格科斯勒的制式匕首，这是一款性能相当优秀的匕首，轻便又顺手，无论是拿来挥砍还是刺击都很合适，在经验丰富的人手中会是一把相当可怕的武器，但它没有其他的功能，也不能作为刺刀使用。",
+    "weight": "450 g",
+    "volume": "500 ml",
+    "longest_side": "300 mm",
+    "price": 28000,
+    "price_postapoc": 2800,
+    "to_hit": 1,
+    "bashing": 5,
+    "cutting": 25,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "green",
+    "techniques": [
+      "BRUTAL",
+      "RAPID",
+      "WBLOCK_1"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        20
+      ]
+    ],
+    "thrown_damage": [
+      {
+        "damage_type": "stab",
+        "amount": 5
+      }
+    ],
+    "flags": [
+      "STAB",
+      "DURABLE_MELEE",
+      "SHEATH_KNIFE",
+      "NONCONDUCTIVE"
+    ]
+  },
+  {
+    "id": "shiv_4",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "Shiv-4 生存砍刀"
+    },
+    "description": "Shiv-4是一种造型较为独特的小型砍刀，产自格科斯勒，其设计目的是为了给飞行员提供一种多功能的刀具，Shiv-4作为一把刀来说能做的事已经不少了，包括但不限于砍树，切割金属，当撬棍，或者只是拿来砍人，反正它可比某些不称职的多功能砍刀结实多了。",
+    "weight": "580 g",
+    "volume": "600 ml",
+    "longest_side": "450 mm",
+    "price": 32000,
+    "price_postapoc": 3200,
+    "to_hit": 2,
+    "bashing": 8,
+    "cutting": 28,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "green",
+    "use_action": [
+      "CROWBAR"
+    ],
+    "techniques": [
+      "BRUTAL",
+      "RAPID",
+      "WBLOCK_2"
+    ],
+    "qualities": [
+      [
+        "AXE",
+        1
+      ],
+      [
+        "CUT",
+        1
+      ],
+      [
+        "CUT_FINE",
+        1
+      ],
+      [
+        "BUTCHER",
+        15
+      ],
+      [
+        "SAW_M",
+        1
+      ],
+      [
+        "SAW_W",
+        1
+      ],
+      [
+        "PRY",
+        2
+      ]
+    ],
+    "thrown_damage": [
+      {
+        "damage_type": "stab",
+        "amount": 15
+      }
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "SHEATH_KNIFE",
+      "NONCONDUCTIVE",
+      "BELT_CLIP"
+    ]
+  },
+  {
+    "id": "tactical_chopper",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "战术柴刀"
+    },
+    "description": "一把看起来很吓人的砍刀，或者说……一把柴刀，这种古怪的武器是猎鹿人户外用品的产品，它看上去像是某种斧头与砍刀的结合体，给人的感觉就是某种变态杀人狂使用的武器，虽然说是“农具”但是却意外的适合拿来砍人。",
+    "weight": "680 g",
+    "volume": "1200 ml",
+    "longest_side": "500 mm",
+    "price": 26000,
+    "price_postapoc": 2600,
+    "to_hit": 2,
+    "bashing": 8,
+    "cutting": 30,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "dark_gray",
+    "techniques": [
+      "DEF_DISARM",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_2"
+    ],
+    "qualities": [
+      [
+        "AXE",
+        2
+      ],
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        8
+      ]
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "SHEATH_SWORD",
+      "NONCONDUCTIVE"
+    ]
+  },
+  {
+    "id": "tactical_claymore",
+    "type": "TOOL",
+    "category": "weapons",
+    "name": {
+      "str": "DCM-T 战术短阔剑"
+    },
+    "description": "DCM-T 战术短阔剑是猎鹿人户外用品的作品，是的，它就是一把质量好的单手剑，没什么别的功能，单从一把剑的角度来说它确实很优秀，非常优秀，但可惜现在不是冷兵器的时代了，不少人认为这东西就是个玩具，毕竟哪有人会傻站在那里等着你去砍，但就目前这个情况来看，他们错了。",
+    "weight": "950 g",
+    "volume": "1350 ml",
+    "longest_side": "800 mm",
+    "price": 50000,
+    "price_postapoc": 5000,
+    "to_hit": 3,
+    "bashing": 8,
+    "cutting": 38,
+    "material": [
+      "steel",
+      "plastic"
+    ],
+    "symbol": "/",
+    "color": "dark_gray",
+    "techniques": [
+      "WIDE",
+      "DEF_DISARM",
+      "SWEEP",
+      "BRUTAL",
+      "WBLOCK_2"
+    ],
+    "qualities": [
+      [
+        "CUT",
+        1
+      ],
+      [
+        "BUTCHER",
+        10
+      ]
+    ],
+    "flags": [
+      "DURABLE_MELEE",
+      "SHEATH_SWORD",
+      "NONCONDUCTIVE"
+    ]
+  },
+  {
+    "id": "bandolier_rifle",
+    "copy-from": "bandolier_rifle",
+    "type": "ARMOR",
+    "name": {"str": "rifle bandolier"},
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "22": 25,
+          "223": 25,
+          "270win": 25,
+          "300blk": 25,
+          "5x50": 25,
+          "545x39": 25,
+          "3006": 25,
+          "308": 25,
+          "300": 25,
+          "762": 25,
+          "762R": 25,
+          "8x40mm": 25,
+          "4570": 25,
+          "50": 25,
+          "408_ct": 25,
+          "737_cta": 25,
+          "79257": 25,
+          "939": 25,
+          "145114": 25,
+          "127108": 25,
+          "em_bolt": 25,
+          "700nx": 25,
+          "303": 25
+        },
+        "moves": 20
+      }
+    ]
+  },
+  {
+    "id": "bandolier_wrist",
+    "copy-from": "bandolier_wrist",
+    "type": "ARMOR",
+    "name": {"str": "wrist bandolier"},
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "22": 6,
+          "223": 6,
+          "270win": 6,
+          "300blk": 6,
+          "5x50": 6,
+          "545x39": 6,
+          "3006": 6,
+          "308": 6,
+          "300": 6,
+          "762": 6,
+          "762R": 6,
+          "8x40mm": 6,
+          "4570": 6,
+          "50": 6,
+          "408_ct": 6,
+          "737_cta": 6,
+          "79257": 6,
+          "939": 6,
+          "145114": 6,
+          "127108": 6,
+          "em_bolt": 6,
+          "700nx": 6,
+          "303": 6
+        },
+        "moves": 20
+      }
+    ]
+  },
+  {
+    "id": "torso_bandolier_shotgun",
+    "copy-from": "torso_bandolier_shotgun",
+    "type": "ARMOR",
+    "name": {"str": "torso shotgun bandolier"},
+    "pocket_data": [
+      {
+        "ammo_restriction": {
+          "410shot": 50,
+          "shot": 50,
+          "20x66mm": 50,
+          "23mm": 50,
+          "signal_flare": 50
+        },
+        "moves": 35
+      }
+    ]
+  }
+]

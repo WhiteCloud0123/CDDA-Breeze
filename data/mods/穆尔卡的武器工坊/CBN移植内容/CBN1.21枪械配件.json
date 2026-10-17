@@ -1,0 +1,456 @@
+[
+  {
+    "id": "bbg_32",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 .32 ACP 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 .32 ACP 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "32"
+    ],
+    "magazine_adaptor": [
+      [
+        "32",
+        [
+          "bbg_30_32"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bbg_380",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 .380 ACP 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 .380 ACP 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "380"
+    ],
+    "magazine_adaptor": [
+      [
+        "380",
+        [
+          "bbg_30_380"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bbg_38super",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 .38 Super 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 .38 Super 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "38super"
+    ],
+    "magazine_adaptor": [
+      [
+        "38super",
+        [
+          "bbg_30_38super"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bbg_40",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 .40 S&W 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 .40 S&W 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "40"
+    ],
+    "magazine_adaptor": [
+      [
+        "40",
+        [
+          "bbg_30_40"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bbg_45",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 .45 ACP 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 .45 ACP 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "45"
+    ],
+    "magazine_adaptor": [
+      [
+        "45",
+        [
+          "bbg_30_45"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bbg_762",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 7.62x25mm 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 7.62x25mm 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "762x25"
+    ],
+    "magazine_adaptor": [
+      [
+        "762x25",
+        [
+          "bbg_30_762"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bbg_918",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“大混蛋”冲锋枪 9x18mm 口径改件"
+    },
+    "description": "一套完整的用于“大混蛋”冲锋枪的枪管，枪机与弹匣井的零件，这一套是用于 9x18mm 口径的，为了避免混淆所以零件上写着适配口径，可以在一分钟内进行更换。",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 cent",
+    "price_postapoc": "100 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "big_bastard_gun",
+      "super_bastard_gun"
+    ],
+    "ammo_modifier": [
+      "9x18"
+    ],
+    "magazine_adaptor": [
+      [
+        "9x18",
+        [
+          "bbg_30_918"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bg_36paper",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“混蛋”冲锋枪 .36 纸卷弹 口径改件"
+    },
+    "description": "在很多国家中子弹属于严格管制物品，你有枪但是没子弹的话那枪就是块废铁，于是有些人就把目光放到了一些古老的弹药上，与其说这是套改件倒不如说它是根铁管以及一些小铁片，它可以让这把冲锋枪兼容其他口径，这也算是结构简单的好处吧……",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "50 cent",
+    "price_postapoc": "50 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "bastard_gun"
+    ],
+    "ammo_modifier": [
+      "36paper"
+    ],
+    "magazine_adaptor": [
+      [
+        "36paper",
+        [
+          "bg_20_36"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "bg_44paper",
+    "looks_like": "tac_gun_sp",
+    "type": "GUNMOD",
+    "name": {
+      "str": "“混蛋”冲锋枪 .44 纸卷弹 口径改件"
+    },
+    "description": "在很多国家中子弹属于严格管制物品，你有枪但是没子弹的话那枪就是块废铁，于是有些人就把目光放到了一些古老的弹药上，与其说这是套改件倒不如说它是根铁管以及一些小铁片，它可以让这把冲锋枪兼容其他口径，这也算是结构简单的好处吧……",
+    "weight": "200 g",
+    "volume": "100 ml",
+    "longest_side": "150 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "50 cent",
+    "price_postapoc": "50 cent",
+    "install_time": "1 m",
+    "material": [
+      "steel"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "bore",
+    "mod_targets": [
+      "bastard_gun"
+    ],
+    "ammo_modifier": [
+      "44paper"
+    ],
+    "magazine_adaptor": [
+      [
+        "44paper",
+        [
+          "bg_20_44"
+        ]
+      ]
+    ],
+    "min_skills": [
+      [
+        "weapon",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "clvp_bcs",
+    "type": "GUNMOD",
+    "name": {
+      "str": "CLVP 弹道计算装置"
+    },
+    "description": "用于CLVP 多用途发射器的弹道计算装置。",
+    "weight": "10 g",
+    "volume": "10 ml",
+    "longest_side": "50 mm",
+    "integral_volume": "0 ml",
+    "integral_weight": "0 g",
+    "price": "100 USD",
+    "price_postapoc": "100 USD",
+    "install_time": "1 m",
+    "material": [
+      "aluminum",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "light_gray",
+    "location": "sights",
+    "mod_targets": [
+      "clvp_launcher"
+    ],
+    "sight_dispersion": 0,
+    "aim_speed": 0,
+    "flags": [
+      "ZOOM"
+    ]
+  },
+  {
+    "id": "grkl_scope",
+    "type": "GUNMOD",
+    "name": {
+      "str": "GRKL 火箭弹瞄准镜"
+    },
+    "description": "格科斯勒生产的火箭筒专用瞄准镜，为不同种类的火箭弹做了不同的分化，不过想要看懂这东西可有点难度。",
+    "weight": "500 g",
+    "volume": "750 ml",
+    "longest_side": "300 mm",
+    "price": "100 USD",
+    "price_postapoc": "10 USD",
+    "install_time": "1 m",
+    "material": [
+      "superalloy",
+      "glass"
+    ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "mod_targets": [
+      "grkl_35"
+    ],
+    "sight_dispersion": 0,
+    "aim_speed": 0,
+    "flags": [
+      "ZOOM"
+    ]
+  }
+]

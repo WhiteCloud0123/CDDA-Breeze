@@ -1,0 +1,127 @@
+[
+  {
+    "id": "4570_sp",
+    "copy-from": "4570_sp",
+    "type": "AMMO",
+    "name": {"str_sp": ".45-70 SP"},
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 72,
+      "armor_penetration": 28
+    },
+    "dispersion": 40,
+    "loudness": 166
+  },
+  {
+    "id": "22_fmj",
+    "copy-from": "22_fmj",
+    "type": "AMMO",
+    "name": {
+      "str_sp": ".22 LR FMJ 弹"
+    },
+    "description": ".22 LR FMJ是这种口径中最基础、最普遍的弹种之一，采用铅芯与铜被甲结构，以价格低廉、弹道平直、兼容性强著称，是练习打靶和小型狩猎的万金油弹药。",
+    "range": 14,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 17,
+      "armor_penetration": 10
+    },
+    "recoil": 180,
+    "loudness": 130
+  },
+  {
+    "id": "bp_46mm",
+    "copy-from": "bp_46mm",
+    "type": "AMMO",
+    "name": {"str_sp": "4.6x30mm, black powder"},
+    "price": 150,
+    "price_postapoc": 800,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 13.68,
+      "armor_penetration": 2
+    },
+    "recoil": 68
+  },
+  {
+    "id": "bp_545",
+    "copy-from": "bp_545",
+    "type": "AMMO",
+    "name": {"str_sp": "5.45x39mm, black powder"},
+    "price": 50,
+    "price_postapoc": 450,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 32,
+      "armor_penetration": 3
+    },
+    "recoil": 1064
+  },
+  {
+    "id": "bp_545_ap",
+    "copy-from": "bp_545_ap",
+    "type": "AMMO",
+    "name": {"str_sp": "5.45x39mm AP, black powder"},
+    "price": 175,
+    "price_postapoc": 450,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 30.4,
+      "armor_penetration": 7
+    },
+    "recoil": 1064
+  },
+  {
+    "id": "bp_57mm",
+    "copy-from": "bp_57mm",
+    "type": "AMMO",
+    "name": {"str_sp": "5.7x28mm, black powder"},
+    "price": 175,
+    "price_postapoc": 800,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 16,
+      "armor_penetration": 1.8
+    },
+    "recoil": 68
+  },
+  {
+    "id": "bp_762_25",
+    "copy-from": "bp_762_25",
+    "type": "AMMO",
+    "name": {"str_sp": "7.62x25mm FMJ, black powder"},
+    "price": 75,
+    "price_postapoc": 450,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 19.2,
+      "armor_penetration": 3
+    }
+  },
+  {
+    "id": "bp_9x18mm",
+    "copy-from": "bp_9x18mm",
+    "type": "AMMO",
+    "name": {"str_sp": "9x18mm, black powder"},
+    "price": 50,
+    "price_postapoc": 500,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 19.2,
+      "armor_penetration": 1
+    }
+  },
+  {
+    "id": "bp_9x18mmfmj",
+    "copy-from": "bp_9x18mmfmj",
+    "type": "AMMO",
+    "name": {"str_sp": "9x18mm FMJ, black powder"},
+    "price": 100,
+    "price_postapoc": 1550,
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 17.6,
+      "armor_penetration": 5
+    }
+  }
+]

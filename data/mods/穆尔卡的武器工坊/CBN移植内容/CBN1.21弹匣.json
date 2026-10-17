@@ -1,0 +1,470 @@
+[
+  {
+    "id": "bg_20",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“混蛋” 9mm 20发弹匣"
+    },
+    "description": "一个“混蛋”冲锋枪的20发弹匣，看上去就是一块被锤子敲成长方体的铁皮，好做那倒确实是好做，但你绝对不要指望它能够正常使用。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "longest_side": "200 mm",
+    "price": "100 cent",
+    "price_postapoc": "50 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "reliability": 2,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 20
+        }
+      }
+    ]
+  },
+  {
+    "id": "bg_20_36",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“混蛋” .36 纸卷弹 20发弹匣"
+    },
+    "description": "一个“混蛋”冲锋枪的20发弹匣，这一款是使用.36纸卷弹的版本，可靠性惨不忍睹。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "longest_side": "200 mm",
+    "price": "100 cent",
+    "price_postapoc": "50 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "36paper"
+    ],
+    "reliability": 1,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "36paper": 20
+        }
+      }
+    ]
+  },
+  {
+    "id": "bg_20_44",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“混蛋” .44 纸卷弹 20发弹匣"
+    },
+    "description": "一个“混蛋”冲锋枪的20发弹匣，这一款是使用.44纸卷弹的版本，可靠性惨不忍睹。",
+    "weight": "300 g",
+    "volume": "250 ml",
+    "longest_side": "200 mm",
+    "price": "100 cent",
+    "price_postapoc": "50 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "44paper"
+    ],
+    "reliability": 1,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "44paper": 20
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_9",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” 9mm 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，9x19mm口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9mm"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9mm": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_32",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” .32 ACP 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，.32 ACP口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "32"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "32": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_380",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” .380 ACP 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，.380 ACP口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "380"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "380": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_38super",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” .38 Super 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，.38 Super口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "38super"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "38super": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_40",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” .40 S&W 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，.40 S&W口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "40"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "40": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_45",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” .45 ACP 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，.45 ACP口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "45"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "45": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_762",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” 7.62x25mm 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，7.62x25mm口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "762x25"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "762x25": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbg_30_918",
+    "looks_like": "evo_30",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "“大混蛋” 9x18mm 30发弹匣"
+    },
+    "description": "一个“大混蛋”冲锋枪的30发弹匣，9x18mm口径，看起来与一些冲锋枪的弹匣没有什么区别，可靠性尚可。",
+    "weight": "400 g",
+    "volume": "300 ml",
+    "longest_side": "220 mm",
+    "price": "200 cent",
+    "price_postapoc": "100 cent",
+    "material": [
+      "steel"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "9x18"
+    ],
+    "reliability": 4,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "9x18": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "var72_15",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "VAR-72 15发弹匣"
+    },
+    "description": "一个VAR-72的15发弹匣。",
+    "weight": "400 g",
+    "volume": "400 ml",
+    "longest_side": "250 mm",
+    "price": "5 USD",
+    "price_postapoc": "500 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "4570"
+    ],
+    "reliability": 8,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "4570": 15
+        }
+      }
+    ]
+  },
+  {
+    "id": "vb12_8",
+    "looks_like": "737_cta_20",
+    "type": "MAGAZINE",
+    "name": {
+      "str": "VB-12 8发弹匣"
+    },
+    "description": "一个VB-12的8发盒式弹匣。",
+    "weight": "500 g",
+    "volume": "500 ml",
+    "longest_side": "200 mm",
+    "price": "5 USD",
+    "price_postapoc": "200 cent",
+    "material": [
+      "plastic"
+    ],
+    "symbol": "#",
+    "color": "light_gray",
+    "ammo_type": [
+      "shot"
+    ],
+    "reliability": 8,
+    "reload_time": 50,
+    "flags": [
+      "MAG_COMPACT"
+    ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE",
+        "rigid": true,
+        "ammo_restriction": {
+          "shot": 8
+        }
+      }
+    ]
+  }
+]

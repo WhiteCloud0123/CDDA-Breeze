@@ -1,3 +1,23 @@
+Breeze 1.2.1，2026-10-17，CBN 1.2.1同步
+
+同步穆尔卡CBN 1.2.0与1.2.1。版本号改用上游编号，modinfo的version由1.19改为1.2.1，依赖仍为dda，上游该版本依赖的exotic_ammo不引入，所需内容已内联或由本体提供。
+
+弹药。新增6.2x30mm埋头弹体系，包含弹药类型62_cta、3P1与3P2V与2P1R与2P2H四种弹、62_casing弹壳、CONTRACT与ASSISTER五个弹匣弹鼓以及八条家族配方。新增4.6x30mm FMJ、5.7x28mm FMJ、5.56x45mm M855、7.62x39mm BP。新增CLVP-1的三种电磁弹射弹药与GRKL-35的两种105mm火箭弹，配套五个ammo_effect按微风爆炸字段落地，即power与distance_factor，CBN的fragment块因本体该路径不生效而丢弃。4570_sp、22_fmj与七种黑火药变体这9条本体既有弹药作为重平衡覆盖写入物品/原版弹药调整/，全部用copy-from同id的增量写法；上游的speed字段本体没有读取路径，丢弃；4570_sp的250毫升体积属CBN旧写法，不覆盖。
+
+枪械。新增23把，含混蛋系列三把自制冲锋枪、Shiv-62三型、TAK-74、VAR-60与VAR-60-S与VAR-72、Z651通用机枪、HCAR、GA-290LBMG、皇家军械RA-1与RA-2、SD-18C、GACP与GACP-C、麻雀自制气枪、CLVP-1多用途发射器、GELX-4UL与GELX-4UN电磁步枪、GRKL-35火箭筒；配件11件、弹匣13个、配方26条。Z651上游未给重量，按通用机枪量级补11.5千克，供对照的是本模组的GA-290LBMG轻机枪6千克。CBN的三个抽象基类mg_base、rifle_energy与rifle_pneumatic扁平化到本体基类，并逐枪补上微风基类缺失的to_hit、bashing、loudness、handling与durability，避免移植枪静默改用本体默认值。9个原版弹匣重定义因与本体容量体积重量完全一致而不重复定义。
+
+近战与携行。新增9件近战武器与3件弹带携行具，微风没有bandolier这个use_action，携行具改为pocket_data加ammo_restriction，口径取上游清单与本体已有清单的并集，避免丢掉303等本体口径。猎鹿人开山刀按1.2.1数值升级为538克、1升、钝击8、斩击26、钢材、WBLOCK_2以及DURABLE_MELEE与NONCONDUCTIVE，保留本体适配的TOOL类型与to_hit元组写法；上游的BUTCHER 17疑似笔误，沿用本体既有的BUTCHER 3。
+
+原版枪械覆盖。写入FN Five-SeveN、SKS与Mini Draco三把的增量改动。Makarov PM、Tokarev TT-33与PPSh-41因上游与本体差异无法确认属作者本意而未覆盖。
+
+物品组。新增rare、nanofab_template_armor、nanofab_template_combat、foreign_armor、carried_guns_cop与五个ammo_*_full共10个组，并以extend方式把新近战武器接入weapons组、把新枪接入swat_gear组。本体core的weapons组没有subtype，extend时原样保留，避免把既有权重从百分比重新解释成相对权重。guns_safe_guns因引用了本体与模组都不存在的guns_safe_pistols而未移植。
+
+贴图。新增tiles_cbn121_weapons.png、tiles_cbn121_ammo.png与tiles_cbn121_melee.png三个图集及对应配置，沿用ASCII文件名，不覆盖现有CBN、0.G与I版图集。
+
+修复既有缺陷。CBN1.19的AMMO_2080_HEHC与工具与投掷物里的爆炸效果沿用了CBN的damage、radius与fragment字段，而微风只读取power与distance_factor，实际威力为零；本次统一改为power与distance_factor。
+
+长度与名字。本体在longest_side缺失时按体积推算长度，15升的CLVP-1会显示24厘米、480毫升的GACP只有8厘米；本次为移植的枪械、配件、弹匣与近战武器共72条补上longest_side，数值参照模组既有90把枪的区间，并同时补上1.19那批漏掉的8把枪与2个弹匣。另外本体要求每个物品定义都显式写name，同id覆盖也不会继承，因此给原版枪械覆盖、弹带与9条重平衡弹药补上name，避免加载中断。
+
 Breeze 1.19，2026-08-30，CBN 1.1.9补充同步
 
 继续保持Breeze武器工坊版本1.19，同步穆尔卡CBN 1.1.9中新口径，新武器和弹药配方。新增K-27，K-28，GK-47，GK-47SU，GK-74，CLAW-9-S，GAVSK螺纹钢与GAVSL螺栓。PPS-43已由现有CCB 1.54.6线提供，本次不重复定义。新增20x80mm埋头弹体系，包含ZS1，ZP1，ZH2C，专用弹匣弹鼓与集成式消音器，并接入世界刷新，偏僻公路枪匠，贴图与otopack音效映射。同步CBN 1.1.9补充的7.37x40mm弹壳与5C2SB制作配方。5C3与5C1R已由现有CCB 1.54.6线提供，本次不重复定义。CBN旧式magazines字段转换为Breeze当前pocket_data弹匣井，移除当前main不存在的carbonmag_223引用。贴图使用独立CBN1.19图集，不覆盖现有CBN，0.G与I版图集。PC与Android继续共用data目录中的同一份模组数据。

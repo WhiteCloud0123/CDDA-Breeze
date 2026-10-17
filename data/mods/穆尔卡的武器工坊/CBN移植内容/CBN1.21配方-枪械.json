@@ -1,0 +1,1594 @@
+[
+  {
+    "result": "bastard_gun",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_RANGED",
+    "skill_used": "mechanics",
+    "skills_required": [
+      [
+        "gun",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "1 h",
+    "autolearn": true,
+    "reversible": true,
+    "book_learn": [
+      [
+        "manual_rifle",
+        3
+      ],
+      [
+        "mag_rifle",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      }
+    ],
+    "components": [
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "spring",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          5
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "nail",
+          10
+        ]
+      ],
+      [
+        [
+          "2x4",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_32",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_380",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_38super",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_40",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_45",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_762",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_9",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_30_918",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_32",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_380",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_38super",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_40",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_45",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_762",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bbg_918",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "30 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "big_bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bg_20",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bg_20_36",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bg_20_44",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bg_36paper",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "bg_44paper",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "time": "10 m",
+    "autolearn": true,
+    "reversible": true,
+    "decomp_learn": 1,
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "bastard_gun",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "pipe",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "big_bastard_gun",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_RANGED",
+    "skill_used": "mechanics",
+    "skills_required": [
+      [
+        "gun",
+        5
+      ]
+    ],
+    "difficulty": 5,
+    "time": "5 h",
+    "autolearn": true,
+    "reversible": true,
+    "book_learn": [
+      [
+        "manual_rifle",
+        5
+      ],
+      [
+        "mag_rifle",
+        5
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "bastard_gun",
+          1
+        ]
+      ],
+      [
+        [
+          "pipe",
+          2
+        ]
+      ],
+      [
+        [
+          "spring",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          5
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "2x4",
+          1
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          2
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "sparrow_airgun",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_RANGED",
+    "skill_used": "mechanics",
+    "skills_required": [
+      [
+        "gun",
+        7
+      ]
+    ],
+    "difficulty": 7,
+    "time": "20 h",
+    "autolearn": true,
+    "reversible": true,
+    "book_learn": [
+      [
+        "manual_rifle",
+        7
+      ],
+      [
+        "mag_rifle",
+        7
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 3
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      },
+      {
+        "id": "DRILL",
+        "level": 2
+      },
+      {
+        "id": "ANVIL",
+        "level": 3
+      },
+      {
+        "id": "CHISEL",
+        "level": 3
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          20
+        ],
+        [
+          "oxy_torch",
+          20
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "metal_tank_little",
+          1
+        ]
+      ],
+      [
+        [
+          "pipe",
+          3
+        ]
+      ],
+      [
+        [
+          "spring",
+          2
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          10
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "2x4",
+          3
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          5
+        ]
+      ],
+      [
+        [
+          "e_scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          5
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "super_bastard_gun",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_RANGED",
+    "skill_used": "mechanics",
+    "skills_required": [
+      [
+        "gun",
+        7
+      ]
+    ],
+    "difficulty": 7,
+    "time": "12 h",
+    "autolearn": true,
+    "reversible": true,
+    "book_learn": [
+      [
+        "manual_rifle",
+        7
+      ],
+      [
+        "mag_rifle",
+        7
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 3
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      },
+      {
+        "id": "DRILL",
+        "level": 2
+      },
+      {
+        "id": "ANVIL",
+        "level": 3
+      },
+      {
+        "id": "CHISEL",
+        "level": 3
+      }
+    ],
+    "tools": [
+      [
+        [
+          "forge",
+          20
+        ],
+        [
+          "oxy_torch",
+          20
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "big_bastard_gun",
+          1
+        ]
+      ],
+      [
+        [
+          "pipe",
+          3
+        ]
+      ],
+      [
+        [
+          "spring",
+          1
+        ]
+      ],
+      [
+        [
+          "steel_chunk",
+          10
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "2x4",
+          3
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          5
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "var72_15",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "time": "200 m",
+    "autolearn": false,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        5
+      ]
+    ],
+    "using": [
+      [
+        "blacksmithing_standard",
+        2
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          5
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          4
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "vb12_8",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "skill_used": "fabrication",
+    "difficulty": 4,
+    "time": "120 m",
+    "autolearn": false,
+    "reversible": true,
+    "decomp_learn": 3,
+    "book_learn": [
+      [
+        "mag_guns",
+        4
+      ]
+    ],
+    "using": [
+      [
+        "blacksmithing_standard",
+        2
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "scrap",
+          3
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          2
+        ]
+      ]
+    ]
+  }
+]

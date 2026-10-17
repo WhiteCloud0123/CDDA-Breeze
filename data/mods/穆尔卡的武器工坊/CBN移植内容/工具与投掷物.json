@@ -61,16 +61,8 @@
       "sound_msg": "滴答。",
       "no_deactivate_msg": "你已经拔掉了%s的插销；现在应该把它扔出去。",
       "explosion": {
-        "damage": 100,
-        "radius": 6,
-        "fragment": {
-          "impact": {
-            "damage_type": "bullet",
-            "amount": 150,
-            "armor_multiplier": 8
-          },
-          "range": 15
-        }
+        "power": 100,
+        "distance_factor": 6
       }
     },
     "flags": [

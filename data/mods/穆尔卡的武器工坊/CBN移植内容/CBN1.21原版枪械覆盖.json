@@ -1,0 +1,29 @@
+[
+  {
+    "id": "fn57",
+    "copy-from": "fn57",
+    "type": "GUN",
+    "name": {"str": "FN Five-seveN"},
+    "bashing": 8,
+    "to_hit": -1,
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": -3
+    }
+  },
+  {
+    "id": "sks",
+    "copy-from": "sks",
+    "type": "GUN",
+    "name": {"str": "SKS"},
+    "volume": "2100 ml"
+  },
+  {
+    "id": "draco",
+    "copy-from": "draco",
+    "type": "GUN",
+    "name": {"str": "Mini Draco"},
+    "volume": "1300 ml",
+    "price_postapoc": 4000
+  }
+]

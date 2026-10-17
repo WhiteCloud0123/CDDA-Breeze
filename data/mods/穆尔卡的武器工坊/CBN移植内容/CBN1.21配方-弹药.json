@@ -1,0 +1,1298 @@
+[
+  {
+    "result": "3P1",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_PISTOL",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "skills_required": [
+      "gun",
+      5
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        5
+      ],
+      [
+        "manual_pistol",
+        5
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        3
+      ],
+      [
+        "ammo_bullet",
+        3
+      ]
+    ],
+    "components": [
+      [
+        [
+          "62_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "smrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          5
+        ]
+      ],
+      [
+        [
+          "copper",
+          2
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "2P1R",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_PISTOL",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "skills_required": [
+      "gun",
+      4
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        4
+      ],
+      [
+        "manual_pistol",
+        4
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        2
+      ],
+      [
+        "ammo_bullet",
+        2
+      ]
+    ],
+    "components": [
+      [
+        [
+          "62_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "smrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          4
+        ]
+      ],
+      [
+        [
+          "copper",
+          1
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "2P2H",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_PISTOL",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "skills_required": [
+      "gun",
+      4
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        4
+      ],
+      [
+        "manual_pistol",
+        4
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        2
+      ],
+      [
+        "ammo_bullet",
+        2
+      ]
+    ],
+    "components": [
+      [
+        [
+          "62_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "smrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          4
+        ]
+      ],
+      [
+        [
+          "copper",
+          1
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "46mm_fmj",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_PISTOL",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "skills_required": [
+      "gun",
+      2
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "manual_pistol",
+        2
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        2
+      ],
+      [
+        "ammo_bullet",
+        2
+      ]
+    ],
+    "components": [
+      [
+        [
+          "46mm_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "smpistol_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          3
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "57mm_fmj",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_PISTOL",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "skills_required": [
+      "gun",
+      2
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        2
+      ],
+      [
+        "manual_pistol",
+        2
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        2
+      ],
+      [
+        "ammo_bullet",
+        2
+      ]
+    ],
+    "components": [
+      [
+        [
+          "57mm_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "smrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          3
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "556_m855",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "skills_required": [
+      "gun",
+      3
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        1
+      ],
+      [
+        "mag_rifle",
+        2
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        4
+      ],
+      [
+        "ammo_bullet",
+        4
+      ]
+    ],
+    "components": [
+      [
+        [
+          "223_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "smrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          4
+        ]
+      ],
+      [
+        [
+          "copper",
+          1
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "762_bp",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_RIFLE",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "skills_required": [
+      "gun",
+      5
+    ],
+    "time": "2 m",
+    "batch_time_factors": [
+      60,
+      5
+    ],
+    "book_learn": [
+      [
+        "recipe_bullets",
+        3
+      ],
+      [
+        "mag_rifle",
+        4
+      ]
+    ],
+    "charges": 1,
+    "reversible": true,
+    "using": [
+      [
+        "bullet_forming",
+        5
+      ],
+      [
+        "ammo_bullet",
+        5
+      ]
+    ],
+    "components": [
+      [
+        [
+          "762_casing",
+          1
+        ]
+      ],
+      [
+        [
+          "lgrifle_primer",
+          1
+        ]
+      ],
+      [
+        [
+          "gunpowder",
+          10
+        ]
+      ],
+      [
+        [
+          "copper",
+          1
+        ]
+      ]
+    ],
+    "activity_level": "LIGHT_EXERCISE",
+    "proficiencies": [
+      {
+        "proficiency": "prof_handloading"
+      }
+    ]
+  },
+  {
+    "result": "62_casing",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_COMPONENTS",
+    "skill_used": "fabrication",
+    "difficulty": 5,
+    "time": "5 m",
+    "book_learn": [
+      [
+        "recipe_bullets",
+        5
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      }
+    ],
+    "tools": [
+      [
+        [
+          "hydraulic_press",
+          7
+        ]
+      ],
+      [
+        [
+          "forging_standard",
+          1,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "mold_plastic",
+          -1
+        ]
+      ]
+    ],
+    "charges": 1,
+    "components": [
+      [
+        [
+          "copper",
+          1
+        ]
+      ],
+      [
+        [
+          "plastic_chunk",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "62_cta_30",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 5,
+    "time": "60 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          5
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  },
+  {
+    "result": "62_cta_50",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 7,
+    "time": "120 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          10
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  },
+  {
+    "result": "62_cta_s_18",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "30 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          2
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  },
+  {
+    "result": "62_cta_s_32",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 3,
+    "time": "60 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          5
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  },
+  {
+    "result": "737_cta_200",
+    "type": "recipe",
+    "category": "CC_WEAPON",
+    "subcategory": "CSC_WEAPON_MAGAZINES",
+    "autolearn": false,
+    "skill_used": "fabrication",
+    "book_learn": [
+      [
+        "mag_guns",
+        3
+      ]
+    ],
+    "difficulty": 8,
+    "time": "600 m",
+    "reversible": true,
+    "decomp_learn": 3,
+    "components": [
+      [
+        [
+          "scrap",
+          60
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          4
+        ]
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "small_repairkit",
+          10
+        ],
+        [
+          "large_repairkit",
+          5
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 1
+      },
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      }
+    ],
+    "activity_level": "MODERATE_EXERCISE"
+  },
+  {
+    "result": "clvp_rkt_1",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_OTHER",
+    "skill_used": "electronics",
+    "skills_required": [
+      [
+        "mechanics",
+        6
+      ],
+      [
+        "computer",
+        6
+      ]
+    ],
+    "difficulty": 6,
+    "time": "35 m",
+    "reversible": true,
+    "decomp_learn": 5,
+    "book_learn": [
+      [
+        "textbook_anarch",
+        6
+      ]
+    ],
+    "using": [
+      [
+        "soldering_standard",
+        10
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "clvp_launcher",
+          -1
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      },
+      {
+        "id": "WRENCH_FINE",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "c4",
+          4
+        ]
+      ],
+      [
+        [
+          "RAM",
+          1
+        ]
+      ],
+      [
+        [
+          "processor",
+          1
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "sheet_metal",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          4
+        ]
+      ],
+      [
+        [
+          "cable",
+          1
+        ]
+      ],
+      [
+        [
+          "impact_fuze",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "clvp_rkt_2",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_OTHER",
+    "skill_used": "electronics",
+    "skills_required": [
+      [
+        "mechanics",
+        8
+      ],
+      [
+        "computer",
+        8
+      ]
+    ],
+    "difficulty": 8,
+    "time": "35 m",
+    "reversible": true,
+    "decomp_learn": 5,
+    "book_learn": [
+      [
+        "textbook_anarch",
+        8
+      ]
+    ],
+    "using": [
+      [
+        "soldering_standard",
+        10
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "clvp_launcher",
+          -1
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      },
+      {
+        "id": "WRENCH_FINE",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "mininuke",
+          1
+        ]
+      ],
+      [
+        [
+          "RAM",
+          1
+        ]
+      ],
+      [
+        [
+          "processor",
+          1
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "sheet_metal",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          4
+        ]
+      ],
+      [
+        [
+          "cable",
+          1
+        ]
+      ],
+      [
+        [
+          "impact_fuze",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "clvp_rkt_3",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_OTHER",
+    "skill_used": "electronics",
+    "skills_required": [
+      [
+        "mechanics",
+        6
+      ],
+      [
+        "computer",
+        6
+      ]
+    ],
+    "difficulty": 6,
+    "time": "35 m",
+    "reversible": true,
+    "decomp_learn": 5,
+    "book_learn": [
+      [
+        "textbook_anarch",
+        6
+      ]
+    ],
+    "using": [
+      [
+        "soldering_standard",
+        10
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "clvp_launcher",
+          -1
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SCREW_FINE",
+        "level": 1
+      },
+      {
+        "id": "WRENCH_FINE",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "incendiary",
+          700
+        ]
+      ],
+      [
+        [
+          "RAM",
+          1
+        ]
+      ],
+      [
+        [
+          "processor",
+          1
+        ]
+      ],
+      [
+        [
+          "scrap",
+          10
+        ]
+      ],
+      [
+        [
+          "sheet_metal",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          4
+        ]
+      ],
+      [
+        [
+          "cable",
+          1
+        ]
+      ],
+      [
+        [
+          "impact_fuze",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "grk_t1_heat_105",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_OTHER",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "30 m",
+    "book_learn": [
+      [
+        "manual_launcher",
+        6
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "hotplate",
+          50
+        ],
+        [
+          "toolset",
+          50
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "pipe",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          5
+        ]
+      ],
+      [
+        [
+          "copper",
+          15
+        ]
+      ],
+      [
+        [
+          "volatile_explosive",
+          30,
+          "LIST"
+        ],
+        [
+          "stable_explosive",
+          30,
+          "LIST"
+        ],
+        [
+          "military_explosive",
+          30,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "chem_rocket_fuel",
+          15
+        ]
+      ],
+      [
+        [
+          "impact_fuze",
+          1
+        ]
+      ]
+    ]
+  },
+  {
+    "result": "grk_t1_hefg_105",
+    "type": "recipe",
+    "category": "CC_AMMO",
+    "subcategory": "CSC_AMMO_OTHER",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "30 m",
+    "book_learn": [
+      [
+        "manual_launcher",
+        6
+      ]
+    ],
+    "tools": [
+      [
+        [
+          "hotplate",
+          50
+        ],
+        [
+          "toolset",
+          50
+        ]
+      ]
+    ],
+    "qualities": [
+      {
+        "id": "SAW_M_FINE",
+        "level": 1
+      },
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "DRILL",
+        "level": 1
+      }
+    ],
+    "components": [
+      [
+        [
+          "pipe",
+          2
+        ]
+      ],
+      [
+        [
+          "sheet_metal_small",
+          5
+        ]
+      ],
+      [
+        [
+          "scrap",
+          15
+        ]
+      ],
+      [
+        [
+          "volatile_explosive",
+          50,
+          "LIST"
+        ],
+        [
+          "stable_explosive",
+          50,
+          "LIST"
+        ],
+        [
+          "military_explosive",
+          50,
+          "LIST"
+        ]
+      ],
+      [
+        [
+          "chem_rocket_fuel",
+          15
+        ]
+      ],
+      [
+        [
+          "impact_fuze",
+          1
+        ]
+      ]
+    ]
+  }
+]
