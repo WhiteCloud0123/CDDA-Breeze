@@ -3365,21 +3365,16 @@ void target_ui::update_target_list()
 
 tripoint target_ui::choose_initial_target()
 {
-    // Hostile creatures win over neutral bystanders: aiming used to snap onto whichever
-    // creature happened to be closest, or onto the last target even when it was a neutral
-    // NPC, so a wandering trader standing next to a zombie could steal the initial aim.
-    // Spells are excluded because many of them are meant to be cast on allies.
-    const bool prefer_hostile = mode != TargetMode::Spell;
+    // Try previously targeted creature
     shared_ptr_fast<Creature> cr = you->last_target.lock();
-
-    // Previously targeted creature, but only while it is still hostile
-    if( prefer_hostile && cr && pl_sees( *cr ) && dist_fn( cr->pos() ) <= range &&
-        you->attitude_to( *cr ) == Creature::Attitude::HOSTILE ) {
+    if( cr && pl_sees( *cr ) && dist_fn( cr->pos() ) <= range ) {
         return cr->pos();
     }
 
-    // Closest hostile creature in range
-    if( prefer_hostile ) {
+    // Try the closest hostile creature before settling for a neutral bystander: falling back to
+    // the closest creature meant a wandering trader standing next to a zombie could steal the
+    // initial aim.  Spells are excluded because many of them are meant to be cast on allies.
+    if( mode != TargetMode::Spell ) {
         const auto hostile = std::find_if( targets.begin(), targets.end(),
         [this]( const Creature * candidate ) {
             return you->attitude_to( *candidate ) == Creature::Attitude::HOSTILE;
@@ -3387,11 +3382,6 @@ tripoint target_ui::choose_initial_target()
         if( hostile != targets.end() ) {
             return ( *hostile )->pos();
         }
-    }
-
-    // Try previously targeted creature
-    if( cr && pl_sees( *cr ) && dist_fn( cr->pos() ) <= range ) {
-        return cr->pos();
     }
 
     // Try closest creature
