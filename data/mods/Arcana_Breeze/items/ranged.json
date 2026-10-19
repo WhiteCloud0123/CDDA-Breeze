@@ -1037,6 +1037,7 @@
       "BOUNCE"
     ],
     "flags": [
+      "BIONIC_WEAPON",
       "NEVER_JAMS",
       "TRADER_AVOID",
       "USES_BIONIC_POWER"
@@ -1087,6 +1088,7 @@
       "AMMO_RIFT_FOCUS_TINDALOS"
     ],
     "flags": [
+      "BIONIC_WEAPON",
       "NEVER_JAMS",
       "TRADER_AVOID",
       "USES_BIONIC_POWER"
