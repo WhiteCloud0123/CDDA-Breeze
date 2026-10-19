@@ -37,6 +37,7 @@
       "INCENDIARY"
     ],
     "flags": [
+      "BIONIC_WEAPON",
       "NEVER_JAMS",
       "NO_DROP",
       "TRADER_AVOID",
@@ -185,6 +186,7 @@
       "INCENDIARY"
     ],
     "flags": [
+      "BIONIC_WEAPON",
       "NEVER_JAMS",
       "NO_DROP",
       "TRADER_AVOID",
@@ -565,6 +567,7 @@
     "weight": "226 g",
     "bashing": 3,
     "flags": [
+      "BIONIC_WEAPON",
       "NO_UNWIELD",
       "NO_DROP",
       "UNBREAKABLE_MELEE",
